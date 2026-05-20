@@ -1,0 +1,19 @@
+{
+  "p_l": {
+    "company": "CloudSync Pro",
+    "year": 2025,
+    "revenue": 42482495.4035902,
+    "cogs": 12206336.432679402,
+    "opex": 2058683.640049576,
+    "gross_profit": 30276158.970910802,
+    "ebitda": 28217475.330861226,
+    "net_income": 22291805.51138037
+  },
+  "balance_sheet": {
+    "company": "CloudSync Pro",
+    "year": 2025,
+    "assets": 33928421.23467321,
+    "liabilities": 25019666.372586764,
+    "equity": 8908754.862086445
+  }
+}

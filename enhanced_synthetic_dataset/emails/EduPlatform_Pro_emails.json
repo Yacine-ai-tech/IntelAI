@@ -1,0 +1,23 @@
+[
+  {
+    "from": "reports@eduplatformpro.com",
+    "to": "insights@company.com",
+    "subject": "Revenue Report",
+    "body": "Data for EduPlatform Pro",
+    "date": "2026-02-27T15:02:03.659454"
+  },
+  {
+    "from": "reports@eduplatformpro.com",
+    "to": "insights@company.com",
+    "subject": "Team Update",
+    "body": "Data for EduPlatform Pro",
+    "date": "2026-02-27T15:02:03.659463"
+  },
+  {
+    "from": "reports@eduplatformpro.com",
+    "to": "insights@company.com",
+    "subject": "Efficiency Alert",
+    "body": "Data for EduPlatform Pro",
+    "date": "2026-02-27T15:02:03.659466"
+  }
+]
