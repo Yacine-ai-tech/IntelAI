@@ -1,0 +1,9 @@
+{
+  "domain": "Growth",
+  "metrics": [
+    "mrr",
+    "arr",
+    "churn_rate",
+    "nps"
+  ]
+}

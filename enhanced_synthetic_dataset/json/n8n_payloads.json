@@ -1,0 +1,44 @@
+[
+  {
+    "company": "CloudSync Pro",
+    "domain": "Finance",
+    "metric": "revenue",
+    "value": 672536.447388393,
+    "timestamp": "2026-02-27T15:02:03.660995"
+  },
+  {
+    "company": "CloudSync Pro",
+    "domain": "Growth",
+    "metric": "mrr",
+    "value": 815899.7820485892,
+    "timestamp": "2026-02-27T15:02:03.661004"
+  },
+  {
+    "company": "DataFlow Analytics",
+    "domain": "Finance",
+    "metric": "revenue",
+    "value": 42808.4709023104,
+    "timestamp": "2026-02-27T15:02:03.661008"
+  },
+  {
+    "company": "DataFlow Analytics",
+    "domain": "Growth",
+    "metric": "mrr",
+    "value": 476093.86318233196,
+    "timestamp": "2026-02-27T15:02:03.661011"
+  },
+  {
+    "company": "HealthCare Analytics",
+    "domain": "Finance",
+    "metric": "revenue",
+    "value": 948943.4401451076,
+    "timestamp": "2026-02-27T15:02:03.661015"
+  },
+  {
+    "company": "HealthCare Analytics",
+    "domain": "Growth",
+    "metric": "mrr",
+    "value": 204582.59937649412,
+    "timestamp": "2026-02-27T15:02:03.661022"
+  }
+]

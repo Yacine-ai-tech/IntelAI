@@ -1,0 +1,19 @@
+{
+  "p_l": {
+    "company": "DataFlow Analytics",
+    "year": 2024,
+    "revenue": 35821663.441722415,
+    "cogs": 5012048.374965327,
+    "opex": 8345003.039373448,
+    "gross_profit": 30809615.06675709,
+    "ebitda": 22464612.02738364,
+    "net_income": 17747043.501633078
+  },
+  "balance_sheet": {
+    "company": "DataFlow Analytics",
+    "year": 2024,
+    "assets": 12366881.467564046,
+    "liabilities": 23362375.419247832,
+    "equity": -10995493.951683786
+  }
+}
