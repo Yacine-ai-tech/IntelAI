@@ -1,0 +1,19 @@
+{
+  "p_l": {
+    "company": "LendingTree Digital",
+    "year": 2025,
+    "revenue": 39755608.08705087,
+    "cogs": 11085568.689063331,
+    "opex": 5356156.1891306015,
+    "gross_profit": 28670039.397987537,
+    "ebitda": 23313883.208856937,
+    "net_income": 18417967.734996982
+  },
+  "balance_sheet": {
+    "company": "LendingTree Digital",
+    "year": 2025,
+    "assets": 57132608.196388826,
+    "liabilities": 26976802.0549746,
+    "equity": 30155806.141414225
+  }
+}

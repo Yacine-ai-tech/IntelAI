@@ -1,0 +1,23 @@
+[
+  {
+    "from": "reports@neuralnetlabs.com",
+    "to": "insights@company.com",
+    "subject": "Revenue Report",
+    "body": "Data for NeuralNet Labs",
+    "date": "2026-02-27T15:02:03.659225"
+  },
+  {
+    "from": "reports@neuralnetlabs.com",
+    "to": "insights@company.com",
+    "subject": "Team Update",
+    "body": "Data for NeuralNet Labs",
+    "date": "2026-02-27T15:02:03.659234"
+  },
+  {
+    "from": "reports@neuralnetlabs.com",
+    "to": "insights@company.com",
+    "subject": "Efficiency Alert",
+    "body": "Data for NeuralNet Labs",
+    "date": "2026-02-27T15:02:03.659237"
+  }
+]
