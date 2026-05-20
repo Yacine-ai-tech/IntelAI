@@ -1,0 +1,38 @@
+groups:
+- name: OmniIntelOS
+  rules:
+  - alert: HighErrorRate
+    expr: rate(error_count_total[5m]) > 0.05
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "High error rate detected ({{ $value }})"
+      description: "API server is experiencing high error rate (> 5%)."
+
+  - alert: HighRequestLatency
+    expr: rate(request_latency_seconds_sum[5m]) / rate(request_latency_seconds_count[5m]) > 0.5
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High request latency ({{ $value }}s)"
+      description: "Average API latency is above 500ms for more than 2 minutes."
+
+  - alert: HighSystemCPU
+    expr: system_cpu_percent > 85
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High CPU usage ({{ $value }}%)"
+      description: "System CPU usage is consistently above 85%."
+
+  - alert: HighAIModelsUsage
+    expr: rate(ai_token_usage_total[10m]) > 1000
+    for: 5m
+    labels:
+      severity: info
+    annotations:
+      summary: "High AI Token Usage"
+      description: "AI Token consumption is unusually high."

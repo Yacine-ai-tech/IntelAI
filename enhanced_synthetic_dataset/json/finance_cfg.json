@@ -1,0 +1,10 @@
+{
+  "domain": "Finance",
+  "metrics": [
+    "revenue",
+    "gross_margin",
+    "ebitda",
+    "operating_expenses",
+    "cash_on_hand"
+  ]
+}

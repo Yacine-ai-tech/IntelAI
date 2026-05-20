@@ -1,0 +1,47 @@
+services:
+  # Development overrides: mount local source and run live-reload servers
+  fastapi:
+    volumes:
+      - ./src:/app/src:cached
+      - ./main.py:/app/main.py:ro
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./uploads:/app/uploads
+    command: uvicorn src.api.server_v2:app --host 0.0.0.0 --port 8000 --reload --reload-dir /app/src
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  frontend:
+    image: node:20
+    working_dir: /app
+    volumes:
+      - ./frontend:/app:cached
+      - /app/node_modules
+    command: sh -c "npm ci --silent && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  omnitel-ocr:
+    volumes:
+      - ./src/services/ocr:/app/src/services/ocr:cached
+    command: uvicorn src.services.ocr.main:app --host 0.0.0.0 --port 8001 --reload --reload-dir /app/src/services/ocr
+    ports:
+      - "8001:8001"
+
+  omnitel-voice:
+    volumes:
+      - ./src/services/voice:/app/src/services/voice:cached
+    command: uvicorn src.services.voice.main:app --host 0.0.0.0 --port 8002 --reload --reload-dir /app/src/services/voice
+    ports:
+      - "8002:8002"
+
+volumes:
+  # keep default volumes declared in compose file
+  prometheus-data: {}
+  grafana-data: {}
+  n8n-data: {}
+  postgres-data: {}
+  chroma-data: {}
+  # grafana-data already defined above

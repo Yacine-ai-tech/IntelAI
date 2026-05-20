@@ -1,0 +1,19 @@
+{
+  "p_l": {
+    "company": "CarePath Digital",
+    "year": 2024,
+    "revenue": 29015960.376010515,
+    "cogs": 1670975.7612707536,
+    "opex": 5338102.62423514,
+    "gross_profit": 27344984.61473976,
+    "ebitda": 22006881.990504622,
+    "net_income": 17385436.772498652
+  },
+  "balance_sheet": {
+    "company": "CarePath Digital",
+    "year": 2024,
+    "assets": 63376298.818476506,
+    "liabilities": 10590813.565177592,
+    "equity": 52785485.253298916
+  }
+}

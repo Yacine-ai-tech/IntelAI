@@ -1,0 +1,19 @@
+{
+  "p_l": {
+    "company": "ServerLess Tech",
+    "year": 2025,
+    "revenue": 14035620.493288586,
+    "cogs": 8564779.264808279,
+    "opex": 8128046.043672585,
+    "gross_profit": 5470841.228480307,
+    "ebitda": -2657204.8151922775,
+    "net_income": -2099191.8040018994
+  },
+  "balance_sheet": {
+    "company": "ServerLess Tech",
+    "year": 2025,
+    "assets": 88940598.34858932,
+    "liabilities": 25866848.257157378,
+    "equity": 63073750.09143194
+  }
+}

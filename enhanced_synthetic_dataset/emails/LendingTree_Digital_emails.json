@@ -1,0 +1,23 @@
+[
+  {
+    "from": "reports@lendingtreedigital.com",
+    "to": "insights@company.com",
+    "subject": "Revenue Report",
+    "body": "Data for LendingTree Digital",
+    "date": "2026-02-27T15:02:03.659580"
+  },
+  {
+    "from": "reports@lendingtreedigital.com",
+    "to": "insights@company.com",
+    "subject": "Team Update",
+    "body": "Data for LendingTree Digital",
+    "date": "2026-02-27T15:02:03.659586"
+  },
+  {
+    "from": "reports@lendingtreedigital.com",
+    "to": "insights@company.com",
+    "subject": "Efficiency Alert",
+    "body": "Data for LendingTree Digital",
+    "date": "2026-02-27T15:02:03.659589"
+  }
+]

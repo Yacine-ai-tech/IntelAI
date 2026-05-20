@@ -1,0 +1,24 @@
+{
+  "KPIs": [
+    {
+      "Domain": "Finance",
+      "Metric": "revenue",
+      "Value": 461199.80808936205
+    },
+    {
+      "Domain": "Finance",
+      "Metric": "gross_margin",
+      "Value": 76502.19592350072
+    },
+    {
+      "Domain": "Growth",
+      "Metric": "mrr",
+      "Value": 617682.4694945758
+    },
+    {
+      "Domain": "Growth",
+      "Metric": "arr",
+      "Value": 378385.6116890768
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "p_l": {
+    "company": "SecureShield Corp",
+    "year": 2024,
+    "revenue": 26248027.651195776,
+    "cogs": 13177515.468696851,
+    "opex": 5510287.515808921,
+    "gross_profit": 13070512.182498924,
+    "ebitda": 7560224.666690003,
+    "net_income": 5972577.486685103
+  },
+  "balance_sheet": {
+    "company": "SecureShield Corp",
+    "year": 2024,
+    "assets": 68324176.13230312,
+    "liabilities": 8782300.950537626,
+    "equity": 59541875.1817655
+  }
+}

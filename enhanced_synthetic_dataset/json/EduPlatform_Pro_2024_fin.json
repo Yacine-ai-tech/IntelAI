@@ -1,0 +1,19 @@
+{
+  "p_l": {
+    "company": "EduPlatform Pro",
+    "year": 2024,
+    "revenue": 35017677.44599534,
+    "cogs": 3954342.018504742,
+    "opex": 7584157.920970948,
+    "gross_profit": 31063335.427490596,
+    "ebitda": 23479177.506519645,
+    "net_income": 18548550.23015052
+  },
+  "balance_sheet": {
+    "company": "EduPlatform Pro",
+    "year": 2024,
+    "assets": 85090833.8910323,
+    "liabilities": 20025385.85719217,
+    "equity": 65065448.03384012
+  }
+}

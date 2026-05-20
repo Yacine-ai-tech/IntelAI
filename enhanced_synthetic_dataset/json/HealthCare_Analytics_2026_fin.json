@@ -1,0 +1,19 @@
+{
+  "p_l": {
+    "company": "HealthCare Analytics",
+    "year": 2026,
+    "revenue": 39186755.95967136,
+    "cogs": 5443003.679122345,
+    "opex": 9942573.769517299,
+    "gross_profit": 33743752.28054902,
+    "ebitda": 23801178.51103172,
+    "net_income": 18802931.02371506
+  },
+  "balance_sheet": {
+    "company": "HealthCare Analytics",
+    "year": 2026,
+    "assets": 38733721.83138414,
+    "liabilities": 10509245.316926792,
+    "equity": 28224476.514457345
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "domain": "People",
+  "metrics": [
+    "headcount",
+    "turnover_rate",
+    "engagement_score"
+  ]
+}

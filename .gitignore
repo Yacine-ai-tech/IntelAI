@@ -1,0 +1,47 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Env
+.env
+*.env
+
+# Data / runtime
+chroma_db/
+*.db
+*.sqlite
+uploads/
+logs/
+*.log
+tmp/
+test-results/
+
+# Large data (keep schema, not runtime data)
+enhanced_synthetic_dataset/pdf/
+enhanced_synthetic_dataset/images/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+*.Zone.Identifier
+
+# Frontend build artifacts
+frontend/node_modules/
+frontend/dist/
+
+# Secrets
+secrets.md
+*.pem
+*.key

@@ -1,0 +1,19 @@
+{
+  "p_l": {
+    "company": "SolarTech Innovations",
+    "year": 2024,
+    "revenue": 12055995.976208052,
+    "cogs": 12691677.568786936,
+    "opex": 7242076.7127999095,
+    "gross_profit": -635681.5925788842,
+    "ebitda": -7877758.305378794,
+    "net_income": -6223429.061249248
+  },
+  "balance_sheet": {
+    "company": "SolarTech Innovations",
+    "year": 2024,
+    "assets": 63813924.09317586,
+    "liabilities": 8559144.55601485,
+    "equity": 55254779.53716101
+  }
+}
