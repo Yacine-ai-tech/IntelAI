@@ -52,3 +52,6 @@ src/**/__pycache__
 
 # Windows artifacts
 *:Zone.Identifier
+
+# Week 0 working notes (not committed)
+STATUS.md
