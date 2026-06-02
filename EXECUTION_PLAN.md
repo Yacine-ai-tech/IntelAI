@@ -5,6 +5,82 @@
 
 ---
 
+# ENVIRONMENT MODEL — Lightning AI Remote Dev (READ FIRST)
+
+**Why this exists:** the local laptop is **2-core / 8 GB RAM**. It cannot build or run this stack (torch, sentence-transformers, FlagEmbedding/`bge-large` ~1.3 GB, chromadb, crewai, dspy, marker/surya OCR, whisperx, prefect, dlt). **All heavy work runs on Lightning AI.** The laptop only edits, browses, runs git, and at most runs the (light) React dev server.
+
+## Hard rules
+- **One Lightning Studio per repo (6 Studios).** Never put two repos in one Studio. Free plan = **one Studio active at a time**; the other five sleep — their files *and installed packages* persist for free ("install once, use forever").
+- **No venv, no conda env on Lightning.** One repo per Studio means zero dependency-conflict risk, so isolation is unnecessary. Install each repo's deps straight into the Studio's base Python env: `pip install -r requirements.txt`. This is exactly why the free-plan "can't create a venv" limit **does not matter** — the Studio boundary *is* the isolation.
+- **Docker: laptop NO, Studio YES.** Never `docker build`/`docker run` on the 2-core/8GB laptop. Lightning Studios **do support Docker**, so when you need a container (build the image, run it, `docker push` to DockerHub), do it **inside the Studio** — verify once with `docker --version`. If a given Studio doesn't have Docker, fall back to the Railway / GitHub-Actions builders (both build images without any local Docker). The simple no-venv base-env install is still the default for day-to-day dev; Docker-in-Studio is for image builds, publishing, and prod-parity checks.
+- **Laptop stays light.** Laptop runs: VS Code (Remote-SSH), git, browser, and at most ONE React dev server (`npm run dev`). It **NEVER** runs: pip install of ML deps, torch, uvicorn-with-models, Whisper, or Docker.
+
+## The split
+```
+LAPTOP (2 core / 8 GB)            LIGHTNING STUDIO (the one that's awake)
+─────────────────────────        ───────────────────────────────────────
+VS Code + Remote-SSH             Python 3.11 (base env, no venv)
+git                              FastAPI / uvicorn  (--host 0.0.0.0)
+browser (localhost:5173)         all ML: torch, embeddings, whisper, OCR
+.env editing                     model downloads (persist on Studio disk)
+ONE React dev server (Vite)      DB clients (→ hosted Postgres)
+        │
+        └────────── SSH (VS Code Remote-SSH auto-forwards ports) ──────────┘
+```
+
+## Per-repo Studio map (clone ONLY that one repo into its Studio)
+| Studio | Repo | Run command (inside the Studio) | Port |
+|---|---|---|---|
+| 1 | OmniIntelOS | `python -m uvicorn src.api.server_v2:app --host 0.0.0.0 --port 8000 --reload` | 8000 |
+| 2 | DocIntel | `uvicorn api:app --host 0.0.0.0 --port 8001 --reload` | 8001 |
+| 3 | VoiceFlow | `uvicorn api:app --host 0.0.0.0 --port 8002 --reload` | 8002 |
+| 4 | RAGeval | `uvicorn api:app --host 0.0.0.0 --port 8003 --reload` | 8003 |
+| 5 | StreamPulse | `uvicorn api:app --host 0.0.0.0 --port 8004 --reload` | 8004 |
+| 6 | AgentKit | `python mcp_server.py` (serve over SSE — see "AgentKit MCP" note) | 8005 |
+
+## Frontend wiring (zero code changes needed)
+The React app runs on the **laptop**. The Vite dev proxy already targets `localhost:8000` (`frontend/vite.config.js`), `api.js` uses the relative `/api/v1`, and the data-ingestion default is `http://localhost:8000/api/v1`. So you just **forward the Studio's backend port to the laptop** and everything resolves with no env edits:
+- VS Code Remote-SSH auto-forwards ports, **or** run `ssh -L 8000:localhost:8000 <studio-ssh-host>`.
+- Then on the laptop: `cd OmniIntelOS/frontend && npm run dev` → open `http://localhost:5173`.
+- Only OmniIntelOS has a frontend today; the RAGeval & StreamPulse dashboards are built in their phases and run the same way (forward 8003 / 8004).
+
+**Two-clone workflow (repos that have a frontend).** Node lives on the laptop, not the Studio. So you develop/run the **frontend in the laptop's local clone** and the **backend in the Studio** (edited via Remote-SSH). Both clones push to the same GitHub repo — git keeps them in sync. Backend-only repos (DocIntel, VoiceFlow, AgentKit) are edited entirely in their Studio.
+
+## Databases (the one thing a sleeping Studio can't host well)
+Don't run Postgres inside a free Studio (it sleeps). Use **one free serverless Postgres** (Neon free tier — includes `pgvector`) where SQL is actually required, and `.env` points at it:
+- **OmniIntelOS** → **requires** Postgres at runtime → `POSTGRES_URL=<neon url>`.
+- **AgentKit** → uses Postgres (reads OmniIntelOS's KPI data) but has a stub-mode fallback for demos → same `<neon url>`, or leave blank to run stubbed.
+- **StreamPulse** → **SQLite by default** (`store.py` → `streampulse.db`); `POSTGRES_URL` is optional and unused unless you wire it — no Neon needed for dev.
+- **RAGeval** → SQLite default (`RAGEVAL_STORE=sqlite`) — no DB server needed.
+- **DocIntel, VoiceFlow** → no database.
+
+State then survives Studio sleeps and is shared across machines. (Alternative, since Docker works in Studios: run `docker run postgres:16` inside the OmniIntelOS Studio — but that DB is only reachable while *that* Studio is awake, so it won't serve StreamPulse/AgentKit when they're the active Studio. Neon is the simpler shared default.)
+
+## Local-model paths (Ollama) — not available on free Studios
+Don't rely on the optional Ollama paths — they need a separate always-on server and are slow on a free CPU Studio: `LLM_LOCAL=ollama/...` (OmniIntelOS, AgentKit), DocIntel's `LLM_VISION_LOCAL=ollama/llama3.2-vision`, and `OLLAMA_BASE_URL`. Use the **API providers**, which are already the defaults: Groq (`LLM_DEFAULT`), Anthropic (`LLM_REASONING` / vision), OpenAI. Leave the Ollama vars blank. (If you ever truly need a local model, Docker works in the Studio — `docker run ollama/ollama` — ideally on a GPU instance; but no deliverable requires it.)
+
+## AgentKit MCP server — run it remote, bridge Claude Desktop to it
+AgentKit's MCP server shares the heavy BI services, so it runs in **its Studio**, not as a local stdio subprocess on the laptop. Serve it over HTTP/SSE in the Studio and bridge Claude Desktop (laptop) to the forwarded port:
+- In the Studio: run the server with FastMCP **SSE transport on port 8005** (`mcp.run(transport="sse", host="0.0.0.0", port=8005)`).
+- Forward 8005 to the laptop (VS Code auto-forward, or `ssh -L 8005:localhost:8005 <studio>`).
+- In `claude_desktop_config.json` (on the laptop) point the server at the forwarded URL via the tiny `npx mcp-remote http://localhost:8005/sse` stdio→SSE proxy — the heavy server stays in the Studio.
+
+## Daily workflow
+1. Wake the Studio for the repo you're working on (let the other 5 sleep).
+2. VS Code → Remote-SSH → that Studio. Edit files there; commit/push from there (`develop` branch).
+3. In the Studio terminal: run the repo's uvicorn/MCP command (deps already in base env).
+4. Port-forward is automatic (VS Code) or via `ssh -L`.
+5. If the repo has a frontend: on the laptop run `npm run dev`, open `localhost:5173`.
+6. Switching projects: stop this Studio, start the next repo's Studio, reconnect VS Code. **No reinstalling** — packages persisted.
+
+## How this rewrites the steps below
+Throughout this plan:
+- `python -m venv .venv && source .venv/bin/activate` (and bare `source .venv/bin/activate`) → on Lightning this means **"open this repo's Studio"**. There is no venv; deps already live in the Studio's base env.
+- `docker build …` → run it **inside the Studio** (Docker is supported there), or defer to the Railway / GitHub-Actions builder. Never on the laptop.
+- "install in a clean/fresh venv" (PyPI publish verification) → use a **fresh throwaway Studio**, `pip install --target /tmp/verify <pkg>`, or a quick `docker run python:3.11-slim` in the Studio.
+
+---
+
 # WEEK 0: Repository Splitting (Days 1–7)
 
 ## Day 1: Pre-Split Audit + Cleanup (6 hours total)
@@ -45,8 +121,7 @@
 - Task 2a: Open NEW Claude Code session (clean context). Do NOT reuse main session.
 - Task 2b: Copy ONLY the DocIntel section from Section 30 (PROJECT 3 block, ~400 lines)
 - Task 2c: Provide the PROJECT 3 prompt to the new session. Let it create docintel/ and all files.
-- Task 2d: Once done, cd docintel and run:
-  - python -m venv .venv && source .venv/bin/activate
+- Task 2d: Once done, in the **DocIntel Studio** (no venv — install into base env) run:
   - pip install -r requirements.txt
   - python -c "from services.ocr_enhancement import *"
   - python -c "from services.llm_extractor import LLMExtractor"
@@ -93,7 +168,7 @@
 - Task 3b: Open NEW session for Project 2 (AgentKit). 
   - Copy PROJECT 2 block (~300 lines)
   - Let it create agentkit/ directory and all files
-  - Verify: cd agentkit && python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && python -c "import mcp_server"
+  - Verify (in the AgentKit Studio, base env — no venv): pip install -r requirements.txt && python -c "import mcp_server"
   - Verify: python mcp_server.py (should start and list 6 tools)
 
 - Task 3c: Open NEW session for Project 3 (DocIntel) — already mostly done Day 2, but now full version
@@ -103,26 +178,26 @@
 - Task 3d: Open NEW session for Project 4 (VoiceFlow)
   - Copy PROJECT 4 block (~350 lines)
   - Create voiceflow/ directory
-  - Verify: pip install -r requirements.txt && python -c "from faster_whisper import WhisperModel"
+  - Verify (in the VoiceFlow Studio, base env): pip install -r requirements.txt && python -c "from faster_whisper import WhisperModel"
 
 - Task 3e: Open NEW session for Project 5 (RAGeval)
   - Copy PROJECT 5 block (~350 lines)
   - Create rageval/ directory
-  - Verify: pip install -r requirements.txt && python -c "from sentence_transformers import SentenceTransformer"
+  - Verify (in the RAGeval Studio, base env): pip install -r requirements.txt && python -c "from sentence_transformers import SentenceTransformer"
 
 **Afternoon Session (3h):**
 - Task 3f: Cross-project sanity checks (all 6 repos):
   - Confirm no project imports from another project (grep -r "from agentkit\|from docintel" etc in each project dir — should find nothing)
   - Confirm every project has: README.md, requirements.txt, Dockerfile, .env.example, .gitignore
-  - Run `docker build -t <name>:test .` in each project directory (should not fail)
+  - Don't `docker build` on the laptop. If you want to build now, do it **inside the project's Studio** (`docker build -t <name>:test .`); otherwise just confirm the Dockerfile COPY paths reference files that exist and let the build happen at deploy time (Railway/Actions). Image builds happen in the Studio or on a remote builder — never on the laptop.
   - Use pip-compile or similar to check for unpinned versions
   - Write a 3-line summary in plain English of what each project does
     - If you can't write 3 clear lines, the README needs work — flag for that phase
 
 **End of Day Checkpoint:**
-- All 6 directories exist at ~/projects/
-- All 6 pass basic import/startup tests
-- All 6 have Dockerfile that builds
+- All 6 directories exist (each in its own Lightning Studio; laptop holds code-only clones)
+- All 6 pass basic import/startup tests (run inside their Studio)
+- All 6 have a Dockerfile whose COPY paths resolve (build it in the Studio or on the deploy builder — never on the laptop)
 - You have written what each project does in your own words
 - No cross-project imports exist
 
@@ -221,38 +296,38 @@ For each repo:
 
 ---
 
-## Day 6: Local Environment Hygiene + IDE Workspace (6 hours total)
+## Day 6: Remote Environment Setup (Lightning Studios) + IDE Workspace (6 hours total)
 
-**Morning Session (3h):**
+> See **ENVIRONMENT MODEL** at the top of this doc. Heavy deps live in each repo's Lightning Studio (base env, no venv); the laptop stays light.
 
-- Task 6a: Decide on single Python version (recommend 3.11). Install via pyenv if needed.
-- Task 6b: For each project:
-  - cd <project>
-  - rm -rf .venv (clean slate)
-  - python3.11 -m venv .venv
-  - source .venv/bin/activate
-  - pip install -U pip wheel setuptools
-  - pip install -r requirements.txt
-  - Document this in each project's CONTRIBUTING.md or README "Quick Start"
-- Task 6c: If using VS Code, create a <name>.code-workspace file at the parent level pointing to all 6 directories
-- Task 6d: Verify all 6 .venv directories work and have correct deps installed
+**Morning Session (3h) — provision the 6 Studios:**
 
-**Afternoon Session (3h):**
+- Task 6a: Create **6 Lightning Studios**, one per repo (OmniIntelOS, DocIntel, VoiceFlow, RAGeval, StreamPulse, AgentKit). Keep only ONE awake at a time (free plan). Confirm each Studio's Python is 3.11.
+- Task 6b: In **each** Studio, clone ONLY that one repo and install its deps into the **base env (no venv)**:
+  - `git clone https://github.com/<you>/<repo>.git && cd <repo>`
+  - `pip install -U pip wheel setuptools`
+  - `pip install -r requirements.txt`
+  - If `requirements-ml.txt` exists (DocIntel, VoiceFlow), install it here too — these big downloads land on the Studio disk and persist across sleeps.
+  - Helper: `bash setup-new-laptop.sh studio <repo>` does steps b automatically.
+- Task 6c: Provision **one free serverless Postgres** (Neon free tier — includes `pgvector`). Put its URL in `POSTGRES_URL` for the OmniIntelOS, StreamPulse, and AgentKit Studios. RAGeval stays SQLite; DocIntel/VoiceFlow need no DB.
+- Task 6d: On the **laptop**, install VS Code + the **Remote-SSH** + Python extensions. Connect to the awake Studio; confirm ports auto-forward (or use `ssh -L 8000:localhost:8000 <studio-host>`). Optionally make a `<name>.code-workspace` per Studio.
 
-- Task 6e: For each project, copy .env.example → .env and fill in real values (GROQ_API_KEY, POSTGRES_URL, etc.)
-  - Verify NONE of these .env files are committed: git status should NOT list them
-- Task 6f: Create a top-level secrets.md (outside any repo) with all keys and URLs you're using locally
-  - This is your single source of truth when something breaks at 11pm
-  - Keep this file safe, NOT in any git repo
-- Task 6g: Run each FastAPI project once locally end-to-end with real keys:
-  - cd <project> && source .venv/bin/activate && uvicorn api:app --port 8001 --reload
-  - Confirm the server starts and responds to /health
+**Afternoon Session (3h) — secrets + smoke each Studio:**
+
+- Task 6e: In each Studio, copy `.env.example` → `.env` and fill real values (GROQ_API_KEY, POSTGRES_URL, etc.).
+  - Verify NONE of these `.env` files are committed: `git status` should NOT list them.
+- Task 6f: Create a top-level `secrets.md` (outside any repo, kept on the laptop) with all keys and URLs — your single source of truth when something breaks at 11pm. NOT in any git repo.
+- Task 6g: Run each FastAPI project once **in its Studio** end-to-end with real keys (deps already in base env):
+  - `cd <repo> && uvicorn api:app --host 0.0.0.0 --port <repo-port> --reload` (OmniIntelOS: `python -m uvicorn src.api.server_v2:app --host 0.0.0.0 --port 8000 --reload`; AgentKit: `python mcp_server.py`)
+  - Forward the port and confirm `/health` responds from the laptop browser.
 
 **End of Day Checkpoint:**
-- All 6 projects have working .venv (Python 3.11)
-- All 6 have working .env (not committed)
-- Each FastAPI project can start with uvicorn in <30 seconds
-- secrets.md exists somewhere safe (NOT in any repo)
+- 6 Lightning Studios exist, one repo each, deps installed in base env (no venv)
+- One hosted Postgres provisioned; `POSTGRES_URL` set where needed
+- VS Code Remote-SSH connects to a Studio and forwards its port
+- All 6 have working `.env` (not committed)
+- Each FastAPI project starts with uvicorn in its Studio and answers `/health`
+- secrets.md exists on the laptop (NOT in any repo)
 
 ---
 
@@ -290,7 +365,7 @@ For each repo:
 - 6 standalone project directories exist
 - All 6 have passing smoke tests
 - All 6 have private GitHub repos with develop branch
-- All 6 have working .venv + .env + Dockerfile that builds
+- All 6 have a Lightning Studio with deps installed (base env, no venv) + working .env + a Dockerfile reserved for deploy
 - All 6 have CI configured (may be failing for known reasons)
 - Each project has STATUS.md with known gaps
 - OmniIntelOS stale docs deleted, README updated
@@ -707,7 +782,7 @@ QUALITY REQUIREMENTS FOR EACH PROJECT:
 - requirements.txt is minimal (only what that project needs)
 - README is accurate (only claim what code actually does)
 - .env.example has every required env var with a placeholder
-- Dockerfile builds without error
+- Dockerfile is valid (COPY paths resolve) — build it in the Studio (Docker is supported there) or on Railway/GitHub Actions, never on the laptop
 - pytest tests/ has at least 5 smoke tests per project
 
 DO NOT:
@@ -761,10 +836,11 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 - Confirm CI is green on develop branch
 
 **Day 12: Railway Deploy + Smoke Test**
-- Deploy to Railway (or Fly.io if Railway pricing exceeds budget)
-- Configure env vars in Railway dashboard
-- Set up Railway PostgreSQL add-on (or Supabase free tier)
-- Run db migrations against production DB
+- Deploy to Railway (or Fly.io if Railway pricing exceeds budget). **Railway builds the image from the Dockerfile on its own builders — no local Docker needed** (push the repo / connect GitHub; `railway.toml` already sets the build + start command).
+- Configure env vars in Railway dashboard (same keys as the Studio `.env`)
+- Database: point `POSTGRES_URL` at the **Neon** project you already use in dev (or add a Railway/Supabase Postgres add-on for prod). One DB across dev + prod is fine to start.
+- Run db migrations against production DB (from the OmniIntelOS Studio: `alembic upgrade head` with the prod `POSTGRES_URL`)
+- The React frontend deploys separately (Vercel/Netlify free, or Railway static) — build runs on their builder, not the laptop. Set its API base to the deployed backend URL.
 - Smoke test every endpoint in production:
   - /health, /api/docs, /auth/login, /chat (with persona), /kpis, /insights/health, /forecast, WebSocket /ws/chat
 - Document any prod-only failures, fix them
@@ -893,16 +969,16 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
   - pyproject.toml
   - README.md ("Drop-in 9-persona prompts for any LangChain RAG")
   - tests/test_templates.py, tests/test_router.py
-- Run pip install -e . locally — verify import works
+- In the OmniIntelOS Studio: `pip install -e .` — verify import works (no venv; base env is fine)
 
 **Day 25: Publish omnismart-personas to PyPI**
 - Create PyPI account if you don't have one (verify email)
-- Install build tools: pip install build twine
+- Install build tools (in the Studio): pip install build twine
 - Build: python -m build
 - Test upload: python -m twine upload --repository testpypi dist/*
-- Install from test PyPI in clean venv — verify it works
+- Verify the install in **isolation without a venv** (venv is blocked on the free plan): `pip install --target /tmp/verify -i https://test.pypi.org/simple/ omnismart-personas` then `PYTHONPATH=/tmp/verify python -c "import omnismart_personas"` — or test in a fresh throwaway Studio.
 - Upload to real PyPI: python -m twine upload dist/*
-- Verify: pip install omnismart-personas (in clean venv anywhere)
+- Verify: `pip install --target /tmp/verify2 omnismart-personas` (or a fresh Studio)
 - Add PyPI badge to README
 - Tweet/post about it (1 short sentence + link, no hype)
 
@@ -941,7 +1017,7 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 ## Week 4: Core Build (api.py + LLM Extractor + Batch) — Days 28-32
 
 **Day 28: Verify Extracted Repo + Build api.py**
-- cd docintel && source .venv/bin/activate
+- Open the **DocIntel Studio** and `cd docintel` (deps already in base env — no venv)
 - Re-read STATUS.md (written Week 0 Day 4)
 - Run pytest tests/ — confirm baseline passes
 - Build api.py (FastAPI app) with endpoints:
@@ -994,7 +1070,7 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 - Profile slow spots (likely Tesseract OCR or LLM call)
 - Add response caching for repeat documents (hash file → check cache)
 - Add request logging (every /process call logged to file or DB)
-- Confirm Dockerfile builds cleanly: docker build -t docintel:dev .
+- Build the Dockerfile **in the DocIntel Studio** (`docker build -t docintel:dev .`) to confirm the Tesseract/poppler apt layers and COPY paths work — never on the laptop. (No Docker in your Studio? Lint with `hadolint` and let Railway/Actions build it on Day 38.)
 
 **Day 32: Tests + CI**
 - Expand tests/:
@@ -1006,7 +1082,7 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 - Run pytest, fix failures
 - CI green on develop branch
 
-**Week 4 Checkpoint:** api.py exposes all 7 endpoints (2xx for valid inputs). LLMExtractor handles 4 doc types. BatchProcessor handles 5-doc batch. Demo works locally with 3+ PDFs. 15+ tests pass. Docker build succeeds.
+**Week 4 Checkpoint:** api.py exposes all 7 endpoints (2xx for valid inputs). LLMExtractor handles 4 doc types. BatchProcessor handles 5-doc batch. Demo works (frontend on laptop → backend in Studio). 15+ tests pass. Docker image builds in the Studio (or on Railway/Actions) — never on the laptop.
 
 ## Week 5: Eval Dataset + Prompt Iteration — Days 33-37
 
@@ -1073,8 +1149,8 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 ## Week 6: Ship + Blog Post 2 + OCR-Niche Proposals — Days 38-44
 
 **Day 38: Deploy DocIntel + Demo Recording**
-- Deploy DocIntel to Railway or Fly.io (Tesseract install in Dockerfile may surprise — test on Day 33!)
-- Configure GROQ_API_KEY env var
+- Deploy DocIntel to Railway or Fly.io. **The platform builds the image from the Dockerfile on its builders — no local Docker** (the Tesseract/poppler apt installs run there; this is the first time the image is actually built, so watch the build log).
+- Configure GROQ_API_KEY / ANTHROPIC_API_KEY env vars (use the Anthropic API vision path, not Ollama — see Environment Model)
 - Smoke test all endpoints in production
 - Record 90-second Loom demo:
   - 0:00–0:10: "DocIntel — drag a PDF, get structured JSON in <1 second"
@@ -1085,10 +1161,12 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 - Pre-review with 3 reviewers before finalizing
 
 **Day 39: Publish to DockerHub + GitHub Public**
-- Build and push Docker image:
-  - docker build -t <yourname>/docintel:latest -t <yourname>/docintel:0.1.0 .
-  - docker push <yourname>/docintel:latest && docker push <yourname>/docintel:0.1.0
-- Verify pullable: docker pull <yourname>/docintel:latest
+- Build and push the Docker image **from the DocIntel Studio** (Docker is supported there; never on the laptop):
+  - `docker login`
+  - `docker build -t <yourname>/docintel:latest -t <yourname>/docintel:0.1.0 .`
+  - `docker push <yourname>/docintel:latest && docker push <yourname>/docintel:0.1.0`
+  - (No Docker in your Studio? Add `.github/workflows/docker.yml` with `docker/build-push-action@v6` on tag `v*` + `DOCKERHUB_USERNAME`/`DOCKERHUB_TOKEN` secrets and push a tag to build on GitHub's runners.)
+- Verify pullable: `docker pull <yourname>/docintel:latest` (from the Studio or any Docker host).
 - Make GitHub repo public: gh repo edit <yourname>/docintel --visibility public
 - Polish README:
   - Title + one-line description
@@ -1145,7 +1223,7 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 - Open agentkit/ — re-read STATUS.md from Week 0 Day 4
 - Write Phase 3 TODO.md in agentkit/
 - Confirm fastmcp is in requirements.txt (was installed Week 0?)
-- Pre-stage MCP testing: install Claude Desktop locally if not already
+- Pre-stage MCP testing: install **Claude Desktop on the laptop** (it's a light desktop app). The MCP server itself runs in the AgentKit Studio — you'll bridge Claude Desktop to it over SSE (see Day 48 + the "AgentKit MCP" note in the Environment Model). Also `npm i -g mcp-remote` (or use `npx`) for the stdio→SSE bridge.
 
 **Day 44: Buffer + Continue Volume**
 - Fix anything broken from the week
@@ -1164,12 +1242,12 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 ## Week 7: MCP Server Build (6 Tools) — Days 45-49
 
 **Day 45: Verify Extracted Repo + Install fastmcp**
-- cd agentkit && source .venv/bin/activate
+- Open the **AgentKit Studio** and `cd agentkit` (deps already in base env — no venv)
 - Read STATUS.md (Week 0)
 - pip install fastmcp (>= 0.4.0)
 - Verify install: python -c "from fastmcp import FastMCP"
 - Read FastMCP docs (15 min): https://github.com/jlowin/fastmcp
-- Build mcp_server.py skeleton with 6 @mcp.tool() decorators + if __name__ == "__main__": mcp.run()
+- Build mcp_server.py skeleton with 6 @mcp.tool() decorators. Make the transport configurable so it runs **over SSE in the Studio**: `if __name__ == "__main__": mcp.run(transport=os.getenv("MCP_TRANSPORT","sse"), host="0.0.0.0", port=int(os.getenv("MCP_PORT","8005")))` (stdio stays available for quick local REPL checks).
 
 **Day 46: Implement Tools 1-3**
 - Tool 1: query_kpis(domain, period_from, period_to, metric_filter, limit)
@@ -1196,12 +1274,12 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
   - Synthesizes into: {summary, health_score, key_metrics, anomalies, top_growth}
 - Run mcp_server.py — confirm server starts and lists 6 tools
 
-**Day 48: Connect to Claude Desktop Locally**
-- Open Claude Desktop config (~/.config/Claude/claude_desktop_config.json on Linux)
-- Add AgentKit MCP server:
-  - command: python
-  - args: [/path/to/agentkit/mcp_server.py]
-  - env: POSTGRES_URL, GROQ_API_KEY
+**Day 48: Connect Claude Desktop (laptop) to the remote MCP server (Studio)**
+- In the AgentKit Studio: start the server over SSE — `MCP_TRANSPORT=sse MCP_PORT=8005 python mcp_server.py` (set POSTGRES_URL + GROQ_API_KEY in the Studio `.env`).
+- Forward the port to the laptop: VS Code Remote-SSH auto-forwards 8005, or run `ssh -L 8005:localhost:8005 <studio-host>`.
+- Open Claude Desktop config on the laptop (~/.config/Claude/claude_desktop_config.json on Linux). Add the AgentKit server via the stdio→SSE bridge (heavy server stays remote):
+  - command: npx
+  - args: ["-y", "mcp-remote", "http://localhost:8005/sse"]
 - Restart Claude Desktop
 - Verify: Claude sees the 6 tools (MCP indicator in UI)
 - Test through Claude:
@@ -1368,14 +1446,14 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 ## Week 10: Voice Service + Meeting Analyzer — Days 62-66
 
 **Day 62: Verify Whisper Install + Voice Service**
-- cd voiceflow && source .venv/bin/activate
+- Open the **VoiceFlow Studio** and `cd voiceflow` (deps already in base env — no venv)
 - Re-read STATUS.md
 - pip install -r requirements.txt (includes faster-whisper)
 - python -c "from faster_whisper import WhisperModel; print('OK')"
-- Download base model: WhisperModel("base", device="cpu", compute_type="int8") (~150MB first time)
+- Download base model: WhisperModel("base", device="cpu", compute_type="int8") (~150MB first time — lands on the Studio disk and persists across sleeps; never on the laptop)
 - Test transcribe on 30-second audio sample
 - Measure latency. Aim for <2x realtime (30s audio → <60s transcribe)
-- If bad: try "tiny" model first; consider GPU for production
+- If bad: try "tiny" model first. For speed, **switch this Studio to a GPU instance** (Lightning free credits) and set `WHISPER_DEVICE=cuda` — dev only; production runs CPU on Railway.
 
 **Day 63: Build services/voice_service.py**
 - Implement transcribe_audio(audio_bytes, language="auto") → dict
@@ -1416,7 +1494,7 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
   - test_pipeline.py: 2 end-to-end tests
 - Run pytest, fix failures
 - Polish: error handling for unsupported audio formats
-- Confirm Dockerfile builds (Whisper model bundled or downloaded at start?)
+- Build the Dockerfile **in the VoiceFlow Studio** (`docker build -t voiceflow:dev .`) — decide now: bundle the Whisper model into the image, or download at start (see Day 69). Never build on the laptop.
 
 **Week 10 Checkpoint:** Whisper transcription works on 3 test files. MeetingAnalyzer + SalesCallAnalyzer return well-structured JSON. All 7 endpoints respond correctly. Tests pass.
 
@@ -1444,8 +1522,8 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 - Iterate based on what was confusing
 
 **Day 69: Deploy**
-- Deploy VoiceFlow to Railway or Fly.io
-- IMPORTANT: Whisper model downloads on first container start. Pre-bake into Docker image OR persistent volume
+- Deploy VoiceFlow to Railway or Fly.io (the platform builds the image on its builders; or push the image you built+pushed from the Studio on Day 66)
+- IMPORTANT: Whisper model downloads on first container start. Pre-bake into the Docker image (build it in the Studio) OR mount a persistent volume
   - Cold-start without pre-baked model = 60+ seconds, will tank demos
 - Test thoroughly in production:
   - Record from production URL with Chrome
@@ -1545,7 +1623,7 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 ## Week 13: Evaluator + Store — Days 79-83
 
 **Day 79: Verify Repo + Build Evaluator (Part 1)**
-- cd rageval && source .venv/bin/activate
+- Open the **RAGeval Studio** and `cd rageval` (deps already in base env — no venv)
 - Re-read STATUS.md
 - pip install sentence-transformers scikit-learn numpy FlagEmbedding
 - Verify: python -c "from sentence_transformers import SentenceTransformer"
@@ -1609,10 +1687,10 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 
 ## Week 14: Dashboard + PyPI Publish — Days 84-90
 
-**Day 84: Dashboard Build (React) (Part 1)**
-- cd rageval && npx create-vite dashboard --template react
+**Day 84: Dashboard Build (React) (Part 1)** — runs on the LAPTOP (Node), backend in the RAGeval Studio
+- On the laptop, in your local RAGeval clone: `npx create-vite dashboard --template react`
 - cd dashboard && npm install recharts
-- Configure proxy in vite.config.js: server: { proxy: { '/eval': 'http://localhost:8000' } }
+- Configure proxy in vite.config.js: `server: { proxy: { '/eval': 'http://localhost:8003' } }` (8003 = RAGeval backend, forwarded from its Studio)
 - Build App.jsx with 3 tabs: Overview | Query Log | Cost Report
 - Implement Overview tab:
   - 3 metric cards (avg relevance, avg groundedness, avg latency)
@@ -1640,7 +1718,7 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
   - rageval/evaluator.py, store.py, decorator.py, cli.py (rageval init / serve commands)
 - pyproject.toml with [project] name="rageval", version="0.1.0", dependencies=[sentence-transformers, scikit-learn, ...] + [project.scripts] rageval = "rageval.cli:main"
 - README.md (marketing surface — see Day 87)
-- Test: pip install -e . in fresh venv, rageval init → creates SQLite DB, from rageval import track → works
+- Test in the RAGeval Studio (base env, no venv): `pip install -e .`, `rageval init` → creates SQLite DB, `from rageval import track` → works. For a true clean-install check use `pip install --target /tmp/verify .` or a fresh Studio.
 
 **Day 87: Polish README (Marketing-Critical)**
 - RAGeval's README is its growth engine. Structure:
@@ -1656,12 +1734,12 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
   - Dashboard Preview (3 screenshots)
   - Roadmap
 
-**Day 88: Publish to PyPI**
+**Day 88: Publish to PyPI** (from the RAGeval Studio)
 - python -m build
 - python -m twine upload --repository testpypi dist/*
-- Install from test PyPI in fresh venv — verify it works end-to-end
+- Verify the test install **without a venv**: `pip install --target /tmp/verify -i https://test.pypi.org/simple/ rageval` then `PYTHONPATH=/tmp/verify rageval --help` — or test in a fresh Studio / `docker run python:3.11-slim`.
 - python -m twine upload dist/*
-- Verify: pip install rageval in clean venv anywhere
+- Verify: `pip install --target /tmp/verify2 rageval` (or a fresh Studio)
 - Add PyPI badge to README
 - Tag v0.1.0
 
@@ -1701,10 +1779,8 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 - NOTE: RAGeval gets pip-installed in 2026 — PyPI publish is fine (artifact, not content channel). What you defer is marketing-content distribution (HN, Reddit, Medium, LinkedIn).
 
 **Day 92: LLMOps Proposals + Dashboard Deploy**
-- Deploy dashboard to Vercel (free) or Railway:
-  - Build the React app: npm run build
-  - Deploy dist/ to Vercel
-  - Configure dashboard to point at sample RAGeval API instance
+- Deploy dashboard to Vercel (free) or Netlify — **the platform builds it on its own builders** (connect the GitHub repo; no `npm run build` needed on the laptop). If you do build locally, `npm run build` on the laptop is light enough.
+  - Configure dashboard to point at a sample RAGeval API instance
 - OR: keep dashboard local-only with great screenshots in README
 - Add RAGeval as Upwork portfolio entry #5
 - Customize Section 26 Template 5 for LLMOps jobs
@@ -1762,7 +1838,7 @@ Shorter on build work (1.5 weeks for StreamPulse), heavier on consolidation (por
 ## Week 16: StreamPulse Build — Days 97-101
 
 **Day 97: Verify Repo + Build api.py**
-- cd streampulse && source .venv/bin/activate
+- Open the **StreamPulse Studio** and `cd streampulse` (deps already in base env — no venv)
 - Re-read STATUS.md
 - pip install -r requirements.txt
 - Verify imports work
@@ -1786,9 +1862,9 @@ Shorter on build work (1.5 weeks for StreamPulse), heavier on consolidation (por
   - route_to_pipeline(records) → None: Calls DomainClassifier (already in classifier.py), validates with DataValidator, stores via store_kpi_metrics, broadcasts to WebSocket connections
 - Test with simulated webhook calls from N8N and custom sources
 
-**Day 99: Build dashboard/LiveDashboard.jsx**
+**Day 99: Build dashboard/LiveDashboard.jsx** — runs on the LAPTOP (Node); backend in the StreamPulse Studio (forward port 8004; WS `/live` tunnels over the same SSH forward)
 - React app for live dashboard:
-  - WebSocket connection to /live endpoint (SSE fallback to /live/sse)
+  - WebSocket connection to /live endpoint (SSE fallback to /live/sse), proxied to the forwarded localhost:8004
   - State: records (last 50), volumeData (last 20 time buckets), domainDist
   - Recharts LineChart: records per minute (live updating)
   - Recharts PieChart: domain distribution (live updating)
@@ -1805,8 +1881,8 @@ Shorter on build work (1.5 weeks for StreamPulse), heavier on consolidation (por
   - test_api.py: 6 tests (each ingest endpoint, pipeline status)
   - test_websocket.py: 2 tests (connect, broadcast)
 - Run pytest, fix failures
-- Deploy StreamPulse to Railway or Fly.io (cold-start tier OK — secondary demo)
-- OR: ship as "docker compose up" in README, document as local-demo project (saves $5/mo on hosting)
+- Deploy StreamPulse to Railway or Fly.io (cold-start tier OK — secondary demo; the platform builds the image, or push the one you build in the Studio). SQLite default is fine; only set `POSTGRES_URL` (Neon) if you wire the Postgres path.
+- OR: ship as "docker compose up" in the README as a self-host option for *end users* — that runs on their machine, not yours (saves $5/mo on hosting)
 - Either way: record 60-second demo video
 
 **Day 101: README + GitHub Public + Portfolio**
@@ -2041,9 +2117,9 @@ Shorter on build work (1.5 weeks for StreamPulse), heavier on consolidation (por
 - [ ] All day tasks completed and verified
 - [ ] Tests passing (pytest)
 - [ ] CI green on develop branch
-- [ ] Demo functional (manual smoke test)
+- [ ] Demo functional (manual smoke test — frontend on laptop → backend in Studio)
 - [ ] README accurate (<250 lines)
-- [ ] Dockerfile builds without error
+- [ ] Dockerfile valid (image builds on Railway/GitHub Actions, not locally)
 - [ ] .env.example complete (every required var)
 - [ ] Upwork portfolio entry added
 - [ ] Proposals sent (per phase target)
