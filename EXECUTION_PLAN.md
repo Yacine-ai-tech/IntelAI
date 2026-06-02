@@ -10,74 +10,80 @@
 **Why this exists:** the local laptop is **2-core / 8 GB RAM**. It cannot build or run this stack (torch, sentence-transformers, FlagEmbedding/`bge-large` ~1.3 GB, chromadb, crewai, dspy, marker/surya OCR, whisperx, prefect, dlt). **All heavy work runs on Lightning AI.** The laptop only edits, browses, runs git, and at most runs the (light) React dev server.
 
 ## Hard rules
-- **One Lightning Studio per repo (6 Studios).** Never put two repos in one Studio. Free plan = **one Studio active at a time**; the other five sleep — their files *and installed packages* persist for free ("install once, use forever").
-- **No venv, no conda env on Lightning.** One repo per Studio means zero dependency-conflict risk, so isolation is unnecessary. Install each repo's deps straight into the Studio's base Python env: `pip install -r requirements.txt`. This is exactly why the free-plan "can't create a venv" limit **does not matter** — the Studio boundary *is* the isolation.
-- **Docker: laptop NO, Studio YES.** Never `docker build`/`docker run` on the 2-core/8GB laptop. Lightning Studios **do support Docker**, so when you need a container (build the image, run it, `docker push` to DockerHub), do it **inside the Studio** — verify once with `docker --version`. If a given Studio doesn't have Docker, fall back to the Railway / GitHub-Actions builders (both build images without any local Docker). The simple no-venv base-env install is still the default for day-to-day dev; Docker-in-Studio is for image builds, publishing, and prod-parity checks.
-- **Laptop stays light.** Laptop runs: VS Code (Remote-SSH), git, browser, and at most ONE React dev server (`npm run dev`). It **NEVER** runs: pip install of ML deps, torch, uvicorn-with-models, Whisper, or Docker.
+- **ONE Lightning Studio (free plan = 1 Studio total, not 1 at a time).** The Studio is named `upwork`. All 6 repos are cloned inside it. Never create a second Studio — the second one is billed.
+- **Docker containers = the dependency isolation layer.** Each repo has a `docker-compose.dev.yml` that builds its `Dockerfile` and volume-mounts the source for hot-reload. This replaces venvs: each container is a fully isolated Python environment. The Studio has no venv; isolation comes from containers.
+- **Docker: laptop NO, Studio YES.** Never `docker build`/`docker run` on the 2-core/8GB laptop. The Studio supports Docker fully (build, run, push to DockerHub). The Railway / GitHub-Actions builders are the fallback for image publishing.
+- **Laptop stays light.** Laptop runs: VS Code (Remote-SSH), git, browser, and at most ONE React dev server (`npm run dev`). It **NEVER** runs Python ML deps, torch, uvicorn, Whisper, or Docker.
+- **Only one container runs at a time.** `switch-project.sh` (in `~/` of the Studio) stops the current container and starts the target one. Docker layer cache persists on the Studio disk — first build is 3-8 min, every subsequent start is near-instant.
 
 ## The split
 ```
-LAPTOP (2 core / 8 GB)            LIGHTNING STUDIO (the one that's awake)
-─────────────────────────        ───────────────────────────────────────
-VS Code + Remote-SSH             Python 3.11 (base env, no venv)
-git                              FastAPI / uvicorn  (--host 0.0.0.0)
-browser (localhost:5173)         all ML: torch, embeddings, whisper, OCR
-.env editing                     model downloads (persist on Studio disk)
-ONE React dev server (Vite)      DB clients (→ hosted Postgres)
-        │
-        └────────── SSH (VS Code Remote-SSH auto-forwards ports) ──────────┘
+LAPTOP (2 core / 8 GB)            upwork Studio (Lightning — your only Studio)
+─────────────────────────        ───────────────────────────────────────────────
+VS Code + Remote-SSH             ~/OmniIntelOS/  (git clone)
+git (local clone for frontend)   ~/DocIntel/     (git clone)
+browser (localhost:5173)         ~/VoiceFlow/    (git clone)
+npm run dev (React, Vite)        ~/RAGeval/      (git clone)
+                                 ~/StreamPulse/  (git clone)
+                                 ~/AgentKit/     (git clone)
+        │                        ~/switch-project.sh
+        └─── SSH lightning-dev ──────────────────────┘
+             (auto-forwards 8000-8005 in one connection)
 ```
 
-## Per-repo Studio map (clone ONLY that one repo into its Studio)
-| Studio | Repo | Run command (inside the Studio) | Port |
-|---|---|---|---|
-| 1 | OmniIntelOS | `python -m uvicorn src.api.server_v2:app --host 0.0.0.0 --port 8000 --reload` | 8000 |
-| 2 | DocIntel | `uvicorn api:app --host 0.0.0.0 --port 8001 --reload` | 8001 |
-| 3 | VoiceFlow | `uvicorn api:app --host 0.0.0.0 --port 8002 --reload` | 8002 |
-| 4 | RAGeval | `uvicorn api:app --host 0.0.0.0 --port 8003 --reload` | 8003 |
-| 5 | StreamPulse | `uvicorn api:app --host 0.0.0.0 --port 8004 --reload` | 8004 |
-| 6 | AgentKit | `python mcp_server.py` (serve over SSE — see "AgentKit MCP" note) | 8005 |
+## Per-repo Docker run (use switch-project.sh, not these directly)
+| Repo | `docker-compose.dev.yml` start command | Port |
+|---|---|---|
+| OmniIntelOS | `bash ~/switch-project.sh OmniIntelOS` | 8000 |
+| DocIntel    | `bash ~/switch-project.sh DocIntel` | 8001 |
+| VoiceFlow   | `bash ~/switch-project.sh VoiceFlow` | 8002 |
+| RAGeval     | `bash ~/switch-project.sh RAGeval` | 8003 |
+| StreamPulse | `bash ~/switch-project.sh StreamPulse` | 8004 |
+| AgentKit    | `bash ~/switch-project.sh AgentKit` (MCP/SSE) | 8005 |
+
+## SSH (laptop → Studio)
+Single SSH host entry: `lightning-dev` → `s_01kt2x8h2w3mg9hcgy83whmqjc@ssh.lightning.ai`.
+Key: `~/.ssh/lightning_rsa`. All 6 ports forwarded in one connection.
+
+- VS Code → Remote-SSH: Connect to Host → `lightning-dev` (auto-forwards ports)
+- CLI: `ssh lightning-dev`
 
 ## Frontend wiring (zero code changes needed)
-The React app runs on the **laptop**. The Vite dev proxy already targets `localhost:8000` (`frontend/vite.config.js`), `api.js` uses the relative `/api/v1`, and the data-ingestion default is `http://localhost:8000/api/v1`. So you just **forward the Studio's backend port to the laptop** and everything resolves with no env edits:
-- VS Code Remote-SSH auto-forwards ports, **or** run `ssh -L 8000:localhost:8000 <studio-ssh-host>`.
-- Then on the laptop: `cd OmniIntelOS/frontend && npm run dev` → open `http://localhost:5173`.
-- Only OmniIntelOS has a frontend today; the RAGeval & StreamPulse dashboards are built in their phases and run the same way (forward 8003 / 8004).
+Vite dev proxy targets `localhost:8000`, `api.js` uses `/api/v1` — with the SSH connection open and the OmniIntelOS container running, it all resolves with no changes:
+- Laptop: `cd OmniIntelOS/frontend && npm run dev` → `http://localhost:5173`.
+- RAGeval and StreamPulse dashboards (built in their phases) run the same way on their ports.
 
-**Two-clone workflow (repos that have a frontend).** Node lives on the laptop, not the Studio. So you develop/run the **frontend in the laptop's local clone** and the **backend in the Studio** (edited via Remote-SSH). Both clones push to the same GitHub repo — git keeps them in sync. Backend-only repos (DocIntel, VoiceFlow, AgentKit) are edited entirely in their Studio.
-
-## Databases (the one thing a sleeping Studio can't host well)
-Don't run Postgres inside a free Studio (it sleeps). Use **one free serverless Postgres** (Neon free tier — includes `pgvector`) where SQL is actually required, and `.env` points at it:
-- **OmniIntelOS** → **requires** Postgres at runtime → `POSTGRES_URL=<neon url>`.
-- **AgentKit** → uses Postgres (reads OmniIntelOS's KPI data) but has a stub-mode fallback for demos → same `<neon url>`, or leave blank to run stubbed.
-- **StreamPulse** → **SQLite by default** (`store.py` → `streampulse.db`); `POSTGRES_URL` is optional and unused unless you wire it — no Neon needed for dev.
-- **RAGeval** → SQLite default (`RAGEVAL_STORE=sqlite`) — no DB server needed.
+## Databases
+- **OmniIntelOS** → **requires** Postgres → `POSTGRES_URL` set to Neon (already in `.env`).
+- **AgentKit** → uses same Neon URL or runs stubbed (already in `.env`).
+- **StreamPulse** → SQLite default (`store.py` → `streampulse.db` inside the container volume).
+- **RAGeval** → SQLite default (`RAGEVAL_STORE=sqlite`).
 - **DocIntel, VoiceFlow** → no database.
 
-State then survives Studio sleeps and is shared across machines. (Alternative, since Docker works in Studios: run `docker run postgres:16` inside the OmniIntelOS Studio — but that DB is only reachable while *that* Studio is awake, so it won't serve StreamPulse/AgentKit when they're the active Studio. Neon is the simpler shared default.)
+## Ollama — skip it
+Leave all `LLM_LOCAL=ollama/...` and `OLLAMA_BASE_URL` vars blank. Use Groq/Anthropic/OpenAI (the defaults). No deliverable requires Ollama.
 
-## Local-model paths (Ollama) — not available on free Studios
-Don't rely on the optional Ollama paths — they need a separate always-on server and are slow on a free CPU Studio: `LLM_LOCAL=ollama/...` (OmniIntelOS, AgentKit), DocIntel's `LLM_VISION_LOCAL=ollama/llama3.2-vision`, and `OLLAMA_BASE_URL`. Use the **API providers**, which are already the defaults: Groq (`LLM_DEFAULT`), Anthropic (`LLM_REASONING` / vision), OpenAI. Leave the Ollama vars blank. (If you ever truly need a local model, Docker works in the Studio — `docker run ollama/ollama` — ideally on a GPU instance; but no deliverable requires it.)
+## AgentKit MCP — served over SSE inside the Studio
+The container runs `python mcp_server.py` with `MCP_TRANSPORT=sse MCP_PORT=8005` (set in `docker-compose.dev.yml`). Port 8005 is forwarded by the SSH connection. Bridge Claude Desktop (laptop) to it:
 
-## AgentKit MCP server — run it remote, bridge Claude Desktop to it
-AgentKit's MCP server shares the heavy BI services, so it runs in **its Studio**, not as a local stdio subprocess on the laptop. Serve it over HTTP/SSE in the Studio and bridge Claude Desktop (laptop) to the forwarded port:
-- In the Studio: run the server with FastMCP **SSE transport on port 8005** (`mcp.run(transport="sse", host="0.0.0.0", port=8005)`).
-- Forward 8005 to the laptop (VS Code auto-forward, or `ssh -L 8005:localhost:8005 <studio>`).
-- In `claude_desktop_config.json` (on the laptop) point the server at the forwarded URL via the tiny `npx mcp-remote http://localhost:8005/sse` stdio→SSE proxy — the heavy server stays in the Studio.
+`~/.config/Claude/claude_desktop_config.json`:
+```json
+{ "mcpServers": { "agentkit": { "command": "npx", "args": ["-y","mcp-remote","http://localhost:8005/sse"] } } }
+```
 
 ## Daily workflow
-1. Wake the Studio for the repo you're working on (let the other 5 sleep).
-2. VS Code → Remote-SSH → that Studio. Edit files there; commit/push from there (`develop` branch).
-3. In the Studio terminal: run the repo's uvicorn/MCP command (deps already in base env).
-4. Port-forward is automatic (VS Code) or via `ssh -L`.
-5. If the repo has a frontend: on the laptop run `npm run dev`, open `localhost:5173`.
-6. Switching projects: stop this Studio, start the next repo's Studio, reconnect VS Code. **No reinstalling** — packages persisted.
+1. Studio is already awake (it's your only Studio — keep it running or wake it when needed).
+2. Connect: VS Code → Remote-SSH → `lightning-dev`. Edit files there; commit/push from there.
+3. `bash ~/switch-project.sh <Repo>` — stops previous container, starts the target.
+4. All 6 ports are forwarded by the SSH connection; whichever container is running responds.
+5. Frontend: laptop `npm run dev`, port 5173.
+6. Switching repos: just `bash ~/switch-project.sh <NextRepo>` — no reconnecting needed.
 
 ## How this rewrites the steps below
 Throughout this plan:
-- `python -m venv .venv && source .venv/bin/activate` (and bare `source .venv/bin/activate`) → on Lightning this means **"open this repo's Studio"**. There is no venv; deps already live in the Studio's base env.
-- `docker build …` → run it **inside the Studio** (Docker is supported there), or defer to the Railway / GitHub-Actions builder. Never on the laptop.
-- "install in a clean/fresh venv" (PyPI publish verification) → use a **fresh throwaway Studio**, `pip install --target /tmp/verify <pkg>`, or a quick `docker run python:3.11-slim` in the Studio.
+- `source .venv/bin/activate` or `python -m venv .venv` → means `bash ~/switch-project.sh <Repo>` (start that repo's container). No venv exists; isolation is Docker.
+- `docker build …` → runs inside the Studio (never on the laptop). `switch-project.sh` does this automatically via `docker compose -f docker-compose.dev.yml up --build`.
+- "install in a clean/fresh venv" (PyPI publish verification) → `docker run --rm python:3.11-slim pip install <pkg>` inside the Studio, or `pip install --target /tmp/verify <pkg>` in the Studio shell.
 
 ---
 

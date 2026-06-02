@@ -1,0 +1,42 @@
+# Lightweight dev compose — runs ONLY the FastAPI backend in a Lightning Studio.
+# No postgres/n8n/grafana/prometheus (those are in docker-compose.yml for full local stack).
+# Database → Neon (POSTGRES_URL in .env). Frontend → runs on the laptop (npm run dev).
+#
+# Usage inside the Studio:
+#   docker compose -f docker-compose.dev.yml up --build
+#   (first build ~3-5 min; subsequent starts use layer cache = fast)
+#
+# Reach it from the laptop: ssh -L 8000:localhost:8000 lightning-omniintelos
+# Then: http://localhost:8000/health  and  http://localhost:5173 (Vite on laptop)
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: omniintelos:dev
+    volumes:
+      - ./src:/app/src
+      - ./main.py:/app/main.py
+      - ./static:/app/static
+      - ./logs:/app/logs
+      - ./.env:/app/.env:ro
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      PYTHONUNBUFFERED: "1"
+      CHROMA_DB_PATH: /app/chroma_db
+    command: >
+      uvicorn src.api.server_v2:app
+      --host 0.0.0.0
+      --port 8000
+      --reload
+      --reload-dir /app/src
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
