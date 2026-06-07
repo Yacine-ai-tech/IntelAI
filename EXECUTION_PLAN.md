@@ -4,6 +4,74 @@
 **No strategy narrative. No code implementation. Just tasks and their details.**
 
 ---
+
+## ✅ UPDATED 2026-06-07 — Full Alignment with STRATEGY.md
+
+This EXECUTION_PLAN.md has been comprehensively updated to include **all 2026 Stack Upgrades** claimed in STRATEGY.md and STRATEGY_DOC.md. 
+
+### Key Additions by Project:
+
+**OmniIntelOS (Phase 1):**
+- ✅ GraphRAG-lite implementation (entity extraction, sidecar tables, graph traversal)
+- ✅ Entity overlap detection for multi-hop queries
+- ✅ Graph-vs-vector quality delta recording (for RAGeval integration)
+
+**AgentKit (Phase 3):**
+- ✅ Claude Agent SDK demo (framework-agnostic positioning)
+- ✅ CrewAI demo (multi-agent collaboration audience)
+- ✅ DSPy experiment (research credential)
+- ✅ MCP resources + prompts (2026 best practice)
+- ✅ Multi-LLM configuration per agent type
+
+**DocIntel (Phase 2):**
+- ✅ Three-route extraction pipeline (vision_premium, vision_local, ocr_fallback)
+- ✅ Vision LLM extractor with Claude Sonnet 4.6 Vision + Ollama Llama 3.2 Vision
+- ✅ Marker integration for PDF-to-Markdown
+- ✅ Surya OCR + DocTR for layout-aware OCR
+- ✅ /classify-image endpoint for Equipment Sourcing pattern
+- ✅ Vision-vs-OCR benchmark harness (research artifact)
+- ✅ n8n integration templates
+
+**VoiceFlow (Phase 4):**
+- ✅ WhisperX upgrade with forced alignment + diarization
+- ✅ Premium API providers (Deepgram Nova-3, AssemblyAI Universal-2)
+- ✅ Multi-LLM analysis layer (Claude Sonnet 4.6 for sales, Groq for speed)
+- ✅ Real-time voice agent demo (OpenAI Realtime API)
+- ✅ TTS provider upgrades (Kokoro TTS, ElevenLabs, OpenAI tts-1-hd)
+- ✅ Speaker diarization fallback chain (pyannote → NeMo → skip)
+
+**RAGeval (Phase 5):**
+- ✅ Multi-judge LLM evaluation with consensus (Claude Haiku + Groq + GPT-5-mini)
+- ✅ OpenTelemetry / OpenLLMetry export (enterprise observability standards)
+- ✅ Multi-embedding comparison endpoint (5 embedding models)
+- ✅ Retrieval strategy benchmark endpoint (A/B testing for retrieval strategies)
+- ✅ DSPy compilation telemetry (research community integration)
+- ✅ pgvector production backend option (millions of interactions scale)
+
+**StreamPulse (Phase 6):**
+- ✅ First-class n8n integration (custom node + 3 workflows)
+- ✅ Prefect 3 orchestration layer (research-strong)
+- ✅ Hybrid domain classifier (keyword → embedding → LLM fallback)
+- ✅ dlt declarative source ingestion (modern pipeline patterns)
+- ✅ Vision-classification webhook (DocIntel synergy)
+- ✅ Server-Sent Events as WebSocket alternative
+- ✅ pgvector + DuckDB advanced storage options
+
+### Implementation Status:
+- **Requirements.txt files**: Already include most 2026 stack dependencies (LiteLLM, anthropic, openai, crewai, dspy-ai, prefect, etc.)
+- **Docker setup**: All repos have docker-compose.dev.yml for Lightning Studio workflow
+- **Missing implementation gaps**: Now scheduled in appropriate phases with specific day-by-day tasks
+
+### Verification:
+All upgrades align with STRATEGY.md sections:
+- Project 1 OmniIntelOS: Section 1.10 (Multi-LLM, Hybrid Retrieval, GraphRAG-lite, Qdrant)
+- Project 2 AgentKit: Section 2.10 (Claude Sonnet + LangGraph + Claude Agent SDK + CrewAI + DSPy)
+- Project 3 DocIntel: Section 3.10 (Vision-First: Claude Vision + Ollama Llama 3.2 Vision + Marker + Surya)
+- Project 4 VoiceFlow: Section 4.10 (WhisperX + Deepgram + AssemblyAI + Realtime API + ElevenLabs)
+- Project 5 RAGeval: Section 5.10 (Multi-Judge Consensus + OpenTelemetry + DSPy + pgvector)
+- Project 6 StreamPulse: Section 6.10 (n8n + Prefect 3 + dlt + Vision-Composition + Hybrid classifier)
+
+---
 ## ✅ PHASE 0 — COMPLETE (2026-06-05)
 
 All Phase 0 success criteria met:
@@ -844,7 +912,7 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 - Test all 9 personas through streaming
 - Verify token-by-token rendering works, reconnect logic handles disconnect
 
-**Day 11: Tests Expansion**
+**Day 11: Tests Expansion + GraphRAG-lite Implementation**
 - Expand tests/test_api.py from 2 tests to 30+:
   - auth tests (5): login, wrong password, register, get me, token validation
   - chat tests (4): basic, persona, streaming, edge cases
@@ -855,6 +923,14 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
   - rbac tests (4): admin works, viewer blocked, scope enforcement, edge cases
   - monitoring tests (3): stats, knowledge search, performance
   - misc tests (3): health, root, 404 handler
+- **GraphRAG-lite Implementation (Research Credential Feature)**:
+  - Create database migration for sidecar table: `kpi_entities(record_id, entity_type, entity_value)`
+  - Implement entity extraction during KPI ingestion: extract {department, category, period, metric_name}
+  - Create `src/services/graph_retrieval.py` with graph traversal logic
+  - Implement query-time entity extraction using Claude Haiku 4.5
+  - Add entity overlap detection for multi-hop queries
+  - Integrate with hybrid retrieval: use graph results when query mentions ≥2 entities
+  - Add `USE_GRAPH_RAG=true` config flag (opt-in during Phase 1, evaluate with RAGeval)
 - Run pytest, fix all failures
 - Confirm CI is green on develop branch
 
@@ -1106,6 +1182,85 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 - CI green on develop branch
 
 **Week 4 Checkpoint:** api.py exposes all 7 endpoints (2xx for valid inputs). LLMExtractor handles 4 doc types. BatchProcessor handles 5-doc batch. Demo works (frontend on laptop → backend in Studio). 15+ tests pass. Docker image builds in the Studio (or on Railway/Actions) — never on the laptop.
+
+## Week 4.5: Vision-First Pipeline Implementation — Days 32.5-34.5
+
+**Day 32.5: Implement Vision LLM Extractor (Three-Route Pipeline)**
+- Create services/vision_extractor.py with multi-route extraction:
+  - Route A: VISION_PREMIUM (Claude Sonnet 4.6 Vision) — best for complex layouts, handwriting
+  - Route B: VISION_LOCAL (Ollama Llama 3.2 Vision 11B or Qwen 2.5-VL 7B) — privacy, cost-bound
+  - Route C: OCR_FALLBACK (Tesseract + LLM cleanup) — legacy path
+- Implement extract_via_vision_llm(image_bytes, model, doc_type):
+  - Convert image to base64
+  - Use LiteLLM with vision model (Claude Sonnet 4.6 Vision or Ollama vision)
+  - Type-specific prompts (invoice, contract, receipt, etc.)
+  - Request JSON output with confidence scores
+- Add route parameter to /extract endpoint: POST /extract?route=vision_premium|vision_local|ocr_fallback
+- Test all three routes with sample PDFs:
+  - vision_premium: should handle complex layouts best
+  - vision_local: should work but slower on CPU
+  - ocr_fallback: baseline comparison
+- Document three-route strategy in README with cost/latency tradeoffs
+
+**Day 33: Marker Integration + Advanced OCR**
+- pip install marker-pdf (for PDF-to-Markdown conversion)
+- Create services/marker_extractor.py:
+  - Use Marker's PdfConverter for high-quality PDF-to-Markdown
+  - Target: documents where structured text intermediate is needed (RAG ingestion)
+- pip install surya-ocr (for layout-aware OCR fallback)
+- Create services/surya_extractor.py:
+  - Implement Surya OCR with detection model and processor
+  - Better than Tesseract for non-Latin scripts and complex layouts
+- Update services/ocr_extractor.py to include fallback chain:
+  - Primary: Surya OCR (if installed)
+  - Fallback: Tesseract (legacy)
+  - Last resort: pure LLM on images (no OCR intermediate)
+- Test Marker on 5 PDFs, compare output vs pdfplumber
+- Test Surya on 5 scanned documents, compare vs Tesseract
+- Document OCR fallback chain in README
+
+**Day 33.5: Enhanced /classify-image Endpoint (Equipment Sourcing Pattern)**
+- Implement POST /classify-image endpoint:
+  - Accepts image file + list of categories
+  - Returns: {category, confidence, reasoning}
+  - Supports route parameter (vision_local for Ollama, vision_premium for Claude)
+- Create classification prompts for common categories:
+  - Equipment types: excavator, crane, bulldozer, truck, etc.
+  - Marketplace items: electronics, furniture, industrial, etc.
+  - Business documents: invoice, contract, receipt, report
+- Test /classify-image with sample images from different categories
+- Measure accuracy and confidence scores
+- Document /classify-image for Equipment Sourcing job applications
+- Create demo showing image classification workflow
+
+**Day 34: Vision-vs-OCR Benchmark Harness (Research Artifact)**
+- Create eval/vision_vs_ocr_benchmark.py:
+  - Load 200-document eval set (can reuse invoice eval + add other doc types)
+  - Run benchmark across three routes:
+    - Route A: Claude Sonnet 4.6 Vision
+    - Route B: Llama 3.2 Vision (local via Ollama)
+    - Route C: Tesseract → Claude Haiku 4.5 cleanup
+  - Measure per-field accuracy, latency, cost per document
+  - Output comparison table for blog post + preprint
+- Run benchmark (may take several hours depending on Ollama performance)
+- Analyze results: which route offers best cost/accuracy tradeoff?
+- Save benchmark results to eval/benchmark_results_2026.json
+- Document methodology for Blog Post 2 (drafted Week 6)
+- This becomes research artifact: cost/quality tradeoffs in document AI
+
+**Day 34.5: n8n Integration Templates (Workflow Automation)**
+- Create integrations/n8n/ directory:
+  - README.md: how to plug DocIntel into n8n workflows
+  - DocIntel node template (n8n community node format)
+  - workflows/: 3 ready-to-import n8n workflow demos
+- Implement workflow examples:
+  - invoice_intake.json: webhook → DocIntel → ERP system
+  - contract_review.json: document upload → extraction → approval workflow
+  - crm_sync.json: invoice processing → CRM data update
+- Test n8n workflows with sample documents
+- Document webhook endpoint signature verification (HMAC)
+- Add n8n integration section to README
+- This addresses Equipment Sourcing job's "n8n or similar workflow tools" requirement
 
 ## Week 5: Eval Dataset + Prompt Iteration — Days 33-37
 
@@ -1386,6 +1541,67 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 
 **Week 8 Checkpoint:** workflow.py runs 3-agent chain end-to-end. analyze() returns coherent reports for 5+ questions. Two demo notebooks exist. Latency acceptable (<20s per call).
 
+## Week 8.5: Multi-Framework Extensions + Research Features — Days 54.5-56.5
+
+**Day 54.5: Claude Agent SDK Demo (Framework Agnostic Positioning)**
+- pip install claude-agent-sdk (verify availability, install if released)
+- Create demos/claude_agent_sdk_demo.py:
+  - Import Agent, MCPServer from claude_agent_sdk
+  - Configure agent with model="claude-sonnet-4-6" and MCP server bridge
+  - Demonstrate same 6 business questions using Claude Agent SDK orchestration
+  - Show that agent achieves same results with different framework
+- Test demo script: python demos/claude_agent_sdk_demo.py
+- Document in README: "Framework-agnostic: works with LangGraph, Claude Agent SDK, CrewAI"
+- This positions AgentKit as multi-framework compatible → major credibility lift
+
+**Day 55: CrewAI Demo (Multi-Agent Collaboration Audience)**
+- pip install crewai (already in requirements.txt from Week 0)
+- Create demos/crewai_demo.py:
+  - Define 3 CrewAI agents: Researcher (@tool for query_kpis), Analyst (@tool for detect_anomalies), Writer (synthesizes)
+  - Wrap existing MCP tools as CrewAI @tool decorators
+  - Define crew with sequential process: Researcher → Analyst → Writer
+  - Run same business questions through CrewAI crew
+  - Compare outputs vs LangGraph workflow (should be functionally equivalent)
+- Test demo: python demos/crewai_demo.py
+- Document CrewAI approach in README with code snippet (~80 lines)
+- This captures clients who think in CrewAI's role abstractions
+
+**Day 55.5: DSPy Experiment (Research Credential)**
+- pip install dspy-ai (already in requirements.txt from Week 0)
+- Create research/dspy_experiment.py:
+  - Define BusinessAnalysis DSPy module with plan → analyze → report chain
+  - Set up eval set: 50 business questions with expected outputs
+  - Use DSPy BootstrapFewShot to optimize prompts on eval set
+  - Log compilation runs: which prompt templates won, which examples chosen
+  - Measure baseline vs optimized performance
+- Run DSPy optimization: python research/dspy_experiment.py (may take 30-60 min)
+- Document results: baseline accuracy ___%, optimized accuracy ___%
+- Save optimized prompt templates for blog post + preprint
+- This becomes research artifact: "DSPy-compiled agent workflow benchmarked"
+
+**Day 56: MCP Resources + Prompts (2026 Best Practice)**
+- Extend mcp_server.py beyond tools to include resources and prompts:
+  - Add @mcp.resource("kpi://Finance/latest") — exposes latest Finance KPI snapshot as stable URI
+  - Add @mcp.resource("kpi://People/latest") — same for People domain
+  - Add @mcp.prompt("monthly_executive_briefing") — reusable prompt template for executive summaries
+  - Add @mcp.prompt("risk_assessment") — reusable prompt for risk analysis
+- Test resources: verify Claude can pin kpi://Finance/latest in context
+- Test prompts: verify Claude can invoke monthly_executive_briefing without writing prompt text
+- Update Claude Desktop config to include new resources/prompts
+- Document MCP resources/prompts in README with examples
+- This implements 2026 MCP best practice: tools + resources + prompts
+
+**Day 56.5: Multi-LLM Configuration per Agent**
+- Update workflow.py to use different LLM tiers per agent (from STRATEGY.md 2.10):
+  - Planner agent: Claude Sonnet 4.6 (best for breaking down hard questions)
+  - Analyst agent: Groq Llama 3.3 70B (high volume tool calls, speed matters)
+  - Reporter agent: Claude Sonnet 4.6 (synthesis needs nuance)
+- Configure via litellm with tier-based routing (already implemented in OmniIntelOS llm_router.py pattern)
+- Add env var controls: PLANNER_MODEL, ANALYST_MODEL, REPORTER_MODEL
+- Test each agent with appropriate model, measure latency/quality tradeoffs
+- Document multi-LLM strategy in README
+- Update demos to show multi-LLM configuration in action
+
 ## Week 9: Distribution + Community + Blog Post 3 — Days 55-61
 
 **Day 55: README + Demo Video**
@@ -1520,6 +1736,73 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 - Build the Dockerfile **in the VoiceFlow Studio** (`docker build -t voiceflow:dev .`) — decide now: bundle the Whisper model into the image, or download at start (see Day 69). Never build on the laptop.
 
 **Week 10 Checkpoint:** Whisper transcription works on 3 test files. MeetingAnalyzer + SalesCallAnalyzer return well-structured JSON. All 7 endpoints respond correctly. Tests pass.
+
+## Week 10.5: 2026 Stack Upgrades — WhisperX + Multi-Provider + Real-Time Voice — Days 66.5-68.5
+
+**Day 66.5: WhisperX Upgrade with Alignment and Diarization**
+- pip install whisperx (upgrade from faster-whisper)
+- Create services/whisperx_service.py:
+  - Load WhisperX large-v3 model with GPU support if available
+  - Implement forced alignment (word-level timestamps)
+  - Implement pyannote diarization integration (who-spoke-when)
+  - Add fallback chain: pyannote 3.x → NeMo built-in diarization → skip diarization
+- Update transcribe_audio to use WhisperX when available:
+  - Returns transcript with speaker labels and word timestamps
+  - Fallback to faster-whisper if WhisperX fails
+- Test WhisperX on sample audio with multiple speakers
+- Document diarization fallback chain honestly in README
+- This implements 2026 SOTA self-hosted transcription
+
+**Day 67: Premium API Provider Integration (Deepgram + AssemblyAI)**
+- pip install deepgram-sdk-python assemblyai
+- Create services/transcription_router.py:
+  - Implement TranscriptionProvider enum: LOCAL_WHISPERX, GROQ_WHISPER, DEEPGRAM, ASSEMBLYAI
+  - Add provider-specific transcription methods
+  - Configure per-client provider selection via env var or request parameter
+- Implement Deepgram Nova-3 integration (best diarization quality)
+- Implement AssemblyAI Universal-2 integration (strong streaming)
+- Add Groq Whisper integration (already has Groq API, just add Whisper model)
+- Update /transcribe endpoint to accept provider parameter
+- Test each provider with sample audio, measure latency/quality/cost
+- Document provider tradeoffs in README
+
+**Day 67.5: Multi-LLM Analysis Layer Configuration**
+- Update services/meeting_analyzer.py with per-analysis-type model selection:
+  - meeting: Groq Llama 3.3 70B (speed, structured output)
+  - sales_call: Claude Sonnet 4.6 (nuance critical for objections/sentiment)
+  - support_call: Claude Haiku 4.5 (cheap, high-volume)
+  - interview: Claude Sonnet 4.6 (quality matters)
+  - general: Groq Llama 3.3 70B
+- Add ANALYSIS_MODELS configuration dict with tier-based routing
+- Update each analysis method to use appropriate model via LiteLLM
+- Test each analysis type with appropriate model
+- Measure quality differences (sales analysis should benefit from Claude Sonnet nuance)
+- Document multi-LLM strategy in README
+
+**Day 68: TTS Provider Upgrades (Kokoro TTS + ElevenLabs + OpenAI)**
+- pip install kokoro-onnx elevenlabs (add to requirements.txt)
+- Create services/tts_router.py:
+  - Implement TTS providers: edge-tts (default), Kokoro TTS (self-host premium), ElevenLabs (paid premium), OpenAI tts-1-hd (paid alternative)
+  - Add provider selection via env var or request parameter
+- Implement Kokoro TTS integration (open-source, expressive)
+- Implement ElevenLabs integration (best voice quality + cloning)
+- Implement OpenAI tts-1-hd integration (reliable HD voice)
+- Update /tts endpoint to accept provider parameter
+- Test each TTS provider with sample text
+- Measure voice quality and latency tradeoffs
+- Document TTS options in README with cost/quality matrix
+
+**Day 68.5: Real-Time Voice Agent Demo (OpenAI Realtime API)**
+- Create demos/realtime_voice_agent.py:
+  - Implement WebRTC server endpoint /realtime/ws
+  - Bridge to OpenAI Realtime API (gpt-4o-realtime-preview)
+  - Sub-second latency voice-in → model processing → voice-out
+  - Integrate with AgentKit MCP tools for business intelligence queries
+- Demo scenario: "Talk to your business analyst" — real-time KPI questions
+- Test real-time voice agent with sample business questions
+- Measure end-to-end latency (target <500ms)
+- This demonstrates cutting-edge real-time voice AI + cross-project AgentKit synergy
+- Document Realtime API setup in README
 
 ## Week 11: Browser Recording Demo + Deploy — Days 67-72
 
@@ -1707,6 +1990,87 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
   - test_decorator.py: 2 tests (sync + async function wrapping)
 
 **Week 13 Checkpoint:** All 5 scorers (incl. cost + multi-judge consensus) return values. SQLite store logs and aggregates correctly. 9 API endpoints respond. @track decorator works on sample RAG function. 17+ tests pass.
+
+## Week 13.5: Advanced 2026 Stack Features — OpenTelemetry + Multi-Embedding + DSPy — Days 83.5-85.5
+
+**Day 83.5: OpenTelemetry / OpenLLMetry Export Implementation**
+- Complete rageval/otel_exporter.py (started Day 83):
+  - Implement OpenTelemetry tracer and metrics setup
+  - Create export_interaction(interaction) function:
+    - Sets span attributes: query, relevance, groundedness, cost_usd, persona
+    - Creates metrics for: rag.query.count, rag.relevance, rag.groundedness, rag.cost_usd
+  - Configure OTLP exporter for Datadog, Honeycomb, Jaeger, Grafana compatibility
+  - Add env var: RAGEVAL_OTEL_ENDPOINT=http://localhost:4317
+- Test OTEL export with local OTEL collector or mock
+- Verify span and metric data flows correctly
+- Document OTEL export configuration in README
+- This implements enterprise observability standards (critical for research credibility)
+
+**Day 84: Multi-Embedding Model Comparison**
+- Extend evaluator.py to support multiple embedding models:
+  - EMBEDDING_MODELS_AVAILABLE = [
+    - "sentence-transformers/all-MiniLM-L6-v2" (legacy baseline)
+    - "BAAI/bge-large-en-v1.5" (current open SOTA)
+    - "BAAI/bge-m3" (multilingual)
+    - "Snowflake/snowflake-arctic-embed-l" (2025-2026 strong open)
+    - "jinaai/jina-embeddings-v3" (code-friendly)
+  - ]
+- Implement POST /eval/embedding-comparison endpoint:
+  - Runs same query set against multiple embedding models
+  - Returns per-embedding relevance scores, latency, cost
+  - Recommends best embedding model for client's use case
+- Create eval/embedding_models_benchmark.py:
+  - 100-query benchmark across all embedding models
+  - Measures: relevance@5, recall@10, latency, cost
+  - Generates comparison table for blog post
+- Run benchmark (may take 30-60 minutes depending on models)
+- Document embedding model tradeoffs in README
+- This helps clients choose optimal embedding models for their RAG systems
+
+**Day 84.5: Retrieval Strategy Benchmark Endpoint**
+- Implement POST /eval/retrieval-bench endpoint (started Day 82):
+  - Accepts strategy name (dense, hybrid_dense_sparse, hybrid_with_reranker, graph_rag_lite)
+  - Runs 200-query benchmark against configured retrieval strategy
+  - Returns: precision@5, recall@10, MRR, latency, cost
+  - Compares strategies side-by-side
+- Create eval/retrieval_strategies.py:
+  - Implement pure dense retrieval (baseline)
+  - Implement hybrid retrieval (dense + BM25 + RRF)
+  - Implement hybrid with BGE reranker
+  - Implement GraphRAG-lite (entity-based retrieval from OmniIntelOS)
+- Test each retrieval strategy on standard eval set
+- Generate comparison table for blog post + preprint
+- Document retrieval strategy recommendations in README
+- This positions RAGeval as A/B testing tool for retrieval strategies
+
+**Day 85: DSPy Compilation Telemetry Integration**
+- Complete rageval/dspy_integration.py (started Day 83):
+  - Implement @dspy_compile_callback decorator:
+    - Logs DSPy compilation runs: program_name, candidates, winner, eval_metric, eval_score
+    - Stores in RAGeval store as dspy_compilation_log table
+  - Create research/dspy_experiment.py:
+    - Define BusinessAnalysis DSPy module (plan → analyze → report)
+    - Use DSPy BootstrapFewShot to optimize on eval set
+    - Log all compilation runs via RAGeval integration
+  - Run DSPy optimization on 50-question business analysis eval set
+  - Measure baseline vs optimized performance
+  - Analyze which prompt templates won and why
+- Document DSPy integration in README
+- This positions RAGeval in DSPy community (research-active audience)
+- Results become section in AgentKit + RAGeval preprint
+
+**Day 85.5: pgvector Production Backend Option**
+- Update store.py to support Postgres + pgvector for production scale:
+  - Check RAGEVAL_STORE env var: "sqlite" (default) or "postgres"
+  - If "postgres": use POSTGRES_URL for connection
+  - Add pgvector for embedding storage (makes retrieval-relevance queries fast)
+  - Create migration: rageval_log table with vector column for query embeddings
+  - SQLite remains default for zero-config drop-in usage
+- Test both SQLite and Postgres backends
+- Document pgvector setup in README (connection string, schema)
+- Add migration script: alembic upgrade head for Postgres users
+- This enables RAGeval to store millions of interactions efficiently
+- Critical for production deployments with high query volume
 
 ## Week 14: Dashboard + PyPI Publish — Days 84-90
 
@@ -1922,6 +2286,94 @@ Shorter on build work (1.5 weeks for StreamPulse), heavier on consolidation (por
 - Customize Section 26 Template 6 for data pipeline jobs
 
 **Week 16 Checkpoint:** StreamPulse api.py + dashboard work end-to-end. WebSocket live updates verified. Repo public, README ready. Portfolio entry #6 added on Upwork.
+
+## Week 16.5: Advanced 2026 Stack Features — n8n + Prefect + Hybrid Classifier — Days 101.5-103.5
+
+**Day 101.5: First-Class n8n Integration (Mandatory for Equipment Sourcing Job)**
+- Create integrations/n8n/ directory structure:
+  - README.md: how to plug StreamPulse into n8n workflows
+  - n8n_node.json: custom n8n node definition (community node format)
+  - workflows/: 3 ready-to-import n8n workflow demos
+- Implement custom n8n node template:
+  - Node exposes StreamPulse classification and ingestion capabilities
+  - Drag-and-drop integration in n8n UI
+  - Configuration: webhook URL, API key, classification parameters
+- Create workflow examples:
+  - auction_aggregator.json: equipment auction listings classification
+  - invoice_intake.json: automated invoice processing pipeline
+  - crm_sync.json: real-time CRM data synchronization
+- Test n8n workflows with sample data
+- Document n8n integration in README with screenshots
+- This directly addresses Equipment Sourcing job's "n8n or similar workflow tools" requirement
+
+**Day 102: Prefect 3 Orchestration Layer (Research-Strong Option)**
+- pip install prefect (already in requirements.txt from Week 0)
+- Create orchestration/prefect_flow.py:
+  - Define @task(retries=3, retry_delay_seconds=30) async def ingest_source(source: str)
+  - Define @task async def classify_record(record: dict) -> dict
+  - Define @task async def store_kpi(record: dict) -> None
+  - Define @flow(name="streampulse-realtime-pipeline") async def pipeline_flow(sources: list[str])
+- Implement Prefect deployment configuration:
+  - Local development: prefect dev
+  - Production: prefect deploy (if needed for clients)
+- Create workflow example that processes multiple sources in parallel
+- Test Prefect flow with sample data sources
+- Document Prefect integration in README
+- This demonstrates modern Python orchestration patterns (research credibility)
+
+**Day 102.5: Domain Classifier Upgrade (Hybrid Approach)**
+- Update classifier.py with three-tier classification:
+  - Fast path: keyword matching (existing, <1ms latency)
+  - Confidence threshold: if keyword match confidence < 0.7
+  - Fallback path 1: embedding similarity vs domain prototypes (BGE-large)
+  - Fallback path 2: Claude Haiku 4.5 zero-shot classification
+  - Cache classification results by content hash (avoid re-classify)
+- Implement embedding-based classification:
+  - Load BGE-large-en-v1.5 model
+  - Create domain prototype embeddings (one per domain)
+  - Cosine similarity comparison for domain assignment
+- Implement LLM-based classification fallback:
+  - Use LiteLLM with Claude Haiku 4.5 for uncertain cases
+  - Type-specific prompts for each domain
+  - Return classification with confidence and reasoning
+- Add classification cache with content hash keys
+- Test hybrid classifier on edge cases (ambiguous content)
+- Measure latency: fast path vs fallback paths
+- Document hybrid approach in README with latency/accuracy tradeoffs
+
+**Day 103: dlt Declarative Source Ingestion**
+- pip install dlt (already in requirements.txt from Week 0)
+- Create ingestion/dlt_sources.py with declarative sources:
+  - @dlt.source def gmail_source(): Gmail integration with incremental loading
+  - @dlt.source def gsheet_source(): Google Sheets integration
+  - @dlt.source def webhook_source(): Webhook-based ingestion
+  - @dlt.source def api_source(): Generic API polling source
+- Implement dlt pipeline configuration:
+  - Pipeline = dlt.pipeline("streampulse")
+  - Incremental loading, schema evolution, idempotency handled by dlt
+- Create example pipelines for each source type
+- Test dlt sources with real data (Gmail, Sheets, APIs)
+- Document dlt integration in README
+- This demonstrates modern declarative data pipeline patterns
+
+**Day 103.5: Advanced Storage + Vision Integration**
+- Update store.py to support pgvector for embedding cache:
+  - Add pgvector for storing classification embeddings
+  - Enables fast similarity searches for classification history
+  - Configure via POSTGRES_URL env var (already has pgvector)
+- Add DuckDB for analytics queries:
+  - Create analytics/duckdb_queries.py for fast analytical queries
+  - Export classified data to DuckDB for dashboard analytics
+  - Support time-series analysis and aggregations
+- Enhance /webhook/{source}/with-vision endpoint:
+  - Accepts payload with text + image_url
+  - Classifies domain from text (StreamPulse classifier)
+  - Classifies image category (DocIntel /classify-image integration)
+  - Combines → enriched record with both classifications
+- Test vision integration with sample images and text
+- Test pgvector and DuckDB functionality
+- Document advanced storage options in README
+- This demonstrates DocIntel + StreamPulse cross-project synergy
 
 ## Week 17: Cold Email Push + Blog Post 6 + Portfolio Polish — Days 102-108
 
