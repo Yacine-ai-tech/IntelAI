@@ -1,6 +1,54 @@
 import { useState } from 'react'
 import { useTranslation } from '../i18n/I18nContext'
 import * as api from '../api'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { DollarSign } from 'lucide-react'
+
+function FinancialChart({ data }) {
+  if (!data || !data.line_items || data.line_items.length === 0) return null
+
+  const chartData = data.line_items.map(item => ({
+    name: item.item_name || item.name || 'Unknown',
+    value: item.amount || item.value || 0
+  }))
+
+  return (
+    <div className="card" style={{ marginBottom: 20 }}>
+      <h3 className="card-title"><DollarSign size={16} /> Line Items Breakdown</h3>
+      <div style={{ height: 300 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={chartData} layout="vertical">
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis 
+              type="number"
+              style={{ fontSize: '0.7rem', fill: 'var(--text-muted)' }}
+            />
+            <YAxis 
+              type="category"
+              dataKey="name"
+              width={150}
+              style={{ fontSize: '0.75rem', fill: 'var(--text-muted)' }}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'var(--card-bg)', 
+                border: '1px solid var(--border)',
+                borderRadius: '4px'
+              }}
+              itemStyle={{ color: 'var(--text)' }}
+            />
+            <Legend />
+            <Bar 
+              dataKey="value" 
+              fill="var(--primary)"
+              name="Amount"
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  )
+}
 
 export default function FinancialPage() {
   const { t } = useTranslation()
@@ -57,9 +105,12 @@ export default function FinancialPage() {
           <h3 className="card-title">{t('result')}</h3>
           {error && <div className="alert alert-danger">{error}</div>}
           {result ? (
-            <div style={{ overflow: 'auto' }}>
-              <pre style={{ whiteSpace: 'pre-wrap', fontSize: '0.9rem' }}>{JSON.stringify(result, null, 2)}</pre>
-            </div>
+            <>
+              <FinancialChart data={result} />
+              <div style={{ overflow: 'auto' }}>
+                <pre style={{ whiteSpace: 'pre-wrap', fontSize: '0.9rem' }}>{JSON.stringify(result, null, 2)}</pre>
+              </div>
+            </>
           ) : (
             <p className="text-muted">{t('noResult')}</p>
           )}
