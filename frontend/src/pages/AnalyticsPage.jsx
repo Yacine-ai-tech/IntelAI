@@ -2,42 +2,49 @@ import { useState, useEffect, useCallback } from 'react'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { BarChart3, Hash, Calendar, Layers, FolderKanban, TrendingUp } from 'lucide-react'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 function MetricChart({ data, title }) {
   if (!data || data.length === 0) return null
 
-  const values = data.map(d => d.value)
-  const maxVal = Math.max(...values) || 1
-  const barHeight = 200
+  const chartData = data.slice(-20).map(d => ({
+    period: d.period || d.date || '',
+    value: d.value || 0
+  }))
 
   return (
     <div className="card">
       <h3 className="card-title">{title}</h3>
-      <div style={{
-        display: 'flex', alignItems: 'flex-end', gap: 4,
-        height: barHeight, padding: '0 8px'
-      }}>
-        {data.slice(-20).map((d, i) => (
-          <div
-            key={i}
-            title={`${d.period || d.date}: ${d.value?.toFixed(2)}`}
-            style={{
-              flex: 1,
-              height: `${(d.value / maxVal) * 100}%`,
-              background: 'var(--primary)',
-              borderRadius: '4px 4px 0 0',
-              minWidth: 8,
-              cursor: 'pointer',
-              transition: 'opacity 0.2s',
-            }}
-            onMouseEnter={e => e.target.style.opacity = 0.7}
-            onMouseLeave={e => e.target.style.opacity = 1}
-          />
-        ))}
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-        <span>{data[0]?.period || data[0]?.date || ''}</span>
-        <span>{data[data.length - 1]?.period || data[data.length - 1]?.date || ''}</span>
+      <div style={{ height: 250 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis 
+              dataKey="period" 
+              style={{ fontSize: '0.7rem', fill: 'var(--text-muted)' }}
+            />
+            <YAxis 
+              style={{ fontSize: '0.7rem', fill: 'var(--text-muted)' }}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'var(--card-bg)', 
+                border: '1px solid var(--border)',
+                borderRadius: '4px'
+              }}
+              itemStyle={{ color: 'var(--text)' }}
+            />
+            <Legend />
+            <Line 
+              type="monotone" 
+              dataKey="value" 
+              stroke="var(--primary)" 
+              strokeWidth={2}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     </div>
   )

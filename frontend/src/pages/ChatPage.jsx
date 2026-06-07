@@ -40,14 +40,96 @@ export default function ChatPage() {
   const [ttsEnabled, setTtsEnabled] = useState(false)
   const [sessions, setSessions] = useState([])
   const [activeSession, setActiveSession] = useState(null)
+  const [connectionStatus, setConnectionStatus] = useState('disconnected')
+  const [sessionId, setSessionId] = useState(null)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+  const wsRef = useRef(null)
+  const reconnectTimeoutRef = useRef(null)
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [])
 
   useEffect(() => { scrollToBottom() }, [messages, scrollToBottom])
+
+  // WebSocket connection
+  useEffect(() => {
+    if (!user) return
+
+    const connectWebSocket = () => {
+      const token = localStorage.getItem('access_token')
+      if (!token) {
+        setConnectionStatus('error')
+        return
+      }
+
+      const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+      const wsHost = import.meta.env.VITE_API_URL || window.location.host
+      const wsUrl = `${wsProtocol}//${wsHost}/api/v1/ws/chat`
+
+      try {
+        const ws = new WebSocket(wsUrl)
+        wsRef.current = ws
+
+        ws.onopen = () => {
+          setConnectionStatus('connecting')
+          // Send authentication
+          ws.send(JSON.stringify({ token }))
+        }
+
+        ws.onmessage = (event) => {
+          const data = JSON.parse(event.data)
+          
+          if (data.type === 'connected') {
+            setConnectionStatus('connected')
+            setSessionId(data.session_id)
+          } else if (data.type === 'response') {
+            setMessages(prev => [...prev, {
+              role: 'assistant',
+              content: data.response,
+              audio_url: data.audio_url || null,
+              sources: data.sources || null,
+              persona_used: data.persona_used,
+            }])
+            setLoading(false)
+          } else if (data.type === 'error') {
+            setMessages(prev => [...prev, {
+              role: 'assistant',
+              content: `Error: ${data.error}`,
+            }])
+            setLoading(false)
+          }
+        }
+
+        ws.onerror = () => {
+          setConnectionStatus('error')
+        }
+
+        ws.onclose = () => {
+          setConnectionStatus('disconnected')
+          // Attempt reconnection after 3 seconds
+          if (user) {
+            reconnectTimeoutRef.current = setTimeout(connectWebSocket, 3000)
+          }
+        }
+      } catch (error) {
+        console.error('WebSocket connection error:', error)
+        setConnectionStatus('error')
+      }
+    }
+
+    connectWebSocket()
+
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close()
+      }
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current)
+      }
+    }
+  }, [user])
 
   useEffect(() => {
     api.listPersonas()
@@ -64,11 +146,13 @@ export default function ChatPage() {
   }, [])
 
   useEffect(() => {
-    setMessages([{
-      role: 'assistant',
-      content: t('chatWelcome'),
-    }])
-  }, [user, t])
+    if (connectionStatus === 'connected') {
+      setMessages([{
+        role: 'assistant',
+        content: t('chatWelcome'),
+      }])
+    }
+  }, [connectionStatus, t])
 
   const loadSession = async (sessionId) => {
     try {
@@ -92,9 +176,9 @@ export default function ChatPage() {
     }])
   }
 
-  const sendMessage = async (e) => {
+  const sendMessage = (e) => {
     e.preventDefault()
-    if (!input.trim() || loading) return
+    if (!input.trim() || loading || connectionStatus !== 'connected') return
 
     const userMsg = { role: 'user', content: input.trim() }
     setMessages(prev => [...prev, userMsg])
@@ -102,28 +186,39 @@ export default function ChatPage() {
     setLoading(true)
 
     try {
-      const res = await api.sendChat(
-        userMsg.content,
-        selectedPersona || null,
-        activeSession,
-        '',
-      )
-
-      const data = res.data
+      const ws = wsRef.current
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+          message: input.trim(),
+          persona: selectedPersona || undefined,
+        }))
+      } else {
+        // Fallback to POST if WebSocket is not available
+        api.sendChat(input.trim(), selectedPersona || null, activeSession, '')
+          .then(res => {
+            const data = res.data
+            setMessages(prev => [...prev, {
+              role: 'assistant',
+              content: data.response || data.message || 'No response received.',
+              audio_url: data.audio_url || null,
+              sources: data.sources || null,
+            }])
+            setLoading(false)
+          })
+          .catch(err => {
+            setMessages(prev => [...prev, {
+              role: 'assistant',
+              content: `Error: ${err.response?.data?.detail || 'Failed to get response. Please try again.'}`,
+            }])
+            setLoading(false)
+          })
+      }
+    } catch (error) {
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: data.response || data.message || 'No response received.',
-        audio_url: data.audio_url || null,
-        sources: data.sources || null,
+        content: `Error: Failed to send message. Please try again.`,
       }])
-    } catch (err) {
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: `Error: ${err.response?.data?.detail || 'Failed to get response. Please try again.'}`,
-      }])
-    } finally {
       setLoading(false)
-      inputRef.current?.focus()
     }
   }
 
@@ -139,6 +234,16 @@ export default function ChatPage() {
       role: 'assistant',
       content: t('chatCleared'),
     }])
+  }
+
+  // Connection status indicator
+  const getConnectionColor = () => {
+    switch (connectionStatus) {
+      case 'connected': return '#22c55e'
+      case 'connecting': return '#eab308'
+      case 'error': return '#ef4444'
+      default: return '#94a3b8'
+    }
   }
 
   return (
@@ -176,6 +281,28 @@ export default function ChatPage() {
             <Bot size={20} /> {t('aiAssistant')}
           </div>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            {/* Connection status indicator */}
+            <div 
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: 6, 
+                fontSize: '0.75rem', 
+                color: getConnectionColor() 
+              }}
+            >
+              <div 
+                style={{ 
+                  width: 8, 
+                  height: 8, 
+                  borderRadius: '50%', 
+                  background: getConnectionColor() 
+                }} 
+              />
+              {connectionStatus === 'connected' ? 'Connected' : 
+               connectionStatus === 'connecting' ? 'Connecting...' :
+               connectionStatus === 'error' ? 'Error' : 'Disconnected'}
+            </div>
             {personas.length > 0 && (
               <select
                 className="form-input"
@@ -222,13 +349,13 @@ export default function ChatPage() {
             ref={inputRef}
             type="text"
             className="chat-input"
-            placeholder={t('chatPlaceholder')}
+            placeholder={connectionStatus !== 'connected' ? 'Connecting...' : t('chatPlaceholder')}
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            disabled={loading}
+            disabled={loading || connectionStatus !== 'connected'}
           />
-          <button type="submit" className="chat-send-btn" disabled={loading || !input.trim()}>
+          <button type="submit" className="chat-send-btn" disabled={loading || !input.trim() || connectionStatus !== 'connected'}>
             <Send size={18} />
           </button>
         </form>

@@ -7,6 +7,7 @@ import {
   LayoutDashboard, DollarSign, TrendingDown, Users, Landmark,
   TrendingUp, Bot, Activity, ShieldAlert, ArrowUpRight, ArrowDownRight
 } from 'lucide-react'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
 const ICON_MAP = {
   revenue: DollarSign,
@@ -22,10 +23,60 @@ const COLOR_MAP = {
   default: 'cyan',
 }
 
-function KPICard({ label, value, change, category }) {
+function SparklineChart({ data, color }) {
+  if (!data || data.length < 2) return null
+
+  const chartData = data.map(d => ({
+    period: d.period || d.date || '',
+    value: d.value || 0
+  }))
+
+  return (
+    <div style={{ height: 60 }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={chartData}>
+          <CartesianGrid strokeDasharray="0" vertical={false} />
+          <XAxis 
+            dataKey="period" 
+            hide 
+          />
+          <YAxis 
+            hide 
+            domain={['dataMin - 5', 'dataMax + 5']}
+          />
+          <Tooltip 
+            contentStyle={{ 
+              backgroundColor: 'var(--card-bg)', 
+              border: '1px solid var(--border)',
+              borderRadius: '4px',
+              fontSize: '0.75rem'
+            }}
+            itemStyle={{ color: 'var(--text)' }}
+          />
+          <Line 
+            type="monotone" 
+            dataKey="value" 
+            stroke={color || 'var(--primary)'} 
+            strokeWidth={2}
+            dot={false}
+            activeDot={false}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  )
+}
+
+function KPICard({ label, value, change, category, history }) {
   const isPositive = change >= 0
   const Icon = ICON_MAP[category] || ICON_MAP.default
   const color = COLOR_MAP[category] || COLOR_MAP.default
+  const colorVar = {
+    blue: 'var(--primary)',
+    red: '#ef4444',
+    purple: '#a855f7',
+    cyan: '#06b6d4'
+  }[color] || 'var(--primary)'
 
   return (
     <div className="kpi-card">
@@ -38,6 +89,9 @@ function KPICard({ label, value, change, category }) {
           <Icon size={20} />
         </div>
       </div>
+      {history && history.length > 0 && (
+        <SparklineChart data={history.slice(-6)} color={colorVar} />
+      )}
       {change !== undefined && (
         <div className={`kpi-change ${isPositive ? 'positive' : 'negative'}`}>
           {isPositive ? <ArrowUpRight size={13} /> : <ArrowDownRight size={13} />}
@@ -102,11 +156,32 @@ export default function DashboardPage() {
     return val.toFixed(1)
   }
 
+  // Group KPIs by metric name and get history for each
+  const kpiHistory = {}
+  kpis.forEach(k => {
+    const name = k.metric_name || k.name || 'Unknown'
+    if (!kpiHistory[name]) {
+      kpiHistory[name] = []
+    }
+    kpiHistory[name].push({
+      period: k.period,
+      value: k.value,
+      category: k.category
+    })
+  })
+
+  // Sort history by period and take last 6
+  Object.keys(kpiHistory).forEach(name => {
+    kpiHistory[name].sort((a, b) => (a.period || '').localeCompare(b.period || ''))
+    kpiHistory[name] = kpiHistory[name].slice(-6)
+  })
+
   const topKPIs = kpis.slice(0, 6).map(k => ({
     label: k.metric_name || k.name || 'Metric',
     value: formatValue(k.value),
     change: k.change_pct,
     category: k.category || 'default',
+    history: kpiHistory[k.metric_name || k.name] || []
   }))
 
   if (topKPIs.length === 0 && !loading) {
