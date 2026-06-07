@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { ShieldAlert, Search, Lightbulb, Activity, CheckCircle2 } from 'lucide-react'
+import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend } from 'recharts'
 
 function StatCard({ label, value, unit, icon }) {
   return (
@@ -12,6 +13,79 @@ function StatCard({ label, value, unit, icon }) {
           <div className="kpi-value">{value}{unit ? <span style={{ fontSize: '0.7em', color: 'var(--text-muted)' }}> {unit}</span> : ''}</div>
         </div>
         <span style={{ fontSize: '1.5rem' }}>{icon}</span>
+      </div>
+    </div>
+  )
+}
+
+function RiskRadarChart({ risk }) {
+  if (!risk) return null
+
+  // Normalize risk factors to 0-100 scale for radar chart
+  const normalize = (val, max = 100) => Math.min(100, Math.max(0, (val / max) * 100))
+
+  const radarData = [
+    {
+      subject: 'Volatility',
+      value: normalize(risk.volatility || 0, 50),
+      fullMark: 100
+    },
+    {
+      subject: 'Concentration',
+      value: normalize(risk.concentration_risk || 0, 50),
+      fullMark: 100
+    },
+    {
+      subject: 'Burn Ratio',
+      value: normalize(risk.burn_ratio || 0, 2),
+      fullMark: 100
+    },
+    {
+      subject: 'Growth Deceleration',
+      value: normalize(risk.growth_deceleration || 0, 50),
+      fullMark: 100
+    },
+    {
+      subject: 'Leverage',
+      value: normalize(risk.leverage || 0, 5),
+      fullMark: 100
+    },
+    {
+      subject: 'Liquidity',
+      value: normalize(risk.liquidity_risk || 0, 50),
+      fullMark: 100
+    }
+  ].filter(d => d.value > 0) // Only show dimensions with data
+
+  if (radarData.length < 3) return null // Need at least 3 dimensions for radar chart
+
+  return (
+    <div className="card">
+      <h3 className="card-title"><Activity size={16} /> {t('riskComponents')}</h3>
+      <div style={{ height: 300 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <RadarChart data={radarData}>
+            <PolarGrid stroke="var(--border)" />
+            <PolarAngleAxis 
+              dataKey="subject" 
+              style={{ fontSize: '0.75rem', fill: 'var(--text-muted)' }}
+            />
+            <PolarRadiusAxis 
+              angle={90} 
+              domain={[0, 100]}
+              style={{ fontSize: '0.7rem', fill: 'var(--text-muted)' }}
+            />
+            <Radar
+              name={t('riskScore')}
+              dataKey="value"
+              stroke="var(--primary)"
+              fill="var(--primary)"
+              fillOpacity={0.6}
+              strokeWidth={2}
+            />
+            <Legend />
+          </RadarChart>
+        </ResponsiveContainer>
       </div>
     </div>
   )
@@ -133,6 +207,9 @@ export default function RiskPage() {
           )}
         </div>
       </div>
+
+      {/* Risk Radar Chart */}
+      <RiskRadarChart risk={risk} />
 
       {/* Anomalies */}
       <div className="card">

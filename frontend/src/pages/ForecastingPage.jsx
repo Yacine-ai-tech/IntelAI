@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { TrendingUp, Play, BarChart3, Brain, Target, Sparkles } from 'lucide-react'
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts'
 
 function StatCard({ label, value, unit, icon: Icon, color = 'blue' }) {
   return (
@@ -57,6 +58,87 @@ export default function ForecastingPage() {
     return v
   }
 
+  function ForecastChart({ forecast }) {
+    if (!forecast) return null
+
+    // Prepare chart data: historical + forecast with CI
+    const historicalData = (forecast.historical || []).map(h => ({
+      period: h.period || h.month_tag,
+      value: h.value || h.actual,
+      type: 'historical',
+      lower: null,
+      upper: null
+    }))
+
+    const forecastData = (forecast.forecast || []).map(f => ({
+      period: f.period || f.month_tag,
+      value: f.predicted || f.value,
+      lower: f.lower,
+      upper: f.upper,
+      type: 'forecast'
+    }))
+
+    const chartData = [...historicalData, ...forecastData]
+
+    return (
+      <div className="card" style={{ marginBottom: 20 }}>
+        <h3 className="card-title"><TrendingUp size={16} /> {t('forecastChart')}</h3>
+        <div style={{ height: 300 }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis 
+                dataKey="period" 
+                style={{ fontSize: '0.7rem', fill: 'var(--text-muted)' }}
+              />
+              <YAxis 
+                style={{ fontSize: '0.7rem', fill: 'var(--text-muted)' }}
+              />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'var(--card-bg)', 
+                  border: '1px solid var(--border)',
+                  borderRadius: '4px'
+                }}
+                itemStyle={{ color: 'var(--text)' }}
+              />
+              <Legend />
+              <Area 
+                type="monotone" 
+                dataKey="value" 
+                stroke="var(--primary)" 
+                fill="var(--primary)"
+                fillOpacity={0.6}
+                strokeWidth={2}
+                name={t('predicted')}
+              />
+              {forecastData.some(f => f.lower !== null && f.upper !== null) && (
+                <>
+                  <Line 
+                    type="monotone" 
+                    dataKey="upper" 
+                    stroke="#10b981" 
+                    strokeWidth={1}
+                    strokeDasharray="5 5"
+                    name={t('upper')}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="lower" 
+                    stroke="#ef4444" 
+                    strokeWidth={1}
+                    strokeDasharray="5 5"
+                    name={t('lower')}
+                  />
+                </>
+              )}
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+    )
+  }
+
   if (initLoading) return <div className="text-center" style={{ padding: 60 }}>{t('loadingMetrics')}</div>
 
   return (
@@ -100,6 +182,8 @@ export default function ForecastingPage() {
             <StatCard label={t('r2Score')} value={forecast.r2 !== undefined ? forecast.r2.toFixed(3) : '—'} icon={Target} color="green" />
             <StatCard label={t('forecastPeriods')} value={forecast.forecast?.length || periods} icon={Sparkles} color="cyan" />
           </div>
+
+          <ForecastChart forecast={forecast} />
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
             {forecast.historical && forecast.historical.length > 0 && (

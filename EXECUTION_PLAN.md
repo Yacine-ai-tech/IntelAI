@@ -5,6 +5,36 @@
 
 ---
 
+## 📊 Week 1 Implementation Status (as of 2026-06-07)
+
+### ✅ Completed (Days 8-9):
+- [x] Recharts conversion for AnalyticsPage (LineChart)
+- [x] Recharts conversion for ForecastingPage (AreaChart + CI bands)
+- [x] Recharts conversion for RiskPage (RadarChart)
+- [x] Sparkline LineCharts for DashboardPage KPI cards
+- [x] BarChart for FinancialPage line items with dropdown
+- [x] Committed to branch: `feat/week-1-visual-technical-fixes`
+
+### 🔄 Remaining (Days 10-12):
+- [ ] Day 10: WebSocket streaming for chat (backend + frontend wiring)
+- [ ] Day 10: Test all 9 personas through streaming
+- [ ] Day 10: Verify token-by-token rendering and reconnect logic
+- [ ] Day 11: Expand tests from 2 to 30+ (auth, chat, kpis, insights, forecast, ingest, rbac, monitoring)
+- [ ] Day 11: GraphRAG-lite implementation (entity extraction, graph traversal, multi-hop queries)
+- [ ] Day 11: Run pytest and fix failures
+- [ ] Day 11: Confirm CI green on develop
+- [ ] Day 12: Deploy to Railway/Fly.io
+- [ ] Day 12: Run database migrations against production
+- [ ] Day 12: Smoke test all endpoints in production
+
+### 📝 Technical Notes:
+- Recharts is already installed (v2.13.0 in package.json)
+- WebSocket endpoint exists at `/api/v1/ws/chat` in server_v2.py
+- Current implementation needs enhancement for true token-by-token streaming
+- GraphRAG-lite requires: kpi_entities table, entity extraction service, graph traversal, hybrid retrieval integration
+
+---
+
 ## ✅ UPDATED 2026-06-07 — Full Alignment with STRATEGY.md
 
 This EXECUTION_PLAN.md has been comprehensively updated to include **all 2026 Stack Upgrades** claimed in STRATEGY.md and STRATEGY_DOC.md. 
