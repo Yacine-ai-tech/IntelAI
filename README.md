@@ -1,8 +1,14 @@
-# 🎯 OmniIntelOS
+# 🎯 IntelAI
 
-> **Unified AI-Powered Intelligence Platform for Multi-Domain Enterprise Analytics**
+> **Persona-Aware AI Analytics & RAG Copilot — multi-domain KPI intelligence with GraphRAG-lite**
 
-[![OmniIntelOS](https://img.shields.io/badge/OmniIntelOS-2026-FF4B4B?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDMTMuMSAyIDI0IDMuOSA4IDggNiAxMCA2IDE0IDggMTggMTAgMTggMTIgMTQgMTIgMTQgMTggMTIgMjJDMTAuOSAyMiAyIDIwLjEgMiAxOUMyIDE3LjkgMy45IDE3IDUgMTdDOSAxNyAxMSAxNSAxMSAxM0MxMSAxMSAxMyA5IDE1IDlDMTcgOSA5IDIgMTIgMloiIGZpbGw9IiNGRjRCNEEiLz4KPC9zdmc+)](https://github.com/Yacine-ai-tech/Finance-Dashboard)
+> ℹ️ **Scope (2026-06-09):** IntelAI is the scoped product (analytics + 9-persona RAG +
+> GraphRAG-lite, one cloud deployment). It was extracted from the larger all-in-one
+> platform, now the separate **private** repo `Yacine-ai-tech/OmniIntelOS`. This README is
+> the pre-split version; Phase 1 trims it to <200 lines and removes platform-only features
+> (monitoring/OCR/voice/n8n). See `STRATEGY.md` §1.1 for the authoritative KEEP/CUT scope.
+
+[![IntelAI](https://img.shields.io/badge/IntelAI-2026-FF4B4B?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDMTMuMSAyIDI0IDMuOSA4IDggNiAxMCA2IDE0IDggMTggMTAgMTggMTIgMTQgMTIgMTQgMTggMTIgMjJDMTAuOSAyMiAyIDIwLjEgMiAxOUMyIDE3LjkgMy45IDE3IDUgMTdDOSAxNyAxMSAxNSAxMSAxM0MxMSAxMSAxMyA5IDE1IDlDMTcgOSA5IDIgMTIgMloiIGZpbGw9IiNGRjRCNEEiLz4KPC9zdmc+)](https://github.com/Yacine-ai-tech/IntelAI)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=for-the-badge&logo=duckdb&logoColor=black)](https://duckdb.org)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
@@ -14,7 +20,7 @@
 
 ## 📊 Overview
 
-**OmniIntelOS** is a comprehensive enterprise-grade intelligence platform that transforms raw business data across multiple sectors into actionable executive intelligence. Built for 2026 enterprise buyers who demand sophisticated analytics, predictive insights, and automated governance across Finance, Growth, Operations, People/HR, and ESG domains.
+**IntelAI** is a comprehensive enterprise-grade intelligence platform that transforms raw business data across multiple sectors into actionable executive intelligence. Built for 2026 enterprise buyers who demand sophisticated analytics, predictive insights, and automated governance across Finance, Growth, Operations, People/HR, and ESG domains.
 
 ### 🎯 What Makes It Special
 
@@ -125,8 +131,8 @@ Notes:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Yacine-ai-tech/Finance-Dashboard.git
-cd Finance-Dashboard
+git clone https://github.com/Yacine-ai-tech/IntelAI.git
+cd IntelAI
 
 # 2. Create virtual environment
 python -m venv venv
@@ -170,9 +176,9 @@ pip install -r requirements.txt
 **🎉 You're ready! The system now contains 15+ KPIs across Finance, Growth, Operations, People, and ESG categories.**
 
 ---
-# OmniIntelOS — Complete Repository Reference
+# IntelAI — Complete Repository Reference
 
-This file is a comprehensive reference for the OmniIntelOS repository. It documents the code layout, service architecture, configuration and environment variables, runtime behavior, API reference, developer workflows, deployment runbooks, troubleshooting, security, testing, and appendices with examples, SQL schema, sample data and common utilities.
+This file is a comprehensive reference for the IntelAI repository. It documents the code layout, service architecture, configuration and environment variables, runtime behavior, API reference, developer workflows, deployment runbooks, troubleshooting, security, testing, and appendices with examples, SQL schema, sample data and common utilities.
 
 This README is intentionally exhaustive so it can serve as the single source of truth for maintainers and operators. Sections are clearly divided and cross-referenced; use your editor's search to jump to the parts you need.
 
@@ -210,7 +216,7 @@ Each major section below contains subsections, examples, and references to the s
 1. Overview
 -----------
 
-OmniIntelOS is a self-hosted intelligence operating system designed to unify multi-domain business metrics (Finance, Growth, Operations, People, ESG) and provide AI-powered insights, forecasting, and governance workflows. The platform is intentionally local-first and container-friendly for on-premise or single-server deployments.
+IntelAI is a self-hosted intelligence operating system designed to unify multi-domain business metrics (Finance, Growth, Operations, People, ESG) and provide AI-powered insights, forecasting, and governance workflows. The platform is intentionally local-first and container-friendly for on-premise or single-server deployments.
 
 Goals:
 
@@ -314,7 +320,7 @@ NOTE: this table mirrors `Settings` dataclass in `src/core/config.py` — verify
 | Env Var | Default | Purpose | Required |
 |---------|---------|---------|----------|
 | ENVIRONMENT | development | runtime environment (development/production) | no |
-| POSTGRES_URL | postgresql://omniintel:change_me_postgres_password@localhost:5432/omniintelos | DB connection string for PostgreSQL | yes (local default provided)
+| POSTGRES_URL | postgresql://omniintel:change_me_postgres_password@localhost:5432/intelai | DB connection string for PostgreSQL | yes (local default provided)
 | GROQ_API_KEY | "" | API key for Groq LLM provider | yes for LLM features
 | TAVILY_API_KEY | "" | Tavily web search API key | yes for web search features
 | SECRET_KEY | change-me-in-production | JWT and session secret | yes in production
@@ -768,7 +774,7 @@ Endpoint: Health Check
 
 	{
 		"status": "healthy",
-		"service": "OmniIntelOS API",
+		"service": "IntelAI API",
 		"version": "2026.3.0",
 		"timestamp": "2026-05-13T...Z",
 		"database": "postgresql"
@@ -1104,7 +1110,7 @@ The following are expanded, machine-friendly request and response schemas with c
 
 		{
 			"status": "healthy",
-			"service": "OmniIntelOS API",
+			"service": "IntelAI API",
 			"version": "2026.3.0",
 			"timestamp": "2026-05-13T00:00:00Z",
 			"database": "postgresql"
