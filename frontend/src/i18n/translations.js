@@ -7,7 +7,7 @@ const translations = {
   en: {
     // ── Global ──────────────────────────────────────────
     appName: 'OmniIntelOS',
-    appTagline: 'Intelligence Operating System',
+    appTagline: 'Enterprise AI Analytics Platform 2026',
     loading: 'Loading…',
     save: 'Save',
     cancel: 'Cancel',
@@ -26,7 +26,7 @@ const translations = {
     noData: 'No data available',
     error: 'Error',
     success: 'Success',
-    poweredByAI: 'Powered by AI · Always available',
+    poweredByAI: 'Multi-LLM · Hybrid Retrieval · GraphRAG-lite',
 
     // ── Sidebar ─────────────────────────────────────────
     sidebarCore: 'Core',
@@ -74,18 +74,18 @@ const translations = {
     loadingDashboard: 'Loading dashboard…',
 
     // ── Chat ────────────────────────────────────────────
-    chatWelcome: "I'm your AI assistant. Ask me anything about your business — KPIs, risk, HR, forecasting, and more.",
-    chatPlaceholder: 'Ask anything about your business…',
-    chatThinking: 'Thinking…',
-    chatCleared: 'Chat cleared. How can I help you?',
-    chatNew: 'New conversation started. How can I help you?',
-    history: 'History',
+    chatWelcome: "I'm your AI-powered business intelligence assistant. Powered by multi-LLM architecture with hybrid retrieval and GraphRAG-lite for comprehensive enterprise insights across Finance, HR, Operations, IT, Logistics, ESG, and Growth domains.",
+    chatPlaceholder: 'Ask anything about your enterprise intelligence…',
+    chatThinking: 'Processing with multi-LLM ensemble…',
+    chatCleared: 'Chat cleared. Ready for enterprise intelligence queries.',
+    chatNew: 'New session started. How can I assist with your business intelligence needs?',
+    history: 'Conversation History',
     noHistory: 'No previous conversations',
-    aiAssistant: 'AI Assistant',
-    newChat: 'New Chat',
-    clearChat: 'Clear Chat',
-    sources: 'Sources',
-    autoRoleBased: 'Auto (role-based)',
+    aiAssistant: 'AI Intelligence Assistant',
+    newChat: 'New Intelligence Session',
+    clearChat: 'Clear Session',
+    sources: 'Knowledge Sources',
+    autoRoleBased: 'Auto (persona-driven)',
 
     // ── Data Hub ────────────────────────────────────────
     dataHub: 'Data Hub',
@@ -482,7 +482,7 @@ const translations = {
   fr: {
     // ── Global ──────────────────────────────────────────
     appName: 'OmniIntelOS',
-    appTagline: "Système d'exploitation intelligent",
+    appTagline: 'Plateforme d\'Analyse IA d\'Entreprise 2026',
     loading: 'Chargement…',
     save: 'Enregistrer',
     cancel: 'Annuler',
@@ -549,18 +549,18 @@ const translations = {
     loadingDashboard: 'Chargement du tableau de bord…',
 
     // ── Chat ────────────────────────────────────────────
-    chatWelcome: "Je suis votre assistant IA. Posez-moi des questions sur votre entreprise — KPIs, risques, RH, prévisions et plus.",
-    chatPlaceholder: 'Posez une question sur votre entreprise…',
-    chatThinking: 'Réflexion…',
-    chatCleared: 'Chat effacé. Comment puis-je vous aider ?',
-    chatNew: 'Nouvelle conversation. Comment puis-je vous aider ?',
-    history: 'Historique',
+    chatWelcome: "Je suis votre assistant d'intelligence d'affaires propulsé par l'IA. Alimenté par une architecture multi-LLM avec récupération hybride et GraphRAG-lite pour des informations d'entreprise complètes à travers Finance, RH, Opérations, IT, Logistique, ESG et Croissance.",
+    chatPlaceholder: 'Posez une question sur votre intelligence d\'entreprise…',
+    chatThinking: 'Traitement avec ensemble multi-LLM…',
+    chatCleared: 'Session effacée. Prêt pour les requêtes d\'intelligence d\'entreprise.',
+    chatNew: 'Nouvelle session commencée. Comment puis-je vous aider avec vos besoins d\'intelligence d\'affaires ?',
+    history: 'Historique des conversations',
     noHistory: 'Aucune conversation précédente',
-    aiAssistant: 'Assistant IA',
-    newChat: 'Nouveau chat',
-    clearChat: 'Effacer le chat',
-    sources: 'Sources',
-    autoRoleBased: 'Auto (basé sur le rôle)',
+    aiAssistant: 'Assistant d\'Intelligence IA',
+    newChat: 'Nouvelle Session d\'Intelligence',
+    clearChat: 'Effacer la Session',
+    sources: 'Sources de Connaissance',
+    autoRoleBased: 'Auto (basé sur les personas)',
 
     // ── Data Hub ────────────────────────────────────────
     dataHub: 'Hub de données',

@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
+import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import {
   LayoutDashboard, DollarSign, TrendingDown, Users, Landmark,
@@ -121,33 +122,37 @@ export default function DashboardPage() {
   const { user } = useAuth()
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const [kpis, setKpis] = useState([])
-  const [health, setHealth] = useState(null)
-  const [summary, setSummary] = useState(null)
-  const [risks, setRisks] = useState([])
-  const [loading, setLoading] = useState(true)
 
-  const fetchDashboard = useCallback(async () => {
-    setLoading(true)
-    try {
-      const [kpiRes, healthRes, summaryRes, riskRes] = await Promise.allSettled([
-        api.getKPIs(),
-        api.getHealth(),
-        api.getSummary(),
-        api.getRisk(),
-      ])
+  // Use React Query for cached data fetching with automatic retries and stale-time management
+  const { data: kpis = [], isLoading: kpisLoading, error: kpisError } = useQuery({
+    queryKey: ['kpis'],
+    queryFn: () => api.getKPIs().then(res => res.data?.metrics || []),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 1,
+  })
 
-      if (kpiRes.status === 'fulfilled') setKpis(kpiRes.value.data?.metrics || [])
-      if (healthRes.status === 'fulfilled') setHealth(healthRes.value.data)
-      if (summaryRes.status === 'fulfilled') setSummary(summaryRes.value.data)
-      if (riskRes.status === 'fulfilled') setRisks(riskRes.value.data?.risks || [])
-    } catch {
-      // silent
-    }
-    setLoading(false)
-  }, [])
+  const { data: health, isLoading: healthLoading } = useQuery({
+    queryKey: ['health'],
+    queryFn: () => api.getHealth().then(res => res.data),
+    staleTime: 2 * 60 * 1000, // 2 minutes
+    retry: 1,
+  })
 
-  useEffect(() => { fetchDashboard() }, [fetchDashboard])
+  const { data: summary, isLoading: summaryLoading } = useQuery({
+    queryKey: ['summary'],
+    queryFn: () => api.getSummary().then(res => res.data),
+    staleTime: 10 * 60 * 1000, // 10 minutes
+    retry: 1,
+  })
+
+  const { data: risks = [], isLoading: risksLoading } = useQuery({
+    queryKey: ['risks'],
+    queryFn: () => api.getRisk().then(res => res.data?.risks || []),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 1,
+  })
+
+  const loading = kpisLoading || healthLoading || summaryLoading || risksLoading
 
   const formatValue = (val) => {
     if (typeof val !== 'number') return val || '—'
