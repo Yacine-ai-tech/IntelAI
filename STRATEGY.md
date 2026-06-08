@@ -1,4 +1,4 @@
-# OmniIntelOS → Freelance Income → Research Pipeline
+# IntelAI → Freelance Income → Research Pipeline
 ## Complete Strategy 2026 (v2 — Refactored)
 
 **Document Version:** 2.0
@@ -8,9 +8,24 @@
 
 ---
 
+> **⚑ 2026-06-09 — PROJECT SPLIT (read first).** "IntelAI" is the scoped product
+> formerly called *OmniIntelOS*. The original codebase had grown into an all-in-one,
+> Palantir-style platform (monitoring, OCR + voice microservices, n8n, on-prem
+> multi-service Docker). That **full platform was moved out** of this 6-project program
+> into its own **private** repo `github.com/Yacine-ai-tech/OmniIntelOS` (with its own
+> dedicated Studio — see that repo's `PLATFORM_GUIDE.md`). **IntelAI = project #1 of 6**:
+> a single cloud deployment scoped to *analytics + 9-persona RAG + GraphRAG-lite*,
+> branded and packageable, with **null dependency** on the full platform or the other 5
+> projects. Where sections below describe broader "platform" features, they refer to the
+> now-separate OmniIntelOS; IntelAI's authoritative scope is §1.1 (KEEP/CUT). The actual
+> code-level scope-down runs in **Phase 1** — the codebase still carries the full feature
+> set until then.
+
+---
+
 > **Thesis in one paragraph**
 >
-> One codebase you already built (OmniIntelOS, ~14k lines Python + ~5.5k lines React,
+> One codebase you already built (IntelAI, ~14k lines Python + ~5.5k lines React,
 > verified by repo audit) becomes the seed for three parallel outcomes in 2026:
 > (1) consistent Upwork freelance income at $65–95/hr,
 > (2) an open-source + technical-writing footprint that powers your 2027 LinkedIn launch,
@@ -43,7 +58,7 @@ PART I  — THE THESIS AND THE CODEBASE
                  multi-provider abstraction via LiteLLM)
 
 PART II — THE SIX PROJECTS (Refined + 2026 Stack Upgrades)
-  Project 1   OmniIntelOS Refactored — AI Analytics + Persona RAG
+  Project 1   IntelAI Refactored — AI Analytics + Persona RAG
               + 1.10 Multi-LLM, Hybrid Retrieval, GraphRAG-lite, Qdrant
   Project 2   AgentKit — MCP Server + Multi-Agent Workflow
               + 2.10 Claude Sonnet + LangGraph + Claude Agent SDK + CrewAI + DSPy
@@ -78,7 +93,7 @@ PART V — EXECUTION (18 WEEKS + WEEK 0, SEQUENTIAL, ALL SIX)
   Section 16  Phased Build Plan (Day-by-Day, All Six Projects)
     16.0      Principles And The Decision To Build All Six
     16.1      Phase 0 — Repository Splitting (Week 0)
-    16.2      Phase 1 — OmniIntelOS Foundation (Weeks 1–3)
+    16.2      Phase 1 — IntelAI Foundation (Weeks 1–3)
     16.3      Phase 2 — DocIntel (Weeks 4–6)
     16.4      Phase 3 — AgentKit (Weeks 7–9)
     16.5      Phase 4 — VoiceFlow (Weeks 10–12)
@@ -139,7 +154,7 @@ APPENDIX
 
 ### What it is
 
-A concrete, phased, 18-week execution plan to convert the OmniIntelOS codebase
+A concrete, phased, 18-week execution plan to convert the IntelAI codebase
 into three compounding assets:
 
 1. **A freelance income pipeline** on Upwork, generating $4k–$15k/month by month 6
@@ -513,7 +528,7 @@ preprint by end of year.
 
 #### Missing 4: Vertical positioning
 
-Your current README markets "OmniIntelOS" to "enterprises in general."
+Your current README markets "IntelAI" to "enterprises in general."
 A Series A SaaS CTO and a healthcare CIO have completely different
 buying criteria. You'll close more deals positioning as "AI analytics
 for Series A SaaS" or "AI analytics for healthcare compliance" than
@@ -641,7 +656,7 @@ attending to query+doc jointly. Adds 100-300ms, but precision@5 jumps
 Extracts entities and relationships during ingestion, builds a knowledge
 graph, performs graph-traversal queries for multi-hop reasoning. Critical
 for queries like "show me how X relates to Y across Z time periods" — which
-is exactly the executive analytics pattern in OmniIntelOS.
+is exactly the executive analytics pattern in IntelAI.
 
 **4. Agentic RAG.** Instead of retrieve-once-and-answer, an agent decides
 *what* to retrieve, *when* to re-query, and *when to give up*. Uses tool
@@ -659,7 +674,7 @@ medium-sized knowledge bases.
 Better for fine-grained matching. Open-source via PyLate / RAGatouille. Niche
 but research-strong.
 
-**Practical implication:** OmniIntelOS and AgentKit should both upgrade from
+**Practical implication:** IntelAI and AgentKit should both upgrade from
 pure ChromaDB cosine similarity to hybrid retrieval + reranker. RAGeval
 should measure all of these as separate metrics, because "retrieval quality"
 is no longer a single number — it's a stack.
@@ -683,7 +698,7 @@ sentence-transformers          Yes    Legacy       Still works, but older
 all-MiniLM-L6-v2                                    (384d, smaller, faster)
 ```
 
-**Practical implication:** for OmniIntelOS keep MiniLM as the fast lane,
+**Practical implication:** for IntelAI keep MiniLM as the fast lane,
 add BGE-large for the persona-grounded paths. For RAGeval, both should be
 recorded so you can compare embedding quality per metric.
 
@@ -705,7 +720,7 @@ Pinecone           Managed                                Premium, easy
 Turbopuffer        Serverless cloud vector              New, fast-growing
 ```
 
-**Practical implication:** OmniIntelOS should add an "advanced" config that
+**Practical implication:** IntelAI should add an "advanced" config that
 swaps ChromaDB for **Qdrant or pgvector**. The README should explicitly say
 "ChromaDB for dev, Qdrant for prod" — this resonates with senior buyers.
 
@@ -890,7 +905,7 @@ DeepSeek V3.5                    $0.27 / $1.10                   Cheapest fronti
 Local Llama 3.3 70B (Ollama)     $0 + electricity                Privacy / cost cap
 ```
 
-A typical production OmniIntelOS chat call might mix:
+A typical production IntelAI chat call might mix:
 - Claude Sonnet 4.6 for the persona-grounded synthesis ($0.02 per call)
 - Groq Llama 3.3 70B for high-volume KPI summarization ($0.001 per call)
 - Local Llama 3.2 Vision via Ollama for any document parsing ($0)
@@ -947,20 +962,46 @@ reality checks above. Specifically:
 
 ---
 
-## PROJECT 1: OmniIntelOS Refactored
+## PROJECT 1: IntelAI Refactored
 ### AI Analytics Platform with Persona-Aware RAG Copilot
 
 ### 1.1 What it becomes
 
-Stop marketing this as "enterprise operating system." Reframe as:
+IntelAI is the **scoped** extraction from the original codebase — *not* the all-in-one
+platform (that is now the separate private `OmniIntelOS` repo). Reframe as:
 
 > **A production-ready AI analytics backend with a 9-persona RAG copilot,
-> multi-domain KPI intelligence, ML forecasting, and board-ready exports.
-> 60 API endpoints. Role-based access. Bilingual (EN/FR).**
+> multi-domain KPI intelligence, GraphRAG-lite retrieval, ML forecasting, and
+> board-ready exports. JWT + RBAC. Bilingual (EN/FR). One cloud deployment.**
 
-This description maps to five different Upwork search queries
-(RAG developer, FastAPI developer, BI developer, AI chatbot developer,
-AI integration engineer) and is concrete enough for a CTO to evaluate.
+This maps to five Upwork search queries (RAG developer, FastAPI developer, BI
+developer, AI chatbot developer, AI integration engineer) and is concrete enough for a
+CTO to evaluate.
+
+**IntelAI scope (authoritative).** One cloud deployment (Railway/Fly + managed
+Postgres); no on-prem multi-service stack.
+
+KEEP (in scope):
+- Multi-domain KPI analytics (Finance, HR, IT, Ops, Logistics, ESG, Risk): Dashboard,
+  Analytics, Forecasting (Monte Carlo CI), Insights/anomalies, board-ready PDF export.
+- 9-persona RAG copilot — role-scoped data, WebSocket streaming, source citations.
+- **GraphRAG-lite + hybrid retrieval + BGE reranker** — the branded differentiator.
+- LiteLLM multi-provider router; Auth + JWT + RBAC; bilingual EN/FR.
+- ChromaDB (dev) / pgvector or Qdrant (prod, via env).
+- Packageable: `omnismart-personas` on PyPI — the only artifact shared across projects.
+
+CUT — these belong to the separate full OmniIntelOS platform or to sibling niches;
+**Phase 1 removes them from this repo**:
+- Monitoring (Prometheus/Grafana/alert rules), nginx, Cloudflare tunnels, the
+  multi-service on-prem `docker-compose.yml`, MonitoringPage → **OmniIntelOS platform**.
+- n8n workflows + N8NWorkflowPage + IntegrationsPage → OmniIntelOS / StreamPulse + AgentKit.
+- OCR microservice (`src/services/ocr`, ScannerPage, `omnitel-ocr`) → **DocIntel**.
+- Voice microservice (`src/services/voice`, VoicePage, `omnitel-voice`) → **VoiceFlow**.
+- Heavy BulkData/DataHub ingestion → trim to a simple CSV/JSON upload; streaming → StreamPulse.
+
+**Dependency rule:** IntelAI must build, test, and deploy with **zero** runtime or import
+dependency on the OmniIntelOS platform or any of the other 5 projects. The personas package
+is consumed via PyPI, not via a repo link.
 
 ### 1.2 Architecture (what exists today)
 
@@ -1128,7 +1169,7 @@ trusted reviewers (peer freelancers, friends with tech backgrounds,
 your future self after sleep). Get feedback. Iterate. Most demos fail
 because they're optimized for the builder, not the buyer.
 
-### 1.6 Upwork niches for OmniIntelOS
+### 1.6 Upwork niches for IntelAI
 
 ```
 NICHE 1: RAG / AI Chatbot Developer
@@ -1177,9 +1218,9 @@ This becomes:
 - A LinkedIn post in 2027 ("Here's what I learned building production RAG")
 - A research-app credential ("I demonstrated this pattern in deployment")
 
-### 1.10 2026 Stack Upgrade For OmniIntelOS (apply during Phase 0 + Phase 1)
+### 1.10 2026 Stack Upgrade For IntelAI (apply during Phase 0 + Phase 1)
 
-The original OmniIntelOS shipped on Groq + LangChain + ChromaDB + sentence-transformers
+The original IntelAI shipped on Groq + LangChain + ChromaDB + sentence-transformers
 (MiniLM). For 2026 leadership, upgrade in three targeted moves. None of these
 are blocking — the existing stack works — but each upgrade adds a line your
 clients ask about in interviews.
@@ -1301,7 +1342,7 @@ QDRANT_API_KEY=...
 Even if you never deploy Qdrant in 2026, the documentation alone — "swap
 to Qdrant for production via env var" — signals to senior buyers.
 
-**Summary — OmniIntelOS 2026 stack:**
+**Summary — IntelAI 2026 stack:**
 
 ```
 LAYER                 OLD                          NEW
@@ -1371,7 +1412,7 @@ Upwork as bonus, not primary.
 └─────────────────────────────┬───────────────────────────────────────┘
                               │ Direct Python imports
 ┌─────────────────────────────▼───────────────────────────────────────┐
-│                    OmniIntelOS Backend (data layer)                  │
+│                    IntelAI Backend (data layer)                  │
 │  pg_store · insights · forecasting · PostgreSQL + ChromaDB          │
 └──────────────────────────────────────────────────────────────────────┘
                               │
@@ -1390,7 +1431,7 @@ Upwork as bonus, not primary.
 
 Repo: `agentkit/`
 
-Extracted (copied from OmniIntelOS):
+Extracted (copied from IntelAI):
 - `src/services/pg_store.py` → `agentkit/services/pg_store.py`
 - `src/services/insights.py` → `agentkit/services/insights.py`
 - `src/services/forecasting.py` → `agentkit/services/forecasting.py`
@@ -1487,7 +1528,7 @@ becomes a **multi-framework, multi-provider agent showcase**. The position:
 "you can plug AgentKit into Claude Desktop, Cursor, any LangGraph project,
 any CrewAI project, or build your own client — same six tools."
 
-**Move 1 — Multi-LLM via LiteLLM (same pattern as OmniIntelOS).**
+**Move 1 — Multi-LLM via LiteLLM (same pattern as IntelAI).**
 
 The planner agent uses Claude Sonnet 4.6 (best for breaking down hard
 business questions). The analyst agent uses Groq Llama 3.3 70B (high
@@ -1646,7 +1687,7 @@ core of a standalone product.
 
 Repo: `docintel/`
 
-Extracted from OmniIntelOS:
+Extracted from IntelAI:
 - `src/services/ocr_enhancement.py` → `docintel/services/ocr_enhancement.py`
 - `src/services/ocr/main.py` → `docintel/services/tesseract_service.py`
 - `src/services/ocr/Dockerfile.ocr` → `docintel/Dockerfile`
@@ -2024,7 +2065,7 @@ Honesty wins clients. Don't promise diarization if you can't reliably ship it.
 
 Repo: `voiceflow/`
 
-Extracted from OmniIntelOS:
+Extracted from IntelAI:
 - `src/services/voice/main.py` → `voiceflow/services/voice_service.py`
 - `src/integrations/tts.py` → `voiceflow/services/tts_service.py`
 - `src/core/logger.py` → `voiceflow/core/logger.py`
@@ -2318,7 +2359,7 @@ The honest competitive frame for a proposal:
 
 Repo: `rageval/`
 
-Extracted from OmniIntelOS:
+Extracted from IntelAI:
 - `src/core/monitoring.py` → `rageval/core/monitoring.py`
 - `src/core/performance.py` → `rageval/core/performance.py`
 - `src/core/logger.py` → `rageval/core/logger.py`
@@ -2358,10 +2399,10 @@ That's it. The decorator:
 biggest credibility play. Even 100 downloads a month is meaningful.
 Target: 500 downloads/month by end of 2026.
 
-### 5.5 Integration into OmniIntelOS (self-eating dogfood)
+### 5.5 Integration into IntelAI (self-eating dogfood)
 
 Modify `omnismart_chatbot.py` to call `rageval.track`. Now every chat
-interaction in OmniIntelOS is automatically logged and scored. This
+interaction in IntelAI is automatically logged and scored. This
 is your demo: open the RAGeval dashboard, see real production data
 from your own deployed system flowing in.
 
@@ -2616,7 +2657,7 @@ External Sources:
 
 Repo: `streampulse/`
 
-Extracted from OmniIntelOS (the full primary modules):
+Extracted from IntelAI (the full primary modules):
 - `src/services/realtime_pipeline.py` (500 lines) → `streampulse/pipeline/classifier.py`
 - `src/services/data_ingestion_manager.py` (558 lines) → `streampulse/pipeline/ingestion.py`
 - `src/integrations/dispatcher.py` (Gmail + Sheets parts) → `streampulse/connectors/`
@@ -2849,9 +2890,9 @@ single Upwork client can buy two or three of them as a bundle:
 ```
 SYNERGY PAIR / TRIPLE        CLIENT VALUE PROPOSITION
 ─────────────────────────────────────────────────────────────────────
-OmniIntelOS + RAGeval        "Production RAG + measured quality"
+IntelAI + RAGeval        "Production RAG + measured quality"
                               (RAGeval drops in via @track decorator)
-AgentKit + OmniIntelOS       "MCP-powered analytics agents"
+AgentKit + IntelAI       "MCP-powered analytics agents"
                               (Claude Desktop talks to your data)
 DocIntel + StreamPulse       "Vision-first multi-source aggregator"
                               (auction listings, invoice intake, etc.)
@@ -3062,7 +3103,7 @@ Always write:
 ```
 PROJECT          UPWORK PRIORITY    WHY
 ─────────────────────────────────────────────────────────────
-OmniIntelOS     PRIMARY            Highest niche overlap
+IntelAI     PRIMARY            Highest niche overlap
 DocIntel        PRIMARY            Most consistent demand
 RAGeval         SECONDARY          Premium-rate, lower volume
 VoiceFlow       SECONDARY          Growing niche, lower volume
@@ -3115,7 +3156,7 @@ For each project, publish:
 ```
 PROJECT          OSS DELIVERABLE                                LAUNCH BY
 ─────────────────────────────────────────────────────────────────────────
-OmniIntelOS     `pip install omnismart-personas`               Week 4
+IntelAI     `pip install omnismart-personas`               Week 4
                 (persona templates as standalone package)
 AgentKit        GitHub repo (primary) + Awesome-MCP listing    Week 10
 DocIntel        DockerHub: `docintel/api:latest`               Week 7
@@ -3478,7 +3519,7 @@ The Anthropic Fellows program (and similar at other top labs) values:
 - Independent thinking (a portfolio of well-argued blog posts goes far)
 - Ability to write clearly (most candidates can't)
 
-**Persona-routed RAG with role-scoped data access** (your OmniIntelOS
+**Persona-routed RAG with role-scoped data access** (your IntelAI
 core differentiator) connects to alignment-relevant questions:
 
 - How do you constrain LLM behavior to a defined role?
@@ -3724,7 +3765,7 @@ five reasons:
    shared, which dependencies are core vs. peripheral, which imports were sloppy.
    You make those calls once at the start.
 3. **Git history starts clean per repo.** Each project has commits that read like
-   the project's own evolution, not "extracted from OmniIntelOS in week N."
+   the project's own evolution, not "extracted from IntelAI in week N."
 4. **Easier mental model.** Six directories side-by-side. You always know which
    one you're working in.
 5. **One splitting pass, not six.** The AI agent prompt is run once with all six
@@ -3735,7 +3776,7 @@ project, primary file is `ocr_enhancement.py`). If DocIntel's extraction works
 cleanly — imports resolve, tests pass, server starts — you trust the prompt for the
 other five. If DocIntel breaks, you fix the prompt before running it on the others.
 
-#### Build order rationale (why Phase 1 = OmniIntelOS, Phase 6 = StreamPulse)
+#### Build order rationale (why Phase 1 = IntelAI, Phase 6 = StreamPulse)
 
 The order is chosen by **freelance signal value × research signal value × build
 risk**, not by alphabetical or technical convenience.
@@ -3743,7 +3784,7 @@ risk**, not by alphabetical or technical convenience.
 ```
 PHASE  PROJECT          WHY THIS POSITION
 ─────────────────────────────────────────────────────────────────────────────
-1      OmniIntelOS      Already mostly built. Fastest path to first live demo.
+1      IntelAI      Already mostly built. Fastest path to first live demo.
                         Sets the Upwork profile baseline. Bilingual hero asset.
 2      DocIntel         Highest-volume Upwork niche (OCR/document AI). Validates
                         income signal before committing to longer builds.
@@ -3796,7 +3837,7 @@ Phase 1 early — use the slack for clean-up audits and reading.
 **Output:** Six directories at `~/projects/` (or your preferred location):
 ```
 ~/projects/
-  omniintelos/        ← refactored monorepo (Phase 1 target)
+  intelai/        ← refactored monorepo (Phase 1 target)
   agentkit/           ← MCP server + LangGraph workflow
   docintel/           ← document intelligence pipeline
   voiceflow/          ← speech-to-intelligence
@@ -3906,7 +3947,7 @@ Tasks:
   1. Open a NEW Claude Code session per project (5 sessions, sequential).
      Doing them sequentially in fresh sessions keeps context focused.
   2. For each project (AgentKit, VoiceFlow, RAGeval, StreamPulse, plus
-     the OmniIntelOS refactor):
+     the IntelAI refactor):
        a. Provide the corresponding PROJECT N block from Section 30
        b. Let it create the directory and files
        c. Immediately verify:
@@ -3917,7 +3958,7 @@ Tasks:
             uvicorn api:app --port 8001 &     # for FastAPI projects
             curl http://localhost:8001/health
        d. Note any failure; do NOT move to next project until current is clean
-  3. The OmniIntelOS refactor is "edits in place," not a new directory:
+  3. The IntelAI refactor is "edits in place," not a new directory:
        a. Apply the PROJECT 1 changes to the existing repo
        b. cd frontend && npm install recharts (do this!)
        c. Run pytest tests/test_api.py to confirm tests still pass
@@ -3958,7 +3999,7 @@ For each of the six projects, run the following matrix:
 ```
 PROJECT       SMOKE TEST                    DEEPER VERIFY
 ──────────────────────────────────────────────────────────────────────────
-omniintelos   pytest tests/                 All 9 personas resolve;
+intelai   pytest tests/                 All 9 personas resolve;
                                             chat endpoint returns text
 agentkit      python mcp_server.py          MCP tools list correctly;
                                             workflow.analyze() returns dict
@@ -4002,7 +4043,7 @@ when you've forgotten the context. Future-you will be grateful.
 **End of day checkpoint:**
 - [ ] All 6 projects have deeper verify passing
 - [ ] Each project has a STATUS.md with known gaps noted
-- [ ] You have a list of pre-Phase 1 fixes needed for OmniIntelOS
+- [ ] You have a list of pre-Phase 1 fixes needed for IntelAI
 
 #### Day 5 — Git Init + GitHub Push (Private) + Branch Strategy
 
@@ -4013,14 +4054,14 @@ Tasks (do this for each of the 6 projects):
   1. cd <project>
   2. git init
   3. git add . (after .gitignore is in place — verify with git status)
-  4. git commit -m "initial: extracted from OmniIntelOS monorepo (week 0)"
+  4. git commit -m "initial: extracted from IntelAI monorepo (week 0)"
   5. Create the repo on GitHub as PRIVATE:
        gh repo create <yourname>/<project> --private --source=. --remote=origin
   6. git push -u origin main
   7. Verify: gh repo view <yourname>/<project>
 
 Repos to create (suggested naming):
-  - omniintelos        (or omnismart if name conflicts)
+  - intelai        (or omnismart if name conflicts)
   - agentkit
   - docintel
   - voiceflow
@@ -4111,13 +4152,13 @@ Tasks:
 
 ```
 Tasks:
-  1. Apply the file deletions from Day 1 to the OmniIntelOS refactor:
+  1. Apply the file deletions from Day 1 to the IntelAI refactor:
        rm COMPLETION_REPORT.md INTEGRATION_PLAN.md WORK_INDEX.md
        rm Production_Readiness_Checklist.md
        rm docs/200_TASKS_COVERAGE.md
        rm omniinteloscompletestrategy   # v1 strategy now superseded
      Commit: "chore: remove stale planning docs (v2 strategy supersedes)"
-  2. Refactor the omniintelos repo README to point at STRATEGY.md
+  2. Refactor the intelai repo README to point at STRATEGY.md
      instead of the deleted docs.
   3. Ensure STRATEGY.md (this file) is itself committed.
 ```
@@ -4126,22 +4167,22 @@ Tasks:
 
 ```
 Tasks:
-  4. Open the omniintelos repo and lay out a TODO.md with Phase 1's
+  4. Open the intelai repo and lay out a TODO.md with Phase 1's
      Day 1-5 tasks in checkbox form (from Section 16.2). You will
      check these off in real time during Phase 1.
   5. Confirm Recharts is installed in frontend/ (was done Day 3 if
-     part of OmniIntelOS refactor — verify):
-       cd omniintelos/frontend && npm list recharts
+     part of IntelAI refactor — verify):
+       cd intelai/frontend && npm list recharts
   6. Identify which Upwork niches you'll start with on Day 12 of Phase 1
      (after profile + demo are live). Recommended: RAG, FastAPI, AI chatbot.
-  7. Set a personal calendar reminder for Phase 1, Day 1: "Build OmniIntelOS
+  7. Set a personal calendar reminder for Phase 1, Day 1: "Build IntelAI
      visuals — Recharts replacement starts today."
 ```
 
 **End of day checkpoint (end of Week 0):**
 - [ ] All Day 1-6 checkpoints are green
-- [ ] Stale docs deleted from omniintelos repo
-- [ ] TODO.md exists in omniintelos for Phase 1
+- [ ] Stale docs deleted from intelai repo
+- [ ] TODO.md exists in intelai for Phase 1
 - [ ] You are not exhausted; you are ready for Phase 1
 - [ ] You have not started Phase 1 work yet (respect the buffer)
 
@@ -4156,8 +4197,8 @@ All 6 have private GitHub repos with develop branch         [ ]
 All 6 have working .venv + .env + Dockerfile that builds    [ ]
 All 6 have CI configured and green                          [ ]
 Each project has a STATUS.md with known gaps                [ ]
-OmniIntelOS stale docs deleted, README updated              [ ]
-TODO.md in omniintelos exists for Phase 1 Day 1             [ ]
+IntelAI stale docs deleted, README updated              [ ]
+TODO.md in intelai exists for Phase 1 Day 1             [ ]
 ```
 
 If any row is unchecked, **do not start Phase 1**. Spend the weekend (or an
@@ -4165,7 +4206,7 @@ extra day) closing the gap. Phase 1 success depends on Week 0 being clean.
 
 ---
 
-### 16.2 Phase 1 — OmniIntelOS Foundation (Weeks 1–3)
+### 16.2 Phase 1 — IntelAI Foundation (Weeks 1–3)
 
 **Goal:** Publish the first portfolio entry. Demo live, Upwork profile launched,
 omnismart-personas package on PyPI, first 50 proposals out, Blog Post 1 published.
@@ -4179,7 +4220,7 @@ shipped at the end.
 Day 8 — Recharts Conversion (Part 1)
 ─────────────────────────────────────────────
 Morning:
-  cd omniintelos/frontend
+  cd intelai/frontend
   npm install recharts (confirm package.json)
   Replace SVG bars in AnalyticsPage.jsx with Recharts LineChart
   Verify in browser: charts render, data loads from API
@@ -4279,7 +4320,7 @@ Day 14 — Loom Demo Recording (3-minute walkthrough)
 ─────────────────────────────────────────────
 Morning:
   Script the demo (write it out, don't ad-lib):
-    0:00–0:15  "Hi, I'm Yacine. OmniIntelOS is a multi-persona AI
+    0:00–0:15  "Hi, I'm Yacine. IntelAI is a multi-persona AI
                 analytics platform. Let me show you."
     0:15–0:45  Login → dashboard → switch persona to CFO →
                 show financial KPIs scoped to CFO view
@@ -4326,8 +4367,8 @@ Afternoon:
     - Skills (paste from 24.3)
     - Hourly rate: $65 (will raise after first 3-5 reviews)
     - Profile photo: professional but not stiff
-  Add OmniIntelOS as portfolio entry #1:
-    - Title: "OmniIntelOS — AI Analytics with 9 C-Suite Personas"
+  Add IntelAI as portfolio entry #1:
+    - Title: "IntelAI — AI Analytics with 9 C-Suite Personas"
     - Description: 3 bullets, lead with live demo link
     - 3 screenshots: dashboard, chat, forecasting page
 
@@ -4336,7 +4377,7 @@ Day 17 — Write 3 Vertical Proposal Templates
 ─────────────────────────────────────────────
 Full day:
   From Section 26, customize Templates 1, 2, 3 for your voice:
-    Template 1: For RAG / AI chatbot jobs → leads with OmniIntelOS demo
+    Template 1: For RAG / AI chatbot jobs → leads with IntelAI demo
     Template 2: For FastAPI / backend jobs → leads with API design
     Template 3: For BI / analytics jobs → leads with multi-persona angle
   Each template:
@@ -4366,7 +4407,7 @@ Afternoon:
 
 **Week 2 checkpoint:**
 - [ ] Loom demo is recorded, < 3:30, watched by 3+ reviewers
-- [ ] Upwork profile is live with OmniIntelOS portfolio entry
+- [ ] Upwork profile is live with IntelAI portfolio entry
 - [ ] 10 proposals sent, all logged in Notion
 
 #### Week 3 — Volume Application + Blog Post 1 + PyPI Package
@@ -4389,7 +4430,7 @@ Each day:
             (persona-conditioned prompts + data scoping), the architecture
             diagram, the code skeleton
     Day 21: Write the second half (~1000 words)
-            Focus on: real examples from OmniIntelOS (CFO vs CTO query
+            Focus on: real examples from IntelAI (CFO vs CTO query
             differences), evaluation metrics (groundedness shifts per
             persona), what worked, what didn't, future work
 
@@ -4402,7 +4443,7 @@ Morning:
   Send draft to 2 reviewers (technical peer + writing-strong friend)
 Afternoon:
   Apply review feedback
-  Add 3-5 code snippets (real code from omniintelos, not pseudocode)
+  Add 3-5 code snippets (real code from intelai, not pseudocode)
   Add 1 architecture diagram (ASCII or Excalidraw export)
   Add 1 evaluation table (if you have RAGeval data even minimal)
 
@@ -4410,7 +4451,7 @@ Afternoon:
 Day 23 — Finalize Blog Post 1 Draft (NOT PUBLISHED — defer to 2027)
 ─────────────────────────────────────────────
 Morning:
-  Save the cleaned draft to: omniintelos/drafts/blog_post_1_persona_rag.md
+  Save the cleaned draft to: intelai/drafts/blog_post_1_persona_rag.md
   Save a parallel LinkedIn-length draft (300 words) to:
     writing_workspace/linkedin_drafts/post_1_persona_rag_linkedin.md
   Save a Hacker News "Show HN" draft (title + 200-word comment) to:
@@ -4420,14 +4461,14 @@ Morning:
   Do NOT publish anywhere public. (See Section 5.1 channel split.)
 Afternoon:
   More Upwork proposals (5-10 today)
-  Update the omniintelos GitHub README to reference the live demo
+  Update the intelai GitHub README to reference the live demo
     + link to the Loom video. The README is your public surface in 2026.
 
 
 Day 24 — Extract omnismart-personas Package
 ─────────────────────────────────────────────
 Morning:
-  Create new sub-directory inside omniintelos: packages/omnismart-personas/
+  Create new sub-directory inside intelai: packages/omnismart-personas/
   Or new repo: gh repo create <yourname>/omnismart-personas --public
   Structure:
     omnismart_personas/
@@ -4473,7 +4514,7 @@ Afternoon:
     - Contracts: ___ (target: 0-1)
     - Blog post views: ___ (target: 100-500)
     - PyPI downloads (omnismart-personas): ___
-    - GitHub stars (omniintelos public if it is): ___
+    - GitHub stars (intelai public if it is): ___
   Review the Notion proposal log: which template/niche converts best?
 
 
@@ -4499,13 +4540,13 @@ Afternoon:
 ```
 DELIVERABLE                                                 STATUS
 ─────────────────────────────────────────────────────────────────
-OmniIntelOS deployed at public URL                           [ ]
+IntelAI deployed at public URL                           [ ]
 4 chart pages use Recharts                                   [ ]
 WebSocket streaming chat working                             [ ]
 30+ pytest tests passing                                     [ ]
 README rewritten, < 200 lines                                [ ]
 Loom demo recorded, pre-reviewed                             [ ]
-Upwork profile live with OmniIntelOS portfolio              [ ]
+Upwork profile live with IntelAI portfolio              [ ]
 50 proposals sent, all logged                                [ ]
 Blog Post 1 DRAFTED + saved to drafts/ (defer publishing to Q1 2027)  [ ]
 omnismart-personas published to PyPI                         [ ]
@@ -4855,7 +4896,7 @@ Morning:
   Fix anything broken from the week
   Continue OCR proposal volume (10 more today, cumulative 20+)
 Afternoon:
-  Send 5 proposals on OmniIntelOS-niche jobs (don't abandon Phase 1
+  Send 5 proposals on IntelAI-niche jobs (don't abandon Phase 1
     niches just because Phase 2 shipped)
   Plan Phase 3: when does Phase 3 Day 1 start?
 ```
@@ -5200,7 +5241,7 @@ Morning:
   Send 5-10 MCP-specific proposals (Section 26 Template 2)
   Lead with AgentKit GitHub link + Claude Desktop demo
 Afternoon:
-  Continue OmniIntelOS + DocIntel niche proposals (5-10 today)
+  Continue IntelAI + DocIntel niche proposals (5-10 today)
   Phase 3 metrics review:
     - AgentKit GitHub stars: ___ (target: 10+)
     - Demo video views: ___
@@ -5513,7 +5554,7 @@ Full day:
     Lead with the browser-recording demo (memorable hook)
     Mention the 85%+ accuracy stat from DocIntel + the structured-output
       capability from VoiceFlow
-  Continue OmniIntelOS / DocIntel / AgentKit niches (5+ each)
+  Continue IntelAI / DocIntel / AgentKit niches (5+ each)
   Total proposals today: 25-30
 
 
@@ -5533,7 +5574,7 @@ Afternoon:
   Decide: SQLite default vs PostgreSQL? (Recommend SQLite default for
     drop-in deploy; Postgres as optional config)
   Pre-stage: collect 5-10 query/answer pairs for testing scorers
-    (you can synthesize these from OmniIntelOS chat logs)
+    (you can synthesize these from IntelAI chat logs)
 
 
 Day 77 — Buffer + Continue Volume
@@ -5728,7 +5769,7 @@ Afternoon:
     LineChart: daily cost over 30 days
     Summary: total cost, avg per query, projected monthly
     Model breakdown table
-  Polish: dark theme (#0f172a), consistent with OmniIntelOS
+  Polish: dark theme (#0f172a), consistent with IntelAI
   Manual test: generate 50 fake interactions, verify dashboard renders
 
 
@@ -5885,7 +5926,7 @@ Afternoon:
 Day 93 — Continue Volume + Inbound Response
 ─────────────────────────────────────────────
 Morning:
-  Continue OmniIntelOS / DocIntel / AgentKit / VoiceFlow niches
+  Continue IntelAI / DocIntel / AgentKit / VoiceFlow niches
     (5 proposals each across the day = 20 total)
 Afternoon:
   Respond to PyPI download spike notifications, GitHub issues,
@@ -5915,7 +5956,7 @@ Full day:
       1. Introduction (the gap)
       2. Related work (Phoenix, Langfuse, TruLens, recent RAG eval papers)
       3. Method (the prompt, the integration)
-      4. Experiments (your OmniIntelOS data with 9 personas)
+      4. Experiments (your IntelAI data with 9 personas)
       5. Discussion (limitations, future work)
       6. Conclusion
     Identify 10-15 papers to cite (recent RAG eval literature)
@@ -6102,7 +6143,7 @@ Morning:
         StreamPulse demo link + 1-line description
         Soft CTA: "Worth a 15-min look?"
     Template B (BI angle): for COO / VP Operations
-      Lead with OmniIntelOS demo instead, soft offer to discuss
+      Lead with IntelAI demo instead, soft offer to discuss
       analytics/BI overall
 Afternoon:
   Send 15 cold emails (mix of A and B templates)
@@ -6221,7 +6262,7 @@ Day 111 — Preprint Section 4 (Experiments)
 ─────────────────────────────────────────────
 Full day:
   Section 4 (Experiments, ~1500 words):
-    Dataset: OmniIntelOS with 9 personas
+    Dataset: IntelAI with 9 personas
     Generate 200-500 query-answer-context tuples (one big eval run):
       Use the synthetic dataset (25,920 KPI records, 144 months, 5 domains)
       For each persona, generate 20-50 representative queries
@@ -6641,7 +6682,7 @@ This is sustainable if you have 1 paying client. Not sustainable from day 1.
 TIER 1 — ALWAYS-ON (your strongest demos)
   Hosted on: Railway or Fly.io
   Cost: $15-25/month
-  Projects: OmniIntelOS (primary demo), DocIntel (second-strongest)
+  Projects: IntelAI (primary demo), DocIntel (second-strongest)
 
 TIER 2 — COLD-START (acceptable for demos, secondary)
   Hosted on: Fly.io free machines (cold-start in 2-3 seconds)
@@ -6736,7 +6777,7 @@ One row per proposal. Columns:
 - Date sent
 - Job title (and link)
 - Niche (RAG / OCR / FastAPI / etc.)
-- Demo used (OmniIntelOS / DocIntel / etc.)
+- Demo used (IntelAI / DocIntel / etc.)
 - Template used (T1-T6)
 - Client's prior reviews (0 / 1-10 / 10+)
 - Client country
@@ -6812,7 +6853,7 @@ Each project has 2–3 vertical-specific positioning angles. Pick ONE
 primary per project and lead with it. Have a backup for variety.
 
 ```
-PROJECT 1 — OmniIntelOS
+PROJECT 1 — IntelAI
   PRIMARY:   Series A SaaS analytics ("ARR, churn, headcount built-in")
   SECONDARY: Healthcare KPI + compliance reporting
   TERTIARY:  ESG / sustainability reporting (EU CSRD-driven)
@@ -6872,7 +6913,7 @@ I build production AI systems that work after deployment — not just in demos.
 Portfolio includes 6 deployed AI projects with live demos and open-source
 artifacts on PyPI/GitHub:
 
-→ OmniIntelOS: 60-endpoint AI analytics backend with 9 C-suite AI personas.
+→ IntelAI: 60-endpoint AI analytics backend with 9 C-suite AI personas.
   Each persona has role-based data scoping. Bilingual (EN/FR). Deployed.
 
 → AgentKit: MCP server exposing business intelligence to Claude Desktop,
@@ -7077,7 +7118,7 @@ Local LLM ranking               DocIntel + StreamPulse (Ollama tier)
 n8n workflow integration        StreamPulse (custom n8n node + 3 workflows)
 Unattended + self-monitoring    StreamPulse (Prefect 3 orchestration option)
 Mobile-friendly dashboard       StreamPulse (React + responsive design)
-Daily digest email              Reuse OmniIntelOS's email infrastructure
+Daily digest email              Reuse IntelAI's email infrastructure
 Existing-code reference         You can read their scraper, integrate cleanly
 ```
 
@@ -7086,7 +7127,7 @@ of this in open source, here are the links" — which is the opposite of the
 position 90% of competing applicants will be in.
 
 **Critical:** you cannot apply to this post **until DocIntel + StreamPulse +
-OmniIntelOS are all live with public READMEs and Loom demos.** That's the
+IntelAI are all live with public READMEs and Loom demos.** That's the
 end of Phase 6 of the 18-week plan. This case study is a forward-looking
 example, not an immediate action.
 
@@ -7127,9 +7168,9 @@ specified:
     Demo: <STREAMPULSE_DEMO_URL>
     Repo: github.com/<yourname>/streampulse
 
-→ OmniIntelOS — provides the email-digest pipeline I'd reuse for your
+→ IntelAI — provides the email-digest pipeline I'd reuse for your
   daily digest + push notifications.
-    Repo: github.com/<yourname>/omniintelos
+    Repo: github.com/<yourname>/intelai
 
 Now to your four questions:
 
@@ -7290,7 +7331,7 @@ TYPICAL POST:    "I have ~500 PDF/markdown docs. Want an internal
                   chatbot that answers questions with sources cited.
                   React frontend OK. Self-hosted preferred."
 
-PROJECTS USED:   OmniIntelOS (RAG + chat UI + sources) + DocIntel
+PROJECTS USED:   IntelAI (RAG + chat UI + sources) + DocIntel
                   (PDF ingestion via vision-first or Marker) + RAGeval
                   (groundedness scoring shipped with their deploy)
 
@@ -7588,7 +7629,7 @@ WEEK 2  — Blog Post 2 (Vision-First Document AI) + Show HN #2 (DocIntel)
           Post Reddit r/MachineLearning methodology-led excerpt
 WEEK 3  — Blog Post 3 (MCP Tool Design Patterns) + Show HN #3 (already
           submitted AgentKit in week 1; this week's Show HN can be
-          DocIntel or OmniIntelOS depending on which got Reddit traction)
+          DocIntel or IntelAI depending on which got Reddit traction)
 WEEK 4  — Blog Post 4 (Speech-to-Intelligence) + Show HN #4 (VoiceFlow)
           Reddit r/speech_recognition crosspost
 WEEK 5  — Blog Post 5 (Multi-Judge LLM Eval) + Show HN #5 (RAGeval)
@@ -7735,7 +7776,7 @@ launch day.
 yacine.dev/
   /              Homepage: hero + 6 project cards + "About" link
   /projects/     Project gallery (one card per repo with screenshot, hook)
-  /projects/omniintelos/   Per-project deep page
+  /projects/intelai/   Per-project deep page
   /projects/agentkit/
   /projects/docintel/
   /projects/voiceflow/
@@ -7962,11 +8003,11 @@ fix the prompt before running on the remaining 5 projects.
 
 ### Pre-prompt context (read this first)
 
-The prompt below produces 6 standalone repositories from the OmniIntelOS
+The prompt below produces 6 standalone repositories from the IntelAI
 monorepo. It assumes:
 
-- You're running in a directory ABOVE the OmniIntelOS source (so the AI
-  agent can read from `./OmniIntelOS/...` and write to sibling directories)
+- You're running in a directory ABOVE the IntelAI source (so the AI
+  agent can read from `./IntelAI/...` and write to sibling directories)
 - You have write access to the working directory
 - Python 3.11 is available
 - You'll add real API keys to `.env` files after the prompt runs
@@ -7985,11 +8026,11 @@ into 6 focused, standalone repositories. Each repo will become an
 independent portfolio project shipping with the 2026 industry-leading
 AI engineering stack.
 
-THE SOURCE REPO: OmniIntelOS/
+THE SOURCE REPO: IntelAI/
 (The full directory structure is accessible to you in the working dir.)
 
 YOUR TASK: Create 6 new project repositories by:
-1. Extracting the relevant files from OmniIntelOS
+1. Extracting the relevant files from IntelAI
 2. Updating all import paths to match the new structure
 3. Adding any glue code needed for each project to be standalone
 4. Creating a proper README.md for each project
@@ -8014,7 +8055,7 @@ GLOBAL DEFAULTS (apply to every project unless overridden):
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-PROJECT 1: OmniIntelOS (refactor the existing repo in place)
+PROJECT 1: IntelAI (refactor the existing repo in place)
 Goal: Clean, deployable version of the main platform
 
 KEEP all files in the repo. Make these specific changes:
@@ -8067,7 +8108,7 @@ Goal: MCP server + multi-framework agent workflow (LangGraph + Claude Agent SDK 
 
 CREATE new directory: agentkit/
 
-EXTRACT these files from OmniIntelOS (copy, don't move):
+EXTRACT these files from IntelAI (copy, don't move):
   src/services/pg_store.py        → agentkit/services/pg_store.py
   src/services/insights.py        → agentkit/services/insights.py
   src/services/forecasting.py     → agentkit/services/forecasting.py
@@ -8143,7 +8184,7 @@ CREATE these new files:
     Architecture ASCII diagram
 
   agentkit/.env.example:
-    POSTGRES_URL=postgresql://omniintel:change_me@localhost:5432/omniintelos
+    POSTGRES_URL=postgresql://omniintel:change_me@localhost:5432/intelai
     LLM_DEFAULT=groq/llama-3.3-70b-versatile
     LLM_REASONING=anthropic/claude-sonnet-4-6
     LLM_JUDGE=anthropic/claude-haiku-4-5
@@ -8162,7 +8203,7 @@ Goal: Vision-first document AI pipeline (the 2026 leading approach)
 
 CREATE new directory: docintel/
 
-EXTRACT from OmniIntelOS:
+EXTRACT from IntelAI:
   src/services/ocr_enhancement.py  → docintel/services/ocr_extractor.py
   src/services/ocr/main.py         → docintel/services/tesseract_service.py
   src/integrations/camera.py       → docintel/services/camera.py
@@ -8260,7 +8301,7 @@ Goal: Multi-provider speech-to-intelligence pipeline
 
 CREATE new directory: voiceflow/
 
-EXTRACT from OmniIntelOS:
+EXTRACT from IntelAI:
   src/services/voice/main.py       → voiceflow/services/voice_service.py
   src/integrations/tts.py          → voiceflow/services/tts_service.py
   src/core/logger.py               → voiceflow/core/logger.py
@@ -8351,7 +8392,7 @@ Goal: Standards-track LLMOps observability with multi-judge consensus
 
 CREATE new directory: rageval/
 
-EXTRACT from OmniIntelOS:
+EXTRACT from IntelAI:
   src/core/monitoring.py    → rageval/core/monitoring.py
   src/core/performance.py   → rageval/core/performance.py
   src/core/logger.py        → rageval/core/logger.py
@@ -8458,7 +8499,7 @@ Goal: Real-time multi-source data pipeline (with n8n + vision composition)
 
 CREATE new directory: streampulse/
 
-EXTRACT from OmniIntelOS:
+EXTRACT from IntelAI:
   src/services/realtime_pipeline.py    → streampulse/pipeline/classifier.py
   src/services/data_ingestion_manager.py → streampulse/pipeline/ingestion.py
   src/integrations/n8n.py               → streampulse/connectors/n8n.py
@@ -8552,7 +8593,7 @@ EXECUTION ORDER:
 1. ALWAYS start with Project 3 (DocIntel) as the prompt-validation test.
    If DocIntel extraction works cleanly (imports resolve, uvicorn starts,
    /classify endpoint responds), proceed to the others.
-2. Then Project 1 (OmniIntelOS refactor) — edits in place, smaller scope.
+2. Then Project 1 (IntelAI refactor) — edits in place, smaller scope.
 3. Then Projects 2, 4, 5, 6 in any order (they're independent).
 
 QUALITY REQUIREMENTS FOR EACH PROJECT:
@@ -8614,7 +8655,7 @@ This validation is Phase 0 Day 4 of Section 16.1. Block on it.
 ## Quick Reference: Project Source Map
 
 ```
-FROM OmniIntelOS-master/          → TO PROJECT
+FROM IntelAI-master/          → TO PROJECT
 ───────────────────────────────────────────────────────────────────
 src/api/server_v2.py              → P1: Keep (refactor in place)
 src/services/omnismart_chatbot.py → P1: Keep
@@ -8694,7 +8735,7 @@ Research-aligned        Variable  Variable      Variable
 ```
 CLIENT SEARCHES FOR           USE PROJECT     USE TEMPLATE
 ─────────────────────────────────────────────────────────────
-RAG, LangChain, chatbot       OmniIntelOS     Template 1
+RAG, LangChain, chatbot       IntelAI     Template 1
 MCP server, agent orchestr.   AgentKit        Template 2
 OCR, PDF, document AI, invoice DocIntel        Template 3
 Whisper, STT, voice AI        VoiceFlow       Template 4
@@ -8728,14 +8769,14 @@ ACTIVE CLIENTS    CLIENT TIME   PIPELINE TIME    NEW PROPOSALS
 - **Groundedness** — How well an LLM answer is supported by retrieved
   context. A core RAG evaluation metric.
 - **Persona-routed RAG** — Same retrieval, different system prompts and
-  data scoping per role/persona. Your differentiator in OmniIntelOS.
+  data scoping per role/persona. Your differentiator in IntelAI.
 - **LLMOps** — Operations and monitoring for LLM-based systems. The DevOps
   of the LLM era.
 - **Phoenix / Langfuse / TruLens / Helicone** — LLMOps observability tools.
   RAGeval competes with these as a self-hosted, drop-in alternative.
 - **fastmcp** — Python library for building MCP servers (anthropic-affiliated).
 - **LangGraph** — Library for building stateful multi-agent workflows.
-- **Persona** — In OmniIntelOS, one of 9 C-suite roles (CEO, CFO, CTO, COO,
+- **Persona** — In IntelAI, one of 9 C-suite roles (CEO, CFO, CTO, COO,
   CHRO, ESG Officer, Risk Manager, Business Analyst, General User) each
   with custom system prompts and data scoping.
 - **arXiv preprint** — A research paper publicly released before formal

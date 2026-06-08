@@ -1,9 +1,20 @@
-# OmniIntelOS — Phase 1 TODO (Weeks 1–3, Days 8–27)
+# IntelAI — Phase 1 TODO (Weeks 1–3, Days 8–27)
 
 Checklist for Phase 1, derived from EXECUTION_PLAN.md §Phase 1 and STRATEGY.md §16.2.
 Check items off in real time during the phase.
 
+> ⚑ 2026-06-09: project renamed OmniIntelOS→IntelAI; full platform moved to a private repo.
+> Phase 1 now STARTS with the scope-down below (this repo still carries the full feature set).
+
 ## Week 1 — Visual + Technical Fixes (Days 8–12)
+
+### Day 8 (prerequisite) — Scope-down to IntelAI (see STRATEGY.md §1.1 CUT)
+- [ ] `git rm -r monitoring/ nginx/ n8n_workflows/ tunnels/ src/services/ocr/ src/services/voice/`
+- [ ] Delete pages ScannerPage/VoicePage/N8NWorkflowPage/IntegrationsPage/MonitoringPage + Sidebar/route entries
+- [ ] Replace multi-service `docker-compose.yml` with single-app dev compose + `railway.toml` (drop ocr/voice/prometheus/grafana/n8n/cloudflare services)
+- [ ] Trim BulkData/DataHub to simple CSV/JSON upload
+- [ ] Prune orphaned deps in `requirements.txt`; rename app identity strings in code
+- [ ] Verify: app boots, `/health` 200, kept pages render, `pytest` green, no import errors
 
 ### Day 8 — Recharts Conversion (Part 1)
 - [ ] `cd frontend && npm install recharts` (already in package.json — verify lockfile)
@@ -39,7 +50,7 @@ Check items off in real time during the phase.
 - [ ] Day 13: Rewrite README to <200 lines (one-liner, what-it-does, 3-cmd quickstart, default creds, /api/docs link, ASCII arch, demo link); tag v0.1.0
 - [ ] Day 14: Record 3-min Loom walkthrough (login→dashboard→CFO persona→chat→Risk→Forecasting); upload
 - [ ] Day 15: Pre-review Loom with 3–5 reviewers; mobile + incognito + Lighthouse checks
-- [ ] Day 16: Iterate on feedback; set up Upwork profile; add OmniIntelOS as portfolio entry #1 (3 screenshots)
+- [ ] Day 16: Iterate on feedback; set up Upwork profile; add IntelAI as portfolio entry #1 (3 screenshots)
 - [ ] Day 17: Write 3 vertical proposal templates (RAG/chatbot, FastAPI/backend, BI/analytics) from STRATEGY.md §26
 - [ ] Day 18: Send first 10 proposals (4 RAG / 3 FastAPI / 3 BI); log each in Notion
 
