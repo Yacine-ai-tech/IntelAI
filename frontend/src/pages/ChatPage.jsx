@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import * as api from '../api'
 import {
   MessageSquare, Send, Sparkles, User, Trash2, Plus,
@@ -32,13 +33,12 @@ function MessageBubble({ msg }) {
 export default function ChatPage() {
   const { user } = useAuth()
   const { t } = useTranslation()
+  const queryClient = useQueryClient()
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [personas, setPersonas] = useState([])
   const [selectedPersona, setSelectedPersona] = useState('')
   const [ttsEnabled, setTtsEnabled] = useState(false)
-  const [sessions, setSessions] = useState([])
   const [activeSession, setActiveSession] = useState(null)
   const [connectionStatus, setConnectionStatus] = useState('disconnected')
   const [sessionId, setSessionId] = useState(null)
@@ -46,6 +46,20 @@ export default function ChatPage() {
   const inputRef = useRef(null)
   const wsRef = useRef(null)
   const reconnectTimeoutRef = useRef(null)
+
+  // Use React Query for personas (cached for 1 hour)
+  const { data: personas = [] } = useQuery({
+    queryKey: ['personas'],
+    queryFn: () => api.listPersonas().then(res => res.data?.personas || res.data || []),
+    staleTime: 60 * 60 * 1000, // 1 hour
+  })
+
+  // Use React Query for sessions (cached for 5 minutes)
+  const { data: sessions = [] } = useQuery({
+    queryKey: ['chat-sessions'],
+    queryFn: () => api.getChatSessions?.().then(res => res.data?.sessions || []) || [],
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  })
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -132,20 +146,6 @@ export default function ChatPage() {
   }, [user])
 
   useEffect(() => {
-    api.listPersonas()
-      .then(res => {
-        const list = res.data?.personas || res.data || []
-        setPersonas(list)
-      })
-      .catch(() => setPersonas([]))
-
-    // Load sessions
-    api.getChatSessions?.()
-      .then(res => setSessions(res.data?.sessions || []))
-      .catch(() => {})
-  }, [])
-
-  useEffect(() => {
     if (connectionStatus === 'connected') {
       setMessages([{
         role: 'assistant',
@@ -163,6 +163,8 @@ export default function ChatPage() {
         content: m.content || m.message || m.response,
       })))
       setActiveSession(sessionId)
+      // Invalidate sessions query to reflect recent access
+      queryClient.invalidateQueries(['chat-sessions'])
     } catch {
       // silent
     }

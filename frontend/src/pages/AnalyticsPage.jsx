@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { BarChart3, Hash, Calendar, Layers, FolderKanban, TrendingUp } from 'lucide-react'
@@ -52,45 +53,45 @@ function MetricChart({ data, title }) {
 
 export default function AnalyticsPage() {
   const { t } = useTranslation()
-  const [kpis, setKpis] = useState([])
-  const [periods, setPeriods] = useState([])
-  const [metrics, setMetrics] = useState([])
+  const queryClient = useQueryClient()
   const [selectedMetric, setSelectedMetric] = useState('')
-  const [forecast, setForecast] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [forecastLoading, setForecastLoading] = useState(false)
 
-  const fetchData = useCallback(async () => {
-    setLoading(true)
-    try {
-      const [kpiRes, periodRes, metricRes] = await Promise.allSettled([
-        api.getKPIs(),
-        api.getPeriods(),
-        api.getMetrics(),
-      ])
+  // Use React Query for cached data fetching
+  const { data: kpis = [], isLoading: kpisLoading } = useQuery({
+    queryKey: ['kpis'],
+    queryFn: () => api.getKPIs().then(res => res.data?.metrics || []),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  })
 
-      if (kpiRes.status === 'fulfilled') setKpis(kpiRes.value.data?.metrics || [])
-      if (periodRes.status === 'fulfilled') setPeriods(periodRes.value.data?.periods || [])
-      if (metricRes.status === 'fulfilled') setMetrics(metricRes.value.data?.metrics || [])
-    } catch {
-      // handled by individual promises
-    }
-    setLoading(false)
-  }, [])
+  const { data: periods = [], isLoading: periodsLoading } = useQuery({
+    queryKey: ['periods'],
+    queryFn: () => api.getPeriods().then(res => res.data?.periods || []),
+    staleTime: 10 * 60 * 1000, // 10 minutes
+  })
 
-  useEffect(() => { fetchData() }, [fetchData])
+  const { data: metrics = [], isLoading: metricsLoading } = useQuery({
+    queryKey: ['metrics'],
+    queryFn: () => api.getMetrics().then(res => res.data?.metrics || []),
+    staleTime: 10 * 60 * 1000, // 10 minutes
+  })
 
-  const runForecast = async () => {
+  // Forecast mutation
+  const forecastMutation = useMutation({
+    mutationFn: (metric) => api.runForecast(metric, 6).then(res => res.data),
+    onSuccess: (data) => {
+      // Invalidate relevant queries if needed
+      queryClient.invalidateQueries(['forecast', selectedMetric])
+    },
+  })
+
+  const runForecast = () => {
     if (!selectedMetric) return
-    setForecastLoading(true)
-    try {
-      const res = await api.runForecast(selectedMetric, 6)
-      setForecast(res.data)
-    } catch {
-      setForecast({ error: 'Forecast failed. Ensure enough historical data.' })
-    }
-    setForecastLoading(false)
+    forecastMutation.mutate(selectedMetric)
   }
+
+  const loading = kpisLoading || periodsLoading || metricsLoading
+  const forecastLoading = forecastMutation.isPending
+  const forecast = forecastMutation.data || null
 
   // Group KPIs by category
   const categories = {}

@@ -20,6 +20,9 @@ import ScannerPage from './pages/ScannerPage'
 import FinancialPage from './pages/FinancialPage'
 import IntegrationsPage from './pages/IntegrationsPage'
 import BulkDataPage from './pages/BulkDataPage'
+import VoicePage from './pages/VoicePage'
+import KnowledgePage from './pages/KnowledgePage'
+import N8NWorkflowPage from './pages/N8NWorkflowPage'
 
 function ProtectedRoute({ children, page }) {
   const { isAuthenticated, loading, hasPage } = useAuth()
@@ -99,6 +102,15 @@ export default function App() {
         } />
         <Route path="scanner" element={
           <ProtectedRoute page="data_hub"><ScannerPage /></ProtectedRoute>
+        } />
+        <Route path="voice" element={
+          <ProtectedRoute page="assistant"><VoicePage /></ProtectedRoute>
+        } />
+        <Route path="knowledge" element={
+          <ProtectedRoute page="analytics"><KnowledgePage /></ProtectedRoute>
+        } />
+        <Route path="workflows" element={
+          <ProtectedRoute page="admin"><N8NWorkflowPage /></ProtectedRoute>
         } />
       </Route>
       
