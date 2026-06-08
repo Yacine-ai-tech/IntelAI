@@ -54,6 +54,7 @@ export const deleteChatSession = (sessionId) => api.delete(`/chat/sessions/${ses
 // ── Knowledge / Vector Search ───────────────────────────
 export const searchKnowledge = (query, n = 5) => api.get('/knowledge/search', { params: { q: query, n } })
 export const getKnowledgeStats = () => api.get('/knowledge/stats')
+export const knowledgeSearch = (params) => api.get('/knowledge/search', { params })
 
 // ── Monitoring ──────────────────────────────────────────
 export const getMonitoringStats = () => api.get('/monitoring/stats')
@@ -165,6 +166,7 @@ export const textToSpeech = (text, language = 'en') => {
 
 // ── N8N ─────────────────────────────────────────────────
 export const listN8NNodes = () => api.get('/n8n/nodes')
+export const getN8NNodes = () => api.get('/n8n/nodes')
 
 // ── Device Pairing ──────────────────────────────────────
 export const requestDevicePairing = (deviceName = 'Mobile Device') =>
