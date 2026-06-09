@@ -7,7 +7,7 @@ const translations = {
   en: {
     // ── Global ──────────────────────────────────────────
     appName: 'IntelAI',
-    appTagline: 'Enterprise AI Analytics Platform 2026',
+    appTagline: 'AI Analytics & RAG Copilot',
     loading: 'Loading…',
     save: 'Save',
     cancel: 'Cancel',
@@ -482,7 +482,7 @@ const translations = {
   fr: {
     // ── Global ──────────────────────────────────────────
     appName: 'IntelAI',
-    appTagline: 'Plateforme d\'Analyse IA d\'Entreprise 2026',
+    appTagline: 'Copilote IA & Analytique',
     loading: 'Chargement…',
     save: 'Enregistrer',
     cancel: 'Annuler',

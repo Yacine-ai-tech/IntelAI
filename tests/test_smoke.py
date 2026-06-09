@@ -1,4 +1,4 @@
-"""In-process smoke tests for OmniIntelOS.
+"""In-process smoke tests for IntelAI.
 
 These run without a live server or a real database by importing the FastAPI
 app and exercising it through Starlette's TestClient. The live-server
@@ -9,7 +9,7 @@ import os
 
 import pytest
 
-os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/omniintelos_test")
+os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai_test")
 
 
 @pytest.fixture(scope="module")
