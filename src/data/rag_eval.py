@@ -42,7 +42,7 @@ def run(path: Path = EVAL_FILE) -> Dict[str, Any]:
     cases = load_eval_set(path)
     results = []
     for c in cases:
-        out = rag.answer(c["query"], top_k=5, use_cache=False)
+        out = rag.answer(c["query"], top_k=10, use_cache=False)  # wider window for groundedness scoring
         response = out.get("response", "")
         sources_text = " ".join(
             f"{s.get('title','')} {s.get('preview','')}" for s in out.get("sources", [])
