@@ -1,0 +1,6 @@
+# Dev/test-only dependencies (not needed at runtime).
+# Install with:  pip install -r requirements.txt -r requirements-dev.txt
+pytest>=7.4
+# httpx is already in requirements.txt (used by tests + integrations)
+# playwright is optional; install separately for the e2e suite:
+#   pip install playwright && playwright install chromium
