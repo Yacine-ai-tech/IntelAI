@@ -29,13 +29,10 @@ def client():
 
 @pytest.fixture(scope="module")
 def admin_token(client):
-    """Bootstrap-admin JWT; skips DB-dependent tests when no seeded DB is reachable."""
-    try:
-        r = client.post("/api/v1/auth/login", json=ADMIN)
-    except Exception as e:  # pragma: no cover - environment dependent
-        pytest.skip(f"auth/login raised (no DB?): {e}")
-    if r.status_code != 200 or "access_token" not in r.json():
-        pytest.skip(f"bootstrap admin login unavailable (status {r.status_code}); needs seeded DB")
+    """Bootstrap-admin JWT (admin + schema + seed are ensured by tests/conftest.py)."""
+    r = client.post("/api/v1/auth/login", json=ADMIN)
+    assert r.status_code == 200 and "access_token" in r.json(), \
+        f"admin login failed ({r.status_code}): {r.text[:200]}"
     return r.json()["access_token"]
 
 
@@ -178,11 +175,13 @@ def test_admin_audit_as_admin(client, admin_token):
 # ── RBAC: a non-admin must not reach admin endpoints ─────────────────────────
 
 def test_rbac_viewer_blocked(client, admin_token):
-    """Log in as a viewer/non-admin and confirm admin endpoints are forbidden."""
-    r = client.post("/api/v1/auth/login", json={"username": "viewer", "password": "viewer123"})
-    if r.status_code != 200 or "access_token" not in r.json():
-        pytest.skip("no 'viewer' default user available to test RBAC denial")
-    viewer = r.json()["access_token"]
+    """Register a viewer (non-admin) and confirm admin endpoints are forbidden."""
+    u = f"viewer_{os.urandom(4).hex()}"
+    reg = client.post("/api/v1/auth/register", json={"username": u, "password": "viewer123", "role": "viewer"})
+    assert reg.status_code in (200, 201), f"register viewer failed ({reg.status_code}): {reg.text[:200]}"
+    login = client.post("/api/v1/auth/login", json={"username": u, "password": "viewer123"})
+    assert login.status_code == 200
+    viewer = login.json()["access_token"]
     assert client.get("/api/v1/admin/users", headers=H(viewer)).status_code in (401, 403)
 
 
