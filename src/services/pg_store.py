@@ -1030,41 +1030,13 @@ def ensure_session_exists(session_id: str, user_id: str) -> str:
 
 def seed_all_domains() -> int:
     """
-    Seed multi-domain KPI data into PostgreSQL if the table is empty.
-    Returns the number of rows inserted.
+    Seed multi-domain KPI data (+ knowledge-base docs) if the table is empty.
+    Delegates to the robust, deterministic seed in ``src.data.seed``.
+    Returns the number of KPI rows inserted.
     """
-    import random
-    from datetime import datetime as _dt, timedelta
-
-    domains = {
-        "Finance":    ["Revenue", "EBITDA", "Net Profit", "Operating Costs", "Gross Margin"],
-        "Growth":     ["MRR", "ARR", "Customer Count", "Churn Rate", "CAC", "LTV"],
-        "Operations": ["Uptime %", "Support Tickets", "NPS", "Delivery SLA %"],
-        "People":     ["Headcount", "Turnover Rate", "Engagement Score", "Hires"],
-        "ESG":        ["Carbon Emissions (tCO2)", "Renewable Energy %", "Diversity Score", "Waste Recycled %"],
-    }
-
-    rows = []
-    base_date = _dt.utcnow().replace(day=1) - timedelta(days=365)
-    for month_offset in range(13):
-        period = (base_date + timedelta(days=30 * month_offset)).strftime("%Y-%m")
-        for category, metrics in domains.items():
-            for metric in metrics:
-                base = random.uniform(50, 5000)
-                rows.append({
-                    "period": period,
-                    "metric": metric,
-                    "value": round(base * (1 + random.uniform(-0.05, 0.12)), 2),
-                    "category": category,
-                    "segment": "Global",
-                    "unit": "",
-                    "direction": "up",
-                })
-
-    import pandas as pd
-    df = pd.DataFrame(rows)
-    store_kpi_metrics(df, source_name="seed", replace=True)
-    return len(rows)
+    from src.data.seed import seed_database  # lazy import avoids circular dependency
+    counts = seed_database(replace=True)
+    return counts.get("kpi_rows", 0)
 
 
 # ════════════════════════════════════════════════════════════════════════════

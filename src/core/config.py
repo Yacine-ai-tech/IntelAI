@@ -164,23 +164,7 @@ class Settings:
     GROQ_API_KEY: str = field(default_factory=lambda: os.getenv("GROQ_API_KEY", ""))
     TAVILY_API_KEY: str = field(default_factory=lambda: os.getenv("TAVILY_API_KEY", ""))
 
-    # n8n
-    N8N_BASE_URL: str = field(
-        default_factory=lambda: os.getenv("N8N_BASE_URL", "http://localhost:5678")
-    )
-    N8N_API_KEY: str = field(default_factory=lambda: os.getenv("N8N_API_KEY", ""))
-
-    # Google OAuth2 (via n8n)
-    GMAIL_PRIMARY: str = field(default_factory=lambda: os.getenv("GMAIL_PRIMARY", ""))
-    DRIVE_ACCOUNT: str = field(default_factory=lambda: os.getenv("DRIVE_ACCOUNT", ""))
-    GSHEETS_ACCOUNT: str = field(default_factory=lambda: os.getenv("GSHEETS_ACCOUNT", ""))
-    GOOGLE_CLIENT_ID: str = field(default_factory=lambda: os.getenv("GOOGLE_CLIENT_ID", ""))
-    GOOGLE_CLIENT_SECRET: str = field(default_factory=lambda: os.getenv("GOOGLE_CLIENT_SECRET", ""))
-
-    # ClickUp
-    CLICKUP_API_KEY: str = field(default_factory=lambda: os.getenv("CLICKUP_API_KEY", ""))
-    CLICKUP_WORKSPACE_ID: str = field(default_factory=lambda: os.getenv("CLICKUP_WORKSPACE_ID", ""))
-    CLICKUP_ACCOUNT: str = field(default_factory=lambda: os.getenv("CLICKUP_ACCOUNT", ""))
+    # (n8n / Google / ClickUp integrations removed — out of IntelAI scope.)
 
     # Cloudflare tunnel
     TUNNEL_URL: str = field(default_factory=lambda: os.getenv("TUNNEL_URL", ""))
@@ -227,9 +211,6 @@ class Settings:
     # Feature flags — all enabled by default; disabled explicitly via env
     FEATURE_VOICE: bool = field(
         default_factory=lambda: os.getenv("FEATURE_VOICE", "true").lower() == "true"
-    )
-    FEATURE_N8N: bool = field(
-        default_factory=lambda: os.getenv("FEATURE_N8N", "true").lower() == "true"
     )
     FEATURE_RAG: bool = field(
         default_factory=lambda: os.getenv("FEATURE_RAG", "true").lower() == "true"
