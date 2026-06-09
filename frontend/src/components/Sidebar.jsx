@@ -5,7 +5,7 @@ import {
   LayoutDashboard, MessageSquare, BarChart3, TrendingUp,
   Users, Package, Monitor, Settings2, Leaf, ShieldAlert,
   Database, ShieldCheck, Settings, LogOut, ChevronRight,
-  Activity, Scan, ExternalLink, Upload, Volume2, BookOpen, Workflow
+  BookOpen
 } from 'lucide-react'
 
 export default function Sidebar() {
@@ -21,7 +21,6 @@ export default function Sidebar() {
         { to: '/chat',        label: t('navAssistant'),    icon: MessageSquare,   page: 'assistant' },
         { to: '/analytics',   label: t('navAnalytics'),    icon: BarChart3,       page: 'analytics' },
         { to: '/forecasting', label: t('navForecasting'),  icon: TrendingUp,      page: 'forecasting' },
-        { to: '/voice',       label: 'Voice Intelligence', icon: Volume2,         page: 'assistant' },
         { to: '/knowledge',   label: 'Knowledge Base',     icon: BookOpen,        page: 'analytics' },
       ],
     },
@@ -40,12 +39,7 @@ export default function Sidebar() {
       label: t('sidebarSystem'),
       items: [
         { to: '/data-hub',    label: t('navDataHub'),      icon: Database,        page: 'data_hub' },
-        { to: '/scanner',     label: t('scanDocument'),    icon: Scan,            page: 'data_hub' },
-        { to: '/integrations',label: t('navIntegrations'), icon: ExternalLink,   page: 'data_hub' },
         { to: '/financial',   label: t('navFinancial'),    icon: TrendingUp,      page: 'cfo' },
-        { to: '/bulk',        label: t('navBulk'),         icon: Upload,          page: 'data_hub' },
-        { to: '/workflows',   label: 'Workflows',         icon: Workflow,        page: 'admin' },
-        { to: '/monitoring',  label: t('navMonitoring'),   icon: Activity,        page: 'admin' },
         { to: '/admin',       label: t('navAdmin'),        icon: ShieldCheck,     page: 'admin' },
         { to: '/settings',    label: t('navSettings'),     icon: Settings,        page: 'settings' },
       ],
@@ -69,7 +63,7 @@ export default function Sidebar() {
       <div className="sidebar-header">
         <div className="sidebar-brand">
           <div className="sidebar-brand-icon">
-            <img src="/logo.png" alt="OmniIntelOS" style={{ width: 24, height: 24, objectFit: 'contain' }} />
+            <img src="/logo.png" alt="IntelAI" style={{ width: 24, height: 24, objectFit: 'contain' }} />
           </div>
           <div>
             <div className="sidebar-brand-text">{t('appName')}</div>

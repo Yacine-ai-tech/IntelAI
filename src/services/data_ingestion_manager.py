@@ -321,40 +321,7 @@ class DataIngestionManager:
 
         return results
 
-    def ingest_pdf_documents(self) -> Dict[str, Any]:
-        """Ingest PDF documents (invoices, reports, etc.)."""
-        from src.services.ocr_enhancement import EnhancedDocumentProcessor
-        
-        processor = EnhancedDocumentProcessor()
-        pdf_dir = self.DATASET_PATH / "pdf"
-        
-        results = {
-            "total_files": 0,
-            "processed_files": 0,
-            "failed_files": 0,
-            "documents": []
-        }
-
-        if not pdf_dir.exists():
-            log.warning("PDF directory not found: %s", pdf_dir)
-            return results
-
-        for pdf_file in pdf_dir.glob("*.pdf"):
-            results["total_files"] += 1
-            try:
-                result = processor.process_pdf(str(pdf_file))
-                results["processed_files"] += 1
-                results["documents"].append({
-                    "filename": pdf_file.name,
-                    "doc_type": result.get("classification", {}).get("type", "unknown"),
-                    "confidence": result.get("classification", {}).get("confidence", 0),
-                    "extracted_data": result.get("text", "")[:500]  # First 500 chars
-                })
-            except Exception as e:
-                results["failed_files"] += 1
-                log.error("Failed to process PDF %s: %s", pdf_file.name, e)
-
-        return results
+    # PDF/OCR document ingestion is out of IntelAI's scope — see the DocIntel project.
 
     def ingest_email_samples(self) -> Dict[str, Any]:
         """Ingest email samples."""

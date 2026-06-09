@@ -1,6 +1,6 @@
 """
 Logistics Service — Supply chain, inventory, shipping, delivery tracking.
-Provides logistics and supply chain intelligence for OmniIntelOS.
+Provides logistics and supply chain intelligence for IntelAI.
 """
 from __future__ import annotations
 

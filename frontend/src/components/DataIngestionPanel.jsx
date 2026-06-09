@@ -641,7 +641,7 @@ export default function DataIngestionPanel() {
     <div className="data-ingestion-panel">
       <div className="panel-header">
         <h2>Data Ingestion Control Panel</h2>
-        <p>Manage automatic and manual data ingestion for your OmniIntelOS platform</p>
+        <p>Manage automatic and manual data ingestion for your IntelAI platform</p>
       </div>
 
       {error && (
