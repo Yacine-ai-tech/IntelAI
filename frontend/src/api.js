@@ -145,67 +145,10 @@ export const uploadDocument = (file, category = 'Misc') => {
   })
 }
 
-// ── Voice ───────────────────────────────────────────────
-export const transcribeAudio = (audioBlob) => {
-  const formData = new FormData()
-  formData.append('audio', audioBlob, 'recording.webm')
-  return api.post('/voice/transcribe', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  })
-}
-
-export const textToSpeech = (text, language = 'en') => {
-  const formData = new FormData()
-  formData.append('text', text)
-  formData.append('language', language)
-  return api.post('/voice/tts', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-    responseType: 'blob',
-  })
-}
-
-// ── N8N ─────────────────────────────────────────────────
-export const listN8NNodes = () => api.get('/n8n/nodes')
-export const getN8NNodes = () => api.get('/n8n/nodes')
-
-// ── Device Pairing ──────────────────────────────────────
-export const requestDevicePairing = (deviceName = 'Mobile Device') =>
-  api.post('/camera/pair', { device_name: deviceName })
-
-export const listPairingSessions = () =>
-  api.get('/camera/sessions')
-
-export const revokePairingSession = (token) =>
-  api.post(`/camera/sessions/${token}/revoke`)
-
-// For mobile devices to upload via pairing token (no auth needed, token-based)
-export const uploadViaToken = (token, file, category = 'Scanned') => {
-  const formData = new FormData()
-  formData.append('file', file)
-  formData.append('category', category)
-  formData.append('token', token)
-  return axios.post(`${API_BASE}/camera/upload?token=${token}`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  })
-}
-
 // ── File Management ───────────────────────────────────
 export const getUserFiles = () => api.get('/files')
 export const getFilePreview = (fileId) => api.get(`/files/${fileId}/preview`)
 export const downloadFile = (fileId) => api.get(`/files/${fileId}/download`, { responseType: 'blob' })
-
-// ── Integrations ────────────────────────────────────────
-export const getIntegrationData = (integrationType) => api.get(`/integrations/${integrationType}/data`)
-export const connectIntegration = (integrationType, credentials) =>
-  api.post(`/integrations/${integrationType}/connect`, credentials)
-export const disconnectIntegration = (integrationType) =>
-  api.post(`/integrations/${integrationType}/disconnect`)
-
- // OAuth start: returns { url, state }
-export const oauthStart = (integrationType) => api.get(`/integrations/${integrationType}/oauth/start`)
-
-// Integrations status: returns { statuses: { gmail: bool, sheets: bool, clickup: bool } }
-export const getIntegrationsStatus = () => api.get('/integrations/status')
 
 // ── Status ──────────────────────────────────────────────
 export const getStatus = () => api.get('/status')
