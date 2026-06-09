@@ -202,3 +202,18 @@ def test_entity_extractor_query_entities():
     from src.services.entity_extractor import get_entity_extractor
     ents = get_entity_extractor().extract_query_entities("finance margin and operations cycle time")
     assert "Finance" in ents and "Operations" in ents
+
+
+# ── GraphRAG-lite persisted sidecar table (DB-backed; seeded by conftest) ─────
+
+def test_kpi_entities_seeded(client, admin_token):
+    """The kpi_entities sidecar table is populated at ingest (conftest seed)."""
+    from src.services.pg_store import get_kpi_entities
+    assert not get_kpi_entities().empty
+
+def test_graphrag_persisted_multihop(client, admin_token, monkeypatch):
+    """A multi-hop query (≥2 entities) ranks records via the persisted entity table."""
+    from src.services import graph_retrieval
+    monkeypatch.setenv("USE_GRAPH_RAG", "true")
+    res = graph_retrieval.graph_kpi_context("finance margin and people headcount", top_k=5)
+    assert isinstance(res, list) and len(res) >= 1
