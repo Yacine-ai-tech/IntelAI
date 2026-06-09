@@ -1,8 +1,0 @@
-{
-  "domain": "Operations",
-  "metrics": [
-    "efficiency_rate",
-    "cycle_time_days",
-    "on_time_delivery"
-  ]
-}
