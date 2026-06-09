@@ -1,6 +1,6 @@
 """
 HR Service — Employee analytics, headcount, turnover, satisfaction, training.
-Provides comprehensive human resources intelligence for OmniIntelOS.
+Provides comprehensive human resources intelligence for IntelAI.
 """
 from __future__ import annotations
 

@@ -27,7 +27,7 @@ class I18N:
     # ── Auth ────────────────────────────────────────────────────────────
     AUTH: Dict[str, Dict[str, str]] = {
         "en": {
-            "title": "OmniIntelOS — Login",
+            "title": "IntelAI — Login",
             "username": "Username",
             "password": "Password",
             "login": "Login",
@@ -71,7 +71,7 @@ class I18N:
     # ── Navigation ──────────────────────────────────────────────────────
     NAV: Dict[str, Dict[str, str]] = {
         "en": {
-            "app_title": "🏢 OmniIntelOS",
+            "app_title": "🏢 IntelAI",
             "briefing": "Executive Briefing",
             "kpi_center": "KPI Command Center",
             "planning": "Advanced Planning",

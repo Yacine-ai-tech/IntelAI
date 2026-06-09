@@ -1,7 +1,8 @@
 """
-OmniIntelOS API v1 — FastAPI server with JWT auth, RBAC, multi-domain intelligence.
+IntelAI API v1 — FastAPI server with JWT auth, RBAC, multi-domain intelligence.
 
-Domains: Finance, HR, Logistics, IT, Operations, ESG, Growth
+Persona-aware AI analytics & RAG copilot. Domains: Finance, HR, Logistics, IT,
+Operations, ESG, Growth/Risk.
 """
 from __future__ import annotations
 
@@ -41,8 +42,8 @@ log = get_logger(__name__)
 # ════════════════════════════════════════════════════════════
 
 app = FastAPI(
-    title="OmniIntelOS API",
-    description="Intelligence Operating System — Multi-Domain AI Platform",
+    title="IntelAI API",
+    description="Persona-Aware AI Analytics & RAG Copilot — Multi-Domain KPI Intelligence",
     version="2026.3.0",
     docs_url="/api/docs",
     redoc_url="/api/redoc",
@@ -164,7 +165,7 @@ def _init_default_users():
 @app.on_event("startup")
 async def startup():
     """Validate required keys, initialize database, seed default data, start cleanup tasks."""
-    log.info("🚀 OmniIntelOS API starting...")
+    log.info("🚀 IntelAI API starting...")
 
     # Fail fast — required API keys must be present
     from src.core.config import validate_required_keys
@@ -196,7 +197,7 @@ async def startup():
     # Start periodic cleanup tasks for OAuth states and token refresh
     _start_background_cleanup_tasks()
 
-    log.info("✅ OmniIntelOS API ready")
+    log.info("✅ IntelAI API ready")
 
 
 def _start_background_cleanup_tasks():
@@ -233,7 +234,7 @@ def _start_background_cleanup_tasks():
 async def health_check():
     return {
         "status": "healthy",
-        "service": "OmniIntelOS API",
+        "service": "IntelAI API",
         "version": "2026.3.0",
         "timestamp": datetime.utcnow().isoformat(),
         "database": "postgresql",
@@ -417,26 +418,7 @@ async def list_personas(user: TokenData = Depends(get_current_user)):
 # VOICE (TTS / STT)
 # ════════════════════════════════════════════════════════════
 
-@app.post("/api/v1/ocr/extract")
-async def ocr_extract(
-    file: UploadFile = File(...),
-    user: TokenData = Depends(get_current_user),
-):
-    try:
-        # Call OCR microservice
-        import httpx
-        async with httpx.AsyncClient() as client:
-            files = {"file": (file.filename, await file.read(), file.content_type)}
-            response = await client.post(
-                f"{settings.OCR_SERVICE_URL}/extract",
-                files=files
-            )
-            response.raise_for_status()
-            result = response.json()
-            return result
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"OCR extraction failed: {e}")
-
+# OCR extraction is out of IntelAI's scope — it belongs to the DocIntel project.
 
 # ════════════════════════════════════════════════════════════
 # FILE MANAGEMENT
@@ -733,53 +715,7 @@ async def disconnect_integration(
     return {"status": "disconnected"}
 
 
-# ════════════════════════════════════════════════════════════
-# VOICE (TTS / STT)
-# ════════════════════════════════════════════════════════════
-
-@app.post("/api/v1/voice/transcribe")
-async def voice_transcribe(
-    audio: UploadFile = File(...),
-    user: TokenData = Depends(get_current_user),
-):
-    try:
-        # Call Voice microservice
-        import httpx
-        async with httpx.AsyncClient() as client:
-            files = {"file": (audio.filename, await audio.read(), audio.content_type)}
-            response = await client.post(
-                f"{settings.VOICE_SERVICE_URL}/stt",
-                files=files,
-                data={"language": user.language if user.language != "en" else None}
-            )
-            response.raise_for_status()
-            result = response.json()
-            return {"text": result["text"]}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Transcription failed: {e}")
-
-
-@app.post("/api/v1/voice/tts")
-async def voice_tts(
-    text: str = Form(...),
-    language: str = Form("en"),
-    user: TokenData = Depends(get_current_user),
-):
-    try:
-        # Call Voice microservice
-        import httpx
-        async with httpx.AsyncClient() as client:
-            data = {"text": text, "language": language}
-            response = await client.post(
-                f"{settings.VOICE_SERVICE_URL}/tts",
-                data=data
-            )
-            response.raise_for_status()
-            from fastapi.responses import Response
-            return Response(content=response.content, media_type="audio/mpeg")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"TTS failed: {e}")
-
+# Voice (TTS/STT) is out of IntelAI's scope — it belongs to the VoiceFlow project.
 
 # ════════════════════════════════════════════════════════════
 # DATA INGESTION
@@ -905,22 +841,8 @@ async def upload_from_paired_device(
         elif file.filename and file.filename.endswith(".csv"):
             text = content.decode("utf-8", errors="ignore")
         else:
-            # Use OCR service for images
-            try:
-                import httpx
-                async with httpx.AsyncClient() as client:
-                    files = {"file": (file.filename, content, file.content_type)}
-                    response = await client.post(
-                        f"{settings.OCR_SERVICE_URL}/extract",
-                        files=files
-                    )
-                    if response.status_code == 200:
-                        ocr_result = response.json()
-                        text = ocr_result.get("text", f"[Image: {file.filename}]")
-                    else:
-                        text = f"[Image: {file.filename} - OCR failed]"
-            except Exception:
-                text = f"[Image: {file.filename}]"
+            # Image OCR is out of scope for IntelAI (see the DocIntel project).
+            text = f"[Image: {file.filename} — image OCR not supported in IntelAI]"
         
         doc_id = str(uuid.uuid4())
         docs_df = pd.DataFrame([{
@@ -2336,29 +2258,7 @@ async def ingest_by_companies(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/api/v1/data-ingestion/ingest-pdfs")
-async def ingest_pdf_documents(
-    user: TokenData = Depends(get_current_user),
-):
-    """Ingest PDF documents from the dataset."""
-    try:
-        manager = await get_ingestion_manager()
-        results = manager.ingest_pdf_documents()
-        
-        log.info(
-            "User %s ingested %d PDF files",
-            user.username, results["processed_files"]
-        )
-        
-        return {
-            "status": "success",
-            "pdf_ingestion": results,
-            "timestamp": datetime.utcnow().isoformat(),
-        }
-    except Exception as e:
-        log.error("PDF ingestion failed: %s", e)
-        raise HTTPException(status_code=500, detail=str(e))
-
+# PDF/OCR document ingestion is out of IntelAI's scope — see the DocIntel project.
 
 @app.post("/api/v1/data-ingestion/ingest-emails")
 async def ingest_email_samples(

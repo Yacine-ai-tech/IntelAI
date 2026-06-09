@@ -97,7 +97,7 @@ class ConversationalAgent:
 
         capabilities = domain_capabilities.get(domain, domain_capabilities["general"])
 
-        system_prompt = f"""You are the OmniIntelOS Conversational Agent.
+        system_prompt = f"""You are the IntelAI Conversational Agent.
 LANGUAGE: Respond in {lang}.
 DOMAIN: {domain.upper()}
 

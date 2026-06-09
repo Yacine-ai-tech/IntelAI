@@ -1,56 +1,22 @@
-# Makefile — OmniIntelOS Docker-first workflow
+# IntelAI — single cloud app. (The old multi-service platform Makefile lives in OmniIntelOS.)
+.PHONY: help dev run test build deploy-info
 
-.PHONY: build build-all build-dev create create-all create-dev start stop status check logs dev-up dev-down tunnel tunnel-up tunnel-down cleanup automation-check
+help: ## Show available targets
+	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-12s\033[0m %s\n",$$1,$$2}'
 
-build: ## Build minimal core images (no containers started)
-	./scripts/start_all.sh minimal
+dev: ## Studio dev: app-only container with hot reload (Neon DB via .env)
+	docker compose -f docker-compose.dev.yml up --build
 
-build-all: ## Build all images (including optional profiled services)
-	./scripts/start_all.sh full
+run: ## Local full stack: app + bundled Postgres
+	docker compose up --build
 
-build-dev: ## Build development profile images
-	docker compose --profile dev build --parallel backend-dev frontend-dev dev-proxy
+test: ## Run the test suite
+	python -m pytest tests/ -q
 
-create: ## Create core containers (no start)
-	docker compose create postgres fastapi frontend
+build: ## Build the app image
+	docker build -t intelai:latest .
 
-create-all: ## Create all standard containers (no start)
-	docker compose --profile automation --profile monitoring --profile ai create postgres fastapi frontend n8n prometheus grafana omnitel-ocr omnitel-voice
-
-create-dev: ## Create dev containers (no start)
-	docker compose --profile dev create backend-dev frontend-dev dev-proxy
-
-start: ## Start all standard services
-	./scripts/start_containers.sh full
-
-stop: ## Stop all running containers
-	./scripts/stop_containers.sh
-
-status: ## Show stack status and health
-	./scripts/status.sh
-
-check: status
-
-cleanup: ## Deep cleanup for low storage (safe mode, keeps volumes)
-	./scripts/cleanup_deep.sh
-
-automation-check: ## Validate automation framework programmatically
-	python3 ./scripts/automation_e2e.py
-
-logs: ## Follow compose logs
-	docker compose logs -f
-
-dev-up: ## Run hot-reload development profile
-	docker compose --profile dev up --remove-orphans
-
-dev-down: ## Stop development profile
-	docker compose --profile dev down
-
-tunnel: ## Configure tunnel env defaults
-	./scripts/tunnel.sh configure
-
-tunnel-up: ## Start Cloudflare tunnel profile
-	./scripts/tunnel.sh up
-
-tunnel-down: ## Stop Cloudflare tunnel profiles
-	./scripts/tunnel.sh down
+deploy-info: ## How IntelAI deploys
+	@echo "IntelAI deploys as ONE cloud service built from the Dockerfile (see railway.toml)."
+	@echo "Railway/Fly: connect the repo; set env vars POSTGRES_URL, GROQ_API_KEY,"
+	@echo "ANTHROPIC_API_KEY, TAVILY_API_KEY, SECRET_KEY. Frontend deploys separately (Vercel/Netlify)."
