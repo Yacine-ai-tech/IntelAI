@@ -3,8 +3,9 @@
 # Single cloud deployment (Railway/Fly). OCR/voice deps belong to DocIntel/VoiceFlow.
 
 # Force CPU wheels to avoid massive CUDA dependencies in local-first deployments.
+# torch >= 2.4 is required by current transformers (else BGE dense retrieval is disabled).
 --extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.3.1+cpu
+torch==2.4.1+cpu
 
 # ── Core Framework ──────────────────────────────
 fastapi>=0.115.0
