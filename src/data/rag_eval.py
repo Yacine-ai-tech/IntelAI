@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
-EVAL_FILE = Path(__file__).resolve().parents[2] / "tests" / "rag_eval.jsonl"
+EVAL_FILE = Path(__file__).resolve().parent / "rag_eval.jsonl"
 
 
 def load_eval_set(path: Path = EVAL_FILE) -> List[Dict[str, Any]]:

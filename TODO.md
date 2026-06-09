@@ -17,7 +17,7 @@ Updated 2026-06-09.
 - [x] **Hybrid retrieval** (BGE + BM25 + RRF + reranker) + **LiteLLM** multi-provider router.
 - [x] **Robust deterministic seed** `src/data/seed.py` (replaces the old dataset): 7 domains,
       24 months, anomalies + knowledge docs. `make seed`. Verified: 1032 rows + 9 docs.
-- [x] **Prompt-eval** (§1.4): `tests/rag_eval.jsonl` (25 cases) + `make eval`
+- [x] **Prompt-eval** (§1.4): `src/data/rag_eval.jsonl` (25 cases) + `make eval`
       (`src/data/rag_eval.py`) with a >20%-below-groundedness gate + structural test.
 - [x] **README** rewritten (<200 lines); **`omnismart-personas`** extracted to
       `packages/` (PyPI-ready, 8 tests passing).
