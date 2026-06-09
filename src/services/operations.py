@@ -1,6 +1,6 @@
 """
 Operations Service — Process efficiency, quality, capacity, production metrics.
-Provides operational excellence intelligence for OmniIntelOS.
+Provides operational excellence intelligence for IntelAI.
 """
 from __future__ import annotations
 

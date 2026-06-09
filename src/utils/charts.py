@@ -1,5 +1,5 @@
 """
-Unified chart library — Plotly visualisations for the OmniIntelOS.
+Unified chart library — Plotly visualisations for the IntelAI.
 Merges base charts + advanced charts into one module.
 """
 from __future__ import annotations

@@ -1,8 +1,8 @@
-# 🚀 OmniIntelOS Integration & Migration Guide
+# 🚀 IntelAI Integration & Migration Guide
 
 ## Overview
 
-This guide covers the major merge and integration work completed for OmniIntelOS:
+This guide covers the major merge and integration work completed for IntelAI:
 
 1. **Merged Chatbot Services** - Combined `advanced_chatbot.py` and `unified_chatbot.py` into `omnismart_chatbot.py`
 2. **Database Migrations** - Added token refresh, data ingestion/export, and mini-spreadsheet support

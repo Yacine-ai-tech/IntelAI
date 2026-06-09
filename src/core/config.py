@@ -198,14 +198,6 @@ class Settings:
         )
     )
 
-    # Microservices URLs (internal Docker network)
-    OCR_SERVICE_URL: str = field(
-        default_factory=lambda: os.getenv("OCR_SERVICE_URL", "http://omnitel-ocr:8001")
-    )
-    VOICE_SERVICE_URL: str = field(
-        default_factory=lambda: os.getenv("VOICE_SERVICE_URL", "http://omnitel-voice:8002")
-    )
-
     # Security
     SECRET_KEY: str = field(
         default_factory=lambda: os.getenv("SECRET_KEY", "change-me-in-production")

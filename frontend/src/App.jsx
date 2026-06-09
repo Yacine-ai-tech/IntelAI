@@ -15,14 +15,8 @@ import OperationsPage from './pages/OperationsPage'
 import ForecastingPage from './pages/ForecastingPage'
 import ESGPage from './pages/ESGPage'
 import RiskPage from './pages/RiskPage'
-import MonitoringPage from './pages/MonitoringPage'
-import ScannerPage from './pages/ScannerPage'
 import FinancialPage from './pages/FinancialPage'
-import IntegrationsPage from './pages/IntegrationsPage'
-import BulkDataPage from './pages/BulkDataPage'
-import VoicePage from './pages/VoicePage'
 import KnowledgePage from './pages/KnowledgePage'
-import N8NWorkflowPage from './pages/N8NWorkflowPage'
 
 function ProtectedRoute({ children, page }) {
   const { isAuthenticated, loading, hasPage } = useAuth()
@@ -37,7 +31,7 @@ function ProtectedRoute({ children, page }) {
 export default function App() {
   const { isAuthenticated, loading } = useAuth()
 
-  if (loading) return <div className="text-center" style={{ padding: '100px' }}>Loading OmniIntelOS...</div>
+  if (loading) return <div className="text-center" style={{ padding: '100px' }}>Loading IntelAI...</div>
 
   return (
     <Routes>
@@ -60,12 +54,6 @@ export default function App() {
         } />
         <Route path="financial" element={
           <ProtectedRoute page="financial"><FinancialPage /></ProtectedRoute>
-        } />
-        <Route path="integrations" element={
-          <ProtectedRoute page="data_hub"><IntegrationsPage /></ProtectedRoute>
-        } />
-        <Route path="bulk" element={
-          <ProtectedRoute page="data_hub"><BulkDataPage /></ProtectedRoute>
         } />
         <Route path="data-hub" element={
           <ProtectedRoute page="data_hub"><DataHubPage /></ProtectedRoute>
@@ -97,20 +85,8 @@ export default function App() {
         <Route path="risk" element={
           <ProtectedRoute page="risk"><RiskPage /></ProtectedRoute>
         } />
-        <Route path="monitoring" element={
-          <ProtectedRoute page="admin"><MonitoringPage /></ProtectedRoute>
-        } />
-        <Route path="scanner" element={
-          <ProtectedRoute page="data_hub"><ScannerPage /></ProtectedRoute>
-        } />
-        <Route path="voice" element={
-          <ProtectedRoute page="assistant"><VoicePage /></ProtectedRoute>
-        } />
         <Route path="knowledge" element={
           <ProtectedRoute page="analytics"><KnowledgePage /></ProtectedRoute>
-        } />
-        <Route path="workflows" element={
-          <ProtectedRoute page="admin"><N8NWorkflowPage /></ProtectedRoute>
         } />
       </Route>
       
