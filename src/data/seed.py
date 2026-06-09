@@ -147,6 +147,17 @@ def generate_knowledge_docs(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
             "source": f"seed/{category.lower()}_{latest}.md",
         })
 
+    # Per-metric docs (latest period) so specific-metric queries retrieve a precise,
+    # dedicated source (improves groundedness vs. burying the metric in a domain summary).
+    for r in df[df["period"] == latest].itertuples():
+        unit = f" {r.unit}".rstrip()
+        slug = str(r.metric).lower().replace(" ", "_").replace("/", "_")
+        docs.append({
+            "title": f"{r.metric} ({r.category}) — {latest}",
+            "content": f"{r.metric} for the {r.category} domain in {latest}: {r.value}{unit}.",
+            "source": f"seed/{r.category.lower()}_{slug}_{latest}.md",
+        })
+
     # Cross-domain narrative for multi-hop / GraphRAG demo queries
     docs.append({
         "title": "Cross-Domain Insight — People vs Finance",
