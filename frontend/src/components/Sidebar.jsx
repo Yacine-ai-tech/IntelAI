@@ -5,7 +5,7 @@ import {
   LayoutDashboard, MessageSquare, BarChart3, TrendingUp,
   Users, Package, Monitor, Settings2, Leaf, ShieldAlert,
   Database, ShieldCheck, Settings, LogOut, ChevronRight,
-  BookOpen
+  BookOpen, Sparkles
 } from 'lucide-react'
 
 export default function Sidebar() {
@@ -63,7 +63,7 @@ export default function Sidebar() {
       <div className="sidebar-header">
         <div className="sidebar-brand">
           <div className="sidebar-brand-icon">
-            <img src="/logo.png" alt="IntelAI" style={{ width: 24, height: 24, objectFit: 'contain' }} />
+            <Sparkles size={20} strokeWidth={2.2} />
           </div>
           <div>
             <div className="sidebar-brand-text">{t('appName')}</div>

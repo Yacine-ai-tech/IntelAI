@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-OmniIntelOS Enhanced Dataset Generator v2.0
+IntelAI Enhanced Dataset Generator v2.0
 Generates realistic, high-volume multi-domain enterprise intelligence data
 Aligned with 2026 strategy claims: AI Analytics + Persona RAG + Multi-LLM + GraphRAG-lite
 
@@ -641,7 +641,7 @@ def generate_business_scenarios(companies: List[Dict[str, Any]]) -> List[Dict[st
 def main():
     """Main function to generate all enhanced dataset components."""
     print("=" * 80)
-    print("OmniIntelOS Enhanced Dataset Generator v2.0")
+    print("IntelAI Enhanced Dataset Generator v2.0")
     print("Generating realistic, high-volume multi-domain enterprise intelligence data")
     print("=" * 80)
     
