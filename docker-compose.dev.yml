@@ -6,7 +6,7 @@
 #   docker compose -f docker-compose.dev.yml up --build
 #   (first build ~3-5 min; subsequent starts use layer cache = fast)
 #
-# Reach it from the laptop: ssh -L 8000:localhost:8000 lightning-omniintelos
+# Reach it from the laptop: ssh -L 8000:localhost:8000 lightning-intelai
 # Then: http://localhost:8000/health  and  http://localhost:5173 (Vite on laptop)
 
 services:
@@ -14,7 +14,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: omniintelos:dev
+    image: intelai:dev
     volumes:
       - ./src:/app/src
       - ./main.py:/app/main.py
