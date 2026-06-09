@@ -335,11 +335,18 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 .prompt-card { padding:14px 16px; border:1px solid var(--border); border-radius:var(--r); background:var(--surface);
   cursor:pointer; transition:all var(--t); font-size:.88rem; color:var(--text-2); }
 .prompt-card:hover { border-color:var(--primary-line); color:var(--text); transform:translateY(-2px); background:var(--surface-2); }
-/* Source citations */
-.citations { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
-.citation-chip { display:inline-flex; align-items:center; gap:5px; padding:3px 9px; border-radius:var(--r-pill);
-  background:var(--bg-2); border:1px solid var(--border); font-size:.7rem; color:var(--text-3); }
-.citation-chip svg { width:12px; height:12px; color:var(--primary); }
+/* Source citations — numbered, deduped, traceable */
+.citations { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; align-items:center; }
+.citations-label { font-size:.64rem; text-transform:uppercase; letter-spacing:.1em; color:var(--text-3); font-weight:600; margin-right:2px; }
+.citation-chip { display:inline-flex; align-items:center; gap:5px; padding:3px 9px 3px 4px; border-radius:var(--r-pill);
+  background:var(--bg-2); border:1px solid var(--border); font-size:.7rem; color:var(--text-2); max-width:260px; transition:all var(--t); }
+.citation-chip:hover { border-color:var(--primary-line); color:var(--text); }
+.citation-chip.kpi { border-color:var(--primary-line); background:var(--primary-soft); }
+.citation-chip svg { width:11px; height:11px; color:var(--primary); flex-shrink:0; }
+.citation-chip .cite-n { display:inline-flex; align-items:center; justify-content:center; width:15px; height:15px; flex-shrink:0;
+  border-radius:50%; background:var(--gradient); color:#04201c; font-size:.6rem; font-weight:700; }
+.citation-chip .cite-rel { font-style:normal; color:var(--text-3); font-family:var(--font-mono); font-size:.64rem; margin-left:2px; }
+.citation-chip > :not(.cite-n):not(svg) { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
 /* ── Right-side drawer (contextual explainer) ──────────────── */
 .drawer-overlay { position:fixed; inset:0; background:rgba(6,8,14,.55); backdrop-filter:blur(2px); z-index:120; display:flex; justify-content:flex-end; }

@@ -112,15 +112,22 @@ class HybridRetriever:
         idxs = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:top_n]
         return [(i, float(scores[i])) for i in idxs]
 
-    def _rrf_merge(
-        self, dense: List[Tuple[int, float]], sparse: List[Tuple[int, float]], top_n: int
-    ) -> List[int]:
-        """Reciprocal Rank Fusion merge."""
+    def _rrf_scores(
+        self, dense: List[Tuple[int, float]], sparse: List[Tuple[int, float]]
+    ) -> Dict[int, float]:
+        """Reciprocal Rank Fusion — returns {doc_idx: fused_score}."""
         scores: Dict[int, float] = {}
         for rank, (idx, _) in enumerate(dense):
             scores[idx] = scores.get(idx, 0.0) + 1.0 / (self.rrf_k + rank + 1)
         for rank, (idx, _) in enumerate(sparse):
             scores[idx] = scores.get(idx, 0.0) + 1.0 / (self.rrf_k + rank + 1)
+        return scores
+
+    def _rrf_merge(
+        self, dense: List[Tuple[int, float]], sparse: List[Tuple[int, float]], top_n: int
+    ) -> List[int]:
+        """Reciprocal Rank Fusion merge (ranked indices)."""
+        scores = self._rrf_scores(dense, sparse)
         return sorted(scores, key=lambda i: scores[i], reverse=True)[:top_n]
 
     def retrieve(self, query: str, top_n: int = 5, rerank: bool = True) -> List[Dict[str, Any]]:
@@ -132,7 +139,8 @@ class HybridRetriever:
         sparse = self._sparse_rank(query, cand_n)
         if not (dense or sparse):
             return []
-        merged = self._rrf_merge(dense, sparse, cand_n)
+        rrf = self._rrf_scores(dense, sparse)
+        merged = sorted(rrf, key=lambda i: rrf[i], reverse=True)[:cand_n]
 
         if rerank and _RERANKER:
             reranker = self._ensure_reranker()
@@ -143,7 +151,11 @@ class HybridRetriever:
             order = sorted(range(len(merged)), key=lambda j: scores[j], reverse=True)[:top_n]
             return [{"chunk": self._chunks[merged[j]], "score": float(scores[j])} for j in order]
 
-        return [{"chunk": self._chunks[i], "score": 1.0} for i in merged[:top_n]]
+        # No reranker available: return RRF-ranked results with relevance normalized to
+        # 0..1 (top result = 1.0) so the score is meaningful, not a flat 1.0 for all.
+        top = merged[:top_n]
+        mx = max((rrf[i] for i in top), default=1.0) or 1.0
+        return [{"chunk": self._chunks[i], "score": rrf[i] / mx} for i in top]
 
 # ── Module-level helpers (opt-in wiring for the RAG path) ─────────────────────
 _HYBRID: Optional["HybridRetriever"] = None
@@ -167,19 +179,24 @@ def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int =
     if not hybrid_enabled() or not records or not (_DENSE or _BM25):
         return []
     try:
+        # Index "title. title. content" so the title (which carries the metric name /
+        # acronym, e.g. "Glossary: NRR (NRR)") is searchable and weighted — a query for
+        # "NRR" then surfaces the NRR doc instead of an arbitrary keyword match.
+        def _indexed(t, c):
+            return f"{t}. {t}. {c}"
         sig = (len(records), hash(tuple(t for t, _ in records)))
         if _HYBRID is None or _HYBRID_SIG != sig:
             r = HybridRetriever(
                 embedding_model=os.getenv("EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5"),
                 reranker_model=os.getenv("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3"),
             )
-            r.fit([c for _, c in records])
+            r.fit([_indexed(t, c) for t, c in records])
             _HYBRID, _HYBRID_SIG = r, sig
-        by_content = {c: t for t, c in records}
+        by_chunk = {_indexed(t, c): (t, c) for t, c in records}
         out = []
         for hit in _HYBRID.retrieve(query, top_n=top_k):
-            chunk = hit["chunk"]
-            out.append((by_content.get(chunk, "Document"), chunk, float(hit.get("score", 1.0))))
+            title, content = by_chunk.get(hit["chunk"], ("Document", hit["chunk"]))
+            out.append((title, content, float(hit.get("score", 1.0))))
         return out
     except Exception as e:  # never break the chat path
         log.warning("Hybrid retrieve failed (falling back to vector): %s", e)

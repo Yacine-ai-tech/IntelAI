@@ -3,7 +3,7 @@ import {
   AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer, Cell,
 } from 'recharts'
-import { Sparkles, ArrowUpRight, ArrowDownRight } from 'lucide-react'
+import { Sparkles, ArrowUpRight, ArrowDownRight, FileText } from 'lucide-react'
 
 // ── formatters ───────────────────────────────────────────────
 export const fmtNum = (v) => {
@@ -165,6 +165,38 @@ export function AskCopilot({ q, label = 'Ask Copilot', size = 'sm' }) {
     <button className={`btn btn-outline${size === 'sm' ? ' btn-sm' : ''}`} onClick={() => navigate(`/chat?q=${encodeURIComponent(q)}`)}>
       <Sparkles size={size === 'sm' ? 13 : 15} /> {label}
     </button>
+  )
+}
+
+// ── Citations — robust, deduped, numbered source chips (used everywhere) ──────
+export function Citations({ sources, label = 'Sources' }) {
+  if (!sources || !sources.length) return null
+  // Defensive client-side normalisation: accept strings or objects, dedupe by title.
+  const seen = new Set()
+  const list = []
+  sources.forEach((s, i) => {
+    const o = typeof s === 'string' ? { title: s } : (s || {})
+    const title = (o.title || o.source || 'source').toString().trim()
+    const key = title.toLowerCase()
+    if (!title || seen.has(key)) return
+    seen.add(key)
+    let rel = o.relevance
+    if (typeof rel === 'string') rel = parseFloat(rel.replace('%', ''))
+    if (typeof rel === 'number' && rel > 1) rel = rel / 100
+    list.push({ id: o.id ?? list.length + 1, title, type: o.type || 'knowledge', snippet: o.snippet || o.preview, rel: typeof rel === 'number' && !isNaN(rel) ? Math.round(rel * 100) : null })
+  })
+  if (!list.length) return null
+  return (
+    <div className="citations">
+      <span className="citations-label">{label}</span>
+      {list.map((s) => (
+        <span key={s.id} className={`citation-chip${s.type === 'kpi' ? ' kpi' : ''}`} title={s.snippet || s.title}>
+          <span className="cite-n">{s.id}</span>
+          {s.type === 'kpi' ? <Sparkles size={11} /> : <FileText size={11} />} {s.title}
+          {s.rel != null && <em className="cite-rel">{s.rel}%</em>}
+        </span>
+      ))}
+    </div>
   )
 }
 
