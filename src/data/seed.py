@@ -169,13 +169,37 @@ def generate_knowledge_docs(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     return docs
 
 
+def generate_entity_rows(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+    """GraphRAG-lite ingest-time extraction → kpi_entities rows (record_ref + entity)."""
+    from src.services.entity_extractor import get_entity_extractor
+    extractor = get_entity_extractor()
+    out: List[Dict[str, str]] = []
+    for r in rows:
+        ref = f"{r['category']}|{r['metric']}|{r['period']}"
+        for e in extractor.extract_entities(
+            {"category": r["category"], "metric_name": r["metric"], "period": r["period"]}
+        ):
+            out.append({
+                "record_ref": ref,
+                "entity_type": e["entity_type"],
+                "entity_value": e["entity_value"],
+            })
+    return out
+
+
 def seed_database(replace: bool = True) -> Dict[str, int]:
-    """Generate + write KPIs and knowledge docs to Postgres. Returns counts."""
+    """Generate + write KPIs, GraphRAG-lite entities, and knowledge docs to Postgres."""
     import pandas as pd
-    from src.services.pg_store import store_kpi_metrics, store_knowledge_docs
+    from src.services.pg_store import store_kpi_metrics, store_knowledge_docs, store_kpi_entities
 
     rows = generate_kpi_rows()
     store_kpi_metrics(pd.DataFrame(rows), source_name="seed", replace=replace)
+
+    # GraphRAG-lite: extract entities at ingest and persist them (kpi_entities sidecar table).
+    try:
+        n_entities = store_kpi_entities(generate_entity_rows(rows), replace=replace)
+    except Exception:
+        n_entities = 0
 
     docs = generate_knowledge_docs(rows)
     docs_df = pd.DataFrame([
@@ -188,7 +212,7 @@ def seed_database(replace: bool = True) -> Dict[str, int]:
         kb = len(docs_df)
     except Exception:
         kb = 0
-    return {"kpi_rows": len(rows), "knowledge_docs": kb}
+    return {"kpi_rows": len(rows), "knowledge_docs": kb, "kpi_entities": n_entities}
 
 
 def main() -> None:
@@ -196,8 +220,9 @@ def main() -> None:
     from pathlib import Path
     load_dotenv(Path(__file__).resolve().parents[2] / ".env")
     counts = seed_database(replace=True)
-    print(f"✅ Seeded {counts['kpi_rows']} KPI rows + {counts['knowledge_docs']} knowledge docs "
-          f"across {len(KPI_SPEC)} domains ({MONTHS} months, deterministic seed={SEED}).")
+    print(f"✅ Seeded {counts['kpi_rows']} KPI rows + {counts['kpi_entities']} entities + "
+          f"{counts['knowledge_docs']} knowledge docs across {len(KPI_SPEC)} domains "
+          f"({MONTHS} months, deterministic seed={SEED}).")
 
 
 if __name__ == "__main__":
