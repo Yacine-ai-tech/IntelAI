@@ -144,3 +144,43 @@ class HybridRetriever:
             return [{"chunk": self._chunks[merged[j]], "score": float(scores[j])} for j in order]
 
         return [{"chunk": self._chunks[i], "score": 1.0} for i in merged[:top_n]]
+
+# ── Module-level helpers (opt-in wiring for the RAG path) ─────────────────────
+_HYBRID: Optional["HybridRetriever"] = None
+_HYBRID_SIG = None
+
+
+def hybrid_enabled() -> bool:
+    """Hybrid retrieval is opt-in via USE_HYBRID_RETRIEVAL (needs BGE models)."""
+    return os.getenv("USE_HYBRID_RETRIEVAL", "false").strip().lower() in ("1", "true", "yes", "on")
+
+
+def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int = 5):
+    """Hybrid (dense+BM25+RRF+rerank) over knowledge docs.
+
+    ``records`` = list of ``(title, content)``. Returns ``[(title, content, score)]`` —
+    the shape the chatbot's retrieval expects — or ``[]`` when disabled/unavailable/failed
+    (caller falls back to the existing vector/TF-IDF path). The retriever is cached and only
+    re-fit when the document set changes.
+    """
+    global _HYBRID, _HYBRID_SIG
+    if not hybrid_enabled() or not records or not (_DENSE or _BM25):
+        return []
+    try:
+        sig = (len(records), hash(tuple(t for t, _ in records)))
+        if _HYBRID is None or _HYBRID_SIG != sig:
+            r = HybridRetriever(
+                embedding_model=os.getenv("EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5"),
+                reranker_model=os.getenv("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3"),
+            )
+            r.fit([c for _, c in records])
+            _HYBRID, _HYBRID_SIG = r, sig
+        by_content = {c: t for t, c in records}
+        out = []
+        for hit in _HYBRID.retrieve(query, top_n=top_k):
+            chunk = hit["chunk"]
+            out.append((by_content.get(chunk, "Document"), chunk, float(hit.get("score", 1.0))))
+        return out
+    except Exception as e:  # never break the chat path
+        log.warning("Hybrid retrieve failed (falling back to vector): %s", e)
+        return []

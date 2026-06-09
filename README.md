@@ -126,7 +126,8 @@ Deploy the frontend separately (Vercel/Netlify) with its API base pointed at the
 ## 🗺️ Roadmap
 
 - `omnismart-personas` published to PyPI (persona templates + router — see `packages/`).
-- RAG eval harness wired to the RAGeval project; weekly groundedness gate.
+- The built-in `make eval` is a **smoke** groundedness check; the full evaluation harness
+  is the separate **RAGeval** project (this just feeds it).
 - Qdrant production vector store; saved dashboards.
 
 ## 📄 License
