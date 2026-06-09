@@ -38,7 +38,7 @@ entity-overlap ranking when |query entities| ≥ 2; fall back to hybrid otherwis
 
 ## 4. Experimental Setup
 - System: IntelAI, 9 personas, 7 KPI domains, deterministic seed (24-month series).
-- Eval set: `tests/rag_eval.jsonl` (25 role-tagged queries; expand to ~100 for submission).
+- Eval set: `src/data/rag_eval.jsonl` (25 role-tagged queries; expand to ~100 for submission).
 - Metrics: answer recall; groundedness (proxy + LLM-judge for the paper); leakage rate
   (fraction of out-of-scope domains appearing in retrieved sources).
 - Conditions: vector-only · hybrid · hybrid+GraphRAG-lite; with/without scoping.

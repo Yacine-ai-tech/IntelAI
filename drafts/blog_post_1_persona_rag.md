@@ -49,7 +49,7 @@ On top of scoping, IntelAI uses a hybrid retriever:
 
 ## Measuring it (the part most demos skip)
 A copilot that sounds confident but isn't grounded is a liability. I keep a small,
-version-controlled eval set (`tests/rag_eval.jsonl`, 25 cases) and a runner (`make eval`)
+version-controlled eval set (`src/data/rag_eval.jsonl`, 25 cases) and a runner (`make eval`)
 that scores two things per query:
 - **Answer recall**: did the response mention the expected terms?
 - **Groundedness proxy**: are those terms supported by the *retrieved sources*?

@@ -3,7 +3,7 @@ The full groundedness run is `python -m src.data.rag_eval` (Studio/prod)."""
 import json
 from pathlib import Path
 
-EVAL = Path(__file__).resolve().parent / "rag_eval.jsonl"
+EVAL = Path(__file__).resolve().parents[1] / "src" / "data" / "rag_eval.jsonl"
 
 
 def _load():
