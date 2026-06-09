@@ -930,11 +930,36 @@ OUTPUT: Create all 6 project directories. Print summary: files created, tests pa
 
 # PHASE 1: IntelAI Foundation (Weeks 1–3, Days 8–27)
 
-> **⚑ Phase 1 reframed (2026-06-09): "recreate IntelAI as the scoped product."**
-> The full all-in-one platform was split out to the private `OmniIntelOS` repo + its own
-> Studio (a done, structural step). This repo (`IntelAI`) still *physically* carries the
-> full feature set, so **Phase 1 starts by scoping the codebase down** before the
-> visual/technical fixes below.
+## ✅ PHASE 1 IMPLEMENTATION STATUS — code-complete & validated (2026-06-09)
+
+Every Phase 1 **engineering** deliverable is implemented, tested, and validated end-to-end.
+CI (GitHub Actions + a Postgres service) is **green on `develop` with the full suite passing
+and 0 skips**; the RAG groundedness eval scores **24/25** with hybrid retrieval + GraphRAG-lite.
+
+| Deliverable | Status | Evidence |
+|---|---|---|
+| Scope-down to IntelAI (remove platform surface) | ✅ | `server_v2.py` 2479→~1340 LOC, 63 routes; `src/` = api/core/data/models/services/utils |
+| Recharts: Analytics(line) · Forecasting(area+CI) · Risk(radar) · Dashboard(sparkline) · Financial(bar) | ✅ | all 5 pages; `npm run build` clean |
+| WebSocket streaming chat, 9 personas | ✅ | `/api/v1/ws/chat` + `ChatPage.jsx` |
+| Hybrid retrieval (BGE + BM25 + RRF + reranker) | ✅ | wired into RAG path; `USE_HYBRID_RETRIEVAL`; torch 2.4.1 so BGE actually loads |
+| GraphRAG-lite (sidecar table + ingest-time extraction + multi-hop) | ✅ | `migrations/005`, `kpi_entities` table, `store_kpi_entities`, seed → 4920 entities, `USE_GRAPH_RAG` |
+| LiteLLM multi-provider router | ✅ | `src/services/llm_router.py` |
+| Robust deterministic seed (replaces the old dataset) | ✅ | `src/data/seed.py` → `make seed` (1032 KPIs + 4920 entities + 9 knowledge docs) |
+| 30+ in-process TestClient tests, **0 skips** | ✅ | 51 tests; CI green w/ Postgres; Playwright e2e is opt-in in `tests/e2e/` |
+| Prompt-eval (SMOKE; full eval = the RAGeval project) | ✅ | `src/data/rag_eval.jsonl` + `make eval` with a >20%-below-groundedness gate |
+| README <200 lines · `omnismart-personas` package · top-level pyproject | ✅ | README 134 LOC; `packages/` (8 tests); `pyproject.toml` |
+| Production: Dockerfile (non-root + healthcheck) · `.dockerignore` · `railway.toml` | ✅ | one cloud service; startup creates tables idempotently |
+| Brand-new Indigo-Nebula UI · simplified Data page | ✅ | re-themed design system |
+| Writing drafts (blog/preprint/demo/proposals) | ✅ | `drafts/` (gitignored — publish 2027) |
+
+**Remaining items are your manual actions (no code):** deploy the backend (Railway/Fly) and
+frontend (Vercel/Netlify) — config is ready — then record the public URL; record the 3-min
+Loom (script in `drafts/demo_script.md`); set up the Upwork profile and send proposals
+(templates in `drafts/upwork_proposal_templates.md`); publish `omnismart-personas` to
+TestPyPI→PyPI. The day-by-day playbook below remains as reference for those actions.
+
+> **⚑ Note on the split:** the full all-in-one platform was moved to the private
+> `OmniIntelOS` repo + its own Studio; this repo is the scoped IntelAI product.
 
 ## Day 8 (prerequisite): Scope-down to IntelAI
 Remove the platform-only surface from this repo (see STRATEGY.md §1.1 CUT list):
@@ -999,7 +1024,7 @@ Remove the platform-only surface from this repo (see STRATEGY.md §1.1 CUT list)
 - Document any prod-only failures, fix them
 - Note the public URL — this becomes your Upwork demo link
 
-**Week 1 Checkpoint:** All 4 chart pages use Recharts. WebSocket streaming chat works. 30+ tests passing. Live production URL exists.
+**Week 1 Checkpoint:** ✅ code-complete — Recharts on all 5 chart pages, WebSocket streaming chat, 51 tests passing (0 skips), GraphRAG-lite + hybrid retrieval. ⏳ Live production URL = your deploy step (config ready).
 
 ## Week 2: Demo + Profile + First Proposals (Days 13–18)
 
@@ -1079,7 +1104,7 @@ Remove the platform-only surface from this repo (see STRATEGY.md §1.1 CUT list)
 - Log in Notion: date, job title, niche, demo link, template used, client country, client reviews, expected outcome
 - Block calendar: more proposals + start Blog Post 1 tomorrow
 
-**Week 2 Checkpoint:** Loom demo recorded, watched by 3+ reviewers. Upwork profile live with IntelAI portfolio entry. 10 proposals sent, all logged.
+**Week 2 Checkpoint:** ✅ README rewritten (<200 lines), demo script + proposal templates drafted. ⏳ Loom recording, Upwork profile, and sending proposals = your manual actions.
 
 ## Week 3: Volume Application + Blog Post 1 + PyPI Package (Days 19–27)
 
@@ -1159,7 +1184,15 @@ Remove the platform-only surface from this repo (see STRATEGY.md §1.1 CUT list)
   - 10-15 from synthetic dataset
 - Save links in docintel/eval_sources.md
 
-**Phase 1 Final Checkpoint:** IntelAI deployed. 4 chart pages use Recharts. WebSocket streaming working. 30+ tests passing. README < 200 lines. Loom demo pre-reviewed. Upwork profile live. 50 proposals sent, all logged. Blog Post 1 drafted. omnismart-personas published to PyPI. 0-3 interviews secured.
+**Phase 1 Final Checkpoint:**
+- ✅ **Engineering (done + validated):** Recharts (5 pages); WebSocket streaming; hybrid
+  retrieval + GraphRAG-lite (persisted `kpi_entities`); 51 tests passing with 0 skips (CI
+  green w/ Postgres); RAG eval 24/25; README <200 lines; `omnismart-personas` package built
+  (8 tests); deterministic seed; single-app Docker/`railway.toml`; Indigo-Nebula UI; Blog
+  Post 1 + preprint + demo script + proposal templates drafted in `drafts/`.
+- ⏳ **Your manual actions:** deploy (Railway/Fly + Vercel/Netlify) → live URL; record Loom;
+  Upwork profile live; 50 proposals sent + logged; publish `omnismart-personas` to PyPI;
+  0–3 interviews secured.
 
 ---
 
