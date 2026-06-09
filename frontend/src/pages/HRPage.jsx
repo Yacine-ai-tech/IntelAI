@@ -28,7 +28,7 @@ function HealthScore({ data, t }) {
       <h3 className="card-title">{t('hrHealthScore')}</h3>
       <div style={{
         width: 120, height: 120, borderRadius: '50%',
-        border: `6px solid ${data.color || '#2563EB'}`,
+        border: `6px solid ${data.color || 'var(--primary-hover)'}`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         flexDirection: 'column', margin: '16px auto'
       }}>

@@ -72,7 +72,7 @@ export default function FloatingChat() {
       <button
         className="floating-chat-toggle"
         onClick={() => setOpen(!open)}
-        title="OmniIntel Assistant"
+        title="IntelAI Assistant"
         aria-label="Toggle assistant"
       >
         {open ? <X /> : <MessageSquare />}
@@ -85,10 +85,10 @@ export default function FloatingChat() {
           <div className="floating-chat-header">
             <div className="floating-chat-header-left">
               <div className="floating-chat-header-icon">
-                <img src="/logo.png" alt="" style={{ width: 22, height: 22, objectFit: 'contain' }} />
+                <Sparkles size={18} strokeWidth={2.2} />
               </div>
               <div>
-                <h4>OmniIntel Assistant <span className="status-dot" /></h4>
+                <h4>IntelAI Assistant <span className="status-dot" /></h4>
                 <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
                   {t('poweredByAI')}
                 </span>

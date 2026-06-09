@@ -106,7 +106,7 @@ export default function ESGPage() {
                 </div>
                 <div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('social')}</div>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 600, color: '#3b82f6' }}><Handshake size={18} /></div>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--primary)' }}><Handshake size={18} /></div>
                 </div>
                 <div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('governance')}</div>

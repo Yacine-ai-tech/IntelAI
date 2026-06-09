@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
-import { ShieldCheck, Briefcase, DollarSign, Cpu, BarChart3, Eye, AlertCircle } from 'lucide-react'
+import { ShieldCheck, Briefcase, DollarSign, Cpu, BarChart3, Eye, AlertCircle, Sparkles } from 'lucide-react'
 
 export default function LoginPage() {
   const { login } = useAuth()
@@ -41,7 +41,7 @@ export default function LoginPage() {
       <div className="login-container">
         <div className="login-header">
           <div className="login-brand-icon">
-            <img src="/logo.png" alt="IntelAI" style={{ width: 48, height: 48, objectFit: 'contain' }} />
+            <Sparkles size={30} strokeWidth={2.2} />
           </div>
           <h1>{t('appName')}</h1>
           <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.85rem' }}>
