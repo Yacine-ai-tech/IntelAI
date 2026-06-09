@@ -1,6 +1,10 @@
-"""Shared test setup: ensure the DB schema, a bootstrap admin, and seed data exist so the
-DB-backed tests run (no skips) wherever a Postgres is reachable (CI service or the Studio's
-Neon via .env)."""
+"""Shared test setup: ensure the DB schema, the bootstrap admin (in the in-memory auth
+store that the login route reads), and seed data exist — so the DB-backed tests RUN (no
+skips) wherever a Postgres is reachable (CI service or the Studio's Neon via .env).
+
+This calls the app's own ``_init_default_users`` instead of running full startup, so the
+test suite needs a database but NOT the LLM keys (``validate_required_keys`` is skipped).
+"""
 import os
 from pathlib import Path
 
@@ -9,22 +13,19 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai_test")
-
-ADMIN_USER = os.getenv("BOOTSTRAP_ADMIN_USERNAME", "admin")
-ADMIN_PASS = os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "admin123")
+# Ensure a bootstrap admin exists for DEFAULT_USERS (used by _init_default_users()).
+os.environ.setdefault("BOOTSTRAP_ADMIN_USERNAME", "admin")
+os.environ.setdefault("BOOTSTRAP_ADMIN_PASSWORD", "admin123")
 
 
 @pytest.fixture(scope="session", autouse=True)
 def _init_db():
-    """Create tables, bootstrap admin, and seed KPIs/knowledge once per test session."""
-    from src.services.pg_store import (
-        init_pg_tables, get_user, create_user, get_kpi_metrics, seed_all_domains,
-    )
-    from src.core.jwt_auth import hash_password
+    """Create tables, seed the bootstrap admin (in-memory + DB), and seed KPIs/knowledge."""
+    from src.api import server_v2
+    from src.services.pg_store import init_pg_tables, get_kpi_metrics, seed_all_domains
 
     init_pg_tables()
-    if not get_user(ADMIN_USER):
-        create_user(ADMIN_USER, hash_password(ADMIN_PASS), "admin")
+    server_v2._init_default_users()  # populates server_v2._users_db (read by /auth/login)
     try:
         empty = get_kpi_metrics().empty
     except Exception:
