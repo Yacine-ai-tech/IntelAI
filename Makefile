@@ -1,5 +1,5 @@
 # IntelAI — single cloud app. (The old multi-service platform Makefile lives in OmniIntelOS.)
-.PHONY: help dev run test build deploy-info
+.PHONY: help dev run test seed eval build deploy-info
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-12s\033[0m %s\n",$$1,$$2}'
@@ -12,6 +12,12 @@ run: ## Local full stack: app + bundled Postgres
 
 test: ## Run the test suite
 	python -m pytest tests/ -q
+
+seed: ## Seed deterministic demo data (KPIs + knowledge docs) into Postgres
+	python -m src.data.seed
+
+eval: ## Run the RAG prompt-eval (groundedness/recall gate)
+	python -m src.data.rag_eval
 
 build: ## Build the app image
 	docker build -t intelai:latest .
