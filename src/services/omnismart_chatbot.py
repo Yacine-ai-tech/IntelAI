@@ -611,14 +611,10 @@ Cite sources where relevant. If information is incomplete, state what additional
         result = {
             "query": query,
             "response": answer,
-            "sources": [
-                {
-                    "title": title,
-                    "preview": content[:200] + "...",
-                    "relevance": f"{sim:.1%}",
-                }
+            "sources": normalize_sources([
+                {"title": title, "snippet": content[:240], "relevance": sim}
                 for title, content, sim in documents
-            ],
+            ]),
             "type": "rag",
             "document_count": len(documents),
             "timestamp": datetime.utcnow().isoformat(),
@@ -1201,6 +1197,67 @@ class PersonaContext:
 
 
 # ════════════════════════════════════════════════════════════════════════════
+# CITATIONS — one canonical schema for every retrieval path
+# ════════════════════════════════════════════════════════════════════════════
+
+def normalize_sources(raw: List[Any], cap: int = 8) -> List[Dict[str, Any]]:
+    """Canonicalise citations from any retrieval path into one robust, scalable
+    shape so every surface renders identical, deduplicated, traceable sources.
+
+    Output item: ``{id, title, type, relevance (0..1 float|None), snippet, source}``.
+    Deduped by title (keeps the max relevance), live/KPI sources pinned first, then
+    by relevance desc, capped, and 1-indexed for inline ``[n]`` citations.
+    Accepts heterogeneous inputs (strings, ``{title,relevance}``, ``{title,preview,
+    relevance:"87%"}``…) so callers never have to agree on a format.
+    """
+    def _rel(v):
+        if v is None:
+            return None
+        if isinstance(v, str):
+            try:
+                f = float(v.strip().rstrip("%"))
+            except ValueError:
+                return None
+        else:
+            try:
+                f = float(v)
+            except (TypeError, ValueError):
+                return None
+        if f != f:  # NaN
+            return None
+        return round(f / 100 if f > 1 else f, 3)
+
+    seen: Dict[str, Dict[str, Any]] = {}
+    for s in raw or []:
+        if not isinstance(s, dict):
+            s = {"title": str(s)}
+        title = str(s.get("title") or s.get("source") or "source").strip()
+        if not title:
+            continue
+        key = title.lower()
+        rel = _rel(s.get("relevance"))
+        if key in seen:
+            ex = seen[key]
+            if rel is not None and (ex.get("relevance") is None or rel > ex["relevance"]):
+                ex["relevance"] = rel
+            continue
+        snippet = (s.get("snippet") or s.get("preview") or "").strip()
+        seen[key] = {
+            "title": title,
+            "type": s.get("type") or ("glossary" if key.startswith("glossary") else "knowledge"),
+            "relevance": rel,
+            "snippet": snippet[:240] or None,
+            "source": s.get("source"),
+        }
+    items = list(seen.values())
+    items.sort(key=lambda x: (0 if x["type"] == "kpi" else 1, -(x.get("relevance") or 0.0)))
+    items = items[:cap]
+    for i, it in enumerate(items, 1):
+        it["id"] = i
+    return items
+
+
+# ════════════════════════════════════════════════════════════════════════════
 # AGENT PERSONA FACTORY
 # ════════════════════════════════════════════════════════════════════════════
 
@@ -1307,8 +1364,9 @@ class AgentPersonaFactory:
     def _retrieve_context(self, message: str, persona: "PersonaContext", language: str = "en"):
         """Persona-routed RAG: gather a live KPI snapshot (scoped to the persona's
         data_access) + relevant knowledge docs. Returns (context_text, sources)."""
-        parts: List[str] = []
-        sources: List[Dict[str, Any]] = []
+        raw_sources: List[Dict[str, Any]] = []
+        kpi_block: Optional[str] = None
+        doc_blocks: List[Tuple[str, str]] = []
         scope = {c.lower() for c in (getattr(persona, "data_access", None) or [])}
 
         # 1) Live KPI snapshot (latest period), scoped to the persona's domains (RBAC)
@@ -1320,7 +1378,7 @@ class AgentPersonaFactory:
                 cur = df[df["period"] == latest]
                 if scope:
                     cur = cur[cur["category"].str.lower().isin(scope)]
-                lines = []
+                lines, cats = [], []
                 for cat in sorted(cur["category"].unique()):
                     cdf = cur[cur["category"] == cat]
                     metrics = "; ".join(
@@ -1328,23 +1386,43 @@ class AgentPersonaFactory:
                         for r in cdf.itertuples()
                     )
                     lines.append(f"- {cat} ({latest}): {metrics}")
+                    cats.append(cat)
                 if lines:
-                    parts.append("LIVE KPI SNAPSHOT:\n" + "\n".join(lines))
-                    sources.append({"title": f"KPI snapshot · {latest}", "type": "kpi"})
+                    kpi_block = "\n".join(lines)
+                    raw_sources.append({
+                        "title": f"Live KPI snapshot · {latest}", "type": "kpi", "relevance": 1.0,
+                        "snippet": f"{', '.join(cats)} metrics for {latest}", "source": f"kpi/{latest}",
+                    })
         except Exception as e:
             log.warning("KPI context retrieval failed: %s", e)
 
         # 2) Relevant knowledge docs (hybrid / GraphRAG-lite / vector)
         try:
-            docs = _get_shared_rag()._retrieve_documents(message, top_k=5, language=language)
-            if docs:
-                snippets = []
-                for title, content, score in docs:
-                    snippets.append(f"[{title}] {str(content)[:400]}")
-                    sources.append({"title": title, "relevance": round(float(score), 2)})
-                parts.append("KNOWLEDGE BASE:\n" + "\n".join(snippets))
+            docs = _get_shared_rag()._retrieve_documents(message, top_k=6, language=language)
+            for title, content, score in (docs or []):
+                doc_blocks.append((str(title), str(content)))
+                raw_sources.append({
+                    "title": str(title),
+                    "type": "glossary" if str(title).lower().startswith("glossary") else "knowledge",
+                    "relevance": round(float(score), 3),
+                    "snippet": str(content)[:240],
+                })
         except Exception as e:
             log.warning("Doc context retrieval failed: %s", e)
+
+        sources = normalize_sources(raw_sources)
+
+        # Build the context with [n] markers aligned to the citation ids, so the model
+        # can cite inline as [1], [2] … and the chips match exactly.
+        by_title = {s["title"].lower(): s for s in sources}
+        parts: List[str] = []
+        if kpi_block is not None:
+            sid = next((s["id"] for s in sources if s["type"] == "kpi"), None)
+            parts.append(f"[{sid}] LIVE KPI SNAPSHOT:\n{kpi_block}" if sid else f"LIVE KPI SNAPSHOT:\n{kpi_block}")
+        for title, text in doc_blocks:
+            s = by_title.get(title.lower())
+            if s:
+                parts.append(f"[{s['id']}] {title}: {text[:500]}")
 
         return ("\n\n".join(parts), sources)
 
@@ -1383,9 +1461,11 @@ class AgentPersonaFactory:
             {"role": "system", "content": (
                 "You have DIRECT access to the company's live data, provided below. Answer the "
                 "user's question directly using these numbers — never ask the user to supply data "
-                "or to pick a focus area when the data is already here. Be specific, quote the "
-                "metric values, and reference sources by their title. Only use data within your "
-                "access scope; if a figure is genuinely missing, say so in one short sentence.\n\n"
+                "or to pick a focus area when the data is already here. Be specific and quote the "
+                "metric values. CITE your sources inline using the bracketed numbers shown in the "
+                "context, e.g. 'Revenue is $3.6M [1]'. Only use citation numbers that appear below "
+                "and never invent one. Only use data within your access scope; if a figure is "
+                "genuinely missing, say so in one short sentence.\n\n"
                 f"=== LIVE DATA (scope: {', '.join(persona.data_access) or 'all'}) ===\n"
                 f"{full_context if full_context else '(no data retrieved)'}"
             )},
