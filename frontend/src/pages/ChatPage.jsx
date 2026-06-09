@@ -4,8 +4,9 @@ import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
 import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
+import { Citations } from '../components/ui'
 import {
-  Send, Sparkles, User, Plus, History, MessageSquare, FileText,
+  Send, Sparkles, User, Plus, History, MessageSquare,
   Crown, DollarSign, Cpu, Settings2, Users, Leaf, ShieldAlert, BarChart3, Bot,
 } from 'lucide-react'
 
@@ -31,22 +32,6 @@ const PROMPTS = {
   esg: ['What are our carbon emissions?', 'How is our renewable energy share?', 'Summarize our ESG position'],
   risk: ['What recent anomalies should I review?', 'What is our risk score?', 'Where is concentration risk?'],
   analyst: ['Summarize the latest KPIs', 'What changed most this period?', 'Forecast revenue for next quarter'],
-}
-
-function Citations({ sources }) {
-  if (!sources || sources.length === 0) return null
-  return (
-    <div className="citations">
-      {sources.slice(0, 6).map((s, i) => {
-        const title = typeof s === 'string' ? s : (s.title || s.source || 'source')
-        return (
-          <span key={i} className="citation-chip" title={title}>
-            <FileText size={12} /> {title}
-          </span>
-        )
-      })}
-    </div>
-  )
 }
 
 function MessageBubble({ msg }) {
