@@ -201,6 +201,50 @@ def graph_rag_enabled() -> bool:
     return os.getenv("USE_GRAPH_RAG", "false").strip().lower() in ("1", "true", "yes", "on")
 
 
+def _rank_from_persisted_entities(query_entities, top_k: int = 6) -> List[Tuple[str, str, float]]:
+    """Rank KPI records via the persisted ``kpi_entities`` table (ingest-time extraction).
+
+    Returns ``[(title, content, score)]`` or ``[]`` if the table is empty / no overlap.
+    """
+    try:
+        from src.services.pg_store import get_kpi_entities, get_kpi_metrics
+        edf = get_kpi_entities()
+        if edf is None or edf.empty:
+            return []
+        q = {e.lower() for e in query_entities}
+        by_ref: Dict[str, set] = {}
+        for ref, val in zip(edf["record_ref"], edf["entity_value"]):
+            by_ref.setdefault(str(ref), set()).add(str(val).lower())
+        scored = sorted(
+            ((ref, len(q & vals)) for ref, vals in by_ref.items()),
+            key=lambda x: -x[1],
+        )
+        scored = [s for s in scored if s[1] > 0][:top_k]
+        if not scored:
+            return []
+        vmap: Dict[str, Tuple[Any, str]] = {}
+        mdf = get_kpi_metrics()
+        if mdf is not None and not mdf.empty:
+            for _, r in mdf.iterrows():
+                key = f"{r.get('category','')}|{r.get('metric','')}|{r.get('period','')}"
+                vmap[key] = (r.get("value"), r.get("unit", "") or "")
+        out: List[Tuple[str, str, float]] = []
+        for ref, _score in scored:
+            cat, metric, period = (ref.split("|") + ["", "", ""])[:3]
+            value, unit = vmap.get(ref, (None, ""))
+            unit = f" {unit}" if unit else ""
+            val = f": {value}{unit}" if value is not None else ""
+            out.append((
+                f"KPI: {metric} ({cat}, {period})",
+                f"{metric} for {cat} in {period}{val}.",
+                1.0,
+            ))
+        return out
+    except Exception as e:
+        logger.warning("GraphRAG-lite persisted ranking failed: %s", e)
+        return []
+
+
 def graph_kpi_context(query: str, top_k: int = 6, min_entities: int = 2) -> List[Tuple[str, str, float]]:
     """GraphRAG-lite retrieval for the RAG context.
 
@@ -221,6 +265,14 @@ def graph_kpi_context(query: str, top_k: int = 6, min_entities: int = 2) -> List
         query_entities = retriever.entity_extractor.extract_query_entities(query)
         if len(set(e.lower() for e in query_entities)) < min_entities:
             return []  # not multi-hop enough → let vector search handle it
+
+        # Preferred path: rank using the persisted kpi_entities sidecar table
+        # (populated at ingest). Falls back to the in-memory graph build below.
+        persisted = _rank_from_persisted_entities(query_entities, top_k)
+        if persisted:
+            logger.info("GraphRAG-lite (persisted) selected %d records for %s",
+                        len(persisted), query_entities)
+            return persisted
 
         from src.services.pg_store import get_kpi_metrics
         df = get_kpi_metrics()
