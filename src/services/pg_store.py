@@ -89,6 +89,16 @@ def init_pg_tables():
             )
         """)
         conn.execute("""
+            CREATE TABLE IF NOT EXISTS kpi_entities (
+                id            SERIAL PRIMARY KEY,
+                record_ref    TEXT NOT NULL,
+                entity_type   TEXT NOT NULL,
+                entity_value  TEXT NOT NULL,
+                created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            )
+        """)
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_entities_ref ON kpi_entities(record_ref)")
+        conn.execute("""
             CREATE TABLE IF NOT EXISTS kpi_targets (
                 metric          TEXT PRIMARY KEY,
                 target          DOUBLE PRECISION,
@@ -316,6 +326,46 @@ def get_kpi_metrics(
             q += " WHERE " + " AND ".join(filters)
         q += " ORDER BY period, metric"
         rows = conn.execute(q, params).fetchall()
+        return pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
+    finally:
+        conn.close()
+
+
+def store_kpi_entities(rows: List[Dict[str, str]], replace: bool = True) -> int:
+    """Persist GraphRAG-lite entities (the kpi_entities sidecar table).
+
+    ``rows`` = ``[{record_ref, entity_type, entity_value}, ...]`` extracted at ingestion.
+    Returns the number of rows written.
+    """
+    if not rows:
+        return 0
+    conn = _get_conn()
+    try:
+        if replace:
+            conn.execute("DELETE FROM kpi_entities")
+        params = [
+            (str(r.get("record_ref", "")), str(r.get("entity_type", "")), str(r.get("entity_value", "")))
+            for r in rows
+        ]
+        with conn.cursor() as cur:
+            cur.executemany(
+                "INSERT INTO kpi_entities (record_ref, entity_type, entity_value) VALUES (%s, %s, %s)",
+                params,
+            )
+        conn.commit()
+        return len(rows)
+    finally:
+        conn.close()
+
+
+def get_kpi_entities() -> "pd.DataFrame":
+    """Return the persisted GraphRAG-lite entities (record_ref, entity_type, entity_value)."""
+    import pandas as pd
+    conn = _get_conn()
+    try:
+        rows = conn.execute(
+            "SELECT record_ref, entity_type, entity_value FROM kpi_entities"
+        ).fetchall()
         return pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
     finally:
         conn.close()
