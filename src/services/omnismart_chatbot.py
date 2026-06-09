@@ -438,7 +438,19 @@ class UltraFastRAG:
                 lang_docs = docs[docs["language"] == language]
                 if not lang_docs.empty:
                     docs = lang_docs
-            
+
+            # Hybrid retrieval (dense + BM25 + RRF + reranker) — opt-in via USE_HYBRID_RETRIEVAL.
+            # Falls through to the vector/TF-IDF path below when disabled or unavailable.
+            try:
+                from src.services.hybrid_retrieval import hybrid_enabled, hybrid_doc_retrieve
+                if hybrid_enabled():
+                    records = list(zip(docs["title"].tolist(), docs["content"].fillna("").tolist()))
+                    hy = hybrid_doc_retrieve(query, records, top_k)
+                    if hy:
+                        return hy
+            except Exception as e:
+                log.warning("Hybrid retrieval skipped: %s", e)
+
             # Semantic search with embeddings
             if _SBERT and self.embedding_model and "embedding" in docs.columns:
                 try:
