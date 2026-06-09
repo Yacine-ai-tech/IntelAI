@@ -1,0 +1,25 @@
+{"query": "What is our latest revenue?", "persona": "cfo", "expected_keywords": ["revenue"], "min_groundedness": 0.6}
+{"query": "How has gross margin trended this year?", "persona": "cfo", "expected_keywords": ["gross", "margin"], "min_groundedness": 0.6}
+{"query": "What is EBITDA and how is it changing?", "persona": "cfo", "expected_keywords": ["ebitda"], "min_groundedness": 0.6}
+{"query": "Summarize operating cash flow.", "persona": "cfo", "expected_keywords": ["cash", "flow"], "min_groundedness": 0.5}
+{"query": "What is our current MRR and ARR?", "persona": "ceo", "expected_keywords": ["mrr", "arr"], "min_groundedness": 0.6}
+{"query": "How is churn rate trending?", "persona": "analyst", "expected_keywords": ["churn"], "min_groundedness": 0.6}
+{"query": "What is our customer acquisition cost versus LTV?", "persona": "ceo", "expected_keywords": ["cac", "ltv"], "min_groundedness": 0.5}
+{"query": "What is the net promoter score?", "persona": "analyst", "expected_keywords": ["promoter", "nps"], "min_groundedness": 0.5}
+{"query": "What is our headcount and how is it growing?", "persona": "chro", "expected_keywords": ["headcount"], "min_groundedness": 0.6}
+{"query": "How is employee turnover trending?", "persona": "chro", "expected_keywords": ["turnover"], "min_groundedness": 0.6}
+{"query": "What is the engagement score?", "persona": "chro", "expected_keywords": ["engagement"], "min_groundedness": 0.5}
+{"query": "How long does time to hire take?", "persona": "chro", "expected_keywords": ["hire"], "min_groundedness": 0.5}
+{"query": "What is on-time delivery performance?", "persona": "coo", "expected_keywords": ["delivery"], "min_groundedness": 0.6}
+{"query": "How is the defect rate?", "persona": "coo", "expected_keywords": ["defect"], "min_groundedness": 0.6}
+{"query": "What is our capacity utilization?", "persona": "coo", "expected_keywords": ["capacity"], "min_groundedness": 0.5}
+{"query": "What is system uptime?", "persona": "cto", "expected_keywords": ["uptime"], "min_groundedness": 0.6}
+{"query": "How many security incidents have we had?", "persona": "cto", "expected_keywords": ["security"], "min_groundedness": 0.6}
+{"query": "What is our deployment frequency?", "persona": "cto", "expected_keywords": ["deployment"], "min_groundedness": 0.5}
+{"query": "What is inventory turnover in logistics?", "persona": "coo", "expected_keywords": ["inventory"], "min_groundedness": 0.5}
+{"query": "How accurate are our orders?", "persona": "coo", "expected_keywords": ["order", "accuracy"], "min_groundedness": 0.5}
+{"query": "What are our carbon emissions?", "persona": "esg", "expected_keywords": ["carbon"], "min_groundedness": 0.6}
+{"query": "What percentage of energy is renewable?", "persona": "esg", "expected_keywords": ["renewable"], "min_groundedness": 0.6}
+{"query": "What is our waste recycling rate?", "persona": "esg", "expected_keywords": ["recycl"], "min_groundedness": 0.5}
+{"query": "What recent anomalies should I review for risk?", "persona": "risk", "expected_keywords": ["anomal"], "min_groundedness": 0.5}
+{"query": "How does headcount relate to finance margin across recent periods?", "persona": "ceo", "expected_keywords": ["headcount", "margin"], "min_groundedness": 0.5}

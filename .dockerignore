@@ -1,0 +1,36 @@
+# Keep the build context lean (Dockerfile only needs requirements.txt, src/, main.py)
+.git
+.github
+__pycache__/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# Frontend (deploys separately)
+frontend/
+static/
+logo/
+
+# Docs, tests, drafts, data, infra
+tests/
+drafts/
+docs/
+db/
+migrations/
+packages/
+*.md
+docker-compose*.yml
+Makefile
+railway.toml
+
+# Secrets / local
+.env
+.env.*
+!.env.example
+*.log
+logs/
+chroma_db/
+*.sqlite
+*.db
