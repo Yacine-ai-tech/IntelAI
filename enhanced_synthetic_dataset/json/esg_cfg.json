@@ -1,8 +1,0 @@
-{
-  "domain": "ESG",
-  "metrics": [
-    "carbon_intensity",
-    "renewable_energy_pct",
-    "safety_incidents"
-  ]
-}
