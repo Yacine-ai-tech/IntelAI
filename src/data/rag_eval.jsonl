@@ -15,11 +15,11 @@
 {"query": "What is our capacity utilization?", "persona": "coo", "expected_keywords": ["capacity"], "min_groundedness": 0.5}
 {"query": "What is system uptime?", "persona": "cto", "expected_keywords": ["uptime"], "min_groundedness": 0.6}
 {"query": "How many security incidents have we had?", "persona": "cto", "expected_keywords": ["security"], "min_groundedness": 0.6}
-{"query": "What is our deployment frequency?", "persona": "cto", "expected_keywords": ["deployment"], "min_groundedness": 0.5}
+{"query": "What is our deployment frequency?", "persona": "cto", "expected_keywords": ["deployment", "frequency"], "min_groundedness": 0.5}
 {"query": "What is inventory turnover in logistics?", "persona": "coo", "expected_keywords": ["inventory"], "min_groundedness": 0.5}
 {"query": "How accurate are our orders?", "persona": "coo", "expected_keywords": ["order", "accuracy"], "min_groundedness": 0.5}
-{"query": "What are our carbon emissions?", "persona": "esg", "expected_keywords": ["carbon"], "min_groundedness": 0.6}
-{"query": "What percentage of energy is renewable?", "persona": "esg", "expected_keywords": ["renewable"], "min_groundedness": 0.6}
-{"query": "What is our waste recycling rate?", "persona": "esg", "expected_keywords": ["recycl"], "min_groundedness": 0.5}
+{"query": "What are our carbon emissions?", "persona": "esg", "expected_keywords": ["carbon", "emissions"], "min_groundedness": 0.6}
+{"query": "What percentage of energy is renewable?", "persona": "esg", "expected_keywords": ["renewable", "energy"], "min_groundedness": 0.6}
+{"query": "What is our waste recycling rate?", "persona": "esg", "expected_keywords": ["recycl", "waste"], "min_groundedness": 0.5}
 {"query": "What recent anomalies should I review for risk?", "persona": "risk", "expected_keywords": ["anomal"], "min_groundedness": 0.5}
 {"query": "How does headcount relate to finance margin across recent periods?", "persona": "ceo", "expected_keywords": ["headcount", "margin"], "min_groundedness": 0.5}
