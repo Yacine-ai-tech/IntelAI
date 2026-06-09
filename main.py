@@ -1,5 +1,5 @@
 """
-OmniIntelOS v2.0 — Intelligence Operating System Entry Point.
+IntelAI v2.0 — Persona-Aware AI Analytics & RAG Copilot. Entry Point.
 
 Usage:
     python main.py                 # FastAPI server (default)

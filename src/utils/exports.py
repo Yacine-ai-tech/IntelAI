@@ -49,7 +49,7 @@ def build_pdf_report(health: dict, risk: dict, highlights: List[str], category_d
     pdf.add_page()
 
     pdf.set_font("Helvetica", "B", 16)
-    pdf.cell(0, 10, _lbl("OmniIntelOS — Executive Briefing", "OmniIntelOS — Rapport exécutif"), ln=True)
+    pdf.cell(0, 10, _lbl("IntelAI — Executive Briefing", "IntelAI — Rapport exécutif"), ln=True)
 
     pdf.set_font("Helvetica", "", 12)
     pdf.cell(0, 8, f"{_lbl('Health Index', 'Indice de santé')}: {health.get('score', 0):.0f} ({health.get('label', '')})", ln=True)
@@ -83,7 +83,7 @@ def build_pptx_report(health: dict, risk: dict, highlights: List[str], category_
 
     # Title slide
     slide0 = prs.slides.add_slide(prs.slide_layouts[0])
-    slide0.shapes.title.text = "OmniIntelOS"
+    slide0.shapes.title.text = "IntelAI"
     slide0.placeholders[1].text = _lbl("Executive Briefing", "Rapport exécutif")
 
     # Summary slide

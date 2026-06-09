@@ -1,5 +1,5 @@
 """
-OmniIntelOS 2026
+IntelAI 2026
 Unified Multi-Domain Intelligence Platform for Enterprise Analytics.
 """
 

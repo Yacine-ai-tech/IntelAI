@@ -1,6 +1,0 @@
-tunnel: omnitelos-n8n
-credentials-file: /home/codespace/.cloudflared/omnitelos-n8n.json
-ingress:
-  - hostname: workflows.ysiddo-ai-projects.app
-    service: http://localhost:5678
-  - service: http_status:404

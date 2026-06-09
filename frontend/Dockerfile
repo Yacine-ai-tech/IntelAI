@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════════════════════════
-# OmniIntelOS — React Frontend
+# IntelAI — React Frontend
 # Stage 1: Build  |  Stage 2: Serve with nginx (ultra-fast)
 # ═══════════════════════════════════════════════════════════════
 

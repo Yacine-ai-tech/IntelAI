@@ -1,6 +1,6 @@
 """
 IT Operations Service — System uptime, tickets, infrastructure, security.
-Provides IT operations and infrastructure intelligence for OmniIntelOS.
+Provides IT operations and infrastructure intelligence for IntelAI.
 """
 from __future__ import annotations
 

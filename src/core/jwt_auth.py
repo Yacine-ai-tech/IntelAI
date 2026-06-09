@@ -144,7 +144,7 @@ async def get_optional_user(
 
 # ── Role-Based Access Control ──────────────────────────────────────────────
 
-# Extended role definitions for OmniIntelOS
+# Extended role definitions for IntelAI
 ROLE_DEFINITIONS = {
     "admin": {
         "pages": ["*"],

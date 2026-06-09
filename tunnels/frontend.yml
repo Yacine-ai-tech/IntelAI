@@ -1,6 +1,0 @@
-tunnel: omnitelos-frontend
-credentials-file: /home/codespace/.cloudflared/omnitelos-frontend.json
-ingress:
-  - hostname: app.ysiddo-ai-projects.app
-    service: http://localhost:5173
-  - service: http_status:404

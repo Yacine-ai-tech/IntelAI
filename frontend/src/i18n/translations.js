@@ -1,12 +1,12 @@
 /**
- * OmniIntelOS — Internationalization (EN / FR)
+ * IntelAI — Internationalization (EN / FR)
  * Every UI string is stored here; components use t('key').
  */
 
 const translations = {
   en: {
     // ── Global ──────────────────────────────────────────
-    appName: 'OmniIntelOS',
+    appName: 'IntelAI',
     appTagline: 'Enterprise AI Analytics Platform 2026',
     loading: 'Loading…',
     save: 'Save',
@@ -481,7 +481,7 @@ const translations = {
 
   fr: {
     // ── Global ──────────────────────────────────────────
-    appName: 'OmniIntelOS',
+    appName: 'IntelAI',
     appTagline: 'Plateforme d\'Analyse IA d\'Entreprise 2026',
     loading: 'Chargement…',
     save: 'Enregistrer',

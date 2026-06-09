@@ -104,7 +104,7 @@ export default function SettingsPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
           <div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('platform')}</div>
-            <div style={{ fontWeight: 600 }}>OmniIntelOS v2.0</div>
+            <div style={{ fontWeight: 600 }}>IntelAI v2.0</div>
           </div>
           <div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('backend')}</div>

@@ -1,5 +1,5 @@
 """
-Logo and Branding Utilities for OmniIntelOS
+Logo and Branding Utilities for IntelAI
 
 Handles logo display, branding elements, and visual identity across the platform.
 """
@@ -13,7 +13,7 @@ from src.core.logger import get_logger
 
 log = get_logger(__name__)
 
-LOGO_PATH = Path(__file__).resolve().parent.parent.parent / "logo" / "OmniIntelOS.png"
+LOGO_PATH = Path(__file__).resolve().parent.parent.parent / "logo" / "IntelAI.png"
 
 
 def get_logo_base64() -> Optional[str]:
@@ -45,7 +45,7 @@ def get_header_html(include_logo: bool = True) -> str:
     <div style="display: flex; align-items: center; padding: 20px 0; border-bottom: 2px solid #f0f0f0;">
         {logo_html}
         <div>
-            <h1 style="margin: 0; color: #1f77b4;">OmniIntelOS 2026</h1>
+            <h1 style="margin: 0; color: #1f77b4;">IntelAI 2026</h1>
             <p style="margin: 0; color: #666; font-size: 14px;">Unified Multi-Domain Intelligence Platform</p>
         </div>
     </div>
@@ -61,14 +61,14 @@ def get_sidebar_logo_html() -> str:
         html = f"""
         <div style="text-align: center; padding: 20px 0;">
             <img src="data:image/png;base64,{logo_b64}" style="width: 80%; max-width: 200px;" />
-            <p style="margin-top: 10px; font-size: 12px; color: #666;">OmniIntelOS 2026</p>
+            <p style="margin-top: 10px; font-size: 12px; color: #666;">IntelAI 2026</p>
         </div>
         """
     else:
         html = """
         <div style="text-align: center; padding: 20px 0;">
             <div style="font-size: 48px;">🏢</div>
-            <h3 style="margin: 10px 0;">OmniIntelOS</h3>
+            <h3 style="margin: 10px 0;">IntelAI</h3>
             <p style="font-size: 12px; color: #666;">2026</p>
         </div>
         """
@@ -81,7 +81,7 @@ def get_export_logo_path() -> str:
 
 
 def get_branding_colors() -> dict:
-    """Get the OmniIntelOS branding color palette."""
+    """Get the IntelAI branding color palette."""
     return {
         "primary": "#1f77b4",      # Blue
         "secondary": "#ff7f0e",    # Orange

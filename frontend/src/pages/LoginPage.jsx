@@ -41,7 +41,7 @@ export default function LoginPage() {
       <div className="login-container">
         <div className="login-header">
           <div className="login-brand-icon">
-            <img src="/logo.png" alt="OmniIntelOS" style={{ width: 48, height: 48, objectFit: 'contain' }} />
+            <img src="/logo.png" alt="IntelAI" style={{ width: 48, height: 48, objectFit: 'contain' }} />
           </div>
           <h1>{t('appName')}</h1>
           <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.85rem' }}>

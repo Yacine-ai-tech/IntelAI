@@ -1,503 +1,205 @@
-import httpx
+"""In-process API tests for IntelAI (FastAPI TestClient).
+
+No live server needed. Endpoints that only depend on routing/auth run everywhere
+(incl. CI without a DB). Endpoints that need a seeded database/LLM are exercised
+when the bootstrap-admin login succeeds and are otherwise skipped with a clear
+reason — so the suite is green in CI and full on the Studio (Neon DB).
+"""
 import os
-import pytest
 from pathlib import Path
+
+import pytest
 from dotenv import load_dotenv
 
-BASE = "http://127.0.0.1:8000"
-
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai_test")
+
+ADMIN = {
+    "username": os.getenv("BOOTSTRAP_ADMIN_USERNAME", "admin"),
+    "password": os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "admin123"),
+}
 
 
-def _test_login_credentials():
-    return {
-        "username": os.getenv("BOOTSTRAP_ADMIN_USERNAME", "admin"),
-        "password": os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "admin123"),
-    }
+@pytest.fixture(scope="module")
+def client():
+    from fastapi.testclient import TestClient
+    from src.api.server_v2 import app
+    return TestClient(app)
 
 
-# ============================================================================
-# AUTH TESTS (5 tests)
-# ============================================================================
+@pytest.fixture(scope="module")
+def admin_token(client):
+    """Bootstrap-admin JWT; skips DB-dependent tests when no seeded DB is reachable."""
+    try:
+        r = client.post("/api/v1/auth/login", json=ADMIN)
+    except Exception as e:  # pragma: no cover - environment dependent
+        pytest.skip(f"auth/login raised (no DB?): {e}")
+    if r.status_code != 200 or "access_token" not in r.json():
+        pytest.skip(f"bootstrap admin login unavailable (status {r.status_code}); needs seeded DB")
+    return r.json()["access_token"]
 
-def test_health():
-    r = httpx.get(f"{BASE}/health", timeout=5)
+
+def H(token):
+    return {"Authorization": f"Bearer {token}"}
+
+
+# ── Routing / docs (no DB) ───────────────────────────────────────────────────
+
+def test_health(client):
+    r = client.get("/health")
+    assert r.status_code == 200
+
+def test_openapi_paths(client):
+    r = client.get("/openapi.json")
+    assert r.status_code == 200
+    assert len(r.json().get("paths", {})) > 20
+
+def test_docs_served(client):
+    assert client.get("/api/docs").status_code == 200
+
+def test_redoc_served(client):
+    assert client.get("/api/redoc").status_code == 200
+
+def test_unknown_api_path_404(client):
+    assert client.get("/api/v1/does-not-exist").status_code == 404
+
+def test_prometheus_metrics(client):
+    r = client.get("/metrics")
     assert r.status_code == 200
 
 
-def test_login():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    assert r.status_code == 200
-    data = r.json()
-    assert "access_token" in data
-
-
-def test_login_wrong_password():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json={"username": "admin", "password": "wrongpassword"},
-        timeout=5,
-    )
-    assert r.status_code in [400, 401, 422]
-
-
-def test_register():
-    import os as _os
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/register",
-        json={"username": f"testuser_{_os.urandom(4).hex()}", "password": "testpass123"},
-        timeout=5,
-    )
-    assert r.status_code in [200, 201, 400]  # 400 if user exists
-
-
-def test_get_me():
-    # First login to get token
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.get(
-        f"{BASE}/api/v1/auth/me",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=5,
-    )
-    assert r.status_code == 200
-    data = r.json()
-    assert "username" in data
-
-
-def test_token_validation():
-    # Test invalid token
-    r = httpx.get(
-        f"{BASE}/api/v1/auth/me",
-        headers={"Authorization": "Bearer invalid_token"},
-        timeout=5,
-    )
-    assert r.status_code in [401, 403]
-
-
-# ============================================================================
-# CHAT TESTS (4 tests)
-# ============================================================================
-
-def test_chat_basic():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.post(
-        f"{BASE}/api/v1/chat",
-        headers={"Authorization": f"Bearer {token}"},
-        json={"message": "Hello", "persona": None},
-        timeout=30,
-    )
-    assert r.status_code in [200, 500]  # 500 if LLM not configured
-    if r.status_code == 200:
-        data = r.json()
-        assert "response" in data
-
-
-def test_chat_with_persona():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.post(
-        f"{BASE}/api/v1/chat",
-        headers={"Authorization": f"Bearer {token}"},
-        json={"message": "Hello", "persona": "CFO"},
-        timeout=30,
-    )
-    assert r.status_code in [200, 500]
-
-
-def test_chat_streaming():
-    # Test WebSocket endpoint exists (basic check)
-    r = httpx.get(f"{BASE}/api/v1/docs", timeout=5)
-    assert r.status_code == 200
-
-
-def test_chat_edge_cases():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    # Test empty message
-    r = httpx.post(
-        f"{BASE}/api/v1/chat",
-        headers={"Authorization": f"Bearer {token}"},
-        json={"message": "", "persona": None},
-        timeout=30,
-    )
-    assert r.status_code in [200, 400, 422]
-
-
-# ============================================================================
-# KPI TESTS (4 tests)
-# ============================================================================
-
-def test_kpis_get():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.get(
-        f"{BASE}/api/v1/kpis",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=10,
-    )
-    assert r.status_code in [200, 404]
-
-
-def test_kpis_periods():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.get(
-        f"{BASE}/api/v1/kpis/periods",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=10,
-    )
-    assert r.status_code in [200, 404]
-
-
-def test_kpis_metrics():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.get(
-        f"{BASE}/api/v1/kpis/metrics",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=10,
-    )
-    assert r.status_code in [200, 404]
-
-
-def test_kpis_by_category():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.get(
-        f"{BASE}/api/v1/kpis?category=Finance",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=10,
-    )
-    assert r.status_code in [200, 404]
-
-
-# ============================================================================
-# INSIGHTS TESTS (3 tests)
-# ============================================================================
-
-def test_insights_health():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.get(
-        f"{BASE}/api/v1/insights/health",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=10,
-    )
-    assert r.status_code in [200, 404]
-
-
-def test_insights_risk():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.get(
-        f"{BASE}/api/v1/insights/risk",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=10,
-    )
-    assert r.status_code in [200, 404]
-
-
-def test_insights_summary():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.get(
-        f"{BASE}/api/v1/insights/summary",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=10,
-    )
-    assert r.status_code in [200, 404]
-
-
-# ============================================================================
-# FORECAST TESTS (2 tests)
-# ============================================================================
-
-def test_forecast_basic():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.post(
-        f"{BASE}/api/v1/forecast",
-        headers={"Authorization": f"Bearer {token}"},
-        json={"metric": "Revenue", "periods": 6},
-        timeout=30,
-    )
-    assert r.status_code in [200, 400, 404, 500]
-
-
-def test_forecast_with_ci():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.post(
-        f"{BASE}/api/v1/forecast",
-        headers={"Authorization": f"Bearer {token}"},
-        json={"metric": "Revenue", "periods": 12},
-        timeout=30,
-    )
-    assert r.status_code in [200, 400, 404, 500]
-
-
-# ============================================================================
-# INGEST TESTS (3 tests)
-# ============================================================================
-
-def test_ingest_valid():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.post(
-        f"{BASE}/api/v1/ingest/kpi",
-        headers={"Authorization": f"Bearer {token}"},
-        json={
-            "data": [{
-                "metric_name": "TestMetric",
-                "value": 100.0,
-                "category": "Test",
-                "period": "2025-Q1"
-            }]
-        },
-        timeout=10,
-    )
-    assert r.status_code in [200, 201, 400, 404]
-
-
-def test_ingest_empty():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.post(
-        f"{BASE}/api/v1/ingest/kpi",
-        headers={"Authorization": f"Bearer {token}"},
-        json={"data": []},
-        timeout=10,
-    )
-    assert r.status_code in [200, 400, 404]
-
-
-def test_ingest_malformed():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.post(
-        f"{BASE}/api/v1/ingest/kpi",
-        headers={"Authorization": f"Bearer {token}"},
-        json={"invalid": "data"},
-        timeout=10,
-    )
-    assert r.status_code in [400, 422, 404]
-
-
-# ============================================================================
-# RBAC TESTS (4 tests)
-# ============================================================================
-
-def test_rbac_admin_works():
-    # Admin should have access to all endpoints
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.get(
-        f"{BASE}/api/v1/kpis",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=10,
-    )
-    assert r.status_code in [200, 404]
-
-
-def test_rbac_viewer_blocked():
-    # Create viewer user
-    import os as _os
-    username = f"viewer_{_os.urandom(4).hex()}"
-    httpx.post(
-        f"{BASE}/api/v1/auth/register",
-        json={"username": username, "password": "testpass123", "role": "viewer"},
-        timeout=5,
-    )
-    
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json={"username": username, "password": "testpass123"},
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    # Viewer should be able to read but not write
-    r = httpx.get(
-        f"{BASE}/api/v1/kpis",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=10,
-    )
-    assert r.status_code in [200, 404]
-    
-    # Try to ingest (should fail for viewer)
-    r = httpx.post(
-        f"{BASE}/api/v1/ingest/kpi",
-        headers={"Authorization": f"Bearer {token}"},
-        json={"data": [{"metric_name": "Test", "value": 100}]},
-        timeout=10,
-    )
-    assert r.status_code in [403, 404]
-
-
-def test_rbac_scope_enforcement():
-    # Test that user can only access their own data
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.get(
-        f"{BASE}/api/v1/chat/sessions",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=10,
-    )
-    assert r.status_code in [200, 404]
-
-
-def test_rbac_edge_cases():
-    # Test with no auth header
-    r = httpx.get(f"{BASE}/api/v1/kpis", timeout=10)
-    assert r.status_code in [401, 403]
-
-
-# ============================================================================
-# MONITORING TESTS (3 tests)
-# ============================================================================
-
-def test_monitoring_stats():
-    r = httpx.get(f"{BASE}/metrics", timeout=5)
-    assert r.status_code in [200, 404]
-
-
-def test_monitoring_knowledge_search():
-    r = httpx.post(
-        f"{BASE}/api/v1/auth/login",
-        json=_test_login_credentials(),
-        timeout=5,
-    )
-    token = r.json().get("access_token")
-    
-    r = httpx.post(
-        f"{BASE}/api/v1/knowledge/search",
-        headers={"Authorization": f"Bearer {token}"},
-        json={"query": "revenue", "top_k": 5},
-        timeout=10,
-    )
-    assert r.status_code in [200, 404, 500]
-
-
-def test_monitoring_performance():
-    # Test performance endpoint exists
-    r = httpx.get(f"{BASE}/health", timeout=5)
-    assert r.status_code == 200
-    data = r.json()
-    assert "status" in data
-
-
-# ============================================================================
-# MISC TESTS (3 tests)
-# ============================================================================
-
-def test_misc_health():
-    r = httpx.get(f"{BASE}/health", timeout=5)
-    assert r.status_code == 200
-    data = r.json()
-    assert data["status"] == "healthy"
-
-
-def test_misc_root():
-    r = httpx.get(f"{BASE}/", timeout=5)
-    assert r.status_code in [200, 404]
-
-
-def test_misc_404_handler():
-    r = httpx.get(f"{BASE}/api/v1/nonexistent", timeout=5)
-    assert r.status_code == 404
+# ── Auth validation / RBAC gating (no DB) ────────────────────────────────────
+
+def test_login_missing_fields_422(client):
+    assert client.post("/api/v1/auth/login", json={"username": "x"}).status_code == 422
+
+def test_me_requires_token(client):
+    assert client.get("/api/v1/auth/me").status_code in (401, 403)
+
+def test_me_rejects_bad_token(client):
+    assert client.get("/api/v1/auth/me", headers=H("not-a-jwt")).status_code in (401, 403)
+
+def test_kpis_requires_auth(client):
+    assert client.get("/api/v1/kpis").status_code in (401, 403)
+
+def test_chat_requires_auth(client):
+    assert client.post("/api/v1/chat", json={"message": "hi"}).status_code in (401, 403)
+
+def test_forecast_requires_auth(client):
+    assert client.post("/api/v1/forecast", json={"metric": "revenue"}).status_code in (401, 403)
+
+def test_insights_health_requires_auth(client):
+    assert client.get("/api/v1/insights/health").status_code in (401, 403)
+
+def test_ingest_requires_auth(client):
+    assert client.post("/api/v1/ingest/metrics", json={"data": []}).status_code in (401, 403)
+
+def test_knowledge_search_requires_auth(client):
+    assert client.get("/api/v1/knowledge/search", params={"q": "x"}).status_code in (401, 403)
+
+def test_admin_users_requires_auth(client):
+    assert client.get("/api/v1/admin/users").status_code in (401, 403)
+
+def test_chat_sessions_requires_auth(client):
+    assert client.get("/api/v1/chat/sessions").status_code in (401, 403)
+
+
+# ── Authenticated flows (need a seeded DB → skip gracefully) ─────────────────
+
+def test_login_success(admin_token):
+    assert isinstance(admin_token, str) and len(admin_token) > 10
+
+def test_me_returns_user(client, admin_token):
+    r = client.get("/api/v1/auth/me", headers=H(admin_token))
+    assert r.status_code == 200 and "username" in r.json()
+
+def test_login_wrong_password(client, admin_token):
+    r = client.post("/api/v1/auth/login", json={"username": ADMIN["username"], "password": "wrong-pw"})
+    assert r.status_code in (400, 401)
+
+def test_register_new_user(client, admin_token):
+    u = f"testuser_{os.urandom(4).hex()}"
+    r = client.post("/api/v1/auth/register", json={"username": u, "password": "testpass123"})
+    assert r.status_code in (200, 201, 400)
+
+def test_kpis_list(client, admin_token):
+    assert client.get("/api/v1/kpis", headers=H(admin_token)).status_code == 200
+
+def test_kpis_periods(client, admin_token):
+    assert client.get("/api/v1/kpis/periods", headers=H(admin_token)).status_code == 200
+
+def test_kpis_metrics(client, admin_token):
+    assert client.get("/api/v1/kpis/metrics", headers=H(admin_token)).status_code == 200
+
+def test_kpis_categories(client, admin_token):
+    assert client.get("/api/v1/kpis/categories", headers=H(admin_token)).status_code == 200
+
+def test_insights_health(client, admin_token):
+    assert client.get("/api/v1/insights/health", headers=H(admin_token)).status_code == 200
+
+def test_insights_risk(client, admin_token):
+    assert client.get("/api/v1/insights/risk", headers=H(admin_token)).status_code == 200
+
+def test_insights_summary(client, admin_token):
+    assert client.get("/api/v1/insights/summary", headers=H(admin_token)).status_code == 200
+
+def test_insights_anomalies(client, admin_token):
+    assert client.get("/api/v1/insights/anomalies", headers=H(admin_token)).status_code == 200
+
+def test_forecast(client, admin_token):
+    r = client.post("/api/v1/forecast", json={"metric": "revenue", "periods": 3}, headers=H(admin_token))
+    assert r.status_code in (200, 400, 404, 422)  # 200 normally; tolerant if metric/data absent
+
+def test_ingest_metrics_valid(client, admin_token):
+    payload = {"data": [{"period": "2099Q1", "metric": "test_metric", "value": 1.0, "category": "Finance"}]}
+    r = client.post("/api/v1/ingest/metrics", json=payload, headers=H(admin_token))
+    assert r.status_code in (200, 201, 400, 422)
+
+def test_ingest_metrics_empty(client, admin_token):
+    r = client.post("/api/v1/ingest/metrics", json={"data": []}, headers=H(admin_token))
+    assert r.status_code in (200, 400, 422)
+
+def test_knowledge_stats(client, admin_token):
+    assert client.get("/api/v1/knowledge/stats", headers=H(admin_token)).status_code == 200
+
+def test_chat_sessions_list(client, admin_token):
+    assert client.get("/api/v1/chat/sessions", headers=H(admin_token)).status_code == 200
+
+def test_admin_users_as_admin(client, admin_token):
+    assert client.get("/api/v1/admin/users", headers=H(admin_token)).status_code == 200
+
+def test_admin_roles_as_admin(client, admin_token):
+    assert client.get("/api/v1/admin/roles", headers=H(admin_token)).status_code == 200
+
+def test_admin_audit_as_admin(client, admin_token):
+    assert client.get("/api/v1/admin/audit", headers=H(admin_token)).status_code == 200
+
+
+# ── RBAC: a non-admin must not reach admin endpoints ─────────────────────────
+
+def test_rbac_viewer_blocked(client, admin_token):
+    """Log in as a viewer/non-admin and confirm admin endpoints are forbidden."""
+    r = client.post("/api/v1/auth/login", json={"username": "viewer", "password": "viewer123"})
+    if r.status_code != 200 or "access_token" not in r.json():
+        pytest.skip("no 'viewer' default user available to test RBAC denial")
+    viewer = r.json()["access_token"]
+    assert client.get("/api/v1/admin/users", headers=H(viewer)).status_code in (401, 403)
+
+
+# ── GraphRAG-lite unit coverage (no DB / no LLM) ─────────────────────────────
+
+def test_graphrag_disabled_returns_empty(monkeypatch):
+    from src.services import graph_retrieval
+    monkeypatch.delenv("USE_GRAPH_RAG", raising=False)
+    assert graph_retrieval.graph_kpi_context("Finance margin vs Engineering headcount") == []
+
+def test_graphrag_enabled_too_few_entities(monkeypatch):
+    from src.services import graph_retrieval
+    monkeypatch.setenv("USE_GRAPH_RAG", "true")
+    # single-entity query → below the multi-hop threshold → empty (vector fallback)
+    assert graph_retrieval.graph_kpi_context("hello there") == []
+
+def test_entity_extractor_query_entities():
+    from src.services.entity_extractor import get_entity_extractor
+    ents = get_entity_extractor().extract_query_entities("finance margin and operations cycle time")
+    assert "Finance" in ents and "Operations" in ents

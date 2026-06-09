@@ -5,7 +5,8 @@ Implements graph-based traversal for multi-hop entity queries.
 Uses entity relationships to find connected KPI records.
 """
 
-from typing import Dict, List, Optional, Any, Set
+import os
+from typing import Dict, List, Optional, Any, Set, Tuple
 import logging
 from dataclasses import dataclass
 from collections import defaultdict
@@ -193,3 +194,67 @@ def get_graph_retriever() -> GraphRetriever:
     if _graph_retriever is None:
         _graph_retriever = GraphRetriever()
     return _graph_retriever
+
+
+def graph_rag_enabled() -> bool:
+    """GraphRAG-lite is opt-in via the USE_GRAPH_RAG env flag (default off)."""
+    return os.getenv("USE_GRAPH_RAG", "false").strip().lower() in ("1", "true", "yes", "on")
+
+
+def graph_kpi_context(query: str, top_k: int = 6, min_entities: int = 2) -> List[Tuple[str, str, float]]:
+    """GraphRAG-lite retrieval for the RAG context.
+
+    When ``USE_GRAPH_RAG`` is on AND the query mentions at least ``min_entities``
+    distinct entities (multi-hop intent, e.g. "headcount in Engineering vs Finance
+    margin"), rank the KPI records by entity overlap (graph) and return the top ones
+    as ``(title, content, score)`` tuples — the same shape the chatbot's vector
+    retrieval returns, so they slot straight into the RAG prompt + sources.
+
+    Returns ``[]`` (fall back to pure vector retrieval) when the flag is off, the
+    query has too few entities, there is no KPI data, or anything fails. Safe to
+    call unconditionally.
+    """
+    if not graph_rag_enabled():
+        return []
+    try:
+        retriever = get_graph_retriever()
+        query_entities = retriever.entity_extractor.extract_query_entities(query)
+        if len(set(e.lower() for e in query_entities)) < min_entities:
+            return []  # not multi-hop enough → let vector search handle it
+
+        from src.services.pg_store import get_kpi_metrics
+        df = get_kpi_metrics()
+        if df is None or df.empty:
+            return []
+
+        records: List[Dict[str, Any]] = []
+        for _, r in df.iterrows():
+            records.append({
+                "category": r.get("category", "") or "",
+                "metric_name": r.get("metric", "") or "",   # pg column is `metric`
+                "period": r.get("period", "") or "",
+                "value": r.get("value"),
+                "segment": r.get("segment", "") or "",
+                "unit": r.get("unit", "") or "",
+            })
+
+        ranked_ids = retriever.rank_by_entity_overlap(query, records, top_k=top_k)
+        results: List[Tuple[str, str, float]] = []
+        for rid in ranked_ids:
+            rec = records[rid]
+            unit = f" {rec['unit']}" if rec["unit"] else ""
+            seg = f" — segment {rec['segment']}" if rec["segment"] else ""
+            title = f"KPI: {rec['metric_name']} ({rec['category']}, {rec['period']})"
+            content = (
+                f"{rec['metric_name']} for {rec['category']} in {rec['period']}: "
+                f"{rec['value']}{unit}{seg}."
+            )
+            results.append((title, content, 1.0))
+
+        if results:
+            logger.info("GraphRAG-lite selected %d KPI records for entities %s",
+                        len(results), query_entities)
+        return results
+    except Exception as e:  # never break the chat path
+        logger.warning("GraphRAG-lite context failed (falling back to vector): %s", e)
+        return []

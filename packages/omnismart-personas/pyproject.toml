@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "omnismart-personas"
+version = "0.1.0"
+description = "Role-based, data-scoped LLM persona templates + router for production analytics copilots."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Yacine" }]
+keywords = ["llm", "personas", "rag", "rbac", "prompts", "analytics", "copilot"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = []   # pure-Python, zero runtime deps
+
+[project.urls]
+Homepage = "https://github.com/Yacine-ai-tech/IntelAI"
+Source = "https://github.com/Yacine-ai-tech/IntelAI/tree/develop/packages/omnismart-personas"
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["omnismart_personas"]
