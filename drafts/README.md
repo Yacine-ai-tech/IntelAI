@@ -13,4 +13,4 @@
 
 All are grounded in the actual IntelAI implementation: 9 role-scoped personas
 (`omnismart-personas`), hybrid retrieval (BGE + BM25 + RRF + reranker), GraphRAG-lite
-(`USE_GRAPH_RAG`), and the prompt-eval set (`tests/rag_eval.jsonl`, `make eval`).
+(`USE_GRAPH_RAG`), and the prompt-eval set (`src/data/rag_eval.jsonl`, `make eval`).
