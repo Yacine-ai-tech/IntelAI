@@ -1,7 +1,7 @@
 {
   "name": "intelai-frontend",
   "private": true,
-  "version": "2026.3.0",
+  "version": "0.1.0",
   "description": "IntelAI — Persona-Aware AI Analytics & RAG Copilot (frontend)",
   "type": "module",
   "scripts": {

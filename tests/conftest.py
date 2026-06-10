@@ -21,11 +21,11 @@ os.environ.setdefault("BOOTSTRAP_ADMIN_PASSWORD", "admin123")
 @pytest.fixture(scope="session", autouse=True)
 def _init_db():
     """Create tables, seed the bootstrap admin (in-memory + DB), and seed KPIs/knowledge."""
-    from src.api import server_v2
+    from src.api import server
     from src.services.pg_store import init_pg_tables, get_kpi_metrics, seed_all_domains
 
     init_pg_tables()
-    server_v2._init_default_users()  # populates server_v2._users_db (read by /auth/login)
+    server._init_default_users()  # populates server._users_db (read by /auth/login)
     try:
         empty = get_kpi_metrics().empty
     except Exception:

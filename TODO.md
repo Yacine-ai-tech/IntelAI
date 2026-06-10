@@ -6,7 +6,7 @@ Updated 2026-06-09.
 ## ✅ Code deliverables — DONE
 - [x] **Scope-down** to IntelAI: removed monitoring/nginx/n8n/tunnels/OCR/voice + all
       out-of-scope routes (integrations, camera, n8n, bulk dataset ingestion) +
-      modules/config. Backend `server_v2.py` 2479→1338 lines, **68 routes**.
+      modules/config. Backend `server.py` 2479→1338 lines, **68 routes**.
 - [x] **Recharts** on Analytics / Forecasting (CI bands) / Risk (radar) / Dashboard
       (sparklines) / Financial (bar).
 - [x] **WebSocket streaming chat** wired (`/api/v1/ws/chat`), 9 personas.

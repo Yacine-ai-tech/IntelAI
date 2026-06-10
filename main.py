@@ -5,7 +5,7 @@ Usage:
     python main.py              # start the API server (http://localhost:8000)
     python main.py --reload     # with auto-reload (development)
 
-Production uses the Dockerfile CMD: ``uvicorn src.api.server_v2:app``.
+Production uses the Dockerfile CMD: ``uvicorn src.api.server:app``.
 """
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ def main() -> None:
     from src.core.config import settings
 
     uvicorn.run(
-        "src.api.server_v2:app",
+        "src.api.server:app",
         host=settings.FASTAPI_HOST,
         port=settings.FASTAPI_PORT,
         reload="--reload" in sys.argv,

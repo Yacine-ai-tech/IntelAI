@@ -12,7 +12,7 @@ export default function SettingsPage() {
   const save = () => { setSaved(true); setTimeout(() => setSaved(false), 1800) }
 
   const sys = [
-    [t('platform') || 'Platform', 'IntelAI v2026.3'],
+    [t('platform') || 'Platform', 'IntelAI v0.1.0'],
     [t('backend') || 'Backend', 'FastAPI + PostgreSQL'],
     [t('llmProvider') || 'LLM', 'Groq / Anthropic (LiteLLM router)'],
     [t('vectorStore') || 'Retrieval', 'Hybrid (vector + BM25 + RRF + reranker)'],

@@ -54,7 +54,7 @@ RAG copilot that respects role boundaries.
             React + Vite (Recharts, i18n)          ← deploy to Vercel/Netlify
                        │  HTTP / WebSocket  /api/v1/*
             ┌──────────▼─────────────────────────────────────┐
-            │  FastAPI (src/api/server_v2.py)                 │
+            │  FastAPI (src/api/server.py)                 │
             │  auth · chat (9 personas) · KPIs · insights ·   │
             │  forecasting · glossary · ingestion · admin     │
             └───────────────────┬───────────────┬────────────┘
