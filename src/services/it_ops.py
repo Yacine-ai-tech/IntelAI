@@ -28,13 +28,13 @@ class ITOpsService:
             "system_uptime": self._extract(it_df, ["uptime", "system uptime", "availability"]) or 0,
             "open_tickets": int(self._extract(it_df, ["open tickets", "pending tickets", "ticket backlog"]) or 0),
             "resolved_today": int(self._extract(it_df, ["resolved today", "closed today"]) or 0),
-            "mttr_hours": self._extract(it_df, ["mttr", "mean time to resolve", "resolution time"]) or 0,
+            "mttr_hours": self._extract(it_df, ["mean time to resolution", "mttr", "mean time to resolve", "resolution time"]) or 0,
             "incidents_month": int(self._extract(it_df, ["incidents", "total incidents"]) or 0),
             "critical_incidents": int(self._extract(it_df, ["critical incidents", "p1 incidents", "severity 1"]) or 0),
             "sla_compliance": self._extract(it_df, ["sla compliance", "sla met"]) or 0,
             "security_score": self._extract(it_df, ["security score", "security rating"]) or 0,
             "server_count": int(self._extract(it_df, ["server count", "servers", "total servers"]) or 0),
-            "cloud_spend": self._extract(it_df, ["cloud spend", "cloud cost", "infrastructure cost"]) or 0,
+            "cloud_spend": self._extract(it_df, ["cloud spend", "infrastructure cost"]) or 0,
             "deployment_frequency": self._extract(it_df, ["deployment frequency", "deployments"]) or 0,
             "change_failure_rate": self._extract(it_df, ["change failure rate", "failed deployments"]) or 0,
             "infrastructure": self._get_infra_breakdown(it_df),
@@ -49,7 +49,7 @@ class ITOpsService:
             "total_open": int(self._extract(it_df, ["open tickets", "pending"]) or 0),
             "total_in_progress": int(self._extract(it_df, ["in progress", "active tickets"]) or 0),
             "total_resolved": int(self._extract(it_df, ["resolved tickets", "closed tickets"]) or 0),
-            "avg_resolution_hours": self._extract(it_df, ["avg resolution time", "mttr"]) or 0,
+            "avg_resolution_hours": self._extract(it_df, ["avg resolution time", "mean time to resolution", "mttr"]) or 0,
             "first_response_hours": self._extract(it_df, ["first response", "response time"]) or 0,
             "escalation_rate": self._extract(it_df, ["escalation rate", "escalations"]) or 0,
             "satisfaction_score": self._extract(it_df, ["ticket satisfaction", "csat"]) or 0,
@@ -71,7 +71,7 @@ class ITOpsService:
             "vulnerabilities_open": int(self._extract(it_df, ["open vulnerabilities", "vulnerabilities"]) or 0),
             "vulnerabilities_critical": int(self._extract(it_df, ["critical vulnerabilities", "critical vuln"]) or 0),
             "patches_pending": int(self._extract(it_df, ["patches pending", "unpatched"]) or 0),
-            "phishing_attempts_blocked": int(self._extract(it_df, ["phishing blocked", "blocked attacks"]) or 0),
+            "phishing_attempts_blocked": int(self._extract(it_df, ["phishing", "blocked attacks"]) or 0),
             "failed_logins": int(self._extract(it_df, ["failed logins", "failed auth"]) or 0),
             "compliance_score": self._extract(it_df, ["compliance score", "compliance"]) or 0,
             "last_pen_test_score": self._extract(it_df, ["pen test score", "penetration test"]) or 0,
@@ -101,7 +101,7 @@ class ITOpsService:
             "deployment_frequency": self._extract(it_df, ["deployment frequency", "deploy freq"]) or 0,
             "lead_time_hours": self._extract(it_df, ["lead time for changes", "deployment lead time"]) or 0,
             "change_failure_rate": self._extract(it_df, ["change failure rate"]) or 0,
-            "mttr_hours": self._extract(it_df, ["mttr", "time to restore"]) or 0,
+            "mttr_hours": self._extract(it_df, ["mean time to resolution", "mttr", "time to restore"]) or 0,
             "code_coverage": self._extract(it_df, ["code coverage", "test coverage"]) or 0,
             "build_success_rate": self._extract(it_df, ["build success", "ci success"]) or 0,
             "releases_month": int(self._extract(it_df, ["releases", "monthly releases"]) or 0),
@@ -171,7 +171,8 @@ class ITOpsService:
     def _extract(df: pd.DataFrame, keywords: List[str]) -> Optional[float]:
         if df.empty or "metric" not in df.columns:
             return None
-        mask = df["metric"].str.lower().apply(lambda m: any(k in m for k in keywords))
+        norm = df["metric"].str.lower().str.replace("-", " ", regex=False)
+        mask = norm.apply(lambda m: any(k in m for k in keywords))
         matched = df[mask]
         if matched.empty:
             return None

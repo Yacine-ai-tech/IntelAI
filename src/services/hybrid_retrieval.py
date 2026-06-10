@@ -96,6 +96,7 @@ class HybridRetriever:
         self.rrf_k = rrf_k
         self._embedder = None
         self._reranker = None
+        self._reranker_failed = False  # set if an installed reranker errors at runtime
         self._chunks: List[str] = []
         self._chunk_vecs = None
         self._bm25 = None
@@ -174,16 +175,21 @@ class HybridRetriever:
         rrf = self._rrf_scores(dense, sparse)
         merged = sorted(rrf, key=lambda i: rrf[i], reverse=True)[:cand_n]
 
-        if rerank and _RERANKER:
-            reranker = self._ensure_reranker()
-            pairs = [(query, self._chunks[i]) for i in merged]
-            scores = reranker.compute_score(pairs, normalize=True)
-            if not isinstance(scores, list):
-                scores = [scores]
-            order = sorted(range(len(merged)), key=lambda j: scores[j], reverse=True)[:top_n]
-            return [{"chunk": self._chunks[merged[j]], "score": float(scores[j])} for j in order]
+        if rerank and _RERANKER and not self._reranker_failed:
+            try:
+                reranker = self._ensure_reranker()
+                pairs = [(query, self._chunks[i]) for i in merged]
+                scores = reranker.compute_score(pairs, normalize=True)
+                if not isinstance(scores, list):
+                    scores = [scores]
+                order = sorted(range(len(merged)), key=lambda j: scores[j], reverse=True)[:top_n]
+                return [{"chunk": self._chunks[merged[j]], "score": float(scores[j])} for j in order]
+            except Exception as e:  # installed-but-broken reranker (e.g. tokenizer version skew)
+                # Degrade to dense+BM25+RRF fusion instead of failing the whole retrieval.
+                self._reranker_failed = True
+                log.warning("Reranker unavailable (%s) — falling back to RRF fusion for this session", e)
 
-        # No reranker available: return RRF-ranked results with relevance normalized to
+        # No (working) reranker: return RRF-ranked results with relevance normalized to
         # 0..1 (top result = 1.0) so the score is meaningful, not a flat 1.0 for all.
         top = merged[:top_n]
         mx = max((rrf[i] for i in top), default=1.0) or 1.0
