@@ -530,6 +530,9 @@ GLOBAL DEFAULTS (apply to every project unless overridden):
 - Python 3.11
 - FastAPI for HTTP APIs, uvicorn[standard] as server
 - LiteLLM for multi-provider LLM routing (every project depends on litellm)
+- Prompt caching for cost: structure messages as a stable persona+instruction prefix
+  then volatile data/query last (Groq auto-caches the prefix ~50% off, off rate-limit);
+  the router applies Anthropic `cache_control` to that prefix for Claude tiers.
 - python-dotenv for config
 - httpx + aiohttp for async HTTP
 - pytest for testing

@@ -236,28 +236,28 @@ class UltraFastRAG:
         self,
         query: str,
         documents: List[Tuple[str, str, float]],
-    ) -> str:
-        """Build prompt with retrieved context."""
+    ) -> Tuple[str, str]:
+        """Return ``(system_instruction, user_content)`` split for prompt-cache
+        friendliness: the instruction is stable per language (a cacheable prefix),
+        while the retrieved docs + query are volatile and go in the user turn."""
         doc_context = "\n\n".join(
             f"📄 **{title}** (relevance: {sim:.1%})\n{content[:300]}..."
             for title, content, sim in documents
         )
-        
-        lang_instruction = (
-            "Répondez en français."
-            if I18N.lang() == "fr"
-            else "Reply in English."
+        lang_instruction = "Répondez en français." if I18N.lang() == "fr" else "Reply in English."
+
+        system_instruction = (
+            f"{lang_instruction}\n\n"
+            "You answer questions using the retrieved knowledge-base context provided in the "
+            "user message. Provide a comprehensive, accurate answer, cite sources where relevant, "
+            "and if information is incomplete, state what additional data would help."
         )
-        
-        return f"""{lang_instruction}
-
-RETRIEVED CONTEXT FROM KNOWLEDGE BASE:
-{doc_context if doc_context else "(No relevant documents found)"}
-
-USER QUERY: {query}
-
-Based on the context above, provide a comprehensive, accurate answer. 
-Cite sources where relevant. If information is incomplete, state what additional data would help."""
+        user_content = (
+            "RETRIEVED CONTEXT FROM KNOWLEDGE BASE:\n"
+            f"{doc_context if doc_context else '(No relevant documents found)'}\n\n"
+            f"USER QUERY: {query}"
+        )
+        return system_instruction, user_content
 
     def answer(
         self,
@@ -294,14 +294,17 @@ Cite sources where relevant. If information is incomplete, state what additional
         except Exception as e:
             log.warning("GraphRAG-lite augmentation skipped: %s", e)
 
-        # Build prompt
-        prompt = self._build_rag_prompt(query, documents)
-        
+        # Build prompt (stable system instruction + volatile docs/query) — cache-friendly
+        system_instruction, user_content = self._build_rag_prompt(query, documents)
+
         # Generate response
         try:
             response = self.client.chat.completions.create(
                 model=settings.LLM_MODEL,
-                messages=[{"role": "user", "content": prompt}],
+                messages=[
+                    {"role": "system", "content": system_instruction},
+                    {"role": "user", "content": user_content},
+                ],
                 max_tokens=1024,
                 temperature=0.4,
             )
@@ -722,29 +725,33 @@ class AgentPersonaFactory:
         retrieved_ctx, sources = self._retrieve_context(message, persona, language)
         full_context = "\n\n".join(c for c in [context, retrieved_ctx] if c).strip()
 
-        # Build messages
-        messages: List[Dict[str, str]] = [
-            {"role": "system", "content": persona.system_prompt},
-            {"role": "system", "content": (
-                "You have DIRECT access to the company's live data, provided below. Answer the "
-                "user's question directly using these numbers — never ask the user to supply data "
-                "or to pick a focus area when the data is already here. Be specific and quote the "
-                "metric values. CITE your sources inline using the bracketed numbers shown in the "
-                "context, e.g. 'Revenue is $3.6M [1]'. Only use citation numbers that appear below "
-                "and never invent one. Only use data within your access scope; if a figure is "
-                "genuinely missing, say so in one short sentence.\n\n"
-                f"=== LIVE DATA (scope: {', '.join(persona.data_access) or 'all'}) ===\n"
-                f"{full_context if full_context else '(no data retrieved)'}"
-            )},
-        ]
+        # Prompt-cache friendly layout: the system message (persona prompt + fixed
+        # grounding instruction) is IDENTICAL for every request with the same persona,
+        # so it forms a long stable prefix that Groq auto-caches at 50% (and that Anthropic
+        # caches via cache_control). The volatile live data + question go LAST, in the user
+        # turn, so they never invalidate the cached prefix.
+        system_prompt = (
+            persona.system_prompt + "\n\n"
+            "You have DIRECT access to the company's live data, provided with the user's message "
+            "below. Answer the question directly using those numbers — never ask the user to supply "
+            "data or to pick a focus area when the data is already provided. Be specific and quote the "
+            "metric values. CITE your sources inline using the bracketed numbers shown in the data "
+            "block, e.g. 'Revenue is $3.6M [1]'. Only use citation numbers that appear in the data "
+            "block and never invent one. Only use data within your access scope; if a figure is "
+            "genuinely missing, say so in one short sentence."
+        )
+        messages: List[Dict[str, str]] = [{"role": "system", "content": system_prompt}]
 
-        # Add conversation history (last 10 messages)
+        # Conversation history (last 10 messages) — after the cached system prefix.
         if history:
-            for msg in history[-10:]:
-                messages.append(msg)
+            messages.extend(history[-10:])
 
-        # Add current user message
-        messages.append({"role": "user", "content": message})
+        # Volatile live data + question last, so the cached prefix stays valid.
+        data_block = (
+            f"=== LIVE DATA (scope: {', '.join(persona.data_access) or 'all'}) ===\n"
+            f"{full_context if full_context else '(no data retrieved)'}"
+        )
+        messages.append({"role": "user", "content": f"{data_block}\n\n=== QUESTION ===\n{message}"})
 
         try:
             response = self.client.chat.completions.create(

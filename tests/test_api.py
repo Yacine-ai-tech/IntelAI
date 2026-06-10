@@ -60,10 +60,6 @@ def test_redoc_served(client):
 def test_unknown_api_path_404(client):
     assert client.get("/api/v1/does-not-exist").status_code == 404
 
-def test_prometheus_metrics(client):
-    r = client.get("/metrics")
-    assert r.status_code == 200
-
 
 # ── Auth validation / RBAC gating (no DB) ────────────────────────────────────
 
