@@ -204,7 +204,7 @@ Verified by reading the repo on the date of this document. Line counts are exact
 
 Backend (Python) — ~14,000 lines
 File	Lines	What It Does
-src/api/server_v2.py	2,579	60+ endpoints, full RBAC, JWT, WebSocket chat
+src/api/server.py	2,579	60+ endpoints, full RBAC, JWT, WebSocket chat
 src/services/pg_store.py	1,669	50+ DB functions (KPIs, auth, sessions, audit)
 src/services/omnismart_chatbot.py	1,658	9 personas, LangChain RAG, ChromaDB integration
 src/services/advanced_chatbot.py	1,137	5 Groq patterns, agentic flows, Tavily search
@@ -328,7 +328,7 @@ AnalyticsPage.jsx and ForecastingPage.jsx use hand-coded SVG bars:
   borderRadius: '4px 4px 0 0',
 }} />
 Issue 2: WebSocket Streaming Chat Is Built but Not Wired
-server_v2.py line 1553: @app.websocket("/api/v1/ws/chat") exists and works. frontend/src/pages/ChatPage.jsx: uses api.post('/chat') — the HTTP endpoint. Users wait 2–5 seconds for a full response when they could see it streaming token by token. Streaming feels 5× more impressive in demos. 1 day of work to wire it.
+server.py line 1553: @app.websocket("/api/v1/ws/chat") exists and works. frontend/src/pages/ChatPage.jsx: uses api.post('/chat') — the HTTP endpoint. Users wait 2–5 seconds for a full response when they could see it streaming token by token. Streaming feels 5× more impressive in demos. 1 day of work to wire it.
 Issue 3: Tests Are Skeletal
 tests/test_api.py: 25 lines, 2 test functions (health + login). tests/test_ui_playwright.py: 453 lines but mostly fixture skeletons. A CTO who clones the repo and runs pytest sees:
 collected 2 items
@@ -565,7 +565,7 @@ This description maps to five different Upwork search queries (RAG developer, Fa
                            │ HTTP / WebSocket
                            │ /api/v1/*
 ┌──────────────────────────▼───────────────────────────────────────┐
-│               FastAPI Backend — server_v2.py (2,579 lines)       │
+│               FastAPI Backend — server.py (2,579 lines)       │
 │                                                                  │
 │  Auth · Chat · Insights · Forecasting · Ingestion · Admin       │
 │  9 personas · ChromaDB RAG · Groq LLaMA 3.1 · JWT + RBAC        │
@@ -748,7 +748,7 @@ Fix E — Railway Deployment (1 day)
 builder = "DOCKERFILE"
  
 [deploy]
-startCommand = "python -m uvicorn src.api.server_v2:app --host 0.0.0.0 --port $PORT --workers 1"
+startCommand = "python -m uvicorn src.api.server:app --host 0.0.0.0 --port $PORT --workers 1"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
@@ -2290,7 +2290,7 @@ Week 1 — Visual + Technical Fixes
 Day	Tasks
 Day 8	Recharts Conversion Part 1: npm install recharts. Replace SVG bars in AnalyticsPage.jsx with Recharts LineChart. Verify in browser: charts render, data loads from API. Afternoon: Replace ForecastingPage.jsx chart with AreaChart + CI bands. Test with multiple metric selections.
 Day 9	Recharts Conversion Part 2: Add RadarChart to RiskPage.jsx. Add sparkline LineCharts (h=60px) to DashboardPage.jsx. Afternoon: Complete FinancialPage.jsx (dropdown + BarChart + currency formatting). Manual smoke test all 4 pages in browser.
-Day 10	WebSocket Streaming: Read existing server_v2.py WebSocket chat endpoint. Fix any handler bugs (CORS, auth, persona routing). Afternoon: Wire ChatPage.jsx to /ws/chat instead of POST /chat. Test all 9 personas. Handle disconnect gracefully (reconnect logic).
+Day 10	WebSocket Streaming: Read existing server.py WebSocket chat endpoint. Fix any handler bugs (CORS, auth, persona routing). Afternoon: Wire ChatPage.jsx to /ws/chat instead of POST /chat. Test all 9 personas. Handle disconnect gracefully (reconnect logic).
 Day 11	Tests Expansion (full day): Expand tests/test_api.py from 2 tests → 30+ tests. Cover: auth (5), chat (4), kpis (4), insights (3), forecast (2), ingest (3), rbac (4), monitoring (3), misc (3). Run pytest, fix all failures. Confirm CI green.
 Day 12	Deploy to Railway: Set up Railway account, connect GitHub. Configure env vars. Set up Railway PostgreSQL add-on. Run db migrations against production DB. Afternoon: Smoke test every endpoint in production. Note the public URL.
 Week 1 Checkpoint
@@ -3166,7 +3166,7 @@ KEEP all files in the repo. Make these specific changes:
  
   i) Create railway.toml in the root:
      [build] builder = "DOCKERFILE"
-     [deploy] startCommand = "python -m uvicorn src.api.server_v2:app
+     [deploy] startCommand = "python -m uvicorn src.api.server:app
                                --host 0.0.0.0 --port $PORT --workers 1"
      healthcheckPath = "/health"
  
@@ -3842,7 +3842,7 @@ E — Open-source maintainer / advocate role	Maintain RAGeval + AgentKit, get sp
 APPENDIX — QUICK REFERENCE CARDS
 Quick Reference: Project Source Map
 From IntelAI-master/	To Project
-src/api/server_v2.py	P1: Keep (refactor in place)
+src/api/server.py	P1: Keep (refactor in place)
 src/services/omnismart_chatbot.py	P1: Keep
 src/services/pg_store.py	P1: Keep | P2: Copy | P6: Slim copy
 src/services/advanced_chatbot.py	P1: Keep

@@ -23,7 +23,7 @@ ADMIN = {
 @pytest.fixture(scope="module")
 def client():
     from fastapi.testclient import TestClient
-    from src.api.server_v2 import app
+    from src.api.server import app
     return TestClient(app)
 
 
