@@ -348,7 +348,7 @@ async def get_me(user: TokenData = Depends(get_current_user)):
 @app.post("/api/v1/chat")
 async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
     import json as _json
-    from src.services.omnismart_chatbot import get_omnismart_chatbot, get_persona_factory
+    from src.services.omnismart_chatbot import get_persona_factory
 
     session_id = req.session_id or str(uuid.uuid4())
 
@@ -359,34 +359,26 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
     except Exception:
         pass  # Fallback — still works without PG
 
-    # Use OmniSmartChatbot for intelligent routing (RAG, agents, web search, automation)
-    chatbot = get_omnismart_chatbot(session_id)
-
-    # Resolve persona and set system instruction
+    # Persona-routed RAG copilot: factory.chat auto-retrieves a role-scoped KPI
+    # snapshot + knowledge docs and returns grounded answers with source citations.
+    # (Same path as the WebSocket handler, so REST and the WS fallback behave identically.)
     factory = get_persona_factory()
-    persona = factory.resolve_persona(user.role, req.persona, user.language)
-    if hasattr(chatbot, "set_persona"):
-        try:
-            chatbot.set_persona(persona.name)
-        except Exception as e:
-            log.warning("Failed to set chatbot persona %s: %s", persona.name, e)
-
-    result = chatbot.process(
+    result = factory.chat(
         message=req.message,
-        mode="auto",
+        user_role=user.role,
+        persona_override=req.persona,
+        language=user.language,
         context=req.context or "",
     )
 
     response_text = result.get("response", "")
     sources = result.get("sources", [])
-    mode = result.get("mode", "conversation")
 
     # Persist both messages to PostgreSQL
     try:
-        store_message(session_id, "user", req.message, mode=mode)
+        store_message(session_id, "user", req.message)
         store_message(
             session_id, "assistant", response_text,
-            mode=mode,
             sources=_json.dumps(sources) if sources else "[]",
             tokens_used=result.get("tokens_used", 0),
             latency_ms=result.get("latency_ms", 0),
@@ -396,14 +388,12 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
 
     return {
         "response": response_text,
-        "persona_used": persona.name,
-        "persona_display": persona.display_name,
+        "persona_used": result.get("persona_used"),
+        "persona_display": result.get("persona_display"),
         "tokens_used": result.get("tokens_used", 0),
         "latency_ms": result.get("latency_ms", 0),
         "session_id": session_id,
-        "mode": mode,
         "sources": sources,
-        "reasoning": result.get("reasoning", ""),
     }
 
 
@@ -411,7 +401,24 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
 async def list_personas(user: TokenData = Depends(get_current_user)):
     from src.services.omnismart_chatbot import get_persona_factory
     factory = get_persona_factory()
-    return {"personas": factory.list_personas()}
+    return {"personas": factory.list_personas(user_role=user.role)}
+
+
+@app.get("/api/v1/glossary")
+async def get_glossary(
+    domain: Optional[str] = None,
+    term: Optional[str] = None,
+    user: TokenData = Depends(get_current_user),
+):
+    """Authoritative, sourced domain glossary — powers the per-page contextual
+    explainer and grounds term definitions (no hallucination)."""
+    from src.data.glossary import for_domain, get_term
+    if term:
+        entry = get_term(term)
+        if not entry:
+            raise HTTPException(status_code=404, detail=f"Term not found: {term}")
+        return entry
+    return {"terms": for_domain(domain)}
 
 
 # ════════════════════════════════════════════════════════════
@@ -1117,6 +1124,7 @@ async def websocket_chat(websocket: WebSocket):
                 "persona_display": result.get("persona_display", ""),
                 "tokens_used": result.get("tokens_used", 0),
                 "latency_ms": result.get("latency_ms", 0),
+                "sources": result.get("sources", []),
             })
     except WebSocketDisconnect:
         log.info("WebSocket client disconnected")
@@ -1321,12 +1329,15 @@ async def export_data(
             row_count=len(data.split("\n")) if req.format == "csv" else 1,
         )
         
+        # csv/json are returned as text; xlsx is base64-encoded so the client can
+        # decode and download it directly (no separate download round-trip).
         return {
             "status": "success",
             "export_id": export_id,
             "format": req.format,
             "filename": filename,
-            "data": data if req.format in ("csv", "json") else f"[Binary data - {len(data)} bytes]",
+            "encoding": "base64" if req.format == "xlsx" else "text",
+            "data": data,
             "download_url": f"/api/v1/exports/{export_id}/download",
         }
     

@@ -1,54 +1,16 @@
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from '../i18n/I18nContext'
 import * as api from '../api'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-import { DollarSign } from 'lucide-react'
+import { DollarSign, TrendingUp, Percent, Banknote, Wallet, FileText, Coins } from 'lucide-react'
+import {
+  PageHeader, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, MiniBars, AskCopilot,
+  fmtNum, fmtMoney, fmtPct,
+} from '../components/ui'
 
-function FinancialChart({ data }) {
-  if (!data || !data.line_items || data.line_items.length === 0) return null
-
-  const chartData = data.line_items.map(item => ({
-    name: item.item_name || item.name || 'Unknown',
-    value: item.amount || item.value || 0
-  }))
-
-  return (
-    <div className="card" style={{ marginBottom: 20 }}>
-      <h3 className="card-title"><DollarSign size={16} /> Line Items Breakdown</h3>
-      <div style={{ height: 300 }}>
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData} layout="vertical">
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis 
-              type="number"
-              style={{ fontSize: '0.7rem', fill: 'var(--text-muted)' }}
-            />
-            <YAxis 
-              type="category"
-              dataKey="name"
-              width={150}
-              style={{ fontSize: '0.75rem', fill: 'var(--text-muted)' }}
-            />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'var(--card-bg)', 
-                border: '1px solid var(--border)',
-                borderRadius: '4px'
-              }}
-              itemStyle={{ color: 'var(--text)' }}
-            />
-            <Legend />
-            <Bar 
-              dataKey="value" 
-              fill="var(--primary)"
-              name="Amount"
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  )
-}
+const ACCENT = 'var(--p-cfo)'
+const ICONS = { Revenue: DollarSign, 'Gross Margin': Percent, EBITDA: TrendingUp, 'Net Profit': Banknote, 'Operating Cash Flow': Wallet, 'Operating Costs': Coins }
+const isPct = (m) => /margin|%/i.test(m)
 
 export default function FinancialPage() {
   const { t } = useTranslation()
@@ -58,33 +20,51 @@ export default function FinancialPage() {
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
 
+  const { data: kpis = [], isLoading } = useQuery({
+    queryKey: ['fin-kpis'], queryFn: () => api.getKPIs({ category: 'Finance' }).then(r => r.data?.metrics || []), retry: 1,
+  })
+
+  // latest reading per metric + a revenue series for the trend
+  const byMetric = {}
+  kpis.forEach(k => { const n = k.metric_name || k.name; (byMetric[n] = byMetric[n] || []).push(k) })
+  Object.values(byMetric).forEach(a => a.sort((x, y) => (x.period || '').localeCompare(y.period || '')))
+  const latest = Object.entries(byMetric).map(([n, a]) => ({ ...a[a.length - 1], name: n }))
+  const revSeries = (byMetric['Revenue'] || []).slice(-12).map(k => ({ period: k.period, value: Math.round(k.value) }))
+
   const runGenerate = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
-    setResult(null)
-    try {
-      const res = await api.generateStatement(type, period || null)
-      setResult(res.data)
-    } catch (err) {
-      setError(err.response?.data?.detail || err.message || 'Failed')
-    }
+    e.preventDefault(); setLoading(true); setError(null); setResult(null)
+    try { setResult((await api.generateStatement(type, period || null)).data) }
+    catch (err) { setError(err.response?.data?.detail || err.message || 'Failed') }
     setLoading(false)
   }
+  const lineItems = (result?.line_items || []).map(it => ({ name: it.item_name || it.name || '—', value: it.amount || it.value || 0 }))
+
+  if (isLoading) return <Loading />
 
   return (
     <div>
-      <div className="page-header">
-        <h1 className="page-title">{t('financialStatements')}</h1>
-        <p className="page-subtitle">{t('financialStatementsDesc')}</p>
-      </div>
+      <PageHeader icon={DollarSign} accent={ACCENT} title={t('navFinancial') || 'Financial'}
+        subtitle={t('finSubtitle') || 'Financial position, profitability & statements'}
+        actions={<AskCopilot q="Give me a CFO-level read on our financial health: revenue, margin, EBITDA, cash flow and the Rule of 40." />} />
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 20 }}>
-        <div className="card">
-          <h3 className="card-title">{t('generateStatement')}</h3>
+      <StatGrid>
+        {latest.map((k, i) => {
+          const Icon = ICONS[k.name] || DollarSign
+          return <Stat key={i} label={k.name} icon={Icon} accent={ACCENT}
+            value={isPct(k.name) ? fmtPct(k.value) : fmtMoney(k.value)}
+            trend={k.change_pct} good={/cost/i.test(k.name) ? 'down' : 'up'} />
+        })}
+      </StatGrid>
+
+      <Panel title="Revenue trend" icon={TrendingUp} style={{ marginTop: 18 }}>
+        <AreaTrend data={revSeries} y="value" color={ACCENT} />
+      </Panel>
+
+      <Grid style={{ marginTop: 18 }} min={320}>
+        <Panel title="Generate statement" icon={FileText}>
           <form onSubmit={runGenerate}>
             <div className="form-group">
-              <label className="form-label">{t('statementType')}</label>
+              <label className="form-label">{t('statementType') || 'Statement type'}</label>
               <select className="form-input" value={type} onChange={e => setType(e.target.value)}>
                 <option value="income_statement">Income Statement (P&L)</option>
                 <option value="balance_sheet">Balance Sheet</option>
@@ -92,30 +72,33 @@ export default function FinancialPage() {
               </select>
             </div>
             <div className="form-group">
-              <label className="form-label">{t('period')}</label>
-              <input className="form-input" value={period} onChange={e => setPeriod(e.target.value)} placeholder="e.g. 2025-Q4 or 2025-12" />
+              <label className="form-label">{t('period') || 'Period'}</label>
+              <input className="form-input" value={period} onChange={e => setPeriod(e.target.value)} placeholder="e.g. 2026-Q1 or 2026-05" />
             </div>
             <button className="btn btn-primary" type="submit" disabled={loading}>
-              {loading ? t('generating') : t('generate')}
+              {loading ? (t('generating') || 'Generating…') : (t('generate') || 'Generate')}
             </button>
           </form>
-        </div>
+        </Panel>
 
-        <div className="card">
-          <h3 className="card-title">{t('result')}</h3>
+        <Panel title={result?.statement_type ? result.statement_type.replace(/_/g, ' ') : (t('result') || 'Result')} icon={DollarSign} style={{ gridColumn: 'span 2' }}>
           {error && <div className="alert alert-danger">{error}</div>}
-          {result ? (
+          {!result && !error && <p className="text-muted">{t('noResult') || 'Generate a statement to see the breakdown.'}</p>}
+          {result && (
             <>
-              <FinancialChart data={result} />
-              <div style={{ overflow: 'auto' }}>
-                <pre style={{ whiteSpace: 'pre-wrap', fontSize: '0.9rem' }}>{JSON.stringify(result, null, 2)}</pre>
-              </div>
+              {lineItems.length > 0 && <MiniBars data={lineItems} x="name" y="value" color={ACCENT} height={Math.max(180, lineItems.length * 30)} />}
+              <table className="table" style={{ marginTop: 14 }}>
+                <thead><tr><th>Line item</th><th style={{ textAlign: 'right' }}>Amount</th></tr></thead>
+                <tbody>
+                  {lineItems.map((it, i) => (
+                    <tr key={i}><td>{it.name}</td><td style={{ textAlign: 'right', fontFamily: 'var(--font-mono)' }}>{fmtMoney(it.value)}</td></tr>
+                  ))}
+                </tbody>
+              </table>
             </>
-          ) : (
-            <p className="text-muted">{t('noResult')}</p>
           )}
-        </div>
-      </div>
+        </Panel>
+      </Grid>
     </div>
   )
 }

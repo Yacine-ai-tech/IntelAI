@@ -1,187 +1,82 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import {
-  Settings2, BarChart3, CheckCircle2, Factory, HardHat,
-  Gauge, TrendingUp, Timer, ArrowDown, DollarSign, Target, ShieldAlert, Zap, Recycle,
-  Microscope, Crosshair, RefreshCcw, FileText, Search,
-  ClipboardList, Cog, Trash2, Wrench, Users,
-  AlertTriangle, Bandage, TriangleAlert, Calendar, BookOpen, Activity, CircleDot
+  Settings2, Gauge, CheckCircle2, AlertOctagon, Boxes, Timer, Power, DollarSign,
+  Factory, HardHat, ShieldCheck,
 } from 'lucide-react'
+import {
+  PageHeader, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, BarList, AskCopilot,
+  fmtNum, fmtMoney, fmtPct,
+} from '../components/ui'
 
-function StatCard({ label, value, unit, icon: Icon, color = 'blue' }) {
-  return (
-    <div className="kpi-card">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div>
-          <div className="kpi-label">{label}</div>
-          <div className="kpi-value">{value}{unit ? <span style={{ fontSize: '0.7em', color: 'var(--text-muted)' }}> {unit}</span> : ''}</div>
-        </div>
-        <div className={`kpi-icon-wrap ${color}`}><Icon size={20} /></div>
-      </div>
-    </div>
-  )
-}
+const ACCENT = 'var(--p-coo)'
 
 export default function OperationsPage() {
   const { t } = useTranslation()
-  const [summary, setSummary] = useState(null)
-  const [quality, setQuality] = useState(null)
-  const [production, setProduction] = useState(null)
-  const [safety, setSafety] = useState(null)
-  const [health, setHealth] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState('overview')
+  const sum = useQuery({ queryKey: ['ops-sum'], queryFn: () => api.getOpsSummary().then(r => r.data), retry: 1 })
+  const qual = useQuery({ queryKey: ['ops-qual'], queryFn: () => api.getOpsQuality().then(r => r.data), retry: 1 })
+  const prod = useQuery({ queryKey: ['ops-prod'], queryFn: () => api.getOpsProduction().then(r => r.data), retry: 1 })
+  const safe = useQuery({ queryKey: ['ops-safe'], queryFn: () => api.getOpsSafety().then(r => r.data), retry: 1 })
 
-  const fetchData = useCallback(async () => {
-    setLoading(true)
-    const [s, q, p, sf, h] = await Promise.allSettled([
-      api.getOpsSummary(), api.getOpsQuality(),
-      api.getOpsProduction(), api.getOpsSafety(), api.getOpsHealth(),
-    ])
-    if (s.status === 'fulfilled') setSummary(s.value.data)
-    if (q.status === 'fulfilled') setQuality(q.value.data)
-    if (p.status === 'fulfilled') setProduction(p.value.data)
-    if (sf.status === 'fulfilled') setSafety(sf.value.data)
-    if (h.status === 'fulfilled') setHealth(h.value.data)
-    setLoading(false)
-  }, [])
-
-  useEffect(() => { fetchData() }, [fetchData])
-
-  const fmt = (v) => {
-    if (v === null || v === undefined) return '—'
-    if (typeof v === 'number') {
-      if (Math.abs(v) >= 1e6) return `${(v / 1e6).toFixed(1)}M`
-      if (Math.abs(v) >= 1e3) return `${(v / 1e3).toFixed(1)}K`
-      return v % 1 === 0 ? v.toString() : v.toFixed(1)
-    }
-    return v
-  }
-
-  const tabs = [
-    { id: 'overview', label: t('overview'), Icon: BarChart3 },
-    { id: 'quality', label: t('quality'), Icon: CheckCircle2 },
-    { id: 'production', label: t('production'), Icon: Factory },
-    { id: 'safety', label: t('safety'), Icon: HardHat },
-  ]
-
-  if (loading) return <div className="text-center" style={{ padding: 60 }}>{t('loadingOps')}</div>
+  if (sum.isLoading) return <Loading />
+  const s = sum.data || {}, q = qual.data || {}, p = prod.data || {}, sf = safe.data || {}
 
   return (
     <div>
-      <h1 className="page-title" style={{ marginBottom: 20 }}><Settings2 size={24} /> {t('operations')}</h1>
+      <PageHeader icon={Settings2} accent={ACCENT} title={t('navOperations') || 'Operations'}
+        subtitle={t('opsSubtitle') || 'Efficiency, quality, production & safety'}
+        actions={<AskCopilot q="Summarize operations health — OEE, quality, on-time completion and safety — and the top bottleneck." />} />
 
-      <div className="tab-bar">
-        {tabs.map(tab => (
-          <button key={tab.id} className={`tab-btn${activeTab === tab.id ? ' active' : ''}`}
-            onClick={() => setActiveTab(tab.id)}>
-            <tab.Icon size={15} /> {tab.label}
-          </button>
-        ))}
-      </div>
+      <StatGrid>
+        <Stat label="Overall Efficiency" value={fmtPct(s.overall_efficiency)} icon={Gauge} accent={ACCENT} good="up" hint="World-class OEE ≈ 85%" />
+        <Stat label="Capacity Utilization" value={fmtPct(s.capacity_utilization)} icon={Boxes} accent={ACCENT} good="up" />
+        <Stat label="Quality Rate" value={fmtPct(s.quality_rate)} icon={CheckCircle2} accent={ACCENT} good="up" />
+        <Stat label="Defect Rate" value={fmtPct(s.defect_rate)} icon={AlertOctagon} accent="var(--bad)" good="down" />
+        <Stat label="Cycle Time" value={fmtNum(s.cycle_time)} unit="d" icon={Timer} accent={ACCENT} good="down" />
+        <Stat label="On-time Completion" value={fmtPct(s.on_time_completion)} icon={CheckCircle2} accent={ACCENT} good="up" />
+        <Stat label="Downtime" value={fmtNum(s.downtime_hours)} unit="h" icon={Power} accent={ACCENT} good="down" />
+        <Stat label="Cost per Unit" value={fmtMoney(s.cost_per_unit)} icon={DollarSign} accent={ACCENT} good="down" />
+      </StatGrid>
 
-      {activeTab === 'overview' && summary && (
-        <>
-          <div className="kpi-grid">
-            <StatCard label={t('oee')} value={fmt(summary.oee)} unit="%" icon={Gauge} color="blue" />
-            <StatCard label={t('capacityUtil')} value={fmt(summary.capacity_utilization)} unit="%" icon={Factory} color="purple" />
-            <StatCard label={t('qualityRate')} value={fmt(summary.quality_rate)} unit="%" icon={CheckCircle2} color="green" />
-            <StatCard label={t('defectRate')} value={fmt(summary.defect_rate)} unit="%" icon={CircleDot} color="red" />
-            <StatCard label={t('throughput')} value={fmt(summary.throughput)} unit="units" icon={TrendingUp} color="cyan" />
-            <StatCard label={t('cycleTime')} value={fmt(summary.cycle_time)} unit="hrs" icon={Timer} color="purple" />
-            <StatCard label={t('downtime')} value={fmt(summary.downtime_hours)} unit="hrs" icon={ArrowDown} color="red" />
-            <StatCard label={t('costPerUnit')} value={`$${fmt(summary.cost_per_unit)}`} icon={DollarSign} color="blue" />
-            <StatCard label={t('onTimeCompletion')} value={fmt(summary.on_time_completion)} unit="%" icon={Target} color="green" />
-            <StatCard label={t('safetyIncidents')} value={fmt(summary.safety_incidents)} icon={ShieldAlert} color="red" />
-            <StatCard label={t('energyEfficiency')} value={fmt(summary.energy_efficiency)} unit="%" icon={Zap} color="cyan" />
-            <StatCard label={t('wasteReduction')} value={fmt(summary.waste_reduction)} unit="%" icon={Recycle} color="green" />
-          </div>
+      <Grid style={{ marginTop: 18 }}>
+        <Panel title="Efficiency trend" icon={Gauge} style={{ gridColumn: 'span 2' }}>
+          <AreaTrend data={s.trends || []} y="efficiency" color={ACCENT} />
+        </Panel>
+        <Panel title="Process areas" icon={Factory}>
+          <BarList items={(s.process_areas || []).map(a => ({
+            label: a.area, value: a.efficiency, display: fmtPct(a.efficiency),
+            color: a.efficiency > 85 ? 'var(--ok)' : a.efficiency > 70 ? 'var(--warn)' : 'var(--bad)',
+          }))} />
+        </Panel>
+      </Grid>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 20, marginTop: 20 }}>
-            {health && (
-              <div className="card" style={{ textAlign: 'center' }}>
-                <h3 className="card-title">{t('opsHealthScore')}</h3>
-                <div style={{
-                  width: 120, height: 120, borderRadius: '50%',
-                  border: `6px solid ${health.color}`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexDirection: 'column', margin: '16px auto'
-                }}>
-                  <div style={{ fontSize: '1.8rem', fontWeight: 700, color: health.color }}>{health.score}</div>
-                  <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>/100</div>
-                </div>
-                <div style={{ fontWeight: 600, color: health.color }}>{health.rating}</div>
-                {health.factors && (
-                  <div style={{ marginTop: 16, textAlign: 'left' }}>
-                    {Object.entries(health.factors).map(([k, v]) => (
-                      <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', fontSize: '0.85rem' }}>
-                        <span style={{ textTransform: 'capitalize' }}>{k.replace(/_/g, ' ')}</span>
-                        <span style={{ fontWeight: 600 }}>{v}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-            <div className="card">
-              <h3 className="card-title">{t('operationsTrends')}</h3>
-              {summary.trends && summary.trends.length > 0 ? (
-                <table className="table">
-                  <thead><tr><th>Period</th><th>OEE</th><th>Quality</th><th>Throughput</th></tr></thead>
-                  <tbody>
-                    {summary.trends.slice(-8).map((t, i) => (
-                      <tr key={i}>
-                        <td>{t.period}</td>
-                        <td>{fmt(t.oee)}%</td>
-                        <td>{fmt(t.quality)}%</td>
-                        <td>{fmt(t.throughput)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : <p style={{ color: 'var(--text-muted)' }}>No trend data available</p>}
-            </div>
-          </div>
-        </>
-      )}
-
-      {activeTab === 'quality' && quality && (
-        <div className="kpi-grid">
-          <StatCard label={t('qualityRate')} value={fmt(quality.quality_rate)} unit="%" icon={CheckCircle2} color="green" />
-          <StatCard label={t('defectPPM')} value={fmt(quality.defect_ppm)} icon={Microscope} color="red" />
-          <StatCard label={t('firstPassYield')} value={fmt(quality.first_pass_yield)} unit="%" icon={Crosshair} color="green" />
-          <StatCard label={t('reworkRate')} value={fmt(quality.rework_rate)} unit="%" icon={RefreshCcw} color="purple" />
-          <StatCard label={t('complaints')} value={fmt(quality.customer_complaints)} icon={FileText} color="blue" />
-          <StatCard label={t('costOfQuality')} value={`$${fmt(quality.cost_of_quality)}`} icon={DollarSign} color="red" />
-          <StatCard label={t('inspectionPass')} value={fmt(quality.inspection_pass_rate)} unit="%" icon={Search} color="cyan" />
-        </div>
-      )}
-
-      {activeTab === 'production' && production && (
-        <div className="kpi-grid">
-          <StatCard label={t('dailyOutput')} value={fmt(production.daily_output)} unit="units" icon={Factory} color="blue" />
-          <StatCard label={t('capacity')} value={fmt(production.capacity_utilization)} unit="%" icon={Gauge} color="purple" />
-          <StatCard label={t('oee')} value={fmt(production.oee)} unit="%" icon={Cog} color="cyan" />
-          <StatCard label={t('plannedVsActual')} value={fmt(production.planned_vs_actual)} unit="%" icon={ClipboardList} color="blue" />
-          <StatCard label={t('changeoverTime')} value={fmt(production.changeover_time)} unit="hrs" icon={RefreshCcw} color="purple" />
-          <StatCard label={t('scrapRate')} value={fmt(production.scrap_rate)} unit="%" icon={Trash2} color="red" />
-          <StatCard label={t('maintenanceCompl')} value={fmt(production.maintenance_compliance)} unit="%" icon={Wrench} color="green" />
-          <StatCard label={t('laborProductivity')} value={fmt(production.labor_productivity)} unit="%" icon={Users} color="cyan" />
-        </div>
-      )}
-
-      {activeTab === 'safety' && safety && (
-        <div className="kpi-grid">
-          <StatCard label={t('totalIncidents')} value={fmt(safety.total_incidents)} icon={AlertTriangle} color="red" />
-          <StatCard label={t('lostTimeInjuries')} value={fmt(safety.lost_time_injuries)} icon={Bandage} color="red" />
-          <StatCard label={t('nearMisses')} value={fmt(safety.near_misses)} icon={TriangleAlert} color="purple" />
-          <StatCard label={t('daysSinceIncident')} value={fmt(safety.days_since_last_incident)} icon={Calendar} color="green" />
-          <StatCard label={t('safetyTraining')} value={fmt(safety.safety_training_completion)} unit="%" icon={BookOpen} color="blue" />
-          <StatCard label={t('trir')} value={fmt(safety.trir)} icon={Activity} color="cyan" />
-          <StatCard label={t('severityRate')} value={fmt(safety.severity_rate)} icon={CircleDot} color="red" />
-        </div>
-      )}
+      <Grid style={{ marginTop: 18 }}>
+        <Panel title="Quality" icon={CheckCircle2}>
+          <BarList items={[
+            { label: 'First pass yield', value: q.first_pass_yield, display: fmtPct(q.first_pass_yield), color: 'var(--ok)' },
+            { label: 'Inspection pass rate', value: q.inspection_pass_rate, display: fmtPct(q.inspection_pass_rate), color: 'var(--ok)' },
+            { label: 'Rework rate', value: q.rework_rate, display: fmtPct(q.rework_rate), color: 'var(--warn)' },
+            { label: 'Customer complaints', value: q.customer_complaints, display: fmtNum(q.customer_complaints), color: 'var(--bad)' },
+          ]} />
+        </Panel>
+        <Panel title="Production" icon={Factory}>
+          <StatGrid>
+            <Stat label="OEE" value={fmtPct(p.oee)} accent={ACCENT} good="up" />
+            <Stat label="Daily Output" value={fmtNum(p.daily_output)} accent={ACCENT} />
+            <Stat label="Labor Productivity" value={fmtPct(p.labor_productivity)} accent={ACCENT} good="up" />
+            <Stat label="Scrap Rate" value={fmtPct(p.scrap_rate)} accent="var(--bad)" good="down" />
+          </StatGrid>
+        </Panel>
+        <Panel title="Safety" icon={HardHat}>
+          <StatGrid>
+            <Stat label="TRIR" value={fmtNum(sf.trir)} icon={ShieldCheck} accent={ACCENT} good="down" />
+            <Stat label="Days w/o Incident" value={fmtNum(sf.days_without_incident)} accent="var(--ok)" good="up" />
+            <Stat label="Lost-time Incidents" value={fmtNum(sf.lost_time_incidents)} accent="var(--bad)" good="down" />
+            <Stat label="Near Misses" value={fmtNum(sf.near_misses)} accent="var(--warn)" />
+          </StatGrid>
+        </Panel>
+      </Grid>
     </div>
   )
 }

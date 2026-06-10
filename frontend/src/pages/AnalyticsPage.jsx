@@ -1,238 +1,96 @@
-import { useState } from 'react'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useState, useMemo } from 'react'
+import { useQuery, useMutation } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { BarChart3, Hash, Calendar, Layers, FolderKanban, TrendingUp } from 'lucide-react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-
-function MetricChart({ data, title }) {
-  if (!data || data.length === 0) return null
-
-  const chartData = data.slice(-20).map(d => ({
-    period: d.period || d.date || '',
-    value: d.value || 0
-  }))
-
-  return (
-    <div className="card">
-      <h3 className="card-title">{title}</h3>
-      <div style={{ height: 250 }}>
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis 
-              dataKey="period" 
-              style={{ fontSize: '0.7rem', fill: 'var(--text-muted)' }}
-            />
-            <YAxis 
-              style={{ fontSize: '0.7rem', fill: 'var(--text-muted)' }}
-            />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'var(--card-bg)', 
-                border: '1px solid var(--border)',
-                borderRadius: '4px'
-              }}
-              itemStyle={{ color: 'var(--text)' }}
-            />
-            <Legend />
-            <Line 
-              type="monotone" 
-              dataKey="value" 
-              stroke="var(--primary)" 
-              strokeWidth={2}
-              dot={{ r: 4 }}
-              activeDot={{ r: 6 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  )
-}
+import {
+  PageHeader, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, AskCopilot, fmtNum,
+} from '../components/ui'
 
 export default function AnalyticsPage() {
   const { t } = useTranslation()
-  const queryClient = useQueryClient()
-  const [selectedMetric, setSelectedMetric] = useState('')
+  const [metric, setMetric] = useState('')
+  const [fcMetric, setFcMetric] = useState('')
 
-  // Use React Query for cached data fetching
-  const { data: kpis = [], isLoading: kpisLoading } = useQuery({
-    queryKey: ['kpis'],
-    queryFn: () => api.getKPIs().then(res => res.data?.metrics || []),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-  })
+  const { data: kpis = [], isLoading } = useQuery({ queryKey: ['kpis'], queryFn: () => api.getKPIs().then(r => r.data?.metrics || []), staleTime: 300_000 })
+  const { data: periods = [] } = useQuery({ queryKey: ['periods'], queryFn: () => api.getPeriods().then(r => r.data?.periods || []), staleTime: 600_000 })
+  const { data: metricNames = [] } = useQuery({ queryKey: ['metrics'], queryFn: () => api.getMetrics().then(r => r.data?.metrics || []), staleTime: 600_000 })
 
-  const { data: periods = [], isLoading: periodsLoading } = useQuery({
-    queryKey: ['periods'],
-    queryFn: () => api.getPeriods().then(res => res.data?.periods || []),
-    staleTime: 10 * 60 * 1000, // 10 minutes
-  })
+  const forecast = useMutation({ mutationFn: (m) => api.runForecast(m, 6).then(r => r.data) })
 
-  const { data: metrics = [], isLoading: metricsLoading } = useQuery({
-    queryKey: ['metrics'],
-    queryFn: () => api.getMetrics().then(res => res.data?.metrics || []),
-    staleTime: 10 * 60 * 1000, // 10 minutes
-  })
+  const categories = useMemo(() => [...new Set(kpis.map(k => k.category).filter(Boolean))], [kpis])
+  const selected = metric || metricNames[0] || ''
+  const series = useMemo(() => kpis
+    .filter(k => (k.metric_name || k.name) === selected)
+    .map(k => ({ period: k.period, value: Math.round((k.value || 0) * 100) / 100 }))
+    .sort((a, b) => (a.period || '').localeCompare(b.period || '')), [kpis, selected])
 
-  // Forecast mutation
-  const forecastMutation = useMutation({
-    mutationFn: (metric) => api.runForecast(metric, 6).then(res => res.data),
-    onSuccess: (data) => {
-      // Invalidate relevant queries if needed
-      queryClient.invalidateQueries(['forecast', selectedMetric])
-    },
-  })
-
-  const runForecast = () => {
-    if (!selectedMetric) return
-    forecastMutation.mutate(selectedMetric)
-  }
-
-  const loading = kpisLoading || periodsLoading || metricsLoading
-  const forecastLoading = forecastMutation.isPending
-  const forecast = forecastMutation.data || null
-
-  // Group KPIs by category
-  const categories = {}
-  kpis.forEach(k => {
-    const cat = k.category || 'Other'
-    if (!categories[cat]) categories[cat] = []
-    categories[cat].push(k)
-  })
-
-  // Create chart data from KPIs
-  const revenueData = kpis
-    .filter(k => k.metric_name?.toLowerCase().includes('revenue') || k.category === 'revenue')
-    .map(k => ({ period: k.period || '', value: k.value || 0 }))
-    .sort((a, b) => a.period.localeCompare(b.period))
+  if (isLoading) return <Loading />
+  const fc = forecast.data
 
   return (
     <div>
-      <h1 className="page-title" style={{ marginBottom: 24 }}><BarChart3 size={24} /> {t('analytics')}</h1>
+      <PageHeader icon={BarChart3} title={t('navAnalytics') || 'Analytics'}
+        subtitle={t('analyticsSubtitle') || 'Cross-domain KPI explorer & forecasting'}
+        actions={<AskCopilot q="What are the most important trends across all our KPIs this period?" />} />
 
-      {loading ? (
-        <div className="text-center" style={{ padding: 60 }}>{t('loading')}</div>
-      ) : (
-        <>
-          {/* Summary Stats */}
-          <div className="kpi-grid" style={{ marginBottom: 24 }}>
-            <div className="kpi-card">
-              <div className="kpi-label">{t('totalMetrics')}</div>
-              <div className="kpi-value">{metrics.length}</div>
-            </div>
-            <div className="kpi-card">
-              <div className="kpi-label">{t('timePeriods')}</div>
-              <div className="kpi-value">{periods.length}</div>
-            </div>
-            <div className="kpi-card">
-              <div className="kpi-label">{t('dataPoints')}</div>
-              <div className="kpi-value">{kpis.length}</div>
-            </div>
-            <div className="kpi-card">
-              <div className="kpi-label">{t('categories')}</div>
-              <div className="kpi-value">{Object.keys(categories).length}</div>
-            </div>
+      <StatGrid>
+        <Stat label={t('totalMetrics') || 'Metrics'} value={fmtNum(metricNames.length)} icon={Hash} />
+        <Stat label={t('timePeriods') || 'Periods'} value={fmtNum(periods.length)} icon={Calendar} />
+        <Stat label={t('dataPoints') || 'Data points'} value={fmtNum(kpis.length)} icon={Layers} />
+        <Stat label={t('categories') || 'Domains'} value={fmtNum(categories.length)} icon={FolderKanban} />
+      </StatGrid>
+
+      <Panel title="Metric explorer" icon={TrendingUp} style={{ marginTop: 18 }}
+        actions={
+          <select className="form-input" style={{ width: 220 }} value={selected} onChange={e => setMetric(e.target.value)}>
+            {metricNames.map((m, i) => <option key={i} value={m}>{m}</option>)}
+          </select>
+        }>
+        <AreaTrend data={series} y="value" />
+      </Panel>
+
+      <Grid style={{ marginTop: 18 }} min={320}>
+        <Panel title={t('forecasting') || 'Forecast'} icon={TrendingUp}>
+          <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
+            <select className="form-input" style={{ flex: 1 }} value={fcMetric} onChange={e => setFcMetric(e.target.value)}>
+              <option value="">{t('selectMetric') || 'Select a metric…'}</option>
+              {metricNames.map((m, i) => <option key={i} value={m}>{m}</option>)}
+            </select>
+            <button className="btn btn-primary" disabled={!fcMetric || forecast.isPending} onClick={() => forecast.mutate(fcMetric)}>
+              {forecast.isPending ? (t('running') || 'Running…') : (t('runForecast') || 'Run')}
+            </button>
           </div>
-
-          {/* Chart */}
-          {revenueData.length > 0 && (
-            <MetricChart data={revenueData} title="Revenue Trend" />
-          )}
-
-          {/* Forecast */}
-          <div className="card" style={{ marginTop: 20 }}>
-            <h3 className="card-title">{t('forecasting')}</h3>
-            <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 16 }}>
-              <select
-                className="form-input"
-                style={{ flex: 1 }}
-                value={selectedMetric}
-                onChange={e => setSelectedMetric(e.target.value)}
-              >
-                <option value="">{t('selectMetric')}</option>
-                {metrics.map((m, i) => (
-                  <option key={i} value={m}>{m}</option>
-                ))}
-              </select>
-              <button
-                className="btn btn-primary"
-                onClick={runForecast}
-                disabled={!selectedMetric || forecastLoading}
-              >
-                {forecastLoading ? t('running') : t('runForecast')}
-              </button>
-            </div>
-
-            {forecast && (
-              forecast.error ? (
-                <p style={{ color: '#ef4444' }}>{forecast.error}</p>
-              ) : (
-                <div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 16 }}>
-                    <div>
-                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Method</div>
-                      <div style={{ fontWeight: 600 }}>{forecast.method}</div>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Confidence</div>
-                      <div style={{ fontWeight: 600 }}>{forecast.confidence ? `${(forecast.confidence * 100).toFixed(0)}%` : '—'}</div>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Periods</div>
-                      <div style={{ fontWeight: 600 }}>{forecast.predictions?.length || 0}</div>
-                    </div>
-                  </div>
-                  {forecast.predictions && (
-                    <table className="table">
-                      <thead>
-                        <tr><th>Period</th><th>Predicted Value</th></tr>
-                      </thead>
-                      <tbody>
-                        {forecast.predictions.map((p, i) => (
-                          <tr key={i}>
-                            <td>{p.period || `+${i + 1}`}</td>
-                            <td>{typeof p.value === 'number' ? p.value.toFixed(2) : p.value ?? '—'}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
-                </div>
-              )
-            )}
-          </div>
-
-          {/* KPI Table */}
-          {kpis.length > 0 && (
-            <div className="card" style={{ marginTop: 20 }}>
-              <h3 className="card-title">{t('allMetrics')}</h3>
-              <div style={{ maxHeight: 400, overflowY: 'auto' }}>
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Metric</th>
-                      <th>Value</th>
-                      <th>Category</th>
-                      <th>Period</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {kpis.slice(0, 50).map((k, i) => (
-                      <tr key={i}>
-                        <td>{k.metric_name || k.name}</td>
-                        <td style={{ fontWeight: 600 }}>{typeof k.value === 'number' ? k.value.toFixed(2) : k.value}</td>
-                        <td><span className="badge">{k.category || '—'}</span></td>
-                        <td>{k.period || '—'}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+          {fc && !fc.error && (
+            <>
+              <div style={{ display: 'flex', gap: 16, marginBottom: 12, fontSize: '.82rem', color: 'var(--text-2)' }}>
+                <span>Method: <b style={{ color: 'var(--text)' }}>{fc.method}</b></span>
+                {fc.confidence != null && <span>Confidence: <b style={{ color: 'var(--text)' }}>{(fc.confidence * 100).toFixed(0)}%</b></span>}
               </div>
-            </div>
+              <AreaTrend data={(fc.predictions || []).map((p, i) => ({ period: p.period || `+${i + 1}`, value: typeof p.value === 'number' ? Math.round(p.value * 100) / 100 : 0 }))} y="value" color="var(--accent)" height={180} />
+            </>
           )}
-        </>
-      )}
+          {fc?.error && <div className="alert alert-danger">{fc.error}</div>}
+        </Panel>
+
+        <Panel title={t('allMetrics') || 'All metrics'} icon={Layers} style={{ gridColumn: 'span 2' }}>
+          <div style={{ maxHeight: 360, overflowY: 'auto' }}>
+            <table className="table">
+              <thead><tr><th>Metric</th><th>Value</th><th>Domain</th><th>Period</th></tr></thead>
+              <tbody>
+                {kpis.slice(0, 60).map((k, i) => (
+                  <tr key={i}>
+                    <td>{k.metric_name || k.name}</td>
+                    <td style={{ fontFamily: 'var(--font-mono)' }}>{typeof k.value === 'number' ? fmtNum(k.value) : k.value}</td>
+                    <td><span className="badge">{k.category || '—'}</span></td>
+                    <td>{k.period || '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Panel>
+      </Grid>
     </div>
   )
 }

@@ -23,7 +23,7 @@ function ProtectedRoute({ children, page }) {
   
   if (loading) return <div className="text-center" style={{ padding: '100px' }}>Loading...</div>
   if (!isAuthenticated) return <Navigate to="/login" replace />
-  if (page && !hasPage(page)) return <Navigate to="/dashboard" replace />
+  if (page && !hasPage(page)) return <Navigate to="/chat" replace />
   
   return children
 }
@@ -36,13 +36,13 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={
-        isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />
+        isAuthenticated ? <Navigate to="/chat" replace /> : <LoginPage />
       } />
-      
+
       <Route path="/" element={
         <ProtectedRoute><Layout /></ProtectedRoute>
       }>
-        <Route index element={<Navigate to="/dashboard" replace />} />
+        <Route index element={<Navigate to="/chat" replace />} />
         <Route path="dashboard" element={
           <ProtectedRoute page="dashboard"><DashboardPage /></ProtectedRoute>
         } />
@@ -90,7 +90,7 @@ export default function App() {
         } />
       </Route>
       
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/chat" replace />} />
     </Routes>
   )
 }

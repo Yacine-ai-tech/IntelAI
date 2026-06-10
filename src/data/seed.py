@@ -213,6 +213,13 @@ def seed_database(replace: bool = True) -> Dict[str, int]:
         n_entities = 0
 
     docs = generate_knowledge_docs(rows)
+    # Glossary docs: authoritative, sourced definitions so the copilot cites a vetted
+    # source when explaining a metric/term (anti-hallucination — STRATEGY §grounding).
+    try:
+        from src.data.glossary import as_knowledge_docs
+        docs += as_knowledge_docs()
+    except Exception:
+        pass
     docs_df = pd.DataFrame([
         {"doc_id": f"seed-{i}", "title": d["title"], "content": d["content"],
          "source": d["source"], "embedding": "", "language": "en"}

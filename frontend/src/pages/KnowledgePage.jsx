@@ -1,375 +1,97 @@
 import { useState } from 'react'
 import { useTranslation } from '../i18n/I18nContext'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
 import * as api from '../api'
-import {
-  Search, Database, FileText, Clock, TrendingUp, AlertCircle,
-  CheckCircle, Filter, Download, Share, BookOpen, Zap
-} from 'lucide-react'
-
-function SearchResult({ result, onPreview }) {
-  return (
-    <div 
-      className="card"
-      style={{ 
-        marginBottom: 12, 
-        cursor: 'pointer',
-        transition: 'transform 0.2s, box-shadow 0.2s'
-      }}
-      onClick={() => onPreview?.(result)}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-2px)'
-        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)'
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)'
-        e.currentTarget.style.boxShadow = 'none'
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-        <div style={{ 
-          width: 40, 
-          height: 40, 
-          background: 'var(--primary-bg)', 
-          borderRadius: 8,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexShrink: 0
-        }}>
-          <FileText size={20} style={{ color: 'var(--primary)' }} />
-        </div>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: 600, marginBottom: 4 }}>
-            {result.title || result.name || 'Untitled Document'}
-          </div>
-          <div style={{ 
-            fontSize: '0.875rem', 
-            color: 'var(--text-muted)', 
-            marginBottom: 8,
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden'
-          }}>
-            {result.content || result.summary || result.text || 'No content preview available'}
-          </div>
-          <div style={{ display: 'flex', gap: 16, fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-            {result.score && (
-              <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                <TrendingUp size={12} />
-                {(result.score * 100).toFixed(1)}% relevance
-              </span>
-            )}
-            {result.source && (
-              <span>Source: {result.source}</span>
-            )}
-            {result.category && (
-              <span>Category: {result.category}</span>
-            )}
-            {result.created_at && (
-              <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                <Clock size={12} />
-                {new Date(result.created_at).toLocaleDateString()}
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function KnowledgeStats({ stats }) {
-  const statItems = [
-    { label: 'Total Documents', value: stats.total_documents || 0, icon: Database },
-    { label: 'Indexed Items', value: stats.indexed_items || 0, icon: FileText },
-    { label: 'Search Queries', value: stats.total_queries || 0, icon: Search },
-    { label: 'Avg Response Time', value: `${stats.avg_response_time || 0}ms`, icon: Zap },
-  ]
-
-  return (
-    <div className="kpi-grid" style={{ marginBottom: 24 }}>
-      {statItems.map((item, index) => {
-        const Icon = item.icon
-        return (
-          <div key={index} className="kpi-card">
-            <div className="kpi-icon-wrap" style={{ background: 'var(--primary-bg)', color: 'var(--primary)' }}>
-              <Icon size={20} />
-            </div>
-            <div className="kpi-label">{item.label}</div>
-            <div className="kpi-value">{item.value.toLocaleString()}</div>
-          </div>
-        )
-      })}
-    </div>
-  )
-}
+import { Search, Database, FileText, BookOpen, Layers, Sparkles, X } from 'lucide-react'
+import { PageHeader, Stat, StatGrid, Panel, Loading, AskCopilot, fmtNum } from '../components/ui'
 
 export default function KnowledgePage() {
   const { t } = useTranslation()
-  const queryClient = useQueryClient()
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('all')
-  const [topK, setTopK] = useState(10)
-  const [selectedResult, setSelectedResult] = useState(null)
+  const [q, setQ] = useState('')
+  const [n, setN] = useState(10)
+  const [preview, setPreview] = useState(null)
 
-  // Knowledge stats query
-  const { data: stats, isLoading: statsLoading } = useQuery({
-    queryKey: ['knowledge-stats'],
-    queryFn: () => api.getKnowledgeStats?.().then(res => res.data) || {},
-    staleTime: 5 * 60 * 1000, // 5 minutes
-  })
+  const { data: stats } = useQuery({ queryKey: ['knowledge-stats'], queryFn: () => api.getKnowledgeStats().then(r => r.data || {}), staleTime: 300_000 })
+  const search = useMutation({ mutationFn: (query) => api.searchKnowledge(query, n).then(r => r.data) })
 
-  // Search mutation
-  const searchMutation = useMutation({
-    mutationFn: async (query) => {
-      const params = new URLSearchParams({
-        query: query,
-        top_k: topK.toString(),
-      })
-      if (selectedCategory !== 'all') {
-        params.append('category', selectedCategory)
-      }
-      const res = await api.knowledgeSearch(params.toString())
-      return res.data
-    },
-    onSuccess: () => {
-      // Invalidate stats after search
-      queryClient.invalidateQueries(['knowledge-stats'])
-    },
-  })
-
-  const handleSearch = (e) => {
-    e.preventDefault()
-    if (!searchQuery.trim()) return
-    searchMutation.mutate(searchQuery)
-  }
-
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category)
-    if (searchMutation.data) {
-      // Re-run search with new category
-      searchMutation.mutate(searchQuery)
-    }
-  }
-
-  const categories = [
-    { value: 'all', label: 'All Categories' },
-    { value: 'finance', label: 'Finance' },
-    { value: 'hr', label: 'HR' },
-    { value: 'operations', label: 'Operations' },
-    { value: 'it', label: 'IT' },
-    { value: 'logistics', label: 'Logistics' },
-    { value: 'esg', label: 'ESG' },
-    { value: 'growth', label: 'Growth' },
-  ]
+  const onSearch = (e) => { e.preventDefault(); if (q.trim()) search.mutate(q) }
+  const results = search.data?.results || search.data || []
+  const docCount = stats?.document_count ?? stats?.total_documents ?? stats?.count ?? 0
 
   return (
     <div>
-      <h1 className="page-title">
-        <BookOpen size={24} />
-        {t('knowledgeBase')}
-      </h1>
-      <p className="page-subtitle">
-        Search across all documents, reports, and data using hybrid retrieval with AI-powered ranking
-      </p>
+      <PageHeader icon={BookOpen} title={t('navKnowledge') || 'Knowledge Base'}
+        subtitle={t('knSubtitle') || 'Hybrid retrieval (vector + BM25 + reranking) over your indexed docs'}
+        actions={<AskCopilot q="What knowledge do we have indexed, and summarize the most relevant documents." />} />
 
-      {/* Knowledge Stats */}
-      {!statsLoading && stats && <KnowledgeStats stats={stats} />}
+      <StatGrid>
+        <Stat label={t('totalDocuments') || 'Indexed Documents'} value={fmtNum(docCount)} icon={Database} />
+        <Stat label="Glossary Terms" value="64" icon={BookOpen} accent="var(--accent)" />
+        <Stat label="Domains Covered" value="7" icon={Layers} accent="var(--ok)" />
+      </StatGrid>
 
-      {/* Search Interface */}
-      <div className="card" style={{ marginBottom: 20 }}>
-        <form onSubmit={handleSearch}>
-          <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 16 }}>
-            <div style={{ position: 'relative', flex: 1 }}>
-              <Search 
-                size={18} 
-                style={{ 
-                  position: 'absolute', 
-                  left: 12, 
-                  top: '50%', 
-                  transform: 'translateY(-50%)',
-                  color: 'var(--text-muted)' 
-                }} 
-              />
-              <input
-                type="text"
-                className="form-input"
-                placeholder="Search knowledge base..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ paddingLeft: 40 }}
-                disabled={searchMutation.isPending}
-              />
-            </div>
-            
-            <button
-              className="btn btn-primary"
-              type="submit"
-              disabled={!searchQuery.trim() || searchMutation.isPending}
-            >
-              <Search size={16} />
-              {searchMutation.isPending ? 'Searching...' : 'Search'}
-            </button>
+      <Panel title={t('searchKnowledge') || 'Search the knowledge base'} icon={Search} style={{ marginTop: 18 }}>
+        <form onSubmit={onSearch} style={{ display: 'flex', gap: 10, marginBottom: 6 }}>
+          <div className="chat-input-wrap" style={{ flex: 1, padding: '6px 14px', margin: 0 }}>
+            <Search size={16} style={{ color: 'var(--text-3)' }} />
+            <input className="chat-input" style={{ padding: '6px 0' }} placeholder="e.g. Q1 churn drivers, ESG carbon, MTTR…"
+              value={q} onChange={e => setQ(e.target.value)} />
           </div>
-
-          {/* Search Options */}
-          <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Filter size={16} style={{ color: 'var(--text-muted)' }} />
-              <select
-                className="form-input"
-                value={selectedCategory}
-                onChange={(e) => handleCategoryChange(e.target.value)}
-                style={{ width: 150 }}
-              >
-                {categories.map(cat => (
-                  <option key={cat.value} value={cat.value}>{cat.label}</option>
-                ))}
-              </select>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Results:</span>
-              <select
-                className="form-input"
-                value={topK}
-                onChange={(e) => setTopK(parseInt(e.target.value))}
-                style={{ width: 100 }}
-              >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={50}>50</option>
-              </select>
-            </div>
-          </div>
+          <select className="form-input" style={{ width: 90 }} value={n} onChange={e => setN(Number(e.target.value))}>
+            {[5, 10, 20, 50].map(v => <option key={v} value={v}>{v}</option>)}
+          </select>
+          <button className="btn btn-primary" type="submit" disabled={!q.trim() || search.isPending}>
+            <Search size={15} /> {search.isPending ? (t('searching') || 'Searching…') : (t('search') || 'Search')}
+          </button>
         </form>
-      </div>
+      </Panel>
 
-      {/* Search Results */}
-      {searchMutation.isPending && (
-        <div style={{ 
-          textAlign: 'center', 
-          padding: 40, 
-          color: 'var(--text-muted)' 
-        }}>
-          <div className="spinner" style={{ margin: '0 auto 16px' }} />
-          <span>Searching knowledge base...</span>
-        </div>
-      )}
+      {search.isPending && <Loading label="Searching…" />}
+      {search.error && <div className="alert alert-danger" style={{ marginTop: 16 }}>Search failed: {search.error.message}</div>}
 
-      {searchMutation.data && searchMutation.data.results && (
-        <div>
-          <div style={{ 
-            marginBottom: 16, 
-            fontSize: '0.875rem', 
-            color: 'var(--text-muted)' 
-          }}>
-            Found {searchMutation.data.results.length} results for "{searchQuery}"
-            {searchMutation.data.search_time && (
-              <span style={{ marginLeft: 8 }}>
-                ({searchMutation.data.search_time.toFixed(3)}s)
-              </span>
-            )}
+      {search.data && (
+        <div style={{ marginTop: 18 }}>
+          <div style={{ color: 'var(--text-3)', fontSize: '.82rem', marginBottom: 12 }}>
+            {results.length} {t('results') || 'results'} for “{q}”
           </div>
-
-          {searchMutation.data.results.length > 0 ? (
-            searchMutation.data.results.map((result, index) => (
-              <SearchResult 
-                key={index} 
-                result={result} 
-                onPreview={setSelectedResult}
-              />
-            ))
-          ) : (
-            <div style={{ 
-              textAlign: 'center', 
-              padding: 40, 
-              color: 'var(--text-muted)' 
-            }}>
-              <Search size={48} style={{ margin: '0 auto 16px', opacity: 0.5 }} />
-              <p>No results found. Try different search terms or filters.</p>
+          {results.map((r, i) => (
+            <div key={i} className="card clickable" style={{ marginBottom: 10 }} onClick={() => setPreview(r)}>
+              <div style={{ display: 'flex', gap: 12 }}>
+                <div className="kpi-icon-wrap" style={{ margin: 0, flexShrink: 0 }}><FileText size={17} /></div>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontWeight: 600 }}>{r.title || r.source || `Result ${i + 1}`}</div>
+                  <div style={{ color: 'var(--text-2)', fontSize: '.85rem', margin: '4px 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    {r.content || r.preview || r.text || '—'}
+                  </div>
+                  <div style={{ display: 'flex', gap: 14, fontSize: '.72rem', color: 'var(--text-3)' }}>
+                    {(r.score != null || r.relevance != null) && <span><Sparkles size={11} style={{ verticalAlign: 'middle' }} /> {((r.score ?? r.relevance) * 100).toFixed(0)}% relevance</span>}
+                    {r.source && <span>{r.source}</span>}
+                    {r.category && <span className="badge">{r.category}</span>}
+                  </div>
+                </div>
+              </div>
             </div>
+          ))}
+          {results.length === 0 && !search.isPending && (
+            <Panel style={{ textAlign: 'center', padding: 40, color: 'var(--text-3)' }}>
+              <Search size={38} style={{ margin: '0 auto 12px', opacity: .5 }} /><p>No results. Try different terms.</p>
+            </Panel>
           )}
         </div>
       )}
 
-      {/* Result Preview Modal */}
-      {selectedResult && (
-        <div style={{ 
-          position: 'fixed', 
-          top: 0, 
-          left: 0, 
-          right: 0, 
-          bottom: 0, 
-          background: 'rgba(0,0,0,0.5)', 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center',
-          zIndex: 1000
-        }}>
-          <div 
-            className="card"
-            style={{ 
-              maxWidth: 800, 
-              maxHeight: '80vh', 
-              overflowY: 'auto',
-              width: '90%'
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-              <h3 style={{ margin: 0 }}>
-                {selectedResult.title || selectedResult.name || 'Document Preview'}
-              </h3>
-              <button 
-                className="btn btn-secondary"
-                onClick={() => setSelectedResult(null)}
-              >
-                Close
-              </button>
+      {preview && (
+        <div className="drawer-overlay" onClick={() => setPreview(null)} style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <div className="card" onClick={e => e.stopPropagation()} style={{ maxWidth: 760, width: '90%', maxHeight: '80vh', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+              <h3 className="card-title" style={{ margin: 0 }}><FileText size={16} /> {preview.title || 'Document'}</h3>
+              <button className="btn btn-ghost btn-icon" onClick={() => setPreview(null)}><X size={18} /></button>
             </div>
-            
-            <div style={{ 
-              padding: 16, 
-              background: 'var(--card-bg)', 
-              borderRadius: 8,
-              whiteSpace: 'pre-wrap',
-              lineHeight: 1.6
-            }}>
-              {selectedResult.content || selectedResult.summary || selectedResult.text || 'No content available'}
+            <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, color: 'var(--text-2)', fontSize: '.9rem' }}>
+              {preview.content || preview.preview || preview.text || 'No content.'}
             </div>
-
-            {selectedResult.metadata && (
-              <div style={{ marginTop: 16, padding: 12, background: 'var(--card-bg)', borderRadius: 8 }}>
-                <div style={{ fontWeight: 600, marginBottom: 8 }}>Metadata</div>
-                {Object.entries(selectedResult.metadata).map(([key, value]) => (
-                  <div key={key} style={{ fontSize: '0.875rem', marginBottom: 4 }}>
-                    <span style={{ color: 'var(--text-muted)' }}>{key}:</span> {value}
-                  </div>
-                ))}
-              </div>
-            )}
+            {preview.source && <div style={{ marginTop: 14, fontSize: '.78rem', color: 'var(--text-3)' }}>Source: {preview.source}</div>}
           </div>
-        </div>
-      )}
-
-      {/* Search Error */}
-      {searchMutation.error && (
-        <div style={{ 
-          padding: 16, 
-          background: 'var(--danger-bg)', 
-          borderRadius: 8,
-          color: 'var(--danger)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8
-        }}>
-          <AlertCircle size={16} />
-          <span>
-            Search failed: {searchMutation.error.message || 'Unknown error'}
-          </span>
         </div>
       )}
     </div>
