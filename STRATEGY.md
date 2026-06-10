@@ -277,7 +277,7 @@ Line counts are exact from `wc -l`.
 
 | File | Lines | What It Does |
 |------|-------|--------------|
-| `src/api/server_v2.py` | 2,579 | 60+ endpoints, full RBAC, JWT, WebSocket chat |
+| `src/api/server.py` | 2,579 | 60+ endpoints, full RBAC, JWT, WebSocket chat |
 | `src/services/pg_store.py` | 1,669 | 50+ DB functions (KPIs, auth, sessions, audit) |
 | `src/services/omnismart_chatbot.py` | 1,658 | 9 personas, LangChain RAG, ChromaDB integration |
 | `src/services/advanced_chatbot.py` | 1,137 | 5 Groq patterns, agentic flows, Tavily search |
@@ -435,7 +435,7 @@ of which projects you build.
 
 #### Issue 2: WebSocket streaming chat is built but not wired
 
-`server_v2.py` line 1553: `@app.websocket("/api/v1/ws/chat")` exists and works.
+`server.py` line 1553: `@app.websocket("/api/v1/ws/chat")` exists and works.
 `frontend/src/pages/ChatPage.jsx`: uses `api.post('/chat')` — the HTTP endpoint.
 
 Users wait 2–5 seconds for a full response when they could see it streaming
@@ -1018,7 +1018,7 @@ is consumed via PyPI, not via a repo link.
                            │ HTTP / WebSocket
                            │ /api/v1/*
 ┌──────────────────────────▼───────────────────────────────────────┐
-│               FastAPI Backend — server_v2.py (2,579 lines)       │
+│               FastAPI Backend — server.py (2,579 lines)       │
 │                                                                  │
 │  Auth · Chat · Insights · Forecasting · Ingestion · Admin       │
 │  9 personas · ChromaDB RAG · Groq LLaMA 3.1 · JWT + RBAC        │
@@ -1064,7 +1064,7 @@ Replace the `api.post('/chat')` call with a WebSocket connection to
 `onmessage`, set streaming state to false on `done`.
 
 The pattern in v1 is correct. Test against all 9 personas. Watch for
-CORS issues — handle them in your `server_v2.py` CORS middleware
+CORS issues — handle them in your `server.py` CORS middleware
 configuration.
 
 #### Fix C — Complete FinancialPage.jsx (1 day)
@@ -4248,7 +4248,7 @@ Afternoon:
 Day 10 — WebSocket Streaming for Chat
 ─────────────────────────────────────────────
 Morning:
-  Read existing src/api/server_v2.py WebSocket chat endpoint
+  Read existing src/api/server.py WebSocket chat endpoint
   Fix any handler bugs (CORS, auth, persona routing)
 Afternoon:
   Wire ChatPage.jsx to /ws/chat endpoint instead of POST /chat
@@ -8085,7 +8085,7 @@ KEEP all files in the repo. Make these specific changes:
 
   i) Create railway.toml:
        [build] builder = "DOCKERFILE"
-       [deploy] startCommand = "python -m uvicorn src.api.server_v2:app
+       [deploy] startCommand = "python -m uvicorn src.api.server:app
                                   --host 0.0.0.0 --port $PORT --workers 1"
        healthcheckPath = "/health"
 
@@ -8659,7 +8659,7 @@ This validation is Phase 0 Day 4 of Section 16.1. Block on it.
 ```
 FROM IntelAI-master/          → TO PROJECT
 ───────────────────────────────────────────────────────────────────
-src/api/server_v2.py              → P1: Keep (refactor in place)
+src/api/server.py              → P1: Keep (refactor in place)
 src/services/omnismart_chatbot.py → P1: Keep
 src/services/pg_store.py          → P1: Keep | P2: Copy | P6: Slim copy
 src/services/advanced_chatbot.py  → P1: Keep

@@ -16,7 +16,7 @@ os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai_test")
 def client():
     from fastapi.testclient import TestClient
 
-    from src.api.server_v2 import app
+    from src.api.server import app
 
     return TestClient(app)
 
@@ -31,7 +31,7 @@ def test_core_imports():
 
 def test_app_imports_and_has_routes():
     """The FastAPI app object builds and registers its routes."""
-    from src.api.server_v2 import app
+    from src.api.server import app
 
     assert len(app.routes) > 50
 
@@ -51,7 +51,7 @@ def test_openapi_schema(client):
 
 def test_docs_served(client):
     """Interactive API docs are served at the configured docs URL."""
-    from src.api.server_v2 import app
+    from src.api.server import app
 
     r = client.get(app.docs_url)
     assert r.status_code == 200
