@@ -10,7 +10,17 @@ import {
 
 const ACCENT = 'var(--p-cfo)'
 const ICONS = { Revenue: DollarSign, 'Gross Margin': Percent, EBITDA: TrendingUp, 'Net Profit': Banknote, 'Operating Cash Flow': Wallet, 'Operating Costs': Coins }
-const isPct = (m) => /margin|%/i.test(m)
+
+// Format a KPI row by its declared unit (Finance now spans %, days, months, ratio, score, USD).
+const fmtVal = (k) => {
+  const u = (k.unit || '').toLowerCase()
+  if (u === '%') return fmtPct(k.value)
+  if (u === 'usd') return fmtMoney(k.value)
+  if (u === 'days') return fmtNum(k.value) + ' d'
+  if (u === 'months') return fmtNum(k.value) + ' mo'
+  if (u === 'ratio') return fmtNum(k.value) + '×'
+  return fmtNum(k.value)
+}
 
 export default function FinancialPage() {
   const { t } = useTranslation()
@@ -26,7 +36,7 @@ export default function FinancialPage() {
 
   // latest reading per metric + a revenue series for the trend
   const byMetric = {}
-  kpis.forEach(k => { const n = k.metric_name || k.name; (byMetric[n] = byMetric[n] || []).push(k) })
+  kpis.forEach(k => { const n = k.metric || k.metric_name || k.name; (byMetric[n] = byMetric[n] || []).push(k) })
   Object.values(byMetric).forEach(a => a.sort((x, y) => (x.period || '').localeCompare(y.period || '')))
   const latest = Object.entries(byMetric).map(([n, a]) => ({ ...a[a.length - 1], name: n }))
   const revSeries = (byMetric['Revenue'] || []).slice(-12).map(k => ({ period: k.period, value: Math.round(k.value) }))
@@ -51,8 +61,8 @@ export default function FinancialPage() {
         {latest.map((k, i) => {
           const Icon = ICONS[k.name] || DollarSign
           return <Stat key={i} label={k.name} icon={Icon} accent={ACCENT}
-            value={isPct(k.name) ? fmtPct(k.value) : fmtMoney(k.value)}
-            trend={k.change_pct} good={/cost/i.test(k.name) ? 'down' : 'up'} />
+            value={fmtVal(k)}
+            good={k.direction || (/cost|cogs|tax|churn/i.test(k.name) ? 'down' : 'up')} />
         })}
       </StatGrid>
 
