@@ -78,6 +78,49 @@ GLOSSARY: Dict[str, Dict[str, Any]] = {
         "source": "SaaS benchmark reports 2026",
     },
 
+    "COGS": {
+        "domain": "Finance", "abbr": "COGS",
+        "definition": "Cost of Goods Sold — the direct costs of producing/delivering what was sold in the period.",
+        "formula": "Σ direct materials + direct labour + direct overhead", "direction": "down",
+        "benchmark": "Revenue − COGS = gross profit; software keeps COGS low (high gross margin).",
+        "source": "GAAP/IFRS",
+    },
+    "Taxes": {
+        "domain": "Finance", "abbr": None,
+        "definition": "Income taxes charged on pre-tax profit for the period.",
+        "formula": "pre-tax income × effective tax rate", "direction": "down",
+        "benchmark": "Track the effective tax rate; deducted to reach net profit.",
+        "source": "GAAP/IFRS",
+    },
+    "Free Cash Flow": {
+        "domain": "Finance", "abbr": "FCF",
+        "definition": "Cash left after operating costs and capital expenditure — the cash actually available to investors/reinvestment.",
+        "formula": "Operating Cash Flow − CapEx", "direction": "up",
+        "benchmark": "Positive and growing; FCF margin >10% is strong. Feeds the Rule of 40.",
+        "source": "Corporate finance standard",
+    },
+    "Working Capital": {
+        "domain": "Finance", "abbr": "WC",
+        "definition": "Short-term liquidity cushion — current assets minus current liabilities.",
+        "formula": "Current Assets − Current Liabilities", "direction": "up",
+        "benchmark": "Positive funds day-to-day operations; watch the trend, not just the level.",
+        "source": "Corporate finance standard",
+    },
+    "Days Sales Outstanding": {
+        "domain": "Finance", "abbr": "DSO",
+        "definition": "Average days to collect cash after a sale — how fast receivables convert to cash.",
+        "formula": "(Accounts Receivable / Revenue) × days in period", "direction": "down",
+        "benchmark": "Lower frees cash; <45 days is healthy for most B2B.",
+        "source": "Corporate finance / working-capital 2026",
+    },
+    "Cash Runway": {
+        "domain": "Finance", "abbr": None,
+        "definition": "Months the company can operate at the current net burn before cash runs out.",
+        "formula": "Cash balance / monthly net burn", "direction": "up",
+        "benchmark": "18–24 months is the post-2023 norm investors expect before the next raise.",
+        "source": "Startup finance benchmarks 2026",
+    },
+
     # ───────────────────────── Growth ─────────────────────────
     "MRR": {
         "domain": "Growth", "abbr": "MRR",
@@ -135,12 +178,33 @@ GLOSSARY: Dict[str, Dict[str, Any]] = {
         "benchmark": "B2B SaaS 30–40 solid; consumer 50+ healthy.",
         "source": "SaaS benchmark reports 2026",
     },
-    "NRR": {
+    "Net Revenue Retention": {
         "domain": "Growth", "abbr": "NRR",
-        "definition": "Net Revenue Retention — revenue kept and grown from the existing base (expansion − churn − contraction).",
+        "definition": "Revenue kept and grown from the existing customer base (expansion − churn − contraction).",
         "formula": "(start MRR + expansion − churn − contraction) / start MRR × 100", "direction": "up",
         "benchmark": "Enterprise 110–120%+, SMB 100–110%. >100% means the base grows by itself.",
         "source": "SaaS benchmark reports 2026",
+    },
+    "CAC Payback": {
+        "domain": "Growth", "abbr": None,
+        "definition": "Months of gross profit needed to recover the cost of acquiring a customer.",
+        "formula": "CAC / (new MRR × gross margin %)", "direction": "down",
+        "benchmark": "<12 months elite, 15–18 median; the real test of CAC efficiency.",
+        "source": "SaaS benchmark reports 2026",
+    },
+    "ARPU": {
+        "domain": "Growth", "abbr": "ARPU",
+        "definition": "Average Revenue Per User/Account — recurring revenue divided by active customers.",
+        "formula": "MRR / active customers", "direction": "up",
+        "benchmark": "Rising ARPU signals upsell/pricing power; read with churn.",
+        "source": "SaaS benchmark reports 2026",
+    },
+    "Active Users": {
+        "domain": "Growth", "abbr": "MAU/DAU",
+        "definition": "Count of users active in a period (monthly = MAU, daily = DAU) — a core engagement signal.",
+        "formula": "count(distinct active users in period)", "direction": "up",
+        "benchmark": "DAU/MAU ratio (stickiness) >20% is good; >50% is exceptional.",
+        "source": "Product analytics 2026",
     },
 
     # ───────────────────────── People (HR) ─────────────────────────
@@ -194,6 +258,49 @@ GLOSSARY: Dict[str, Dict[str, Any]] = {
         "source": "AIHR people analytics 2026",
     },
 
+    "Average Tenure": {
+        "domain": "People", "abbr": None,
+        "definition": "Average length of time employees have stayed — a retention and institutional-knowledge signal.",
+        "formula": "Σ tenure / headcount", "direction": "up",
+        "benchmark": "Rising tenure (with healthy hiring) signals stability; very high can signal stagnation.",
+        "source": "AIHR people analytics 2026",
+    },
+    "Cost per Hire": {
+        "domain": "People", "abbr": "CPH",
+        "definition": "Fully-loaded cost to fill one role (sourcing, agency, referral, recruiter time).",
+        "formula": "(internal + external recruiting cost) / hires", "direction": "down",
+        "benchmark": "Benchmark by role/seniority; rising CPH with slow time-to-hire flags pipeline issues.",
+        "source": "AIHR people analytics 2026",
+    },
+    "Absenteeism Rate": {
+        "domain": "People", "abbr": None,
+        "definition": "Share of scheduled work time lost to unplanned absence — a wellbeing and engagement signal.",
+        "formula": "absent days / scheduled work days × 100", "direction": "down",
+        "benchmark": "<3% typical; sustained rises often precede attrition.",
+        "source": "AIHR people analytics 2026",
+    },
+    "Offer Acceptance Rate": {
+        "domain": "People", "abbr": "OAR",
+        "definition": "Share of job offers candidates accept — measures offer competitiveness and candidate experience.",
+        "formula": "offers accepted / offers extended × 100", "direction": "up",
+        "benchmark": "85–90%+ is healthy; below ~80% flags comp or process problems.",
+        "source": "AIHR people analytics 2026",
+    },
+    "Internal Mobility Rate": {
+        "domain": "People", "abbr": None,
+        "definition": "Share of roles filled by internal moves/promotions rather than external hires.",
+        "formula": "internal placements / total placements × 100", "direction": "up",
+        "benchmark": "Higher internal mobility correlates with retention and lower hiring cost.",
+        "source": "AIHR people analytics 2026",
+    },
+    "Revenue per Employee": {
+        "domain": "People", "abbr": "RPE",
+        "definition": "Revenue generated per full-time employee — the headline workforce-productivity metric.",
+        "formula": "Revenue / headcount", "direction": "up",
+        "benchmark": "Sector-dependent; rising RPE shows efficient scaling. SaaS often $200k–$400k+.",
+        "source": "AIHR / SaaS benchmarks 2026",
+    },
+
     # ───────────────────────── Operations ─────────────────────────
     "On-time Delivery": {
         "domain": "Operations", "abbr": "OTD / OTIF",
@@ -242,6 +349,49 @@ GLOSSARY: Dict[str, Dict[str, Any]] = {
         "definition": "Units that pass without rework or scrap on the first attempt.",
         "formula": "good units (no rework) / units entering × 100", "direction": "up",
         "benchmark": "95%+ most industries; 99%+ automotive/medical.",
+        "source": "Manufacturing quality KPIs 2026",
+    },
+
+    "Quality Rate": {
+        "domain": "Operations", "abbr": None,
+        "definition": "Share of output meeting quality spec (the quality component of OEE; inverse of defect rate).",
+        "formula": "good units / total units × 100", "direction": "up",
+        "benchmark": "97%+ for most industries; 99%+ in automotive/medical.",
+        "source": "Manufacturing quality KPIs 2026",
+    },
+    "Throughput": {
+        "domain": "Operations", "abbr": None,
+        "definition": "Volume of units produced/processed per unit of time — raw output capacity in action.",
+        "formula": "units produced / time period", "direction": "up",
+        "benchmark": "Read against takt time and demand; stability matters as much as level.",
+        "source": "Operations management standard",
+    },
+    "Unplanned Downtime": {
+        "domain": "Operations", "abbr": None,
+        "definition": "Hours equipment/lines are unexpectedly stopped — the biggest drag on the availability part of OEE.",
+        "formula": "Σ unplanned stop time", "direction": "down",
+        "benchmark": "Lower is better; predictive maintenance targets near-zero unplanned stops.",
+        "source": "OEE / maintenance standard 2026",
+    },
+    "Cost per Unit": {
+        "domain": "Operations", "abbr": None,
+        "definition": "Fully-loaded cost to produce one unit of output — links operations to gross margin.",
+        "formula": "total production cost / units produced", "direction": "down",
+        "benchmark": "Falls with scale and efficiency; rising unit cost erodes margin.",
+        "source": "Operations / cost accounting",
+    },
+    "Schedule Adherence": {
+        "domain": "Operations", "abbr": None,
+        "definition": "How closely actual production follows the plan/schedule — on-time completion of planned work.",
+        "formula": "on-schedule jobs / total scheduled jobs × 100", "direction": "up",
+        "benchmark": "90%+ indicates a reliable, well-balanced plan.",
+        "source": "Operations planning standard",
+    },
+    "Scrap Rate": {
+        "domain": "Operations", "abbr": None,
+        "definition": "Share of material/output discarded as unusable — direct waste and cost.",
+        "formula": "scrapped units / total units × 100", "direction": "down",
+        "benchmark": "Lower is better; lean targets continuous reduction toward <2%.",
         "source": "Manufacturing quality KPIs 2026",
     },
 
@@ -303,6 +453,35 @@ GLOSSARY: Dict[str, Dict[str, Any]] = {
         "source": "DORA 2026",
     },
 
+    "Critical Incidents": {
+        "domain": "IT", "abbr": "P1",
+        "definition": "Count of severity-1 incidents (major outage / security breach) in the period.",
+        "formula": "count(P1/Sev-1 incidents)", "direction": "down",
+        "benchmark": "Trend toward zero; each one warrants a blameless post-mortem.",
+        "source": "SRE / incident management 2026",
+    },
+    "Cloud Spend": {
+        "domain": "IT", "abbr": None,
+        "definition": "Total cloud/infrastructure spend in the period — the headline FinOps cost metric.",
+        "formula": "Σ cloud + infrastructure invoices", "direction": "down",
+        "benchmark": "Should grow slower than usage/revenue; watch unit cost (spend per user).",
+        "source": "FinOps Foundation 2026",
+    },
+    "SLA Compliance": {
+        "domain": "IT", "abbr": None,
+        "definition": "Share of service-level agreement targets (availability/response/resolution) actually met.",
+        "formula": "SLAs met / total SLAs × 100", "direction": "up",
+        "benchmark": "95–99%+ depending on tier; misses trigger credits and churn risk.",
+        "source": "ITIL / service management 2026",
+    },
+    "Security Score": {
+        "domain": "IT", "abbr": None,
+        "definition": "Composite 0–100 security-posture rating (patching, vulnerabilities, controls, config).",
+        "formula": "weighted posture index", "direction": "up",
+        "benchmark": "Higher is better; pair with open-vulnerability and incident trends.",
+        "source": "Security operations 2026",
+    },
+
     # ───────────────────────── Logistics ─────────────────────────
     "Inventory Turnover": {
         "domain": "Logistics", "abbr": None,
@@ -359,6 +538,42 @@ GLOSSARY: Dict[str, Dict[str, Any]] = {
         "formula": "(average inventory / COGS) × days in period", "direction": "down",
         "benchmark": "Lower = faster cash conversion (sector-dependent).",
         "source": "Supply-chain finance 2026",
+    },
+
+    "On-Time Delivery Rate": {
+        "domain": "Logistics", "abbr": "OTD",
+        "definition": "Share of orders delivered by the promised date — the core fulfilment-reliability metric.",
+        "formula": "on-time deliveries / total deliveries × 100", "direction": "up",
+        "benchmark": "World-class 95–98%+; a top driver of customer satisfaction.",
+        "source": "Supply-chain KPI literature 2026",
+    },
+    "Fill Rate": {
+        "domain": "Logistics", "abbr": None,
+        "definition": "Share of demand met from stock on the first attempt (order/line/unit fill).",
+        "formula": "units shipped on time / units ordered × 100", "direction": "up",
+        "benchmark": "95%+ balances service level against inventory cost.",
+        "source": "Supply-chain KPI literature 2026",
+    },
+    "Stockout Rate": {
+        "domain": "Logistics", "abbr": None,
+        "definition": "Share of demand or SKUs unavailable when wanted — lost sales and CX damage.",
+        "formula": "stockout events / total demand events × 100", "direction": "down",
+        "benchmark": "<2–3%; the direct cost of under-stocking.",
+        "source": "Supply-chain KPI literature 2026",
+    },
+    "Carrying Cost": {
+        "domain": "Logistics", "abbr": None,
+        "definition": "Total cost of holding inventory (capital, storage, insurance, obsolescence).",
+        "formula": "Σ holding costs (typically 20–30% of inventory value/yr)", "direction": "down",
+        "benchmark": "Lower frees working capital; trade off against stockout risk.",
+        "source": "Supply-chain finance 2026",
+    },
+    "Avg Lead Time": {
+        "domain": "Logistics", "abbr": None,
+        "definition": "Average time from order placement to delivery — end-to-end fulfilment speed.",
+        "formula": "Σ (delivery date − order date) / orders", "direction": "down",
+        "benchmark": "Shorter + consistent; variability hurts as much as the average.",
+        "source": "Supply-chain KPI literature 2026",
     },
 
     # ───────────────────────── ESG ─────────────────────────
@@ -424,6 +639,56 @@ GLOSSARY: Dict[str, Dict[str, Any]] = {
         "formula": None, "direction": None,
         "benchmark": "Drives the topics a company must report under ESRS.",
         "source": "EU CSRD / ESRS 2026",
+    },
+
+    "ESG Score": {
+        "domain": "ESG", "abbr": None,
+        "definition": "Composite 0–100 rating blending environmental, social and governance performance.",
+        "formula": "weighted blend of E, S and G pillar scores", "direction": "up",
+        "benchmark": "Higher is better; methodology varies by rater — disclose the basis.",
+        "source": "ESG ratings methodology 2026",
+    },
+    "Scope 1 Emissions": {
+        "domain": "ESG", "abbr": None,
+        "definition": "Direct GHG emissions from owned/controlled sources (combustion, company vehicles, processes).",
+        "formula": "Σ direct activity data × emission factors", "direction": "down",
+        "benchmark": "Mandatory under CSRD/ESRS E1; the most directly controllable scope.",
+        "source": "GHG Protocol / CSRD ESRS E1 2026",
+    },
+    "Scope 2 Emissions": {
+        "domain": "ESG", "abbr": None,
+        "definition": "Indirect GHG emissions from purchased energy (electricity, steam, heating/cooling).",
+        "formula": "Σ purchased energy × grid emission factors", "direction": "down",
+        "benchmark": "Cut fastest by renewable energy procurement; mandatory under CSRD.",
+        "source": "GHG Protocol / CSRD ESRS E1 2026",
+    },
+    "Scope 3 Emissions": {
+        "domain": "ESG", "abbr": None,
+        "definition": "All other value-chain emissions (suppliers, logistics, product use, travel) — usually the largest share.",
+        "formula": "Σ 15 upstream/downstream categories × emission factors", "direction": "down",
+        "benchmark": "Often 70–90% of the footprint; Scope 3 disclosure now required under CSRD.",
+        "source": "GHG Protocol / CSRD ESRS E1 2026",
+    },
+    "Emissions Intensity": {
+        "domain": "ESG", "abbr": None,
+        "definition": "Emissions normalised to business size (per unit revenue/output) — enables fair comparison and decoupling.",
+        "formula": "total tCO2e / $M revenue (or unit of output)", "direction": "down",
+        "benchmark": "Falling intensity shows emissions decoupling from growth.",
+        "source": "GHG Protocol / CSRD 2026",
+    },
+    "Gender Pay Gap": {
+        "domain": "ESG", "abbr": None,
+        "definition": "Difference in average pay between genders — a core social-pillar (ESRS S1) disclosure.",
+        "formula": "(avg male pay − avg female pay) / avg male pay × 100", "direction": "down",
+        "benchmark": "Toward 0%; disclosure mandatory under CSRD and the EU Pay Transparency Directive.",
+        "source": "CSRD ESRS S1 / EU Pay Transparency 2026",
+    },
+    "Community Investment": {
+        "domain": "ESG", "abbr": None,
+        "definition": "Spend/contributions to community and social programmes — a social-pillar commitment metric.",
+        "formula": "Σ community/charitable investment", "direction": "up",
+        "benchmark": "Often benchmarked as a % of pre-tax profit; report outcomes, not just spend.",
+        "source": "CSRD ESRS S3 2026",
     },
 
     # ───────────────────────── Risk ─────────────────────────
