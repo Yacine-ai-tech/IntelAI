@@ -44,6 +44,35 @@ except ImportError:
     _RERANKER = False
     log.warning("FlagEmbedding not installed — reranker disabled")
 
+import re as _re
+_WORD_RE = _re.compile(r"[a-z0-9]+")
+
+
+def _tokenize(text: str, drop_stop: bool = False) -> List[str]:
+    """Lowercase alphanumeric tokens (punctuation-free) so query and corpus match
+    consistently. With drop_stop, strip question/filler words so content terms drive
+    BM25 — but never return empty (fall back to the full token list)."""
+    toks = _WORD_RE.findall((text or "").lower())
+    if drop_stop:
+        kept = [t for t in toks if t not in _STOPWORDS]
+        return kept or toks
+    return toks
+
+
+# Question/filler words stripped from BM25 queries so content terms drive ranking.
+_STOPWORDS = {
+    "the", "a", "an", "is", "are", "was", "were", "be", "been", "being", "am",
+    "what", "which", "who", "whom", "whose", "how", "when", "where", "why",
+    "our", "we", "us", "you", "your", "i", "me", "my", "it", "its", "they", "them",
+    "of", "to", "in", "on", "for", "and", "or", "with", "at", "by", "from", "as",
+    "do", "does", "did", "have", "has", "had", "this", "that", "these", "those",
+    "about", "across", "over", "into", "than", "vs", "versus", "between", "per",
+    "recent", "recently", "latest", "current", "currently", "now", "today",
+    "please", "tell", "show", "give", "me", "many", "much", "long", "relate",
+    "related", "relates", "any", "some", "all", "more", "most", "been", "should",
+    "can", "could", "would", "will", "doing", "get", "got", "there", "here",
+}
+
 
 class HybridRetriever:
     """
@@ -93,7 +122,7 @@ class HybridRetriever:
         if _DENSE and chunks:
             self._chunk_vecs = self._ensure_embedder().encode(chunks, show_progress_bar=False)
         if _BM25 and chunks:
-            tokenized = [c.lower().split() for c in chunks]
+            tokenized = [_tokenize(c) for c in chunks]
             self._bm25 = BM25Okapi(tokenized)
 
     def _dense_rank(self, query: str, top_n: int) -> List[Tuple[int, float]]:
@@ -108,7 +137,10 @@ class HybridRetriever:
     def _sparse_rank(self, query: str, top_n: int) -> List[Tuple[int, float]]:
         if not (_BM25 and self._bm25 is not None):
             return []
-        scores = self._bm25.get_scores(query.lower().split())
+        # Strip question/stopwords so the content terms drive BM25 — natural-language
+        # queries ("what is our latest revenue?") otherwise rank on boilerplate and
+        # return near-random docs across a uniform corpus (e.g. the glossary).
+        scores = self._bm25.get_scores(_tokenize(query, drop_stop=True))
         idxs = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:top_n]
         return [(i, float(scores[i])) for i in idxs]
 
