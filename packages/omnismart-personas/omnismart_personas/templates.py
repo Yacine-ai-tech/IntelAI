@@ -37,7 +37,7 @@ PERSONA_TEMPLATES: Dict[str, dict] = {
             "points, and quantify everything."
         ),
         "allowed_tools": ["kpi_query", "forecast", "report_generate", "market_analysis"],
-        "data_access": ["Finance", "Growth", "Operations", "People", "ESG"],
+        "data_access": ["Finance", "Growth", "Operations", "People", "ESG", "IT", "Logistics"],
         "temperature": 0.4,
     },
     "cfo": {
@@ -61,7 +61,7 @@ PERSONA_TEMPLATES: Dict[str, dict] = {
             "build-vs-buy decisions."
         ),
         "allowed_tools": ["kpi_query", "risk_analysis", "technology_metrics"],
-        "data_access": ["Operations", "Finance"],
+        "data_access": ["IT", "Operations", "Finance"],
         "temperature": 0.3,
     },
     "coo": {
@@ -72,7 +72,7 @@ PERSONA_TEMPLATES: Dict[str, dict] = {
             "Track cycle times, throughput, and resource utilization, and identify bottlenecks."
         ),
         "allowed_tools": ["kpi_query", "operations_metrics", "supply_chain"],
-        "data_access": ["Operations", "Growth", "People"],
+        "data_access": ["Operations", "Logistics", "Growth", "People"],
         "temperature": 0.3,
     },
     "chro": {
@@ -106,7 +106,7 @@ PERSONA_TEMPLATES: Dict[str, dict] = {
             "Proactively flag issues and recommend mitigation strategies."
         ),
         "allowed_tools": ["kpi_query", "risk_analysis", "anomaly_detection"],
-        "data_access": ["Finance", "Operations", "ESG"],
+        "data_access": ["Finance", "Operations", "ESG", "IT"],
         "temperature": 0.2,
     },
     "analyst": {
@@ -117,7 +117,7 @@ PERSONA_TEMPLATES: Dict[str, dict] = {
             "Be thorough and data-driven, and communicate with supporting evidence."
         ),
         "allowed_tools": ["kpi_query", "forecast", "data_analysis", "report_generate"],
-        "data_access": ["Finance", "Growth", "Operations"],
+        "data_access": ["Finance", "Growth", "Operations", "People", "IT", "Logistics", "ESG"],
         "temperature": 0.3,
     },
     "general": {
@@ -128,7 +128,7 @@ PERSONA_TEMPLATES: Dict[str, dict] = {
             "the platform. Adapt to the user's needs and be helpful, accurate, and proactive."
         ),
         "allowed_tools": ["kpi_query", "forecast", "data_analysis"],
-        "data_access": ["Finance", "Growth", "Operations"],
+        "data_access": ["Finance", "Growth", "Operations", "People"],
         "temperature": 0.3,
     },
 }

@@ -55,6 +55,28 @@ def _resolve(tier: str) -> str:
     }.get(tier, DEFAULT_MODEL)
 
 
+def _apply_cache_control(messages: List[Dict[str, Any]], model: str) -> List[Dict[str, Any]]:
+    """Mark the stable system prefix with Anthropic prompt-cache breakpoints so repeated
+    system prompts / large context are billed at the cached rate (~0.1x reads). No-op for
+    non-Claude providers — Groq caches matching prefixes automatically with no markup needed.
+    litellm translates the block-with-cache_control shape to the Anthropic Messages API.
+    """
+    if "claude" not in model.lower() and not model.lower().startswith("anthropic/"):
+        return messages
+    out: List[Dict[str, Any]] = []
+    breakpoints = 0
+    for m in messages:
+        content = m.get("content")
+        if m.get("role") == "system" and isinstance(content, str) and breakpoints < 4:
+            out.append({"role": "system", "content": [
+                {"type": "text", "text": content, "cache_control": {"type": "ephemeral"}},
+            ]})
+            breakpoints += 1
+        else:
+            out.append(m)
+    return out
+
+
 async def llm_call(
     messages: List[Dict[str, str]],
     tier: str = "default",
@@ -85,6 +107,7 @@ async def llm_call(
     if not _LITELLM:
         return {"choices": [{"message": {"content": "stub: litellm not installed"}}], "model": model}
 
+    messages = _apply_cache_control(messages, model)
     params: Dict[str, Any] = {"model": model, "messages": messages, "temperature": temperature, **kwargs}
     if max_tokens:
         params["max_tokens"] = max_tokens
@@ -108,6 +131,7 @@ def llm_call_sync(
     if not _LITELLM:
         return {"choices": [{"message": {"content": "stub: litellm not installed"}}], "model": model}
 
+    messages = _apply_cache_control(messages, model)
     params: Dict[str, Any] = {"model": model, "messages": messages, "temperature": temperature, **kwargs}
     if max_tokens:
         params["max_tokens"] = max_tokens
