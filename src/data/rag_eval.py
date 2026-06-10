@@ -45,7 +45,8 @@ def run(path: Path = EVAL_FILE) -> Dict[str, Any]:
         out = rag.answer(c["query"], top_k=10, use_cache=False)  # wider window for groundedness scoring
         response = out.get("response", "")
         sources_text = " ".join(
-            f"{s.get('title','')} {s.get('preview','')}" for s in out.get("sources", [])
+            f"{s.get('title','')} {s.get('snippet') or s.get('preview') or ''}"
+            for s in out.get("sources", [])
         )
         kws = c.get("expected_keywords", [])
         ans_recall = _recall(kws, response)
