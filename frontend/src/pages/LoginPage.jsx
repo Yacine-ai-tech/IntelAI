@@ -19,7 +19,7 @@ export default function LoginPage() {
     setLoading(true)
     try {
       await login(username, password)
-      navigate('/dashboard')
+      navigate('/chat')
     } catch (err) {
       setError(err.response?.data?.detail || t('loginFailed'))
     } finally {
