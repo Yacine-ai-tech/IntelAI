@@ -376,20 +376,6 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 .menu-item svg { color:var(--primary); }
 .spin-inline { animation:spin .8s linear infinite; }
 
-/* ── Floating chat ─────────────────────────────────────────── */
-.floating-chat-toggle { position:fixed; bottom:24px; right:24px; width:56px; height:56px; border-radius:50%;
-  background:var(--gradient); color:#04201c; border:0; cursor:pointer; box-shadow:var(--sh-lg), var(--sh-glow);
-  display:flex; align-items:center; justify-content:center; z-index:90; }
-.floating-chat-panel { position:fixed; bottom:92px; right:24px; width:380px; max-width:calc(100vw - 48px);
-  height:540px; max-height:calc(100vh - 130px); background:var(--surface); border:1px solid var(--border-2);
-  border-radius:var(--r-lg); box-shadow:var(--sh-lg); display:flex; flex-direction:column; overflow:hidden; z-index:90; }
-.floating-chat-header { display:flex; align-items:center; justify-content:space-between; padding:13px 15px; border-bottom:1px solid var(--border); }
-.floating-chat-header-left { display:flex; align-items:center; gap:10px; }
-.floating-chat-header-icon { width:32px; height:32px; border-radius:9px; background:var(--gradient); color:#04201c;
-  display:flex; align-items:center; justify-content:center; }
-.floating-chat-messages { flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:12px; }
-.floating-chat-input-area { padding:12px; border-top:1px solid var(--border); display:flex; gap:8px; }
-
 /* ── Feedback / loading ────────────────────────────────────── */
 .alert { padding:12px 15px; border-radius:var(--r); display:flex; align-items:center; gap:10px; font-size:.86rem; border:1px solid transparent; }
 .alert-danger { background:var(--bad-soft); border-color:var(--bad); color:var(--bad); }
