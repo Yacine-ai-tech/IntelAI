@@ -38,7 +38,7 @@
 
 ### 📝 Technical Notes:
 - Recharts is already installed (v2.13.0 in package.json)
-- WebSocket endpoint exists at `/api/v1/ws/chat` in server_v2.py
+- WebSocket endpoint exists at `/api/v1/ws/chat` in server.py
 - Current implementation needs enhancement for true token-by-token streaming
 - GraphRAG-lite requires: kpi_entities table, entity extraction service, graph traversal, hybrid retrieval integration
 
@@ -292,7 +292,7 @@ Throughout this plan:
   - Immediately verify:
     - cd intelai/frontend && npm install recharts
     - cd .. && pytest tests/test_api.py (should still pass)
-    - uvicorn src.api.server_v2:app --port 8001 & and curl /health
+    - uvicorn src.api.server:app --port 8001 & and curl /health
   - If fails, fix before moving to next project
 
 - Task 3b: Open NEW session for Project 2 (AgentKit). 
@@ -448,7 +448,7 @@ For each repo:
   - Verify NONE of these `.env` files are committed: `git status` should NOT list them.
 - Task 6f: Create a top-level `secrets.md` (outside any repo, kept on the laptop) with all keys and URLs — your single source of truth when something breaks at 11pm. NOT in any git repo.
 - Task 6g: Run each FastAPI project once **in its Studio** end-to-end with real keys (deps already in base env):
-  - `cd <repo> && uvicorn api:app --host 0.0.0.0 --port <repo-port> --reload` (IntelAI: `python -m uvicorn src.api.server_v2:app --host 0.0.0.0 --port 8000 --reload`; AgentKit: `python mcp_server.py`)
+  - `cd <repo> && uvicorn api:app --host 0.0.0.0 --port <repo-port> --reload` (IntelAI: `python -m uvicorn src.api.server:app --host 0.0.0.0 --port 8000 --reload`; AgentKit: `python mcp_server.py`)
   - Forward the port and confirm `/health` responds from the laptop browser.
 
 **End of Day Checkpoint:**
@@ -941,7 +941,7 @@ and 0 skips**; the RAG groundedness eval scores **24/25** with hybrid retrieval 
 
 | Deliverable | Status | Evidence |
 |---|---|---|
-| Scope-down to IntelAI (remove platform surface) | ✅ | `server_v2.py` 2479→~1340 LOC, 63 routes; `src/` = api/core/data/models/services/utils |
+| Scope-down to IntelAI (remove platform surface) | ✅ | `server.py` 2479→~1340 LOC, 63 routes; `src/` = api/core/data/models/services/utils |
 | Recharts: Analytics(line) · Forecasting(area+CI) · Risk(radar) · Dashboard(sparkline) · Financial(bar) | ✅ | all 5 pages; `npm run build` clean |
 | WebSocket streaming chat, 9 personas | ✅ | `/api/v1/ws/chat` + `ChatPage.jsx` |
 | Hybrid retrieval (BGE + BM25 + RRF + reranker) | ✅ | wired into RAG path; `USE_HYBRID_RETRIEVAL`; torch 2.4.1 so BGE actually loads |
@@ -988,7 +988,7 @@ Remove the platform-only surface from this repo (see STRATEGY.md §1.1 CUT list)
 - Manual smoke test all 4 pages in browser
 
 **Day 10: WebSocket Streaming for Chat**
-- Read existing WebSocket chat endpoint in src/api/server_v2.py
+- Read existing WebSocket chat endpoint in src/api/server.py
 - Fix any handler bugs (CORS, auth, persona routing)
 - Wire ChatPage.jsx to /ws/chat instead of POST /chat
 - Test all 9 personas through streaming
