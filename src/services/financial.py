@@ -113,8 +113,8 @@ class FinancialStatementEngine:
         fin = df[df["category"] == "Finance"] if "category" in df.columns else df
         rev = self._sum_match(fin, ["revenue"])
         cogs = self._sum_match(fin, ["cogs", "cost of goods"])
-        opex = self._sum_match(fin, ["opex", "operating expense"])
-        taxes = self._sum_match(fin, ["tax"])
+        opex = self._sum_match(fin, ["opex", "operating expense", "operating cost"])
+        taxes = self._sum_match(fin, ["taxes", "tax"])
         gp = rev - cogs
         ebitda = gp - opex
         return {"Revenue": rev, "COGS": cogs, "Gross Profit": gp, "Operating Expenses": opex, "EBITDA": ebitda, "Taxes": taxes, "Net Income": ebitda - taxes}

@@ -866,12 +866,12 @@ async def get_esg_summary(user: TokenData = Depends(get_current_user)):
         "environment": {
             "carbon_emissions": _val(["carbon emissions"]),
             "renewable_energy_pct": _val(["renewables", "renewable"]),
-            "water_usage": _val(["water usage"]),
-            "waste_diverted": _val(["waste diverted"]),
+            "water_usage": _val(["water usage", "water consumption"]),
+            "waste_diverted": _val(["waste diverted", "waste recycled"]),
         },
         "social": {
             "community_investment": _val(["community investment"]),
-            "diversity_index": _val(["diversity index"]),
+            "diversity_index": _val(["diversity index", "diversity score"]),
             "gender_pay_gap": _val(["gender pay gap"]),
         },
         "governance": {
