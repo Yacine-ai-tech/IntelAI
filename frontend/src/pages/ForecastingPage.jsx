@@ -3,17 +3,36 @@ import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { TrendingUp, Play, BarChart3, Brain, Target, Sparkles } from 'lucide-react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts'
+import { PageHeader, Stat, StatGrid, Panel, Grid, Loading, Empty, AskCopilot, fmtNum } from '../components/ui'
 
-function StatCard({ label, value, unit, icon: Icon, color = 'blue' }) {
+const TIP = { background: 'var(--surface-2)', border: '1px solid var(--border-2)', borderRadius: 8, fontSize: '.78rem', color: 'var(--text)' }
+const AXIS = { fontSize: 11, fill: 'var(--text-3)' }
+
+function ForecastChart({ forecast, t }) {
+  const hist = (forecast.historical || []).map(h => ({ period: h.period || h.month_tag, value: h.value ?? h.actual }))
+  const fc = (forecast.forecast || []).map(f => ({ period: f.period || f.month_tag, value: f.predicted ?? f.value, lower: f.lower, upper: f.upper }))
+  const data = [...hist, ...fc]
+  if (!data.length) return <Empty text="No forecast data." />
+  const hasCI = fc.some(f => f.lower != null && f.upper != null)
   return (
-    <div className="kpi-card">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div>
-          <div className="kpi-label">{label}</div>
-          <div className="kpi-value">{value}{unit ? <span style={{ fontSize: '0.7em', color: 'var(--text-muted)' }}> {unit}</span> : ''}</div>
-        </div>
-        <div className={`kpi-icon-wrap ${color}`}><Icon size={20} /></div>
-      </div>
+    <div style={{ height: 300 }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
+          <defs><linearGradient id="fc" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="var(--primary)" stopOpacity={0.35} /><stop offset="100%" stopColor="var(--primary)" stopOpacity={0} />
+          </linearGradient></defs>
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+          <XAxis dataKey="period" tick={AXIS} axisLine={false} tickLine={false} />
+          <YAxis tick={AXIS} axisLine={false} tickLine={false} width={52} />
+          <Tooltip contentStyle={TIP} />
+          <Legend wrapperStyle={{ fontSize: 12 }} />
+          {hasCI && <Area type="monotone" dataKey="upper" stroke="none" fill="var(--ok)" fillOpacity={0.08} name={t('upper') || 'Upper'} />}
+          {hasCI && <Area type="monotone" dataKey="lower" stroke="none" fill="var(--bg)" fillOpacity={0} name={t('lower') || 'Lower'} />}
+          <Area type="monotone" dataKey="value" stroke="var(--primary)" strokeWidth={2} fill="url(#fc)" name={t('predicted') || 'Value'} />
+          {hasCI && <Line type="monotone" dataKey="upper" stroke="var(--ok)" strokeWidth={1} strokeDasharray="5 5" dot={false} name="" />}
+          {hasCI && <Line type="monotone" dataKey="lower" stroke="var(--bad)" strokeWidth={1} strokeDasharray="5 5" dot={false} name="" />}
+        </AreaChart>
+      </ResponsiveContainer>
     </div>
   )
 }
@@ -21,216 +40,91 @@ function StatCard({ label, value, unit, icon: Icon, color = 'blue' }) {
 export default function ForecastingPage() {
   const { t } = useTranslation()
   const [metrics, setMetrics] = useState([])
-  const [selectedMetric, setSelectedMetric] = useState('')
+  const [metric, setMetric] = useState('')
   const [periods, setPeriods] = useState(6)
   const [forecast, setForecast] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [initLoading, setInitLoading] = useState(true)
+  const [init, setInit] = useState(true)
 
   useEffect(() => {
-    api.getMetrics().then(res => {
-      const list = res.data?.metrics || []
-      setMetrics(list)
-      if (list.length > 0) setSelectedMetric(list[0])
-    }).catch(() => {}).finally(() => setInitLoading(false))
+    api.getMetrics().then(r => { const l = r.data?.metrics || []; setMetrics(l); if (l[0]) setMetric(l[0]) })
+      .catch(() => {}).finally(() => setInit(false))
   }, [])
 
-  const runForecast = useCallback(async () => {
-    if (!selectedMetric) return
+  const run = useCallback(async () => {
+    if (!metric) return
     setLoading(true)
-    try {
-      const res = await api.runForecast(selectedMetric, periods)
-      setForecast(res.data)
-    } catch (err) {
-      console.error('Forecast error:', err)
-      setForecast({ error: err.response?.data?.detail || 'Forecast failed' })
-    }
+    try { setForecast((await api.runForecast(metric, periods)).data) }
+    catch (e) { setForecast({ error: e.response?.data?.detail || 'Forecast failed' }) }
     setLoading(false)
-  }, [selectedMetric, periods])
+  }, [metric, periods])
 
-  const fmt = (v) => {
-    if (v === null || v === undefined) return '—'
-    if (typeof v === 'number') {
-      if (Math.abs(v) >= 1e6) return `${(v / 1e6).toFixed(2)}M`
-      if (Math.abs(v) >= 1e3) return `${(v / 1e3).toFixed(1)}K`
-      return v.toFixed(2)
-    }
-    return v
-  }
-
-  function ForecastChart({ forecast }) {
-    if (!forecast) return null
-
-    // Prepare chart data: historical + forecast with CI
-    const historicalData = (forecast.historical || []).map(h => ({
-      period: h.period || h.month_tag,
-      value: h.value || h.actual,
-      type: 'historical',
-      lower: null,
-      upper: null
-    }))
-
-    const forecastData = (forecast.forecast || []).map(f => ({
-      period: f.period || f.month_tag,
-      value: f.predicted || f.value,
-      lower: f.lower,
-      upper: f.upper,
-      type: 'forecast'
-    }))
-
-    const chartData = [...historicalData, ...forecastData]
-
-    return (
-      <div className="card" style={{ marginBottom: 20 }}>
-        <h3 className="card-title"><TrendingUp size={16} /> {t('forecastChart')}</h3>
-        <div style={{ height: 300 }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis 
-                dataKey="period" 
-                style={{ fontSize: '0.7rem', fill: 'var(--text-muted)' }}
-              />
-              <YAxis 
-                style={{ fontSize: '0.7rem', fill: 'var(--text-muted)' }}
-              />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'var(--card-bg)', 
-                  border: '1px solid var(--border)',
-                  borderRadius: '4px'
-                }}
-                itemStyle={{ color: 'var(--text)' }}
-              />
-              <Legend />
-              <Area 
-                type="monotone" 
-                dataKey="value" 
-                stroke="var(--primary)" 
-                fill="var(--primary)"
-                fillOpacity={0.6}
-                strokeWidth={2}
-                name={t('predicted')}
-              />
-              {forecastData.some(f => f.lower !== null && f.upper !== null) && (
-                <>
-                  <Line 
-                    type="monotone" 
-                    dataKey="upper" 
-                    stroke="#10b981" 
-                    strokeWidth={1}
-                    strokeDasharray="5 5"
-                    name={t('upper')}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="lower" 
-                    stroke="#ef4444" 
-                    strokeWidth={1}
-                    strokeDasharray="5 5"
-                    name={t('lower')}
-                  />
-                </>
-              )}
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-    )
-  }
-
-  if (initLoading) return <div className="text-center" style={{ padding: 60 }}>{t('loadingMetrics')}</div>
+  if (init) return <Loading label={t('loadingMetrics') || 'Loading metrics…'} />
 
   return (
     <div>
-      <h1 className="page-title" style={{ marginBottom: 20 }}><TrendingUp size={24} /> {t('forecasting')}</h1>
+      <PageHeader icon={TrendingUp} title={t('navForecasting') || 'Forecasting'}
+        subtitle={t('fcSubtitle') || 'Monte-Carlo projections with confidence intervals'}
+        actions={metric && <AskCopilot q={`Forecast ${metric} and explain the trend, drivers and confidence.`} />} />
 
-      <div className="card" style={{ marginBottom: 20 }}>
-        <h3 className="card-title">{t('configureForecast')}</h3>
-        <div style={{ display: 'flex', gap: 16, alignItems: 'flex-end', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, minWidth: 200 }}>
-            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4, color: 'var(--text-muted)' }}>{t('metric')}</label>
-            <select value={selectedMetric} onChange={e => setSelectedMetric(e.target.value)}
-              style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-card)', color: 'var(--text-primary)', fontSize: '0.9rem' }}>
+      <Panel title={t('configureForecast') || 'Configure forecast'} icon={Brain}>
+        <div style={{ display: 'flex', gap: 14, alignItems: 'flex-end', flexWrap: 'wrap' }}>
+          <div style={{ flex: 1, minWidth: 220 }}>
+            <label className="form-label">{t('metric') || 'Metric'}</label>
+            <select className="form-input" value={metric} onChange={e => setMetric(e.target.value)}>
               {metrics.map(m => <option key={m} value={m}>{m}</option>)}
             </select>
           </div>
-          <div style={{ minWidth: 120 }}>
-            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4, color: 'var(--text-muted)' }}>{t('periodsAhead')}</label>
-            <select value={periods} onChange={e => setPeriods(Number(e.target.value))}
-              style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-card)', color: 'var(--text-primary)', fontSize: '0.9rem' }}>
-              {[3, 6, 9, 12].map(n => <option key={n} value={n}>{n} {t('months')}</option>)}
+          <div style={{ minWidth: 140 }}>
+            <label className="form-label">{t('periodsAhead') || 'Periods ahead'}</label>
+            <select className="form-input" value={periods} onChange={e => setPeriods(Number(e.target.value))}>
+              {[3, 6, 9, 12].map(n => <option key={n} value={n}>{n} {t('months') || 'months'}</option>)}
             </select>
           </div>
-          <button className="btn btn-primary" onClick={runForecast} disabled={loading || !selectedMetric}>
-            {loading ? t('running') : <><Play size={14} /> {t('runForecast')}</>}
+          <button className="btn btn-primary" onClick={run} disabled={loading || !metric}>
+            {loading ? (t('running') || 'Running…') : <><Play size={14} /> {t('runForecast') || 'Run forecast'}</>}
           </button>
         </div>
-      </div>
+      </Panel>
 
-      {forecast && forecast.error && (
-        <div className="card" style={{ borderColor: '#ef4444', background: 'rgba(239,68,68,0.1)' }}>
-          <p style={{ color: '#ef4444' }}>⚠️ {forecast.error}</p>
-        </div>
-      )}
+      {forecast?.error && <div className="alert alert-danger" style={{ marginTop: 18 }}>⚠️ {forecast.error}</div>}
 
       {forecast && !forecast.error && (
         <>
-          <div className="kpi-grid" style={{ marginBottom: 20 }}>
-            <StatCard label={t('metric')} value={forecast.metric || selectedMetric} icon={BarChart3} color="blue" />
-            <StatCard label={t('model')} value={forecast.model || 'Linear'} icon={Brain} color="purple" />
-            <StatCard label={t('r2Score')} value={forecast.r2 !== undefined ? forecast.r2.toFixed(3) : '—'} icon={Target} color="green" />
-            <StatCard label={t('forecastPeriods')} value={forecast.forecast?.length || periods} icon={Sparkles} color="cyan" />
-          </div>
+          <StatGrid style={{ marginTop: 18 }}>
+            <Stat label={t('metric') || 'Metric'} value={forecast.metric || metric} icon={BarChart3} />
+            <Stat label={t('model') || 'Model'} value={forecast.model || 'Linear'} icon={Brain} accent="var(--accent)" />
+            <Stat label={t('r2Score') || 'R² score'} value={forecast.r2 != null ? forecast.r2.toFixed(3) : '—'} icon={Target} accent="var(--ok)" />
+            <Stat label={t('forecastPeriods') || 'Periods'} value={fmtNum(forecast.forecast?.length || periods)} icon={Sparkles} />
+          </StatGrid>
 
-          <ForecastChart forecast={forecast} />
+          <Panel title={t('forecastChart') || 'Forecast'} icon={TrendingUp} style={{ marginTop: 18 }}>
+            <ForecastChart forecast={forecast} t={t} />
+          </Panel>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-            {forecast.historical && forecast.historical.length > 0 && (
-              <div className="card">
-                <h3 className="card-title"><TrendingUp size={16} /> {t('historicalData')}</h3>
-                <table className="table">
-                  <thead><tr><th>Period</th><th>Value</th></tr></thead>
-                  <tbody>
-                    {forecast.historical.map((h, i) => (
-                      <tr key={i}>
-                        <td>{h.period || h.month_tag}</td>
-                        <td>{fmt(h.value || h.actual)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-
-            {forecast.forecast && forecast.forecast.length > 0 && (
-              <div className="card">
-                <h3 className="card-title"><Sparkles size={16} /> {t('forecast')}</h3>
-                <table className="table">
-                  <thead><tr><th>{t('period')}</th><th>{t('predicted')}</th><th>{t('lower')}</th><th>{t('upper')}</th></tr></thead>
-                  <tbody>
-                    {forecast.forecast.map((f, i) => (
-                      <tr key={i}>
-                        <td>{f.period || f.month_tag}</td>
-                        <td style={{ fontWeight: 600 }}>{fmt(f.predicted || f.value)}</td>
-                        <td>{fmt(f.lower)}</td>
-                        <td>{fmt(f.upper)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
+          <Panel title={t('forecast') || 'Projected values'} icon={Sparkles} style={{ marginTop: 18 }}>
+            <table className="table">
+              <thead><tr><th>{t('period') || 'Period'}</th><th>{t('predicted') || 'Predicted'}</th><th>{t('lower') || 'Lower'}</th><th>{t('upper') || 'Upper'}</th></tr></thead>
+              <tbody>
+                {(forecast.forecast || []).map((f, i) => (
+                  <tr key={i}>
+                    <td>{f.period || f.month_tag}</td>
+                    <td style={{ fontWeight: 600, fontFamily: 'var(--font-mono)' }}>{fmtNum(f.predicted ?? f.value)}</td>
+                    <td style={{ color: 'var(--text-3)' }}>{fmtNum(f.lower)}</td>
+                    <td style={{ color: 'var(--text-3)' }}>{fmtNum(f.upper)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Panel>
         </>
       )}
 
       {!forecast && (
-        <div className="card" style={{ textAlign: 'center', padding: 40, color: 'var(--text-muted)' }}>
-          <div style={{ marginBottom: 12 }}><Sparkles size={40} /></div>
-          <p>{t('forecastPrompt')}</p>
-          <p style={{ fontSize: '0.85rem', marginTop: 8 }}>{t('forecastDesc')}</p>
-        </div>
+        <Panel style={{ marginTop: 18, textAlign: 'center', padding: 40 }}>
+          <Sparkles size={38} style={{ color: 'var(--primary)', margin: '0 auto 12px' }} />
+          <p style={{ color: 'var(--text-2)' }}>{t('forecastPrompt') || 'Pick a metric and run a forecast.'}</p>
+        </Panel>
       )}
     </div>
   )
