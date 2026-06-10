@@ -56,7 +56,7 @@ export default function DataHubPage() {
   }
 
   return (
-    <div style={{ padding: '28px 32px', overflowY: 'auto' }}>
+    <div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 6 }}>
         <Database size={26} style={{ color: 'var(--primary)' }} />
         <h1 className="display" style={{ fontSize: '1.6rem' }}>Data</h1>
