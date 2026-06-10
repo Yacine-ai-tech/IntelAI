@@ -64,9 +64,6 @@ export const searchKnowledge = (query, n = 5) => api.get('/knowledge/search', { 
 export const getKnowledgeStats = () => api.get('/knowledge/stats')
 export const knowledgeSearch = (params) => api.get('/knowledge/search', { params })
 
-// ── Monitoring ──────────────────────────────────────────
-export const getMonitoringStats = () => api.get('/monitoring/stats')
-
 // ── KPIs (cross-domain) ────────────────────────────────
 export const getKPIs = (params = {}) => api.get('/kpis', { params })
 export const getPeriods = () => api.get('/kpis/periods')

@@ -3,12 +3,10 @@ Unified Configuration — Single source of truth for the entire platform.
 """
 from __future__ import annotations
 
-import logging
 import os
 from dataclasses import dataclass, field
-from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import List
 
 from dotenv import load_dotenv
 
@@ -25,115 +23,8 @@ for _d in (DATA_DIR, UPLOADS_DIR, LOGS_DIR, CHROMA_DIR):
     _d.mkdir(parents=True, exist_ok=True)
 
 
-# ── Enums ───────────────────────────────────────────────────────────────────
-class Role(str, Enum):
-    ADMIN = "admin"
-    CFO = "cfo"
-    COO = "coo"
-    HR = "hr"
-    ESG = "esg"
-    ANALYST = "analyst"
-    VIEWER = "viewer"
-
-
-class DataCategory(str, Enum):
-    FINANCE = "Finance"
-    GROWTH = "Growth"
-    OPERATIONS = "Operations"
-    PEOPLE = "People"
-    ESG = "ESG"
-
-
-class DocumentType(str, Enum):
-    INVOICE = "Invoice"
-    RECEIPT = "Receipt"
-    STATEMENT = "Statement"
-    REPORT = "Report"
-    CONTRACT = "Contract"
-    OTHER = "Other"
-
-
-# ── RBAC Definitions ───────────────────────────────────────────────────────
-ROLE_DEFINITIONS: Dict[Role, Dict[str, Any]] = {
-    Role.ADMIN: {
-        "name": "Administrator",
-        "pages": ["all"],
-        "actions": ["read", "write", "delete", "admin"],
-        "data_access": ["all"],
-        "can_manage_users": True,
-        "can_view_audit": True,
-        "can_manage_roles": True,
-    },
-    Role.CFO: {
-        "name": "Chief Financial Officer",
-        "pages": [
-            "Dashboard", "Assistant", "Analytics", "Knowledge Base",
-            "Data Hub", "Forecasting", "Risk Radar", "Settings",
-        ],
-        "actions": ["read", "write"],
-        "data_access": ["finance", "growth", "operations", "forecast", "risk"],
-        "can_manage_users": False,
-        "can_view_audit": True,
-        "can_manage_roles": False,
-    },
-    Role.COO: {
-        "name": "Chief Operating Officer",
-        "pages": [
-            "Dashboard", "Assistant", "Analytics", "Knowledge Base",
-            "Data Hub", "Forecasting", "Risk Radar", "Settings",
-        ],
-        "actions": ["read", "write"],
-        "data_access": ["operations", "finance", "risk", "forecast"],
-        "can_manage_users": False,
-        "can_view_audit": True,
-        "can_manage_roles": False,
-    },
-    Role.HR: {
-        "name": "HR Director",
-        "pages": [
-            "Dashboard", "Assistant", "Analytics", "Knowledge Base",
-            "ESG", "Settings",
-        ],
-        "actions": ["read", "write"],
-        "data_access": ["people", "esg", "executive"],
-        "can_manage_users": False,
-        "can_view_audit": False,
-        "can_manage_roles": False,
-    },
-    Role.ESG: {
-        "name": "ESG Officer",
-        "pages": [
-            "Dashboard", "Assistant", "Analytics", "Knowledge Base",
-            "ESG", "Risk Radar", "Settings",
-        ],
-        "actions": ["read", "write"],
-        "data_access": ["esg", "risk", "executive", "operations"],
-        "can_manage_users": False,
-        "can_view_audit": False,
-        "can_manage_roles": False,
-    },
-    Role.ANALYST: {
-        "name": "Data Analyst",
-        "pages": [
-            "Dashboard", "Assistant", "Analytics", "Knowledge Base",
-            "Data Hub", "Forecasting", "ESG", "Risk Radar", "Settings",
-        ],
-        "actions": ["read", "write"],
-        "data_access": ["all"],
-        "can_manage_users": False,
-        "can_view_audit": False,
-        "can_manage_roles": False,
-    },
-    Role.VIEWER: {
-        "name": "Viewer",
-        "pages": ["Dashboard", "Assistant", "Settings"],
-        "actions": ["read"],
-        "data_access": ["executive"],
-        "can_manage_users": False,
-        "can_view_audit": False,
-        "can_manage_roles": False,
-    },
-}
+# RBAC (roles → pages/actions) and the default user set live in
+# ``src.core.jwt_auth`` — the single source of truth used by the API.
 
 
 # ── Settings ───────────────────────────────────────────────────────────────
@@ -162,12 +53,8 @@ class Settings:
 
     # API keys — required; validated at startup
     GROQ_API_KEY: str = field(default_factory=lambda: os.getenv("GROQ_API_KEY", ""))
-    TAVILY_API_KEY: str = field(default_factory=lambda: os.getenv("TAVILY_API_KEY", ""))
-
-    # (n8n / Google / ClickUp integrations removed — out of IntelAI scope.)
-
-    # Cloudflare tunnel
-    TUNNEL_URL: str = field(default_factory=lambda: os.getenv("TUNNEL_URL", ""))
+    # Optional: Anthropic (LiteLLM router can fall back to Claude)
+    ANTHROPIC_API_KEY: str = field(default_factory=lambda: os.getenv("ANTHROPIC_API_KEY", ""))
 
     # FastAPI
     FASTAPI_HOST: str = field(default_factory=lambda: os.getenv("FASTAPI_HOST", "0.0.0.0"))
@@ -197,9 +84,6 @@ class Settings:
     LLM_TEMPERATURE: float = 0.3
     LLM_MAX_TOKENS: int = 2048
 
-    # Voice (Groq Whisper)
-    VOICE_MODEL: str = "whisper-large-v3-turbo"
-
     # Embedding / RAG
     EMBEDDING_MODEL: str = field(
         default_factory=lambda: os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
@@ -209,9 +93,6 @@ class Settings:
     CHUNK_OVERLAP: int = 120
 
     # Feature flags — all enabled by default; disabled explicitly via env
-    FEATURE_VOICE: bool = field(
-        default_factory=lambda: os.getenv("FEATURE_VOICE", "true").lower() == "true"
-    )
     FEATURE_RAG: bool = field(
         default_factory=lambda: os.getenv("FEATURE_RAG", "true").lower() == "true"
     )
@@ -237,8 +118,6 @@ def validate_required_keys() -> None:
     missing = []
     if not settings.GROQ_API_KEY:
         missing.append("GROQ_API_KEY")
-    if not settings.TAVILY_API_KEY:
-        missing.append("TAVILY_API_KEY")
     if missing:
         raise EnvironmentError(
             f"Missing required environment variables: {', '.join(missing)}. "
@@ -256,29 +135,4 @@ def get_cors_allowed_origins() -> List[str]:
     """Parse and normalize CORS origins from env."""
     origins = [o.strip() for o in settings.CORS_ALLOWED_ORIGINS.split(",") if o.strip()]
     return origins or ["http://localhost:5173"]
-
-
-# ── Helpers ─────────────────────────────────────────────────────────────────
-def get_role_definition(role: str) -> Dict[str, Any]:
-    try:
-        return ROLE_DEFINITIONS[Role(role)]
-    except (ValueError, KeyError):
-        return {}
-
-
-def get_role_pages(role: str) -> List[str]:
-    return get_role_definition(role).get("pages", [])
-
-
-def has_role_permission(role: str, action: str) -> bool:
-    return action in get_role_definition(role).get("actions", [])
-
-
-def has_data_access(role: str, category: str) -> bool:
-    access = get_role_definition(role).get("data_access", [])
-    return "all" in access or category.lower() in access
-
-
-def get_all_roles() -> Dict[str, str]:
-    return {r.value: d["name"] for r, d in ROLE_DEFINITIONS.items()}
 
