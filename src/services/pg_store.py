@@ -249,28 +249,47 @@ def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: 
     import pandas as pd
     if df.empty:
         return
-    conn = _get_conn()
-    try:
-        if replace:
-            conn.execute("DELETE FROM kpi_metrics WHERE source = %s", [source_name])
-        for _, row in df.iterrows():
-            conn.execute(
-                """INSERT INTO kpi_metrics (period, metric, value, category, segment, unit, direction, source)
-                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
-                [
-                    str(row.get("period", "")),
-                    str(row.get("metric", "")),
-                    float(row.get("value", 0)),
-                    str(row.get("category", "")),
-                    str(row.get("segment", "")),
-                    str(row.get("unit", "")),
-                    str(row.get("direction", "higher_is_better")),
-                    source_name,
-                ],
-            )
-        conn.commit()
-    finally:
-        conn.close()
+    # Build all rows once, then write in a single batched executemany — one round-trip
+    # instead of N. This keeps large seeds (thousands of rows) well within the
+    # connection lifetime of serverless Postgres (Neon scales to zero and can drop a
+    # long row-by-row transaction on cold start).
+    params = [
+        (
+            str(row.get("period", "")),
+            str(row.get("metric", "")),
+            float(row.get("value", 0)),
+            str(row.get("category", "")),
+            str(row.get("segment", "")),
+            str(row.get("unit", "")),
+            str(row.get("direction", "higher_is_better")),
+            source_name,
+        )
+        for _, row in df.iterrows()
+    ]
+    insert_sql = (
+        "INSERT INTO kpi_metrics (period, metric, value, category, segment, unit, direction, source) "
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+    )
+    last_err: Optional[Exception] = None
+    for _ in range(3):  # retry: serverless Postgres may drop the first connection on cold start
+        conn = _get_conn()
+        try:
+            with conn.cursor() as cur:
+                if replace:
+                    cur.execute("DELETE FROM kpi_metrics WHERE source = %s", [source_name])
+                cur.executemany(insert_sql, params)
+            conn.commit()
+            return
+        except Exception as e:  # noqa: BLE001 — retry transient connection drops, re-raise persistent ones
+            last_err = e
+            try:
+                conn.rollback()
+            except Exception:
+                pass
+        finally:
+            conn.close()
+    if last_err:
+        raise last_err
 
 
 def get_kpi_metrics(
