@@ -567,9 +567,7 @@ repos when Phase 0 splits the codebase.
 The principle: **lead with the strongest model in each tier, fall back to the
 fastest/cheapest, never lock to a single vendor.** Multi-provider abstraction
 via LiteLLM (or equivalent) is now table stakes — clients ask about it in
-interviews. Pair it with **prompt caching** (stable persona/instruction prefix
-first, volatile data last) so repeated calls bill the prefix at the cached rate —
-Groq caches it automatically (~50% off, off rate-limit); Anthropic via `cache_control`.
+interviews.
 
 ### 4.5.1 The Frontier LLM Landscape (May 2026)
 
