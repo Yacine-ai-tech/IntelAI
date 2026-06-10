@@ -46,7 +46,6 @@ export const listPersonas = () => api.get('/personas')
 
 // ── Glossary (contextual explainer / grounding) ─────────
 export const getGlossary = (domain = null) => api.get('/glossary', { params: domain ? { domain } : {} })
-export const explainTerm = (term) => api.get('/glossary', { params: { term } })
 
 // ── Data export ─────────────────────────────────────────
 export const exportData = (format = 'json', source_type = 'kpis', source_name = null) =>
@@ -62,7 +61,6 @@ export const deleteChatSession = (sessionId) => api.delete(`/chat/sessions/${ses
 // ── Knowledge / Vector Search ───────────────────────────
 export const searchKnowledge = (query, n = 5) => api.get('/knowledge/search', { params: { q: query, n } })
 export const getKnowledgeStats = () => api.get('/knowledge/stats')
-export const knowledgeSearch = (params) => api.get('/knowledge/search', { params })
 
 // ── KPIs (cross-domain) ────────────────────────────────
 export const getKPIs = (params = {}) => api.get('/kpis', { params })
