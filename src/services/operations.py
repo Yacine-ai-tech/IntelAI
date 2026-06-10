@@ -34,7 +34,7 @@ class OperationsService:
             "downtime_hours": self._extract(ops_df, ["downtime", "unplanned downtime"]) or 0,
             "cost_per_unit": self._extract(ops_df, ["cost per unit", "unit cost"]) or 0,
             "on_time_completion": self._extract(ops_df, ["on time completion", "schedule adherence"]) or 0,
-            "safety_incidents": int(self._extract(ops_df, ["safety incidents", "workplace incidents"]) or 0),
+            "safety_incidents": int(self._extract(ops_df, ["safety incident", "workplace incidents"]) or 0),
             "energy_consumption": self._extract(ops_df, ["energy consumption", "kwh", "energy usage"]) or 0,
             "waste_reduction": self._extract(ops_df, ["waste reduction", "waste rate"]) or 0,
             "process_areas": self._get_process_areas(ops_df),
@@ -63,7 +63,7 @@ class OperationsService:
         return {
             "daily_output": self._extract(ops_df, ["daily output", "daily production"]) or 0,
             "capacity_utilization": self._extract(ops_df, ["capacity utilization"]) or 0,
-            "oee": self._extract(ops_df, ["oee", "overall equipment"]) or 0,
+            "oee": self._extract(ops_df, ["oee", "overall equipment", "production efficiency"]) or 0,
             "planned_vs_actual": self._extract(ops_df, ["planned vs actual", "plan adherence"]) or 0,
             "changeover_time": self._extract(ops_df, ["changeover time", "setup time"]) or 0,
             "scrap_rate": self._extract(ops_df, ["scrap rate", "waste rate"]) or 0,
@@ -81,7 +81,7 @@ class OperationsService:
             "near_misses": int(self._extract(ops_df, ["near misses", "near miss"]) or 0),
             "days_without_incident": int(self._extract(ops_df, ["days without incident", "safe days"]) or 0),
             "safety_training_completion": self._extract(ops_df, ["safety training", "safety completion"]) or 0,
-            "trir": self._extract(ops_df, ["trir", "total recordable"]) or 0,
+            "trir": self._extract(ops_df, ["trir", "total recordable", "safety incident rate"]) or 0,
             "severity_rate": self._extract(ops_df, ["severity rate"]) or 0,
         }
 
@@ -160,7 +160,8 @@ class OperationsService:
     def _extract(df: pd.DataFrame, keywords: List[str]) -> Optional[float]:
         if df.empty or "metric" not in df.columns:
             return None
-        mask = df["metric"].str.lower().apply(lambda m: any(k in m for k in keywords))
+        norm = df["metric"].str.lower().str.replace("-", " ", regex=False)
+        mask = norm.apply(lambda m: any(k in m for k in keywords))
         matched = df[mask]
         if matched.empty:
             return None

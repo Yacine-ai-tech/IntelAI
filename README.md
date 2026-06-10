@@ -31,12 +31,19 @@ RAG copilot that respects role boundaries.
   (`USE_HYBRID_RETRIEVAL`); degrades gracefully to stopword-filtered BM25 + RRF when the
   ML extras aren't installed.
 - **Grounded, cited answers** — every reply injects a role-scoped live KPI snapshot +
-  retrieved docs and cites them inline (`[1]`, `[2]`); a 64-term sourced **glossary** keeps
+  retrieved docs and cites them inline (`[1]`, `[2]`); a 100+-term sourced **glossary** keeps
   definitions accurate (no hallucination). Gated by a groundedness eval (`make eval`).
 - **Per-page contextual explainer** — a Topbar drawer defines every metric on the current
   page (definition + formula + 2026 benchmark + source) and can hand off to the copilot.
 - **Multi-domain KPI analytics** — dashboards, anomaly detection, health scoring, and a
-  unified KPI schema across domains.
+  single **metric catalog** (one `kpi_metrics` table) feeding every page, the copilot and
+  the analytics. The catalog ships ~90 curated, board-relevant "metrics that matter" across
+  the 7 domains — each with a sourced glossary definition + 2026 benchmark (Finance: Rule of
+  40, DSO, runway; Growth: NRR, LTV:CAC, CAC payback; HR: eNPS, quality-of-hire, internal
+  mobility; IT: the DORA four, SLA, security score; Ops: OEE, FPY, scrap; Logistics: perfect-
+  order, fill rate, DIO; ESG: Scope 1/2/3, emissions intensity) — plus operational detail
+  per dashboard. Adding a metric is config-only (one catalog row + glossary entry, no schema
+  change); the long tail of company-specific metrics flows in via CSV upload, scoped by RBAC.
 - **ML forecasting** — Monte Carlo forecasts with confidence-interval bands (Recharts).
 - **Data export & ingestion** — export KPIs to PDF (print) / Excel / CSV / JSON; ingest
   CSV metrics and documents from the UI.

@@ -63,7 +63,7 @@ class LogisticsService:
             "shipments_today": int(self._extract(ops_df, ["shipments today", "daily shipments"]) or 0),
             "shipments_month": int(self._extract(ops_df, ["monthly shipments", "shipments month"]) or 0),
             "on_time_rate": self._extract(ops_df, ["on time delivery", "otd rate"]) or 0,
-            "damaged_rate": self._extract(ops_df, ["damage rate", "damaged shipments"]) or 0,
+            "damaged_rate": self._extract(ops_df, ["damage", "damaged shipments"]) or 0,
             "avg_transit_days": self._extract(ops_df, ["transit time", "avg transit"]) or 0,
             "cost_per_shipment": self._extract(ops_df, ["cost per shipment", "shipping cost"]) or 0,
             "carrier_performance": self._get_carrier_performance(ops_df),
@@ -154,7 +154,8 @@ class LogisticsService:
     def _extract(df: pd.DataFrame, keywords: List[str]) -> Optional[float]:
         if df.empty or "metric" not in df.columns:
             return None
-        mask = df["metric"].str.lower().apply(lambda m: any(k in m for k in keywords))
+        norm = df["metric"].str.lower().str.replace("-", " ", regex=False)
+        mask = norm.apply(lambda m: any(k in m for k in keywords))
         matched = df[mask]
         if matched.empty:
             return None
