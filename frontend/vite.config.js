@@ -17,6 +17,7 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
+        ws: true,            // proxy WebSocket (/api/v1/ws/chat) to the backend
       },
       '/health': {
         target: 'http://localhost:8000',

@@ -1079,7 +1079,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "Use bullet points. Quantify everything."
         ),
         "allowed_tools": ["kpi_query", "forecast", "report_generate", "market_analysis"],
-        "data_access": ["Finance", "Growth", "Operations", "People", "ESG"],
+        "data_access": ["Finance", "Growth", "Operations", "People", "ESG", "IT", "Logistics"],
         "temperature": 0.4,
     },
     "cfo": {
@@ -1102,7 +1102,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "Analyze burn rate vs. engineering output. Evaluate build-vs-buy decisions."
         ),
         "allowed_tools": ["kpi_query", "risk_analysis", "technology_metrics"],
-        "data_access": ["Operations", "Finance"],
+        "data_access": ["IT", "Operations", "Finance"],
         "temperature": 0.3,
     },
     "coo": {
@@ -1113,7 +1113,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "Track cycle times, throughput, resource utilization. Identify bottlenecks."
         ),
         "allowed_tools": ["kpi_query", "operations_metrics", "supply_chain"],
-        "data_access": ["Operations", "Growth", "People"],
+        "data_access": ["Operations", "Logistics", "Growth", "People"],
         "temperature": 0.3,
     },
     "chro": {
@@ -1146,7 +1146,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "Proactively flag issues and recommend mitigation strategies."
         ),
         "allowed_tools": ["kpi_query", "risk_analysis", "anomaly_detection"],
-        "data_access": ["Finance", "Operations", "ESG"],
+        "data_access": ["Finance", "Operations", "ESG", "IT"],
         "temperature": 0.2,
     },
     "analyst": {
@@ -1157,7 +1157,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "Be thorough, data-driven, communicate with supporting evidence."
         ),
         "allowed_tools": ["kpi_query", "forecast", "data_analysis", "report_generate"],
-        "data_access": ["Finance", "Growth", "Operations"],
+        "data_access": ["Finance", "Growth", "Operations", "People", "IT", "Logistics", "ESG"],
         "temperature": 0.3,
     },
     "general": {
@@ -1168,13 +1168,13 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "Adapt communication to user needs. Be helpful, accurate, proactive."
         ),
         "allowed_tools": ["kpi_query", "forecast", "data_analysis"],
-        "data_access": ["Finance", "Growth", "Operations"],
+        "data_access": ["Finance", "Growth", "Operations", "People"],
         "temperature": 0.3,
     },
 }
 
 ROLE_PERSONA_MAP = {
-    "admin": "general", "ceo": "ceo", "cfo": "cfo", "cto": "cto",
+    "admin": "ceo", "ceo": "ceo", "cfo": "cfo", "cto": "cto",
     "coo": "coo", "chro": "chro", "hr": "chro", "esg": "esg", "risk": "risk",
     "analyst": "analyst", "viewer": "general", "operations": "coo", "it": "cto",
     "custom": "general",
@@ -1241,6 +1241,28 @@ class AgentPersonaFactory:
         except Exception as e:
             log.info("Using in-memory persona templates (DB not available: %s)", str(e)[:60])
 
+    # ── RBAC: persona scope guardrails ──────────────────────────────────────
+    def _persona_scope(self, name: str) -> set:
+        """The data categories a persona is allowed to read (lowercased)."""
+        tmpl = self._db_personas.get(name) or PERSONA_TEMPLATES.get(name, {})
+        return {c.lower() for c in tmpl.get("data_access", [])}
+
+    def allowed_personas_for_role(self, user_role: str) -> List[str]:
+        """Personas a user may switch to *without* widening their data scope.
+
+        A persona is permitted iff its ``data_access`` is a subset of the role's
+        own scope (its default persona). admin/ceo carry full scope, so every
+        persona qualifies for them; a CFO cannot impersonate, say, the CHRO to
+        reach People data. This is the persona-level RBAC the strategy requires.
+        """
+        default = ROLE_PERSONA_MAP.get(user_role, "general")
+        base_scope = self._persona_scope(default)
+        out: List[str] = []
+        for name in {**PERSONA_TEMPLATES, **self._db_personas}:
+            if name == default or self._persona_scope(name).issubset(base_scope):
+                out.append(name)
+        return out
+
     def resolve_persona(
         self,
         user_role: str,
@@ -1250,6 +1272,13 @@ class AgentPersonaFactory:
         """Resolve the best persona for the given user role."""
         # Priority: explicit override → role mapping → general
         persona_name = persona_override or ROLE_PERSONA_MAP.get(user_role, "general")
+
+        # RBAC guard: never let an override widen the caller's data scope.
+        if persona_override and persona_override not in self.allowed_personas_for_role(user_role):
+            fallback = ROLE_PERSONA_MAP.get(user_role, "general")
+            log.warning("RBAC: role '%s' may not use persona '%s' — using '%s'",
+                        user_role, persona_override, fallback)
+            persona_name = fallback
 
         # Try DB personas first, then in-memory templates
         template = self._db_personas.get(persona_name) or PERSONA_TEMPLATES.get(persona_name, PERSONA_TEMPLATES["general"])
@@ -1274,6 +1303,50 @@ class AgentPersonaFactory:
             temperature=temp,
             language=language,
         )
+
+    def _retrieve_context(self, message: str, persona: "PersonaContext", language: str = "en"):
+        """Persona-routed RAG: gather a live KPI snapshot (scoped to the persona's
+        data_access) + relevant knowledge docs. Returns (context_text, sources)."""
+        parts: List[str] = []
+        sources: List[Dict[str, Any]] = []
+        scope = {c.lower() for c in (getattr(persona, "data_access", None) or [])}
+
+        # 1) Live KPI snapshot (latest period), scoped to the persona's domains (RBAC)
+        try:
+            from src.services.pg_store import get_kpi_metrics
+            df = get_kpi_metrics()
+            if df is not None and not df.empty:
+                latest = sorted(df["period"].unique())[-1]
+                cur = df[df["period"] == latest]
+                if scope:
+                    cur = cur[cur["category"].str.lower().isin(scope)]
+                lines = []
+                for cat in sorted(cur["category"].unique()):
+                    cdf = cur[cur["category"] == cat]
+                    metrics = "; ".join(
+                        f"{r.metric}={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
+                        for r in cdf.itertuples()
+                    )
+                    lines.append(f"- {cat} ({latest}): {metrics}")
+                if lines:
+                    parts.append("LIVE KPI SNAPSHOT:\n" + "\n".join(lines))
+                    sources.append({"title": f"KPI snapshot · {latest}", "type": "kpi"})
+        except Exception as e:
+            log.warning("KPI context retrieval failed: %s", e)
+
+        # 2) Relevant knowledge docs (hybrid / GraphRAG-lite / vector)
+        try:
+            docs = _get_shared_rag()._retrieve_documents(message, top_k=5, language=language)
+            if docs:
+                snippets = []
+                for title, content, score in docs:
+                    snippets.append(f"[{title}] {str(content)[:400]}")
+                    sources.append({"title": title, "relevance": round(float(score), 2)})
+                parts.append("KNOWLEDGE BASE:\n" + "\n".join(snippets))
+        except Exception as e:
+            log.warning("Doc context retrieval failed: %s", e)
+
+        return ("\n\n".join(parts), sources)
 
     def chat(
         self,
@@ -1300,17 +1373,23 @@ class AgentPersonaFactory:
         persona = self.resolve_persona(user_role, persona_override, language)
         start = time.time()
 
+        # ── Persona-routed RAG: auto-retrieve grounded data + sources ──
+        retrieved_ctx, sources = self._retrieve_context(message, persona, language)
+        full_context = "\n\n".join(c for c in [context, retrieved_ctx] if c).strip()
+
         # Build messages
         messages: List[Dict[str, str]] = [
             {"role": "system", "content": persona.system_prompt},
+            {"role": "system", "content": (
+                "You have DIRECT access to the company's live data, provided below. Answer the "
+                "user's question directly using these numbers — never ask the user to supply data "
+                "or to pick a focus area when the data is already here. Be specific, quote the "
+                "metric values, and reference sources by their title. Only use data within your "
+                "access scope; if a figure is genuinely missing, say so in one short sentence.\n\n"
+                f"=== LIVE DATA (scope: {', '.join(persona.data_access) or 'all'}) ===\n"
+                f"{full_context if full_context else '(no data retrieved)'}"
+            )},
         ]
-
-        # Add context if available
-        if context:
-            messages.append({
-                "role": "system",
-                "content": f"Current data context:\n{context}",
-            })
 
         # Add conversation history (last 10 messages)
         if history:
@@ -1339,6 +1418,7 @@ class AgentPersonaFactory:
                 "persona_display": persona.display_name,
                 "tokens_used": tokens,
                 "latency_ms": latency,
+                "sources": sources,
             }
         except Exception as exc:
             log.error("Persona chat error (%s): %s", persona.name, exc)
@@ -1349,11 +1429,15 @@ class AgentPersonaFactory:
                 "latency_ms": int((time.time() - start) * 1000),
             }
 
-    def list_personas(self) -> List[Dict[str, Any]]:
-        """List all available personas."""
+    def list_personas(self, user_role: Optional[str] = None) -> List[Dict[str, Any]]:
+        """List available personas. When ``user_role`` is given, return only the
+        personas that role may use (RBAC — see ``allowed_personas_for_role``)."""
         all_personas = {**PERSONA_TEMPLATES, **self._db_personas}
+        allowed = set(self.allowed_personas_for_role(user_role)) if user_role else None
         result = []
         for name, template in all_personas.items():
+            if allowed is not None and name not in allowed:
+                continue
             result.append({
                 "name": name,
                 "display_name": template.get("display_name", name),
@@ -1376,6 +1460,16 @@ def get_persona_factory() -> AgentPersonaFactory:
     if _factory is None:
         _factory = AgentPersonaFactory()
     return _factory
+
+
+# Shared retriever for persona-routed RAG (knowledge docs + hybrid/GraphRAG).
+_SHARED_RAG: Optional["UltraFastRAG"] = None
+
+def _get_shared_rag() -> "UltraFastRAG":
+    global _SHARED_RAG
+    if _SHARED_RAG is None:
+        _SHARED_RAG = UltraFastRAG()
+    return _SHARED_RAG
 
 
 # ════════════════════════════════════════════════════════════════════════════
