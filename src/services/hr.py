@@ -175,7 +175,8 @@ class HRService:
     def _extract_metric(df: pd.DataFrame, keywords: List[str]) -> Optional[float]:
         if df.empty or "metric" not in df.columns:
             return None
-        mask = df["metric"].str.lower().apply(lambda m: any(k in m for k in keywords))
+        norm = df["metric"].str.lower().str.replace("-", " ", regex=False)
+        mask = norm.apply(lambda m: any(k in m for k in keywords))
         matched = df[mask]
         if matched.empty:
             return None
