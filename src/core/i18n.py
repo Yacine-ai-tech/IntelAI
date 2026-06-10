@@ -18,7 +18,6 @@ from typing import Dict, Literal
 
 Language = Literal["en", "fr"]
 
-
 class I18N:
     """Thread-safe i18n store for multilingual support."""
 
@@ -220,50 +219,6 @@ class I18N:
         },
     }
 
-    # ── Voice ───────────────────────────────────────────────────────────
-    VOICE: Dict[str, Dict[str, str]] = {
-        "en": {
-            "start": "🎤 Start Voice Command",
-            "listening": "Listening…",
-            "transcribing": "Transcribing…",
-            "err_transcribe": "Transcription error",
-            "err_intent": "Could not understand command",
-            "received": "Command received",
-            "processing": "Processing…",
-        },
-        "fr": {
-            "start": "🎤 Commande vocale",
-            "listening": "Écoute…",
-            "transcribing": "Transcription…",
-            "err_transcribe": "Erreur de transcription",
-            "err_intent": "Commande non comprise",
-            "received": "Commande reçue",
-            "processing": "Traitement…",
-        },
-    }
-
-    # ── Camera / OCR ────────────────────────────────────────────────────
-    CAMERA: Dict[str, Dict[str, str]] = {
-        "en": {
-            "scan": "📸 Scan Document",
-            "upload_invoice": "Upload invoices (handwritten or digital)",
-            "processing": "Processing with Vision-LLM…",
-            "detected": "Document detected",
-            "none": "No document detected",
-            "ok": "Data extracted successfully",
-            "err": "Extraction error",
-        },
-        "fr": {
-            "scan": "📸 Scanner un document",
-            "upload_invoice": "Téléverser des factures",
-            "processing": "Traitement Vision-LLM…",
-            "detected": "Document détecté",
-            "none": "Aucun document détecté",
-            "ok": "Données extraites avec succès",
-            "err": "Erreur d'extraction",
-        },
-    }
-
     # ── RBAC / Admin ────────────────────────────────────────────────────
     RBAC: Dict[str, Dict[str, str]] = {
         "en": {
@@ -279,24 +234,6 @@ class I18N:
             "delete": "Supprimer", "assign": "Attribuer",
             "users": "Utilisateurs", "audit": "Journal d'audit",
             "success": "Opération réussie", "error": "Opération échouée",
-        },
-    }
-
-    # ── Automation / n8n ────────────────────────────────────────────────
-    N8N: Dict[str, Dict[str, str]] = {
-        "en": {
-            "automation": "Automation & Workflows",
-            "gmail": "Gmail", "drive": "Google Drive",
-            "sheets": "Google Sheets", "clickup": "ClickUp",
-            "configure": "Configure", "test": "Test",
-            "enable": "Enable", "disable": "Disable",
-        },
-        "fr": {
-            "automation": "Automatisation & Flux",
-            "gmail": "Gmail", "drive": "Google Drive",
-            "sheets": "Google Sheets", "clickup": "ClickUp",
-            "configure": "Configurer", "test": "Tester",
-            "enable": "Activer", "disable": "Désactiver",
         },
     }
 
@@ -372,7 +309,6 @@ class I18N:
             return getattr(cls, name).get(cls._lang, {})
         except AttributeError:
             return {}
-
 
 # Convenience alias
 def t(section: str, key: str, default: str = "") -> str:
