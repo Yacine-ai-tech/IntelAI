@@ -385,6 +385,14 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 .gloss-row b { color:var(--text-3); min-width:96px; font-weight:600; text-transform:uppercase; font-size:.66rem; letter-spacing:.05em; padding-top:2px; }
 .gloss-row code { font-family:var(--font-mono); color:var(--primary-2); background:var(--bg-2); padding:2px 7px; border-radius:6px; font-size:.74rem; }
 
+/* ── Dropzone (data upload) ────────────────────────────────── */
+.dropzone { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  padding:26px 16px; border:1.5px dashed var(--border-2); border-radius:var(--r-lg); cursor:pointer;
+  color:var(--text-2); background:var(--bg-2); transition:all var(--t); }
+.dropzone:hover { border-color:var(--primary-line); color:var(--text); background:var(--primary-soft); }
+.dropzone.over { border-color:var(--primary); background:var(--primary-soft); color:var(--text); transform:translateY(-1px); }
+.dropzone svg { color:var(--primary); }
+
 /* ── Dropdown menu (export) ────────────────────────────────── */
 .menu-pop { position:absolute; right:0; top:calc(100% + 6px); min-width:170px; background:var(--surface-2);
   border:1px solid var(--border-2); border-radius:var(--r); box-shadow:var(--sh-lg); padding:6px; z-index:80; }

@@ -42,10 +42,6 @@ RAG copilot that respects role boundaries.
   CSV metrics and documents from the UI.
 - **Auth + RBAC** — JWT, role-based pages and per-persona data scoping, audit log.
 - **Multi-provider LLM** — Groq (default) / Anthropic via a LiteLLM router.
-- **Prompt caching (lower cost)** — the chat puts a stable persona + instruction prefix
-  first and the volatile live data + question last, so Groq auto-caches the prefix (~50%
-  off, and cached tokens don't count toward rate limits); the router adds Anthropic
-  `cache_control` on the same prefix for Claude tiers.
 - **Bilingual** — full EN / FR UI and responses.
 
 ## 🏗️ Architecture
