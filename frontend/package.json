@@ -2,7 +2,7 @@
   "name": "intelai-frontend",
   "private": true,
   "version": "2026.3.0",
-  "description": "IntelAI — Intelligence Operating System Frontend",
+  "description": "IntelAI — Persona-Aware AI Analytics & RAG Copilot (frontend)",
   "type": "module",
   "scripts": {
     "dev": "vite --port 5173",

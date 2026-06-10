@@ -127,45 +127,13 @@ def init_pg_tables():
                 created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
             )
         """)
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS monitoring_logs (
-                id          SERIAL PRIMARY KEY,
-                event_type  TEXT NOT NULL,
-                module      TEXT,
-                detail      JSONB DEFAULT '{}'::jsonb,
-                actor       TEXT,
-                created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
-            )
-        """)
         # Indexes
         conn.execute("CREATE INDEX IF NOT EXISTS idx_chat_messages_session ON chat_messages(session_id)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_chat_sessions_user ON chat_sessions(user_id)")
-        conn.execute("CREATE INDEX IF NOT EXISTS idx_monitoring_type ON monitoring_logs(event_type)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_period ON kpi_metrics(period)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_category ON kpi_metrics(category)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_metric ON kpi_metrics(metric)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_audit_type ON audit_trail(event_type)")
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS integration_credentials (
-                id SERIAL PRIMARY KEY,
-                username TEXT NOT NULL,
-                integration_type TEXT NOT NULL,
-                credentials_encrypted TEXT NOT NULL,
-                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-            )
-        """)
-        conn.execute("CREATE INDEX IF NOT EXISTS idx_integration_user ON integration_credentials(username)")
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS oauth_states (
-                state TEXT PRIMARY KEY,
-                username TEXT NOT NULL,
-                integration_type TEXT NOT NULL,
-                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                expires_at TIMESTAMPTZ
-            )
-        """)
-        conn.execute("CREATE INDEX IF NOT EXISTS idx_oauth_state_username ON oauth_states(username)")
 
         # File management (uploaded artifacts and extracted content)
         conn.execute(
@@ -637,100 +605,7 @@ def get_audit_trail(limit: int = 100) -> "pd.DataFrame":
 
 
 # ── Integration credentials (encrypted) ─────────────────────────────────────
-def store_integration_credentials(username: str, integration_type: str, credentials_encrypted: str) -> None:
-    conn = _get_conn()
-    try:
-        # Upsert: if user+integration exists, update, else insert
-        row = conn.execute(
-            "SELECT id FROM integration_credentials WHERE username = %s AND integration_type = %s",
-            [username, integration_type],
-        ).fetchone()
-        if row:
-            conn.execute(
-                "UPDATE integration_credentials SET credentials_encrypted = %s, updated_at = NOW() WHERE id = %s",
-                [credentials_encrypted, row["id"]],
-            )
-        else:
-            conn.execute(
-                "INSERT INTO integration_credentials (username, integration_type, credentials_encrypted) VALUES (%s, %s, %s)",
-                [username, integration_type, credentials_encrypted],
-            )
-        conn.commit()
-    finally:
-        conn.close()
 
-
-def remove_integration_credentials(username: str, integration_type: str) -> None:
-    conn = _get_conn()
-    try:
-        conn.execute("DELETE FROM integration_credentials WHERE username = %s AND integration_type = %s", [username, integration_type])
-        conn.commit()
-    finally:
-        conn.close()
-
-
-def get_integration_credentials(username: str, integration_type: str) -> Optional[Dict[str, Any]]:
-    conn = _get_conn()
-    try:
-        row = conn.execute(
-            "SELECT id, credentials_encrypted, created_at, updated_at FROM integration_credentials WHERE username = %s AND integration_type = %s",
-            [username, integration_type],
-        ).fetchone()
-        return dict(row) if row else None
-    finally:
-        conn.close()
-
-
-def store_integration_token_refresh(username: str, integration_type: str, refresh_token: str, expires_in: int = 3600) -> None:
-    """Store refresh token metadata for token rotation. Stores expiry time."""
-    from datetime import timedelta
-    expires_at = (datetime.utcnow() + timedelta(seconds=expires_in)).isoformat()
-    conn = _get_conn()
-    try:
-        # Update credential record with refresh_token metadata and expiry
-        row = conn.execute(
-            "SELECT id FROM integration_credentials WHERE username = %s AND integration_type = %s",
-            [username, integration_type],
-        ).fetchone()
-        if row:
-            # In production, you'd store refresh_token separately encrypted
-            # For now, we'll store metadata: { "refresh_token": "...", "expires_at": "2026-02-28T10:00:00" }
-            from src.core.crypto import encrypt_value
-            import json as _json
-            metadata = {"refresh_token": refresh_token, "expires_at": expires_at}
-            enc = encrypt_value(_json.dumps(metadata))
-            conn.execute(
-                "UPDATE integration_credentials SET credentials_encrypted = %s, updated_at = NOW() WHERE id = %s",
-                [enc, row["id"]],
-            )
-            conn.commit()
-    finally:
-        conn.close()
-
-
-def get_integration_refresh_token(username: str, integration_type: str) -> Optional[Dict[str, Any]]:
-    """Retrieve refresh token metadata if available."""
-    conn = _get_conn()
-    try:
-        row = conn.execute(
-            "SELECT credentials_encrypted FROM integration_credentials WHERE username = %s AND integration_type = %s",
-            [username, integration_type],
-        ).fetchone()
-        if not row:
-            return None
-        # Decrypt and parse metadata
-        from src.core.crypto import decrypt_value
-        import json as _json
-        try:
-            decrypted = decrypt_value(row["credentials_encrypted"])
-            metadata = _json.loads(decrypted)
-            if "refresh_token" in metadata:
-                return metadata
-        except Exception:
-            pass
-        return None
-    finally:
-        conn.close()
 
     # ── Chat session helpers ───────────────────────────────────────────────────
 def store_chat_session(session_id: str, user_id: str, title: str = "New Chat", persona: str = "general", is_pinned: bool = False) -> None:
@@ -761,57 +636,7 @@ def store_chat_session(session_id: str, user_id: str, title: str = "New Chat", p
         conn.close()
 
 
-
 # ── OAuth state persistence (to avoid in-memory loss on restart)
-def store_oauth_state(state: str, username: str, integration_type: str, expires_at: Optional[str] = None) -> None:
-    """Store OAuth state for callback validation. Expires in 15 minutes by default."""
-    conn = _get_conn()
-    try:
-        from datetime import timedelta
-        if not expires_at:
-            expires_at = (datetime.utcnow() + timedelta(minutes=15)).isoformat()
-        conn.execute(
-            "INSERT INTO oauth_states (state, username, integration_type, expires_at) VALUES (%s, %s, %s, %s)"
-            " ON CONFLICT (state) DO UPDATE SET username = EXCLUDED.username, integration_type = EXCLUDED.integration_type, expires_at = EXCLUDED.expires_at",
-            [state, username, integration_type, expires_at],
-        )
-        conn.commit()
-    finally:
-        conn.close()
-
-
-def pop_oauth_state(state: str) -> Optional[Dict[str, str]]:
-    """Atomically fetch and delete an oauth state. Returns dict with username and integration_type or None."""
-    conn = _get_conn()
-    try:
-        row = conn.execute("SELECT username, integration_type, expires_at FROM oauth_states WHERE state = %s", [state]).fetchone()
-        if not row:
-            return None
-        # Check if expired
-        if row.get("expires_at"):
-            from datetime import datetime as dt
-            expires_at = dt.fromisoformat(str(row["expires_at"]))
-            if dt.utcnow() > expires_at:
-                conn.execute("DELETE FROM oauth_states WHERE state = %s", [state])
-                conn.commit()
-                return None
-        conn.execute("DELETE FROM oauth_states WHERE state = %s", [state])
-        conn.commit()
-        return {"username": row["username"], "integration_type": row["integration_type"]}
-    finally:
-        conn.close()
-
-
-def cleanup_expired_oauth_states() -> int:
-    """Delete expired OAuth states. Returns count of deleted rows."""
-    conn = _get_conn()
-    try:
-        result = conn.execute("DELETE FROM oauth_states WHERE expires_at < NOW()").rowcount
-        conn.commit()
-        log.info("Cleaned up %d expired OAuth states", result)
-        return result
-    finally:
-        conn.close()
 
 
 # ═══════════════════════════════════════════════════════════
@@ -1024,39 +849,6 @@ def get_recent_context(user_id: str, limit: int = 10) -> List[Dict[str, str]]:
 # MONITORING
 # ═══════════════════════════════════════════════════════════
 
-def log_monitoring_event(event_type: str, module: str = "", detail: str = "{}", actor: str = ""):
-    conn = _get_conn()
-    try:
-        conn.execute(
-            "INSERT INTO monitoring_logs (event_type, module, detail, actor) VALUES (%s, %s, %s::jsonb, %s)",
-            [event_type, module, detail, actor],
-        )
-        conn.commit()
-    except Exception:
-        pass
-    finally:
-        conn.close()
-
-
-def get_monitoring_stats() -> Dict[str, Any]:
-    conn = _get_conn()
-    try:
-        total_users = conn.execute("SELECT COUNT(*) AS c FROM users").fetchone()["c"]
-        total_sessions = conn.execute("SELECT COUNT(*) AS c FROM chat_sessions").fetchone()["c"]
-        total_messages = conn.execute("SELECT COUNT(*) AS c FROM chat_messages").fetchone()["c"]
-        today = datetime.utcnow().date().isoformat()
-        today_messages = conn.execute(
-            "SELECT COUNT(*) AS c FROM chat_messages WHERE created_at::date = %s", [today]
-        ).fetchone()["c"]
-        return {
-            "total_users": total_users,
-            "total_sessions": total_sessions,
-            "total_messages": total_messages,
-            "today_messages": today_messages,
-        }
-    finally:
-        conn.close()
-
 
 def ensure_session_exists(session_id: str, user_id: str) -> str:
     """Ensure a chat session exists, create if not. Return session_id."""
@@ -1262,51 +1054,6 @@ def update_token_refresh_status(
         return True
     except Exception as e:
         log.error("Failed to update refresh status: %s", e)
-        return False
-    finally:
-        conn.close()
-
-
-def record_oauth_token_event(
-    username: str,
-    integration_type: str,
-    event_type: str,
-    old_expires_at: Optional[str] = None,
-    new_expires_at: Optional[str] = None,
-    error_message: Optional[str] = None,
-    user_agent: Optional[str] = None,
-    ip_address: Optional[str] = None,
-) -> bool:
-    """
-    Record OAuth token event for audit trail.
-    
-    event_type: 'token_issued', 'token_refreshed', 'token_expired', 'refresh_failed', 'revoked'
-    """
-    conn = _get_conn()
-    try:
-        conn.execute(
-            """
-            INSERT INTO oauth_token_events (
-                username, integration_type, event_type,
-                old_expires_at, new_expires_at, error_message,
-                user_agent, ip_address, created_at
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, NOW())
-            """,
-            [
-                username,
-                integration_type,
-                event_type,
-                old_expires_at,
-                new_expires_at,
-                error_message[:500] if error_message else None,
-                user_agent,
-                ip_address,
-            ],
-        )
-        conn.commit()
-        return True
-    except Exception as e:
-        log.error("Failed to record token event: %s", e)
         return False
     finally:
         conn.close()

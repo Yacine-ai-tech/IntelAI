@@ -1,43 +1,37 @@
 """
-IntelAI v2.0 — Persona-Aware AI Analytics & RAG Copilot. Entry Point.
+IntelAI — Persona-Aware AI Analytics & RAG Copilot. Entry point.
 
 Usage:
-    python main.py                 # FastAPI server (default)
-    python main.py --api           # FastAPI server
-    python main.py --legacy-api    # FastAPI server (v1, backward compat)
+    python main.py              # start the API server (http://localhost:8000)
+    python main.py --reload     # with auto-reload (development)
+
+Production uses the Dockerfile CMD: ``uvicorn src.api.server_v2:app``.
 """
 from __future__ import annotations
 
 import sys
 from pathlib import Path
 
-# Add project root to Python path for proper imports
+# Make the project root importable, then load environment.
 project_root = Path(__file__).resolve().parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-# ⚡ PERFORMANCE: Apply optimizations before any heavy imports
-import src.core.performance  # noqa: F401
-
-# Ensure .env is loaded before any module reads os.getenv
 from dotenv import load_dotenv
-load_dotenv(Path(__file__).resolve().parent / ".env")
+load_dotenv(project_root / ".env")
 
 
-def main():
-    if "--legacy-api" in sys.argv:
-        from src.api.server import run_server
-        run_server()
-    else:
-        # Default: FastAPI server with JWT + Persona Factory
-        import uvicorn
-        uvicorn.run(
-            "src.api.server_v2:app",
-            host="0.0.0.0",
-            port=8000,
-            reload="--reload" in sys.argv,
-            log_level="info",
-        )
+def main() -> None:
+    import uvicorn
+    from src.core.config import settings
+
+    uvicorn.run(
+        "src.api.server_v2:app",
+        host=settings.FASTAPI_HOST,
+        port=settings.FASTAPI_PORT,
+        reload="--reload" in sys.argv,
+        log_level=settings.LOG_LEVEL.lower(),
+    )
 
 
 if __name__ == "__main__":

@@ -1,83 +1,49 @@
-# IntelAI v2.0 — Persona-Aware AI Analytics & RAG Copilot
-# Stack: FastAPI + React + PostgreSQL + Groq/Anthropic + Tavily + ChromaDB
-# Single cloud deployment (Railway/Fly). OCR/voice deps belong to DocIntel/VoiceFlow.
+# IntelAI — Persona-Aware AI Analytics & RAG Copilot
+# Stack: FastAPI + React + PostgreSQL + Groq/Anthropic (LiteLLM) + hybrid RAG.
+# Single cloud deployment. OCR/voice/integrations belong to the sibling projects.
 
-# Force CPU wheels to avoid massive CUDA dependencies in local-first deployments.
-# torch >= 2.4 is required by current transformers (else BGE dense retrieval is disabled).
+# CPU-only torch (needed by sentence-transformers / FlagEmbedding for dense + reranking).
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch==2.4.1+cpu
 
-# ── Core Framework ──────────────────────────────
+# ── Core framework ──────────────────────────────
 fastapi>=0.115.0
 uvicorn[standard]>=0.32.0
 python-dotenv>=1.0.1
 python-multipart>=0.0.12
 websockets>=12.0
+uvloop>=0.21.0
+httptools>=0.6.4
+httpx>=0.27.0
 
-# ── Authentication (JWT + bcrypt) ───────────────
+# ── Auth (JWT + bcrypt) ─────────────────────────
 python-jose[cryptography]>=3.3.0
 passlib[bcrypt]>=1.7.4
 bcrypt==4.0.1
 
-# ── Database (PostgreSQL only) ──────────────────
-sqlalchemy[asyncio]>=2.0.30
+# ── Database — PostgreSQL via psycopg 3 (raw SQL, no ORM) ─
 psycopg[binary]>=3.1.18
-asyncpg>=0.29.0
-alembic>=1.13.0
-pydantic-settings>=2.6.1
+
+# ── Data ────────────────────────────────────────
 pandas>=2.2.3
 numpy>=2.1.3
-openpyxl>=3.1.5
+openpyxl>=3.1.5            # pandas .to_excel engine (xlsx export)
 
-# ── AI / LLM — Groq (REQUIRED) ─────────────────
+# ── AI / LLM — Groq + multi-provider routing ────
 groq>=0.11.0
-langchain>=0.3.0
-langchain-community>=0.3.0
-langchain-groq>=0.2.0
-
-# ── Web search — Tavily (REQUIRED) ─────────────
-tavily-python>=0.5.0
-
-# ── Embedding (local CPU, small model) ──────────
-sentence-transformers>=3.1.1
-chromadb>=0.5.18
-
-# ── ML Forecasting (CPU only) ──────────────────
-scipy>=1.14.1
-scikit-learn>=1.5.2
-
-# ── Document text extraction (in-scope: PDF/DOCX text, no OCR) ─────────────
-pypdf>=4.3.1
-python-docx>=1.1.2
-beautifulsoup4>=4.12.3
-
-# ── Visualization and Export ────────────────────
-plotly>=5.24.1
-kaleido==0.2.1
-fpdf2>=2.8.1
-python-pptx>=0.6.23
-pillow>=10.1.0
-
-# ── Integrations ───────────────────────────────
-httpx>=0.27.0
-requests>=2.32.3
-qrcode>=7.4.2
-
-# (TTS/STT removed — voice belongs to the VoiceFlow project.)
-
-# ── System Monitoring (app /metrics endpoint + middleware) ─────────────────
-psutil>=6.0.0
-prometheus-client>=0.21.0
-
-# ── Performance (uvicorn speed boosters) ───────
-uvloop>=0.21.0
-httptools>=0.6.4
-
-# ── 2026 Stack Upgrade — Multi-Provider LLM + Hybrid RAG ────────────────────
 litellm>=1.55.0
 anthropic>=0.40.0
 openai>=1.55.0
+
+# ── Retrieval — hybrid (dense + BM25 + rerank) ──
+sentence-transformers>=3.1.1
 rank-bm25>=0.2.2
 FlagEmbedding>=1.3.0
-qdrant-client>=1.12.0
 
+# ── ML — forecasting, anomaly detection, TF-IDF/cosine ─
+scipy>=1.14.1
+scikit-learn>=1.5.2
+
+# ── Document text extraction (PDF/DOCX text, no OCR) ─
+pypdf>=4.3.1
+python-docx>=1.1.2

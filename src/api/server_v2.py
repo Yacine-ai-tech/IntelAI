@@ -194,36 +194,7 @@ async def startup():
     except Exception as e:
         log.warning("Data seeding skipped: %s", e)
 
-    # Start periodic cleanup tasks for OAuth states and token refresh
-    _start_background_cleanup_tasks()
-
     log.info("✅ IntelAI API ready")
-
-
-def _start_background_cleanup_tasks():
-    """Start background tasks for OAuth state cleanup and token refresh."""
-    import asyncio
-    
-    async def cleanup_oauth_states_task():
-        """Periodically cleanup expired OAuth states (every 30 minutes)."""
-        while True:
-            try:
-                await asyncio.sleep(30 * 60)  # 30 minutes
-                from src.services.pg_store import cleanup_expired_oauth_states
-                count = cleanup_expired_oauth_states()
-                if count > 0:
-                    log.info("Cleaned up %d expired OAuth states", count)
-            except Exception as e:
-                log.error("OAuth state cleanup error: %s", e)
-    
-    # Schedule cleanup task (fire and forget)
-    try:
-        import asyncio
-        loop = asyncio.get_event_loop()
-        loop.create_task(cleanup_oauth_states_task())
-        log.info("✅ Background cleanup tasks started")
-    except Exception as e:
-        log.warning("Failed to start background cleanup tasks: %s", e)
 
 
 # ════════════════════════════════════════════════════════════
@@ -524,7 +495,7 @@ async def ingest_document(
     text = ""
     if file.filename and file.filename.endswith(".pdf"):
         try:
-            from PyPDF2 import PdfReader
+            from pypdf import PdfReader
             import io
             reader = PdfReader(io.BytesIO(content))
             text = "\n".join(p.extract_text() or "" for p in reader.pages)
@@ -1028,26 +999,6 @@ async def delete_chat_session(session_id: str, user: TokenData = Depends(get_cur
 
 
 # ════════════════════════════════════════════════════════════
-# MONITORING API
-# ════════════════════════════════════════════════════════════
-
-@app.get("/api/v1/monitoring/stats")
-async def get_monitoring_stats(user: TokenData = Depends(get_current_user)):
-    result = {}
-    try:
-        from src.services.pg_store import get_monitoring_stats
-        result.update(get_monitoring_stats())
-    except Exception:
-        pass
-    try:
-        from src.core.monitoring import monitor
-        result.update(monitor.get_current_metrics())
-    except Exception:
-        pass
-    return result
-
-
-# ════════════════════════════════════════════════════════════
 # VECTOR SEARCH (ChromaDB)
 # ════════════════════════════════════════════════════════════
 
@@ -1130,20 +1081,6 @@ async def websocket_chat(websocket: WebSocket):
         log.info("WebSocket client disconnected")
     except Exception as e:
         log.error("WebSocket error: %s", e)
-
-
-# ════════════════════════════════════════════════════════════
-# METRICS (Prometheus)
-# ════════════════════════════════════════════════════════════
-
-@app.get("/metrics")
-async def prometheus_metrics():
-    try:
-        from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
-        from fastapi.responses import Response
-        return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
-    except Exception:
-        return {"error": "Prometheus not available"}
 
 
 # ════════════════════════════════════════════════════════════
