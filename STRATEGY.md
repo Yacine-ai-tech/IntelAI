@@ -395,19 +395,32 @@ Each persona has: custom system prompt, role-to-persona auto-mapping,
 temperature tuned (executives conservative, analysts flexible), tool
 whitelist, and data scoping.
 
-### Synthetic Dataset (`enhanced_synthetic_dataset/`)
+### Metric Catalog & Deterministic Seed (`src/data/seed.py` + `src/data/glossary.py`)
 
-- 25,920 KPI records across 10 companies, 144 monthly periods, 5 domains
-- 30 P&L / balance sheet JSON files (10 companies × 3 years)
-- 3 sample invoice PDFs (for OCR testing)
-- 5 sample images / charts (for vision)
-- 10 email samples (for Gmail automation testing)
-- 5 sheets exports (for Sheets automation testing)
-- 30 n8n webhook payloads
-- 5 domain configuration files
+The data layer is one catalog, one source. A deterministic, seeded generator
+(`make seed`) writes the entire metric set into a single `kpi_metrics` table that
+feeds every surface — the domain dashboards (the domain services are just keyword
+extractors over this table), the cross-domain analytics, the persona RAG copilot
+(per-metric + per-domain knowledge docs), and the glossary-grounded explainer.
 
-**Why this matters:** every demo can show real data flowing through real
-pipelines. That's a credibility advantage 90% of freelancer portfolios lack.
+- **126 metrics across 7 domains** (Finance, Growth, People, Operations, IT,
+  Logistics, ESG) × 24 monthly periods = **3,024 KPI rows**, with trend,
+  seasonality, noise, and 5 planted anomalies so Risk/anomaly detection has signal.
+- Split for intent (both seeded into the same table): **`STRATEGIC_KPIS`** — 89
+  board-relevant "metrics that matter," each with a sourced, benchmarked definition
+  in the **101-term glossary** (Rule of 40, NRR, LTV:CAC, eNPS, the DORA four, OEE,
+  perfect-order rate, Scope 1/2/3, …); **`OPERATIONAL_DETAIL`** — 37 operational
+  counters the dashboards display.
+- **14,664 GraphRAG-lite entities** + **236 knowledge docs** seeded for grounded,
+  cited retrieval.
+- **Scales without code:** adding a metric is one catalog row + one glossary entry
+  (no schema change, no migration). The long tail of company-specific metrics flows
+  in through the CSV upload path, written to the same table and scoped by RBAC.
+
+**Why this matters:** every demo shows a coherent, benchmarked metric set flowing
+through real retrieval and access control — and the same path that powers the demo
+ingests a customer's real data. That single-source, config-driven design is what
+keeps IntelAI scalable while staying a lean prototype.
 
 ---
 
