@@ -942,9 +942,10 @@ and 0 skips**; the RAG groundedness eval scores **24/25** with hybrid retrieval 
 | Recharts: Analytics(line) · Forecasting(area+CI) · Risk(radar) · Dashboard(sparkline) · Financial(bar) | ✅ | all 5 pages; `npm run build` clean |
 | WebSocket streaming chat, 9 personas | ✅ | `/api/v1/ws/chat` + `ChatPage.jsx` |
 | Hybrid retrieval (BGE + BM25 + RRF + reranker) | ✅ | wired into RAG path; `USE_HYBRID_RETRIEVAL`; torch 2.4.1 so BGE actually loads |
-| GraphRAG-lite (sidecar table + ingest-time extraction + multi-hop) | ✅ | `migrations/005`, `kpi_entities` table, `store_kpi_entities`, seed → 4920 entities, `USE_GRAPH_RAG` |
+| GraphRAG-lite (sidecar table + ingest-time extraction + multi-hop) | ✅ | `kpi_entities` table, `store_kpi_entities`, seed → 14,664 entities, `USE_GRAPH_RAG` |
 | LiteLLM multi-provider router | ✅ | `src/services/llm_router.py` |
-| Robust deterministic seed (replaces the old dataset) | ✅ | `src/data/seed.py` → `make seed` (1032 KPIs + 4920 entities + 9 knowledge docs) |
+| Single metric catalog (one source feeds pages + copilot + analytics) | ✅ | `src/data/seed.py` → `STRATEGIC_KPIS` (89 glossary-backed) + `OPERATIONAL_DETAIL` (37); 126 metrics / 7 domains; domain services are keyword extractors over the same `kpi_metrics` table; long tail via CSV upload |
+| Robust deterministic seed (batched insert, Neon-safe) | ✅ | `src/data/seed.py` → `make seed` (3024 KPIs + 14,664 entities + 236 knowledge docs); 101-term sourced glossary |
 | 30+ in-process TestClient tests, **0 skips** | ✅ | 51 tests; CI green w/ Postgres; Playwright e2e is opt-in in `tests/e2e/` |
 | Prompt-eval (SMOKE; full eval = the RAGeval project) | ✅ | `src/data/rag_eval.jsonl` + `make eval` with a >20%-below-groundedness gate |
 | README <200 lines · `omnismart-personas` package · top-level pyproject | ✅ | README 134 LOC; `packages/` (8 tests); `pyproject.toml` |
