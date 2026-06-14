@@ -52,3 +52,6 @@ scikit-learn>=1.5.2
 # ── Document text extraction (PDF/DOCX text, no OCR) ─
 pypdf>=4.3.1
 python-docx>=1.1.2
+
+# ── Board-ready PDF report export ─
+reportlab>=4.2.0
