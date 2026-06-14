@@ -27,6 +27,9 @@ services:
     environment:
       PYTHONUNBUFFERED: "1"
       CHROMA_DB_PATH: /app/chroma_db
+      # Dev default vector store = ChromaDB (prod uses pgvector on Neon / Qdrant via env).
+      # Degrades to in-process retrieval if the chromadb extra isn't in the image yet.
+      VECTOR_STORE: chroma
     command: >
       uvicorn src.api.server:app
       --host 0.0.0.0
