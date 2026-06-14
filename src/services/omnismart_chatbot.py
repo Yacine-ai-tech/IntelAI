@@ -86,6 +86,72 @@ except ImportError:
 
 
 # ════════════════════════════════════════════════════════════════════════════
+# PROVIDER-AGNOSTIC LLM COMPLETION
+# ════════════════════════════════════════════════════════════════════════════
+
+_GROQ_CLIENT = None
+
+
+def _groq_client():
+    global _GROQ_CLIENT
+    if _GROQ_CLIENT is None and _GROQ and settings.GROQ_API_KEY:
+        _GROQ_CLIENT = Groq(api_key=settings.GROQ_API_KEY)
+    return _GROQ_CLIENT
+
+
+def llm_available() -> bool:
+    """Whether the configured provider can serve a completion: the Groq SDK for
+    LLM_PROVIDER=groq, otherwise LiteLLM (which reaches Anthropic/OpenAI/Ollama/…)."""
+    if (settings.LLM_PROVIDER or "groq").lower() == "groq":
+        return _groq_client() is not None
+    try:
+        import litellm  # noqa: F401
+        return True
+    except ImportError:
+        return False
+
+
+def llm_complete(
+    messages: List[Dict[str, str]],
+    temperature: float = 0.3,
+    max_tokens: int = 1024,
+    top_p: Optional[float] = None,
+) -> Tuple[str, int]:
+    """Provider-agnostic chat completion → (text, tokens_used).
+
+    ``LLM_PROVIDER`` picks the backend with a single env var (no vendor lock-in):
+      * ``groq`` (default) — the Groq SDK directly (fastest path).
+      * anything else (``anthropic``/``openai``/``ollama``/…) — routed via LiteLLM, with
+        ``LLM_MODEL`` either a full ``provider/model`` string or a bare model id that gets
+        the provider prefix. Anthropic prompt-cache breakpoints are applied for Claude models.
+    """
+    provider = (settings.LLM_PROVIDER or "groq").lower()
+
+    if provider == "groq" and _groq_client() is not None:
+        kw: Dict[str, Any] = {"model": settings.LLM_MODEL, "messages": messages,
+                              "temperature": temperature, "max_tokens": max_tokens}
+        if top_p is not None:
+            kw["top_p"] = top_p
+        r = _groq_client().chat.completions.create(**kw)
+        tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
+        return r.choices[0].message.content, tokens
+
+    # Any other provider → LiteLLM.
+    from litellm import completion
+    from src.services.llm_router import _apply_cache_control
+    model = settings.LLM_MODEL if "/" in settings.LLM_MODEL else f"{provider}/{settings.LLM_MODEL}"
+    msgs = _apply_cache_control(messages, model)
+    kw = {"model": model, "messages": msgs, "temperature": temperature, "max_tokens": max_tokens}
+    if top_p is not None:
+        kw["top_p"] = top_p
+    r = completion(**kw)
+    text = r.choices[0].message.content
+    usage = getattr(r, "usage", None)
+    tokens = getattr(usage, "total_tokens", 0) if usage else 0
+    return text, tokens
+
+
+# ════════════════════════════════════════════════════════════════════════════
 # UTILITY FUNCTIONS
 # ════════════════════════════════════════════════════════════════════════════
 
@@ -277,10 +343,10 @@ class UltraFastRAG:
         language: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Generate RAG-based answer with retrieved documents."""
-        if not self.client:
+        if not llm_available():
             return {
                 "query": query,
-                "response": "RAG unavailable (Groq not configured)",
+                "response": "RAG unavailable (no LLM provider configured)",
                 "sources": [],
                 "type": "rag",
             }
@@ -307,10 +373,9 @@ class UltraFastRAG:
         # Build prompt (stable system instruction + volatile docs/query) — cache-friendly
         system_instruction, user_content = self._build_rag_prompt(query, documents)
 
-        # Generate response
+        # Generate response (provider-agnostic — LLM_PROVIDER selects Groq/LiteLLM)
         try:
-            response = self.client.chat.completions.create(
-                model=settings.LLM_MODEL,
+            answer, _ = llm_complete(
                 messages=[
                     {"role": "system", "content": system_instruction},
                     {"role": "user", "content": user_content},
@@ -318,7 +383,6 @@ class UltraFastRAG:
                 max_tokens=1024,
                 temperature=0.4,
             )
-            answer = response.choices[0].message.content
         except Exception as e:
             log.error("RAG generation error: %s", e)
             answer = f"Error generating response: {str(e)[:100]}"
@@ -720,7 +784,7 @@ class AgentPersonaFactory:
         
         Returns dict with: response, persona_used, tokens_used, latency_ms
         """
-        if not self.client:
+        if not llm_available():
             return {
                 "response": "AI agent unavailable (missing API key)." if language != "fr" else "Agent IA non disponible (clé API manquante).",
                 "persona_used": "none",
@@ -764,16 +828,12 @@ class AgentPersonaFactory:
         messages.append({"role": "user", "content": f"{data_block}\n\n=== QUESTION ===\n{message}"})
 
         try:
-            response = self.client.chat.completions.create(
-                model=settings.LLM_MODEL,
+            reply, tokens = llm_complete(
                 messages=messages,
                 max_tokens=2048,
                 temperature=persona.temperature,
                 top_p=0.9,
             )
-
-            reply = response.choices[0].message.content
-            tokens = getattr(response.usage, 'total_tokens', 0) if response.usage else 0
             latency = int((time.time() - start) * 1000)
 
             return {
