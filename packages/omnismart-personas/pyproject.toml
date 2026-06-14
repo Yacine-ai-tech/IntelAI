@@ -24,6 +24,7 @@ Source = "https://github.com/Yacine-ai-tech/IntelAI/tree/develop/packages/omnism
 
 [project.optional-dependencies]
 test = ["pytest>=7"]
+langchain = ["langchain-core>=0.3"]   # for omnismart_personas.langchain (optional adapter)
 
 [tool.hatch.build.targets.wheel]
 packages = ["omnismart_personas"]
