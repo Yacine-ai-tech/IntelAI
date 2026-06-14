@@ -92,6 +92,11 @@ class FinancialRequest(BaseModel):
     period: Optional[str] = None
     statement_type: str = "income_statement"
 
+class AgentToolRequest(BaseModel):
+    tool: str
+    persona: Optional[str] = None
+    args: Optional[Dict[str, Any]] = None
+
 class UserUpdateRequest(BaseModel):
     role: Optional[str] = None
     is_active: Optional[bool] = None
@@ -885,6 +890,36 @@ async def get_esg_summary(user: TokenData = Depends(get_current_user)):
 
 
 # ════════════════════════════════════════════════════════════
+# PERSONA TOOLS (whitelisted + RBAC-enforced)
+# ════════════════════════════════════════════════════════════
+
+@app.get("/api/v1/agent/tools")
+async def agent_list_tools(persona: Optional[str] = None, user: TokenData = Depends(get_current_user)):
+    """List the tools a persona may invoke (its whitelist). Defaults to the persona for the
+    caller's role, and only personas the role is allowed to use (RBAC)."""
+    from src.services.omnismart_chatbot import get_persona_factory
+    from src.services.tools import TOOLS, list_persona_tools
+    factory = get_persona_factory()
+    p = persona or factory.get_persona_for_role(user.role)
+    if p not in factory.allowed_personas_for_role(user.role):
+        raise HTTPException(status_code=403, detail=f"Persona '{p}' not allowed for your role")
+    return {"persona": p, "allowed_tools": list_persona_tools(p), "implemented": sorted(TOOLS.keys())}
+
+
+@app.post("/api/v1/agent/run")
+async def agent_run_tool(req: AgentToolRequest, user: TokenData = Depends(get_current_user)):
+    """Run a whitelisted tool for a persona. Enforces both RBAC (the role may use the persona)
+    and the persona's tool whitelist (the tool must be in allowed_tools)."""
+    from src.services.omnismart_chatbot import get_persona_factory
+    from src.services.tools import run_tool
+    factory = get_persona_factory()
+    persona = req.persona or factory.get_persona_for_role(user.role)
+    if persona not in factory.allowed_personas_for_role(user.role):
+        raise HTTPException(status_code=403, detail=f"Persona '{persona}' not allowed for your role")
+    return _json_safe(run_tool(persona, req.tool, req.args or {}))
+
+
+# ════════════════════════════════════════════════════════════
 # ADMIN ENDPOINTS
 # ════════════════════════════════════════════════════════════
 
@@ -1254,6 +1289,10 @@ async def export_data(
                 df.to_excel(buffer, index=False)
                 data = base64.b64encode(buffer.getvalue()).decode()
                 filename = "kpis_export.xlsx"
+            elif req.format == "pdf":
+                from src.services.board_report import generate_board_pdf
+                data = base64.b64encode(generate_board_pdf()).decode()
+                filename = "board_report.pdf"
             else:
                 raise HTTPException(status_code=400, detail=f"Unsupported format: {req.format}")
         
@@ -1274,7 +1313,7 @@ async def export_data(
             "export_id": export_id,
             "format": req.format,
             "filename": filename,
-            "encoding": "base64" if req.format == "xlsx" else "text",
+            "encoding": "base64" if req.format in ("xlsx", "pdf") else "text",
             "data": data,
             "download_url": f"/api/v1/exports/{export_id}/download",
         }
