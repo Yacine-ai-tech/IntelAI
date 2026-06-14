@@ -26,7 +26,7 @@ export default function KnowledgePage() {
 
       <StatGrid>
         <Stat label={t('totalDocuments') || 'Indexed Documents'} value={fmtNum(docCount)} icon={Database} />
-        <Stat label="Glossary Terms" value="64" icon={BookOpen} accent="var(--accent)" />
+        <Stat label="Glossary Terms" value="101" icon={BookOpen} accent="var(--accent)" />
         <Stat label="Domains Covered" value="7" icon={Layers} accent="var(--ok)" />
       </StatGrid>
 
