@@ -41,8 +41,15 @@ inaccurate when this audit was written.
 > pluggable `VECTOR_STORE` backend (`memory` | `chroma` | `pgvector` | `qdrant`) was added
 > ([vector_store.py](../src/services/vector_store.py)); Chroma + pgvector (on Neon) + Qdrant
 > were each verified to index 236 docs and retrieve. The BGE reranker was fixed (now a
-> `CrossEncoder`, so the "+ BGE reranker" claim holds). **Still outstanding:** LangChain is
-> not used (planned: a LangChain adapter in `omnismart-personas`).
+> `CrossEncoder`, so the "+ BGE reranker" claim holds).
+>
+> **✅ Update — LLM-routing + LangChain PR:** the chat path is now provider-agnostic via
+> `LLM_PROVIDER` (`llm_complete`: Groq SDK by default, LiteLLM for any other provider — so
+> "swap models via one env var" is real in the hot path, not just the side router). LangChain
+> is now a real integration: `omnismart_personas.langchain` ships a `ChatPromptTemplate` + an
+> RBAC `persona_retriever_filter` (extra `[langchain]`), so "reusable in any LangChain RAG
+> project" holds. Outstanding pitch items move to later PRs: board-ready PDF export, persona
+> tool-whitelist enforcement, and publishing the package to PyPI.
 
 ---
 
