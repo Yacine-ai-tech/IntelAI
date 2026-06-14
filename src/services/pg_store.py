@@ -507,26 +507,38 @@ def get_kpi_targets(metrics: Optional[List[str]] = None) -> "pd.DataFrame":
 # KNOWLEDGE BASE OPERATIONS
 # ═══════════════════════════════════════════════════════════
 
-def store_knowledge_docs(docs_df: "pd.DataFrame") -> None:
+def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] = None) -> None:
+    """Upsert knowledge-base docs. ON CONFLICT updates ALL fields (title/content/source/
+    embedding) — not just content — so a reused doc_id can never end up with a stale title
+    paired to new content. ``replace_prefix`` first deletes docs whose doc_id starts with it
+    (e.g. ``"seed-"``) so a re-seed with a different doc set leaves no orphaned rows."""
     import pandas as pd
     if docs_df.empty:
         return
+    params = [
+        (
+            str(row.get("doc_id", "")),
+            str(row.get("title", "")),
+            str(row.get("content", "")),
+            str(row.get("source", "manual")),
+            str(row.get("embedding", "")),
+            str(row.get("language", "en")),
+        )
+        for _, row in docs_df.iterrows()
+    ]
     conn = _get_conn()
     try:
-        for _, row in docs_df.iterrows():
-            conn.execute(
+        with conn.cursor() as cur:
+            if replace_prefix:
+                cur.execute("DELETE FROM knowledge_base WHERE doc_id LIKE %s", [f"{replace_prefix}%"])
+            cur.executemany(
                 """INSERT INTO knowledge_base (doc_id, title, content, source, embedding, language)
                    VALUES (%s, %s, %s, %s, %s, %s)
                    ON CONFLICT (doc_id) DO UPDATE
-                   SET content = EXCLUDED.content, embedding = EXCLUDED.embedding""",
-                [
-                    str(row.get("doc_id", "")),
-                    str(row.get("title", "")),
-                    str(row.get("content", "")),
-                    str(row.get("source", "manual")),
-                    str(row.get("embedding", "")),
-                    str(row.get("language", "en")),
-                ],
+                   SET title = EXCLUDED.title, content = EXCLUDED.content,
+                       source = EXCLUDED.source, embedding = EXCLUDED.embedding,
+                       language = EXCLUDED.language""",
+                params,
             )
         conn.commit()
     finally:
