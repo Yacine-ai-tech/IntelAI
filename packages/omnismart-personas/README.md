@@ -49,6 +49,27 @@ prompt = build_rag_prompt(
 
 Personas: `ceo, cfo, cto, coo, chro, esg, risk, analyst, general`.
 
+## LangChain
+
+Use the personas in any LangChain RAG chain — `pip install "omnismart-personas[langchain]"`:
+
+```python
+from omnismart_personas import persona_for_role
+from omnismart_personas.langchain import persona_chat_prompt, persona_retriever_filter
+from langchain_openai import ChatOpenAI
+from langchain_core.output_parsers import StrOutputParser
+
+persona = persona_for_role("cfo")
+prompt = persona_chat_prompt(persona)               # system = scope; {context} + {question}
+chain = prompt | ChatOpenAI(model="gpt-4o-mini") | StrOutputParser()
+
+docs = persona_retriever_filter(persona, retriever.invoke(q))   # RBAC on retrieved docs
+answer = chain.invoke({"context": "\n".join(d.page_content for d in docs), "question": q})
+```
+
+`persona_retriever_filter` drops `Document`s whose `metadata["category"]` is outside the
+persona's `data_access` scope — the same role boundaries, enforced in your LangChain pipeline.
+
 ## Test
 
 ```bash
