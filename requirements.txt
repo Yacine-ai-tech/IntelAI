@@ -2,7 +2,7 @@
 # Stack: FastAPI + React + PostgreSQL + Groq/Anthropic (LiteLLM) + hybrid RAG.
 # Single cloud deployment. OCR/voice/integrations belong to the sibling projects.
 
-# CPU-only torch (needed by sentence-transformers / FlagEmbedding for dense + reranking).
+# CPU-only torch (needed by sentence-transformers for dense embeddings + CrossEncoder reranking).
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch==2.4.1+cpu
 
@@ -36,9 +36,14 @@ anthropic>=0.40.0
 openai>=1.55.0
 
 # ── Retrieval — hybrid (dense + BM25 + rerank) ──
-sentence-transformers>=3.1.1
+sentence-transformers>=3.1.1   # dense embeddings + CrossEncoder BGE reranker
 rank-bm25>=0.2.2
-FlagEmbedding>=1.3.0
+sentencepiece>=0.2.0           # XLM-R tokenizer for the BGE reranker (bge-reranker-v2-m3)
+
+# ── Vector stores (VECTOR_STORE=chroma|pgvector|qdrant; memory needs none) ─
+chromadb>=0.5.0
+pgvector>=0.3.0
+qdrant-client>=1.12.0
 
 # ── ML — forecasting, anomaly detection, TF-IDF/cosine ─
 scipy>=1.14.1
