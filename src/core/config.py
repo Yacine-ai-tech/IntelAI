@@ -92,6 +92,13 @@ class Settings:
     CHUNK_SIZE: int = 900
     CHUNK_OVERLAP: int = 120
 
+    # Vector store backend — memory (in-process) | chroma (dev) | pgvector (prod, Neon) | qdrant (prod)
+    VECTOR_STORE: str = field(
+        default_factory=lambda: os.getenv("VECTOR_STORE", "memory").strip().lower()
+    )
+    QDRANT_URL: str = field(default_factory=lambda: os.getenv("QDRANT_URL", ""))
+    QDRANT_API_KEY: str = field(default_factory=lambda: os.getenv("QDRANT_API_KEY", ""))
+
     # Feature flags — all enabled by default; disabled explicitly via env
     FEATURE_RAG: bool = field(
         default_factory=lambda: os.getenv("FEATURE_RAG", "true").lower() == "true"

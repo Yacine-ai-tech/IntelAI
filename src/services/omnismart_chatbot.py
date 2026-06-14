@@ -131,6 +131,16 @@ class UltraFastRAG:
     ) -> List[Tuple[str, str, float]]:
         """Retrieve most relevant documents using semantic similarity."""
         try:
+            # Persistent vector store (chroma/pgvector/qdrant) — dense hits from the store
+            # fused with BM25 + reranker. No-op (returns None) when VECTOR_STORE=memory.
+            try:
+                from src.services.vector_store import vector_store_retrieve
+                vr = vector_store_retrieve(query, top_k, language)
+                if vr:
+                    return vr
+            except Exception as e:
+                log.warning("Vector store retrieval skipped: %s", e)
+
             docs = get_knowledge_docs()
             if docs.empty:
                 return []
