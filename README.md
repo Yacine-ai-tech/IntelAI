@@ -27,9 +27,13 @@ RAG copilot that respects role boundaries.
 - **GraphRAG-lite** — for multi-hop questions ("how does Engineering headcount track
   Finance margin?"), an entity graph ranks KPI records by overlap and feeds them to the
   copilot. Opt-in via `USE_GRAPH_RAG`.
-- **Hybrid retrieval** — dense (BGE-large) + BM25 + RRF + BGE reranker
-  (`USE_HYBRID_RETRIEVAL`); degrades gracefully to stopword-filtered BM25 + RRF when the
-  ML extras aren't installed.
+- **Hybrid retrieval** — dense + BM25 + RRF + BGE reranker (a `CrossEncoder` over
+  `bge-reranker-v2-m3`); degrades gracefully to stopword-filtered BM25 + RRF when the ML
+  extras aren't installed.
+- **Pluggable vector store** — `VECTOR_STORE` selects the dense backend at runtime:
+  `memory` (in-process, default), `chroma` (dev), `pgvector` (prod — runs on the same Neon
+  Postgres), or `qdrant` (prod). The store serves the dense side; BM25 + the reranker sit on
+  top. Switching backends is one env var — no code change.
 - **Grounded, cited answers** — every reply injects a role-scoped live KPI snapshot +
   retrieved docs and cites them inline (`[1]`, `[2]`); a 100+-term sourced **glossary** keeps
   definitions accurate (no hallucination). Gated by a groundedness eval (`make eval`).
@@ -109,6 +113,8 @@ Default login: **`admin` / `admin123`** (change after first login).
 | `ANTHROPIC_API_KEY` | ⬜ | LiteLLM reasoning / judge tiers (Claude) |
 | `USE_HYBRID_RETRIEVAL` | ⬜ | `true` = dense+BM25+RRF+reranker (needs ML extras) |
 | `USE_GRAPH_RAG` | ⬜ | `true` = GraphRAG-lite for multi-hop KPI queries |
+| `VECTOR_STORE` | ⬜ | `memory` (default) · `chroma` (dev) · `pgvector` (prod/Neon) · `qdrant` |
+| `QDRANT_URL` / `QDRANT_API_KEY` | ⬜ | Qdrant endpoint (only when `VECTOR_STORE=qdrant`) |
 | `LLM_MODEL` | ⬜ | Groq model id (default `llama-3.1-8b-instant`) |
 
 ## 🔌 Key API endpoints
@@ -144,7 +150,8 @@ Deploy the frontend separately (Vercel/Netlify) with its API base pointed at the
 - `omnismart-personas` published to PyPI (persona templates + router — see `packages/`).
 - The built-in `make eval` is a **smoke** groundedness check; the full evaluation harness
   is the separate **RAGeval** project (this just feeds it).
-- Optional pgvector index for the knowledge store; saved dashboards.
+- Saved dashboards; per-tenant workspaces. (pgvector/Chroma/Qdrant vector stores are
+  implemented — select with `VECTOR_STORE`.)
 
 ## 📄 License
 
