@@ -999,21 +999,22 @@ async def delete_chat_session(session_id: str, user: TokenData = Depends(get_cur
 
 
 # ════════════════════════════════════════════════════════════
-# VECTOR SEARCH (ChromaDB)
+# KNOWLEDGE BASE SEARCH (vector store / hybrid retrieval)
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/knowledge/search")
-async def vector_search(q: str, n: int = 5, user: TokenData = Depends(get_current_user)):
+async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_current_user)):
+    """Retrieve the most relevant knowledge-base docs through the configured retrieval stack:
+    the persistent vector store (chroma/pgvector/qdrant) fused with BM25 + reranker when
+    VECTOR_STORE is set, otherwise the in-process hybrid retriever."""
     try:
-        from src.services.pg_store import search_vectors
-        results = search_vectors(q, n=n)
-        docs = []
-        if results and results.get("documents"):
-            for i, doc in enumerate(results["documents"][0]):
-                meta = results["metadatas"][0][i] if results.get("metadatas") else {}
-                dist = results["distances"][0][i] if results.get("distances") else 0
-                docs.append({"content": doc[:500], "metadata": meta, "distance": dist})
-        return {"results": docs, "query": q, "count": len(docs)}
+        from src.services.omnismart_chatbot import _get_shared_rag
+        hits = _get_shared_rag()._retrieve_documents(q, top_k=n)
+        results = [
+            {"title": title, "content": (content or "")[:600], "score": round(float(score), 4)}
+            for title, content, score in hits
+        ]
+        return {"results": results, "query": q, "count": len(results)}
     except Exception as e:
         return {"results": [], "query": q, "error": str(e)}
 
