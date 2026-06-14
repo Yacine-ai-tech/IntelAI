@@ -23,6 +23,7 @@ log = get_logger(__name__)
 
 try:
     from sentence_transformers import SentenceTransformer
+    from sentence_transformers import CrossEncoder
     from sklearn.metrics.pairwise import cosine_similarity
     import numpy as np
     _DENSE = True
@@ -37,12 +38,10 @@ except ImportError:
     _BM25 = False
     log.warning("rank-bm25 not installed — sparse retrieval disabled")
 
-try:
-    from FlagEmbedding import FlagReranker  # type: ignore
-    _RERANKER = True
-except ImportError:
-    _RERANKER = False
-    log.warning("FlagEmbedding not installed — reranker disabled")
+# The BGE reranker is loaded via sentence-transformers' CrossEncoder (not FlagEmbedding) —
+# CrossEncoder uses the fast HF tokenizer and avoids FlagEmbedding's slow-tokenizer path,
+# which breaks on newer transformers (XLMRobertaTokenizer.prepare_for_model removed).
+_RERANKER = _DENSE
 
 import re as _re
 _WORD_RE = _re.compile(r"[a-z0-9]+")
@@ -113,8 +112,8 @@ class HybridRetriever:
         if not _RERANKER:
             return None
         if self._reranker is None:
-            log.info("Loading reranker: %s", self.reranker_model_name)
-            self._reranker = FlagReranker(self.reranker_model_name, use_fp16=True)
+            log.info("Loading reranker (CrossEncoder): %s", self.reranker_model_name)
+            self._reranker = CrossEncoder(self.reranker_model_name)
         return self._reranker
 
     def fit(self, chunks: List[str]) -> None:
@@ -179,9 +178,8 @@ class HybridRetriever:
             try:
                 reranker = self._ensure_reranker()
                 pairs = [(query, self._chunks[i]) for i in merged]
-                scores = reranker.compute_score(pairs, normalize=True)
-                if not isinstance(scores, list):
-                    scores = [scores]
+                scores = reranker.predict(pairs)
+                scores = [float(s) for s in scores]
                 order = sorted(range(len(merged)), key=lambda j: scores[j], reverse=True)[:top_n]
                 return [{"chunk": self._chunks[merged[j]], "score": float(scores[j])} for j in order]
             except Exception as e:  # installed-but-broken reranker (e.g. tokenizer version skew)
@@ -239,3 +237,32 @@ def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int =
     except Exception as e:  # never break the chat path
         log.warning("Hybrid retrieve failed (falling back to vector): %s", e)
         return []
+
+
+# ── Standalone reranker (shared by the vector-store retrieval path) ────────────
+_RERANK_RETRIEVER: Optional["HybridRetriever"] = None
+
+
+def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
+    """Score ``(query, text)`` pairs with the BGE CrossEncoder reranker.
+
+    Returns a list of relevance scores aligned with ``texts``, or ``None`` when the reranker
+    is unavailable / has errored (callers then keep their fusion order). Reuses one cached
+    reranker instance so the model loads at most once per process.
+    """
+    global _RERANK_RETRIEVER
+    if not _RERANKER or not texts:
+        return None
+    if _RERANK_RETRIEVER is None:
+        _RERANK_RETRIEVER = HybridRetriever()
+    r = _RERANK_RETRIEVER
+    if r._reranker_failed:
+        return None
+    try:
+        reranker = r._ensure_reranker()
+        scores = reranker.predict([(query, t) for t in texts])
+        return [float(s) for s in scores]
+    except Exception as e:
+        r._reranker_failed = True
+        log.warning("rerank() unavailable (%s) — keeping fusion order", e)
+        return None

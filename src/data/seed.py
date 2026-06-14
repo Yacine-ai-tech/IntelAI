@@ -352,10 +352,22 @@ def seed_database(replace: bool = True) -> Dict[str, int]:
         for i, d in enumerate(docs)
     ])
     try:
-        store_knowledge_docs(docs_df)
+        store_knowledge_docs(docs_df, replace_prefix="seed-")
         kb = len(docs_df)
     except Exception:
         kb = 0
+
+    # Mirror docs into the persistent vector store (chroma/pgvector/qdrant); no-op for memory.
+    try:
+        from src.services.vector_store import reindex
+        reindex([
+            {"doc_id": r["doc_id"], "title": r["title"], "content": r["content"],
+             "source": r["source"], "category": ""}
+            for r in docs_df.to_dict("records")
+        ])
+    except Exception:
+        pass
+
     return {"kpi_rows": len(rows), "knowledge_docs": kb, "kpi_entities": n_entities}
 
 
