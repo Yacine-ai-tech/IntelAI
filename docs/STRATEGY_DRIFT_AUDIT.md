@@ -171,10 +171,11 @@ STRATEGY.md is doing two jobs at once: (1) a **historical audit of OmniIntelOS**
 **forward strategy for IntelAI**. Post-split, job (1) is misleading because it's presented as
 IntelAI's current state. Options, in order of preference:
 
-1. **Replace Section 3** ("Real Codebase Inventory") with the *actual* IntelAI inventory
-   (the `src/` tree above, 16 pages, ~62 routes, Postgres-only data layer, BM25+BGE+RRF
-   retrieval, no Chroma/LangChain/OCR/voice/n8n), and update Section 4 to drop the
-   already-fixed weaknesses. Keep Sections 1–2 + the strategy/recommendations.
+1. ✅ **Done** — Section 3 ("Real Codebase Inventory") has been rewritten to the actual
+   scoped IntelAI build (real `src/` tree, 16 pages, ~64 routes, Postgres-only data layer +
+   pluggable vector store, BM25+BGE+RRF+CrossEncoder retrieval; no Chroma-as-default/
+   LangChain-in-app/OCR/voice/n8n), and the "exact wc -l / 6 domains / HTTP-only / SVG / stub"
+   claims were corrected. Sections 1–2 + strategy/recommendations kept.
 2. Or **label Section 3 clearly** as "Historical — pre-split OmniIntelOS audit (not IntelAI's
    current code)" so the "grounded in the actual code" claim isn't violated.
 3. Either way, **fix §E** (the broken knowledge search) since that's real code, not docs.
