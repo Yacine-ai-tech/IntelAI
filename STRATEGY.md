@@ -270,117 +270,75 @@ and convert in 2027.
 
 ## Section 3: Real Codebase Inventory (Audited)
 
-Verified by reading the repo on the date of this document.
-Line counts are exact from `wc -l`.
+Reflects the current scoped IntelAI repo (updated after the OmniIntelOS split).
+Files/areas are listed; exact line counts move with development.
 
-### Backend (Python) — ~14,000 lines
+### Backend (Python) — ~7,500 lines
 
-| File | Lines | What It Does |
-|------|-------|--------------|
-| `src/api/server.py` | 2,579 | 60+ endpoints, full RBAC, JWT, WebSocket chat |
-| `src/services/pg_store.py` | 1,669 | 50+ DB functions (KPIs, auth, sessions, audit) |
-| `src/services/omnismart_chatbot.py` | 1,658 | 9 personas, LangChain RAG, ChromaDB integration |
-| `src/services/advanced_chatbot.py` | 1,137 | 5 Groq patterns, agentic flows, Tavily search |
-| `src/integrations/dispatcher.py` | 605 | Gmail/Sheets/n8n/TTS/Voice central dispatcher |
-| `src/services/data_ingestion_manager.py` | 558 | CSV/JSON/PDF/Email/Sheets ingestion orchestration |
-| `src/services/realtime_pipeline.py` | 500 | Domain classifier, async ingestion, 6-domain routing |
-| `src/integrations/n8n.py` | 445 | n8n workflow integration |
-| `src/services/ocr_enhancement.py` | 428 | PDF tables, forms, OCR via pdfplumber + tesseract |
-| `src/core/i18n.py` | 380 | Full EN/FR translation system |
-| `src/core/jwt_auth.py` | 312 | JWT + 9 role definitions, RBAC enforcement |
-| `src/core/config.py` | 311 | Settings, RBAC enums, env management |
-| `src/models/pg_models.py` | 309 | SQLAlchemy models for all entities |
-| `src/services/forecasting.py` | 276 | LinearRegression + Monte Carlo forecasting |
-| `src/services/insights.py` | 275 | Health index, 4 anomaly detection methods |
-| `src/services/hr.py` | 225 | Headcount, turnover, department metrics |
-| `src/services/operations.py` | 204 | Efficiency, utilization, cycle time |
-| `src/services/it_ops.py` | 213 | Uptime, incidents, ticket metrics |
-| `src/services/logistics.py` | 210 | On-time delivery, OTD, cycle time |
-| `src/services/financial.py` | 137 | P&L, balance sheet, EBITDA |
-| `src/services/auth.py` | 180 | Auth helpers, bcrypt, session management |
-| `src/integrations/camera.py` | 189 | QR pairing + mobile upload flow |
-| `src/services/lazy_loader.py` | 160 | Lazy model loading |
-| `src/core/performance.py` | 149 | Latency tracking infrastructure |
-| `src/integrations/tts.py` | 135 | TTS service wrapper |
-| `src/core/monitoring.py` | 122 | Prometheus metrics emitter |
-| `src/core/pg_engine.py` | 114 | DB engine and connection pool |
-| `src/services/voice/main.py` | 130 | faster-whisper + edge-tts microservice |
-| `src/services/ocr/main.py` | ~80 | Tesseract image OCR microservice |
-| `src/integrations/__init__.py` | 75 | Public integration API |
-| `src/models/schemas.py` | 77 | Pydantic request/response schemas |
-| `src/core/logger.py` | 54 | Structured logging |
-| `src/core/crypto.py` | 32 | Credential encryption |
-| `src/services/ingestion.py` | 107 | Ingestion helpers |
-| `src/core/db_engine.py` | 18 | Engine getters |
-| `main.py` | 44 | App entry point |
+> Reflects the **scoped IntelAI build** (post-split). The OCR/voice/n8n/monitoring,
+> SQLAlchemy models, LangChain/ChromaDB and the second chatbot listed in earlier drafts
+> belonged to the OmniIntelOS platform and are **not** in this repo. Data layer is
+> Postgres-only (raw `psycopg` 3) with an optional pluggable vector store.
 
-### Frontend (React + Vite) — ~5,500 lines
+| File | What It Does |
+|------|--------------|
+| `src/api/server.py` | ~1,400 LOC · ~64 endpoints: auth, RBAC, JWT, WebSocket chat, KPIs, insights, domain, glossary, forecast, ingest, knowledge search, `/agent` tools, exports, admin |
+| `src/services/pg_store.py` | PostgreSQL via raw `psycopg` 3 — KPIs, auth, sessions, audit, knowledge base, exports |
+| `src/services/omnismart_chatbot.py` | 9 personas, persona-routed RAG, provider-agnostic completion (`llm_complete`) |
+| `src/services/vector_store.py` | Pluggable vector store — `memory` / Chroma / pgvector / Qdrant (`VECTOR_STORE`) |
+| `src/services/hybrid_retrieval.py` | Dense (BGE) + BM25 + RRF + CrossEncoder reranker, with graceful degradation |
+| `src/services/graph_retrieval.py` · `entity_extractor.py` | GraphRAG-lite over the `kpi_entities` sidecar |
+| `src/services/llm_router.py` | LiteLLM multi-provider router (tiers + Anthropic `cache_control`) |
+| `src/services/tools.py` | Whitelisted persona tools (enforced per persona + RBAC) |
+| `src/services/board_report.py` | Board-ready PDF report (reportlab) |
+| `src/services/{hr,it_ops,operations,logistics,financial}.py` | Per-domain KPI extractors over the catalog |
+| `src/services/{insights,forecasting}.py` | Health/risk index, 4-method anomalies, Monte Carlo forecasting |
+| `src/data/{seed,glossary,rag_eval}.py` | 126-metric single catalog, 101-term sourced glossary, groundedness eval gate |
+| `src/core/{config,jwt_auth,i18n,logger,crypto}.py` | Settings, JWT + 9-role RBAC, EN/FR, logging, crypto |
+| `main.py` | App entry point (`uvicorn src.api.server:app`) |
 
-19 pages, all routed in `App.jsx`. Highlights:
+### Frontend (React + Vite) — 16 pages
 
-| File | Lines | What It Does |
-|------|-------|--------------|
-| `frontend/src/pages/DataHubPage.jsx` | 356 | Full ingestion control UI |
-| `frontend/src/pages/AdminPage.jsx` | 261 | User management, roles, audit |
-| `frontend/src/pages/ScannerPage.jsx` | 256 | Camera + file OCR upload |
-| `frontend/src/pages/ChatPage.jsx` | 238 | Sessions, personas, TTS, **but uses HTTP not WebSocket** |
-| `frontend/src/pages/ITPage.jsx` | 230 | Incidents, uptime, tickets |
-| `frontend/src/pages/AnalyticsPage.jsx` | 230 | KPI browser, **hand-coded SVG bar charts** |
-| `frontend/src/pages/HRPage.jsx` | 210 | Headcount, turnover, departments |
-| `frontend/src/pages/IntegrationsPage.jsx` | 210 | Gmail, Sheets, ClickUp UI |
-| `frontend/src/pages/DashboardPage.jsx` | 199 | KPIs, Health, Summary, Risk cards |
-| `frontend/src/pages/RiskPage.jsx` | 192 | Risk score, anomalies |
-| `frontend/src/pages/OperationsPage.jsx` | 187 | Efficiency, cycle time |
-| `frontend/src/pages/ESGPage.jsx` | 168 | Carbon, safety, governance |
-| `frontend/src/pages/LogisticsPage.jsx` | 165 | OTD, delivery metrics |
-| `frontend/src/pages/ForecastingPage.jsx` | 153 | Metric select, **lacks proper chart** |
-| `frontend/src/pages/MonitoringPage.jsx` | 153 | System health, Prometheus |
-| `frontend/src/pages/SettingsPage.jsx` | 133 | Language, preferences |
-| `frontend/src/pages/LoginPage.jsx` | 112 | Auth form |
-| `frontend/src/pages/FinancialPage.jsx` | 70 | **Stub — minimal content** |
-| `frontend/src/pages/BulkDataPage.jsx` | 67 | **Stub — minimal content** |
+All routed in `App.jsx`, built on a shared UI kit (`components/ui.jsx`), Recharts charts,
+bilingual EN/FR, and JWT/RBAC route guards:
 
-Plus components (`DataIngestionPanel`, `FloatingChat`, `PairingModal`,
-`Sidebar`, `FilePreview`), full EN+FR translations, and a working
-design system.
+Dashboard · Analytics · Forecasting · Risk · Financial · HR · IT · Operations · Logistics ·
+ESG · Knowledge · DataHub · Admin · Settings · Chat · Login.
+
+(WebSocket streaming chat, Recharts on all chart pages, full Forecasting/Financial pages —
+the "HTTP-only / SVG / stub" notes in earlier drafts are resolved.)
 
 ### Infrastructure
 
 ```
-docker-compose.yml         13 services: postgres, fastapi, frontend,
-                           prometheus, grafana, n8n, ocr, voice, tunnels
-Dockerfile                 Backend image (Python 3.10)
-frontend/Dockerfile        nginx-served frontend
-src/services/ocr/          Standalone OCR microservice (Tesseract, :8001)
-src/services/voice/        Standalone voice microservice (Whisper, :8002)
-monitoring/                Prometheus rules + Grafana provisioning
-scripts/                   10 ops shell scripts
-n8n_workflows/             4 pre-built n8n workflows
-tunnels/                   Cloudflare tunnel configs
-db/schema.sql              Full PostgreSQL schema
+docker-compose.dev.yml     Single FastAPI app (Neon Postgres via POSTGRES_URL)
+Dockerfile                 Non-root backend image + healthcheck
+railway.toml               One-service cloud deploy (Railway/Fly)
 ```
 
-### API Surface (60+ endpoints)
+No nginx / Prometheus / Grafana / n8n / Cloudflare tunnels / OCR / voice services — those
+are the OmniIntelOS platform. Tables are created idempotently in `pg_store` (no `db/schema.sql`).
 
-Organized in groups:
+### API Surface (~64 endpoints)
 
 ```
-AUTH       (5)   login, register, me, logout, status
-CHAT       (10)  /chat HTTP, /ws/chat WebSocket, /personas, sessions, domain
-KPI        (7)   kpis, periods, metrics, categories + insights health/risk/summary
-INGESTION  (12)  metrics, csv, document + data/ingest, spreadsheets, bulk
-DOMAIN     (14)  hr, operations, esg, logistics, financial, IT
-INTEGRATIONS (9) Gmail, Sheets, ClickUp OAuth + connect/disconnect
-VOICE/OCR  (4)   transcribe, tts, ocr/extract
-CAMERA     (5)   pair, upload, sessions
-ADMIN      (8)   users, roles, audit, seed, monitoring, /metrics, /health
+AUTH        login, register, me, logout, status
+CHAT        /chat (REST) + /ws/chat (WebSocket), personas, sessions, chatbot/domain
+KPI         kpis (+ periods/metrics/categories), insights health/risk/summary/anomalies
+DOMAIN      hr, operations, logistics, esg, financial, it (overview/security/devops…)
+RAG         glossary, knowledge/search, knowledge/stats
+FORECAST    /forecast (Monte Carlo CI)
+INGEST      ingest/csv, ingest/document, ingest/metrics, files, spreadsheets
+AGENT       agent/tools, agent/run (whitelisted persona tools)
+EXPORT      data/export (csv · json · xlsx · pdf board report)
+ADMIN       users, roles, audit, seed, health
 ```
 
 ### Nine AI Personas (Implemented in omnismart_chatbot.py lines 1048–1230)
 
 ```
 PERSONA   TEMP   DATA_ACCESS               ALLOWED_TOOLS
-ceo       0.4    All 6 domains             kpi, forecast, report, market
+ceo       0.4    All 7 domains             kpi, forecast, report, market
 cfo       0.2    Finance, Growth           kpi, forecast, financial_stmt
 cto       0.3    Operations, Finance, IT   kpi, risk, tech_metrics
 coo       0.3    Operations, Growth, People kpi, ops_metrics, supply_chain
