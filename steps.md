@@ -59,3 +59,7 @@ Recharts UI, WebSocket chat, JWT/RBAC). Deploy + PyPI publish remain (user-gated
 3. **pgvector prod path** alongside Chroma dev; load-test retrieval at scale.
 4. **Eval-in-CI** gate (the 25/25 set) to catch retrieval regressions.
 5. **Package** `omnismart-personas` to PyPI (the one shared artifact across the 6 projects).
+
+## Comprehensive QA pass (2026-06-16)
+- **58 tests pass** (shared env, after installing jose/chromadb). §1.10 verified: GraphRAG-lite, hybrid retrieval+reranker, multi-LLM router. Package **omnismart-personas**: 8 tests pass + builds wheel (PyPI-ready).
+- All 6 projects + both packages green; 28/28 STRATEGY §.10 feature claims code-verified.
