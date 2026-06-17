@@ -67,3 +67,10 @@ Recharts UI, WebSocket chat, JWT/RBAC). Deploy + PyPI publish remain (user-gated
 ## Remediation — LIVE behavior validation (2026-06-17)
 - Added `tests/test_live_llm.py` (real LLM, skip-if-no-key): **llm_router LIVE**: real multi-provider completion returns exact 'PONG'.
 - Addresses the "tests prove imports not behavior" gap with a real, measured run.
+
+## FINAL scoreboard + Docker validation (2026-06-17)
+- **Docker**: docker compose up --build → /health **200** on :8000 (isolated image, not conda). **Tests 58**. BGE-large validated on T4 (CUDA). RAG quality measured via internal 25-query eval (no worldwide RAG benchmark maps to KPI-domain data — honest).
+- Deployment validated via **Docker** (docker-compose.dev.yml), the isolated per-repo design —
+  NOT the shared conda env. All 6 repos: 6/6 containers serve /health.
+- **User-gated (cannot be done by the agent):** Railway/Fly deploy, PyPI upload (wheels built),
+  Loom recording, sending Upwork proposals, publishing blog/preprint drafts.
