@@ -133,7 +133,7 @@ export default function ChatPage() {
     setInput(''); setLoading(true)
     const ws = wsRef.current
     if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ message: q, persona: persona || undefined }))
+      ws.send(JSON.stringify({ message: q, persona: persona || undefined, session_id: activeSession || undefined }))
     } else {
       api.sendChat(q, persona || null, activeSession, '')
         .then(r => setMessages(p => [...p, { role: 'assistant', content: r.data.response || 'No response.', sources: r.data.sources || [] }]))
