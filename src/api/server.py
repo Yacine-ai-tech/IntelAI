@@ -1135,20 +1135,38 @@ async def websocket_chat(websocket: WebSocket):
 
         from src.services.omnismart_chatbot import get_persona_factory
         factory = get_persona_factory()
+        # Reuse the client's session when provided (so reconnects continue the same thread);
+        # otherwise start a new one. Persisted lazily on the first real message.
         session_id = str(uuid.uuid4())
         history = []
+        _session_ready = False
         await websocket.send_json({"type": "connected", "user": user.username, "session_id": session_id})
 
         while True:
             data = await websocket.receive_json()
             message = data.get("message", "")
             persona_override = data.get("persona")
+            if data.get("session_id"):
+                session_id = data["session_id"]
             result = factory.chat(
                 message=message, user_role=user.role,
                 persona_override=persona_override, language=user.language, history=history,
             )
             history.append({"role": "user", "content": message})
             history.append({"role": "assistant", "content": result["response"]})
+            # Persist the turn so it appears in history with a real title (store_message
+            # auto-titles the session from the first user message). Best-effort.
+            try:
+                import json as _json
+                from src.services.pg_store import ensure_session_exists, store_message
+                if not _session_ready:
+                    ensure_session_exists(session_id, getattr(user, "user_id", user.username))
+                    _session_ready = True
+                store_message(session_id, "user", message)
+                store_message(session_id, "assistant", result["response"],
+                              sources=_json.dumps(result.get("sources", [])))
+            except Exception as e:
+                log.warning("WS message persistence failed: %s", e)
             await websocket.send_json({
                 "type": "response", "response": result["response"],
                 "persona_used": result["persona_used"],
