@@ -47,7 +47,7 @@ class Settings:
     # PostgreSQL — primary and only database
     POSTGRES_URL: str = field(
         default_factory=lambda: os.getenv(
-            "POSTGRES_URL", "postgresql://omniintel:change_me_postgres_password@localhost:5432/omniintelos"
+            "POSTGRES_URL", "postgresql://intelai:change_me@localhost:5432/intelai"
         )
     )
 
