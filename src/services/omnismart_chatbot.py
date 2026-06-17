@@ -809,10 +809,12 @@ class AgentPersonaFactory:
             "You have DIRECT access to the company's live data, provided with the user's message "
             "below. Answer the question directly using those numbers — never ask the user to supply "
             "data or to pick a focus area when the data is already provided. Be specific and quote the "
-            "metric values. CITE your sources inline using the bracketed numbers shown in the data "
-            "block, e.g. 'Revenue is $3.6M [1]'. Only use citation numbers that appear in the data "
-            "block and never invent one. Only use data within your access scope; if a figure is "
-            "genuinely missing, say so in one short sentence."
+            "metric values, mirroring the exact currency and number format shown in the data "
+            "(e.g. '$3.6M', '3,6 M€', or '3,6 Md FCFA' — do not convert currencies). CITE your "
+            "sources inline using the bracketed numbers shown in the data block, e.g. 'Revenue is "
+            "3.6M [1]'. Only use citation numbers that appear in the data block and never invent "
+            "one. Only use data within your access scope; if a figure is genuinely missing, say so "
+            "in one short sentence."
         )
         messages: List[Dict[str, str]] = [{"role": "system", "content": system_prompt}]
 
