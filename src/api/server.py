@@ -1084,6 +1084,29 @@ async def cleanup_data(user: TokenData = Depends(require_role("admin"))):
     return {"status": "cleaned", "deleted": clear_user_data()}
 
 
+@app.get("/api/v1/admin/vsdebug")
+async def vsdebug(q: str = "revenue", user: TokenData = Depends(require_role("admin"))):
+    """Diagnostic: localize why knowledge search may return nothing."""
+    out = {}
+    try:
+        from src.services.vector_store import get_vector_store, vector_store_retrieve
+        vs = get_vector_store()
+        out["vs"] = getattr(vs, "name", None)
+        if vs is not None:
+            out["count"] = vs.count()
+            try:
+                dense = vs.query(q, n=5)
+                out["dense_hits"] = len(dense)
+                out["dense_top"] = (dense[0]["title"], round(dense[0]["score"], 3)) if dense else None
+            except Exception as e:
+                out["dense_error"] = str(e)[:200]
+        fused = vector_store_retrieve(q, top_k=3, language="en")
+        out["fused_hits"] = (len(fused) if fused is not None else None)
+    except Exception as e:
+        out["error"] = str(e)[:200]
+    return out
+
+
 @app.post("/api/v1/admin/reindex")
 async def reindex_vectors(user: TokenData = Depends(require_role("admin"))):
     """(Re)build the persistent vector store from the knowledge base — fixes empty search."""
