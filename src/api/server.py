@@ -199,6 +199,26 @@ async def startup():
     except Exception as e:
         log.warning("Data seeding skipped: %s", e)
 
+    # Self-heal the persistent vector store: if a store is configured (pgvector/chroma/qdrant)
+    # but it's empty while the knowledge base has docs, (re)build the index. This covers the
+    # case where the DB was seeded by a prior deploy (so seeding is skipped) but the vector
+    # store on this instance/backend was never populated → knowledge search returns nothing.
+    try:
+        from src.services.vector_store import get_vector_store, reindex
+        vs = get_vector_store()
+        if vs is not None:
+            try:
+                cnt = vs.count()
+            except Exception:
+                cnt = 0
+            if cnt == 0:
+                n = reindex()
+                log.info("✅ Vector store was empty — reindexed %d docs", n)
+            else:
+                log.info("✅ Vector store populated: %d docs", cnt)
+    except Exception as e:
+        log.warning("Vector store self-heal skipped: %s", e)
+
     log.info("✅ IntelAI API ready")
 
 
@@ -1021,6 +1041,16 @@ async def seed_data(user: TokenData = Depends(require_role("admin"))):
     from src.services.pg_store import seed_all_domains
     count = seed_all_domains()
     return {"status": "seeded", "rows": count}
+
+
+@app.post("/api/v1/admin/reindex")
+async def reindex_vectors(user: TokenData = Depends(require_role("admin"))):
+    """(Re)build the persistent vector store from the knowledge base — fixes empty search."""
+    from src.services.vector_store import reindex, get_vector_store
+    if get_vector_store() is None:
+        return {"status": "skipped", "reason": "VECTOR_STORE=memory (no persistent store)"}
+    n = reindex()
+    return {"status": "reindexed", "docs": n}
 
 
 # ════════════════════════════════════════════════════════════
