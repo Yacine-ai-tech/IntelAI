@@ -163,6 +163,21 @@ class PgVectorStore:
         finally:
             conn.close()
 
+    def reset(self) -> None:
+        """Drop + recreate the table at the CURRENT embedding dimension. Fixes a dimension
+        mismatch (e.g. table built with 1024-d vectors but the active model is 384-d)."""
+        conn = self._get_conn()
+        try:
+            conn.execute("DROP TABLE IF EXISTS doc_vectors")
+            conn.execute(
+                f"CREATE TABLE doc_vectors ("
+                f"doc_id TEXT PRIMARY KEY, title TEXT, content TEXT, source TEXT, "
+                f"category TEXT, embedding vector({self.dim}))"
+            )
+            conn.commit()
+        finally:
+            conn.close()
+
 
 class QdrantVectorStore:
     name = "qdrant"
@@ -241,11 +256,14 @@ def reset_cache() -> None:
     _STORE = "unset"
 
 
-def reindex(docs: Optional[List[Doc]] = None) -> int:
-    """Embed + upsert the knowledge base into the configured store. No-op for ``memory``."""
+def reindex(docs: Optional[List[Doc]] = None, force: bool = False) -> int:
+    """Embed + upsert the knowledge base into the configured store. No-op for ``memory``.
+    ``force=True`` drops + recreates the store first (rebuilds at the current embedding dim)."""
     vs = get_vector_store()
     if vs is None:
         return 0
+    if force and hasattr(vs, "reset"):
+        vs.reset()
     if docs is None:
         from src.services.pg_store import get_knowledge_docs
         df = get_knowledge_docs()
