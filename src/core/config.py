@@ -79,6 +79,10 @@ class Settings:
     SUPPORTED_LANGUAGES: tuple = ("en", "fr")
     DEFAULT_LANGUAGE: str = field(default_factory=lambda: os.getenv("DEFAULT_LANGUAGE", "en"))
 
+    # Display currency for KPI/insight formatting. ISO 4217 code: USD | EUR | GBP | XOF (FCFA) | …
+    # This is a presentation setting (symbol + locale rules); it does not perform FX conversion.
+    CURRENCY: str = field(default_factory=lambda: os.getenv("CURRENCY", "USD").strip().upper())
+
     # LLM — provider-agnostic. LLM_PROVIDER selects the backend (groq uses the Groq SDK
     # directly for speed; any other value routes through LiteLLM → no vendor lock-in).
     LLM_PROVIDER: str = field(default_factory=lambda: os.getenv("LLM_PROVIDER", "groq").strip().lower())
