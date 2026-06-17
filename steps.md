@@ -107,3 +107,9 @@ with a **non-default `PORT=9100`** (+ `--env-file .env`), and poll `/health`. Re
 **build OK → HEALTH 200 ✓** — confirms the image builds (deps + COPY paths resolve), honors the
 platform `$PORT`, and boots cleanly. All 6 projects passed (OVERALL_RESULT=ALL_PASS). Railway/
 Render build the same Dockerfile, so cloud deploy is validated end-to-end.
+
+## PyPI publish — omnismart-personas (2026-06-17)
+- **Published** the reusable persona library to PyPI: https://pypi.org/project/omnismart-personas/0.1.0/
+  (hatchling build, zero runtime deps, `twine check` PASSED). Test-installed from PyPI into a clean
+  target: `import omnismart_personas` + submodules (router, templates) OK. This is the shareable
+  artifact called for in STRATEGY/EXECUTION_PLAN (the IntelAI app itself stays a deploy, not a dist).
