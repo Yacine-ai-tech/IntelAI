@@ -65,6 +65,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [slowHint, setSlowHint] = useState(false)
   const [persona, setPersona] = useState('')          // '' = auto (role-based)
   const [activeSession, setActiveSession] = useState(null)
   const [status, setStatus] = useState('disconnected')
@@ -86,6 +87,12 @@ export default function ChatPage() {
 
   const scroll = useCallback(() => endRef.current?.scrollIntoView({ behavior: 'smooth' }), [])
   useEffect(() => { scroll() }, [messages, loading, scroll])
+  // Show a gentle "warming up" hint if a reply takes a while (cold model load / on-demand wake).
+  useEffect(() => {
+    if (!loading) { setSlowHint(false); return }
+    const id = setTimeout(() => setSlowHint(true), 6000)
+    return () => clearTimeout(id)
+  }, [loading])
 
   // Prefill from a Dashboard "ask copilot" deep-link (?q=…), then clear it from the URL.
   useEffect(() => {
@@ -227,6 +234,7 @@ export default function ChatPage() {
               <div className="chat-avatar"><Sparkles size={15} /></div>
               <div className="chat-bubble">
                 <span className="typing-dot" /> <span className="typing-dot" style={{ animationDelay: '.2s' }} /> <span className="typing-dot" style={{ animationDelay: '.4s' }} />
+                {slowHint && <div style={{ marginTop: 8, fontSize: '.78rem', color: 'var(--text-3)' }}>{t('warmingHint') || 'Warming up the copilot — the first reply can take ~30s, then it’s fast.'}</div>}
               </div>
             </div>
           )}
