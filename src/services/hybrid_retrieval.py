@@ -243,6 +243,34 @@ def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int =
 _RERANK_RETRIEVER: Optional["HybridRetriever"] = None
 
 
+_LAST_WAKE = 0.0
+
+
+def _trigger_wake() -> None:
+    """Fire-and-forget: ask the orchestrator to wake the on-demand inference Studio. Rate-limited
+    so a burst of failed reranks triggers at most one wake per minute. Non-blocking (daemon thread)."""
+    import time as _t
+    global _LAST_WAKE
+    url = os.getenv("ORCHESTRATOR_URL", "").strip()
+    if not url or (_t.time() - _LAST_WAKE) < 60:
+        return
+    _LAST_WAKE = _t.time()
+
+    def _go():
+        try:
+            import json as _json, urllib.request
+            h = {"Content-Type": "application/json"}
+            tk = os.getenv("ORCH_TOKEN", "").strip()
+            if tk:
+                h["Authorization"] = "Bearer " + tk
+            req = urllib.request.Request(url.rstrip("/") + "/wake", data=_json.dumps({}).encode(), headers=h)
+            urllib.request.urlopen(req, timeout=90)
+        except Exception:
+            pass
+    import threading
+    threading.Thread(target=_go, daemon=True).start()
+
+
 def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
     """Score ``(query, text)`` pairs with the BGE CrossEncoder reranker.
 
@@ -277,7 +305,8 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
             if isinstance(scores, list) and len(scores) == len(texts):
                 return [float(s) for s in scores]
         except Exception as e:
-            log.warning("remote rerank unavailable (%s) — falling back", e)
+            log.warning("remote rerank unavailable (%s) — falling back + waking studio", e)
+            _trigger_wake()  # on-demand: wake the inference Studio so the next requests get rerank
 
     if not _RERANKER:
         return None
