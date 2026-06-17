@@ -209,35 +209,37 @@ async def startup():
     except Exception as e:
         log.warning("Data seeding skipped: %s", e)
 
-    # Self-heal the persistent vector store: if a store is configured (pgvector/chroma/qdrant)
-    # but it's empty while the knowledge base has docs, (re)build the index. This covers the
-    # case where the DB was seeded by a prior deploy (so seeding is skipped) but the vector
-    # store on this instance/backend was never populated → knowledge search returns nothing.
-    try:
-        from src.services.vector_store import get_vector_store, reindex
-        vs = get_vector_store()
-        if vs is not None:
+    # Self-heal the persistent vector store WITHOUT blocking startup: embedding-model load +
+    # (re)indexing are heavy, so run them in a background thread. The API serves /health, login,
+    # dashboards and chat immediately; knowledge search lights up once the index finishes. This
+    # keeps large deps/models from blocking the UI/UX.
+    def _vector_selfheal():
+        try:
+            from src.services.vector_store import get_vector_store, reindex
+            vs = get_vector_store()
+            if vs is None:
+                return
             try:
                 cnt = vs.count()
             except Exception:
                 cnt = 0
             if cnt == 0:
-                n = reindex()
-                log.info("✅ Vector store was empty — reindexed %d docs", n)
+                log.info("Vector store empty — background reindex: %d docs", reindex())
             else:
-                # Probe a query — a dimension mismatch (table built with a different embedding
-                # model) means search silently returns nothing → force-rebuild at the current dim.
                 try:
                     vs.query("healthcheck probe", n=1)
                     log.info("✅ Vector store populated: %d docs", cnt)
                 except Exception as e:
                     if "dimension" in str(e).lower():
-                        n = reindex(force=True)
-                        log.info("✅ Vector store dim mismatch — rebuilt %d docs", n)
+                        log.info("Vector store dim mismatch — background rebuild: %d docs", reindex(force=True))
                     else:
                         log.warning("Vector store probe error: %s", e)
-    except Exception as e:
-        log.warning("Vector store self-heal skipped: %s", e)
+        except Exception as e:
+            log.warning("Vector store self-heal skipped: %s", e)
+
+    import asyncio as _asyncio
+    _asyncio.create_task(_asyncio.to_thread(_vector_selfheal))
+    log.info("Vector store self-heal scheduled (background)")
 
     log.info("✅ IntelAI API ready")
 
