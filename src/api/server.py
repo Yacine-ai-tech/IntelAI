@@ -380,21 +380,65 @@ async def list_personas(user: TokenData = Depends(get_current_user)):
     return {"personas": factory.list_personas(user_role=user.role)}
 
 
+# In-memory cache of French-translated glossary entries (term -> translated dict).
+_GLOSSARY_FR_CACHE: Dict[str, Dict[str, Any]] = {}
+_GLOSSARY_TEXT_FIELDS = ("definition", "benchmark", "interpretation", "why_it_matters", "example")
+
+
+async def _localize_glossary_entry(entry: Dict[str, Any], lang: str) -> Dict[str, Any]:
+    """Return the entry with its prose fields translated to ``lang`` (fr) via the LLM, cached.
+    Numbers/formulas/direction are left untouched. Falls back to English on any error."""
+    if lang != "fr" or not entry:
+        return entry
+    key = str(entry.get("term") or entry.get("definition", ""))[:80]
+    if key in _GLOSSARY_FR_CACHE:
+        return _GLOSSARY_FR_CACHE[key]
+    fields = {k: entry[k] for k in _GLOSSARY_TEXT_FIELDS if isinstance(entry.get(k), str) and entry[k].strip()}
+    if not fields:
+        return entry
+    try:
+        import json as _json
+        from src.services.llm_router import llm_call
+        prompt = (
+            "Translate the string VALUES of this JSON object to French. Keep the keys unchanged, "
+            "keep numbers, %, currency and formulas as-is, and return ONLY the JSON object:\n"
+            + _json.dumps(fields, ensure_ascii=False)
+        )
+        resp = await llm_call([{"role": "user", "content": prompt}], tier="default",
+                              temperature=0.0, max_tokens=500)
+        txt = resp["choices"][0]["message"]["content"]
+        txt = txt[txt.find("{"): txt.rfind("}") + 1]
+        translated = _json.loads(txt)
+        out = {**entry, **{k: v for k, v in translated.items() if k in fields}}
+    except Exception as e:
+        log.warning("glossary fr translation failed (%s) — serving English", e)
+        out = entry
+    _GLOSSARY_FR_CACHE[key] = out
+    return out
+
+
 @app.get("/api/v1/glossary")
 async def get_glossary(
     domain: Optional[str] = None,
     term: Optional[str] = None,
+    lang: Optional[str] = None,
     user: TokenData = Depends(get_current_user),
 ):
     """Authoritative, sourced domain glossary — powers the per-page contextual
-    explainer and grounds term definitions (no hallucination)."""
+    explainer and grounds term definitions (no hallucination). ``lang=fr`` returns
+    French definitions (LLM-translated + cached; numbers/formulas preserved)."""
+    import asyncio
     from src.data.glossary import for_domain, get_term
+    lang = (lang or getattr(user, "language", None) or "en").lower()
     if term:
         entry = get_term(term)
         if not entry:
             raise HTTPException(status_code=404, detail=f"Term not found: {term}")
-        return entry
-    return {"terms": for_domain(domain)}
+        return await _localize_glossary_entry(entry, lang)
+    terms = for_domain(domain)
+    if lang == "fr":
+        terms = await asyncio.gather(*[_localize_glossary_entry(t, lang) for t in terms])
+    return {"terms": list(terms)}
 
 
 # ════════════════════════════════════════════════════════════
