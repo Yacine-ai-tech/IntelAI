@@ -1088,7 +1088,12 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
     VECTOR_STORE is set, otherwise the in-process hybrid retriever."""
     try:
         from src.services.omnismart_chatbot import _get_shared_rag
-        hits = _get_shared_rag()._retrieve_documents(q, top_k=n)
+        # Match the (working) chat retrieval path: pass a language so the vector-store query
+        # filters consistently instead of returning nothing.
+        rag = _get_shared_rag()
+        hits = rag._retrieve_documents(q, top_k=n, language=getattr(user, "language", None) or "en")
+        if not hits:  # last-resort: retry language-agnostic
+            hits = rag._retrieve_documents(q, top_k=n)
         results = [
             {"title": title, "content": (content or "")[:600], "score": round(float(score), 4)}
             for title, content, score in hits
