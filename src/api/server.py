@@ -128,11 +128,19 @@ def _init_default_users():
         log.warning("No default users configured. Use /api/v1/auth/register for first account or set BOOTSTRAP_ADMIN_* env vars.")
         return
     try:
-        from src.services.pg_store import get_user, create_user
+        from src.services.pg_store import get_user, create_user, update_user
         for username, info in DEFAULT_USERS.items():
             existing = get_user(username)
             if not existing:
                 create_user(username, hash_password(info["password"]), info["role"])
+            else:
+                # Sync password + role to the configured value so the documented credentials
+                # always work (create-if-absent alone would keep a stale password).
+                try:
+                    update_user(existing["id"], password_hash=hash_password(info["password"]), role=info["role"])
+                    existing = get_user(username)
+                except Exception as e:
+                    log.warning("could not sync default user %s: %s", username, e)
             # Also keep in-memory for fast lookups
             if existing:
                 _users_db[username] = existing
@@ -292,6 +300,30 @@ async def login(req: LoginRequest):
             "language": user_data.get("preferred_language", "en"),
             "pages": get_user_pages(role),
             "data_access": get_user_data_categories(role),
+        },
+    }
+
+
+@app.post("/api/v1/auth/demo-login")
+async def demo_login(role: str):
+    """One-click 'try as persona' for the demo — issues a token for the role WITHOUT exposing
+    any password in the frontend. Gated by DEMO_MODE (default on). Real logins still use passwords
+    (documented in the repo-root `credentials` file)."""
+    import os as _os
+    if _os.getenv("DEMO_MODE", "true").lower() != "true":
+        raise HTTPException(status_code=403, detail="Demo mode disabled")
+    from src.core.jwt_auth import ROLE_DEFINITIONS
+    role = (role or "").lower()
+    if role not in ROLE_DEFINITIONS:
+        raise HTTPException(status_code=404, detail=f"Unknown role: {role}")
+    ud = _users_db.get(role) or {"id": str(uuid.uuid4()), "username": role}
+    token = create_access_token(TokenData(user_id=ud["id"], username=role, role=role, language="en"))
+    return {
+        "access_token": token, "token_type": "bearer",
+        "user": {
+            "id": ud["id"], "username": role, "role": role,
+            "full_name": role.upper(), "language": "en",
+            "pages": get_user_pages(role), "data_access": get_user_data_categories(role),
         },
     }
 
@@ -1041,6 +1073,13 @@ async def seed_data(user: TokenData = Depends(require_role("admin"))):
     from src.services.pg_store import seed_all_domains
     count = seed_all_domains()
     return {"status": "seeded", "rows": count}
+
+
+@app.post("/api/v1/admin/cleanup")
+async def cleanup_data(user: TokenData = Depends(require_role("admin"))):
+    """Wipe safe-to-delete data (chat history + audit trail); keeps KPI/knowledge/seed data."""
+    from src.services.pg_store import clear_user_data
+    return {"status": "cleaned", "deleted": clear_user_data()}
 
 
 @app.post("/api/v1/admin/reindex")
