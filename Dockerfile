@@ -15,8 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 COPY requirements.txt /app/requirements.txt
-RUN --mount=type=cache,id=pip,target=/root/.cache/pip \
-    pip install --upgrade pip && \
+RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r /app/requirements.txt --retries 10 --timeout 120
 
 COPY src /app/src
