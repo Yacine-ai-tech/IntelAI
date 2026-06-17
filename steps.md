@@ -74,3 +74,29 @@ Recharts UI, WebSocket chat, JWT/RBAC). Deploy + PyPI publish remain (user-gated
   NOT the shared conda env. All 6 repos: 6/6 containers serve /health.
 - **User-gated (cannot be done by the agent):** Railway/Fly deploy, PyPI upload (wheels built),
   Loom recording, sending Upwork proposals, publishing blog/preprint drafts.
+
+## Internationalization — locale-aware currency formatting (2026-06-17)
+STRATEGY calls for bilingual EN/FR + "proper currency formatting". Found inconsistency: French
+executive-summary bullets called `format_number()` which emitted English `$3.6M` inside French
+prose ("Revenu actuel à $3.6M.").
+- `src/services/insights.py::format_number` is now locale-aware (defaults to `I18N.lang()`):
+  EN `$3.6M` (prefix, `.` decimal, K/M/B); FR `3,6 M$` (suffix, `,` decimal, space groups, k/M/Md).
+  Backward-compatible signature (`currency` kept; new optional `lang`). No tests pinned the format.
+- Verified EN/FR output across 10 cases (B/M/k thresholds, sub-1000, None→"—").
+
+## FCFA + multi-currency, and deploy-today pass (2026-06-17)
+"Make IntelAI handle French/English AND FCFA." French/English: verified all 7 i18n sections have
+exact EN/FR key parity (AUTH 18, NAV 26, COPILOT 9, FINANCE 22, INGESTION 19, RBAC 10, COMMON 34).
+- **Currency now configurable + FCFA-correct.** New `settings.CURRENCY` (ISO 4217, default USD).
+  `insights.format_number` rewritten to be currency- AND locale-aware via a presentation table:
+  symbol vs word currencies, prefix (EN) vs suffix (FR). Examples — USD/EN `$3.6M`, EUR/FR `3,6 M€`,
+  **XOF/EN `3.6B FCFA`, XOF/FR `3,6 Md FCFA`, XOF/FR `850 FCFA`**. Verified across 15 cases.
+- **Frontend too:** `frontend/src/components/ui.jsx` `fmtMoney` hardcoded `'$'` → now reads
+  `VITE_CURRENCY` (+ `VITE_LANGUAGE`) and mirrors the backend rules (FCFA renders as a spaced suffix).
+- `.env.example` documents `DEFAULT_LANGUAGE` + `CURRENCY=USD|EUR|GBP|XOF…` (presentation only, no FX).
+- **Deploy:** already binds `$PORT` via `railway.toml` startCommand; confirmed healthcheck `/health`,
+  `.env` gitignored, no secrets tracked.
+- Copilot prompt fix: the citation example hardcoded `$3.6M`; now currency-neutral and tells the
+  model to **mirror the currency shown in the (FCFA/EUR-aware) data block, never convert** — so
+  with `CURRENCY=XOF` the copilot cites FCFA, not `$`. Verified chatbot already replies in FR/EN
+  (`"Répondez en français." if I18N.lang()=="fr"`). IntelAI FR/EN/FCFA is now consistent end-to-end.

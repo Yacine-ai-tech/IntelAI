@@ -14,7 +14,28 @@ export const fmtNum = (v) => {
   if (a >= 1e3) return (v / 1e3).toFixed(1) + 'K'
   return Number.isInteger(v) ? String(v) : v.toFixed(1)
 }
-export const fmtMoney = (v) => (v == null || isNaN(v) ? '—' : '$' + fmtNum(v))
+// Currency presentation (mirrors backend src/services/insights.py). Configure the display
+// currency at build time with VITE_CURRENCY (ISO 4217: USD|EUR|GBP|JPY|XOF/FCFA|…) and the
+// locale with VITE_LANGUAGE (en|fr). Presentation only — no FX conversion.
+const CURRENCIES = {
+  USD: ['$', false], CAD: ['$', false], AUD: ['$', false], EUR: ['€', false],
+  GBP: ['£', false], JPY: ['¥', false], CNY: ['¥', false], INR: ['₹', false],
+  NGN: ['₦', false], XOF: ['FCFA', true], XAF: ['FCFA', true],
+}
+const CCY_CODE = (import.meta.env.VITE_CURRENCY || 'USD').toUpperCase()
+const [CCY_SYM, CCY_WORD] = CURRENCIES[CCY_CODE] || [CCY_CODE, true]
+const IS_FR = (import.meta.env.VITE_LANGUAGE || 'en').toLowerCase() === 'fr'
+
+export const fmtMoney = (v) => {
+  if (v == null || isNaN(v)) return '—'
+  let n = fmtNum(v)                           // e.g. "3.60M" / "850"
+  if (IS_FR) {
+    n = n.replace('.', ',').replace('B', ' Md').replace('M', ' M').replace('K', ' k')
+    // word currencies get a space ("3,60 M FCFA"); symbol currencies attach ("3,60 M€" / "850 €")
+    return CCY_WORD ? `${n} ${CCY_SYM}` : (n.includes(' ') ? `${n}${CCY_SYM}` : `${n} ${CCY_SYM}`)
+  }
+  return CCY_WORD ? `${n} ${CCY_SYM}` : `${CCY_SYM}${n}`           // EN: "$3.60M" / "3.60M FCFA"
+}
 export const fmtPct = (v) => (v == null || isNaN(v) ? '—' : (Math.round(v * 10) / 10) + '%')
 
 const CHART_AXIS = { fontSize: 11, fill: 'var(--text-3)' }

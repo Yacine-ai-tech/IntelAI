@@ -16,18 +16,58 @@ log = get_logger(__name__)
 
 # ── Formatting ────────────────────────────────────────────────────────────
 
-def format_number(value: float | None, currency: str = "$") -> str:
-    """Human-readable number with automatic scale suffix."""
+# Currency presentation table: ISO 4217 -> (token, is_word).
+# is_word=True renders as a spaced suffix in BOTH locales ("1.2B FCFA"); symbol currencies
+# render prefixed in EN ("$3.6M") and suffixed in FR ("3,6 M€"), per locale convention.
+_CURRENCIES: dict[str, tuple[str, bool]] = {
+    "USD": ("$", False), "CAD": ("$", False), "AUD": ("$", False), "EUR": ("€", False),
+    "GBP": ("£", False), "JPY": ("¥", False), "CNY": ("¥", False), "INR": ("₹", False),
+    "NGN": ("₦", False), "CHF": ("CHF", True), "ZAR": ("R", False),
+    "XOF": ("FCFA", True), "XAF": ("FCFA", True),  # West / Central African CFA franc
+}
+
+
+def _resolve_currency(currency: str | None) -> tuple[str, bool]:
+    """Map an ISO 4217 code (or a literal symbol) to (token, is_word)."""
+    if not currency:
+        from src.core.config import settings
+        currency = settings.CURRENCY
+    code = str(currency).upper()
+    if code in _CURRENCIES:
+        return _CURRENCIES[code]
+    return (str(currency), len(str(currency)) > 1)  # literal symbol/word passthrough
+
+
+def format_number(value: float | None, currency: str | None = None, lang: str | None = None) -> str:
+    """Human-readable monetary value with scale suffix — currency- and locale-aware.
+
+    ``currency`` is an ISO 4217 code (USD, EUR, GBP, JPY, XOF/FCFA, …) or a literal symbol;
+    defaults to ``settings.CURRENCY``. ``lang`` defaults to the active UI language so localized
+    executive summaries don't mix French prose with English number formats.
+
+    Examples:
+        USD/EN -> "$3.6M"   EUR/FR -> "3,6 M€"   XOF/EN -> "3.6B FCFA"   XOF/FR -> "3,6 Md FCFA"
+        USD/EN -> "$850"    EUR/FR -> "850 €"    XOF/FR -> "850 FCFA"
+    """
     if value is None or (isinstance(value, float) and np.isnan(value)):
         return "—"
     value = float(value)
-    if abs(value) >= 1e9:
-        return f"{currency}{value / 1e9:.1f}B"
-    if abs(value) >= 1e6:
-        return f"{currency}{value / 1e6:.1f}M"
-    if abs(value) >= 1e3:
-        return f"{currency}{value / 1e3:.1f}K"
-    return f"{currency}{value:,.0f}"
+    fr = (lang or I18N.lang()) == "fr"
+    sym, is_word = _resolve_currency(currency)
+
+    # (threshold, EN suffix, FR suffix)
+    for thresh, en_suf, fr_suf in ((1e9, "B", "Md"), (1e6, "M", "M"), (1e3, "K", "k")):
+        if abs(value) >= thresh:
+            if fr:
+                num = f"{value / thresh:.1f}".replace(".", ",")
+                return f"{num} {fr_suf} {sym}" if is_word else f"{num} {fr_suf}{sym}"
+            num = f"{value / thresh:.1f}"
+            return f"{num}{en_suf} {sym}" if is_word else f"{sym}{num}{en_suf}"
+
+    # Plain (< 1000)
+    if fr:
+        return f"{value:,.0f}".replace(",", " ") + f" {sym}"
+    return f"{value:,.0f} {sym}" if is_word else f"{sym}{value:,.0f}"
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────
