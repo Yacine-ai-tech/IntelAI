@@ -1,0 +1,11 @@
+frontend/node_modules
+frontend/dist
+.git
+eval
+packages
+drafts
+logs
+chroma_db
+uploads
+**/__pycache__
+*.pyc
