@@ -225,7 +225,17 @@ async def startup():
                 n = reindex()
                 log.info("✅ Vector store was empty — reindexed %d docs", n)
             else:
-                log.info("✅ Vector store populated: %d docs", cnt)
+                # Probe a query — a dimension mismatch (table built with a different embedding
+                # model) means search silently returns nothing → force-rebuild at the current dim.
+                try:
+                    vs.query("healthcheck probe", n=1)
+                    log.info("✅ Vector store populated: %d docs", cnt)
+                except Exception as e:
+                    if "dimension" in str(e).lower():
+                        n = reindex(force=True)
+                        log.info("✅ Vector store dim mismatch — rebuilt %d docs", n)
+                    else:
+                        log.warning("Vector store probe error: %s", e)
     except Exception as e:
         log.warning("Vector store self-heal skipped: %s", e)
 
@@ -1108,13 +1118,14 @@ async def vsdebug(q: str = "revenue", user: TokenData = Depends(require_role("ad
 
 
 @app.post("/api/v1/admin/reindex")
-async def reindex_vectors(user: TokenData = Depends(require_role("admin"))):
-    """(Re)build the persistent vector store from the knowledge base — fixes empty search."""
+async def reindex_vectors(force: bool = True, user: TokenData = Depends(require_role("admin"))):
+    """(Re)build the persistent vector store from the knowledge base — fixes empty search.
+    force=True (default) drops + recreates the store at the current embedding dimension."""
     from src.services.vector_store import reindex, get_vector_store
     if get_vector_store() is None:
         return {"status": "skipped", "reason": "VECTOR_STORE=memory (no persistent store)"}
-    n = reindex()
-    return {"status": "reindexed", "docs": n}
+    n = reindex(force=force)
+    return {"status": "reindexed", "docs": n, "force": force}
 
 
 # ════════════════════════════════════════════════════════════
