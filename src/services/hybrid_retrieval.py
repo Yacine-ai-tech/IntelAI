@@ -255,7 +255,31 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
     # (default on) so constrained hosts can disable it and keep dense+BM25 fusion (no crash).
     if os.getenv("USE_RERANKER", "true").strip().lower() not in ("1", "true", "yes", "on"):
         return None
-    if not _RERANKER or not texts:
+    if not texts:
+        return None
+
+    # Remote inference backend (Lightning AI): run the real BGE reranker off-box so small app
+    # tiers (512MB) don't OOM. Set LIGHTNING_RERANK_URL (+ optional INFERENCE_TOKEN). Falls back
+    # to local CrossEncoder, then to None (keep fusion order) when the backend is unreachable
+    # (e.g. the on-demand Studio is asleep) — so search degrades gracefully, never breaks.
+    remote = os.getenv("LIGHTNING_RERANK_URL", "").strip()
+    if remote:
+        try:
+            import json as _json, urllib.request
+            body = _json.dumps({"query": query, "texts": texts}).encode()
+            h = {"Content-Type": "application/json"}
+            tk = os.getenv("INFERENCE_TOKEN", "").strip()
+            if tk:
+                h["Authorization"] = "Bearer " + tk
+            req = urllib.request.Request(remote.rstrip("/") + "/rerank", data=body, headers=h)
+            timeout = float(os.getenv("LIGHTNING_RERANK_TIMEOUT", "12"))
+            scores = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["scores"]
+            if isinstance(scores, list) and len(scores) == len(texts):
+                return [float(s) for s in scores]
+        except Exception as e:
+            log.warning("remote rerank unavailable (%s) — falling back", e)
+
+    if not _RERANKER:
         return None
     if _RERANK_RETRIEVER is None:
         _RERANK_RETRIEVER = HybridRetriever()
