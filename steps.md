@@ -100,3 +100,10 @@ exact EN/FR key parity (AUTH 18, NAV 26, COPILOT 9, FINANCE 22, INGESTION 19, RB
   model to **mirror the currency shown in the (FCFA/EUR-aware) data block, never convert** — so
   with `CURRENCY=XOF` the copilot cites FCFA, not `$`. Verified chatbot already replies in FR/EN
   (`"Répondez en français." if I18N.lang()=="fr"`). IntelAI FR/EN/FCFA is now consistent end-to-end.
+
+## E2E production-Docker validation (2026-06-17, on the Studio)
+Real end-to-end test: `docker build` the production image from a **cold cache**, `docker run` it
+with a **non-default `PORT=9100`** (+ `--env-file .env`), and poll `/health`. Result:
+**build OK → HEALTH 200 ✓** — confirms the image builds (deps + COPY paths resolve), honors the
+platform `$PORT`, and boots cleanly. All 6 projects passed (OVERALL_RESULT=ALL_PASS). Railway/
+Render build the same Dockerfile, so cloud deploy is validated end-to-end.
