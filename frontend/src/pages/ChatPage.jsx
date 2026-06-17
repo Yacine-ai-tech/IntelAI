@@ -33,6 +33,17 @@ const PROMPTS = {
   risk: ['What recent anomalies should I review?', 'What is our risk score?', 'Where is concentration risk?'],
   analyst: ['Summarize the latest KPIs', 'What changed most this period?', 'Forecast revenue for next quarter'],
 }
+const PROMPTS_FR = {
+  general: ['Quelle est la santé globale de notre activité ?', 'Résume les indicateurs clés de la période', 'Quels risques dois-je surveiller maintenant ?'],
+  cfo: ['Comment se porte notre santé financière ?', 'Pourquoi la marge brute pourrait-elle bouger ce trimestre ?', 'Quelle est la tendance du revenu et de l’EBITDA ?'],
+  ceo: ['Donne-moi un aperçu pour le conseil', 'Comment évoluent le MRR et la croissance client ?', 'Où sont nos plus grands risques ?'],
+  chro: ['Quel est notre effectif et le taux de rotation ?', 'Comment évolue l’engagement des employés ?', 'Quel est notre délai d’embauche ?'],
+  cto: ['Quelle est la disponibilité système et la posture de sécurité ?', 'Quelle est notre fréquence de déploiement ?', 'Des préoccupations sur les coûts IT ?'],
+  coo: ['Comment se portent la livraison à temps et le taux de défauts ?', 'Quel est notre taux d’utilisation des capacités ?', 'Des goulots d’étranglement opérationnels ?'],
+  esg: ['Quelles sont nos émissions de carbone ?', 'Quelle est notre part d’énergie renouvelable ?', 'Résume notre position ESG'],
+  risk: ['Quelles anomalies récentes dois-je examiner ?', 'Quel est notre score de risque ?', 'Où est le risque de concentration ?'],
+  analyst: ['Résume les derniers indicateurs', 'Qu’est-ce qui a le plus changé cette période ?', 'Prévois le revenu du prochain trimestre'],
+}
 
 function MessageBubble({ msg }) {
   const isUser = msg.role === 'user'
@@ -50,7 +61,7 @@ function MessageBubble({ msg }) {
 
 export default function ChatPage() {
   const { user } = useAuth()
-  const { t } = useTranslation()
+  const { t, lang } = useTranslation()
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -88,8 +99,13 @@ export default function ChatPage() {
     const connect = () => {
       const token = localStorage.getItem('access_token')
       if (!token) { setStatus('error'); return }
-      const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
-      const ws = new WebSocket(`${proto}//${window.location.host}/api/v1/ws/chat`)
+      // WebSocket can't be proxied by Vercel rewrites, so connect straight to the backend
+      // origin when VITE_API_BASE_URL is set (prod); fall back to same-host in dev (Vite proxy).
+      const apiBase = import.meta.env.VITE_API_BASE_URL
+      const wsBase = apiBase
+        ? apiBase.replace(/^http/, 'ws').replace(/\/$/, '')
+        : `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}`
+      const ws = new WebSocket(`${wsBase}/api/v1/ws/chat`)
       wsRef.current = ws
       ws.onopen = () => { setStatus('connecting'); ws.send(JSON.stringify({ token })) }
       ws.onmessage = (ev) => {
@@ -141,7 +157,8 @@ export default function ChatPage() {
   }
 
   const activeKey = persona || 'general'
-  const prompts = PROMPTS[activeKey] || PROMPTS.general
+  const promptSet = lang === 'fr' ? PROMPTS_FR : PROMPTS
+  const prompts = promptSet[activeKey] || promptSet.general
   const dotColor = status === 'connected' ? 'var(--ok)' : status === 'connecting' ? 'var(--warn)' : 'var(--bad)'
 
   return (

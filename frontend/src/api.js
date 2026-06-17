@@ -45,7 +45,7 @@ export const sendChat = (message, persona = null, sessionId = null, context = ''
 export const listPersonas = () => api.get('/personas')
 
 // ── Glossary (contextual explainer / grounding) ─────────
-export const getGlossary = (domain = null) => api.get('/glossary', { params: domain ? { domain } : {} })
+export const getGlossary = (domain = null, lang = null) => api.get('/glossary', { params: { ...(domain ? { domain } : {}), ...(lang ? { lang } : {}) } })
 
 // ── Data export ─────────────────────────────────────────
 export const exportData = (format = 'json', source_type = 'kpis', source_name = null) =>

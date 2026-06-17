@@ -842,6 +842,16 @@ def store_message(
             [session_id, role, content, mode, sources, tokens_used, latency_ms],
         )
         conn.execute("UPDATE chat_sessions SET updated_at = NOW() WHERE id = %s", [session_id])
+        # Auto-title the session from the FIRST user message (only while it's still the default),
+        # so the history list shows real titles instead of every entry reading "New Chat".
+        if role == "user" and content and content.strip():
+            snippet = " ".join(content.strip().split())
+            snippet = (snippet[:60] + "…") if len(snippet) > 60 else snippet
+            conn.execute(
+                "UPDATE chat_sessions SET title = %s "
+                "WHERE id = %s AND (title = 'New Chat' OR title IS NULL OR title = '')",
+                [snippet, session_id],
+            )
         conn.commit()
     finally:
         conn.close()
