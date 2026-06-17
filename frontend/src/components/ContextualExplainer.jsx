@@ -9,14 +9,14 @@ import { X, Search, Sparkles, ArrowUp, ArrowDown, BookOpen } from 'lucide-react'
 // domain, defines each (definition + formula + how to read it + 2026 benchmark +
 // source), and can hand off to the copilot for an in-context explanation.
 export default function ContextualExplainer({ domain, onClose }) {
-  const { t } = useTranslation()
+  const { t, lang } = useTranslation()
   const navigate = useNavigate()
   const [q, setQ] = useState('')
   const [active, setActive] = useState(null)
 
   const { data: terms = [], isLoading } = useQuery({
-    queryKey: ['glossary', domain || 'all'],
-    queryFn: () => api.getGlossary(domain || null).then(r => r.data?.terms || []),
+    queryKey: ['glossary', domain || 'all', lang],
+    queryFn: () => api.getGlossary(domain || null, lang).then(r => r.data?.terms || []),
     staleTime: 3600_000,
   })
 
