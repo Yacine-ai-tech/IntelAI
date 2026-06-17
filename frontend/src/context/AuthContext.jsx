@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { login as apiLogin, getMe } from '../api'
+import { login as apiLogin, demoLogin as apiDemoLogin, getMe } from '../api'
 
 const AuthContext = createContext(null)
 
@@ -37,6 +37,16 @@ export function AuthProvider({ children }) {
     return userData
   }
 
+  const demoLogin = async (role) => {
+    const res = await apiDemoLogin(role)
+    const { access_token, user: userData } = res.data
+    localStorage.setItem('access_token', access_token)
+    localStorage.setItem('user', JSON.stringify(userData))
+    setToken(access_token)
+    setUser(userData)
+    return userData
+  }
+
   const logout = () => {
     localStorage.removeItem('access_token')
     localStorage.removeItem('user')
@@ -57,7 +67,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, logout, isAuthenticated, hasPage, hasAction }}>
+    <AuthContext.Provider value={{ user, token, loading, login, demoLogin, logout, isAuthenticated, hasPage, hasAction }}>
       {children}
     </AuthContext.Provider>
   )
