@@ -5,19 +5,26 @@ import { useTranslation } from '../i18n/I18nContext'
 import {
   ShieldCheck, Briefcase, DollarSign, Cpu, BarChart3, Eye, EyeOff, AlertCircle,
   Sparkles, FileText, Languages, Lock, ArrowRight, Loader2,
+  Settings2, Users, Leaf, ShieldAlert, Landmark,
 } from 'lucide-react'
 
+// All personas — one-click demo via the password-less /auth/demo-login endpoint.
 const DEMO = [
   { user: 'admin',   role: 'Admin',   Icon: ShieldCheck },
   { user: 'ceo',     role: 'CEO',     Icon: Briefcase },
   { user: 'cfo',     role: 'CFO',     Icon: DollarSign },
   { user: 'cto',     role: 'CTO',     Icon: Cpu },
+  { user: 'coo',     role: 'COO',     Icon: Settings2 },
+  { user: 'chro',    role: 'CHRO',    Icon: Users },
+  { user: 'esg',     role: 'ESG',     Icon: Leaf },
+  { user: 'risk',    role: 'Risk',    Icon: ShieldAlert },
   { user: 'analyst', role: 'Analyst', Icon: BarChart3 },
+  { user: 'board',   role: 'Board',   Icon: Landmark },
   { user: 'viewer',  role: 'Viewer',  Icon: Eye },
 ]
 
 export default function LoginPage() {
-  const { login } = useAuth()
+  const { login, demoLogin: demoAuth } = useAuth()
   const { t, lang, setLang } = useTranslation()
   const navigate = useNavigate()
   const [username, setUsername] = useState('')
@@ -37,7 +44,11 @@ export default function LoginPage() {
     }
   }
   const onSubmit = (e) => { e.preventDefault(); doLogin(username, password) }
-  const demoLogin = (u) => { setUsername(u); setPassword(u + '123'); doLogin(u, u + '123') }
+  const demoLogin = async (u) => {
+    setError(''); setLoading(true)
+    try { await demoAuth(u); navigate('/chat') }
+    catch (err) { setError(err.response?.data?.detail || t('loginFailed') || 'Login failed'); setLoading(false) }
+  }
 
   const features = [
     { icon: Sparkles, text: t('authFeat1') || 'Persona-routed RAG copilot — answers scoped to your role' },
