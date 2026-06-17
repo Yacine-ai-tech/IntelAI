@@ -32,6 +32,8 @@ api.interceptors.response.use(
 // ── Auth ────────────────────────────────────────────────
 export const login = (username, password) =>
   api.post('/auth/login', { username, password })
+export const demoLogin = (role) =>
+  api.post(`/auth/demo-login?role=${encodeURIComponent(role)}`)
 
 export const register = (username, password, role = 'viewer') =>
   api.post('/auth/register', { username, password, role })
