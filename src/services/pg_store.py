@@ -891,6 +891,24 @@ def get_recent_context(user_id: str, limit: int = 10) -> List[Dict[str, str]]:
 # ═══════════════════════════════════════════════════════════
 
 
+def clear_user_data() -> Dict[str, int]:
+    """Delete safe-to-wipe data (chat history + audit trail). Preserves everything the app
+    needs to work: KPI metrics, knowledge base, targets, entities, and users."""
+    out: Dict[str, int] = {}
+    conn = _get_conn()
+    try:
+        for tbl in ("chat_messages", "chat_sessions", "audit_trail"):
+            try:
+                cur = conn.execute(f"DELETE FROM {tbl}")
+                out[tbl] = getattr(cur, "rowcount", 0) or 0
+            except Exception as e:
+                out[tbl] = -1
+        conn.commit()
+    finally:
+        conn.close()
+    return out
+
+
 def ensure_session_exists(session_id: str, user_id: str) -> str:
     """Ensure a chat session exists, create if not. Return session_id."""
     conn = _get_conn()
