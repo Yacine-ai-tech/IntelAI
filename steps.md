@@ -63,3 +63,7 @@ Recharts UI, WebSocket chat, JWT/RBAC). Deploy + PyPI publish remain (user-gated
 ## Comprehensive QA pass (2026-06-16)
 - **58 tests pass** (shared env, after installing jose/chromadb). §1.10 verified: GraphRAG-lite, hybrid retrieval+reranker, multi-LLM router. Package **omnismart-personas**: 8 tests pass + builds wheel (PyPI-ready).
 - All 6 projects + both packages green; 28/28 STRATEGY §.10 feature claims code-verified.
+
+## Remediation — LIVE behavior validation (2026-06-17)
+- Added `tests/test_live_llm.py` (real LLM, skip-if-no-key): **llm_router LIVE**: real multi-provider completion returns exact 'PONG'.
+- Addresses the "tests prove imports not behavior" gap with a real, measured run.
