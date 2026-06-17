@@ -251,6 +251,10 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
     reranker instance so the model loads at most once per process.
     """
     global _RERANK_RETRIEVER
+    # The CrossEncoder reranker (~600MB) can OOM small instances. Gate it behind USE_RERANKER
+    # (default on) so constrained hosts can disable it and keep dense+BM25 fusion (no crash).
+    if os.getenv("USE_RERANKER", "true").strip().lower() not in ("1", "true", "yes", "on"):
+        return None
     if not _RERANKER or not texts:
         return None
     if _RERANK_RETRIEVER is None:
