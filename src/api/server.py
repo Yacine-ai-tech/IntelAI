@@ -135,10 +135,12 @@ def _init_default_users():
                 create_user(username, hash_password(info["password"]), info["role"])
             else:
                 # Sync password + role to the configured value so the documented credentials
-                # always work (create-if-absent alone would keep a stale password).
+                # always work (create-if-absent alone would keep a stale password). Update the
+                # in-memory copy directly to avoid a second (cross-region) DB round-trip.
                 try:
-                    update_user(existing["id"], password_hash=hash_password(info["password"]), role=info["role"])
-                    existing = get_user(username)
+                    new_hash = hash_password(info["password"])
+                    update_user(existing["id"], password_hash=new_hash, role=info["role"])
+                    existing = {**existing, "password_hash": new_hash, "role": info["role"]}
                 except Exception as e:
                     log.warning("could not sync default user %s: %s", username, e)
             # Also keep in-memory for fast lookups
