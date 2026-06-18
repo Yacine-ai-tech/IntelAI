@@ -109,7 +109,12 @@ class HybridRetriever:
         return self._embedder
 
     def _ensure_reranker(self):
-        if not _RERANKER:
+        # Local CrossEncoder (~600MB) is OFF by default: loading it on a constrained app host
+        # (Railway/Render free) OOM-crashes the process (the 502/restart-loop we hit). The real
+        # BGE reranker runs REMOTELY on the Lightning Studio (see module-level rerank()); a brief
+        # outage degrades to dense+BM25+RRF fusion instead. Set USE_LOCAL_RERANKER=true only on a
+        # host with RAM headroom.
+        if not _RERANKER or os.getenv("USE_LOCAL_RERANKER", "false").strip().lower() not in ("1", "true", "yes", "on"):
             return None
         if self._reranker is None:
             log.info("Loading reranker (CrossEncoder): %s", self.reranker_model_name)
@@ -259,7 +264,7 @@ def _trigger_wake() -> None:
     def _go():
         try:
             import json as _json, urllib.request
-            h = {"Content-Type": "application/json"}
+            h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0 (+https://ysiddo-ai-projects.app)"}
             tk = os.getenv("ORCH_TOKEN", "").strip()
             if tk:
                 h["Authorization"] = "Bearer " + tk
@@ -295,7 +300,7 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
         try:
             import json as _json, urllib.request
             body = _json.dumps({"query": query, "texts": texts}).encode()
-            h = {"Content-Type": "application/json"}
+            h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0 (+https://ysiddo-ai-projects.app)"}
             tk = os.getenv("INFERENCE_TOKEN", "").strip()
             if tk:
                 h["Authorization"] = "Bearer " + tk
@@ -308,7 +313,9 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
             log.warning("remote rerank unavailable (%s) — falling back + waking studio", e)
             _trigger_wake()  # on-demand: wake the inference Studio so the next requests get rerank
 
-    if not _RERANKER:
+    # Local CrossEncoder fallback is OFF by default (see _ensure_reranker) — degrade to fusion
+    # order instead of OOM-loading 600MB on a constrained host when the remote backend is down.
+    if not _RERANKER or os.getenv("USE_LOCAL_RERANKER", "false").strip().lower() not in ("1", "true", "yes", "on"):
         return None
     if _RERANK_RETRIEVER is None:
         _RERANK_RETRIEVER = HybridRetriever()
