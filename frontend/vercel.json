@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://intelai-6h6p.onrender.com/api/:path*" }
+    { "source": "/api/:path*", "destination": "https://intelai-production.up.railway.app/api/:path*" }
   ]
 }
