@@ -8,6 +8,8 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+> 🔗 **Live demo:** https://intelai.ysiddo-ai-projects.app  ·  password-less role login (DEMO_MODE).
+> On-demand backend — the first request may take ~30–60 s to wake the API, then it's fast.
 
 IntelAI turns multi-domain business KPIs (Finance, HR, IT, Operations, Logistics, ESG,
 Risk) into executive intelligence and lets each role *talk to its own data* through a
