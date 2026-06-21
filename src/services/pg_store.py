@@ -396,7 +396,17 @@ def get_available_segments() -> List[str]:
 
 def get_latest_period() -> Optional[str]:
     periods = get_available_periods()
-    return periods[0] if periods else None
+    if not periods:
+        return None
+    # Prefer the latest real monthly period (YYYY-MM) — these carry the full metric
+    # set (incl. Finance line items). For YYYY-MM, lexical sort == chronological order.
+    # This avoids placeholder/future tags (e.g. "2099Q1") or sparse quarterly aggregates
+    # ("2026-Q2") being picked as "latest" and yielding empty statements/dashboards.
+    import re
+    monthly = sorted(p for p in periods if re.match(r"^\d{4}-\d{2}$", p))
+    if monthly:
+        return monthly[-1]
+    return periods[0]
 
 
 def delete_period(period: str) -> None:
