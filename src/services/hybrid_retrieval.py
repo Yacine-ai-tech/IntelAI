@@ -276,6 +276,45 @@ def _trigger_wake() -> None:
     threading.Thread(target=_go, daemon=True).start()
 
 
+def _hosted_rerank(query: str, texts: List[str]) -> Optional[List[float]]:
+    """Hosted-API rerank backstop (a real cross-encoder rerank endpoint — Cohere ``/v2/rerank`` by
+    default, Jina ``/v1/rerank`` alternate) so search keeps true rerank quality when the on-demand
+    Lightning Studio is down, WITHOUT loading a ~600MB local cross-encoder (survives on a 512MB
+    host). Off unless ``HOSTED_RERANK_PROVIDER`` (cohere|jina) + the provider's key are set. Returns
+    scores aligned with ``texts`` or ``None`` (caller keeps fusion order). Stdlib urllib only — no
+    new dependency. Both providers offer a free, no-card tier."""
+    provider = os.getenv("HOSTED_RERANK_PROVIDER", "").strip().lower()
+    if provider not in ("cohere", "jina"):
+        return None
+    key = os.getenv("COHERE_API_KEY" if provider == "cohere" else "JINA_API_KEY", "").strip()
+    if not key:
+        return None
+    try:
+        import json as _json, urllib.request
+        if provider == "cohere":
+            url = os.getenv("COHERE_BASE_URL", "https://api.cohere.com").rstrip("/") + "/v2/rerank"
+            model = os.getenv("HOSTED_RERANK_MODEL", "rerank-v3.5")  # multilingual (EN/FR)
+        else:  # jina
+            url = "https://api.jina.ai/v1/rerank"
+            model = os.getenv("HOSTED_RERANK_MODEL", "jina-reranker-v2-base-multilingual")
+        body = _json.dumps({"model": model, "query": query,
+                            "documents": list(texts), "top_n": len(texts)}).encode()
+        req = urllib.request.Request(url, data=body, headers={
+            "Content-Type": "application/json", "Authorization": "Bearer " + key})
+        timeout = float(os.getenv("HOSTED_RERANK_TIMEOUT", "12"))
+        results = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["results"]
+        # Both APIs return [{"index", "relevance_score"}] sorted by score — realign to input order.
+        scores = [0.0] * len(texts)
+        for r in results:
+            idx = r.get("index")
+            if isinstance(idx, int) and 0 <= idx < len(texts):
+                scores[idx] = float(r.get("relevance_score", 0.0))
+        return scores
+    except Exception as e:
+        log.warning("hosted rerank unavailable (%s) — keeping fusion order", e)
+        return None
+
+
 def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
     """Score ``(query, text)`` pairs with the BGE CrossEncoder reranker.
 
@@ -312,6 +351,13 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
         except Exception as e:
             log.warning("remote rerank unavailable (%s) — falling back + waking studio", e)
             _trigger_wake()  # on-demand: wake the inference Studio so the next requests get rerank
+
+    # Hosted-API backstop (default OpenAI embeddings → cosine): keeps rerank quality when the
+    # on-demand Studio is unreachable, without loading a 600MB local model. Off unless
+    # HOSTED_RERANK_PROVIDER is set. Returns None (→ fusion order) when disabled or on failure.
+    hosted = _hosted_rerank(query, texts)
+    if hosted is not None:
+        return hosted
 
     # Local CrossEncoder fallback is OFF by default (see _ensure_reranker) — degrade to fusion
     # order instead of OOM-loading 600MB on a constrained host when the remote backend is down.
