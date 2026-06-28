@@ -221,5 +221,6 @@ export function Citations({ sources, label = 'Sources' }) {
   )
 }
 
-export const PIE = ['#2dd4bf', '#22d3ee', '#38bdf8', '#a78bfa', '#f472b6', '#fbbf24', '#34d399']
+// Brand-forward categorical palette (Deep Blue → Cyan → Indigo, + anomaly violet)
+export const PIE = ['#38bdf8', '#22d3ee', '#6366f1', '#2563eb', '#818cf8', '#c084fc', '#2dd4bf']
 export { Cell, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer }
