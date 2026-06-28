@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
+import CubeMark from './Brand'
 import {
   LayoutDashboard, BarChart3, TrendingUp, Users, Package, Monitor,
   Settings2, Leaf, ShieldAlert, Database, ShieldCheck, Settings,
@@ -53,7 +54,7 @@ export default function Sidebar() {
     <aside className="sidebar">
       <div className="sidebar-header">
         <div className="sidebar-brand">
-          <div className="sidebar-brand-icon"><Sparkles size={20} strokeWidth={2.2} /></div>
+          <CubeMark size={38} />
           <div>
             <div className="sidebar-brand-text">{t('appName')}</div>
             <div className="sidebar-brand-sub">{t('appTagline')}</div>
