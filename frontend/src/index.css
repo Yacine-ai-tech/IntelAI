@@ -452,6 +452,23 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 .typing-dot { width:7px; height:7px; border-radius:50%; background:var(--primary); display:inline-block; animation:blink 1.2s infinite; }
 @keyframes blink { 0%,60%,100%{opacity:.25} 30%{opacity:1} }
 
+/* ── GraphRAG node-network citations ─────────────────────────── */
+.citations { position:relative; }
+/* faint "retrieval graph" line linking the source nodes */
+.citations::before { content:''; position:absolute; left:58px; right:6px; top:50%; height:1px; z-index:0;
+  background:linear-gradient(90deg, transparent, var(--primary-line) 20%, var(--primary-line) 80%, transparent); opacity:.4; }
+.citations > * { position:relative; z-index:1; }
+.citation-chip .cite-n { box-shadow:0 0 10px var(--glow); }
+.citation-chip:hover { transform:translateY(-1px); box-shadow:0 0 0 1px var(--primary-line); }
+
+/* ── Streaming / cascade entrance (WebSocket chat, tiles) ─────── */
+@keyframes cascadeIn { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:none; } }
+.cascade-in { animation:cascadeIn .34s cubic-bezier(.4,0,.2,1) both; }
+.chat-message { animation:cascadeIn .3s cubic-bezier(.4,0,.2,1) both; }
+
+/* ── Anomaly marker — sharp glowing diamond (data-viz) ───────── */
+.anomaly-dot { fill:var(--anomaly); stroke:var(--anomaly); filter:drop-shadow(0 0 6px var(--anomaly)); }
+
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width:860px) {
   .sidebar { display:none; }
