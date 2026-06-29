@@ -62,8 +62,9 @@ export function AuthProvider({ children }) {
   }
 
   const hasAction = (action) => {
-    // Check from ROLE_DEFINITIONS in user data
-    return true // Simplified — actual check happens server-side
+    if (!user) return false
+    const actions = user.actions || []
+    return actions.includes('*') || actions.includes(action)
   }
 
   return (

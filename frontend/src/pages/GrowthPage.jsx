@@ -23,15 +23,15 @@ export default function GrowthPage() {
         actions={<AskCopilot q="Analyze our recent MRR and Churn trends. Are our unit economics (LTV/CAC) healthy?" />} />
 
       <StatGrid>
-        <Stat label="MRR" value={fmtMoney(d.mrr)} trend={d.mrr_trend} icon={DollarSign} accent={ACCENT} good="up" />
-        <Stat label="ARR" value={fmtMoney(d.arr)} icon={DollarSign} accent={ACCENT} good="up" />
-        <Stat label="CAC" value={fmtMoney(d.cac)} trend={d.cac_trend} icon={Activity} accent={ACCENT} good="down" />
-        <Stat label="LTV" value={fmtMoney(d.ltv)} icon={TrendingUp} accent={ACCENT} good="up" />
-        <Stat label="Churn Rate" value={fmtPct(d.churn_rate)} trend={d.churn_trend} icon={Percent} accent={ACCENT} good="down" />
+        <Stat label={t('mrr') || 'MRR'} value={fmtMoney(d.mrr)} trend={d.mrr_trend} icon={DollarSign} accent={ACCENT} good="up" />
+        <Stat label={t('arr') || 'ARR'} value={fmtMoney(d.arr)} icon={DollarSign} accent={ACCENT} good="up" />
+        <Stat label={t('cac') || 'CAC'} value={fmtMoney(d.cac)} trend={d.cac_trend} icon={Activity} accent={ACCENT} good="down" />
+        <Stat label={t('ltv') || 'LTV'} value={fmtMoney(d.ltv)} icon={TrendingUp} accent={ACCENT} good="up" />
+        <Stat label={t('churnRate') || 'Churn Rate'} value={fmtPct(d.churn_rate)} trend={d.churn_trend} icon={Percent} accent={ACCENT} good="down" />
       </StatGrid>
 
       <Grid style={{ marginTop: 18 }}>
-        <Panel title="MRR Trend" icon={TrendingUp} style={{ gridColumn: 'span 2' }}>
+        <Panel title={t('mrrTrend') || 'MRR Trend'} icon={TrendingUp} style={{ gridColumn: 'span 2' }}>
           <AreaTrend data={d.trends || []} y="value" color={ACCENT} height={250} />
         </Panel>
       </Grid>
