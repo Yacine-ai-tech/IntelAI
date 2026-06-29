@@ -41,8 +41,8 @@ export const register = (username, password, role = 'viewer') =>
 export const getMe = () => api.get('/auth/me')
 
 // ── Chat ────────────────────────────────────────────────
-export const sendChat = (message, persona = null, sessionId = null, context = '') =>
-  api.post('/chat', { message, persona, session_id: sessionId, context })
+export const sendChat = (message, persona = null, sessionId = null, context = '', lang = 'en') =>
+  api.post('/chat', { message, persona, session_id: sessionId, context, language: lang })
 
 export const listPersonas = () => api.get('/personas')
 
@@ -96,6 +96,9 @@ export const getHRDepartments = () => api.get('/hr/departments')
 export const getHRRecruitment = () => api.get('/hr/recruitment')
 export const getHRTraining = () => api.get('/hr/training')
 export const getHRHealth = () => api.get('/hr/health')
+
+// ── Growth ──────────────────────────────────────────────
+export const getGrowthSummary = () => api.get('/growth/summary')
 
 // ── Logistics ───────────────────────────────────────────
 export const getLogisticsSummary = () => api.get('/logistics/summary')

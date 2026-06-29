@@ -18,6 +18,9 @@ import RiskPage from './pages/RiskPage'
 import FinancialPage from './pages/FinancialPage'
 import KnowledgePage from './pages/KnowledgePage'
 
+import GrowthPage from './pages/GrowthPage'
+import GlossaryPage from './pages/GlossaryPage'
+
 function ProtectedRoute({ children, page }) {
   const { isAuthenticated, loading, hasPage } = useAuth()
   
@@ -43,51 +46,23 @@ export default function App() {
         <ProtectedRoute><Layout /></ProtectedRoute>
       }>
         <Route index element={<Navigate to="/chat" replace />} />
-        <Route path="dashboard" element={
-          <ProtectedRoute page="dashboard"><DashboardPage /></ProtectedRoute>
-        } />
-        <Route path="chat" element={
-          <ProtectedRoute page="assistant"><ChatPage /></ProtectedRoute>
-        } />
-        <Route path="analytics" element={
-          <ProtectedRoute page="analytics"><AnalyticsPage /></ProtectedRoute>
-        } />
-        <Route path="financial" element={
-          <ProtectedRoute page="financial"><FinancialPage /></ProtectedRoute>
-        } />
-        <Route path="data-hub" element={
-          <ProtectedRoute page="data_hub"><DataHubPage /></ProtectedRoute>
-        } />
-        <Route path="admin" element={
-          <ProtectedRoute page="admin"><AdminPage /></ProtectedRoute>
-        } />
-        <Route path="settings" element={
-          <ProtectedRoute page="settings"><SettingsPage /></ProtectedRoute>
-        } />
-        <Route path="hr" element={
-          <ProtectedRoute page="hr"><HRPage /></ProtectedRoute>
-        } />
-        <Route path="logistics" element={
-          <ProtectedRoute page="logistics"><LogisticsPage /></ProtectedRoute>
-        } />
-        <Route path="it" element={
-          <ProtectedRoute page="it"><ITPage /></ProtectedRoute>
-        } />
-        <Route path="operations" element={
-          <ProtectedRoute page="operations"><OperationsPage /></ProtectedRoute>
-        } />
-        <Route path="forecasting" element={
-          <ProtectedRoute page="forecasting"><ForecastingPage /></ProtectedRoute>
-        } />
-        <Route path="esg" element={
-          <ProtectedRoute page="esg"><ESGPage /></ProtectedRoute>
-        } />
-        <Route path="risk" element={
-          <ProtectedRoute page="risk"><RiskPage /></ProtectedRoute>
-        } />
-        <Route path="knowledge" element={
-          <ProtectedRoute page="analytics"><KnowledgePage /></ProtectedRoute>
-        } />
+        <Route path="dashboard" element={<ProtectedRoute page="dashboard"><DashboardPage /></ProtectedRoute>} />
+        <Route path="chat" element={<ProtectedRoute page="assistant"><ChatPage /></ProtectedRoute>} />
+        <Route path="analytics" element={<ProtectedRoute page="analytics"><AnalyticsPage /></ProtectedRoute>} />
+        <Route path="growth" element={<ProtectedRoute page="analytics"><GrowthPage /></ProtectedRoute>} />
+        <Route path="financial" element={<ProtectedRoute page="financial"><FinancialPage /></ProtectedRoute>} />
+        <Route path="data-hub" element={<ProtectedRoute page="data_hub"><DataHubPage /></ProtectedRoute>} />
+        <Route path="admin" element={<ProtectedRoute page="admin"><AdminPage /></ProtectedRoute>} />
+        <Route path="settings" element={<ProtectedRoute page="settings"><SettingsPage /></ProtectedRoute>} />
+        <Route path="hr" element={<ProtectedRoute page="hr"><HRPage /></ProtectedRoute>} />
+        <Route path="logistics" element={<ProtectedRoute page="logistics"><LogisticsPage /></ProtectedRoute>} />
+        <Route path="it" element={<ProtectedRoute page="it"><ITPage /></ProtectedRoute>} />
+        <Route path="operations" element={<ProtectedRoute page="operations"><OperationsPage /></ProtectedRoute>} />
+        <Route path="forecasting" element={<ProtectedRoute page="forecasting"><ForecastingPage /></ProtectedRoute>} />
+        <Route path="esg" element={<ProtectedRoute page="esg"><ESGPage /></ProtectedRoute>} />
+        <Route path="risk" element={<ProtectedRoute page="risk"><RiskPage /></ProtectedRoute>} />
+        <Route path="knowledge" element={<ProtectedRoute page="analytics"><KnowledgePage /></ProtectedRoute>} />
+        <Route path="glossary" element={<ProtectedRoute page="analytics"><GlossaryPage /></ProtectedRoute>} />
       </Route>
       
       <Route path="*" element={<Navigate to="/chat" replace />} />

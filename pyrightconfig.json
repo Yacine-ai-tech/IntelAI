@@ -1,0 +1,12 @@
+{
+  "include": ["."],
+  "exclude": ["**/node_modules", "**/__pycache__", "env", ".env", "venv"],
+  "executionEnvironments": [
+    {
+      "root": "."
+    }
+  ],
+  "extraPaths": ["."],
+  "reportMissingModuleSource": false,
+  "reportMissingImports": "warning"
+}

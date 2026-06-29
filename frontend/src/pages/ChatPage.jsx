@@ -8,7 +8,9 @@ import { Citations } from '../components/ui'
 import {
   Send, Sparkles, User, Plus, History, MessageSquare,
   Crown, DollarSign, Cpu, Settings2, Users, Leaf, ShieldAlert, BarChart3, Bot,
+  Info, MoreHorizontal, ArrowUpRight, ArrowDownRight,
 } from 'lucide-react'
+import { AreaChart, Area, YAxis, ResponsiveContainer } from 'recharts'
 
 // Persona identity (color + icon + suggested prompts) — the persona-routed RAG copilot.
 const PERSONA_META = {
@@ -140,9 +142,9 @@ export default function ChatPage() {
     setInput(''); setLoading(true)
     const ws = wsRef.current
     if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ message: q, persona: persona || undefined, session_id: activeSession || undefined }))
+      ws.send(JSON.stringify({ message: q, persona: persona || undefined, session_id: activeSession || undefined, language: lang }))
     } else {
-      api.sendChat(q, persona || null, activeSession, '')
+      api.sendChat(q, persona || null, activeSession, '', lang)
         .then(r => setMessages(p => [...p, { role: 'assistant', content: r.data.response || 'No response.', sources: r.data.sources || [] }]))
         .catch(e => setMessages(p => [...p, { role: 'assistant', content: `Error: ${e.response?.data?.detail || 'request failed'}` }]))
         .finally(() => setLoading(false))
@@ -196,20 +198,41 @@ export default function ChatPage() {
           <span className="badge" style={{ gap: 6 }}><span className="status-dot" style={{ background: dotColor, boxShadow: `0 0 0 3px color-mix(in srgb, ${dotColor} 20%, transparent)` }} />{status}</span>
           <div className="topbar-spacer" />
           <div className="persona-row">
-            <span className="persona-chip" onClick={() => setPersona('')} style={{ '--pc': 'var(--p-general)' }}
-              {...(persona === '' ? { className: 'persona-chip active' } : {})}>
-              <span className="dot" /> Auto
-            </span>
-            {personas.map(p => {
-              const key = p.id || p.persona_id || p.name
-              const pm = PERSONA_META[key] || PERSONA_META.general
-              const PIcon = pm.icon
-              return (
-                <span key={key} className={`persona-chip${persona === key ? ' active' : ''}`} style={{ '--pc': pm.color }} onClick={() => setPersona(key)}>
-                  <PIcon size={13} /> {p.display_name || pm.label || key}
+            {user?.role === 'admin' ? (
+              <>
+                <span className="persona-chip" onClick={() => setPersona('')} style={{ '--pc': 'var(--p-general)' }}
+                  {...(persona === '' ? { className: 'persona-chip active' } : {})}>
+                  <span className="dot" /> Auto
                 </span>
-              )
-            })}
+                {personas.map(p => {
+                  const key = p.id || p.persona_id || p.name
+                  const pm = PERSONA_META[key] || PERSONA_META.general
+                  const PIcon = pm.icon
+                  return (
+                    <span key={key} className={`persona-chip${persona === key ? ' active' : ''}`} style={{ '--pc': pm.color }} onClick={() => setPersona(key)}>
+                      <PIcon size={13} /> {p.display_name || pm.label || key}
+                    </span>
+                  )
+                })}
+              </>
+            ) : (
+              (() => {
+                const rolePersonaMap = {
+                  "admin": "ceo", "ceo": "ceo", "cfo": "cfo", "cto": "cto",
+                  "coo": "coo", "chro": "chro", "hr": "chro", "esg": "esg", "risk": "risk",
+                  "analyst": "analyst", "viewer": "general", "operations": "coo", "it": "cto",
+                  "custom": "general",
+                }
+                const allowedForRole = rolePersonaMap[user?.role] || 'general'
+                const pm = PERSONA_META[allowedForRole] || PERSONA_META.general
+                const PIcon = pm.icon
+                return (
+                  <span className="persona-chip active" style={{ '--pc': pm.color, cursor: 'default' }}>
+                    <PIcon size={13} /> {pm.label || allowedForRole}
+                  </span>
+                )
+              })()
+            )}
           </div>
         </div>
 
@@ -252,6 +275,93 @@ export default function ChatPage() {
           </div>
         </form>
       </section>
+
+      <ChatKPIRail />
     </div>
+  )
+}
+
+/* ── Right-side KPI rail (matches og-image thumbnail) ────────── */
+function ChatKPIRail() {
+  const { data: kpis = [] } = useQuery({
+    queryKey: ['kpis'], queryFn: () => api.getKPIs().then(r => r.data?.metrics || []),
+    staleTime: 300_000, retry: 1,
+  })
+
+  // Build per-metric history and pick 3 representative KPIs
+  const hist = {}
+  kpis.forEach(k => {
+    const name = k.metric_name || k.name || 'Unknown'
+    ;(hist[name] = hist[name] || []).push({ period: k.period, value: k.value })
+  })
+  Object.keys(hist).forEach(n => {
+    hist[n].sort((a, b) => (a.period || '').localeCompare(b.period || ''))
+    hist[n] = hist[n].slice(-6)
+  })
+
+  const seen = new Set()
+  const unique = kpis.filter(k => {
+    const n = k.metric_name || k.name
+    if (seen.has(n)) return false; seen.add(n); return true
+  })
+
+  // Pick representative KPIs for the rail
+  const picks = [
+    unique.find(k => /revenue/i.test(k.metric_name || k.name)),
+    unique.find(k => /ebitda|margin/i.test(k.metric_name || k.name)),
+    unique.find(k => /cost|opex/i.test(k.metric_name || k.name)),
+  ].filter(Boolean).slice(0, 3)
+  if (picks.length === 0) picks.push(...unique.slice(0, 3))
+
+  const fmt = (v) => {
+    if (v == null || isNaN(v)) return '—'
+    const a = Math.abs(v)
+    if (a >= 1e9) return '$' + (v / 1e9).toFixed(2) + 'B'
+    if (a >= 1e6) return '$' + (v / 1e6).toFixed(1) + 'M'
+    if (a >= 1e3) return '$' + (v / 1e3).toFixed(1) + 'K'
+    if (a < 1) return (v * 100).toFixed(1) + '%'
+    return v.toFixed(1)
+  }
+
+  return (
+    <aside className="chat-kpi-rail">
+      {picks.map((k, i) => {
+        const name = k.metric_name || k.name
+        const data = hist[name] || []
+        const change = k.change_pct
+        const up = (change ?? 0) >= 0
+        return (
+          <div key={i} className="rail-card">
+            <div className="rail-card-header">
+              <span className="rail-card-title"><Info size={14} /> {name}</span>
+              <span className="rail-card-period">Latest</span>
+            </div>
+            <div className="rail-card-value">{fmt(k.value)}</div>
+            {change != null && (
+              <div className={`rail-card-change ${up ? 'up' : 'down'}`}>
+                {up ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
+                {' '}{Math.abs(change).toFixed(1)}%
+              </div>
+            )}
+            {data.length >= 2 && (
+              <div style={{ height: 64, marginTop: 10 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={data}>
+                    <defs>
+                      <linearGradient id={`railG${i}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.4} />
+                        <stop offset="100%" stopColor="#22d3ee" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <YAxis hide domain={['dataMin', 'dataMax']} />
+                    <Area type="monotone" dataKey="value" stroke="#22d3ee" strokeWidth={2} fill={`url(#railG${i})`} dot={false} />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            )}
+          </div>
+        )
+      })}
+    </aside>
   )
 }

@@ -73,6 +73,7 @@ class ChatRequest(BaseModel):
     persona: Optional[str] = None
     session_id: Optional[str] = None
     context: Optional[str] = ""
+    language: Optional[str] = None
 
 class ChatResponse(BaseModel):
     response: str
@@ -409,7 +410,7 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
         message=req.message,
         user_role=user.role,
         persona_override=req.persona,
-        language=user.language,
+        language=req.language or user.language,
         context=req.context or "",
     )
 
@@ -651,7 +652,8 @@ async def get_kpis(
     # Filter by user's data access
     user_categories = get_user_data_categories(user.role)
     if "*" not in user_categories and "category" in df.columns and not df.empty:
-        df = df[df["category"].isin(user_categories)]
+        user_cat_lower = [c.lower() for c in user_categories]
+        df = df[df["category"].str.lower().isin(user_cat_lower)]
 
     metrics = df.to_dict(orient="records") if not df.empty else []
     return {"metrics": metrics, "count": len(metrics)}
@@ -944,6 +946,47 @@ async def get_ops_health(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
     return OperationsService().compute_ops_health(get_kpi_metrics())
+
+
+# ════════════════════════════════════════════════════════════
+# GROWTH DOMAIN
+# ════════════════════════════════════════════════════════════
+
+@app.get("/api/v1/growth/summary")
+async def get_growth_summary(user: TokenData = Depends(get_current_user)):
+    from src.services.pg_store import get_kpi_metrics
+    df = get_kpi_metrics(categories=["Growth"])
+    if df.empty:
+        return {"mrr": 0, "arr": 0, "cac": 0, "ltv": 0, "churn_rate": 0, "trends": [], "mrr_trend": 0, "cac_trend": 0, "churn_trend": 0}
+    
+    # Sort and grab latest
+    df = df.sort_values(by="period")
+    latest = df.drop_duplicates(subset=["metric"], keep="last")
+    
+    def _val(metric_name):
+        row = latest[latest["metric"] == metric_name]
+        return float(row["value"].iloc[0]) if not row.empty else 0
+        
+    def _trend(metric_name):
+        m_df = df[df["metric"] == metric_name]
+        if len(m_df) < 2: return 0
+        v1 = m_df.iloc[-2]["value"]
+        v2 = m_df.iloc[-1]["value"]
+        return ((v2 - v1) / v1 * 100) if v1 else 0
+
+    mrr_series = df[df["metric"] == "MRR"][["period", "value"]].tail(12).to_dict("records")
+    
+    return {
+        "mrr": _val("MRR"),
+        "arr": _val("ARR"),
+        "cac": _val("CAC"),
+        "ltv": _val("LTV"),
+        "churn_rate": _val("Churn Rate"),
+        "trends": mrr_series,
+        "mrr_trend": _trend("MRR"),
+        "cac_trend": _trend("CAC"),
+        "churn_trend": _trend("Churn Rate")
+    }
 
 
 # ════════════════════════════════════════════════════════════
