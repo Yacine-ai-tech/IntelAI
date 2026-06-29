@@ -11,9 +11,11 @@ const AXIS = { fontSize: 11, fill: 'var(--text-3)' }
 function ForecastChart({ forecast, t }) {
   const hist = (forecast.historical || []).map(h => ({ period: h.period || h.month_tag, value: h.value ?? h.actual }))
   const fc = (forecast.forecast || []).map(f => {
-    const lower = f.lower, upper = f.upper
+    const lower = f.lower_bound ?? f.lower
+    const upper = f.upper_bound ?? f.upper
+    const val = f.forecast ?? f.predicted ?? f.value
     return {
-      period: f.period || f.month_tag, value: f.predicted ?? f.value, lower, upper,
+      period: f.period || f.month_tag, value: val, lower, upper,
       // Ranged datum [lower, upper] → a single shaded Monte-Carlo band region.
       band: (lower != null && upper != null) ? [lower, upper] : undefined,
     }
@@ -111,7 +113,7 @@ export default function ForecastingPage() {
           <StatGrid style={{ marginTop: 18 }}>
             <Stat label={t('metric') || 'Metric'} value={forecast.metric || metric} icon={BarChart3} />
             <Stat label={t('model') || 'Model'} value={forecast.model || 'Linear'} icon={Brain} accent="var(--accent)" />
-            <Stat label={t('r2Score') || 'R² score'} value={forecast.r2 != null ? forecast.r2.toFixed(3) : '—'} icon={Target} accent="var(--ok)" />
+            <Stat label={t('r2Score') || 'R² score'} value={forecast.explanation?.r_squared != null ? forecast.explanation.r_squared.toFixed(3) : '—'} icon={Target} accent="var(--ok)" />
             <Stat label={t('forecastPeriods') || 'Periods'} value={fmtNum(forecast.forecast?.length || periods)} icon={Sparkles} />
           </StatGrid>
 
@@ -126,9 +128,9 @@ export default function ForecastingPage() {
                 {(forecast.forecast || []).map((f, i) => (
                   <tr key={i}>
                     <td>{f.period || f.month_tag}</td>
-                    <td style={{ fontWeight: 600, fontFamily: 'var(--font-mono)' }}>{fmtNum(f.predicted ?? f.value)}</td>
-                    <td style={{ color: 'var(--text-3)' }}>{fmtNum(f.lower)}</td>
-                    <td style={{ color: 'var(--text-3)' }}>{fmtNum(f.upper)}</td>
+                    <td style={{ fontWeight: 600, fontFamily: 'var(--font-mono)' }}>{fmtNum(f.forecast ?? f.predicted ?? f.value)}</td>
+                    <td style={{ color: 'var(--text-3)' }}>{fmtNum(f.lower_bound ?? f.lower)}</td>
+                    <td style={{ color: 'var(--text-3)' }}>{fmtNum(f.upper_bound ?? f.upper)}</td>
                   </tr>
                 ))}
               </tbody>

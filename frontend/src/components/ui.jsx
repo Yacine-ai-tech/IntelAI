@@ -1,9 +1,10 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer, Cell,
 } from 'recharts'
-import { Sparkles, ArrowUpRight, ArrowDownRight, FileText } from 'lucide-react'
+import { Sparkles, ArrowUpRight, ArrowDownRight, FileText, X } from 'lucide-react'
 
 // ── formatters ───────────────────────────────────────────────
 export const fmtNum = (v) => {
@@ -63,15 +64,24 @@ export function PageHeader({ icon: Icon, title, subtitle, accent = 'var(--primar
 }
 
 // ── stat tile ────────────────────────────────────────────────
-export function Stat({ label, value, unit, icon: Icon, accent = 'var(--primary)', trend, good, hint }) {
+export function Stat({ label, value, unit, icon: Icon, accent = 'var(--primary)', trend, good, hint, history, hasAnomaly, onClick }) {
   const up = trend != null && trend >= 0
-  // "good" = direction where higher is better ('up'/'down'); colours the trend accordingly
   const trendGood = good == null ? up : (good === 'up' ? up : !up)
+  const sparkColor = accent || 'var(--primary)'
+  const sparkId = `sparkG-${label.replace(/\\s+/g, '')}`
+
   return (
-    <div className="kpi-card">
+    <div className={`kpi-card${onClick ? ' clickable' : ''}`} onClick={onClick}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div style={{ minWidth: 0 }}>
-          <div className="kpi-label truncate">{label}</div>
+          <div className="kpi-label truncate" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            {label}
+            {hasAnomaly && (
+              <span className="anomaly-dot" title="Anomaly detected">
+                <Sparkles size={11} fill="currentColor" />
+              </span>
+            )}
+          </div>
           <div className="kpi-value">{value}{unit ? <span style={{ fontSize: '.9rem', color: 'var(--text-3)', marginLeft: 3 }}>{unit}</span> : null}</div>
         </div>
         {Icon && (
@@ -85,7 +95,23 @@ export function Stat({ label, value, unit, icon: Icon, accent = 'var(--primary)'
           {up ? <ArrowUpRight size={13} /> : <ArrowDownRight size={13} />}{Math.abs(trend).toFixed(1)}%
         </div>
       )}
-      {hint && <div style={{ fontSize: '.72rem', color: 'var(--text-3)', marginTop: 6 }}>{hint}</div>}
+      {history && history.length >= 2 && (
+        <div style={{ height: 60, marginTop: 12, marginLeft: -18, marginRight: -18, marginBottom: -18 }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={history}>
+              <defs>
+                <linearGradient id={sparkId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={sparkColor} stopOpacity={0.3} />
+                  <stop offset="100%" stopColor={sparkColor} stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <YAxis hide domain={['dataMin', 'dataMax']} />
+              <Area type="monotone" dataKey="value" stroke={sparkColor} strokeWidth={2} fill={`url(#${sparkId})`} dot={false} />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+      {hint && !history && <div style={{ fontSize: '.72rem', color: 'var(--text-3)', marginTop: 6 }}>{hint}</div>}
     </div>
   )
 }
@@ -120,21 +146,29 @@ export function Empty({ text = 'No data available.' }) {
 }
 
 // ── charts ───────────────────────────────────────────────────
+// Brand gradient stops reused by chart strokes/fills (Deep Blue → Cyan).
+const BRAND_STOPS = [['0%', '#4f46e5'], ['55%', '#2563eb'], ['100%', '#22d3ee']]
+
 export function AreaTrend({ data, x = 'period', y, color = 'var(--primary)', height = 220 }) {
   if (!data?.length) return <Empty text="No trend data." />
-  const id = 'g' + y
+  const id = 'g' + y, sid = 's' + y
   return (
     <div style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 5, right: 8, left: -16, bottom: 0 }}>
-          <defs><linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={color} stopOpacity={0.35} /><stop offset="100%" stopColor={color} stopOpacity={0} />
-          </linearGradient></defs>
+          <defs>
+            <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={color} stopOpacity={0.34} /><stop offset="100%" stopColor={color} stopOpacity={0} />
+            </linearGradient>
+            <linearGradient id={sid} x1="0" y1="0" x2="1" y2="0">
+              {BRAND_STOPS.map(([o, c]) => <stop key={o} offset={o} stopColor={c} />)}
+            </linearGradient>
+          </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
           <XAxis dataKey={x} tick={CHART_AXIS} axisLine={false} tickLine={false} />
           <YAxis tick={CHART_AXIS} axisLine={false} tickLine={false} width={48} />
           <Tooltip contentStyle={TIP} />
-          <Area type="monotone" dataKey={y} stroke={color} strokeWidth={2} fill={`url(#${id})`} />
+          <Area type="monotone" dataKey={y} stroke={`url(#${sid})`} strokeWidth={2.4} fill={`url(#${id})`} />
         </AreaChart>
       </ResponsiveContainer>
     </div>
@@ -143,15 +177,19 @@ export function AreaTrend({ data, x = 'period', y, color = 'var(--primary)', hei
 
 export function MiniBars({ data, x = 'period', y, color = 'var(--primary)', height = 220 }) {
   if (!data?.length) return <Empty text="No data." />
+  const bid = 'b' + y
   return (
     <div style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 5, right: 8, left: -16, bottom: 0 }}>
+          <defs><linearGradient id={bid} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#22d3ee" /><stop offset="100%" stopColor="#2563eb" stopOpacity={0.85} />
+          </linearGradient></defs>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
           <XAxis dataKey={x} tick={CHART_AXIS} axisLine={false} tickLine={false} />
           <YAxis tick={CHART_AXIS} axisLine={false} tickLine={false} width={48} />
           <Tooltip contentStyle={TIP} cursor={{ fill: 'var(--hover)' }} />
-          <Bar dataKey={y} fill={color} radius={[5, 5, 0, 0]} />
+          <Bar dataKey={y} fill={`url(#${bid})`} radius={[5, 5, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -191,6 +229,8 @@ export function AskCopilot({ q, label = 'Ask Copilot', size = 'sm' }) {
 
 // ── Citations — robust, deduped, numbered source chips (used everywhere) ──────
 export function Citations({ sources, label = 'Sources' }) {
+  const [preview, setPreview] = useState(null)
+
   if (!sources || !sources.length) return null
   // Defensive client-side normalisation: accept strings or objects, dedupe by title.
   const seen = new Set()
@@ -204,20 +244,48 @@ export function Citations({ sources, label = 'Sources' }) {
     let rel = o.relevance
     if (typeof rel === 'string') rel = parseFloat(rel.replace('%', ''))
     if (typeof rel === 'number' && rel > 1) rel = rel / 100
-    list.push({ id: o.id ?? list.length + 1, title, type: o.type || 'knowledge', snippet: o.snippet || o.preview, rel: typeof rel === 'number' && !isNaN(rel) ? Math.round(rel * 100) : null })
+    list.push({ id: o.id ?? list.length + 1, title, type: o.type || 'knowledge', snippet: o.snippet || o.preview || o.content, rel: typeof rel === 'number' && !isNaN(rel) ? Math.round(rel * 100) : null, source: o.source || o.url || '' })
   })
   if (!list.length) return null
+
   return (
-    <div className="citations">
-      <span className="citations-label">{label}</span>
-      {list.map((s) => (
-        <span key={s.id} className={`citation-chip${s.type === 'kpi' ? ' kpi' : ''}`} title={s.snippet || s.title}>
-          <span className="cite-n">{s.id}</span>
-          {s.type === 'kpi' ? <Sparkles size={11} /> : <FileText size={11} />} {s.title}
-          {s.rel != null && <em className="cite-rel">{s.rel}%</em>}
-        </span>
-      ))}
-    </div>
+    <>
+      <div className="citations">
+        <span className="citations-label">{label}</span>
+        {list.map((s) => {
+          const isHttp = s.source?.startsWith('http')
+          return (
+            <a key={s.id} href={isHttp ? s.source : '#'} target={isHttp ? '_blank' : '_self'} rel="noreferrer" 
+               className={`citation-chip${s.type === 'kpi' ? ' kpi' : ''}`} title={s.snippet || s.title} style={{ textDecoration: 'none', cursor: 'pointer' }}
+               onClick={(e) => {
+                 if (!isHttp) {
+                   e.preventDefault()
+                   setPreview(s)
+                 }
+               }}>
+              <span className="cite-n">{s.id}</span>
+              {s.type === 'kpi' ? <Sparkles size={11} /> : <FileText size={11} />} {s.title}
+              {s.rel != null && <em className="cite-rel">{s.rel}%</em>}
+            </a>
+          )
+        })}
+      </div>
+
+      {preview && (
+        <div className="drawer-overlay" onClick={() => setPreview(null)} style={{ justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
+          <div className="card" onClick={e => e.stopPropagation()} style={{ maxWidth: 760, width: '90%', maxHeight: '80vh', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+              <h3 className="card-title" style={{ margin: 0 }}><FileText size={16} /> {preview.title || 'Document'}</h3>
+              <button className="btn btn-ghost btn-icon" onClick={() => setPreview(null)}><X size={18} /></button>
+            </div>
+            <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, color: 'var(--text-2)', fontSize: '.9rem' }}>
+              {preview.snippet || preview.text || 'No detailed content available.'}
+            </div>
+            {preview.source && <div style={{ marginTop: 14, fontSize: '.78rem', color: 'var(--text-3)' }}>Source: {preview.source}</div>}
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 

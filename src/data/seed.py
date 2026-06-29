@@ -34,7 +34,7 @@ from itertools import chain
 from typing import Any, Dict, List, Tuple
 
 SEED = 42
-MONTHS = 24
+MONTHS = 36
 SEGMENT = "Global"
 
 # Tuple schema per metric: (metric, unit, base_value, monthly_drift, direction)
@@ -219,8 +219,8 @@ ANOMALIES: List[Tuple[str, str, int, float]] = [
 
 
 def _periods(months: int) -> List[str]:
-    base = datetime.utcnow().replace(day=1) - timedelta(days=30 * (months - 1))
-    return [(base + timedelta(days=30 * i)).strftime("%Y-%m") for i in range(months)]
+    base = datetime(2024, 1, 1)
+    return [(base + timedelta(days=31 * i)).replace(day=1).strftime("%Y-%m") for i in range(months)]
 
 
 def generate_kpi_rows(months: int = MONTHS, seed: int = SEED) -> List[Dict[str, Any]]:
