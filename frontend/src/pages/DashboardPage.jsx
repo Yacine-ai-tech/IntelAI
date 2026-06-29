@@ -29,38 +29,34 @@ function Sparkline({ data, color }) {
     <div style={{ height: 42, marginTop: 10 }}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data.map(d => ({ value: d.value || 0 }))}>
+          <defs><linearGradient id="spark" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#4f46e5" /><stop offset="100%" stopColor="#22d3ee" />
+          </linearGradient></defs>
           <YAxis hide domain={['dataMin', 'dataMax']} />
           <Tooltip contentStyle={{ background: 'var(--surface-2)', border: '1px solid var(--border-2)', borderRadius: 8, fontSize: '.75rem' }}
             itemStyle={{ color: 'var(--text)' }} labelStyle={{ display: 'none' }} />
-          <Line type="monotone" dataKey="value" stroke={color} strokeWidth={2} dot={false} />
+          <Line type="monotone" dataKey="value" stroke={color === 'var(--primary)' ? 'url(#spark)' : color} strokeWidth={2} dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </div>
   )
 }
 
-function KPICard({ label, value, change, category, history }) {
+function KPICard({ label, value, change, category, history, isAnomaly }) {
   const navigate = useNavigate()
   const { icon: Icon, accent, route } = catOf(category)
-  const up = (change ?? 0) >= 0
+  
   return (
-    <div className="kpi-card clickable" onClick={() => navigate(route)} title={`Open ${category || 'analytics'}`}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div style={{ minWidth: 0 }}>
-          <div className="kpi-label truncate">{label}</div>
-          <div className="kpi-value">{value}</div>
-        </div>
-        <div className="kpi-icon-wrap" style={{ background: `color-mix(in srgb, ${accent} 16%, transparent)`, color: accent }}>
-          <Icon size={18} />
-        </div>
-      </div>
-      <Sparkline data={history} color={accent} />
-      {change !== undefined && change !== null && (
-        <div className={`kpi-trend ${up ? 'up' : 'down'}`}>
-          {up ? <ArrowUpRight size={13} /> : <ArrowDownRight size={13} />}{Math.abs(change).toFixed(1)}%
-        </div>
-      )}
-    </div>
+    <Stat 
+      label={label}
+      value={value}
+      trend={change}
+      icon={Icon}
+      accent={accent}
+      history={history || []}
+      hasAnomaly={isAnomaly}
+      onClick={() => navigate(route)}
+    />
   )
 }
 
@@ -115,6 +111,10 @@ export default function DashboardPage() {
     queryKey: ['risk'], queryFn: () => api.getRisk().then(r => r.data),
     staleTime: 300_000, retry: 1,
   })
+  const { data: anomalies = [] } = useQuery({
+    queryKey: ['anomalies'], queryFn: () => api.getAnomalies().then(r => r.data?.anomalies || []),
+    staleTime: 300_000, retry: 1,
+  })
 
   const loading = kpisLoading || healthLoading || summaryLoading
 
@@ -137,10 +137,14 @@ export default function DashboardPage() {
   const topKPIs = kpis.filter(k => {
     const n = k.metric_name || k.name
     if (seen.has(n)) return false; seen.add(n); return true
-  }).slice(0, 8).map(k => ({
-    label: k.metric_name || k.name || 'Metric', value: fmt(k.value),
-    change: k.change_pct, category: k.category || 'default', history: hist[k.metric_name || k.name] || [],
-  }))
+  }).slice(0, 8).map(k => {
+    const n = k.metric_name || k.name || 'Metric'
+    const isAnomaly = anomalies.some(a => (a.metric_name || a.name) === n)
+    return {
+      label: n, value: fmt(k.value),
+      change: k.change_pct, isAnomaly, category: k.category || 'default', history: hist[n] || [],
+    }
+  })
 
   const riskScore = risk?.score
   const askChips = ['What is our overall business health?', 'What risks should I watch right now?', 'Summarize this period’s key metrics']
