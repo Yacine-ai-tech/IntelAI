@@ -42,7 +42,7 @@ export default function AnalyticsPage() {
         <Stat label={t('categories') || 'Domains'} value={fmtNum(categories.length)} icon={FolderKanban} />
       </StatGrid>
 
-      <Panel title="Metric explorer" icon={TrendingUp} style={{ marginTop: 18 }}
+      <Panel title={t('metricExplorer') || 'Metric explorer'} icon={TrendingUp} style={{ marginTop: 18 }}
         actions={
           <select className="form-input" style={{ width: 220 }} value={selected} onChange={e => setMetric(e.target.value)}>
             {metricNames.map((m, i) => <option key={i} value={m}>{m}</option>)}
@@ -66,8 +66,8 @@ export default function AnalyticsPage() {
             {fc && !fc.error && (
               <>
                 <div style={{ display: 'flex', gap: 16, marginBottom: 12, fontSize: '.82rem', color: 'var(--text-2)' }}>
-                  <span>Method: <b style={{ color: 'var(--text)' }}>{fc.method}</b></span>
-                  {fc.confidence != null && <span>Confidence: <b style={{ color: 'var(--text)' }}>{(fc.confidence * 100).toFixed(0)}%</b></span>}
+                  <span>{t('method') || 'Method'}: <b style={{ color: 'var(--text)' }}>{fc.method}</b></span>
+                  {fc.confidence != null && <span>{t('confidence') || 'Confidence'}: <b style={{ color: 'var(--text)' }}>{(fc.confidence * 100).toFixed(0)}%</b></span>}
                 </div>
                 <AreaTrend data={(fc.predictions || []).map((p, i) => ({ period: p.period || `+${i + 1}`, value: typeof p.value === 'number' ? Math.round(p.value * 100) / 100 : 0 }))} y="value" color="var(--accent)" height={180} />
               </>
