@@ -315,6 +315,7 @@ async def login(req: LoginRequest):
             "language": user_data.get("preferred_language", "en"),
             "pages": get_user_pages(role),
             "data_access": get_user_data_categories(role),
+            "actions": __import__('src.core.jwt_auth').core.jwt_auth.ROLE_DEFINITIONS.get(role, {}).get("actions", []),
         },
     }
 
@@ -339,6 +340,7 @@ async def demo_login(role: str):
             "id": ud["id"], "username": role, "role": role,
             "full_name": role.upper(), "language": "en",
             "pages": get_user_pages(role), "data_access": get_user_data_categories(role),
+            "actions": ROLE_DEFINITIONS.get(role, {}).get("actions", []),
         },
     }
 
@@ -381,6 +383,7 @@ async def get_me(user: TokenData = Depends(get_current_user)):
         "pages": get_user_pages(user.role),
         "data_access": get_user_data_categories(user.role),
         "preferred_language": user_data.get("preferred_language", user.language),
+        "actions": __import__('src.core.jwt_auth').core.jwt_auth.ROLE_DEFINITIONS.get(user.role, {}).get("actions", []),
     }
 
 
