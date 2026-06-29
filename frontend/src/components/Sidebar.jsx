@@ -5,10 +5,10 @@ import CubeMark from './Brand'
 import {
   LayoutDashboard, BarChart3, TrendingUp, Users, Package, Monitor,
   Settings2, Leaf, ShieldAlert, Database, ShieldCheck, Settings,
-  LogOut, BookOpen, Sparkles, DollarSign,
+  LogOut, BookOpen, Sparkles, DollarSign, X
 } from 'lucide-react'
 
-export default function Sidebar() {
+export default function Sidebar({ mobileOpen, onClose }) {
   const { user, logout, hasPage } = useAuth()
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -28,6 +28,7 @@ export default function Sidebar() {
     {
       label: t('sidebarDomains') || 'Domains',
       items: [
+        { to: '/growth',     label: t('navGrowth') || 'Growth', icon: TrendingUp, page: 'analytics' },
         { to: '/hr',         label: t('navHR'),         icon: Users,     page: 'hr' },
         { to: '/it',         label: t('navIT'),         icon: Monitor,   page: 'it' },
         { to: '/operations', label: t('navOperations'), icon: Settings2, page: 'operations' },
@@ -39,6 +40,7 @@ export default function Sidebar() {
       label: t('sidebarSystem') || 'Knowledge & System',
       items: [
         { to: '/knowledge', label: t('navKnowledge') || 'Knowledge', icon: BookOpen,    page: 'analytics' },
+        { to: '/glossary',  label: t('navGlossary') || 'Glossary',   icon: BookOpen,    page: 'analytics' },
         { to: '/data-hub',  label: t('navDataHub'),                  icon: Database,    page: 'data_hub' },
         { to: '/admin',     label: t('navAdmin'),                    icon: ShieldCheck, page: 'admin' },
         { to: '/settings',  label: t('navSettings'),                 icon: Settings,    page: 'settings' },
@@ -51,16 +53,19 @@ export default function Sidebar() {
     .split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-header">
-        <div className="sidebar-brand">
-          <CubeMark size={38} />
-          <div>
-            <div className="sidebar-brand-text">{t('appName')}</div>
-            <div className="sidebar-brand-sub">{t('appTagline')}</div>
+    <>
+      {mobileOpen && <div className="sidebar-overlay" onClick={onClose} />}
+      <aside className={`sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
+        {mobileOpen && <button className="btn btn-ghost btn-icon mobile-close-btn" onClick={onClose} style={{ position: 'absolute', top: 12, right: 12, zIndex: 10 }}><X size={18} /></button>}
+        <div className="sidebar-header">
+          <div className="sidebar-brand">
+            <CubeMark size={38} />
+            <div>
+              <div className="sidebar-brand-text">{t('appName')}</div>
+              <div className="sidebar-brand-sub">{t('appTagline')}</div>
+            </div>
           </div>
         </div>
-      </div>
 
       <nav className="sidebar-nav">
         {hasPage('assistant') && (
@@ -105,5 +110,6 @@ export default function Sidebar() {
         </button>
       </div>
     </aside>
+    </>
   )
 }
