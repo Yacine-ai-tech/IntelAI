@@ -66,19 +66,19 @@ export default function FinancialPage() {
         })}
       </StatGrid>
 
-      <Panel title="Revenue trend" icon={TrendingUp} style={{ marginTop: 18 }}>
+      <Panel title={t('revenueTrend') || 'Revenue trend'} icon={TrendingUp} style={{ marginTop: 18 }}>
         <AreaTrend data={revSeries} y="value" color={ACCENT} />
       </Panel>
 
       <Grid style={{ marginTop: 18 }} min={320}>
-        <Panel title="Generate statement" icon={FileText}>
+        <Panel title={t('generateStatement') || 'Generate statement'} icon={FileText}>
           <form onSubmit={runGenerate}>
             <div className="form-group">
               <label className="form-label">{t('statementType') || 'Statement type'}</label>
               <select className="form-input" value={type} onChange={e => setType(e.target.value)}>
-                <option value="income_statement">Income Statement (P&L)</option>
-                <option value="balance_sheet">Balance Sheet</option>
-                <option value="cash_flow">Cash Flow</option>
+                <option value="income_statement">{t('incomeStatement') || 'Income Statement (P&L)'}</option>
+                <option value="balance_sheet">{t('balanceSheet') || 'Balance Sheet'}</option>
+                <option value="cash_flow">{t('cashFlow') || 'Cash Flow'}</option>
               </select>
             </div>
             <div className="form-group">
@@ -98,7 +98,7 @@ export default function FinancialPage() {
             <>
               {lineItems.length > 0 && <MiniBars data={lineItems} x="name" y="value" color={ACCENT} height={Math.max(180, lineItems.length * 30)} />}
               <table className="table" style={{ marginTop: 14 }}>
-                <thead><tr><th>Line item</th><th style={{ textAlign: 'right' }}>Amount</th></tr></thead>
+                <thead><tr><th>{t('lineItem') || 'Line item'}</th><th style={{ textAlign: 'right' }}>{t('amount') || 'Amount'}</th></tr></thead>
                 <tbody>
                   {lineItems.map((it, i) => (
                     <tr key={i}><td>{it.name}</td><td style={{ textAlign: 'right', fontFamily: 'var(--font-mono)' }}>{fmtMoney(it.value)}</td></tr>

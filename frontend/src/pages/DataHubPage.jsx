@@ -49,7 +49,7 @@ function chartFromRows(headers, rows) {
 }
 
 export default function DataHubPage() {
-  const { user } = useAuth()
+  const { user, hasAction } = useAuth()
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [stats, setStats] = useState(null)
@@ -139,27 +139,31 @@ export default function DataHubPage() {
       )}
 
       <Grid min={300}>
-        <Panel title={t('uploadKpiCsv') || 'Upload KPI data (CSV)'} icon={Upload}>
-          <div className={`dropzone${drag === 'csv' ? ' over' : ''}`} {...dz('csv', onPickCSV)} onClick={() => csvRef.current?.click()}>
-            <Upload size={26} />
-            <div style={{ fontWeight: 600, marginTop: 8 }}>{t('dropCsv') || 'Drop a CSV here or click to choose'}</div>
-            <div style={{ fontSize: '.78rem', color: 'var(--text-3)', marginTop: 4 }}>
-              <code>period, metric, value, category, unit</code>
+      {hasAction('ingest') && (
+        <>
+          <Panel title={t('uploadKpiCsv') || 'Upload KPI data (CSV)'} icon={Upload}>
+            <div className={`dropzone${drag === 'csv' ? ' over' : ''}`} {...dz('csv', onPickCSV)} onClick={() => csvRef.current?.click()}>
+              <Upload size={26} />
+              <div style={{ fontWeight: 600, marginTop: 8 }}>{t('dropCsv') || 'Drop a CSV here or click to choose'}</div>
+              <div style={{ fontSize: '.78rem', color: 'var(--text-3)', marginTop: 4 }}>
+                <code>period, metric, value, category, unit</code>
+              </div>
             </div>
-          </div>
-          <input ref={csvRef} type="file" accept=".csv" style={{ display: 'none' }}
-            onChange={(e) => onPickCSV(e.target.files[0])} />
-        </Panel>
+            <input ref={csvRef} type="file" accept=".csv" style={{ display: 'none' }}
+              onChange={(e) => onPickCSV(e.target.files[0])} />
+          </Panel>
 
-        <Panel title={t('addDocument') || 'Add document to knowledge base'} icon={FileText}>
-          <div className={`dropzone${drag === 'doc' ? ' over' : ''}`} {...dz('doc', onUploadDoc)} onClick={() => docRef.current?.click()}>
-            {busy === 'doc' ? <Loader2 size={26} className="spin-inline" /> : <FileText size={26} />}
-            <div style={{ fontWeight: 600, marginTop: 8 }}>{t('dropDoc') || 'Drop a PDF/TXT/MD or click to choose'}</div>
-            <div style={{ fontSize: '.78rem', color: 'var(--text-3)', marginTop: 4 }}>{t('docIndexed') || 'Indexed for the persona RAG copilot'}</div>
-          </div>
-          <input ref={docRef} type="file" accept=".pdf,.txt,.csv,.md" style={{ display: 'none' }}
-            onChange={(e) => onUploadDoc(e.target.files[0])} />
-        </Panel>
+          <Panel title={t('addDocument') || 'Add document to knowledge base'} icon={FileText}>
+            <div className={`dropzone${drag === 'doc' ? ' over' : ''}`} {...dz('doc', onUploadDoc)} onClick={() => docRef.current?.click()}>
+              {busy === 'doc' ? <Loader2 size={26} className="spin-inline" /> : <FileText size={26} />}
+              <div style={{ fontWeight: 600, marginTop: 8 }}>{t('dropDoc') || 'Drop a PDF/TXT/MD or click to choose'}</div>
+              <div style={{ fontSize: '.78rem', color: 'var(--text-3)', marginTop: 4 }}>{t('docIndexed') || 'Indexed for the persona RAG copilot'}</div>
+            </div>
+            <input ref={docRef} type="file" accept=".pdf,.txt,.csv,.md" style={{ display: 'none' }}
+              onChange={(e) => onUploadDoc(e.target.files[0])} />
+          </Panel>
+        </>
+      )}
 
         <Panel title={t('knowledgeBase') || 'Knowledge base'} icon={Database} style={{ textAlign: 'center' }}>
           <div className="brand-gradient" style={{ fontSize: '2.4rem', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
