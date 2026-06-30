@@ -47,6 +47,156 @@ const PROMPTS_FR = {
   analyst: ['Résume les derniers indicateurs', 'Qu’est-ce qui a le plus changé cette période ?', 'Prévois le revenu du prochain trimestre'],
 }
 
+function formatMessageContent(content) {
+  if (!content) return ''
+  
+  // Split content into sections based on markdown-style headers
+  const lines = content.split('\n')
+  let formatted = []
+  let currentList = null
+  let currentSection = null
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim()
+    
+    // Handle empty lines
+    if (!line) {
+      if (currentList) {
+        formatted.push(currentList)
+        currentList = null
+      }
+      continue
+    }
+    
+    // Handle headers (###, ##, #)
+    if (line.startsWith('###')) {
+      if (currentList) {
+        formatted.push(currentList)
+        currentList = null
+      }
+      if (currentSection) formatted.push(currentSection)
+      currentSection = { type: 'h3', content: line.replace(/^###\s*/, '') }
+      continue
+    }
+    
+    if (line.startsWith('##')) {
+      if (currentList) {
+        formatted.push(currentList)
+        currentList = null
+      }
+      if (currentSection) formatted.push(currentSection)
+      currentSection = { type: 'h2', content: line.replace(/^##\s*/, '') }
+      continue
+    }
+    
+    if (line.startsWith('#')) {
+      if (currentList) {
+        formatted.push(currentList)
+        currentList = null
+      }
+      if (currentSection) formatted.push(currentSection)
+      currentSection = { type: 'h1', content: line.replace(/^#\s*/, '') }
+      continue
+    }
+    
+    // Handle bold text with ***
+    if (line.includes('***')) {
+      const parts = line.split(/\*\*\*/g)
+      let formattedLine = []
+      for (let j = 0; j < parts.length; j++) {
+        if (j % 2 === 1) {
+          formattedLine.push(<strong key={j}>{parts[j]}</strong>)
+        } else if (parts[j]) {
+          formattedLine.push(<span key={j}>{parts[j]}</span>)
+        }
+      }
+      if (currentList) {
+        currentList.items.push(formattedLine)
+      } else {
+        formatted.push({ type: 'text', content: formattedLine })
+      }
+      continue
+    }
+    
+    // Handle bullet points (-, *, •)
+    if (line.match(/^[-*•]\s+/)) {
+      if (!currentList) {
+        currentList = { type: 'list', items: [] }
+      }
+      currentList.items.push(line.replace(/^[-*•]\s+/, ''))
+      continue
+    }
+    
+    // Handle numbered lists (1., 2., etc.)
+    if (line.match(/^\d+\.\s+/)) {
+      if (!currentList) {
+        currentList = { type: 'numbered-list', items: [] }
+      }
+      currentList.items.push(line.replace(/^\d+\.\s+/, ''))
+      continue
+    }
+    
+    // Regular text
+    if (currentList) {
+      formatted.push(currentList)
+      currentList = null
+    }
+    if (currentSection) {
+      formatted.push(currentSection)
+      currentSection = null
+    }
+    formatted.push({ type: 'text', content: line })
+  }
+  
+  // Push any remaining content
+  if (currentList) formatted.push(currentList)
+  if (currentSection) formatted.push(currentSection)
+  
+  return formatted
+}
+
+function FormattedContent({ content }) {
+  const formatted = formatMessageContent(content)
+  
+  return (
+    <div className="formatted-message">
+      {formatted.map((item, idx) => {
+        if (item.type === 'h1') {
+          return <h1 key={idx} className="msg-h1">{item.content}</h1>
+        }
+        if (item.type === 'h2') {
+          return <h2 key={idx} className="msg-h2">{item.content}</h2>
+        }
+        if (item.type === 'h3') {
+          return <h3 key={idx} className="msg-h3">{item.content}</h3>
+        }
+        if (item.type === 'list') {
+          return (
+            <ul key={idx} className="msg-list">
+              {item.items.map((listItem, i) => (
+                <li key={i}>{listItem}</li>
+              ))}
+            </ul>
+          )
+        }
+        if (item.type === 'numbered-list') {
+          return (
+            <ol key={idx} className="msg-numbered-list">
+              {item.items.map((listItem, i) => (
+                <li key={i}>{listItem}</li>
+              ))}
+            </ol>
+          )
+        }
+        if (item.type === 'text') {
+          return <p key={idx} className="msg-text">{item.content}</p>
+        }
+        return null
+      })}
+    </div>
+  )
+}
+
 function MessageBubble({ msg }) {
   const isUser = msg.role === 'user'
   const Icon = isUser ? User : Sparkles
@@ -54,7 +204,13 @@ function MessageBubble({ msg }) {
     <div className={`chat-message ${isUser ? 'user' : 'assistant'}`}>
       <div className="chat-avatar"><Icon size={15} /></div>
       <div style={{ minWidth: 0 }}>
-        <div className="chat-bubble" style={{ whiteSpace: 'pre-wrap' }}>{msg.content}</div>
+        <div className="chat-bubble">
+          {isUser ? (
+            <div style={{ whiteSpace: 'pre-wrap' }}>{msg.content}</div>
+          ) : (
+            <FormattedContent content={msg.content} />
+          )}
+        </div>
         {!isUser && <Citations sources={msg.sources} />}
       </div>
     </div>
