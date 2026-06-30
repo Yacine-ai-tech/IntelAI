@@ -56,6 +56,7 @@ RAG copilot that respects role boundaries.
 - **Auth + RBAC** — JWT, role-based pages and per-persona data scoping, audit log.
 - **Multi-provider LLM** — Groq (default) / Anthropic via a LiteLLM router.
 - **Bilingual** — full EN / FR UI and responses.
+- **Diverse benchmarking scenarios** — 7 business health scenarios (healthy, declining financial, high churn crisis, operational meltdown, talent crisis, cybersecurity breach, ESG compliance failure) based on S&P 500, SaaS industry standards, and operational excellence benchmarks.
 
 ## 🏗️ Architecture
 
@@ -72,11 +73,24 @@ RAG copilot that respects role boundaries.
                            knowledge/vectors)  LiteLLM router)
                                   ▲
                           GraphRAG-lite + hybrid retrieval + reranker
+                                  │
+                          Diverse benchmarking scenarios (7 health states)
 ```
 
 One deployable FastAPI service backed by PostgreSQL (KPIs, auth, and the knowledge/vector
 store all live in Postgres — no separate vector DB to run). The React frontend deploys
 separately. Production target: a single cloud service (Railway/Fly) + managed Postgres.
+
+**Data Seeding System**: Includes 7 diverse business health scenarios for comprehensive testing and benchmarking:
+- Healthy (default baseline based on S&P 500 benchmarks)
+- Declining Financial (financial distress)
+- High Churn Crisis (customer retention issues)
+- Operational Meltdown (operations failure)
+- Talent Crisis (HR/talent issues)
+- Cybersecurity Breach (security incidents)
+- ESG Compliance Failure (ESG governance issues)
+
+Each scenario generates 36 months of realistic KPI data based on industry standards and research benchmarks.
 
 ## 🚀 Quickstart
 
@@ -97,6 +111,27 @@ python main.py              # → http://localhost:8000  (docs at /api/docs)
 cd frontend && npm install && npm run dev
 ```
 
+**Data seeding scenarios:**
+The seeding system supports multiple business health scenarios for diverse benchmarking:
+
+```bash
+# Default healthy company scenario
+python -m src.data.seed
+
+# Specific scenarios for testing different business conditions
+python -m src.data.seed declining_financial       # Financial distress scenario
+python -m src.data.seed high_churn_crisis        # Customer retention crisis
+python -m src.data.seed operational_meltdown      # Operations failure
+python -m src.data.seed talent_crisis            # HR/talent crisis
+python -m src.data.seed cybersecurity_breach    # Security incident
+python -m src.data.seed esg_compliance_failure   # ESG compliance issues
+
+# Generate all scenarios at once
+./scripts/generate_all_scenarios.sh
+```
+
+Each scenario generates 36 months of data with domain-specific anomalies based on realistic business benchmarks from S&P 500, SaaS metrics studies, and industry standards.
+
 **Docker (single app):**
 ```bash
 docker compose -f docker-compose.dev.yml up --build   # app only (uses your .env DB)
@@ -113,9 +148,11 @@ Default login: **`admin` / `admin123`** (change after first login).
 | `GROQ_API_KEY` | ✅ | default LLM provider |
 | `SECRET_KEY` | ✅ | JWT signing (`python -c "import secrets;print(secrets.token_hex(32))"`) |
 | `ANTHROPIC_API_KEY` | ⬜ | LiteLLM reasoning / judge tiers (Claude) |
+| `COHERE_API_KEY` | ⬜ | Hosted rerank fallback (resilience) |
 | `USE_HYBRID_RETRIEVAL` | ⬜ | `true` = dense+BM25+RRF+reranker (needs ML extras) |
 | `USE_GRAPH_RAG` | ⬜ | `true` = GraphRAG-lite for multi-hop KPI queries |
 | `VECTOR_STORE` | ⬜ | `memory` (default) · `chroma` (dev) · `pgvector` (prod/Neon) · `qdrant` |
+| `HOSTED_RERANK_PROVIDER` | ⬜ | `cohere`/`jina` for hosted rerank fallback |
 | `QDRANT_URL` / `QDRANT_API_KEY` | ⬜ | Qdrant endpoint (only when `VECTOR_STORE=qdrant`) |
 | `LLM_MODEL` | ⬜ | Groq model id (default `llama-3.1-8b-instant`) |
 
@@ -154,6 +191,17 @@ Deploy the frontend separately (Vercel/Netlify) with its API base pointed at the
   is the separate **RAGeval** project (this just feeds it).
 - Saved dashboards; per-tenant workspaces. (pgvector/Chroma/Qdrant vector stores are
   implemented — select with `VECTOR_STORE`.)
+- **NEW**: Additional benchmarking scenarios (M&A integration, market expansion, regulatory compliance, digital transformation)
+- **NEW**: UI for scenario selection and comparison
+- **NEW**: Automated scenario-based reporting
+
+## 📚 Documentation
+
+- **User Guide**: See `/docs/` for comprehensive documentation
+- **Benchmarking Guide**: `/docs/BENCHMARKING_DATA_GUIDE.md` - detailed explanation of all 7 business health scenarios
+- **Presentation Checklist**: `/docs/INTELAI_PRESENTATION_CHECKLIST.md` - feature verification and demo preparation
+- **API Reference**: Interactive docs at `/api/docs` when running
+- **Architecture**: See STRATEGY.md (parent directory) for full strategic context
 
 ## 📄 License
 
