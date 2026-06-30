@@ -1,21 +1,32 @@
 # Lightning Studio Recovery Guide
 
-## Issue (RESOLVED)
-The Lightning inference Studio was experiencing access issues (530 error) due to teamspace/organization configuration problems. This affected:
-- BGE reranking (degrades to BM25+RRF fusion)
-- Off-box embeddings (degrades to neutral relevance)
-- Local GPU vision (Route B unavailable)
+## Issue (PARTIALLY RESOLVED)
+The Lightning inference Studio is experiencing programmatic wake-up issues due to SSL/connection problems. Current status:
+- Studio name: `upwork`
+- Organization: `yacinetrainer227-5z4m0-org`
+- Credentials: Valid but connection unstable
+- Cohere API fallback: **Fully operational**
 
-## Current Status (2026-06-29)
-**✅ RESOLVED**: Cohere API fallback configured and operational
+## Current Status (2026-06-30)
+**⚠️ PARTIAL RESOLUTION**: Cohere API fallback configured and operational; programmatic wake-up implemented but SSL issues remain
 
-**Configuration Applied**:
+**Fallback Configuration (WORKING)**:
 - `COHERE_API_KEY=<configured_key>` configured in `.env`
 - `HOSTED_RERANK_PROVIDER=cohere` set in environment
 - Graceful degradation chain operational: Studio → Cohere → BM25+RRF
 - All fallbacks tested and working correctly
 
-**Impact**: The system now has robust service continuity with zero disruption expected during presentation. The hosted API fallback actually provides better demo experience with consistent performance and zero cold-start time.
+**Programmatic Wake-up Status (IMPLEMENTED BUT SSL ISSUES)**:
+- SDK: `lightning-sdk` added to requirements.txt
+- Service: `src/services/lightning_studio.py` created
+- API endpoints: `/api/v1/admin/lightning/status`, `/api/v1/admin/lightning/wake`, `/api/v1/admin/lightning/stop`
+- Frontend API functions added
+- Configuration: `LIGHTNING_USER_ID`, `LIGHTNING_API_KEY`, `LIGHTNING_STUDIO_NAME` in `.env`
+- **Issue**: SSL connection errors during authentication
+- **Impact**: Cannot reliably wake studio programmatically
+- **Manual wake-up**: Still possible via Lightning dashboard
+
+**Impact**: The system has robust service continuity via Cohere fallback. Programmatic wake-up needs SSL debugging but is not critical for operations.
 
 ## Implementation Details
 
@@ -35,52 +46,39 @@ COHERE_API_KEY=<configured_key>
 ```
 
 **Benefits Realized**:
-- ✅ No Studio recovery needed for presentation
+- ✅ No Studio recovery needed for operations
 - ✅ Better demo experience (consistent performance)
 - ✅ Zero cold-start time
 - ✅ Cost-effective for demo traffic
 - ✅ Production-ready resilience pattern
 
-### Option 2: Restore Lightning Studio (POST-PRESENTATION, IF NEEDED)
-**Status**: Not required for presentation, optional for future
+### Option 2: Programmatic Studio Wake-up (IMPLEMENTED, SSL ISSUES)
+**Status**: Code implemented, SSL connection issues remain
 
-**Prerequisites**: Access to Lightning AI account with valid teamspace
+**Implemented**:
+- `lightning-sdk` added to requirements.txt
+- `src/services/lightning_studio.py` service created
+- API endpoints added: `/api/v1/admin/lightning/status`, `/api/v1/admin/lightning/wake`, `/api/v1/admin/lightning/stop`
+- Frontend API functions added
+- Configuration: `LIGHTNING_USER_ID`, `LIGHTNING_API_KEY`, `LIGHTNING_STUDIO_NAME` in `.env`
 
-**Steps**:
-1. Create new Studio in accessible teamspace
-2. Restore from backup: `~/Downloads/studio_backup.tar.gz`
-3. Re-run `start_all.sh` to start inference server + tunnel
-4. Update orchestrator env vars + tunnel target
+**Current Issue**:
+- SSL connection errors during authentication
+- May be network/SSL layer issue, not authentication
 
-**Commands**:
-```bash
-# On laptop, restore backup to temporary location
-mkdir -p ~/studio_restore
-tar xzf ~/Downloads/studio_backup.tar.gz -C ~/studio_restore
+**Manual Wake-up**: Still possible via Lightning dashboard
 
-# On new Studio, copy over critical files
-# (Manual process: copy .env files, models, configs)
+**Code Available**:
+```python
+# Usage when SSL issues resolved
+from src.services.lightning_studio import wake_studio, get_studio_status
+
+# Wake up studio
+result = wake_studio()
+
+# Check status
+status = get_studio_status()
 ```
-
-**Timeline**: 30-60 minutes, not recommended before presentation
-
-### Option 3: Disable ML-Heavy Features (DEMO MODE, IF NEEDED)
-**Status**: Available as backup option
-
-**Implementation**:
-```bash
-# In IntelAI/.env
-USE_HYBRID_RETRIEVAL=false  # Disable BGE models
-USE_GRAPH_RAG=false         # Disable entity extraction
-```
-
-**Impact**:
-- Chat still works (basic retrieval)
-- Analytics still work
-- No ML dependencies
-- Faster cold starts
-
-**Benefits**: Simpler demo, no external dependencies
 
 ## Presentation Recommendation
 
@@ -92,6 +90,9 @@ Reasons:
 3. **Graceful degradation** - already built into the code
 4. **Cost-effective** - free tiers available for demo traffic
 5. **Professional** - shows production-ready resilience
+6. **Reliable** - no SSL/connection issues
+
+**Programmatic Wake-up Status**: Not ready for production due to SSL issues. Manual wake-up via dashboard still works if needed.
 
 ## Verification
 
@@ -121,10 +122,11 @@ When presenting, if someone asks about the Lightning Studio:
 
 ## Post-Presentation Action Items (Optional)
 
-1. **Restore Lightning Studio** (when time permits, for full GPU performance)
-2. **Implement proper monitoring** for Studio health
-3. **Add auto-fallback logic** to production deployment
-4. **Document disaster recovery procedures**
+1. **Debug SSL issues** for programmatic studio wake-up
+2. **Test lightning-sdk** with different network configurations
+3. **Implement proper monitoring** for Studio health
+4. **Add auto-fallback logic** to production deployment
+5. **Document disaster recovery procedures**
 
 ## Conclusion
 
@@ -133,5 +135,6 @@ For presentation and current operations, **hosted API fallbacks are fully operat
 - Consistent performance
 - Production resilience
 - Zero setup time (already configured)
+- No SSL/connection issues
 
-The Lightning Studio can be restored post-presentation when there's more time for proper testing and validation, but it's not required for current operations or presentation success.
+The Lightning Studio programmatic wake-up capability is implemented but needs SSL debugging. Manual wake-up via dashboard remains available. The system is fully operational with Cohere fallback.
