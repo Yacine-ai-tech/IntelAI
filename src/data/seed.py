@@ -45,7 +45,7 @@ SEGMENT = "Global"
 STRATEGIC_KPIS: Dict[str, List[Tuple[str, str, float, float, str]]] = {
     "Finance": [
         ("Revenue", "USD", 2_400_000, 0.018, "up"),
-        ("Gross Margin", "%", 58, 0.004, "up"),
+        ("Gross Margin", "%", 72, 0.002, "up"),  # Healthy SaaS: 79% gross margin
         ("EBITDA", "USD", 540_000, 0.020, "up"),
         ("Operating Costs", "USD", 1_300_000, -0.006, "down"),
         ("Net Profit", "USD", 360_000, 0.022, "up"),
@@ -57,6 +57,8 @@ STRATEGIC_KPIS: Dict[str, List[Tuple[str, str, float, float, str]]] = {
         ("Rule of 40", "%", 46, 0.003, "up"),
         ("Days Sales Outstanding", "days", 45, -0.006, "down"),
         ("Cash Runway", "months", 19, 0.004, "up"),
+        ("Debt to Equity", "ratio", 0.8, -0.005, "down"),
+        ("Interest Coverage", "ratio", 4.5, 0.010, "up"),
     ],
     "Growth": [
         ("MRR", "USD", 410_000, 0.025, "up"),
@@ -67,14 +69,16 @@ STRATEGIC_KPIS: Dict[str, List[Tuple[str, str, float, float, str]]] = {
         ("LTV", "USD", 9_800, 0.014, "up"),
         ("LTV:CAC", "ratio", 4.2, 0.010, "up"),
         ("Net Promoter Score", "score", 42, 0.006, "up"),
-        ("Net Revenue Retention", "%", 112, 0.003, "up"),
+        ("Net Revenue Retention", "%", 110, 0.003, "up"),  # Healthy: >100%
         ("CAC Payback", "months", 14, -0.008, "down"),
         ("ARPU", "USD", 320, 0.010, "up"),
         ("Active Users", "count", 9_800, 0.020, "up"),
+        ("Viral Coefficient", "ratio", 0.8, 0.005, "up"),
+        ("Conversion Rate", "%", 3.5, 0.008, "up"),
     ],
     "People": [
         ("Headcount", "count", 240, 0.012, "up"),
-        ("Turnover Rate", "%", 12.5, -0.012, "down"),
+        ("Turnover Rate", "%", 8.5, -0.010, "down"),  # Healthy: <10%
         ("Engagement Score", "score", 74, 0.004, "up"),
         ("Time to Hire", "days", 38, -0.008, "down"),
         ("Training Hours", "hours", 22, 0.010, "up"),
@@ -86,6 +90,7 @@ STRATEGIC_KPIS: Dict[str, List[Tuple[str, str, float, float, str]]] = {
         ("Offer Acceptance Rate", "%", 84, 0.004, "up"),
         ("Internal Mobility Rate", "%", 18, 0.010, "up"),
         ("Revenue per Employee", "USD", 235_000, 0.012, "up"),
+        ("Diversity Score", "score", 72, 0.003, "up"),
     ],
     "Operations": [
         ("On-time Delivery", "%", 93, 0.003, "up"),
@@ -101,20 +106,22 @@ STRATEGIC_KPIS: Dict[str, List[Tuple[str, str, float, float, str]]] = {
         ("Cost per Unit", "USD", 12.5, -0.007, "down"),
         ("Schedule Adherence", "%", 91, 0.003, "up"),
         ("Scrap Rate", "%", 3.1, -0.011, "down"),
+        ("OEE", "%", 85, 0.003, "up"),
     ],
     "IT": [
-        ("System Uptime", "%", 99.4, 0.0006, "up"),
-        ("Mean Time to Resolution", "hours", 6.5, -0.012, "down"),
+        ("System Uptime", "%", 99.7, 0.0006, "up"),
+        ("Mean Time to Resolution", "hours", 4.5, -0.012, "down"),  # Healthy: <8 hours
         ("Security Incidents", "count", 7, -0.018, "down"),
         ("Critical Incidents", "count", 2, -0.020, "down"),
         ("Cloud Cost per User", "USD", 180, -0.006, "down"),
         ("Cloud Spend", "USD", 240_000, -0.004, "down"),
         ("Deployment Frequency", "per_month", 18, 0.020, "up"),
         ("Lead Time for Changes", "hours", 9, -0.012, "down"),
-        ("Change Failure Rate", "%", 12, -0.015, "down"),
-        ("SLA Compliance", "%", 96.5, 0.002, "up"),
-        ("Security Score", "score", 82, 0.005, "up"),
+        ("Change Failure Rate", "%", 8, -0.015, "down"),  # Healthy: <15%
+        ("SLA Compliance", "%", 97.5, 0.002, "up"),
+        ("Security Score", "score", 85, 0.005, "up"),
         ("IT Satisfaction", "score", 7.6, 0.005, "up"),
+        ("Vulnerability Response Time", "days", 3, -0.010, "down"),
     ],
     "Logistics": [
         ("Inventory Turnover", "ratio", 6.2, 0.012, "up"),
@@ -130,9 +137,10 @@ STRATEGIC_KPIS: Dict[str, List[Tuple[str, str, float, float, str]]] = {
         ("Last Mile Delivery Time", "days", 3.2, -0.010, "down"),
         ("Days Inventory Outstanding", "days", 58, -0.006, "down"),
         ("Returns Rate", "%", 6.5, -0.009, "down"),
+        ("Freight Damage Rate", "%", 1.2, -0.008, "down"),
     ],
     "ESG": [
-        ("ESG Score", "score", 71, 0.004, "up"),
+        ("ESG Score", "score", 75, 0.004, "up"),
         ("Carbon Emissions (tCO2)", "tonnes_CO2e", 8_400, -0.014, "down"),
         ("Scope 1 Emissions", "tonnes_CO2e", 1_200, -0.012, "down"),
         ("Scope 2 Emissions", "tonnes_CO2e", 2_100, -0.013, "down"),
@@ -209,13 +217,60 @@ KPI_SPEC: Dict[str, List[Tuple[str, str, float, float, str]]] = {
 PCT_OVER_100 = {"Net Revenue Retention"}
 
 # Deterministic anomalies: (category, metric, month_index, multiplier) — give Risk a signal.
+# Healthy baseline company with occasional issues for risk detection demo
 ANOMALIES: List[Tuple[str, str, int, float]] = [
-    ("Finance", "Revenue", 17, 0.78),            # revenue dip
-    ("Growth", "Churn Rate", 14, 1.9),           # churn spike
-    ("Operations", "Defect Rate", 11, 2.4),      # quality incident
-    ("IT", "Security Incidents", 20, 3.2),       # security spike
-    ("People", "Turnover Rate", 9, 1.8),         # attrition spike
+    ("Finance", "Revenue", 17, 0.78),            # revenue dip (mild issue)
+    ("Growth", "Churn Rate", 14, 1.9),           # churn spike (customer concern)
+    ("Operations", "Defect Rate", 11, 2.4),      # quality incident (ops issue)
+    ("IT", "Security Incidents", 20, 3.2),       # security spike (cyber incident)
+    ("People", "Turnover Rate", 9, 1.8),         # attrition spike (HR concern)
 ]
+
+# Unhealthy company scenarios for diverse benchmarking
+UNHEALTHY_SCENARIOS: Dict[str, List[Tuple[str, str, int, float]]] = {
+    "declining_financial": [
+        ("Finance", "Revenue", 6, 0.65),        # major revenue decline
+        ("Finance", "Gross Margin", 6, 0.75),    # margin compression
+        ("Finance", "Net Profit", 8, 0.4),       # profit collapse
+        ("Finance", "Cash Runway", 10, 0.5),    # cash crunch
+        ("Finance", "Debt to Equity", 12, 2.5), # debt explosion
+    ],
+    "high_churn_crisis": [
+        ("Growth", "Churn Rate", 4, 3.5),       # churn crisis
+        ("Growth", "Customer Count", 5, 0.85),   # customer loss
+        ("Growth", "Net Revenue Retention", 6, 0.85), # NRR collapse
+        ("Growth", "CAC", 7, 1.8),              # CAC spike
+        ("Growth", "LTV:CAC", 8, 0.6),         # unit economics breakdown
+    ],
+    "operational_meltdown": [
+        ("Operations", "On-time Delivery", 3, 0.7),    # delivery failure
+        ("Operations", "Defect Rate", 4, 4.5),         # quality crisis
+        ("Operations", "Cycle Time", 5, 2.2),          # slowdown
+        ("Operations", "Unplanned Downtime", 6, 3.5),   # major outage
+        ("Operations", "Scrap Rate", 7, 2.8),         # waste spike
+    ],
+    "talent_crisis": [
+        ("People", "Turnover Rate", 5, 2.8),         # talent exodus
+        ("People", "Time to Hire", 6, 2.2),          # hiring freeze
+        ("People", "Engagement Score", 7, 0.65),      # engagement collapse
+        ("People", "Open Positions", 8, 2.5),         # unfilled roles
+        ("People", "Quality of Hire", 9, 0.7),         # hiring quality drop
+    ],
+    "cybersecurity_breach": [
+        ("IT", "Security Incidents", 2, 5.0),         # major breach
+        ("IT", "Critical Incidents", 2, 4.0),         # critical escalation
+        ("IT", "System Uptime", 3, 0.92),            # availability hit
+        ("IT", "SLA Compliance", 4, 0.88),           # SLA breach
+        ("IT", "Security Score", 5, 0.6),            # security score collapse
+    ],
+    "esg_compliance_failure": [
+        ("ESG", "ESG Score", 8, 0.65),              # ESG rating drop
+        ("ESG", "Carbon Emissions (tCO2e)", 9, 1.8), # emissions spike
+        ("ESG", "Data Privacy Incidents", 10, 5.0), # privacy breach
+        ("ESG", "Supplier ESG Compliance", 11, 0.7), # supply chain issues
+        ("ESG", "Board Diversity %", 12, 0.6),      # governance failure
+    ],
+}
 
 
 def _periods(months: int) -> List[str]:
@@ -223,11 +278,34 @@ def _periods(months: int) -> List[str]:
     return [(base + timedelta(days=31 * i)).replace(day=1).strftime("%Y-%m") for i in range(months)]
 
 
-def generate_kpi_rows(months: int = MONTHS, seed: int = SEED) -> List[Dict[str, Any]]:
-    """Deterministic multi-domain KPI time series with trend, seasonality, noise, anomalies."""
+def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "healthy") -> List[Dict[str, Any]]:
+    """Deterministic multi-domain KPI time series with trend, seasonality, noise, anomalies.
+    
+    Args:
+        months: Number of months to generate
+        seed: Random seed for reproducibility
+        scenario: Health scenario to simulate:
+            - "healthy": Baseline healthy company with occasional issues
+            - "declining_financial": Financial distress scenario
+            - "high_churn_crisis": Customer retention crisis
+            - "operational_meltdown": Operations failure
+            - "talent_crisis": HR/talent crisis
+            - "cybersecurity_breach": Security incident
+            - "esg_compliance_failure": ESG compliance issues
+    """
     rng = random.Random(seed)
     periods = _periods(months)
-    anomaly_map = {(c, m): (i, mult) for c, m, i, mult in ANOMALIES}
+    
+    # Select anomalies based on scenario
+    anomaly_map = {}
+    if scenario == "healthy":
+        anomaly_map = {(c, m): (i, mult) for c, m, i, mult in ANOMALIES}
+    elif scenario in UNHEALTHY_SCENARIOS:
+        anomaly_map = {(c, m): (i, mult) for c, m, i, mult in UNHEALTHY_SCENARIOS[scenario]}
+    else:
+        # Default to healthy if unknown scenario
+        anomaly_map = {(c, m): (i, mult) for c, m, i, mult in ANOMALIES}
+    
     rows: List[Dict[str, Any]] = []
 
     for category, metrics in KPI_SPEC.items():
@@ -253,6 +331,7 @@ def generate_kpi_rows(months: int = MONTHS, seed: int = SEED) -> List[Dict[str, 
                     "segment": SEGMENT,
                     "unit": unit,
                     "direction": direction,
+                    "scenario": scenario,  # Track scenario for analysis
                 })
     return rows
 
@@ -324,13 +403,18 @@ def generate_entity_rows(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     return out
 
 
-def seed_database(replace: bool = True) -> Dict[str, int]:
-    """Generate + write KPIs, GraphRAG-lite entities, and knowledge docs to Postgres."""
+def seed_database(replace: bool = True, scenario: str = "healthy") -> Dict[str, int]:
+    """Generate + write KPIs, GraphRAG-lite entities, and knowledge docs to Postgres.
+    
+    Args:
+        replace: Whether to replace existing data
+        scenario: Health scenario to simulate (healthy, declining_financial, high_churn_crisis, etc.)
+    """
     import pandas as pd
     from src.services.pg_store import store_kpi_metrics, store_knowledge_docs, store_kpi_entities
 
-    rows = generate_kpi_rows()
-    store_kpi_metrics(pd.DataFrame(rows), source_name="seed", replace=replace)
+    rows = generate_kpi_rows(scenario=scenario)
+    store_kpi_metrics(pd.DataFrame(rows), source_name=f"seed_{scenario}", replace=replace)
 
     # GraphRAG-lite: extract entities at ingest and persist them (kpi_entities sidecar table).
     try:
@@ -374,12 +458,23 @@ def seed_database(replace: bool = True) -> Dict[str, int]:
 def main() -> None:
     from dotenv import load_dotenv
     from pathlib import Path
+    import sys
+    
     load_dotenv(Path(__file__).resolve().parents[2] / ".env")
-    counts = seed_database(replace=True)
+    
+    # Support scenario selection via command line
+    scenario = "healthy"  # default
+    if len(sys.argv) > 1:
+        scenario = sys.argv[1]
+        if scenario not in ["healthy"] + list(UNHEALTHY_SCENARIOS.keys()):
+            print(f"⚠️  Unknown scenario '{scenario}'. Using 'healthy'. Available: {', '.join(['healthy'] + list(UNHEALTHY_SCENARIOS.keys()))}")
+            scenario = "healthy"
+    
+    counts = seed_database(replace=True, scenario=scenario)
     n_metrics = sum(len(v) for v in KPI_SPEC.values())
     print(f"✅ Seeded {counts['kpi_rows']} KPI rows ({n_metrics} metrics across "
           f"{len(KPI_SPEC)} domains) + {counts['kpi_entities']} entities + "
-          f"{counts['knowledge_docs']} knowledge docs ({MONTHS} months, deterministic seed={SEED}).")
+          f"{counts['knowledge_docs']} knowledge docs ({MONTHS} months, deterministic seed={SEED}, scenario={scenario}).")
 
 
 if __name__ == "__main__":
