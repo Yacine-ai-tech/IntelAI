@@ -98,6 +98,9 @@ class AgentToolRequest(BaseModel):
     persona: Optional[str] = None
     args: Optional[Dict[str, Any]] = None
 
+class ScenarioRequest(BaseModel):
+    scenario: str
+
 class UserUpdateRequest(BaseModel):
     role: Optional[str] = None
     is_active: Optional[bool] = None
@@ -1137,6 +1140,28 @@ async def seed_data(user: TokenData = Depends(require_role("admin"))):
     from src.services.pg_store import seed_all_domains
     count = seed_all_domains()
     return {"status": "seeded", "rows": count}
+
+@app.post("/api/v1/admin/scenario")
+async def switch_scenario(req: ScenarioRequest, user: TokenData = Depends(require_role("admin"))):
+    """Switch database scenario for benchmarking (admin only)."""
+    from src.data.seed import seed_database
+    try:
+        # Validate scenario
+        valid_scenarios = ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown", "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]
+        if req.scenario not in valid_scenarios:
+            raise HTTPException(status_code=400, detail=f"Invalid scenario. Valid: {', '.join(valid_scenarios)}")
+        
+        # Seed with new scenario
+        counts = seed_database(replace=True, scenario=req.scenario)
+        return {"status": "success", "scenario": req.scenario, "counts": counts}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/v1/admin/scenario")
+async def get_current_scenario(user: TokenData = Depends(require_role("admin"))):
+    """Get current active scenario (admin only)."""
+    # This would require tracking current scenario in database, for now return default
+    return {"current_scenario": "healthy", "available_scenarios": ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown", "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]}
 
 
 @app.post("/api/v1/admin/cleanup")
