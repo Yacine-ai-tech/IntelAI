@@ -700,14 +700,18 @@ async def generate_financial_statement(
         if req.statement_type in ("income_statement", "pl", "P&L", "profit_loss"):
             stmt = engine.create_pl_statement(period)
             margins = engine.analyze_margins(stmt)
-            return {"statement": stmt.data, "margins": margins, "period": period, "type": "P&L"}
+            # Convert statement dict to line_items format for frontend
+            line_items = [{"item_name": k, "name": k, "amount": v} for k, v in stmt.data.items()]
+            return {"line_items": line_items, "margins": margins, "period": period, "statement_type": req.statement_type}
         elif req.statement_type in ("balance_sheet", "bs"):
             stmt = engine.create_balance_sheet(period)
             ratios = engine.analyze_ratios(stmt)
-            return {"statement": stmt.data, "ratios": ratios, "period": period, "type": "Balance Sheet"}
+            line_items = [{"item_name": k, "name": k, "amount": v} for k, v in stmt.data.items()]
+            return {"line_items": line_items, "ratios": ratios, "period": period, "statement_type": req.statement_type}
         elif req.statement_type in ("cash_flow", "cf"):
             stmt = engine.create_cash_flow_statement(period)
-            return {"statement": stmt.data, "period": period, "type": "Cash Flow"}
+            line_items = [{"item_name": k, "name": k, "amount": v} for k, v in stmt.data.items()]
+            return {"line_items": line_items, "period": period, "statement_type": req.statement_type}
         else:
             raise HTTPException(status_code=400, detail=f"Unknown statement type: {req.statement_type}")
     except Exception as e:
