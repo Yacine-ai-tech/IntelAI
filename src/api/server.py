@@ -1163,6 +1163,24 @@ async def get_current_scenario(user: TokenData = Depends(require_role("admin")))
     # This would require tracking current scenario in database, for now return default
     return {"current_scenario": "healthy", "available_scenarios": ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown", "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]}
 
+@app.get("/api/v1/admin/lightning/status")
+async def get_lightning_studio_status(user: TokenData = Depends(require_role("admin"))):
+    """Get Lightning Studio status (admin only)."""
+    from src.services.lightning_studio import get_studio_status
+    return get_studio_status()
+
+@app.post("/api/v1/admin/lightning/wake")
+async def wake_lightning_studio(machine: Optional[str] = None, user: TokenData = Depends(require_role("admin"))):
+    """Wake up Lightning Studio programmatically (admin only)."""
+    from src.services.lightning_studio import wake_studio
+    return wake_studio(machine)
+
+@app.post("/api/v1/admin/lightning/stop")
+async def stop_lightning_studio(user: TokenData = Depends(require_role("admin"))):
+    """Stop Lightning Studio to save compute (admin only)."""
+    from src.services.lightning_studio import stop_studio
+    return stop_studio()
+
 
 @app.post("/api/v1/admin/cleanup")
 async def cleanup_data(user: TokenData = Depends(require_role("admin"))):
