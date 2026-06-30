@@ -161,4 +161,8 @@ export const downloadFile = (fileId) => api.get(`/files/${fileId}/download`, { r
 // ── Status ──────────────────────────────────────────────
 export const getStatus = () => api.get('/status')
 
+// ── Scenario Management ─────────────────────────────────
+export const switchScenario = (scenarioId) => api.post('/admin/scenario', { scenario: scenarioId })
+export const getCurrentScenario = () => api.get('/admin/scenario')
+
 export default api
