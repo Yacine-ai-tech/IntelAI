@@ -165,4 +165,9 @@ export const getStatus = () => api.get('/status')
 export const switchScenario = (scenarioId) => api.post('/admin/scenario', { scenario: scenarioId })
 export const getCurrentScenario = () => api.get('/admin/scenario')
 
+// ── Lightning Studio Management ─────────────────────────
+export const getLightningStatus = () => api.get('/admin/lightning/status')
+export const wakeLightningStudio = (machine) => api.post('/admin/lightning/wake', { machine })
+export const stopLightningStudio = () => api.post('/admin/lightning/stop')
+
 export default api
