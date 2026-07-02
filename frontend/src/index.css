@@ -233,6 +233,30 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 .kpi-trend { font-size:.74rem; font-weight:600; margin-top:6px; display:inline-flex; align-items:center; gap:4px; }
 .kpi-trend.up { color:var(--ok); } .kpi-trend.down { color:var(--bad); }
 
+/* ── Command band (executive hero stats) ─────────────────── */
+.hero-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-bottom:18px; }
+.hero-stat { position:relative; overflow:hidden; padding:18px 20px; border-radius:var(--r-lg);
+  background:
+    linear-gradient(140deg, color-mix(in srgb, var(--hero-accent,var(--primary)) 12%, var(--surface)),
+      color-mix(in srgb, var(--surface) 82%, var(--bg-2))) padding-box,
+    var(--gradient-line) border-box;
+  border:1px solid transparent; box-shadow:var(--sh), var(--inner-glow); transition:transform var(--t), box-shadow var(--t); }
+.hero-stat::before { content:''; position:absolute; top:0; left:0; bottom:0; width:3px;
+  background:var(--hero-accent,var(--primary)); opacity:.9; box-shadow:0 0 14px var(--hero-accent,var(--primary)); }
+.hero-stat.clickable { cursor:pointer; }
+.hero-stat.clickable:hover { transform:translateY(-3px); box-shadow:var(--sh-lg), var(--inner-glow), var(--sh-glow); }
+.hero-stat-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.hero-stat-label { font-size:.72rem; text-transform:uppercase; letter-spacing:.09em; color:var(--text-3); font-weight:600; }
+.hero-val { font-family:var(--font-mono); font-size:2.3rem; font-weight:700; line-height:1; letter-spacing:-.02em; }
+.hero-unit { font-size:1rem; color:var(--text-3); margin-left:3px; }
+.hero-sub { font-size:.78rem; color:var(--text-2); margin-top:8px; text-transform:capitalize; }
+
+/* ── Subtle card entrance (premium cascade-in) ───────────── */
+@keyframes riseIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-stat, .kpi-card, .card { animation: riseIn .34s cubic-bezier(.4,0,.2,1) both; }
+}
+
 /* ── Buttons ───────────────────────────────────────────────── */
 .btn {
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
