@@ -28,21 +28,21 @@ export default function HRPage() {
         actions={<AskCopilot q="Summarize our people metrics — headcount, turnover, engagement — and what needs attention." />} />
 
       <StatGrid>
-        <Stat label="Headcount" value={fmtNum(s.headcount)} icon={Users} accent={ACCENT} />
-        <Stat label="Turnover Rate" value={fmtPct(s.turnover_rate)} icon={UserMinus} accent={ACCENT} good="down" />
-        <Stat label="Satisfaction" value={fmtNum(s.satisfaction_score)} unit="/100" icon={Smile} accent={ACCENT} good="up" />
-        <Stat label="Open Positions" value={fmtNum(s.open_positions)} icon={Briefcase} accent={ACCENT} good="down" />
-        <Stat label="Avg Tenure" value={fmtNum(s.avg_tenure_years)} unit="yrs" icon={Clock} accent={ACCENT} />
-        <Stat label="Training / Employee" value={fmtNum(s.training_hours_per_employee)} unit="h" icon={GraduationCap} accent={ACCENT} good="up" />
-        <Stat label="Cost per Hire" value={fmtMoney(s.cost_per_hire)} icon={DollarSign} accent={ACCENT} good="down" />
-        <Stat label="Absenteeism" value={fmtPct(s.absenteeism_rate)} icon={CalendarX} accent={ACCENT} good="down" />
+        <Stat label={t('lblHeadcount')} value={fmtNum(s.headcount)} icon={Users} accent={ACCENT} />
+        <Stat label={t('lblTurnoverRate')} value={fmtPct(s.turnover_rate)} icon={UserMinus} accent={ACCENT} good="down" />
+        <Stat label={t('lblSatisfaction')} value={fmtNum(s.satisfaction_score)} unit="/100" icon={Smile} accent={ACCENT} good="up" />
+        <Stat label={t('lblOpenPositions')} value={fmtNum(s.open_positions)} icon={Briefcase} accent={ACCENT} good="down" />
+        <Stat label={t('lblAvgTenure')} value={fmtNum(s.avg_tenure_years)} unit="yrs" icon={Clock} accent={ACCENT} />
+        <Stat label={t('lblTrainingEmployee')} value={fmtNum(s.training_hours_per_employee)} unit="h" icon={GraduationCap} accent={ACCENT} good="up" />
+        <Stat label={t('lblCostPerHire')} value={fmtMoney(s.cost_per_hire)} icon={DollarSign} accent={ACCENT} good="down" />
+        <Stat label={t('lblAbsenteeism')} value={fmtPct(s.absenteeism_rate)} icon={CalendarX} accent={ACCENT} good="down" />
       </StatGrid>
 
       <Grid style={{ marginTop: 18 }}>
-        <Panel title="Headcount trend" icon={Users} style={{ gridColumn: 'span 2' }}>
+        <Panel title={t('lblHeadcountTrend')} icon={Users} style={{ gridColumn: 'span 2' }}>
           <AreaTrend data={s.trends || []} y="headcount" color={ACCENT} />
         </Panel>
-        <Panel title="Recruitment funnel" icon={UserPlus}>
+        <Panel title={t('lblRecruitmentFunnel')} icon={UserPlus}>
           <BarList items={[
             { label: 'Applications', value: r.applications_received, display: fmtNum(r.applications_received) },
             { label: 'Interviews', value: r.interviews_scheduled, display: fmtNum(r.interviews_scheduled) },
@@ -55,8 +55,8 @@ export default function HRPage() {
         </Panel>
       </Grid>
 
-      <Panel title="By department" icon={Users} style={{ marginTop: 18 }}
-        actions={<AskCopilot q="Which department has the highest turnover and lowest satisfaction, and why?" label="Analyze" />}>
+      <Panel title={t('lblByDepartment')} icon={Users} style={{ marginTop: 18 }}
+        actions={<AskCopilot q="Which department has the highest turnover and lowest satisfaction, and why?" label={t('lblAnalyze')} />}>
         <table className="table">
           <thead><tr><th>Department</th><th>Headcount</th><th>Satisfaction</th><th>Turnover</th><th>Avg Salary</th><th>Training</th></tr></thead>
           <tbody>
