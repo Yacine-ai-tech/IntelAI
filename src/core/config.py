@@ -55,6 +55,9 @@ class Settings:
     GROQ_API_KEY: str = field(default_factory=lambda: os.getenv("GROQ_API_KEY", ""))
     # Optional: Anthropic (LiteLLM router can fall back to Claude)
     ANTHROPIC_API_KEY: str = field(default_factory=lambda: os.getenv("ANTHROPIC_API_KEY", ""))
+    # Optional: Tavily — real-time web search to augment RAG with trustworthy, cited web sources
+    TAVILY_API_KEY: str = field(default_factory=lambda: os.getenv("TAVILY_API_KEY", ""))
+    WEB_SEARCH_MAX_RESULTS: int = field(default_factory=lambda: int(os.getenv("WEB_SEARCH_MAX_RESULTS", "4")))
 
     # FastAPI
     FASTAPI_HOST: str = field(default_factory=lambda: os.getenv("FASTAPI_HOST", "0.0.0.0"))
