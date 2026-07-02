@@ -3,7 +3,7 @@ import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { Leaf, Cloud, Zap, Droplet, Recycle, Users, Scale, Landmark, ShieldCheck } from 'lucide-react'
 import {
-  PageHeader, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, AskCopilot,
+  PageHeader, DomainHero, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, AskCopilot,
   fmtNum, fmtMoney, fmtPct,
 } from '../components/ui'
 
@@ -17,6 +17,16 @@ export default function ESGPage() {
   const env = d.environment || {}, soc = d.social || {}, gov = d.governance || {}
   const score = Math.round(d.score ?? 0)
   const scoreColor = score >= 70 ? 'var(--ok)' : score >= 50 ? 'var(--warn)' : 'var(--bad)'
+  const esgHealth = {
+    score, color: scoreColor, captionLabel: t('lblEsgScore') || 'ESG score',
+    rating: score >= 70 ? (t('strong') || 'Strong') : score >= 50 ? (t('moderate') || 'Developing') : (t('atRisk') || 'At risk'),
+    factors: [
+      { label: t('lblRenewableEnergy') || 'Renewable %', value: env.renewable_energy_pct },
+      { label: t('lblWasteDiverted') || 'Waste diverted %', value: env.waste_diverted },
+      { label: t('lblDiversityIndex') || 'Diversity /100', value: soc.diversity_index },
+      { label: t('lblEthicsTraining') || 'Ethics training %', value: gov.ethics_training },
+    ],
+  }
 
   return (
     <div>
@@ -24,16 +34,12 @@ export default function ESGPage() {
         subtitle={t('esgSubtitle') || 'Environmental, social & governance — GHG Protocol / CSRD aligned'}
         actions={<AskCopilot q="Summarize our ESG position across environment, social and governance, and CSRD readiness." />} />
 
-      <Grid min={260}>
-        <Panel style={{ textAlign: 'center' }}>
-          <div className="kpi-label">ESG Score</div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '3rem', fontWeight: 700, color: scoreColor }}>{score}<span style={{ fontSize: '1.1rem', color: 'var(--text-3)' }}>/100</span></div>
-          <div style={{ marginTop: 8 }}><AskCopilot q="What is driving our ESG score and how do we improve it under CSRD?" label={t('lblImproveScore')} /></div>
-        </Panel>
-        <Panel title={t('lblCarbonTrend')} icon={Cloud} style={{ gridColumn: 'span 2' }}>
-          <AreaTrend data={d.trends || []} y="carbon" color={ACCENT} height={180} />
-        </Panel>
-      </Grid>
+      <DomainHero health={esgHealth} accent={ACCENT} />
+
+      <Panel title={t('lblCarbonTrend')} icon={Cloud}
+        actions={<AskCopilot q="What is driving our ESG score and how do we improve it under CSRD?" label={t('lblImproveScore')} />}>
+        <AreaTrend data={d.trends || []} y="carbon" color={ACCENT} height={200} />
+      </Panel>
 
       <Panel title={t('lblEnvironment')} icon={Leaf} style={{ marginTop: 18 }}>
         <StatGrid>

@@ -251,6 +251,27 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 .hero-unit { font-size:1rem; color:var(--text-3); margin-left:3px; }
 .hero-sub { font-size:.78rem; color:var(--text-2); margin-top:8px; text-transform:capitalize; }
 
+/* ── Domain hero band (per-domain health headline) ───────── */
+.domain-hero { display:grid; grid-template-columns:minmax(180px,240px) 1fr; gap:22px; align-items:center;
+  padding:20px 24px; margin-bottom:18px; border-radius:var(--r-lg); position:relative; overflow:hidden;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--dh,var(--primary)) 14%, var(--surface)),
+      color-mix(in srgb, var(--surface) 82%, var(--bg-2))) padding-box,
+    var(--gradient-line) border-box;
+  border:1px solid transparent; box-shadow:var(--sh), var(--inner-glow); }
+.domain-hero::before { content:''; position:absolute; top:0; left:0; bottom:0; width:4px;
+  background:var(--dh,var(--primary)); box-shadow:0 0 18px var(--dh,var(--primary)); }
+.dh-cap { font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; color:var(--text-3); font-weight:600; }
+.dh-score { font-family:var(--font-mono); font-size:3rem; font-weight:700; line-height:1.05; letter-spacing:-.02em; }
+.dh-slash { font-size:1.1rem; color:var(--text-3); margin-left:2px; }
+.dh-rating { font-weight:600; font-size:.9rem; text-transform:capitalize; margin-top:2px; }
+.dh-factors { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px 22px; }
+.dh-factor-top { display:flex; justify-content:space-between; font-size:.78rem; color:var(--text-2); margin-bottom:5px; }
+.dh-factor-top b { font-family:var(--font-mono); color:var(--text); }
+.dh-bar { height:6px; background:var(--bg-2); border-radius:99px; overflow:hidden; }
+.dh-bar > div { height:100%; border-radius:99px; background:var(--gradient); }
+@media (max-width:640px){ .domain-hero { grid-template-columns:1fr; gap:16px; } }
+
 /* ── Subtle card entrance (premium cascade-in) ───────────── */
 @keyframes riseIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
 @media (prefers-reduced-motion: no-preference) {

@@ -7,6 +7,8 @@ const translations = {
   en: {
     flaggedThisPeriod: 'flagged this period',
     acrossDomains: 'across 7 domains',
+    lblEsgScore: 'ESG score',
+    strong: 'Strong',
     // Domain KPI labels (i18n)
     lblAbsenteeism: "Absenteeism",
     lblAnalyze: "Analyze",
@@ -576,6 +578,8 @@ const translations = {
   fr: {
     flaggedThisPeriod: 'signalées cette période',
     acrossDomains: 'sur 7 domaines',
+    lblEsgScore: 'Score ESG',
+    strong: 'Solide',
     // Domain KPI labels (i18n)
     lblAbsenteeism: "Absentéisme",
     lblAnalyze: "Analyser",

@@ -5,7 +5,7 @@ import {
   Package, Truck, Clock, RefreshCw, Boxes, DollarSign, Warehouse, RotateCcw, PackageCheck, Ban,
 } from 'lucide-react'
 import {
-  PageHeader, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, BarList, AskCopilot,
+  PageHeader, DomainHero, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, BarList, AskCopilot,
   fmtNum, fmtMoney, fmtPct,
 } from '../components/ui'
 
@@ -16,6 +16,7 @@ export default function LogisticsPage() {
   const sum = useQuery({ queryKey: ['log-sum'], queryFn: () => api.getLogisticsSummary().then(r => r.data), retry: 1 })
   const inv = useQuery({ queryKey: ['log-inv'], queryFn: () => api.getLogisticsInventory().then(r => r.data), retry: 1 })
   const ship = useQuery({ queryKey: ['log-ship'], queryFn: () => api.getLogisticsShipping().then(r => r.data), retry: 1 })
+  const hlt = useQuery({ queryKey: ['log-health'], queryFn: () => api.getLogisticsHealth().then(r => r.data), retry: 1 })
 
   if (sum.isLoading) return <Loading />
   const s = sum.data || {}, iv = inv.data || {}, sh = ship.data || {}
@@ -25,6 +26,8 @@ export default function LogisticsPage() {
       <PageHeader icon={Package} accent={ACCENT} title={t('navLogistics') || 'Logistics'}
         subtitle={t('logSubtitle') || 'Fulfilment, inventory & transportation'}
         actions={<AskCopilot q="How is our supply chain performing — on-time delivery, inventory turnover, costs — and where are the risks?" />} />
+
+      <DomainHero health={hlt.data} accent={ACCENT} />
 
       <StatGrid>
         <Stat label={t('lblTotalOrders')} value={fmtNum(s.total_orders)} icon={Package} accent={ACCENT} />
