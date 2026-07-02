@@ -6,7 +6,7 @@ import {
   Factory, HardHat, ShieldCheck,
 } from 'lucide-react'
 import {
-  PageHeader, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, BarList, AskCopilot,
+  PageHeader, DomainHero, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, BarList, AskCopilot,
   fmtNum, fmtMoney, fmtPct,
 } from '../components/ui'
 
@@ -18,6 +18,7 @@ export default function OperationsPage() {
   const qual = useQuery({ queryKey: ['ops-qual'], queryFn: () => api.getOpsQuality().then(r => r.data), retry: 1 })
   const prod = useQuery({ queryKey: ['ops-prod'], queryFn: () => api.getOpsProduction().then(r => r.data), retry: 1 })
   const safe = useQuery({ queryKey: ['ops-safe'], queryFn: () => api.getOpsSafety().then(r => r.data), retry: 1 })
+  const hlt = useQuery({ queryKey: ['ops-health'], queryFn: () => api.getOpsHealth().then(r => r.data), retry: 1 })
 
   if (sum.isLoading) return <Loading />
   const s = sum.data || {}, q = qual.data || {}, p = prod.data || {}, sf = safe.data || {}
@@ -27,6 +28,8 @@ export default function OperationsPage() {
       <PageHeader icon={Settings2} accent={ACCENT} title={t('navOperations') || 'Operations'}
         subtitle={t('opsSubtitle') || 'Efficiency, quality, production & safety'}
         actions={<AskCopilot q="Summarize operations health — OEE, quality, on-time completion and safety — and the top bottleneck." />} />
+
+      <DomainHero health={hlt.data} accent={ACCENT} />
 
       <StatGrid>
         <Stat label={t('lblOverallEfficiency')} value={fmtPct(s.overall_efficiency)} icon={Gauge} accent={ACCENT} good="up" hint="World-class OEE ≈ 85%" />

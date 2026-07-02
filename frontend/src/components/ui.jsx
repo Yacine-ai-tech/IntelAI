@@ -63,6 +63,38 @@ export function PageHeader({ icon: Icon, title, subtitle, accent = 'var(--primar
   )
 }
 
+// ── domain hero band (per-domain health headline) ───────────
+export function DomainHero({ health, accent = 'var(--primary)' }) {
+  if (!health) return null
+  const s = Math.round(health.score ?? 0)
+  const color = health.color || (s >= 80 ? 'var(--ok)' : s >= 60 ? 'var(--warn)' : 'var(--bad)')
+  const factors = Array.isArray(health.factors)
+    ? health.factors
+    : Object.entries(health.factors || {}).map(([label, value]) => ({ label, value }))
+  return (
+    <div className="domain-hero" style={{ '--dh': color }}>
+      <div className="dh-gauge">
+        <div className="dh-cap">{health.captionLabel || 'Health index'}</div>
+        <div className="dh-score" style={{ color }}>{s}<span className="dh-slash">/100</span></div>
+        <div className="dh-rating" style={{ color }}>{health.rating || health.label || '—'}</div>
+      </div>
+      {factors.length > 0 && (
+        <div className="dh-factors">
+          {factors.slice(0, 4).map((f, i) => {
+            const v = Math.round(Number(f.value) || 0)
+            return (
+              <div key={i} className="dh-factor">
+                <div className="dh-factor-top"><span>{f.label}</span><b>{v}</b></div>
+                <div className="dh-bar"><div style={{ width: `${Math.min(Math.max(v, 0), 100)}%` }} /></div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ── stat tile ────────────────────────────────────────────────
 export function Stat({ label, value, unit, icon: Icon, accent = 'var(--primary)', trend, good, hint, history, hasAnomaly, onClick }) {
   const up = trend != null && trend >= 0
