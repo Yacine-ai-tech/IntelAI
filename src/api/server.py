@@ -1353,9 +1353,11 @@ async def websocket_chat(websocket: WebSocket):
             persona_override = data.get("persona")
             if data.get("session_id"):
                 session_id = data["session_id"]
+            # Use language from message if provided, otherwise fall back to user language
+            language = data.get("language") or user.language
             result = factory.chat(
                 message=message, user_role=user.role,
-                persona_override=persona_override, language=user.language, history=history,
+                persona_override=persona_override, language=language, history=history,
             )
             history.append({"role": "user", "content": message})
             history.append({"role": "assistant", "content": result["response"]})
