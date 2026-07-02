@@ -36,6 +36,8 @@ export default function Layout() {
   const loc = useLocation()
   const [explainOpen, setExplainOpen] = useState(false)
   const [mobileMenu, setMobileMenu] = useState(false)
+  const [collapsed, setCollapsed] = useState(() => localStorage.getItem('sidebar_collapsed') === '1')
+  const toggleCollapse = () => setCollapsed(c => { localStorage.setItem('sidebar_collapsed', c ? '0' : '1'); return !c })
 
   const seg = loc.pathname.split('/')[1] || 'chat'
   const route = ROUTES[seg] || ROUTES.chat
@@ -45,7 +47,7 @@ export default function Layout() {
 
   return (
     <div className="layout">
-      <Sidebar mobileOpen={mobileMenu} onClose={() => setMobileMenu(false)} />
+      <Sidebar mobileOpen={mobileMenu} onClose={() => setMobileMenu(false)} collapsed={collapsed} onToggleCollapse={toggleCollapse} />
       <main className="main-content">
         <header className="topbar">
           <button className="mobile-nav-btn" onClick={() => setMobileMenu(true)}><Menu size={18} /></button>
