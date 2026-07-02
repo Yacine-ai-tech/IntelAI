@@ -5,10 +5,10 @@ import CubeMark from './Brand'
 import {
   LayoutDashboard, BarChart3, TrendingUp, Users, Package, Monitor,
   Settings2, Leaf, ShieldAlert, Database, ShieldCheck, Settings,
-  LogOut, BookOpen, Sparkles, DollarSign, X
+  LogOut, BookOpen, Sparkles, DollarSign, X, ChevronsLeft, ChevronsRight,
 } from 'lucide-react'
 
-export default function Sidebar({ mobileOpen, onClose }) {
+export default function Sidebar({ mobileOpen, onClose, collapsed = false, onToggleCollapse = () => {} }) {
   const { user, logout, hasPage } = useAuth()
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -55,7 +55,7 @@ export default function Sidebar({ mobileOpen, onClose }) {
   return (
     <>
       {mobileOpen && <div className="sidebar-overlay" onClick={onClose} />}
-      <aside className={`sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
+      <aside className={`sidebar ${mobileOpen ? 'mobile-open' : ''}${collapsed ? ' collapsed' : ''}`}>
         {mobileOpen && <button className="btn btn-ghost btn-icon mobile-close-btn" onClick={onClose} style={{ position: 'absolute', top: 12, right: 12, zIndex: 10 }}><X size={18} /></button>}
         <div className="sidebar-header">
           <div className="sidebar-brand">
@@ -69,7 +69,7 @@ export default function Sidebar({ mobileOpen, onClose }) {
 
       <nav className="sidebar-nav">
         {hasPage('assistant') && (
-          <NavLink to="/chat" className={({ isActive }) => `sidebar-cta${isActive ? ' active' : ''}`}>
+          <NavLink to="/chat" title={t('navAssistant') || 'Copilot'} className={({ isActive }) => `sidebar-cta${isActive ? ' active' : ''}`}>
             <Sparkles size={18} />
             <span>{t('navAssistant') || 'Copilot'}</span>
           </NavLink>
@@ -84,7 +84,7 @@ export default function Sidebar({ mobileOpen, onClose }) {
               {visible.map(item => {
                 const Icon = item.icon
                 return (
-                  <NavLink key={item.to} to={item.to}
+                  <NavLink key={item.to} to={item.to} title={item.label}
                     className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`}>
                     <Icon size={18} />
                     <span>{item.label}</span>
@@ -104,9 +104,14 @@ export default function Sidebar({ mobileOpen, onClose }) {
             <div className="sidebar-user-role">{user?.role}</div>
           </div>
         </div>
-        <button onClick={handleLogout} className="btn btn-outline btn-sm" style={{ width: '100%' }}>
+        <button onClick={handleLogout} className="btn btn-outline btn-sm" style={{ width: '100%' }} title={t('signOut')}>
           <LogOut size={14} />
-          <span>{t('signOut')}</span>
+          <span className="sidebar-label">{t('signOut')}</span>
+        </button>
+        <button onClick={onToggleCollapse} className="btn btn-ghost btn-sm sidebar-collapse-btn" style={{ width: '100%', marginTop: 6 }}
+          title={collapsed ? (t('expand') || 'Expand') : (t('collapse') || 'Collapse')}>
+          {collapsed ? <ChevronsRight size={16} /> : <ChevronsLeft size={16} />}
+          <span className="sidebar-label">{t('collapse') || 'Collapse'}</span>
         </button>
       </div>
     </aside>
