@@ -633,6 +633,47 @@ def normalize_sources(raw: List[Any], cap: int = 8) -> List[Dict[str, Any]]:
 
 
 # ════════════════════════════════════════════════════════════════════════════
+# REAL-TIME WEB SEARCH (Tavily) — augments RAG with trustworthy, citable web sources
+# ════════════════════════════════════════════════════════════════════════════
+
+def tavily_search(query: str, max_results: int = 4) -> List[Dict[str, Any]]:
+    """Real-time web search via Tavily. Returns trustworthy results with URLs so the
+    copilot can cite the live web. Stdlib-only (urllib); returns [] when no key is set
+    or on any error, so the chat path degrades gracefully to internal RAG."""
+    key = getattr(settings, "TAVILY_API_KEY", "")
+    if not key or not query or not query.strip():
+        return []
+    import urllib.request as _u
+    payload = json.dumps({
+        "api_key": key,
+        "query": query.strip()[:400],
+        "max_results": max(1, min(int(max_results or 4), 8)),
+        "search_depth": "basic",
+        "include_answer": False,
+    }).encode()
+    try:
+        req = _u.Request("https://api.tavily.com/search", data=payload,
+                         headers={"Content-Type": "application/json"}, method="POST")
+        with _u.urlopen(req, timeout=9) as r:
+            data = json.loads(r.read())
+        out: List[Dict[str, Any]] = []
+        for it in (data.get("results") or []):
+            url = (it.get("url") or "").strip()
+            if not url:
+                continue
+            out.append({
+                "title": (it.get("title") or url).strip()[:140],
+                "url": url,
+                "content": (it.get("content") or "").strip()[:600],
+                "score": float(it.get("score", 0) or 0),
+            })
+        return out
+    except Exception as e:  # network/key/quota — never break the chat
+        log.warning("Tavily web search failed: %s", e)
+        return []
+
+
+# ════════════════════════════════════════════════════════════════════════════
 # AGENT PERSONA FACTORY
 # ════════════════════════════════════════════════════════════════════════════
 
@@ -820,6 +861,40 @@ class AgentPersonaFactory:
             return True
         return False
 
+    @staticmethod
+    def _needs_web(text: str) -> bool:
+        """True when a question calls for external / real-time / benchmark information that the
+        internal KPI snapshot + knowledge base cannot answer on their own."""
+        t = (text or "").lower()
+        if not t.strip():
+            return False
+        triggers = (
+            "benchmark", "industry", "market", "competitor", "competition", "peer", " vs ",
+            "versus", "news", "latest", "regulation", "gdpr", "csrd", "sec filing", "best practice",
+            "macro", "inflation", "interest rate", "industry standard", "industry average",
+            "external", "compare to other", "how do other", "current events", "what's happening",
+            "actualité", "marché", "concurrent", "réglementation", "secteur", "meilleures pratiques",
+            "tendance du marché", "moyenne du secteur",
+        )
+        return any(x in t for x in triggers)
+
+    def _web_context(self, query: str, max_results: int, start_id: int):
+        """Fetch real-time web results and format them as citable context blocks.
+        Returns (block_text, web_sources) with ids continuing after the internal sources."""
+        results = tavily_search(query, max_results)
+        if not results:
+            return "", []
+        parts, sources = [], []
+        for i, r in enumerate(results, start=start_id + 1):
+            parts.append(f"[{i}] (WEB) {r['title']} — {r['url']}: {r['content']}")
+            rel = round(min(max(r.get("score", 0.0), 0.0), 1.0), 3)
+            sources.append({
+                "id": i, "title": r["title"], "type": "web", "url": r["url"],
+                "relevance": rel or None, "snippet": r["content"][:240],
+            })
+        header = ("=== WEB RESULTS (real-time; cite by [n]; prefer recent, trustworthy sources) ===")
+        return header + "\n" + "\n".join(parts), sources
+
     def chat(
         self,
         message: str,
@@ -861,6 +936,14 @@ class AgentPersonaFactory:
             retrieved_ctx, sources = "", []
         else:
             retrieved_ctx, sources = self._retrieve_context(message, persona, language)
+            # Augment with real-time web search (Tavily) when the question needs external,
+            # current or benchmark data — web results are cited by [n] like any other source.
+            if self._needs_web(message):
+                max_id = max((s.get("id", 0) for s in sources), default=0)
+                web_ctx, web_sources = self._web_context(message, settings.WEB_SEARCH_MAX_RESULTS, max_id)
+                if web_ctx:
+                    retrieved_ctx = (retrieved_ctx + "\n\n" + web_ctx).strip() if retrieved_ctx else web_ctx
+                    sources = sources + web_sources
         full_context = "\n\n".join(c for c in [context, retrieved_ctx] if c).strip()
 
         # Prompt-cache friendly layout: the system message (persona prompt + fixed
@@ -889,11 +972,15 @@ class AgentPersonaFactory:
             "that appear in the data block; never invent one. Stay within your access scope; if a figure is "
             "genuinely missing, say so in one short sentence. Never ask the user to supply data that is "
             "already provided.\n\n"
+            "WEB RESULTS: if a '=== WEB RESULTS ===' block is present, use it for external / current / "
+            "benchmark facts, prefer recent and trustworthy sources, and CITE each web fact by its [n] "
+            "(same bracket scheme). Never state a web claim without its citation.\n\n"
             "FORMAT: clean, well-structured markdown — real bullets with '- ', bold with **, no stray or "
             "unmatched symbols. Keep it as short as the intent allows.\n\n"
-            "LANGUAGE (critical): write your ENTIRE reply in the SAME language as the user's QUESTION "
-            "below. If the question is in French, answer fully in French; if in English, answer in English. "
-            "This is decided per message and overrides the language of earlier turns."
+            f"LANGUAGE (critical): the user's current message is written in "
+            f"{'FRENCH' if language == 'fr' else 'ENGLISH'}. Write your ENTIRE reply in "
+            f"{'FRENCH' if language == 'fr' else 'ENGLISH'} — this is decided per message and overrides "
+            "the language of earlier turns."
         )
         messages: List[Dict[str, str]] = [{"role": "system", "content": system_prompt}]
 
