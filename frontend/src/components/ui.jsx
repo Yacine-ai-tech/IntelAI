@@ -4,7 +4,7 @@ import {
   AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer, Cell,
 } from 'recharts'
-import { Sparkles, ArrowUpRight, ArrowDownRight, FileText, X } from 'lucide-react'
+import { Sparkles, ArrowUpRight, ArrowDownRight, FileText, X, Globe } from 'lucide-react'
 
 // ── formatters ───────────────────────────────────────────────
 export const fmtNum = (v) => {
@@ -264,7 +264,7 @@ export function Citations({ sources, label = 'Sources' }) {
                  }
                }}>
               <span className="cite-n">{s.id}</span>
-              {s.type === 'kpi' ? <Sparkles size={11} /> : <FileText size={11} />} {s.title}
+              {s.type === 'kpi' ? <Sparkles size={11} /> : s.type === 'web' ? <Globe size={11} /> : <FileText size={11} />} {s.title}
               {s.rel != null && <em className="cite-rel">{s.rel}%</em>}
             </a>
           )
