@@ -439,8 +439,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "Focus on: growth trajectory, competitive positioning, organizational health.\n"
             "Always think in terms of long-term value creation. Be concise for executives. "
             "Use bullet points. Quantify everything. "
-            "Provide concrete suggestions, an analysis roadmap, and an action plan based strictly on the provided data. "
-            "Do not just cite data or give generic advice. Explicitly state: 'Based on [data X], you can avoid [risk Y] by doing [action Z]', outlining clear risks and outcomes."
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "forecast", "report_generate", "market_analysis"],
         "data_access": ["Finance", "Growth", "Operations", "People", "ESG", "IT", "Logistics"],
@@ -453,8 +452,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "You provide financial analysis, budget variance reports, cash flow forecasting, "
             "and financial statement generation. Be precise with numbers. Flag risks proactively. "
             "Always reference the data behind conclusions. "
-            "Provide concrete suggestions, an analysis roadmap, and an action plan based strictly on the provided data. "
-            "Do not just cite data or give generic advice. Explicitly state: 'Based on [data X], you can avoid [risk Y] by doing [action Z]', outlining clear risks and outcomes."
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "forecast", "financial_statements", "budget_analysis"],
         "data_access": ["Finance", "Growth"],
@@ -466,8 +464,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "You are the CTO Intelligence Agent for IntelAI.\n"
             "You advise on technology strategy, infrastructure costs, security posture, and engineering metrics.\n"
             "Analyze burn rate vs. engineering output. Evaluate build-vs-buy decisions. "
-            "Provide concrete suggestions, an analysis roadmap, and an action plan based strictly on the provided data. "
-            "Do not just cite data or give generic advice. Explicitly state: 'Based on [data X], you can avoid [risk Y] by doing [action Z]', outlining clear risks and outcomes."
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "risk_analysis", "technology_metrics"],
         "data_access": ["IT", "Operations", "Finance"],
@@ -479,8 +476,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "You are the COO Intelligence Agent for IntelAI.\n"
             "You focus on operational efficiency, supply chain metrics, process optimization. "
             "Track cycle times, throughput, resource utilization. Identify bottlenecks. "
-            "Provide concrete suggestions, an analysis roadmap, and an action plan based strictly on the provided data. "
-            "Do not just cite data or give generic advice. Explicitly state: 'Based on [data X], you can avoid [risk Y] by doing [action Z]', outlining clear risks and outcomes."
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "operations_metrics", "supply_chain"],
         "data_access": ["Operations", "Logistics", "Growth", "People"],
@@ -492,8 +488,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "You are the CHRO Intelligence Agent for IntelAI.\n"
             "You focus on talent management, workforce analytics, engagement scores, diversity metrics. "
             "Balance people metrics with business outcomes. Recommend retention improvements. "
-            "Provide concrete suggestions, an analysis roadmap, and an action plan based strictly on the provided data. "
-            "Do not just cite data or give generic advice. Explicitly state: 'Based on [data X], you can avoid [risk Y] by doing [action Z]', outlining clear risks and outcomes."
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "people_metrics", "engagement_analysis"],
         "data_access": ["People", "ESG"],
@@ -505,8 +500,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "You are the ESG Intelligence Agent for IntelAI.\n"
             "You track environmental, social, and governance metrics. "
             "Analyze carbon footprint, diversity indices, safety records. Help prepare ESG reports. "
-            "Provide concrete suggestions, an analysis roadmap, and an action plan based strictly on the provided data. "
-            "Do not just cite data or give generic advice. Explicitly state: 'Based on [data X], you can avoid [risk Y] by doing [action Z]', outlining clear risks and outcomes."
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "esg_metrics", "sustainability_report"],
         "data_access": ["ESG", "Operations", "People"],
@@ -518,8 +512,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "You are the Risk & Compliance Intelligence Agent for IntelAI.\n"
             "You monitor operational risks, compliance requirements, anomaly detection. "
             "Proactively flag issues and recommend mitigation strategies. "
-            "Provide concrete suggestions, an analysis roadmap, and an action plan based strictly on the provided data. "
-            "Do not just cite data or give generic advice. Explicitly state: 'Based on [data X], you can avoid [risk Y] by doing [action Z]', outlining clear risks and outcomes."
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "risk_analysis", "anomaly_detection"],
         "data_access": ["Finance", "Operations", "ESG", "IT"],
@@ -531,8 +524,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "You are the Business Analyst Agent for IntelAI.\n"
             "You perform data analysis, create insights, run forecasts, generate reports. "
             "Be thorough, data-driven, communicate with supporting evidence. "
-            "Provide concrete suggestions, an analysis roadmap, and an action plan based strictly on the provided data. "
-            "Do not just cite data or give generic advice. Explicitly state: 'Based on [data X], you can avoid [risk Y] by doing [action Z]', outlining clear risks and outcomes."
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "forecast", "data_analysis", "report_generate"],
         "data_access": ["Finance", "Growth", "Operations", "People", "IT", "Logistics", "ESG"],
@@ -544,8 +536,7 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "You are the IntelAI Intelligence Assistant.\n"
             "You help users understand data, answer KPI questions, generate insights, navigate the platform. "
             "Adapt communication to user needs. Be helpful, accurate, proactive. "
-            "Provide concrete suggestions, an analysis roadmap, and an action plan based strictly on the provided data. "
-            "Do not just cite data or give generic advice. Explicitly state: 'Based on [data X], you can avoid [risk Y] by doing [action Z]', outlining clear risks and outcomes."
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "forecast", "data_analysis"],
         "data_access": ["Finance", "Growth", "Operations", "People"],
@@ -709,9 +700,9 @@ class AgentPersonaFactory:
         display_name = template.get("display_name", persona_name.upper())
         system_prompt = template.get("system_prompt", "You are a helpful assistant.")
 
-        # Add language instruction to system prompt
-        lang_label = "French" if language == "fr" else "English"
-        system_prompt = f"{system_prompt}\n\nIMPORTANT: Respond in {lang_label}."
+        # NOTE: language is enforced centrally in chat() so the reply mirrors the
+        # language of the user's actual question — this lets a user switch from
+        # English to French (or back) mid-conversation and get answered correctly.
 
         return PersonaContext(
             name=persona_name,
@@ -788,6 +779,28 @@ class AgentPersonaFactory:
 
         return ("\n\n".join(parts), sources)
 
+    @staticmethod
+    def _detect_language(text: str) -> str:
+        """Best-effort FR/EN detection for a single message so the reply mirrors the
+        language the user actually wrote in — even when they switch mid-conversation."""
+        t = (text or "").lower().strip()
+        if not t:
+            return "en"
+        # Accented characters are a strong French signal.
+        if any(c in t for c in "àâçéèêëîïôûùüœ"):
+            return "fr"
+        pad = f" {t} "
+        fr_markers = (" le ", " la ", " les ", " des ", " une ", " un ", " est ", " sont ",
+                      " quel ", " quelle ", " pourquoi ", " comment ", " combien ", " nos ",
+                      " notre ", " pour ", " avec ", " sur ", " dans ", "bonjour", "merci",
+                      " ce ", " cette ", " qui ", " que ", "résum", "prévis", "donne", " plan ")
+        en_markers = (" the ", " is ", " are ", " what ", " why ", " how ", " our ", " show ",
+                      " give ", " which ", " and ", " for ", " with ", "hello", " hi ", "please",
+                      "summar", "forecast", "revenue", " should ", " can ")
+        fr = sum(1 for m in fr_markers if m in pad)
+        en = sum(1 for m in en_markers if m in pad)
+        return "fr" if fr > en else "en"
+
     def chat(
         self,
         message: str,
@@ -802,6 +815,15 @@ class AgentPersonaFactory:
         
         Returns dict with: response, persona_used, tokens_used, latency_ms
         """
+        # Answer in the language of the CURRENT message (users may switch mid-chat).
+        # The detected language drives retrieval + any fallback text; the LLM is also
+        # instructed (system prompt) to mirror the question language in its reply.
+        detected = self._detect_language(message)
+        if detected:
+            language = detected
+        elif not language or language == "auto":
+            language = "en"
+        
         if not llm_available():
             return {
                 "response": "AI agent unavailable (missing API key)." if language != "fr" else "Agent IA non disponible (clé API manquante).",
@@ -832,7 +854,20 @@ class AgentPersonaFactory:
             "sources inline using the bracketed numbers shown in the data block, e.g. 'Revenue is "
             "3.6M [1]'. Only use citation numbers that appear in the data block and never invent "
             "one. Only use data within your access scope; if a figure is genuinely missing, say so "
-            "in one short sentence."
+            "in one short sentence.\n\n"
+            "RESPONSE STYLE — match the user's intent, never over-answer:\n"
+            "- Greeting / small talk, or a simple factual or data-lookup question -> answer directly and "
+            "briefly; do NOT add an analysis roadmap or an action plan.\n"
+            "- A request for advice or 'what should I do' -> give a short, specific recommendation tied to "
+            "a figure; add a brief action plan only if it genuinely helps.\n"
+            "- An explicit request for a plan, strategy or step-by-step -> provide a tailored, prioritized "
+            "action plan grounded in the data (each step: what to do, which figure justifies it, expected "
+            "impact).\n"
+            "Never pad replies with generic advice. Write clean, well-structured markdown (real bullets "
+            "with '- ', bold with **, no stray or unmatched symbols).\n\n"
+            "LANGUAGE (critical): write your ENTIRE reply in the SAME language as the user's QUESTION "
+            "below. If the question is in French, answer fully in French; if in English, answer in English. "
+            "This is decided per message and overrides the language of earlier turns."
         )
         messages: List[Dict[str, str]] = [{"role": "system", "content": system_prompt}]
 
