@@ -90,6 +90,20 @@ function FactorBar({ label, value, invert }) {
   )
 }
 
+// Prominent "command band" tile — the board-ready executive headline metrics.
+function HeroStat({ icon: Icon, label, value, unit, sub, color = 'var(--primary)', onClick }) {
+  return (
+    <div className={`hero-stat${onClick ? ' clickable' : ''}`} onClick={onClick} style={{ '--hero-accent': color }}>
+      <div className="hero-stat-head">
+        <span className="hero-stat-label">{label}</span>
+        {Icon && <span className="hero-stat-icon" style={{ color }}><Icon size={16} /></span>}
+      </div>
+      <div className="hero-val" style={{ color }}>{value}{unit && <span className="hero-unit">{unit}</span>}</div>
+      {sub && <div className="hero-sub">{sub}</div>}
+    </div>
+  )
+}
+
 export default function DashboardPage() {
   const { user } = useAuth()
   const { t } = useTranslation()
@@ -147,6 +161,10 @@ export default function DashboardPage() {
   })
 
   const riskScore = risk?.score
+  const hScore = Math.round(health?.score ?? health?.health_index ?? 0)
+  const hColor = hScore >= 80 ? 'var(--ok)' : hScore >= 60 ? 'var(--warn)' : 'var(--bad)'
+  const rColor = riskScore >= 70 ? 'var(--ok)' : riskScore >= 50 ? 'var(--warn)' : 'var(--bad)'
+  const metricCount = new Set(kpis.map(k => k.metric_name || k.name)).size
   const askChips = ['What is our overall business health?', 'What risks should I watch right now?', 'Summarize this period’s key metrics']
 
   return (
@@ -169,22 +187,32 @@ export default function DashboardPage() {
         </div>
       ) : (
         <>
+          {/* Command band — board-ready headline metrics */}
+          <div className="hero-grid">
+            <HeroStat icon={Activity} label={t('healthIndex') || 'Business Health'} value={hScore} unit="/100"
+              sub={health?.label} color={hColor} onClick={() => navigate('/analytics')} />
+            <HeroStat icon={ShieldAlert} label={t('riskIndicators') || 'Risk Index'} value={Math.round(riskScore ?? 0)} unit="/100"
+              sub={risk?.label} color={rColor} onClick={() => navigate('/risk')} />
+            <HeroStat icon={Sparkles} label={t('anomalies') || 'Anomalies'} value={anomalies.length}
+              sub={t('flaggedThisPeriod') || 'flagged this period'} color={anomalies.length ? 'var(--anomaly)' : 'var(--ok)'}
+              onClick={() => navigate('/risk')} />
+            <HeroStat icon={TrendingUp} label={t('totalMetrics') || 'Metrics tracked'} value={metricCount}
+              sub={t('acrossDomains') || 'across 7 domains'} color="var(--primary-2)" onClick={() => navigate('/analytics')} />
+          </div>
+
           <div className="kpi-grid">
             {topKPIs.length ? topKPIs.map((k, i) => <KPICard key={i} {...k} />)
               : <div className="card" style={{ gridColumn: '1/-1', color: 'var(--text-3)' }}>{t('noData') || 'No KPI data available.'}</div>}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(220px,1fr) 2fr', gap: 18, marginTop: 18 }}>
-            <HealthGauge score={health?.score ?? health?.health_index ?? 0} t={t} />
-            <div className="card">
-              <h3 className="card-title"><TrendingUp size={16} /> {t('executiveSummary') || 'Executive Summary'}</h3>
-              <p style={{ lineHeight: 1.7, color: 'var(--text-2)', fontSize: '.9rem' }}>
-                {summary?.summary || t('noSummary') || 'No summary available yet.'}
-              </p>
-              <button className="btn btn-outline btn-sm" style={{ marginTop: 14 }} onClick={() => navigate('/chat')}>
-                <Sparkles size={14} /> {t('askAssistant') || 'Ask Copilot'}
-              </button>
-            </div>
+          <div className="card" style={{ marginTop: 18 }}>
+            <h3 className="card-title"><TrendingUp size={16} /> {t('executiveSummary') || 'Executive Summary'}</h3>
+            <p style={{ lineHeight: 1.7, color: 'var(--text-2)', fontSize: '.92rem' }}>
+              {summary?.summary || t('noSummary') || 'No summary available yet.'}
+            </p>
+            <button className="btn btn-outline btn-sm" style={{ marginTop: 14 }} onClick={() => navigate('/chat')}>
+              <Sparkles size={14} /> {t('askAssistant') || 'Ask Copilot'}
+            </button>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 18, marginTop: 18 }}>
