@@ -47,151 +47,97 @@ const PROMPTS_FR = {
   analyst: ['Résume les derniers indicateurs', 'Qu’est-ce qui a le plus changé cette période ?', 'Prévois le revenu du prochain trimestre'],
 }
 
-function formatMessageContent(content) {
-  if (!content) return ''
-  
-  // Split content into sections based on markdown-style headers
-  const lines = content.split('\n')
-  let formatted = []
-  let currentList = null
-  let currentSection = null
-  
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim()
-    
-    // Handle empty lines
-    if (!line) {
-      if (currentList) {
-        formatted.push(currentList)
-        currentList = null
-      }
-      continue
-    }
-    
-    // Handle headers (###, ##, #)
-    if (line.startsWith('###')) {
-      if (currentList) {
-        formatted.push(currentList)
-        currentList = null
-      }
-      if (currentSection) formatted.push(currentSection)
-      currentSection = { type: 'h3', content: line.replace(/^###\s*/, '') }
-      continue
-    }
-    
-    if (line.startsWith('##')) {
-      if (currentList) {
-        formatted.push(currentList)
-        currentList = null
-      }
-      if (currentSection) formatted.push(currentSection)
-      currentSection = { type: 'h2', content: line.replace(/^##\s*/, '') }
-      continue
-    }
-    
-    if (line.startsWith('#')) {
-      if (currentList) {
-        formatted.push(currentList)
-        currentList = null
-      }
-      if (currentSection) formatted.push(currentSection)
-      currentSection = { type: 'h1', content: line.replace(/^#\s*/, '') }
-      continue
-    }
-    
-    // Handle bold text with ***
-    if (line.includes('***')) {
-      const parts = line.split(/\*\*\*/g)
-      let formattedLine = []
-      for (let j = 0; j < parts.length; j++) {
-        if (j % 2 === 1) {
-          formattedLine.push(<strong key={j}>{parts[j]}</strong>)
-        } else if (parts[j]) {
-          formattedLine.push(<span key={j}>{parts[j]}</span>)
-        }
-      }
-      if (currentList) {
-        currentList.items.push(formattedLine)
-      } else {
-        formatted.push({ type: 'text', content: formattedLine })
-      }
-      continue
-    }
-    
-    // Handle bullet points (-, *, •)
-    if (line.match(/^[-*•]\s+/)) {
-      if (!currentList) {
-        currentList = { type: 'list', items: [] }
-      }
-      currentList.items.push(line.replace(/^[-*•]\s+/, ''))
-      continue
-    }
-    
-    // Handle numbered lists (1., 2., etc.)
-    if (line.match(/^\d+\.\s+/)) {
-      if (!currentList) {
-        currentList = { type: 'numbered-list', items: [] }
-      }
-      currentList.items.push(line.replace(/^\d+\.\s+/, ''))
-      continue
-    }
-    
-    // Regular text
-    if (currentList) {
-      formatted.push(currentList)
-      currentList = null
-    }
-    if (currentSection) {
-      formatted.push(currentSection)
-      currentSection = null
-    }
-    formatted.push({ type: 'text', content: line })
+// Inline markdown → React nodes: **bold**, __bold__, *italic*, _italic_, `code`, [text](url).
+function renderInline(text, keyBase = 'i') {
+  if (text == null) return null
+  const s = String(text)
+  const re = /(\*\*([^*]+)\*\*|__([^_]+)__|`([^`]+)`|\*([^*\s][^*]*?)\*|(?<![A-Za-z0-9])_([^_\s][^_]*?)_(?![A-Za-z0-9])|\[([^\]]+)\]\((https?:[^)]+)\))/g
+  const nodes = []
+  let last = 0, m, k = 0
+  while ((m = re.exec(s)) !== null) {
+    if (m.index > last) nodes.push(s.slice(last, m.index))
+    if (m[2] != null) nodes.push(<strong key={`${keyBase}-${k++}`}>{m[2]}</strong>)
+    else if (m[3] != null) nodes.push(<strong key={`${keyBase}-${k++}`}>{m[3]}</strong>)
+    else if (m[4] != null) nodes.push(<code key={`${keyBase}-${k++}`} className="msg-code">{m[4]}</code>)
+    else if (m[5] != null) nodes.push(<em key={`${keyBase}-${k++}`}>{m[5]}</em>)
+    else if (m[6] != null) nodes.push(<em key={`${keyBase}-${k++}`}>{m[6]}</em>)
+    else if (m[7] != null) nodes.push(<a key={`${keyBase}-${k++}`} href={m[8]} target="_blank" rel="noreferrer">{m[7]}</a>)
+    last = re.lastIndex
   }
-  
-  // Push any remaining content
-  if (currentList) formatted.push(currentList)
-  if (currentSection) formatted.push(currentSection)
-  
-  return formatted
+  if (last < s.length) nodes.push(s.slice(last))
+  return nodes.length ? nodes : s
+}
+
+// Block-level markdown parser: headings, lists (ordered/unordered, with inline formatting),
+// fenced code, blockquotes, tables and paragraphs. Robust to unmatched symbols.
+function parseBlocks(content) {
+  const lines = String(content || '').replace(/\r\n/g, '\n').split('\n')
+  const blocks = []
+  let list = null, code = null
+  const flush = () => { if (list) { blocks.push(list); list = null } }
+  for (let i = 0; i < lines.length; i++) {
+    const t = lines[i].trim()
+    if (t.startsWith('```')) {
+      if (code) { blocks.push({ type: 'code', text: code.join('\n') }); code = null }
+      else { flush(); code = [] }
+      continue
+    }
+    if (code) { code.push(lines[i]); continue }
+    if (!t) { flush(); continue }
+    if (/^(-{3,}|\*{3,}|_{3,})$/.test(t)) { flush(); continue }           // hr
+    const h = t.match(/^(#{1,6})\s+(.*)$/)
+    if (h) { flush(); blocks.push({ type: `h${Math.min(h[1].length, 3)}`, text: h[2] }); continue }
+    if (/^\|.*\|$/.test(t)) {                                             // table
+      flush(); const rows = []; let j = i
+      while (j < lines.length && /^\|.*\|$/.test(lines[j].trim())) { rows.push(lines[j].trim()); j++ }
+      const parsed = rows.filter(r => !/^\|[\s:|-]+\|$/.test(r))
+        .map(r => r.replace(/^\||\|$/g, '').split('|').map(c => c.trim()))
+      if (parsed.length) blocks.push({ type: 'table', rows: parsed })
+      i = j - 1; continue
+    }
+    if (t.startsWith('>')) { flush(); blocks.push({ type: 'quote', text: t.replace(/^>\s?/, '') }); continue }
+    let m = t.match(/^[-*•]\s+(.*)$/)
+    if (m) { if (!list || list.ordered) { flush(); list = { type: 'list', ordered: false, items: [] } } list.items.push(m[1]); continue }
+    m = t.match(/^\d+[.)]\s+(.*)$/)
+    if (m) { if (!list || !list.ordered) { flush(); list = { type: 'list', ordered: true, items: [] } } list.items.push(m[1]); continue }
+    flush(); blocks.push({ type: 'p', text: t })
+  }
+  flush(); if (code) blocks.push({ type: 'code', text: code.join('\n') })
+  return blocks
 }
 
 function FormattedContent({ content }) {
-  const formatted = formatMessageContent(content)
-  
+  const blocks = parseBlocks(content)
   return (
     <div className="formatted-message">
-      {formatted.map((item, idx) => {
-        if (item.type === 'h1') {
-          return <h1 key={idx} className="msg-h1">{item.content}</h1>
-        }
-        if (item.type === 'h2') {
-          return <h2 key={idx} className="msg-h2">{item.content}</h2>
-        }
-        if (item.type === 'h3') {
-          return <h3 key={idx} className="msg-h3">{item.content}</h3>
-        }
-        if (item.type === 'list') {
-          return (
-            <ul key={idx} className="msg-list">
-              {item.items.map((listItem, i) => (
-                <li key={i}>{listItem}</li>
-              ))}
-            </ul>
+      {blocks.map((b, idx) => {
+        switch (b.type) {
+          case 'h1': return <h3 key={idx} className="msg-h1">{renderInline(b.text, `h1${idx}`)}</h3>
+          case 'h2': return <h4 key={idx} className="msg-h2">{renderInline(b.text, `h2${idx}`)}</h4>
+          case 'h3': return <h5 key={idx} className="msg-h3">{renderInline(b.text, `h3${idx}`)}</h5>
+          case 'code': return <pre key={idx} className="msg-pre"><code>{b.text}</code></pre>
+          case 'quote': return <blockquote key={idx} className="msg-quote">{renderInline(b.text, `q${idx}`)}</blockquote>
+          case 'table': return (
+            <div key={idx} className="msg-table-wrap">
+              <table className="table msg-table"><tbody>
+                {b.rows.map((r, ri) => (
+                  <tr key={ri}>{r.map((c, ci) => ri === 0
+                    ? <th key={ci}>{renderInline(c, `t${idx}-${ri}-${ci}`)}</th>
+                    : <td key={ci}>{renderInline(c, `t${idx}-${ri}-${ci}`)}</td>)}</tr>
+                ))}
+              </tbody></table>
+            </div>
           )
+          case 'list': {
+            const Tag = b.ordered ? 'ol' : 'ul'
+            return (
+              <Tag key={idx} className={b.ordered ? 'msg-numbered-list' : 'msg-list'}>
+                {b.items.map((it, i) => <li key={i}>{renderInline(it, `l${idx}-${i}`)}</li>)}
+              </Tag>
+            )
+          }
+          default: return <p key={idx} className="msg-text">{renderInline(b.text, `p${idx}`)}</p>
         }
-        if (item.type === 'numbered-list') {
-          return (
-            <ol key={idx} className="msg-numbered-list">
-              {item.items.map((listItem, i) => (
-                <li key={i}>{listItem}</li>
-              ))}
-            </ol>
-          )
-        }
-        if (item.type === 'text') {
-          return <p key={idx} className="msg-text">{item.content}</p>
-        }
-        return null
       })}
     </div>
   )
