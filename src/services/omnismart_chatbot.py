@@ -801,6 +801,25 @@ class AgentPersonaFactory:
         en = sum(1 for m in en_markers if m in pad)
         return "fr" if fr > en else "en"
 
+    @staticmethod
+    def _is_smalltalk(text: str) -> bool:
+        """Greeting / thanks / identity chit-chat that should NOT trigger a KPI dump."""
+        t = (text or "").strip().lower().rstrip("!.?…")
+        if not t:
+            return True
+        greetings = {
+            "hi", "hey", "hello", "yo", "hiya", "sup", "gm", "good morning", "good afternoon",
+            "good evening", "bonjour", "bonsoir", "salut", "coucou", "thanks", "thank you",
+            "merci", "ok", "okay", "cool", "nice", "great", "who are you", "what can you do",
+            "help", "aide", "qui es-tu", "que peux-tu faire", "how are you", "ça va", "ca va",
+        }
+        if t in greetings:
+            return True
+        # very short openers like "hi there", "hello!" with no data keywords
+        if len(t.split()) <= 3 and any(t.startswith(g) for g in ("hi", "hey", "hello", "bonjour", "salut", "thanks", "merci")):
+            return True
+        return False
+
     def chat(
         self,
         message: str,
@@ -836,7 +855,12 @@ class AgentPersonaFactory:
         start = time.time()
 
         # ── Persona-routed RAG: auto-retrieve grounded data + sources ──
-        retrieved_ctx, sources = self._retrieve_context(message, persona, language)
+        # Skip retrieval for greetings / small talk so the copilot answers briefly
+        # instead of dumping a KPI analysis at someone who just said "hi".
+        if self._is_smalltalk(message):
+            retrieved_ctx, sources = "", []
+        else:
+            retrieved_ctx, sources = self._retrieve_context(message, persona, language)
         full_context = "\n\n".join(c for c in [context, retrieved_ctx] if c).strip()
 
         # Prompt-cache friendly layout: the system message (persona prompt + fixed
@@ -846,25 +870,27 @@ class AgentPersonaFactory:
         # turn, so they never invalidate the cached prefix.
         system_prompt = (
             persona.system_prompt + "\n\n"
-            "You have DIRECT access to the company's live data, provided with the user's message "
-            "below. Answer the question directly using those numbers — never ask the user to supply "
-            "data or to pick a focus area when the data is already provided. Be specific and quote the "
-            "metric values, mirroring the exact currency and number format shown in the data "
-            "(e.g. '$3.6M', '3,6 M€', or '3,6 Md FCFA' — do not convert currencies). CITE your "
-            "sources inline using the bracketed numbers shown in the data block, e.g. 'Revenue is "
-            "3.6M [1]'. Only use citation numbers that appear in the data block and never invent "
-            "one. Only use data within your access scope; if a figure is genuinely missing, say so "
-            "in one short sentence.\n\n"
-            "RESPONSE STYLE — match the user's intent, never over-answer:\n"
-            "- Greeting / small talk, or a simple factual or data-lookup question -> answer directly and "
-            "briefly; do NOT add an analysis roadmap or an action plan.\n"
-            "- A request for advice or 'what should I do' -> give a short, specific recommendation tied to "
-            "a figure; add a brief action plan only if it genuinely helps.\n"
-            "- An explicit request for a plan, strategy or step-by-step -> provide a tailored, prioritized "
-            "action plan grounded in the data (each step: what to do, which figure justifies it, expected "
-            "impact).\n"
-            "Never pad replies with generic advice. Write clean, well-structured markdown (real bullets "
-            "with '- ', bold with **, no stray or unmatched symbols).\n\n"
+            "STEP 1 — CLASSIFY THE USER'S INTENT before answering, and size your reply to it:\n"
+            "* GREETING / SMALL TALK / META (e.g. 'hi', 'hello', 'bonjour', 'thanks', 'who are you', "
+            "'what can you do') -> reply in ONE or TWO short friendly sentences and briefly say what you "
+            "can help with. Do NOT list metrics, do NOT analyze data, do NOT produce a plan. Stop there.\n"
+            "* SIMPLE DATA LOOKUP (e.g. 'what is our revenue?') -> give the specific number(s) in 1–3 "
+            "sentences with citations. No roadmap, no action plan.\n"
+            "* ADVICE / 'what should I do' -> a short, specific recommendation tied to a figure; add a "
+            "brief action plan only if it genuinely helps.\n"
+            "* EXPLICIT PLAN / STRATEGY / 'give me a plan / roadmap / step-by-step' -> a tailored, "
+            "prioritized action plan grounded in the data (each step: what to do, which figure justifies "
+            "it, expected impact).\n"
+            "Only include an action plan when the user actually asked for one. Never pad with generic advice.\n\n"
+            "STEP 2 — WHEN (and only when) the user asks about the business or its data, use the LIVE DATA "
+            "block below directly: quote the metric values, mirroring the exact currency and number format "
+            "shown (e.g. '$3.6M', '3,6 M€', '3,6 Md FCFA' — never convert currencies), and CITE sources "
+            "inline with the bracketed numbers shown, e.g. 'Revenue is 3.6M [1]'. Only use citation numbers "
+            "that appear in the data block; never invent one. Stay within your access scope; if a figure is "
+            "genuinely missing, say so in one short sentence. Never ask the user to supply data that is "
+            "already provided.\n\n"
+            "FORMAT: clean, well-structured markdown — real bullets with '- ', bold with **, no stray or "
+            "unmatched symbols. Keep it as short as the intent allows.\n\n"
             "LANGUAGE (critical): write your ENTIRE reply in the SAME language as the user's QUESTION "
             "below. If the question is in French, answer fully in French; if in English, answer in English. "
             "This is decided per message and overrides the language of earlier turns."
