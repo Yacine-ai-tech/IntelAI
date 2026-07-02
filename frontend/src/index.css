@@ -377,6 +377,19 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 .msg-list li { margin:4px 0; line-height:1.5; }
 .msg-numbered-list { margin:8px 0; padding-left:20px; color:var(--text-2); }
 .msg-numbered-list li { margin:4px 0; line-height:1.5; }
+.msg-list li strong, .msg-numbered-list li strong, .msg-text strong { color:var(--text); font-weight:600; }
+.msg-list li::marker, .msg-numbered-list li::marker { color:var(--primary-2); }
+.msg-code { font-family:var(--font-mono); font-size:.82em; background:var(--bg-2); color:var(--primary-2);
+  padding:1px 6px; border-radius:6px; border:1px solid var(--border); }
+.msg-pre { margin:8px 0; padding:12px 14px; background:var(--bg-2); border:1px solid var(--border);
+  border-radius:var(--r); overflow-x:auto; }
+.msg-pre code { font-family:var(--font-mono); font-size:.82rem; color:var(--text); white-space:pre; }
+.msg-quote { margin:8px 0; padding:8px 14px; border-left:3px solid var(--primary-line);
+  background:var(--primary-soft); border-radius:0 var(--r-sm) var(--r-sm) 0; color:var(--text-2); font-style:italic; }
+.msg-table-wrap { overflow-x:auto; margin:8px 0; }
+.msg-table { font-size:.82rem; }
+.msg-table th { color:var(--text-2); }
+.msg-em, .msg-text em { color:var(--text-2); font-style:italic; }
 
 /* Spin animation for loading states */
 .spin { animation: spin 1s linear infinite; }
