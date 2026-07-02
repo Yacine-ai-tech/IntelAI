@@ -27,21 +27,21 @@ export default function LogisticsPage() {
         actions={<AskCopilot q="How is our supply chain performing — on-time delivery, inventory turnover, costs — and where are the risks?" />} />
 
       <StatGrid>
-        <Stat label="Total Orders" value={fmtNum(s.total_orders)} icon={Package} accent={ACCENT} />
-        <Stat label="On-time Delivery" value={fmtPct(s.on_time_delivery_rate)} icon={Truck} accent={ACCENT} good="up" hint="World-class 95–98%" />
-        <Stat label="Fill Rate" value={fmtPct(s.fill_rate)} icon={PackageCheck} accent={ACCENT} good="up" />
-        <Stat label="Avg Lead Time" value={fmtNum(s.avg_lead_time_days)} unit="d" icon={Clock} accent={ACCENT} good="down" />
-        <Stat label="Inventory Turnover" value={fmtNum(s.inventory_turnover)} unit="×" icon={RefreshCw} accent={ACCENT} good="up" />
-        <Stat label="Stockout Rate" value={fmtPct(s.stockout_rate)} icon={Ban} accent="var(--bad)" good="down" />
-        <Stat label="Return Rate" value={fmtPct(s.return_rate)} icon={RotateCcw} accent={ACCENT} good="down" />
-        <Stat label="Ship Cost / Unit" value={fmtMoney(s.shipping_cost_per_unit)} icon={DollarSign} accent={ACCENT} good="down" />
+        <Stat label={t('lblTotalOrders')} value={fmtNum(s.total_orders)} icon={Package} accent={ACCENT} />
+        <Stat label={t('lblOnTimeDelivery')} value={fmtPct(s.on_time_delivery_rate)} icon={Truck} accent={ACCENT} good="up" hint="World-class 95–98%" />
+        <Stat label={t('lblFillRate')} value={fmtPct(s.fill_rate)} icon={PackageCheck} accent={ACCENT} good="up" />
+        <Stat label={t('lblAvgLeadTime')} value={fmtNum(s.avg_lead_time_days)} unit="d" icon={Clock} accent={ACCENT} good="down" />
+        <Stat label={t('lblInventoryTurnover')} value={fmtNum(s.inventory_turnover)} unit="×" icon={RefreshCw} accent={ACCENT} good="up" />
+        <Stat label={t('lblStockoutRate')} value={fmtPct(s.stockout_rate)} icon={Ban} accent="var(--bad)" good="down" />
+        <Stat label={t('lblReturnRate')} value={fmtPct(s.return_rate)} icon={RotateCcw} accent={ACCENT} good="down" />
+        <Stat label={t('lblShipCostUnit')} value={fmtMoney(s.shipping_cost_per_unit)} icon={DollarSign} accent={ACCENT} good="down" />
       </StatGrid>
 
       <Grid style={{ marginTop: 18 }}>
-        <Panel title="Order volume trend" icon={Package} style={{ gridColumn: 'span 2' }}>
+        <Panel title={t('lblOrderVolumeTrend')} icon={Package} style={{ gridColumn: 'span 2' }}>
           <AreaTrend data={s.trends || []} y="orders" color={ACCENT} />
         </Panel>
-        <Panel title="Inventory health" icon={Boxes}>
+        <Panel title={t('lblInventoryHealth')} icon={Boxes}>
           <BarList items={[
             { label: 'Accuracy rate', value: iv.accuracy_rate, display: fmtPct(iv.accuracy_rate), color: 'var(--ok)' },
             { label: 'Days of supply', value: iv.days_of_supply, display: fmtNum(iv.days_of_supply) + 'd' },
@@ -54,14 +54,14 @@ export default function LogisticsPage() {
         </Panel>
       </Grid>
 
-      <Panel title="Shipping" icon={Truck} style={{ marginTop: 18 }}>
+      <Panel title={t('lblShipping')} icon={Truck} style={{ marginTop: 18 }}>
         <StatGrid>
-          <Stat label="Shipments (mo)" value={fmtNum(sh.shipments_month)} icon={Truck} accent={ACCENT} />
-          <Stat label="On-time Rate" value={fmtPct(sh.on_time_rate)} icon={PackageCheck} accent={ACCENT} good="up" />
-          <Stat label="Damaged Rate" value={fmtPct(sh.damaged_rate)} icon={Ban} accent="var(--bad)" good="down" />
-          <Stat label="Avg Transit" value={fmtNum(sh.avg_transit_days)} unit="d" icon={Clock} accent={ACCENT} good="down" />
-          <Stat label="Cost / Shipment" value={fmtMoney(sh.cost_per_shipment)} icon={DollarSign} accent={ACCENT} good="down" />
-          <Stat label="Warehouse Util." value={fmtPct(s.warehouse_utilization)} icon={Warehouse} accent={ACCENT} good="up" />
+          <Stat label={t('lblShipmentsMo')} value={fmtNum(sh.shipments_month)} icon={Truck} accent={ACCENT} />
+          <Stat label={t('lblOnTimeRate')} value={fmtPct(sh.on_time_rate)} icon={PackageCheck} accent={ACCENT} good="up" />
+          <Stat label={t('lblDamagedRate')} value={fmtPct(sh.damaged_rate)} icon={Ban} accent="var(--bad)" good="down" />
+          <Stat label={t('lblAvgTransit')} value={fmtNum(sh.avg_transit_days)} unit="d" icon={Clock} accent={ACCENT} good="down" />
+          <Stat label={t('lblCostShipment')} value={fmtMoney(sh.cost_per_shipment)} icon={DollarSign} accent={ACCENT} good="down" />
+          <Stat label={t('lblWarehouseUtil')} value={fmtPct(s.warehouse_utilization)} icon={Warehouse} accent={ACCENT} good="up" />
         </StatGrid>
       </Panel>
     </div>
