@@ -28,19 +28,19 @@ export default function ITPage() {
         actions={<AskCopilot q="How healthy is our IT — uptime, security posture and DORA metrics — vs 2026 benchmarks?" />} />
 
       <StatGrid>
-        <Stat label="System Uptime" value={fmtPct(o.system_uptime)} icon={Activity} accent={ACCENT} good="up" hint="2026 elite: 99.99%" />
-        <Stat label="Open Tickets" value={fmtNum(o.open_tickets)} icon={Ticket} accent={ACCENT} good="down" />
-        <Stat label="MTTR" value={fmtNum(o.mttr_hours)} unit="h" icon={Timer} accent={ACCENT} good="down" hint="DORA elite: <1h" />
-        <Stat label="SLA Compliance" value={fmtPct(o.sla_compliance)} icon={ShieldCheck} accent={ACCENT} good="up" />
-        <Stat label="Security Score" value={fmtNum(o.security_score)} unit="/100" icon={Lock} accent={ACCENT} good="up" />
-        <Stat label="Servers" value={fmtNum(o.server_count)} icon={Server} accent={ACCENT} />
-        <Stat label="Cloud Spend" value={fmtMoney(o.cloud_spend)} icon={DollarSign} accent={ACCENT} good="down" />
-        <Stat label="Deploy Frequency" value={fmtNum(o.deployment_frequency)} unit="/mo" icon={Rocket} accent={ACCENT} good="up" />
+        <Stat label={t('lblSystemUptime')} value={fmtPct(o.system_uptime)} icon={Activity} accent={ACCENT} good="up" hint="2026 elite: 99.99%" />
+        <Stat label={t('lblOpenTickets')} value={fmtNum(o.open_tickets)} icon={Ticket} accent={ACCENT} good="down" />
+        <Stat label={t('lblMTTR')} value={fmtNum(o.mttr_hours)} unit="h" icon={Timer} accent={ACCENT} good="down" hint="DORA elite: <1h" />
+        <Stat label={t('lblSLACompliance')} value={fmtPct(o.sla_compliance)} icon={ShieldCheck} accent={ACCENT} good="up" />
+        <Stat label={t('lblSecurityScore')} value={fmtNum(o.security_score)} unit="/100" icon={Lock} accent={ACCENT} good="up" />
+        <Stat label={t('lblServers')} value={fmtNum(o.server_count)} icon={Server} accent={ACCENT} />
+        <Stat label={t('lblCloudSpend')} value={fmtMoney(o.cloud_spend)} icon={DollarSign} accent={ACCENT} good="down" />
+        <Stat label={t('lblDeployFrequency')} value={fmtNum(o.deployment_frequency)} unit="/mo" icon={Rocket} accent={ACCENT} good="up" />
       </StatGrid>
 
       <Grid style={{ marginTop: 18 }}>
-        <Panel title="DevOps — DORA metrics" icon={GitBranch}
-          actions={<AskCopilot q="Interpret our DORA metrics vs the 2026 elite benchmarks and what to improve first." label="Interpret" />}>
+        <Panel title={t('lblDevOpsDORAMetrics')} icon={GitBranch}
+          actions={<AskCopilot q="Interpret our DORA metrics vs the 2026 elite benchmarks and what to improve first." label={t('lblInterpret')} />}>
           <BarList items={[
             { label: 'Deployment frequency (/mo)', value: d.deployment_frequency, display: fmtNum(d.deployment_frequency) },
             { label: 'Lead time (h)', value: d.lead_time_hours, display: fmtNum(d.lead_time_hours) + 'h', color: 'var(--warn)' },
@@ -50,14 +50,14 @@ export default function ITPage() {
             { label: 'Build success (%)', value: d.build_success_rate, display: fmtPct(d.build_success_rate), color: 'var(--ok)' },
           ]} />
         </Panel>
-        <Panel title="Security posture" icon={ShieldCheck}>
+        <Panel title={t('lblSecurityPosture')} icon={ShieldCheck}>
           <StatGrid>
-            <Stat label="Security Score" value={fmtNum(s.security_score)} unit="/100" icon={Lock} accent={ACCENT} good="up" />
-            <Stat label="Open Vulns" value={fmtNum(s.vulnerabilities_open)} icon={Bug} accent="var(--bad)" good="down" />
-            <Stat label="Critical Vulns" value={fmtNum(s.vulnerabilities_critical)} icon={AlertTriangle} accent="var(--bad)" good="down" />
-            <Stat label="Compliance" value={fmtPct(s.compliance_score)} icon={ShieldCheck} accent={ACCENT} good="up" />
-            <Stat label="Phishing Blocked" value={fmtNum(s.phishing_attempts_blocked)} icon={Lock} accent={ACCENT} />
-            <Stat label="Backup Success" value={fmtPct(s.backup_success_rate)} icon={ShieldCheck} accent={ACCENT} good="up" />
+            <Stat label={t('lblSecurityScore')} value={fmtNum(s.security_score)} unit="/100" icon={Lock} accent={ACCENT} good="up" />
+            <Stat label={t('lblOpenVulns')} value={fmtNum(s.vulnerabilities_open)} icon={Bug} accent="var(--bad)" good="down" />
+            <Stat label={t('lblCriticalVulns')} value={fmtNum(s.vulnerabilities_critical)} icon={AlertTriangle} accent="var(--bad)" good="down" />
+            <Stat label={t('lblCompliance')} value={fmtPct(s.compliance_score)} icon={ShieldCheck} accent={ACCENT} good="up" />
+            <Stat label={t('lblPhishingBlocked')} value={fmtNum(s.phishing_attempts_blocked)} icon={Lock} accent={ACCENT} />
+            <Stat label={t('lblBackupSuccess')} value={fmtPct(s.backup_success_rate)} icon={ShieldCheck} accent={ACCENT} good="up" />
           </StatGrid>
         </Panel>
       </Grid>

@@ -26,8 +26,8 @@ export default function KnowledgePage() {
 
       <StatGrid>
         <Stat label={t('totalDocuments') || 'Indexed Documents'} value={fmtNum(docCount)} icon={Database} />
-        <Stat label="Glossary Terms" value="101" icon={BookOpen} accent="var(--accent)" />
-        <Stat label="Domains Covered" value="7" icon={Layers} accent="var(--ok)" />
+        <Stat label={t('lblGlossaryTerms')} value="101" icon={BookOpen} accent="var(--accent)" />
+        <Stat label={t('lblDomainsCovered')} value="7" icon={Layers} accent="var(--ok)" />
       </StatGrid>
 
       <Panel title={t('searchKnowledge') || 'Search the knowledge base'} icon={Search} style={{ marginTop: 18 }}>
@@ -46,7 +46,7 @@ export default function KnowledgePage() {
         </form>
       </Panel>
 
-      {search.isPending && <Loading label="Searching…" />}
+      {search.isPending && <Loading label={t('lblSearching')} />}
       {search.error && <div className="alert alert-danger" style={{ marginTop: 16 }}>Search failed: {search.error.message}</div>}
 
       {search.data && (

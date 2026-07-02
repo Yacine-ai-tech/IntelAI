@@ -73,7 +73,7 @@ export default function RiskPage() {
       </Grid>
 
       <Panel title={t('anomaliesDetected') || 'Anomaly watchlist'} icon={Search} style={{ marginTop: 18 }}
-        actions={<AskCopilot q="Explain each detected anomaly and the likely root cause." label="Explain anomalies" />}>
+        actions={<AskCopilot q="Explain each detected anomaly and the likely root cause." label={t('lblExplainAnomalies')} />}>
         {(anom.data || []).length > 0 ? (
           <table className="table">
             <thead><tr><th>Metric</th><th>Category</th><th>Period</th><th>Value</th><th>Z-Score</th><th>Severity</th></tr></thead>

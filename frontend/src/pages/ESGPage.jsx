@@ -28,36 +28,36 @@ export default function ESGPage() {
         <Panel style={{ textAlign: 'center' }}>
           <div className="kpi-label">ESG Score</div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '3rem', fontWeight: 700, color: scoreColor }}>{score}<span style={{ fontSize: '1.1rem', color: 'var(--text-3)' }}>/100</span></div>
-          <div style={{ marginTop: 8 }}><AskCopilot q="What is driving our ESG score and how do we improve it under CSRD?" label="Improve score" /></div>
+          <div style={{ marginTop: 8 }}><AskCopilot q="What is driving our ESG score and how do we improve it under CSRD?" label={t('lblImproveScore')} /></div>
         </Panel>
-        <Panel title="Carbon trend" icon={Cloud} style={{ gridColumn: 'span 2' }}>
+        <Panel title={t('lblCarbonTrend')} icon={Cloud} style={{ gridColumn: 'span 2' }}>
           <AreaTrend data={d.trends || []} y="carbon" color={ACCENT} height={180} />
         </Panel>
       </Grid>
 
-      <Panel title="Environment" icon={Leaf} style={{ marginTop: 18 }}>
+      <Panel title={t('lblEnvironment')} icon={Leaf} style={{ marginTop: 18 }}>
         <StatGrid>
-          <Stat label="Carbon Emissions" value={fmtNum(env.carbon_emissions)} unit="tCO₂e" icon={Cloud} accent={ACCENT} good="down" hint="Scope 1–3 (GHG Protocol)" />
-          <Stat label="Renewable Energy" value={fmtPct(env.renewable_energy_pct)} icon={Zap} accent={ACCENT} good="up" />
-          <Stat label="Water Usage" value={fmtNum(env.water_usage)} unit="m³" icon={Droplet} accent={ACCENT} good="down" />
-          <Stat label="Waste Diverted" value={fmtPct(env.waste_diverted)} icon={Recycle} accent={ACCENT} good="up" />
+          <Stat label={t('lblCarbonEmissions')} value={fmtNum(env.carbon_emissions)} unit="tCO₂e" icon={Cloud} accent={ACCENT} good="down" hint="Scope 1–3 (GHG Protocol)" />
+          <Stat label={t('lblRenewableEnergy')} value={fmtPct(env.renewable_energy_pct)} icon={Zap} accent={ACCENT} good="up" />
+          <Stat label={t('lblWaterUsage')} value={fmtNum(env.water_usage)} unit="m³" icon={Droplet} accent={ACCENT} good="down" />
+          <Stat label={t('lblWasteDiverted')} value={fmtPct(env.waste_diverted)} icon={Recycle} accent={ACCENT} good="up" />
         </StatGrid>
       </Panel>
 
       <Grid style={{ marginTop: 18 }}>
-        <Panel title="Social" icon={Users}>
+        <Panel title={t('lblSocial')} icon={Users}>
           <StatGrid>
-            <Stat label="Community Investment" value={fmtMoney(soc.community_investment)} icon={Landmark} accent={ACCENT} good="up" />
-            <Stat label="Diversity Index" value={fmtNum(soc.diversity_index)} unit="/100" icon={Users} accent={ACCENT} good="up" />
-            <Stat label="Gender Pay Gap" value={fmtPct(soc.gender_pay_gap)} icon={Scale} accent={ACCENT} good="down" />
+            <Stat label={t('lblCommunityInvestment')} value={fmtMoney(soc.community_investment)} icon={Landmark} accent={ACCENT} good="up" />
+            <Stat label={t('lblDiversityIndex')} value={fmtNum(soc.diversity_index)} unit="/100" icon={Users} accent={ACCENT} good="up" />
+            <Stat label={t('lblGenderPayGap')} value={fmtPct(soc.gender_pay_gap)} icon={Scale} accent={ACCENT} good="down" />
           </StatGrid>
         </Panel>
-        <Panel title="Governance" icon={Landmark}>
+        <Panel title={t('lblGovernance')} icon={Landmark}>
           <StatGrid>
-            <Stat label="Board Diversity" value={fmtPct(gov.board_diversity)} icon={Users} accent={ACCENT} good="up" />
-            <Stat label="Ethics Training" value={fmtPct(gov.ethics_training)} icon={ShieldCheck} accent={ACCENT} good="up" />
-            <Stat label="Supplier Compliance" value={fmtPct(gov.supplier_compliance)} icon={ShieldCheck} accent={ACCENT} good="up" />
-            <Stat label="Data Privacy Incidents" value={fmtNum(gov.data_privacy_incidents)} icon={ShieldCheck} accent="var(--bad)" good="down" />
+            <Stat label={t('lblBoardDiversity')} value={fmtPct(gov.board_diversity)} icon={Users} accent={ACCENT} good="up" />
+            <Stat label={t('lblEthicsTraining')} value={fmtPct(gov.ethics_training)} icon={ShieldCheck} accent={ACCENT} good="up" />
+            <Stat label={t('lblSupplierCompliance')} value={fmtPct(gov.supplier_compliance)} icon={ShieldCheck} accent={ACCENT} good="up" />
+            <Stat label={t('lblDataPrivacyIncidents')} value={fmtNum(gov.data_privacy_incidents)} icon={ShieldCheck} accent="var(--bad)" good="down" />
           </StatGrid>
         </Panel>
       </Grid>
