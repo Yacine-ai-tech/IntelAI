@@ -459,15 +459,29 @@ _GLOSSARY_TEXT_FIELDS = ("definition", "benchmark", "interpretation", "why_it_ma
 
 
 async def _localize_glossary_entry(entry: Dict[str, Any], lang: str) -> Dict[str, Any]:
-    """Return the entry with its prose fields translated to ``lang`` (fr) via the LLM, cached.
-    Numbers/formulas/direction are left untouched. Falls back to English on any error."""
+    """Return the entry with its prose fields in ``lang`` (fr). Prefers the static,
+    pre-generated ``GLOSSARY_FR`` (complete + instant + LLM-independent) and only falls
+    back to on-the-fly LLM translation for any field it doesn't cover. Numbers/formulas
+    are left untouched; English is the final fallback."""
     if lang != "fr" or not entry:
         return entry
-    key = str(entry.get("term") or entry.get("definition", ""))[:80]
+    term = entry.get("term")
+    # 1) Static French overlay — the authoritative, complete source.
+    try:
+        from src.data.glossary_fr import GLOSSARY_FR
+        static = GLOSSARY_FR.get(term) or {}
+    except Exception:
+        static = {}
+    entry = {**entry, **{k: v for k, v in static.items()
+                         if k in _GLOSSARY_TEXT_FIELDS and isinstance(v, str) and v.strip()}}
+    key = str(term or entry.get("definition", ""))[:80]
     if key in _GLOSSARY_FR_CACHE:
         return _GLOSSARY_FR_CACHE[key]
-    fields = {k: entry[k] for k in _GLOSSARY_TEXT_FIELDS if isinstance(entry.get(k), str) and entry[k].strip()}
-    if not fields:
+    # 2) LLM only for any text field the static set didn't cover (rare).
+    remaining = {k: entry[k] for k in _GLOSSARY_TEXT_FIELDS
+                 if isinstance(entry.get(k), str) and entry[k].strip() and k not in static}
+    if not remaining:
+        _GLOSSARY_FR_CACHE[key] = entry
         return entry
     try:
         import json as _json
@@ -475,14 +489,14 @@ async def _localize_glossary_entry(entry: Dict[str, Any], lang: str) -> Dict[str
         prompt = (
             "Translate the string VALUES of this JSON object to French. Keep the keys unchanged, "
             "keep numbers, %, currency and formulas as-is, and return ONLY the JSON object:\n"
-            + _json.dumps(fields, ensure_ascii=False)
+            + _json.dumps(remaining, ensure_ascii=False)
         )
         resp = await llm_call([{"role": "user", "content": prompt}], tier="default",
                               temperature=0.0, max_tokens=500)
         txt = resp["choices"][0]["message"]["content"]
         txt = txt[txt.find("{"): txt.rfind("}") + 1]
         translated = _json.loads(txt)
-        out = {**entry, **{k: v for k, v in translated.items() if k in fields}}
+        out = {**entry, **{k: v for k, v in translated.items() if k in remaining}}
     except Exception as e:
         log.warning("glossary fr translation failed (%s) — serving English", e)
         out = entry
