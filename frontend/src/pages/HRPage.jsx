@@ -5,7 +5,7 @@ import {
   Users, UserMinus, Smile, Briefcase, Clock, GraduationCap, DollarSign, CalendarX, UserPlus,
 } from 'lucide-react'
 import {
-  PageHeader, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, BarList, AskCopilot,
+  PageHeader, DomainHero, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, BarList, AskCopilot,
   fmtNum, fmtMoney, fmtPct,
 } from '../components/ui'
 
@@ -16,6 +16,7 @@ export default function HRPage() {
   const summary = useQuery({ queryKey: ['hr-summary'], queryFn: () => api.getHRSummary().then(r => r.data), retry: 1 })
   const depts = useQuery({ queryKey: ['hr-depts'], queryFn: () => api.getHRDepartments().then(r => r.data?.departments || []), retry: 1 })
   const recruit = useQuery({ queryKey: ['hr-recruit'], queryFn: () => api.getHRRecruitment().then(r => r.data), retry: 1 })
+  const hlt = useQuery({ queryKey: ['hr-health'], queryFn: () => api.getHRHealth().then(r => r.data), retry: 1 })
 
   if (summary.isLoading) return <Loading />
   const s = summary.data || {}
@@ -26,6 +27,8 @@ export default function HRPage() {
       <PageHeader icon={Users} accent={ACCENT} title={t('navHR') || 'Human Resources'}
         subtitle={t('hrSubtitle') || 'Workforce, engagement & talent analytics'}
         actions={<AskCopilot q="Summarize our people metrics — headcount, turnover, engagement — and what needs attention." />} />
+
+      <DomainHero health={hlt.data} accent={ACCENT} />
 
       <StatGrid>
         <Stat label={t('lblHeadcount')} value={fmtNum(s.headcount)} icon={Users} accent={ACCENT} />
