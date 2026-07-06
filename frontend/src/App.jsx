@@ -4,6 +4,11 @@ import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import WorkspacePage from './pages/WorkspacePage'
+import ReportsPage from './pages/ReportsPage'
+import GovernancePage from './pages/GovernancePage'
+import OrganizationPage from './pages/OrganizationPage'
+import ComparePage from './pages/ComparePage'
+import KnowledgeGraphPage from './pages/KnowledgeGraphPage' 
 import ChatPage from './pages/ChatPage'
 import AnalyticsPage from './pages/AnalyticsPage'
 import DataHubPage from './pages/DataHubPage'
@@ -48,6 +53,11 @@ export default function App() {
       }>
         <Route index element={<Navigate to="/workspace" replace />} />
         <Route path="workspace" element={<ProtectedRoute page="assistant"><WorkspacePage /></ProtectedRoute>} />
+        <Route path="reports" element={<ProtectedRoute page="analytics"><ReportsPage /></ProtectedRoute>} />
+        <Route path="compare" element={<ProtectedRoute page="assistant"><ComparePage /></ProtectedRoute>} />
+        <Route path="knowledge-graph" element={<ProtectedRoute page="analytics"><KnowledgeGraphPage /></ProtectedRoute>} />
+        <Route path="organization" element={<ProtectedRoute page="analytics"><OrganizationPage /></ProtectedRoute>} />
+        <Route path="governance" element={<ProtectedRoute page="admin"><GovernancePage /></ProtectedRoute>} />
         <Route path="dashboard" element={<ProtectedRoute page="dashboard"><DashboardPage /></ProtectedRoute>} />
         <Route path="chat" element={<ProtectedRoute page="assistant"><ChatPage /></ProtectedRoute>} />
         <Route path="analytics" element={<ProtectedRoute page="analytics"><AnalyticsPage /></ProtectedRoute>} />
