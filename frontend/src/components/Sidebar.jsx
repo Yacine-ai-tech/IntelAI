@@ -6,6 +6,7 @@ import {
   LayoutDashboard, BarChart3, TrendingUp, Users, Package, Monitor,
   Settings2, Leaf, ShieldAlert, Database, ShieldCheck, Settings,
   LogOut, BookOpen, Sparkles, DollarSign, X, ChevronsLeft, ChevronsRight,
+  Share2, FileText, GitCompareArrows, Network,
 } from 'lucide-react'
 
 export default function Sidebar({ mobileOpen, onClose, collapsed = false, onToggleCollapse = () => {} }) {
@@ -41,8 +42,13 @@ export default function Sidebar({ mobileOpen, onClose, collapsed = false, onTogg
       label: t('sidebarSystem') || 'Knowledge & System',
       items: [
         { to: '/knowledge', label: t('navKnowledge') || 'Knowledge', icon: BookOpen,    page: 'analytics' },
+        { to: '/knowledge-graph', label: t('navKnowledgeGraph') || 'Knowledge Graph', icon: Share2, page: 'analytics' },
         { to: '/glossary',  label: t('navGlossary') || 'Glossary',   icon: BookOpen,    page: 'analytics' },
+        { to: '/reports',   label: t('navReports') || 'Reports',      icon: FileText,    page: 'analytics' },
+        { to: '/compare',   label: t('navCompare') || 'Compare Personas', icon: GitCompareArrows, page: 'assistant' },
+        { to: '/organization', label: t('navOrganization') || 'Organization', icon: Network, page: 'analytics' },
         { to: '/data-hub',  label: t('navDataHub'),                  icon: Database,    page: 'data_hub' },
+        { to: '/governance', label: t('navGovernance') || 'Governance', icon: ShieldCheck, page: 'admin' },
         { to: '/admin',     label: t('navAdmin'),                    icon: ShieldCheck, page: 'admin' },
         { to: '/settings',  label: t('navSettings'),                 icon: Settings,    page: 'settings' },
       ],
