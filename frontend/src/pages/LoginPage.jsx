@@ -38,7 +38,7 @@ export default function LoginPage() {
     setError(''); setLoading(true)
     try {
       await login(u, p)
-      navigate('/chat')
+      navigate('/workspace')
     } catch (err) {
       setError(err.response?.data?.detail || t('loginFailed') || 'Login failed')
       setLoading(false)
@@ -47,7 +47,7 @@ export default function LoginPage() {
   const onSubmit = (e) => { e.preventDefault(); doLogin(username, password) }
   const demoLogin = async (u) => {
     setError(''); setLoading(true)
-    try { await demoAuth(u); navigate('/chat') }
+    try { await demoAuth(u); navigate('/workspace') }
     catch (err) { setError(err.response?.data?.detail || t('loginFailed') || 'Login failed'); setLoading(false) }
   }
 
