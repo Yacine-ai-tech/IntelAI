@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext'
 import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
+import WorkspacePage from './pages/WorkspacePage'
 import ChatPage from './pages/ChatPage'
 import AnalyticsPage from './pages/AnalyticsPage'
 import DataHubPage from './pages/DataHubPage'
@@ -39,13 +40,14 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={
-        isAuthenticated ? <Navigate to="/chat" replace /> : <LoginPage />
+        isAuthenticated ? <Navigate to="/workspace" replace /> : <LoginPage />
       } />
 
       <Route path="/" element={
         <ProtectedRoute><Layout /></ProtectedRoute>
       }>
-        <Route index element={<Navigate to="/chat" replace />} />
+        <Route index element={<Navigate to="/workspace" replace />} />
+        <Route path="workspace" element={<ProtectedRoute page="assistant"><WorkspacePage /></ProtectedRoute>} />
         <Route path="dashboard" element={<ProtectedRoute page="dashboard"><DashboardPage /></ProtectedRoute>} />
         <Route path="chat" element={<ProtectedRoute page="assistant"><ChatPage /></ProtectedRoute>} />
         <Route path="analytics" element={<ProtectedRoute page="analytics"><AnalyticsPage /></ProtectedRoute>} />
@@ -65,7 +67,7 @@ export default function App() {
         <Route path="glossary" element={<ProtectedRoute page="analytics"><GlossaryPage /></ProtectedRoute>} />
       </Route>
       
-      <Route path="*" element={<Navigate to="/chat" replace />} />
+      <Route path="*" element={<Navigate to="/workspace" replace />} />
     </Routes>
   )
 }
