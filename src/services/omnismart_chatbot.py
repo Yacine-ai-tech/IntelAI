@@ -575,6 +575,27 @@ class PersonaContext:
 # CITATIONS — one canonical schema for every retrieval path
 # ════════════════════════════════════════════════════════════════════════════
 
+# The 7 business domains personas are scoped to (lowercased). Mirrors the ``data_access``
+# values in PERSONA_TEMPLATES — used to enforce RBAC on retrieved knowledge docs.
+_KPI_DOMAINS = {"finance", "growth", "operations", "people", "esg", "it", "logistics"}
+
+
+def _doc_domain(title: str) -> Optional[str]:
+    """Return the business domain a *company* KPI doc belongs to, or None for
+    domain-agnostic docs (glossary definitions, untagged knowledge). Recognises the two
+    title shapes the KPI docs use — ``"Headcount (People) — 2026-12"`` and
+    ``"People KPI Summary — 2026-12"`` — so retrieval can be scoped to a persona's
+    ``data_access`` the same way the live KPI snapshot is."""
+    t = (title or "").lower()
+    m = re.search(r"\(([a-z& ]+)\)", t)  # "... (People)"
+    if m and m.group(1).strip() in _KPI_DOMAINS:
+        return m.group(1).strip()
+    for d in _KPI_DOMAINS:  # "People KPI Summary ...", "Finance KPI Summary ..."
+        if t.startswith(d + " kpi") or t.startswith(d + " summary"):
+            return d
+    return None
+
+
 def normalize_sources(raw: List[Any], cap: int = 8) -> List[Dict[str, Any]]:
     """Canonicalise citations from any retrieval path into one robust, scalable
     shape so every surface renders identical, deduplicated, traceable sources.
@@ -790,10 +811,18 @@ class AgentPersonaFactory:
         except Exception as e:
             log.warning("KPI context retrieval failed: %s", e)
 
-        # 2) Relevant knowledge docs (hybrid / GraphRAG-lite / vector)
+        # 2) Relevant knowledge docs (hybrid / GraphRAG-lite / vector) — RBAC-scoped.
+        # The live KPI snapshot above is filtered to the persona's data_access; the doc
+        # retrieval must be too, or a CFO could read People/HR figures via the knowledge
+        # base (e.g. "Headcount (People)", "People KPI Summary"). Drop any *company* KPI
+        # doc whose domain is outside scope. Domain-agnostic docs (glossary definitions,
+        # untagged docs) are kept — they carry no scoped company data.
         try:
             docs = _get_shared_rag()._retrieve_documents(message, top_k=6, language=language)
             for title, content, score in (docs or []):
+                dom = _doc_domain(str(title))
+                if scope and dom and dom not in scope:
+                    continue  # out-of-scope company data — persona RBAC
                 doc_blocks.append((str(title), str(content)))
                 raw_sources.append({
                     "title": str(title),
@@ -969,9 +998,12 @@ class AgentPersonaFactory:
             "block below directly: quote the metric values, mirroring the exact currency and number format "
             "shown (e.g. '$3.6M', '3,6 M€', '3,6 Md FCFA' — never convert currencies), and CITE sources "
             "inline with the bracketed numbers shown, e.g. 'Revenue is 3.6M [1]'. Only use citation numbers "
-            "that appear in the data block; never invent one. Stay within your access scope; if a figure is "
-            "genuinely missing, say so in one short sentence. Never ask the user to supply data that is "
-            "already provided.\n\n"
+            "that appear in the data block; never invent one. Stay STRICTLY within your data-access scope: "
+            "answer only from the domains you own. If the user asks for figures outside your scope (another "
+            "executive's area — e.g. a CFO asked for headcount/attrition, or a CHRO asked for revenue/cash), "
+            "do NOT guess or fabricate: say in one short sentence that it's outside your remit and point to the "
+            "role that owns it (e.g. 'that's the CHRO's domain'). If a figure genuinely is missing, say so in "
+            "one short sentence. Never ask the user to supply data that is already provided.\n\n"
             "WEB RESULTS: if a '=== WEB RESULTS ===' block is present, use it for external / current / "
             "benchmark facts, prefer recent and trustworthy sources, and CITE each web fact by its [n] "
             "(same bracket scheme). Never state a web claim without its citation.\n\n"
