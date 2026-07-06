@@ -1,11 +1,12 @@
 // Executive Workspace — the landing experience. The same organizational data, entered
 // through strategic questions rather than a chat box: persona lenses, live health,
 // anomalies, and one-click paths into Copilot, Forecasting and Knowledge.
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import {
   Sparkles, TrendingUp, ShieldAlert, BookOpen, DollarSign, Activity, Flag,
-  Bot, Crown, Cpu, Settings2, Users, Leaf, BarChart3, ArrowRight,
+  Bot, Crown, Cpu, Settings2, Users, Leaf, BarChart3, ArrowRight, Pin, PinOff,
 } from 'lucide-react'
 import * as api from '../api'
 import { useAuth } from '../context/AuthContext'
@@ -29,6 +30,16 @@ export default function WorkspacePage() {
   const navigate = useNavigate()
   const { user } = useAuth()
   const { t } = useTranslation()
+  const [pinned, setPinned] = useState(() => { try { return JSON.parse(localStorage.getItem('intelai.pinned') || '[]') } catch { return [] } })
+  const togglePin = (item) => {
+    setPinned(prev => {
+      const exists = prev.find(p => p.key === item.key)
+      const next = exists ? prev.filter(p => p.key !== item.key) : [{ ...item, ts: Date.now() }, ...prev].slice(0, 12)
+      localStorage.setItem('intelai.pinned', JSON.stringify(next))
+      return next
+    })
+  }
+  const isPinned = (key) => pinned.some(p => p.key === key)
 
   const { data: personas = [] } = useQuery({
     queryKey: ['personas'],
@@ -151,6 +162,34 @@ export default function WorkspacePage() {
             </button>
           ))}
         </div>
+      </Panel>
+
+      {/* Pinned insights — anomalies you starred, persisted locally */}
+      <Panel title="Pinned insights" icon={Pin}
+        actions={<span style={{ color: 'var(--text-3)', fontSize: 12 }}>{pinned.length} pinned</span>}>
+        {anomalies.length === 0 && pinned.length === 0 ? (
+          <p style={{ color: 'var(--text-3)', fontSize: 13 }}>No anomalies to pin right now.</p>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))', gap: 10 }}>
+            {anomalies.slice(0, 8).map((a, i) => {
+              const key = `${a.metric}-${a.period}-${i}`
+              const p = isPinned(key)
+              return (
+                <div key={key} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '12px 13px', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)' }}>
+                  <span style={{ width: 7, height: 7, borderRadius: 999, marginTop: 5, background: 'var(--anomaly)', flexShrink: 0 }} />
+                  <div style={{ minWidth: 0, flex: 1 }}>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{a.metric}</div>
+                    <div style={{ fontSize: 11.5, color: 'var(--text-3)' }}>{a.category} · {a.period} · z {Number(a.z_score ?? 0).toFixed(1)}</div>
+                  </div>
+                  <button onClick={() => togglePin({ key, metric: a.metric, category: a.category, period: a.period })}
+                    title={p ? 'Unpin' : 'Pin'} style={{ background: 'none', border: 'none', cursor: 'pointer', color: p ? 'var(--primary)' : 'var(--text-3)' }}>
+                    {p ? <Pin size={14} fill="currentColor" /> : <PinOff size={14} />}
+                  </button>
+                </div>
+              )
+            })}
+          </div>
+        )}
       </Panel>
 
       {/* Executive brief — real insights summary when available */}
