@@ -200,6 +200,8 @@ export default function ChatPage() {
 
   // Prefill from a Dashboard "ask copilot" deep-link (?q=…), then clear it from the URL.
   useEffect(() => {
+    const pp = searchParams.get('persona')
+    if (pp && PERSONA_META[pp]) { setPersona(pp); searchParams.delete('persona'); setSearchParams(searchParams, { replace: true }) }
     const q = searchParams.get('q')
     if (q) { setInput(q); setSearchParams({}, { replace: true }) }
   }, [searchParams, setSearchParams])

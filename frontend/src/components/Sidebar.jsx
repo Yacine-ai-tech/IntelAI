@@ -18,6 +18,7 @@ export default function Sidebar({ mobileOpen, onClose, collapsed = false, onTogg
     {
       label: t('sidebarCore') || 'Overview',
       items: [
+        { to: '/workspace',   label: t('navWorkspace') || 'Workspace', icon: Sparkles, page: 'assistant' },
         { to: '/dashboard',   label: t('navDashboard'),   icon: LayoutDashboard, page: 'dashboard' },
         { to: '/analytics',   label: t('navAnalytics'),   icon: BarChart3,       page: 'analytics' },
         { to: '/forecasting', label: t('navForecasting'), icon: TrendingUp,      page: 'forecasting' },
