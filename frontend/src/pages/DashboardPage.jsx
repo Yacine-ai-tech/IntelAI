@@ -8,6 +8,7 @@ import {
   TrendingUp, Sparkles, Activity, ShieldAlert, ArrowUpRight, ArrowDownRight,
 } from 'lucide-react'
 import { LineChart, Line, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
+import { Stat, Loading } from '../components/ui'
 
 // category → { icon, accent, route } so a KPI card both reads its domain and links to it.
 const CAT = {
