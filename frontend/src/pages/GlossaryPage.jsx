@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { BookOpen, Search } from 'lucide-react'
-import { PageHeader, Panel, Loading, Empty } from '../components/ui'
+import { PageHeader, Loading, Empty, Panel } from '../components/ui'
 
 export default function GlossaryPage() {
   const { t } = useTranslation()

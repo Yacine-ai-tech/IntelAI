@@ -5,10 +5,7 @@ import {
   Monitor, Activity, Ticket, Timer, ShieldCheck, Server, DollarSign, Rocket,
   AlertTriangle, Bug, Lock, GitBranch,
 } from 'lucide-react'
-import {
-  PageHeader, DomainHero, Stat, StatGrid, Panel, Grid, Loading, BarList, AskCopilot,
-  fmtNum, fmtMoney, fmtPct,
-} from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, Grid, AskCopilot, DomainHero, Panel, fmtMoney } from '../components/ui'
 
 const ACCENT = 'var(--p-cto)'
 
