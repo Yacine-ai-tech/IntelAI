@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
 import { Settings, User, SlidersHorizontal, Info, Check, Globe, Database, RefreshCw } from 'lucide-react'
-import { PageHeader, Panel, Grid, Stat, StatGrid } from '../components/ui'
+import { PageHeader, Stat, StatGrid, Grid, Panel } from '../components/ui'
 import * as api from '../api'
 
 const SCENARIOS = [

@@ -7,6 +7,8 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 // Attach JWT token to every request
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token')
@@ -19,7 +21,21 @@ api.interceptors.request.use((config) => {
 // Handle 401 globally
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    const config = error.config;
+    if (config) {
+      config.__retryCount = config.__retryCount || 0;
+      const status = error.response ? error.response.status : null;
+      // Retry on network errors or 502, 503, 504 (Cloudflare auto-wake)
+      if (!status || status >= 500) {
+        if (config.__retryCount < 5) {
+          config.__retryCount += 1;
+          await delay(2000 * config.__retryCount);
+          return api(config);
+        }
+      }
+    }
+    
     if (error.response?.status === 401) {
       localStorage.removeItem('access_token')
       localStorage.removeItem('user')

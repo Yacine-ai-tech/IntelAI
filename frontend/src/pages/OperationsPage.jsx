@@ -5,10 +5,7 @@ import {
   Settings2, Gauge, CheckCircle2, AlertOctagon, Boxes, Timer, Power, DollarSign,
   Factory, HardHat, ShieldCheck,
 } from 'lucide-react'
-import {
-  PageHeader, DomainHero, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, BarList, AskCopilot,
-  fmtNum, fmtMoney, fmtPct,
-} from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
 
 const ACCENT = 'var(--p-coo)'
 

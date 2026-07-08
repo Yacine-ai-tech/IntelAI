@@ -4,10 +4,7 @@ import { useTranslation } from '../i18n/I18nContext'
 import {
   Package, Truck, Clock, RefreshCw, Boxes, DollarSign, Warehouse, RotateCcw, PackageCheck, Ban,
 } from 'lucide-react'
-import {
-  PageHeader, DomainHero, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, BarList, AskCopilot,
-  fmtNum, fmtMoney, fmtPct,
-} from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
 
 const ACCENT = 'var(--p-coo)'
 

@@ -3,7 +3,7 @@ import { useTranslation } from '../i18n/I18nContext'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import * as api from '../api'
 import { Search, Database, FileText, BookOpen, Layers, Sparkles, X } from 'lucide-react'
-import { PageHeader, Stat, StatGrid, Panel, Loading, AskCopilot, fmtNum } from '../components/ui'
+import { PageHeader, Stat, StatGrid, fmtNum, Loading, AskCopilot, Panel } from '../components/ui'
 
 export default function KnowledgePage() {
   const { t } = useTranslation()

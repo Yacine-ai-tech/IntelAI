@@ -11,7 +11,7 @@ import {
 import * as api from '../api'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
-import { Stat, StatGrid, Panel, Loading } from '../components/ui'
+import { Stat, StatGrid, Loading, Panel } from '../components/ui'
 
 // Same identity map the Copilot uses (ChatPage) — one visual language for personas.
 const PERSONA_META = {

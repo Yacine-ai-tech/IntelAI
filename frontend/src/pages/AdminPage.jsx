@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
 import * as api from '../api'
 import { ShieldCheck, Users, FileText, Key, Plus, UserCheck, UserX } from 'lucide-react'
-import { PageHeader, Stat, StatGrid, Panel, Loading } from '../components/ui'
+import { PageHeader, Stat, StatGrid, Loading, Panel } from '../components/ui'
 
 export default function AdminPage() {
   const { user, hasPage } = useAuth()

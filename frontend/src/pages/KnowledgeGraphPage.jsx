@@ -6,7 +6,7 @@ import { useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Share2, Search, Loader2 } from 'lucide-react'
 import * as api from '../api'
-import { PageHeader, Panel, Empty } from '../components/ui'
+import { PageHeader, Empty, Panel } from '../components/ui'
 
 export default function KnowledgeGraphPage() {
   const { data: categories = [] } = useQuery({

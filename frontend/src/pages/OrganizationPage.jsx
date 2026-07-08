@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Network, Crown, DollarSign, Cpu, Settings2, Users, Leaf, ShieldAlert, BarChart3, Bot } from 'lucide-react'
 import * as api from '../api'
-import { PageHeader, Panel, Loading } from '../components/ui'
+import { PageHeader, Loading, Panel } from '../components/ui'
 
 const PERSONA_ICON = {
   general: Bot, ceo: Crown, cfo: DollarSign, cto: Cpu, coo: Settings2,

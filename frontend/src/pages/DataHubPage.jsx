@@ -7,7 +7,7 @@ import {
   Database, Upload, FileText, Search, Loader2, CheckCircle2, AlertCircle,
   BarChart3, File, ArrowRight, Table as TableIcon,
 } from 'lucide-react'
-import { PageHeader, Panel, Grid, Stat, StatGrid, MiniBars, Empty, fmtNum } from '../components/ui'
+import { PageHeader, Stat, StatGrid, fmtNum, Grid, Empty, Panel, MiniBars } from '../components/ui'
 
 // Minimal CSV parser (handles quoted fields) — lets us preview/visualize a file
 // in the browser before it's ingested, so the user sees exactly what they uploaded.

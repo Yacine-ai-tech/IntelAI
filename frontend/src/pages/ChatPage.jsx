@@ -8,7 +8,7 @@ import { Citations } from '../components/ui'
 import {
   Send, Sparkles, User, Plus, History, MessageSquare,
   Crown, DollarSign, Cpu, Settings2, Users, Leaf, ShieldAlert, BarChart3, Bot,
-  Info, MoreHorizontal, ArrowUpRight, ArrowDownRight,
+  Info, MoreHorizontal, ArrowUpRight, ArrowDownRight, PanelLeftClose, PanelRightClose, PanelLeft, PanelRight, X, Network
 } from 'lucide-react'
 import { AreaChart, Area, YAxis, ResponsiveContainer } from 'recharts'
 
@@ -157,7 +157,17 @@ function MessageBubble({ msg }) {
             <FormattedContent content={msg.content} />
           )}
         </div>
-        {!isUser && <Citations sources={msg.sources} />}
+        {!isUser && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginTop: 8 }}>
+            <Citations sources={msg.sources} />
+            {msg.sources?.length > 0 && (
+              <a href={`/knowledge-graph?q=${encodeURIComponent(msg.query || 'knowledge')}`} target="_blank" rel="noreferrer" 
+                 className="btn btn-ghost btn-sm" style={{ padding: '2px 8px', fontSize: '.75rem', height: '24px' }} title="Visualize GraphRAG Entities">
+                <Network size={12} style={{ marginRight: 4 }} /> View Graph
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
@@ -174,6 +184,8 @@ export default function ChatPage() {
   const [activeSession, setActiveSession] = useState(null)
   const [status, setStatus] = useState('disconnected')
   const [searchParams, setSearchParams] = useSearchParams()
+  const [showHistory, setShowHistory] = useState(false)
+  const [showKPI, setShowKPI] = useState(false)
   const endRef = useRef(null)
   const wsRef = useRef(null)
   const reconnectRef = useRef(null)
@@ -242,14 +254,14 @@ export default function ChatPage() {
   const send = (text) => {
     const q = (text ?? input).trim()
     if (!q || loading) return
-    setMessages(p => [...p, { role: 'user', content: q }])
+    setMessages(p => [...p, { role: 'user', content: q, query: q }])
     setInput(''); setLoading(true)
     const ws = wsRef.current
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ message: q, persona: persona || undefined, session_id: activeSession || undefined, language: lang }))
     } else {
       api.sendChat(q, persona || null, activeSession, '', lang)
-        .then(r => setMessages(p => [...p, { role: 'assistant', content: r.data.response || 'No response.', sources: r.data.sources || [] }]))
+        .then(r => setMessages(p => [...p, { role: 'assistant', content: r.data.response || 'No response.', sources: r.data.sources || [], query: q }]))
         .catch(e => setMessages(p => [...p, { role: 'assistant', content: `Error: ${e.response?.data?.detail || 'request failed'}` }]))
         .finally(() => setLoading(false))
     }
@@ -275,13 +287,16 @@ export default function ChatPage() {
   const dotColor = status === 'connected' ? 'var(--ok)' : status === 'connecting' ? 'var(--warn)' : 'var(--bad)'
 
   return (
-    <div className="chat-layout">
-      <aside className="chat-history-panel">
+    <div className="chat-layout" style={{ position: 'relative', overflow: 'hidden' }}>
+      <aside className={`chat-history-panel${showHistory ? ' mobile-open' : ' collapsed'}`}>
         <div className="chat-history-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: 7, fontWeight: 600, fontSize: '.9rem' }}>
             <History size={15} /> {t('history') || 'History'}
           </span>
-          <button className="btn btn-primary btn-sm" onClick={newChat}><Plus size={14} /> {t('newChat') || 'New'}</button>
+          <div style={{ display: 'flex', gap: 6 }}>
+            <button className="btn btn-primary btn-sm" onClick={newChat}><Plus size={14} /> {t('newChat') || 'New'}</button>
+            <button className="btn btn-ghost btn-icon mobile-only" onClick={() => setShowHistory(false)}><X size={14} /></button>
+          </div>
         </div>
         <div className="chat-history-list">
           {sessions.length ? sessions.map(s => {
@@ -296,8 +311,11 @@ export default function ChatPage() {
         </div>
       </aside>
 
-      <section className="chat-main">
+      <section className="chat-main" style={{ zIndex: 1 }}>
         <div className="chat-header">
+          <button className="btn btn-ghost btn-icon" onClick={() => setShowHistory(!showHistory)} style={{ marginRight: 6 }}>
+            {showHistory ? <PanelLeftClose size={18} /> : <PanelLeft size={18} />}
+          </button>
           <span className="page-title" style={{ fontSize: '1.05rem' }}><Sparkles size={18} /> Copilot</span>
           <span className="badge" style={{ gap: 6 }}><span className="status-dot" style={{ background: dotColor, boxShadow: `0 0 0 3px color-mix(in srgb, ${dotColor} 20%, transparent)` }} />{status}</span>
           <div className="topbar-spacer" />
@@ -338,6 +356,9 @@ export default function ChatPage() {
               })()
             )}
           </div>
+          <button className="btn btn-ghost btn-icon" onClick={() => setShowKPI(!showKPI)} style={{ marginLeft: 6 }}>
+            {showKPI ? <PanelRightClose size={18} /> : <PanelRight size={18} />}
+          </button>
         </div>
 
         <div className="chat-messages">
@@ -380,13 +401,13 @@ export default function ChatPage() {
         </form>
       </section>
 
-      <ChatKPIRail />
+      <ChatKPIRail showKPI={showKPI} setShowKPI={setShowKPI} />
     </div>
   )
 }
 
 /* ── Right-side KPI rail (matches og-image thumbnail) ────────── */
-function ChatKPIRail() {
+function ChatKPIRail({ showKPI, setShowKPI }) {
   const { data: kpis = [] } = useQuery({
     queryKey: ['kpis'], queryFn: () => api.getKPIs().then(r => r.data?.metrics || []),
     staleTime: 300_000, retry: 1,
@@ -428,7 +449,10 @@ function ChatKPIRail() {
   }
 
   return (
-    <aside className="chat-kpi-rail">
+    <aside className={`chat-kpi-rail${showKPI ? ' mobile-open' : ' collapsed'}`}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 4 }} className="mobile-only">
+        <button className="btn btn-ghost btn-icon" onClick={() => setShowKPI(false)}><X size={14} /></button>
+      </div>
       {picks.map((k, i) => {
         const name = k.metric_name || k.name
         const data = hist[name] || []

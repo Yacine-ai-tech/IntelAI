@@ -4,10 +4,7 @@ import { useTranslation } from '../i18n/I18nContext'
 import {
   Users, UserMinus, Smile, Briefcase, Clock, GraduationCap, DollarSign, CalendarX, UserPlus,
 } from 'lucide-react'
-import {
-  PageHeader, DomainHero, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, BarList, AskCopilot,
-  fmtNum, fmtMoney, fmtPct,
-} from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
 
 const ACCENT = 'var(--p-chro)'
 
