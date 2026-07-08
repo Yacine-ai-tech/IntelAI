@@ -382,12 +382,12 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 .login-brand-icon { width:62px; height:62px; border-radius:18px; background:var(--gradient); color:#04201c;
   display:flex; align-items:center; justify-content:center; margin:0 auto 14px; box-shadow:0 10px 30px rgba(45,212,191,.5); }
 .login-header h1 { font-size:1.65rem; background:var(--gradient); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.login-quick-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:18px; }
-.login-quick-btn { display:flex; flex-direction:column; align-items:center; gap:5px; padding:11px 8px;
+.login-quick-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(72px, 1fr)); gap:8px; margin-top:18px; }
+.login-quick-btn { display:flex; flex-direction:column; align-items:center; gap:5px; padding:10px 6px;
   background:var(--surface-2); border:1px solid var(--border); border-radius:var(--r); color:var(--text-2);
-  cursor:pointer; font-size:.72rem; font-weight:500; transition:all var(--t); }
+  cursor:pointer; font-size:.70rem; font-weight:500; transition:all var(--t); }
 .login-quick-btn:hover { border-color:var(--primary-line); color:var(--primary); background:var(--primary-soft); }
-.login-quick-btn svg { width:18px; height:18px; }
+.login-quick-btn svg { width:16px; height:16px; }
 
 /* ── Copilot / Chat ────────────────────────────────────────── */
 .chat-layout { display:flex; height:100%; min-height:0; }
