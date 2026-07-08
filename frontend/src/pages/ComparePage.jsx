@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { GitCompareArrows, Send, Loader2, AlertTriangle, Crown, DollarSign, Cpu, Settings2, Users, Leaf, ShieldAlert, BarChart3, Bot } from 'lucide-react'
 import * as api from '../api'
-import { PageHeader, Panel, Citations } from '../components/ui'
+import { PageHeader, Citations, Panel } from '../components/ui'
 
 const ICON = { general: Bot, ceo: Crown, cfo: DollarSign, cto: Cpu, coo: Settings2, chro: Users, esg: Leaf, risk: ShieldAlert, analyst: BarChart3 }
 const COLOR = { general: 'var(--p-general)', ceo: 'var(--p-ceo)', cfo: 'var(--p-cfo)', cto: 'var(--p-cto)', coo: 'var(--p-coo)', chro: 'var(--p-chro)', esg: 'var(--p-esg)', risk: 'var(--p-risk)', analyst: 'var(--p-analyst)' }

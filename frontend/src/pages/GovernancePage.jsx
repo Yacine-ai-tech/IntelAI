@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { ShieldCheck, Users, ScrollText, KeyRound, Lock } from 'lucide-react'
 import * as api from '../api'
-import { PageHeader, Panel, Loading, Empty } from '../components/ui'
+import { PageHeader, Loading, Empty, Panel } from '../components/ui'
 
 export default function GovernancePage() {
   const { data: rolesData, isLoading: rLoading } = useQuery({

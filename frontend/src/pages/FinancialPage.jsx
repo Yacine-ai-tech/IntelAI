@@ -3,10 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from '../i18n/I18nContext'
 import * as api from '../api'
 import { DollarSign, TrendingUp, Percent, Banknote, Wallet, FileText, Coins } from 'lucide-react'
-import {
-  PageHeader, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, MiniBars, AskCopilot,
-  fmtNum, fmtMoney, fmtPct,
-} from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, Line, fmtNum, Loading, Grid, AskCopilot, AreaTrend, Panel, fmtMoney, MiniBars } from '../components/ui'
 
 const ACCENT = 'var(--p-cfo)'
 const ICONS = { Revenue: DollarSign, 'Gross Margin': Percent, EBITDA: TrendingUp, 'Net Profit': Banknote, 'Operating Cash Flow': Wallet, 'Operating Costs': Coins }

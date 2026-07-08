@@ -3,7 +3,7 @@ import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { ShieldAlert, Search, Activity, CheckCircle2, HeartPulse } from 'lucide-react'
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Tooltip } from 'recharts'
-import { PageHeader, Panel, Grid, Loading, AskCopilot, fmtNum } from '../components/ui'
+import { PageHeader, fmtNum, Loading, Grid, AskCopilot, Panel } from '../components/ui'
 
 const ACCENT = 'var(--p-risk)'
 

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { FileText, Download, FileSpreadsheet, FileJson, FileType, Loader2, AlertTriangle } from 'lucide-react'
 import * as api from '../api'
-import { PageHeader, Panel, Loading } from '../components/ui'
+import { PageHeader, Loading, Panel } from '../components/ui'
 
 const FORMATS = [
   { format: 'pdf', label: 'Board report (PDF)', icon: FileType, desc: 'Executive summary, charts and recommendations as a formatted PDF.' },
