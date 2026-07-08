@@ -2,10 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { Leaf, Cloud, Zap, Droplet, Recycle, Users, Scale, Landmark, ShieldCheck } from 'lucide-react'
-import {
-  PageHeader, DomainHero, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, AskCopilot,
-  fmtNum, fmtMoney, fmtPct,
-} from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
 
 const ACCENT = 'var(--p-esg)'
 
