@@ -82,6 +82,120 @@ class ChatResponse(BaseModel):
     tokens_used: int = 0
     latency_ms: int = 0
     session_id: str = ""
+    blocks: List[Dict[str, Any]] = []
+
+
+def _structure_answer(text: str) -> List[Dict[str, Any]]:
+    """Parse a Markdown-flavoured LLM response into typed answer-blocks.
+
+    Each block is a dict with at least ``{"type": ..., "content": ...}``.
+    Supported types:
+    - ``heading``   — ``# …`` / ``## …`` / ``### …``
+    - ``list``      — ``- …`` / ``* …`` / ``1. …`` lines; ``items`` key holds the list
+    - ``kpi``       — ``**Label:** value`` lines (KPI pill pattern)
+    - ``quote``     — ``> …`` blockquotes
+    - ``code``      — fenced ``` blocks
+    - ``text``      — everything else
+    """
+    import re as _re
+    lines = (text or "").replace("\r\n", "\n").split("\n")
+    blocks: List[Dict[str, Any]] = []
+    buf: List[str] = []
+    in_code = False
+    code_buf: List[str] = []
+    list_buf: List[str] = []
+    list_ordered = False
+
+    def flush_text():
+        t = " ".join(buf).strip()
+        if t:
+            blocks.append({"type": "text", "content": t})
+        buf.clear()
+
+    def flush_list():
+        if list_buf:
+            blocks.append({"type": "list", "ordered": list_ordered, "items": list(list_buf)})
+            list_buf.clear()
+
+    for line in lines:
+        stripped = line.strip()
+
+        # Fenced code block toggle
+        if stripped.startswith("```"):
+            if in_code:
+                flush_list()
+                flush_text()
+                blocks.append({"type": "code", "content": "\n".join(code_buf)})
+                code_buf.clear()
+                in_code = False
+            else:
+                flush_list()
+                flush_text()
+                in_code = True
+            continue
+        if in_code:
+            code_buf.append(line)
+            continue
+
+        # Heading
+        h = _re.match(r"^(#{1,3})\s+(.*)", stripped)
+        if h:
+            flush_list()
+            flush_text()
+            level = len(h.group(1))
+            blocks.append({"type": "heading", "level": level, "content": h.group(2)})
+            continue
+
+        # Blockquote
+        if stripped.startswith("> "):
+            flush_list()
+            flush_text()
+            blocks.append({"type": "quote", "content": stripped[2:]})
+            continue
+
+        # KPI pill: **Label:** value  or  **Label**: value
+        kpi = _re.match(r"^\*\*([^*]+)\*\*:?\s*(.+)$", stripped)
+        if kpi and not stripped.startswith("- ") and not stripped.startswith("* "):
+            flush_list()
+            flush_text()
+            blocks.append({"type": "kpi", "label": kpi.group(1).strip(":. "), "value": kpi.group(2).strip()})
+            continue
+
+        # Unordered list item
+        ul = _re.match(r"^[-*•]\s+(.*)", stripped)
+        if ul:
+            flush_text()
+            if list_buf and list_ordered:
+                flush_list()
+            list_ordered = False
+            list_buf.append(ul.group(1))
+            continue
+
+        # Ordered list item
+        ol = _re.match(r"^\d+[.):]\s+(.*)", stripped)
+        if ol:
+            flush_text()
+            if list_buf and not list_ordered:
+                flush_list()
+            list_ordered = True
+            list_buf.append(ol.group(1))
+            continue
+
+        # Blank line → flush both lists and accumulate paragraph text
+        if not stripped:
+            flush_list()
+            flush_text()
+            continue
+
+        flush_list()
+        buf.append(stripped)
+
+    flush_list()
+    flush_text()
+    if code_buf:
+        blocks.append({"type": "code", "content": "\n".join(code_buf)})
+
+    return blocks
 
 class IngestMetricsRequest(BaseModel):
     data: List[Dict[str, Any]]
@@ -443,6 +557,7 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
         "latency_ms": result.get("latency_ms", 0),
         "session_id": session_id,
         "sources": sources,
+        "blocks": _structure_answer(response_text),
     }
 
 
@@ -1395,6 +1510,7 @@ async def websocket_chat(websocket: WebSocket):
                 "tokens_used": result.get("tokens_used", 0),
                 "latency_ms": result.get("latency_ms", 0),
                 "sources": result.get("sources", []),
+                "blocks": _structure_answer(result["response"]),
             })
     except WebSocketDisconnect:
         log.info("WebSocket client disconnected")

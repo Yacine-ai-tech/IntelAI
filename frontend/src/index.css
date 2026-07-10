@@ -437,6 +437,12 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 .msg-table th { color:var(--text-2); }
 .msg-em, .msg-text em { color:var(--text-2); font-style:italic; }
 
+/* KPI answer-block pill (server-structured response) */
+.msg-kpi-block { display:flex; align-items:center; gap:12px; padding:9px 14px; margin:4px 0; border-radius:10px;
+  background:var(--primary-soft); border:1px solid var(--primary-line); max-width:420px; }
+.msg-kpi-label { font-size:.78rem; font-weight:600; color:var(--primary); text-transform:uppercase; letter-spacing:.04em; flex-shrink:0; }
+.msg-kpi-value { font-family:var(--font-mono); font-size:.96rem; font-weight:700; color:var(--text); }
+
 /* Spin animation for loading states */
 .spin { animation: spin 1s linear infinite; }
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
