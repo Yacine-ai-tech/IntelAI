@@ -10,7 +10,7 @@ import os
 import uuid
 import time
 import math
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import pandas as pd
@@ -41,12 +41,20 @@ log = get_logger(__name__)
 # APP INITIALIZATION
 # ════════════════════════════════════════════════════════════
 
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await startup()
+    yield
+
 app = FastAPI(
     title="IntelAI API",
     description="Persona-Aware AI Analytics & RAG Copilot — Multi-Domain KPI Intelligence",
     version="2026.3.0",
     docs_url="/api/docs",
     redoc_url="/api/redoc",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -272,7 +280,7 @@ def _init_default_users():
                     "role": info["role"],
                     "is_active": True,
                     "preferred_language": "en",
-                    "created_at": datetime.utcnow().isoformat(),
+                    "created_at": datetime.now(timezone.utc).isoformat(),
                 }
         log.info("Initialized %d default users (PostgreSQL + cache)", len(_users_db))
     except Exception as e:
@@ -286,7 +294,7 @@ def _init_default_users():
                     "role": info["role"],
                     "is_active": True,
                     "preferred_language": "en",
-                    "created_at": datetime.utcnow().isoformat(),
+                    "created_at": datetime.now(timezone.utc).isoformat(),
                 }
         log.info("Initialized %d default users (in-memory fallback)", len(_users_db))
 
@@ -295,7 +303,6 @@ def _init_default_users():
 # STARTUP
 # ════════════════════════════════════════════════════════════
 
-@app.on_event("startup")
 async def startup():
     """Validate required keys, initialize database, seed default data, start cleanup tasks."""
     log.info("🚀 IntelAI API starting...")
@@ -372,7 +379,7 @@ async def health_check():
         "status": "healthy",
         "service": "IntelAI API",
         "version": "2026.3.0",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "database": "postgresql",
     }
 
@@ -477,7 +484,7 @@ async def register(req: RegisterRequest):
         "role": req.role,
         "is_active": True,
         "preferred_language": req.preferred_language,
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
     }
     # Persist to PostgreSQL
     try:
@@ -584,7 +591,7 @@ async def _localize_glossary_entry(entry: Dict[str, Any], lang: str) -> Dict[str
     # 1) Static French overlay — the authoritative, complete source.
     try:
         from src.data.glossary_fr import GLOSSARY_FR
-        static = GLOSSARY_FR.get(term) or {}
+        static = GLOSSARY_FR.get(str(term)) or {}
     except Exception:
         static = {}
     entry = {**entry, **{k: v for k, v in static.items()
@@ -1424,7 +1431,7 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
         if not hits:  # last-resort: retry language-agnostic
             hits = rag._retrieve_documents(q, top_k=n)
         results = [
-            {"title": title, "content": (content or "")[:600], "score": round(float(score), 4)}
+            {"title": title, "content": (content or "")[:600], "score": round(score, 4)}
             for title, content, score in hits
         ]
         return {"results": results, "query": q, "count": len(results)}
@@ -1648,7 +1655,7 @@ async def export_data(
     
     export_id = log_data_export(
         username=user.username,
-        export_name=req.source_name or f"export_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
+        export_name=req.source_name or f"export_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}",
         export_format=req.format,
         source_type=req.source_type,
         status="processing",
