@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import * as api from '../api'
+import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
 import { BarChart3, Hash, Calendar, Layers, FolderKanban, TrendingUp } from 'lucide-react'
 import { PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, AreaTrend, Panel } from '../components/ui'
