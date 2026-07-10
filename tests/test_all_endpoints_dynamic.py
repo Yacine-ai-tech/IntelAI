@@ -4,46 +4,8 @@ import re
 
 # We will import the app dynamically based on the project structure
 def get_app():
-    try:
-        from src.api.server import app
-        return app
-    except ImportError:
-        pass
-    try:
-        from api import app
-        return app
-    except ImportError:
-        pass
-    try:
-        from web_app import app
-        return app
-    except ImportError:
-        pass
-    try:
-        from main import app
-        return app
-    except ImportError:
-        pass
-    try:
-        from src.main import app
-        return app
-    except ImportError:
-        pass
-    try:
-        from api.server import app
-        return app
-    except ImportError:
-        pass
-    try:
-        from server import app
-        return app
-    except ImportError:
-        pass
-    try:
-        from app import app
-        return app
-    except ImportError:
-        raise ImportError("Could not find FastAPI app to test.")
+    from src.api.server import app
+    return app
 
 app = get_app()
 client = TestClient(app)
@@ -53,10 +15,10 @@ def get_all_routes():
     if not hasattr(app, "routes"):
         return routes
     for route in app.routes:
-        if hasattr(route, "methods"):
+        if hasattr(route, "methods") and hasattr(route, "path"):
             for method in route.methods:
                 if method in ["GET", "POST", "PUT", "DELETE", "PATCH"]:
-                    routes.append((method, route.path))
+                    routes.append((method, getattr(route, "path")))
     return routes
 
 @pytest.mark.parametrize("method, path", get_all_routes())

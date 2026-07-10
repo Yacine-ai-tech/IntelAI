@@ -116,9 +116,17 @@ def wake_studio(machine: Optional[str] = None) -> Dict[str, Any]:
         
         if machine:
             # Start with specific machine
-            studio.start(getattr(Machine, machine.upper(), Machine.CPU_4))
+            machine_enum = getattr(Machine, machine.upper(), None)
+            if machine_enum is None:
+                return {
+                    'success': False,
+                    'status': 'error',
+                    'machine': None,
+                    'error': f'Invalid machine type: {machine}'
+                }
+            studio.start(machine_enum)
         else:
-            # Start with default machine
+            # Start with default machine configured for the studio
             studio.start()
         
         logger.info(f"Studio {LIGHTNING_STUDIO_NAME} started successfully")
