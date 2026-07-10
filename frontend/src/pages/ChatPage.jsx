@@ -106,39 +106,71 @@ function parseBlocks(content) {
   return blocks
 }
 
-function FormattedContent({ content }) {
-  const blocks = parseBlocks(content)
+// KPI block rendered as an accent pill (from server answer-block structuring)
+function KpiBlock({ label, value }) {
+  return (
+    <div className="msg-kpi-block">
+      <span className="msg-kpi-label">{label}</span>
+      <span className="msg-kpi-value">{value}</span>
+    </div>
+  )
+}
+
+// Prefer server-sent blocks[] (structured by _structure_answer); fall back to client-side parsing.
+function FormattedContent({ content, blocks: serverBlocks }) {
+  // If the server sent typed blocks use them directly; otherwise parse client-side
+  const blocks = (serverBlocks && serverBlocks.length > 0) ? serverBlocks : parseBlocks(content)
+
+  const renderBlock = (b, idx) => {
+    // Server block types
+    if (b.type === 'heading') {
+      const Tag = b.level === 1 ? 'h3' : b.level === 2 ? 'h4' : 'h5'
+      const cls = b.level === 1 ? 'msg-h1' : b.level === 2 ? 'msg-h2' : 'msg-h3'
+      return <Tag key={idx} className={cls}>{renderInline(b.content, `hd${idx}`)}</Tag>
+    }
+    if (b.type === 'kpi') return <KpiBlock key={idx} label={b.label} value={b.value} />
+    if (b.type === 'quote') return <blockquote key={idx} className="msg-quote">{renderInline(b.content, `q${idx}`)}</blockquote>
+    if (b.type === 'code') return <pre key={idx} className="msg-pre"><code>{b.content}</code></pre>
+    if (b.type === 'text' && b.content) return <p key={idx} className="msg-text">{renderInline(b.content, `p${idx}`)}</p>
+    if (b.type === 'list') {
+      const Tag = b.ordered ? 'ol' : 'ul'
+      return (
+        <Tag key={idx} className={b.ordered ? 'msg-numbered-list' : 'msg-list'}>
+          {b.items.map((it, i) => <li key={i}>{renderInline(it, `l${idx}-${i}`)}</li>)}
+        </Tag>
+      )
+    }
+    // Client-side parse block types (parseBlocks output)
+    if (b.type === 'h1') return <h3 key={idx} className="msg-h1">{renderInline(b.text, `h1${idx}`)}</h3>
+    if (b.type === 'h2') return <h4 key={idx} className="msg-h2">{renderInline(b.text, `h2${idx}`)}</h4>
+    if (b.type === 'h3') return <h5 key={idx} className="msg-h3">{renderInline(b.text, `h3${idx}`)}</h5>
+    if (b.type === 'code') return <pre key={idx} className="msg-pre"><code>{b.text}</code></pre>
+    if (b.type === 'quote') return <blockquote key={idx} className="msg-quote">{renderInline(b.text, `q${idx}`)}</blockquote>
+    if (b.type === 'table') return (
+      <div key={idx} className="msg-table-wrap">
+        <table className="table msg-table"><tbody>
+          {b.rows.map((r, ri) => (
+            <tr key={ri}>{r.map((c, ci) => ri === 0
+              ? <th key={ci}>{renderInline(c, `t${idx}-${ri}-${ci}`)}</th>
+              : <td key={ci}>{renderInline(c, `t${idx}-${ri}-${ci}`)}</td>)}</tr>
+          ))}
+        </tbody></table>
+      </div>
+    )
+    if (b.type === 'list') {
+      const Tag = b.ordered ? 'ol' : 'ul'
+      return (
+        <Tag key={idx} className={b.ordered ? 'msg-numbered-list' : 'msg-list'}>
+          {b.items.map((it, i) => <li key={i}>{renderInline(it, `l${idx}-${i}`)}</li>)}
+        </Tag>
+      )
+    }
+    return <p key={idx} className="msg-text">{renderInline(b.text || b.content || '', `p${idx}`)}</p>
+  }
+
   return (
     <div className="formatted-message">
-      {blocks.map((b, idx) => {
-        switch (b.type) {
-          case 'h1': return <h3 key={idx} className="msg-h1">{renderInline(b.text, `h1${idx}`)}</h3>
-          case 'h2': return <h4 key={idx} className="msg-h2">{renderInline(b.text, `h2${idx}`)}</h4>
-          case 'h3': return <h5 key={idx} className="msg-h3">{renderInline(b.text, `h3${idx}`)}</h5>
-          case 'code': return <pre key={idx} className="msg-pre"><code>{b.text}</code></pre>
-          case 'quote': return <blockquote key={idx} className="msg-quote">{renderInline(b.text, `q${idx}`)}</blockquote>
-          case 'table': return (
-            <div key={idx} className="msg-table-wrap">
-              <table className="table msg-table"><tbody>
-                {b.rows.map((r, ri) => (
-                  <tr key={ri}>{r.map((c, ci) => ri === 0
-                    ? <th key={ci}>{renderInline(c, `t${idx}-${ri}-${ci}`)}</th>
-                    : <td key={ci}>{renderInline(c, `t${idx}-${ri}-${ci}`)}</td>)}</tr>
-                ))}
-              </tbody></table>
-            </div>
-          )
-          case 'list': {
-            const Tag = b.ordered ? 'ol' : 'ul'
-            return (
-              <Tag key={idx} className={b.ordered ? 'msg-numbered-list' : 'msg-list'}>
-                {b.items.map((it, i) => <li key={i}>{renderInline(it, `l${idx}-${i}`)}</li>)}
-              </Tag>
-            )
-          }
-          default: return <p key={idx} className="msg-text">{renderInline(b.text, `p${idx}`)}</p>
-        }
-      })}
+      {blocks.map((b, idx) => renderBlock(b, idx))}
     </div>
   )
 }
@@ -154,7 +186,7 @@ function MessageBubble({ msg }) {
           {isUser ? (
             <div style={{ whiteSpace: 'pre-wrap' }}>{msg.content}</div>
           ) : (
-            <FormattedContent content={msg.content} />
+            <FormattedContent content={msg.content} blocks={msg.blocks} />
           )}
         </div>
         {!isUser && (
@@ -237,7 +269,13 @@ export default function ChatPage() {
         const d = JSON.parse(ev.data)
         if (d.type === 'connected') setStatus('connected')
         else if (d.type === 'response') {
-          setMessages(p => [...p, { role: 'assistant', content: d.response, sources: d.sources || [], persona_used: d.persona_used }])
+          setMessages(p => [...p, {
+            role: 'assistant',
+            content: d.response,
+            sources: d.sources || [],
+            blocks: d.blocks || [],
+            persona_used: d.persona_used,
+          }])
           setLoading(false)
         } else if (d.type === 'error' || d.error) {
           setMessages(p => [...p, { role: 'assistant', content: `Error: ${d.error || 'request failed'}` }])
@@ -261,7 +299,13 @@ export default function ChatPage() {
       ws.send(JSON.stringify({ message: q, persona: persona || undefined, session_id: activeSession || undefined, language: lang }))
     } else {
       api.sendChat(q, persona || null, activeSession, '', lang)
-        .then(r => setMessages(p => [...p, { role: 'assistant', content: r.data.response || 'No response.', sources: r.data.sources || [], query: q }]))
+        .then(r => setMessages(p => [...p, {
+          role: 'assistant',
+          content: r.data.response || 'No response.',
+          sources: r.data.sources || [],
+          blocks: r.data.blocks || [],
+          query: q,
+        }]))
         .catch(e => setMessages(p => [...p, { role: 'assistant', content: `Error: ${e.response?.data?.detail || 'request failed'}` }]))
         .finally(() => setLoading(false))
     }

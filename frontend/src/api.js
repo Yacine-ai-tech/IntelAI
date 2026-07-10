@@ -147,6 +147,8 @@ export const updateUser = (userId, data) => api.put(`/admin/users/${userId}`, da
 export const listRoles = () => api.get('/admin/roles')
 export const getAuditLog = (limit = 100) => api.get('/admin/audit', { params: { limit } })
 export const seedData = () => api.post('/admin/seed')
+export const reindexVectors = (force = true) => api.post(`/admin/reindex?force=${force}`)
+export const cleanupData = () => api.post('/admin/cleanup')
 
 // ── Ingestion ───────────────────────────────────────────
 export const ingestMetrics = (data, sourceName = 'api') =>
