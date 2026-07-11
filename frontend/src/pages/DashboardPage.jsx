@@ -8,6 +8,7 @@ import {
   TrendingUp, Sparkles, Activity, ShieldAlert, ArrowUpRight, ArrowDownRight,
 } from 'lucide-react'
 import { LineChart, Line, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
+import { Stat, Loading } from '../components/ui'
 
 // category → { icon, accent, route } so a KPI card both reads its domain and links to it.
 const CAT = {
@@ -29,38 +30,34 @@ function Sparkline({ data, color }) {
     <div style={{ height: 42, marginTop: 10 }}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data.map(d => ({ value: d.value || 0 }))}>
+          <defs><linearGradient id="spark" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#4f46e5" /><stop offset="100%" stopColor="#22d3ee" />
+          </linearGradient></defs>
           <YAxis hide domain={['dataMin', 'dataMax']} />
           <Tooltip contentStyle={{ background: 'var(--surface-2)', border: '1px solid var(--border-2)', borderRadius: 8, fontSize: '.75rem' }}
             itemStyle={{ color: 'var(--text)' }} labelStyle={{ display: 'none' }} />
-          <Line type="monotone" dataKey="value" stroke={color} strokeWidth={2} dot={false} />
+          <Line type="monotone" dataKey="value" stroke={color === 'var(--primary)' ? 'url(#spark)' : color} strokeWidth={2} dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </div>
   )
 }
 
-function KPICard({ label, value, change, category, history }) {
+function KPICard({ label, value, change, category, history, isAnomaly }) {
   const navigate = useNavigate()
   const { icon: Icon, accent, route } = catOf(category)
-  const up = (change ?? 0) >= 0
+  
   return (
-    <div className="kpi-card clickable" onClick={() => navigate(route)} title={`Open ${category || 'analytics'}`}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div style={{ minWidth: 0 }}>
-          <div className="kpi-label truncate">{label}</div>
-          <div className="kpi-value">{value}</div>
-        </div>
-        <div className="kpi-icon-wrap" style={{ background: `color-mix(in srgb, ${accent} 16%, transparent)`, color: accent }}>
-          <Icon size={18} />
-        </div>
-      </div>
-      <Sparkline data={history} color={accent} />
-      {change !== undefined && change !== null && (
-        <div className={`kpi-trend ${up ? 'up' : 'down'}`}>
-          {up ? <ArrowUpRight size={13} /> : <ArrowDownRight size={13} />}{Math.abs(change).toFixed(1)}%
-        </div>
-      )}
-    </div>
+    <Stat 
+      label={label}
+      value={value}
+      trend={change}
+      icon={Icon}
+      accent={accent}
+      history={history || []}
+      hasAnomaly={isAnomaly}
+      onClick={() => navigate(route)}
+    />
   )
 }
 
@@ -94,6 +91,20 @@ function FactorBar({ label, value, invert }) {
   )
 }
 
+// Prominent "command band" tile — the board-ready executive headline metrics.
+function HeroStat({ icon: Icon, label, value, unit, sub, color = 'var(--primary)', onClick }) {
+  return (
+    <div className={`hero-stat${onClick ? ' clickable' : ''}`} onClick={onClick} style={{ '--hero-accent': color }}>
+      <div className="hero-stat-head">
+        <span className="hero-stat-label">{label}</span>
+        {Icon && <span className="hero-stat-icon" style={{ color }}><Icon size={16} /></span>}
+      </div>
+      <div className="hero-val" style={{ color }}>{value}{unit && <span className="hero-unit">{unit}</span>}</div>
+      {sub && <div className="hero-sub">{sub}</div>}
+    </div>
+  )
+}
+
 export default function DashboardPage() {
   const { user } = useAuth()
   const { t } = useTranslation()
@@ -113,6 +124,10 @@ export default function DashboardPage() {
   })
   const { data: risk } = useQuery({
     queryKey: ['risk'], queryFn: () => api.getRisk().then(r => r.data),
+    staleTime: 300_000, retry: 1,
+  })
+  const { data: anomalies = [] } = useQuery({
+    queryKey: ['anomalies'], queryFn: () => api.getAnomalies().then(r => r.data?.anomalies || []),
     staleTime: 300_000, retry: 1,
   })
 
@@ -137,12 +152,20 @@ export default function DashboardPage() {
   const topKPIs = kpis.filter(k => {
     const n = k.metric_name || k.name
     if (seen.has(n)) return false; seen.add(n); return true
-  }).slice(0, 8).map(k => ({
-    label: k.metric_name || k.name || 'Metric', value: fmt(k.value),
-    change: k.change_pct, category: k.category || 'default', history: hist[k.metric_name || k.name] || [],
-  }))
+  }).slice(0, 8).map(k => {
+    const n = k.metric_name || k.name || 'Metric'
+    const isAnomaly = anomalies.some(a => (a.metric_name || a.name) === n)
+    return {
+      label: n, value: fmt(k.value),
+      change: k.change_pct, isAnomaly, category: k.category || 'default', history: hist[n] || [],
+    }
+  })
 
   const riskScore = risk?.score
+  const hScore = Math.round(health?.score ?? health?.health_index ?? 0)
+  const hColor = hScore >= 80 ? 'var(--ok)' : hScore >= 60 ? 'var(--warn)' : 'var(--bad)'
+  const rColor = riskScore >= 70 ? 'var(--ok)' : riskScore >= 50 ? 'var(--warn)' : 'var(--bad)'
+  const metricCount = new Set(kpis.map(k => k.metric_name || k.name)).size
   const askChips = ['What is our overall business health?', 'What risks should I watch right now?', 'Summarize this period’s key metrics']
 
   return (
@@ -165,22 +188,32 @@ export default function DashboardPage() {
         </div>
       ) : (
         <>
+          {/* Command band — board-ready headline metrics */}
+          <div className="hero-grid">
+            <HeroStat icon={Activity} label={t('healthIndex') || 'Business Health'} value={hScore} unit="/100"
+              sub={health?.label} color={hColor} onClick={() => navigate('/analytics')} />
+            <HeroStat icon={ShieldAlert} label={t('riskIndicators') || 'Risk Index'} value={Math.round(riskScore ?? 0)} unit="/100"
+              sub={risk?.label} color={rColor} onClick={() => navigate('/risk')} />
+            <HeroStat icon={Sparkles} label={t('anomalies') || 'Anomalies'} value={anomalies.length}
+              sub={t('flaggedThisPeriod') || 'flagged this period'} color={anomalies.length ? 'var(--anomaly)' : 'var(--ok)'}
+              onClick={() => navigate('/risk')} />
+            <HeroStat icon={TrendingUp} label={t('totalMetrics') || 'Metrics tracked'} value={metricCount}
+              sub={t('acrossDomains') || 'across 7 domains'} color="var(--primary-2)" onClick={() => navigate('/analytics')} />
+          </div>
+
           <div className="kpi-grid">
             {topKPIs.length ? topKPIs.map((k, i) => <KPICard key={i} {...k} />)
               : <div className="card" style={{ gridColumn: '1/-1', color: 'var(--text-3)' }}>{t('noData') || 'No KPI data available.'}</div>}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(220px,1fr) 2fr', gap: 18, marginTop: 18 }}>
-            <HealthGauge score={health?.score ?? health?.health_index ?? 0} t={t} />
-            <div className="card">
-              <h3 className="card-title"><TrendingUp size={16} /> {t('executiveSummary') || 'Executive Summary'}</h3>
-              <p style={{ lineHeight: 1.7, color: 'var(--text-2)', fontSize: '.9rem' }}>
-                {summary?.summary || t('noSummary') || 'No summary available yet.'}
-              </p>
-              <button className="btn btn-outline btn-sm" style={{ marginTop: 14 }} onClick={() => navigate('/chat')}>
-                <Sparkles size={14} /> {t('askAssistant') || 'Ask Copilot'}
-              </button>
-            </div>
+          <div className="card" style={{ marginTop: 18 }}>
+            <h3 className="card-title"><TrendingUp size={16} /> {t('executiveSummary') || 'Executive Summary'}</h3>
+            <p style={{ lineHeight: 1.7, color: 'var(--text-2)', fontSize: '.92rem' }}>
+              {summary?.summary || t('noSummary') || 'No summary available yet.'}
+            </p>
+            <button className="btn btn-outline btn-sm" style={{ marginTop: 14 }} onClick={() => navigate('/chat')}>
+              <Sparkles size={14} /> {t('askAssistant') || 'Ask Copilot'}
+            </button>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 18, marginTop: 18 }}>
