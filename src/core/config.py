@@ -150,5 +150,5 @@ def validate_required_keys() -> None:
 def get_cors_allowed_origins() -> List[str]:
     """Parse and normalize CORS origins from env."""
     origins = [o.strip() for o in settings.CORS_ALLOWED_ORIGINS.split(",") if o.strip()]
-    return origins or ["http://localhost:5173"]
+    return origins or ["*"]
 
