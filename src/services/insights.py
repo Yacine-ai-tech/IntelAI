@@ -216,11 +216,19 @@ def compute_risk_score(df: pd.DataFrame) -> Dict[str, float | int | str]:
             share = latest["value"].abs() / total
             concentration = float(share.sort_values(ascending=False).head(3).sum() * 100)
 
-    score = float(np.clip(100 - (volatility * 1.5 + anomaly_count * 5 + concentration * 0.4), 0, 100))
+    # Adjusted scoring to be more reasonable with large anomaly counts
+    # Use logarithmic scaling for anomalies to handle large counts reasonably
+    anomaly_contribution = min(np.log1p(anomaly_count) * 10, 40)  # Logarithmic scaling, cap at 40
+    score = float(np.clip(100 - (volatility * 1.0 + anomaly_contribution + concentration * 0.3), 0, 100))
 
-    label_map = {"en": {70: "Low", 50: "Moderate", 0: "High"}, "fr": {70: "Faible", 50: "Modéré", 0: "Élevé"}}
+    label_map = {"en": {80: "Low", 60: "Moderate", 40: "Medium", 0: "High"}, "fr": {80: "Faible", 60: "Modéré", 40: "Moyen", 0: "Élevé"}}
     lang_map = label_map.get(I18N.lang(), label_map["en"])
-    label = next(v for k, v in sorted(lang_map.items(), reverse=True) if score >= k)
+    # Find the highest threshold where score >= threshold
+    label = "High"  # default
+    for threshold, label_name in sorted(lang_map.items(), reverse=True):
+        if score >= threshold:
+            label = label_name
+            break
 
     return {
         "score": score,
