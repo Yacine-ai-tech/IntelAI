@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// Dev API target. Defaults to a local backend; set VITE_PROXY_TARGET to develop the
+// frontend against a remote/staging backend (e.g. the live deployment) without CORS.
+const PROXY_TARGET = process.env.VITE_PROXY_TARGET || 'http://localhost:8000'
+
 export default defineConfig({
   plugins: [
     react({
@@ -15,16 +19,16 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: PROXY_TARGET,
         changeOrigin: true,
         ws: true,            // proxy WebSocket (/api/v1/ws/chat) to the backend
       },
       '/health': {
-        target: 'http://localhost:8000',
+        target: PROXY_TARGET,
         changeOrigin: true,
       },
       '/metrics': {
-        target: 'http://localhost:8000',
+        target: PROXY_TARGET,
         changeOrigin: true,
       },
     },

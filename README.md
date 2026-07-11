@@ -1,160 +1,130 @@
-# 🎯 IntelAI
+# IntelAI
 
-> **Persona-Aware AI Analytics & RAG Copilot** — multi-domain KPI intelligence with a
-> 9-persona, role-scoped RAG copilot, GraphRAG-lite retrieval, ML forecasting, and
-> board-ready exports. One FastAPI service. Bilingual (EN/FR).
+> **Persona-Aware AI Analytics & RAG Copilot** — 9-persona, role-scoped copilot with
+> GraphRAG-lite retrieval, ML forecasting, bilingual (EN/FR) UI, and board-ready exports.
 
 [![CI](https://github.com/Yacine-ai-tech/IntelAI/actions/workflows/ci.yml/badge.svg)](https://github.com/Yacine-ai-tech/IntelAI/actions)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-> 🔗 **Live demo:** https://intelai.ysiddo-ai-projects.app  ·  password-less role login (DEMO_MODE).
-> On-demand backend — the first request may take ~30–60 s to wake the API, then it's fast.
 
-IntelAI turns multi-domain business KPIs (Finance, HR, IT, Operations, Logistics, ESG,
-Risk) into executive intelligence and lets each role *talk to its own data* through a
-RAG copilot that respects role boundaries.
-
-> IntelAI is the scoped product extracted from a larger all-in-one platform. The full
-> self-hostable platform (monitoring, OCR, voice, n8n, on-prem stack) is a separate
-> project, **OmniIntelOS**.
+**Live demo:** https://intelai.ysiddo-ai-projects.app · password-less role login (DEMO_MODE).
+First request may take ~60 s to wake the on-demand backend.
 
 ---
 
-## ✨ Features
+## Features
 
-- **9-persona RAG copilot** — CEO, CFO, CTO, COO, CHRO, ESG, Risk, Business Analyst, and a
-  general Assistant. Each persona has its own system prompt **and data scope** (e.g. the
-  CHRO can't see Finance-only data). WebSocket token streaming + source citations.
-- **GraphRAG-lite** — for multi-hop questions ("how does Engineering headcount track
-  Finance margin?"), an entity graph ranks KPI records by overlap and feeds them to the
-  copilot. Opt-in via `USE_GRAPH_RAG`.
-- **Hybrid retrieval** — dense + BM25 + RRF + BGE reranker (a `CrossEncoder` over
-  `bge-reranker-v2-m3`); degrades gracefully to stopword-filtered BM25 + RRF when the ML
-  extras aren't installed.
-- **Pluggable vector store** — `VECTOR_STORE` selects the dense backend at runtime:
-  `memory` (in-process, default), `chroma` (dev), `pgvector` (prod — runs on the same Neon
-  Postgres), or `qdrant` (prod). The store serves the dense side; BM25 + the reranker sit on
-  top. Switching backends is one env var — no code change.
-- **Grounded, cited answers** — every reply injects a role-scoped live KPI snapshot +
-  retrieved docs and cites them inline (`[1]`, `[2]`); a 100+-term sourced **glossary** keeps
-  definitions accurate (no hallucination). Gated by a groundedness eval (`make eval`).
-- **Per-page contextual explainer** — a Topbar drawer defines every metric on the current
-  page (definition + formula + 2026 benchmark + source) and can hand off to the copilot.
-- **Multi-domain KPI analytics** — dashboards, anomaly detection, health scoring, and a
-  single **metric catalog** (one `kpi_metrics` table) feeding every page, the copilot and
-  the analytics. The catalog ships ~90 curated, board-relevant "metrics that matter" across
-  the 7 domains — each with a sourced glossary definition + 2026 benchmark (Finance: Rule of
-  40, DSO, runway; Growth: NRR, LTV:CAC, CAC payback; HR: eNPS, quality-of-hire, internal
-  mobility; IT: the DORA four, SLA, security score; Ops: OEE, FPY, scrap; Logistics: perfect-
-  order, fill rate, DIO; ESG: Scope 1/2/3, emissions intensity) — plus operational detail
-  per dashboard. Adding a metric is config-only (one catalog row + glossary entry, no schema
-  change); the long tail of company-specific metrics flows in via CSV upload, scoped by RBAC.
-- **ML forecasting** — Monte Carlo forecasts with confidence-interval bands (Recharts).
-- **Data export & ingestion** — export KPIs to PDF (print) / Excel / CSV / JSON; ingest
-  CSV metrics and documents from the UI.
-- **Auth + RBAC** — JWT, role-based pages and per-persona data scoping, audit log.
-- **Multi-provider LLM** — Groq (default) / Anthropic via a LiteLLM router.
-- **Bilingual** — full EN / FR UI and responses.
+| Area | Detail |
+|---|---|
+| **9-persona RAG copilot** | CEO, CFO, CTO, COO, CHRO, ESG, Risk, Analyst, Assistant — role-scoped data, WS streaming, citations |
+| **GraphRAG-lite** | Multi-hop entity graph for cross-domain queries (`USE_GRAPH_RAG=true`) |
+| **Hybrid retrieval** | Dense + BM25 + RRF + BGE reranker; degrades gracefully |
+| **Answer-block structuring** | Backend parses LLM markdown into typed blocks (heading, kpi, list, quote, code) |
+| **90+ curated KPIs** | Finance, HR, IT, Ops, Logistics, ESG, Growth — 36-month history, 7 benchmarking scenarios |
+| **ML forecasting** | Monte Carlo with confidence bands |
+| **Data export/ingest** | PDF / Excel / CSV / JSON export; CSV & document ingestion |
+| **Auth + RBAC** | JWT, role-based pages, per-persona data scoping, audit log |
+| **Admin governance** | User management (create/edit/disable), role viewer, scenario switcher, vector store reindex |
+| **Multi-provider LLM** | Groq (default) / Anthropic via LiteLLM |
+| **Bilingual** | Full EN / FR UI and copilot responses |
 
-## 🏗️ Architecture
+## Architecture
 
 ```
-            React + Vite (Recharts, i18n)          ← deploy to Vercel/Netlify
-                       │  HTTP / WebSocket  /api/v1/*
-            ┌──────────▼─────────────────────────────────────┐
-            │  FastAPI (src/api/server.py)                 │
-            │  auth · chat (9 personas) · KPIs · insights ·   │
-            │  forecasting · glossary · ingestion · admin     │
-            └───────────────────┬───────────────┬────────────┘
-                          PostgreSQL          LLM (Groq /
-                          (KPIs · auth ·       Anthropic via
-                           knowledge/vectors)  LiteLLM router)
-                                  ▲
-                          GraphRAG-lite + hybrid retrieval + reranker
+React + Vite (Recharts · TanStack Query · i18n)   → Vercel / Netlify
+        │  HTTP / WebSocket  /api/v1/*
+FastAPI  (src/api/server.py)
+  auth · chat (9 personas) · KPIs · insights · forecasting · admin
+        │
+   PostgreSQL (Neon)          LLM  (Groq / Anthropic via LiteLLM)
+   KPIs · auth · sessions ·   GraphRAG-lite · hybrid retrieval
+   vectors (pgvector opt-in)  BGE reranker · BM25
 ```
 
-One deployable FastAPI service backed by PostgreSQL (KPIs, auth, and the knowledge/vector
-store all live in Postgres — no separate vector DB to run). The React frontend deploys
-separately. Production target: a single cloud service (Railway/Fly) + managed Postgres.
+## Quickstart
 
-## 🚀 Quickstart
-
-**Prerequisites:** Python 3.11, Node 18+, a Postgres URL (Neon free tier works), and a
-`GROQ_API_KEY` (Anthropic/OpenAI optional).
+**Prerequisites:** Python 3.11, Node 18+, Postgres URL, `GROQ_API_KEY`.
 
 ```bash
 git clone https://github.com/Yacine-ai-tech/IntelAI.git
 cd IntelAI
-cp .env.example .env        # fill POSTGRES_URL, GROQ_API_KEY, SECRET_KEY (see below)
+cp .env.example .env   # fill POSTGRES_URL, GROQ_API_KEY, SECRET_KEY
 
-# Backend (API on :8000) — tables auto-create on first start
+# Backend (port 8000 — tables & seed created automatically)
 pip install -r requirements.txt
-python -m src.data.seed     # seed demo KPIs + glossary (optional)
-python main.py              # → http://localhost:8000  (docs at /api/docs)
+python main.py
 
-# Frontend (UI on :5173, proxies to :8000)
+# Frontend (port 5173, proxies /api → :8000)
 cd frontend && npm install && npm run dev
 ```
 
-**Docker (single app):**
+Default login: **`admin` / `admin123`** — change after first login.
+
+**Docker:**
 ```bash
-docker compose -f docker-compose.dev.yml up --build   # app only (uses your .env DB)
+docker compose -f docker-compose.dev.yml up --build   # app only (uses .env DB)
 docker compose up --build                              # app + bundled Postgres
 ```
 
-Default login: **`admin` / `admin123`** (change after first login).
+## Configuration (`.env`)
 
-## 🔑 Configuration (`.env`)
-
-| Variable | Required | Notes |
+| Variable | Required | Description |
 |---|---|---|
-| `POSTGRES_URL` | ✅ | KPIs + auth (Neon / Railway / local) |
-| `GROQ_API_KEY` | ✅ | default LLM provider |
-| `SECRET_KEY` | ✅ | JWT signing (`python -c "import secrets;print(secrets.token_hex(32))"`) |
-| `ANTHROPIC_API_KEY` | ⬜ | LiteLLM reasoning / judge tiers (Claude) |
-| `USE_HYBRID_RETRIEVAL` | ⬜ | `true` = dense+BM25+RRF+reranker (needs ML extras) |
-| `USE_GRAPH_RAG` | ⬜ | `true` = GraphRAG-lite for multi-hop KPI queries |
-| `VECTOR_STORE` | ⬜ | `memory` (default) · `chroma` (dev) · `pgvector` (prod/Neon) · `qdrant` |
-| `QDRANT_URL` / `QDRANT_API_KEY` | ⬜ | Qdrant endpoint (only when `VECTOR_STORE=qdrant`) |
+| `POSTGRES_URL` | ✅ | Neon / Railway / local Postgres |
+| `GROQ_API_KEY` | ✅ | Default LLM provider |
+| `SECRET_KEY` | ✅ | JWT signing key |
+| `ANTHROPIC_API_KEY` | ⬜ | Claude reasoning tier |
+| `USE_GRAPH_RAG` | ⬜ | `true` = GraphRAG-lite multi-hop |
+| `USE_HYBRID_RETRIEVAL` | ⬜ | `true` = dense+BM25+RRF+reranker |
+| `VECTOR_STORE` | ⬜ | `memory` · `chroma` · `pgvector` · `qdrant` |
 | `LLM_MODEL` | ⬜ | Groq model id (default `llama-3.1-8b-instant`) |
 
-## 🔌 Key API endpoints
+## Key API Endpoints
 
-`/health` · `/api/docs` ·
-`POST /api/v1/auth/login` · `GET /api/v1/auth/me` ·
-`POST /api/v1/chat` · `WS /api/v1/ws/chat` (streaming) · `GET /api/v1/personas` ·
-`GET /api/v1/kpis[/periods|/metrics|/categories]` ·
-`GET /api/v1/insights/{health,risk,summary,anomalies}` · `GET /api/v1/glossary` ·
-`POST /api/v1/forecast` · `POST /api/v1/data/export` · `POST /api/v1/ingest/{metrics,csv,document}` ·
-`GET /api/v1/knowledge/{search,stats}` · `GET /api/v1/admin/{users,roles,audit}`
+```
+/health  ·  /api/docs
+POST /api/v1/auth/login   GET /api/v1/auth/me
+POST /api/v1/chat         WS  /api/v1/ws/chat      GET /api/v1/personas
+GET  /api/v1/kpis[/periods|/metrics|/categories]
+GET  /api/v1/insights/{health,risk,summary,anomalies}
+POST /api/v1/forecast      GET /api/v1/glossary
+POST /api/v1/data/export   POST /api/v1/ingest/{metrics,csv,document}
+GET  /api/v1/admin/{users,roles,audit,scenario}
+```
 
-Full interactive reference at **`/api/docs`**.
+Full interactive reference at `/api/docs`.
 
-## 🧪 Tests
+## Tests
 
 ```bash
-pytest tests/ -q
+pytest tests/ -q                  # all in-process (no live server needed)
+pytest tests/test_smoke.py -q     # 5 smoke checks (zero deps)
+pytest tests/test_api.py -q       # 30+ auth/RBAC/endpoint checks
+pytest tests/test_chat.py -q      # chat endpoint + answer-block assertions
 ```
-`tests/test_smoke.py` + `tests/test_api.py` run **in-process** via FastAPI `TestClient`
-(no live server). DB-dependent checks run when a seeded DB is reachable and skip cleanly
-otherwise, so CI is green without a database. The Playwright e2e
-(`tests/test_e2e_playwright.py`) runs only when the live stack + Playwright are present.
 
-## ☁️ Deploy
+DB-dependent tests run automatically when `POSTGRES_URL` is reachable and skip cleanly otherwise — CI is green without a database.
 
-IntelAI deploys as **one cloud service** built from the `Dockerfile` (`railway.toml`
-included). On Railway/Fly: connect the repo, set the env vars above, attach Postgres.
-Deploy the frontend separately (Vercel/Netlify) with its API base pointed at the backend.
+## Benchmarking Scenarios
 
-## 🗺️ Roadmap
+Seven seeded scenarios (selectable from the Admin → Scenarios tab or via `POST /api/v1/admin/scenario`):
 
-- `omnismart-personas` published to PyPI (persona templates + router — see `packages/`).
-- The built-in `make eval` is a **smoke** groundedness check; the full evaluation harness
-  is the separate **RAGeval** project (this just feeds it).
-- Saved dashboards; per-tenant workspaces. (pgvector/Chroma/Qdrant vector stores are
-  implemented — select with `VECTOR_STORE`.)
+| Scenario | Description |
+|---|---|
+| `healthy` | S&P 500 baseline |
+| `declining_financial` | Revenue contraction & margin compression |
+| `high_churn_crisis` | Customer retention failure |
+| `operational_meltdown` | OEE collapse & quality failures |
+| `talent_crisis` | High attrition, open-req spike |
+| `cybersecurity_breach` | Security incident — SLA/SLO degrade |
+| `esg_compliance_failure` | Governance failures & emissions spike |
 
-## 📄 License
+## Deploy
+
+IntelAI deploys as **one cloud service** (`railway.toml` included). Connect the repo on Railway,
+set the env vars above, attach a Postgres add-on. Deploy the frontend separately on Vercel with
+`VITE_API_BASE_URL` pointing to the Railway service URL.
+
+## License
 
 MIT — see [LICENSE](LICENSE).

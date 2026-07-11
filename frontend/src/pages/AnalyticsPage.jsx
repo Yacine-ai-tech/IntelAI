@@ -1,13 +1,13 @@
 import { useState, useMemo } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import * as api from '../api'
+import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
 import { BarChart3, Hash, Calendar, Layers, FolderKanban, TrendingUp } from 'lucide-react'
-import {
-  PageHeader, Stat, StatGrid, Panel, Grid, Loading, AreaTrend, AskCopilot, fmtNum,
-} from '../components/ui'
+import { PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, AreaTrend, Panel } from '../components/ui'
 
 export default function AnalyticsPage() {
+  const { user, hasAction } = useAuth()
   const { t } = useTranslation()
   const [metric, setMetric] = useState('')
   const [fcMetric, setFcMetric] = useState('')
@@ -41,7 +41,7 @@ export default function AnalyticsPage() {
         <Stat label={t('categories') || 'Domains'} value={fmtNum(categories.length)} icon={FolderKanban} />
       </StatGrid>
 
-      <Panel title="Metric explorer" icon={TrendingUp} style={{ marginTop: 18 }}
+      <Panel title={t('metricExplorer') || 'Metric explorer'} icon={TrendingUp} style={{ marginTop: 18 }}
         actions={
           <select className="form-input" style={{ width: 220 }} value={selected} onChange={e => setMetric(e.target.value)}>
             {metricNames.map((m, i) => <option key={i} value={m}>{m}</option>)}
@@ -51,27 +51,29 @@ export default function AnalyticsPage() {
       </Panel>
 
       <Grid style={{ marginTop: 18 }} min={320}>
-        <Panel title={t('forecasting') || 'Forecast'} icon={TrendingUp}>
-          <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
-            <select className="form-input" style={{ flex: 1 }} value={fcMetric} onChange={e => setFcMetric(e.target.value)}>
-              <option value="">{t('selectMetric') || 'Select a metric…'}</option>
-              {metricNames.map((m, i) => <option key={i} value={m}>{m}</option>)}
-            </select>
-            <button className="btn btn-primary" disabled={!fcMetric || forecast.isPending} onClick={() => forecast.mutate(fcMetric)}>
-              {forecast.isPending ? (t('running') || 'Running…') : (t('runForecast') || 'Run')}
-            </button>
-          </div>
-          {fc && !fc.error && (
-            <>
-              <div style={{ display: 'flex', gap: 16, marginBottom: 12, fontSize: '.82rem', color: 'var(--text-2)' }}>
-                <span>Method: <b style={{ color: 'var(--text)' }}>{fc.method}</b></span>
-                {fc.confidence != null && <span>Confidence: <b style={{ color: 'var(--text)' }}>{(fc.confidence * 100).toFixed(0)}%</b></span>}
-              </div>
-              <AreaTrend data={(fc.predictions || []).map((p, i) => ({ period: p.period || `+${i + 1}`, value: typeof p.value === 'number' ? Math.round(p.value * 100) / 100 : 0 }))} y="value" color="var(--accent)" height={180} />
-            </>
-          )}
-          {fc?.error && <div className="alert alert-danger">{fc.error}</div>}
-        </Panel>
+        {hasAction('forecast') && (
+          <Panel title={t('forecasting') || 'Forecast'} icon={TrendingUp}>
+            <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
+              <select className="form-input" style={{ flex: 1 }} value={fcMetric} onChange={e => setFcMetric(e.target.value)}>
+                <option value="">{t('selectMetric') || 'Select a metric…'}</option>
+                {metricNames.map((m, i) => <option key={i} value={m}>{m}</option>)}
+              </select>
+              <button className="btn btn-primary" disabled={!fcMetric || forecast.isPending} onClick={() => forecast.mutate(fcMetric)}>
+                {forecast.isPending ? (t('running') || 'Running…') : (t('runForecast') || 'Run')}
+              </button>
+            </div>
+            {fc && !fc.error && (
+              <>
+                <div style={{ display: 'flex', gap: 16, marginBottom: 12, fontSize: '.82rem', color: 'var(--text-2)' }}>
+                  <span>{t('method') || 'Method'}: <b style={{ color: 'var(--text)' }}>{fc.method}</b></span>
+                  {fc.confidence != null && <span>{t('confidence') || 'Confidence'}: <b style={{ color: 'var(--text)' }}>{(fc.confidence * 100).toFixed(0)}%</b></span>}
+                </div>
+                <AreaTrend data={(fc.predictions || []).map((p, i) => ({ period: p.period || `+${i + 1}`, value: typeof p.value === 'number' ? Math.round(p.value * 100) / 100 : 0 }))} y="value" color="var(--accent)" height={180} />
+              </>
+            )}
+            {fc?.error && <div className="alert alert-danger">{fc.error}</div>}
+          </Panel>
+        )}
 
         <Panel title={t('allMetrics') || 'All metrics'} icon={Layers} style={{ gridColumn: 'span 2' }}>
           <div style={{ maxHeight: 360, overflowY: 'auto' }}>

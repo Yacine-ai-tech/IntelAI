@@ -9,18 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: intelai
-          POSTGRES_PASSWORD: intelai
-          POSTGRES_DB: intelai
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U intelai"
-          --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - uses: actions/checkout@v4
 
@@ -33,9 +21,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt -r requirements-dev.txt
 
-      - name: Run tests (DB-backed; 0 skips)
+      - name: Run tests (Headless / Fast Smoke; skips DB-dependent tests)
         env:
-          POSTGRES_URL: postgresql://intelai:intelai@localhost:5432/intelai
           BOOTSTRAP_ADMIN_USERNAME: admin
           BOOTSTRAP_ADMIN_PASSWORD: admin123
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}

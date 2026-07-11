@@ -438,7 +438,8 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "You provide strategic insights, market analysis, M&A guidance, and board-level reporting.\n"
             "Focus on: growth trajectory, competitive positioning, organizational health.\n"
             "Always think in terms of long-term value creation. Be concise for executives. "
-            "Use bullet points. Quantify everything."
+            "Use bullet points. Quantify everything. "
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "forecast", "report_generate", "market_analysis"],
         "data_access": ["Finance", "Growth", "Operations", "People", "ESG", "IT", "Logistics"],
@@ -450,7 +451,8 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
             "You are the CFO Intelligence Agent for IntelAI.\n"
             "You provide financial analysis, budget variance reports, cash flow forecasting, "
             "and financial statement generation. Be precise with numbers. Flag risks proactively. "
-            "Always reference the data behind conclusions."
+            "Always reference the data behind conclusions. "
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "forecast", "financial_statements", "budget_analysis"],
         "data_access": ["Finance", "Growth"],
@@ -461,7 +463,8 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
         "system_prompt": (
             "You are the CTO Intelligence Agent for IntelAI.\n"
             "You advise on technology strategy, infrastructure costs, security posture, and engineering metrics.\n"
-            "Analyze burn rate vs. engineering output. Evaluate build-vs-buy decisions."
+            "Analyze burn rate vs. engineering output. Evaluate build-vs-buy decisions. "
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "risk_analysis", "technology_metrics"],
         "data_access": ["IT", "Operations", "Finance"],
@@ -472,7 +475,8 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
         "system_prompt": (
             "You are the COO Intelligence Agent for IntelAI.\n"
             "You focus on operational efficiency, supply chain metrics, process optimization. "
-            "Track cycle times, throughput, resource utilization. Identify bottlenecks."
+            "Track cycle times, throughput, resource utilization. Identify bottlenecks. "
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "operations_metrics", "supply_chain"],
         "data_access": ["Operations", "Logistics", "Growth", "People"],
@@ -483,7 +487,8 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
         "system_prompt": (
             "You are the CHRO Intelligence Agent for IntelAI.\n"
             "You focus on talent management, workforce analytics, engagement scores, diversity metrics. "
-            "Balance people metrics with business outcomes. Recommend retention improvements."
+            "Balance people metrics with business outcomes. Recommend retention improvements. "
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "people_metrics", "engagement_analysis"],
         "data_access": ["People", "ESG"],
@@ -494,7 +499,8 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
         "system_prompt": (
             "You are the ESG Intelligence Agent for IntelAI.\n"
             "You track environmental, social, and governance metrics. "
-            "Analyze carbon footprint, diversity indices, safety records. Help prepare ESG reports."
+            "Analyze carbon footprint, diversity indices, safety records. Help prepare ESG reports. "
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "esg_metrics", "sustainability_report"],
         "data_access": ["ESG", "Operations", "People"],
@@ -505,7 +511,8 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
         "system_prompt": (
             "You are the Risk & Compliance Intelligence Agent for IntelAI.\n"
             "You monitor operational risks, compliance requirements, anomaly detection. "
-            "Proactively flag issues and recommend mitigation strategies."
+            "Proactively flag issues and recommend mitigation strategies. "
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "risk_analysis", "anomaly_detection"],
         "data_access": ["Finance", "Operations", "ESG", "IT"],
@@ -516,7 +523,8 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
         "system_prompt": (
             "You are the Business Analyst Agent for IntelAI.\n"
             "You perform data analysis, create insights, run forecasts, generate reports. "
-            "Be thorough, data-driven, communicate with supporting evidence."
+            "Be thorough, data-driven, communicate with supporting evidence. "
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "forecast", "data_analysis", "report_generate"],
         "data_access": ["Finance", "Growth", "Operations", "People", "IT", "Logistics", "ESG"],
@@ -527,7 +535,8 @@ PERSONA_TEMPLATES: Dict[str, Dict[str, Any]] = {
         "system_prompt": (
             "You are the IntelAI Intelligence Assistant.\n"
             "You help users understand data, answer KPI questions, generate insights, navigate the platform. "
-            "Adapt communication to user needs. Be helpful, accurate, proactive."
+            "Adapt communication to user needs. Be helpful, accurate, proactive. "
+            "Ground every statement in the provided data and cite it; when you do recommend, tie it to a specific figure."
         ),
         "allowed_tools": ["kpi_query", "forecast", "data_analysis"],
         "data_access": ["Finance", "Growth", "Operations", "People"],
@@ -565,6 +574,27 @@ class PersonaContext:
 # ════════════════════════════════════════════════════════════════════════════
 # CITATIONS — one canonical schema for every retrieval path
 # ════════════════════════════════════════════════════════════════════════════
+
+# The 7 business domains personas are scoped to (lowercased). Mirrors the ``data_access``
+# values in PERSONA_TEMPLATES — used to enforce RBAC on retrieved knowledge docs.
+_KPI_DOMAINS = {"finance", "growth", "operations", "people", "esg", "it", "logistics"}
+
+
+def _doc_domain(title: str) -> Optional[str]:
+    """Return the business domain a *company* KPI doc belongs to, or None for
+    domain-agnostic docs (glossary definitions, untagged knowledge). Recognises the two
+    title shapes the KPI docs use — ``"Headcount (People) — 2026-12"`` and
+    ``"People KPI Summary — 2026-12"`` — so retrieval can be scoped to a persona's
+    ``data_access`` the same way the live KPI snapshot is."""
+    t = (title or "").lower()
+    m = re.search(r"\(([a-z& ]+)\)", t)  # "... (People)"
+    if m and m.group(1).strip() in _KPI_DOMAINS:
+        return m.group(1).strip()
+    for d in _KPI_DOMAINS:  # "People KPI Summary ...", "Finance KPI Summary ..."
+        if t.startswith(d + " kpi") or t.startswith(d + " summary"):
+            return d
+    return None
+
 
 def normalize_sources(raw: List[Any], cap: int = 8) -> List[Dict[str, Any]]:
     """Canonicalise citations from any retrieval path into one robust, scalable
@@ -621,6 +651,47 @@ def normalize_sources(raw: List[Any], cap: int = 8) -> List[Dict[str, Any]]:
     for i, it in enumerate(items, 1):
         it["id"] = i
     return items
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# REAL-TIME WEB SEARCH (Tavily) — augments RAG with trustworthy, citable web sources
+# ════════════════════════════════════════════════════════════════════════════
+
+def tavily_search(query: str, max_results: int = 4) -> List[Dict[str, Any]]:
+    """Real-time web search via Tavily. Returns trustworthy results with URLs so the
+    copilot can cite the live web. Stdlib-only (urllib); returns [] when no key is set
+    or on any error, so the chat path degrades gracefully to internal RAG."""
+    key = getattr(settings, "TAVILY_API_KEY", "")
+    if not key or not query or not query.strip():
+        return []
+    import urllib.request as _u
+    payload = json.dumps({
+        "api_key": key,
+        "query": query.strip()[:400],
+        "max_results": max(1, min(int(max_results or 4), 8)),
+        "search_depth": "basic",
+        "include_answer": False,
+    }).encode()
+    try:
+        req = _u.Request("https://api.tavily.com/search", data=payload,
+                         headers={"Content-Type": "application/json"}, method="POST")
+        with _u.urlopen(req, timeout=9) as r:
+            data = json.loads(r.read())
+        out: List[Dict[str, Any]] = []
+        for it in (data.get("results") or []):
+            url = (it.get("url") or "").strip()
+            if not url:
+                continue
+            out.append({
+                "title": (it.get("title") or url).strip()[:140],
+                "url": url,
+                "content": (it.get("content") or "").strip()[:600],
+                "score": float(it.get("score", 0) or 0),
+            })
+        return out
+    except Exception as e:  # network/key/quota — never break the chat
+        log.warning("Tavily web search failed: %s", e)
+        return []
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -691,9 +762,9 @@ class AgentPersonaFactory:
         display_name = template.get("display_name", persona_name.upper())
         system_prompt = template.get("system_prompt", "You are a helpful assistant.")
 
-        # Add language instruction to system prompt
-        lang_label = "French" if language == "fr" else "English"
-        system_prompt = f"{system_prompt}\n\nIMPORTANT: Respond in {lang_label}."
+        # NOTE: language is enforced centrally in chat() so the reply mirrors the
+        # language of the user's actual question — this lets a user switch from
+        # English to French (or back) mid-conversation and get answered correctly.
 
         return PersonaContext(
             name=persona_name,
@@ -740,10 +811,18 @@ class AgentPersonaFactory:
         except Exception as e:
             log.warning("KPI context retrieval failed: %s", e)
 
-        # 2) Relevant knowledge docs (hybrid / GraphRAG-lite / vector)
+        # 2) Relevant knowledge docs (hybrid / GraphRAG-lite / vector) — RBAC-scoped.
+        # The live KPI snapshot above is filtered to the persona's data_access; the doc
+        # retrieval must be too, or a CFO could read People/HR figures via the knowledge
+        # base (e.g. "Headcount (People)", "People KPI Summary"). Drop any *company* KPI
+        # doc whose domain is outside scope. Domain-agnostic docs (glossary definitions,
+        # untagged docs) are kept — they carry no scoped company data.
         try:
             docs = _get_shared_rag()._retrieve_documents(message, top_k=6, language=language)
             for title, content, score in (docs or []):
+                dom = _doc_domain(str(title))
+                if scope and dom and dom not in scope:
+                    continue  # out-of-scope company data — persona RBAC
                 doc_blocks.append((str(title), str(content)))
                 raw_sources.append({
                     "title": str(title),
@@ -770,6 +849,81 @@ class AgentPersonaFactory:
 
         return ("\n\n".join(parts), sources)
 
+    @staticmethod
+    def _detect_language(text: str) -> str:
+        """Best-effort FR/EN detection for a single message so the reply mirrors the
+        language the user actually wrote in — even when they switch mid-conversation."""
+        t = (text or "").lower().strip()
+        if not t:
+            return "en"
+        # Accented characters are a strong French signal.
+        if any(c in t for c in "àâçéèêëîïôûùüœ"):
+            return "fr"
+        pad = f" {t} "
+        fr_markers = (" le ", " la ", " les ", " des ", " une ", " un ", " est ", " sont ",
+                      " quel ", " quelle ", " pourquoi ", " comment ", " combien ", " nos ",
+                      " notre ", " pour ", " avec ", " sur ", " dans ", "bonjour", "merci",
+                      " ce ", " cette ", " qui ", " que ", "résum", "prévis", "donne", " plan ")
+        en_markers = (" the ", " is ", " are ", " what ", " why ", " how ", " our ", " show ",
+                      " give ", " which ", " and ", " for ", " with ", "hello", " hi ", "please",
+                      "summar", "forecast", "revenue", " should ", " can ")
+        fr = sum(1 for m in fr_markers if m in pad)
+        en = sum(1 for m in en_markers if m in pad)
+        return "fr" if fr > en else "en"
+
+    @staticmethod
+    def _is_smalltalk(text: str) -> bool:
+        """Greeting / thanks / identity chit-chat that should NOT trigger a KPI dump."""
+        t = (text or "").strip().lower().rstrip("!.?…")
+        if not t:
+            return True
+        greetings = {
+            "hi", "hey", "hello", "yo", "hiya", "sup", "gm", "good morning", "good afternoon",
+            "good evening", "bonjour", "bonsoir", "salut", "coucou", "thanks", "thank you",
+            "merci", "ok", "okay", "cool", "nice", "great", "who are you", "what can you do",
+            "help", "aide", "qui es-tu", "que peux-tu faire", "how are you", "ça va", "ca va",
+        }
+        if t in greetings:
+            return True
+        # very short openers like "hi there", "hello!" with no data keywords
+        if len(t.split()) <= 3 and any(t.startswith(g) for g in ("hi", "hey", "hello", "bonjour", "salut", "thanks", "merci")):
+            return True
+        return False
+
+    @staticmethod
+    def _needs_web(text: str) -> bool:
+        """True when a question calls for external / real-time / benchmark information that the
+        internal KPI snapshot + knowledge base cannot answer on their own."""
+        t = (text or "").lower()
+        if not t.strip():
+            return False
+        triggers = (
+            "benchmark", "industry", "market", "competitor", "competition", "peer", " vs ",
+            "versus", "news", "latest", "regulation", "gdpr", "csrd", "sec filing", "best practice",
+            "macro", "inflation", "interest rate", "industry standard", "industry average",
+            "external", "compare to other", "how do other", "current events", "what's happening",
+            "actualité", "marché", "concurrent", "réglementation", "secteur", "meilleures pratiques",
+            "tendance du marché", "moyenne du secteur",
+        )
+        return any(x in t for x in triggers)
+
+    def _web_context(self, query: str, max_results: int, start_id: int):
+        """Fetch real-time web results and format them as citable context blocks.
+        Returns (block_text, web_sources) with ids continuing after the internal sources."""
+        results = tavily_search(query, max_results)
+        if not results:
+            return "", []
+        parts, sources = [], []
+        for i, r in enumerate(results, start=start_id + 1):
+            parts.append(f"[{i}] (WEB) {r['title']} — {r['url']}: {r['content']}")
+            rel = round(min(max(r.get("score", 0.0), 0.0), 1.0), 3)
+            sources.append({
+                "id": i, "title": r["title"], "type": "web", "url": r["url"],
+                "relevance": rel or None, "snippet": r["content"][:240],
+            })
+        header = ("=== WEB RESULTS (real-time; cite by [n]; prefer recent, trustworthy sources) ===")
+        return header + "\n" + "\n".join(parts), sources
+
     def chat(
         self,
         message: str,
@@ -784,6 +938,15 @@ class AgentPersonaFactory:
         
         Returns dict with: response, persona_used, tokens_used, latency_ms
         """
+        # Answer in the language of the CURRENT message (users may switch mid-chat).
+        # The detected language drives retrieval + any fallback text; the LLM is also
+        # instructed (system prompt) to mirror the question language in its reply.
+        detected = self._detect_language(message)
+        if detected:
+            language = detected
+        elif not language or language == "auto":
+            language = "en"
+        
         if not llm_available():
             return {
                 "response": "AI agent unavailable (missing API key)." if language != "fr" else "Agent IA non disponible (clé API manquante).",
@@ -796,7 +959,20 @@ class AgentPersonaFactory:
         start = time.time()
 
         # ── Persona-routed RAG: auto-retrieve grounded data + sources ──
-        retrieved_ctx, sources = self._retrieve_context(message, persona, language)
+        # Skip retrieval for greetings / small talk so the copilot answers briefly
+        # instead of dumping a KPI analysis at someone who just said "hi".
+        if self._is_smalltalk(message):
+            retrieved_ctx, sources = "", []
+        else:
+            retrieved_ctx, sources = self._retrieve_context(message, persona, language)
+            # Augment with real-time web search (Tavily) when the question needs external,
+            # current or benchmark data — web results are cited by [n] like any other source.
+            if self._needs_web(message):
+                max_id = max((s.get("id", 0) for s in sources), default=0)
+                web_ctx, web_sources = self._web_context(message, settings.WEB_SEARCH_MAX_RESULTS, max_id)
+                if web_ctx:
+                    retrieved_ctx = (retrieved_ctx + "\n\n" + web_ctx).strip() if retrieved_ctx else web_ctx
+                    sources = sources + web_sources
         full_context = "\n\n".join(c for c in [context, retrieved_ctx] if c).strip()
 
         # Prompt-cache friendly layout: the system message (persona prompt + fixed
@@ -806,15 +982,37 @@ class AgentPersonaFactory:
         # turn, so they never invalidate the cached prefix.
         system_prompt = (
             persona.system_prompt + "\n\n"
-            "You have DIRECT access to the company's live data, provided with the user's message "
-            "below. Answer the question directly using those numbers — never ask the user to supply "
-            "data or to pick a focus area when the data is already provided. Be specific and quote the "
-            "metric values, mirroring the exact currency and number format shown in the data "
-            "(e.g. '$3.6M', '3,6 M€', or '3,6 Md FCFA' — do not convert currencies). CITE your "
-            "sources inline using the bracketed numbers shown in the data block, e.g. 'Revenue is "
-            "3.6M [1]'. Only use citation numbers that appear in the data block and never invent "
-            "one. Only use data within your access scope; if a figure is genuinely missing, say so "
-            "in one short sentence."
+            "STEP 1 — CLASSIFY THE USER'S INTENT before answering, and size your reply to it:\n"
+            "* GREETING / SMALL TALK / META (e.g. 'hi', 'hello', 'bonjour', 'thanks', 'who are you', "
+            "'what can you do') -> reply in ONE or TWO short friendly sentences and briefly say what you "
+            "can help with. Do NOT list metrics, do NOT analyze data, do NOT produce a plan. Stop there.\n"
+            "* SIMPLE DATA LOOKUP (e.g. 'what is our revenue?') -> give the specific number(s) in 1–3 "
+            "sentences with citations. No roadmap, no action plan.\n"
+            "* ADVICE / 'what should I do' -> a short, specific recommendation tied to a figure; add a "
+            "brief action plan only if it genuinely helps.\n"
+            "* EXPLICIT PLAN / STRATEGY / 'give me a plan / roadmap / step-by-step' -> a tailored, "
+            "prioritized action plan grounded in the data (each step: what to do, which figure justifies "
+            "it, expected impact).\n"
+            "Only include an action plan when the user actually asked for one. Never pad with generic advice.\n\n"
+            "STEP 2 — WHEN (and only when) the user asks about the business or its data, use the LIVE DATA "
+            "block below directly: quote the metric values, mirroring the exact currency and number format "
+            "shown (e.g. '$3.6M', '3,6 M€', '3,6 Md FCFA' — never convert currencies), and CITE sources "
+            "inline with the bracketed numbers shown, e.g. 'Revenue is 3.6M [1]'. Only use citation numbers "
+            "that appear in the data block; never invent one. Stay STRICTLY within your data-access scope: "
+            "answer only from the domains you own. If the user asks for figures outside your scope (another "
+            "executive's area — e.g. a CFO asked for headcount/attrition, or a CHRO asked for revenue/cash), "
+            "do NOT guess or fabricate: say in one short sentence that it's outside your remit and point to the "
+            "role that owns it (e.g. 'that's the CHRO's domain'). If a figure genuinely is missing, say so in "
+            "one short sentence. Never ask the user to supply data that is already provided.\n\n"
+            "WEB RESULTS: if a '=== WEB RESULTS ===' block is present, use it for external / current / "
+            "benchmark facts, prefer recent and trustworthy sources, and CITE each web fact by its [n] "
+            "(same bracket scheme). Never state a web claim without its citation.\n\n"
+            "FORMAT: clean, well-structured markdown — real bullets with '- ', bold with **, no stray or "
+            "unmatched symbols. Keep it as short as the intent allows.\n\n"
+            f"LANGUAGE (critical): the user's current message is written in "
+            f"{'FRENCH' if language == 'fr' else 'ENGLISH'}. Write your ENTIRE reply in "
+            f"{'FRENCH' if language == 'fr' else 'ENGLISH'} — this is decided per message and overrides "
+            "the language of earlier turns."
         )
         messages: List[Dict[str, str]] = [{"role": "system", "content": system_prompt}]
 

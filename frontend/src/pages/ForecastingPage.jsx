@@ -3,14 +3,23 @@ import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { TrendingUp, Play, BarChart3, Brain, Target, Sparkles } from 'lucide-react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts'
-import { PageHeader, Stat, StatGrid, Panel, Grid, Loading, Empty, AskCopilot, fmtNum } from '../components/ui'
+import { PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, Empty, Panel } from '../components/ui'
 
 const TIP = { background: 'var(--surface-2)', border: '1px solid var(--border-2)', borderRadius: 8, fontSize: '.78rem', color: 'var(--text)' }
 const AXIS = { fontSize: 11, fill: 'var(--text-3)' }
 
 function ForecastChart({ forecast, t }) {
   const hist = (forecast.historical || []).map(h => ({ period: h.period || h.month_tag, value: h.value ?? h.actual }))
-  const fc = (forecast.forecast || []).map(f => ({ period: f.period || f.month_tag, value: f.predicted ?? f.value, lower: f.lower, upper: f.upper }))
+  const fc = (forecast.forecast || []).map(f => {
+    const lower = f.lower_bound ?? f.lower
+    const upper = f.upper_bound ?? f.upper
+    const val = f.forecast ?? f.predicted ?? f.value
+    return {
+      period: f.period || f.month_tag, value: val, lower, upper,
+      // Ranged datum [lower, upper] → a single shaded Monte-Carlo band region.
+      band: (lower != null && upper != null) ? [lower, upper] : undefined,
+    }
+  })
   const data = [...hist, ...fc]
   if (!data.length) return <Empty text="No forecast data." />
   const hasCI = fc.some(f => f.lower != null && f.upper != null)
@@ -18,19 +27,29 @@ function ForecastChart({ forecast, t }) {
     <div style={{ height: 300 }}>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
-          <defs><linearGradient id="fc" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--primary)" stopOpacity={0.35} /><stop offset="100%" stopColor="var(--primary)" stopOpacity={0} />
-          </linearGradient></defs>
+          <defs>
+            <linearGradient id="fc" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--primary-2)" stopOpacity={0.32} /><stop offset="100%" stopColor="var(--primary-2)" stopOpacity={0} />
+            </linearGradient>
+            <linearGradient id="mcBand" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--accent)" stopOpacity={0.24} /><stop offset="100%" stopColor="var(--accent)" stopOpacity={0.05} />
+            </linearGradient>
+            <linearGradient id="fcLine" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#4f46e5" /><stop offset="55%" stopColor="#2563eb" /><stop offset="100%" stopColor="#22d3ee" />
+            </linearGradient>
+          </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
           <XAxis dataKey="period" tick={AXIS} axisLine={false} tickLine={false} />
           <YAxis tick={AXIS} axisLine={false} tickLine={false} width={52} />
           <Tooltip contentStyle={TIP} />
           <Legend wrapperStyle={{ fontSize: 12 }} />
-          {hasCI && <Area type="monotone" dataKey="upper" stroke="none" fill="var(--ok)" fillOpacity={0.08} name={t('upper') || 'Upper'} />}
-          {hasCI && <Area type="monotone" dataKey="lower" stroke="none" fill="var(--bg)" fillOpacity={0} name={t('lower') || 'Lower'} />}
-          <Area type="monotone" dataKey="value" stroke="var(--primary)" strokeWidth={2} fill="url(#fc)" name={t('predicted') || 'Value'} />
-          {hasCI && <Line type="monotone" dataKey="upper" stroke="var(--ok)" strokeWidth={1} strokeDasharray="5 5" dot={false} name="" />}
-          {hasCI && <Line type="monotone" dataKey="lower" stroke="var(--bad)" strokeWidth={1} strokeDasharray="5 5" dot={false} name="" />}
+          {/* Monte-Carlo confidence band — semi-transparent ranged fill behind the projection */}
+          {hasCI && <Area type="monotone" dataKey="band" stroke="none" fill="url(#mcBand)" name={t('confidenceBand') || 'Confidence band'} connectNulls isAnimationActive={false} />}
+          {/* main projection — brand gradient stroke + soft cyan fill */}
+          <Area type="monotone" dataKey="value" stroke="url(#fcLine)" strokeWidth={2.4} fill="url(#fc)" name={t('predicted') || 'Projection'} />
+          {/* dashed CI bounds in the band accent */}
+          {hasCI && <Line type="monotone" dataKey="upper" stroke="var(--accent)" strokeWidth={1} strokeDasharray="4 4" dot={false} legendType="none" name="" connectNulls />}
+          {hasCI && <Line type="monotone" dataKey="lower" stroke="var(--accent)" strokeWidth={1} strokeDasharray="4 4" dot={false} legendType="none" name="" connectNulls />}
         </AreaChart>
       </ResponsiveContainer>
     </div>
@@ -94,7 +113,7 @@ export default function ForecastingPage() {
           <StatGrid style={{ marginTop: 18 }}>
             <Stat label={t('metric') || 'Metric'} value={forecast.metric || metric} icon={BarChart3} />
             <Stat label={t('model') || 'Model'} value={forecast.model || 'Linear'} icon={Brain} accent="var(--accent)" />
-            <Stat label={t('r2Score') || 'R² score'} value={forecast.r2 != null ? forecast.r2.toFixed(3) : '—'} icon={Target} accent="var(--ok)" />
+            <Stat label={t('r2Score') || 'R² score'} value={forecast.explanation?.r_squared != null ? forecast.explanation.r_squared.toFixed(3) : '—'} icon={Target} accent="var(--ok)" />
             <Stat label={t('forecastPeriods') || 'Periods'} value={fmtNum(forecast.forecast?.length || periods)} icon={Sparkles} />
           </StatGrid>
 
@@ -109,9 +128,9 @@ export default function ForecastingPage() {
                 {(forecast.forecast || []).map((f, i) => (
                   <tr key={i}>
                     <td>{f.period || f.month_tag}</td>
-                    <td style={{ fontWeight: 600, fontFamily: 'var(--font-mono)' }}>{fmtNum(f.predicted ?? f.value)}</td>
-                    <td style={{ color: 'var(--text-3)' }}>{fmtNum(f.lower)}</td>
-                    <td style={{ color: 'var(--text-3)' }}>{fmtNum(f.upper)}</td>
+                    <td style={{ fontWeight: 600, fontFamily: 'var(--font-mono)' }}>{fmtNum(f.forecast ?? f.predicted ?? f.value)}</td>
+                    <td style={{ color: 'var(--text-3)' }}>{fmtNum(f.lower_bound ?? f.lower)}</td>
+                    <td style={{ color: 'var(--text-3)' }}>{fmtNum(f.upper_bound ?? f.upper)}</td>
                   </tr>
                 ))}
               </tbody>

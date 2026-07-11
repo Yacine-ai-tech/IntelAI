@@ -55,6 +55,9 @@ class Settings:
     GROQ_API_KEY: str = field(default_factory=lambda: os.getenv("GROQ_API_KEY", ""))
     # Optional: Anthropic (LiteLLM router can fall back to Claude)
     ANTHROPIC_API_KEY: str = field(default_factory=lambda: os.getenv("ANTHROPIC_API_KEY", ""))
+    # Optional: Tavily — real-time web search to augment RAG with trustworthy, cited web sources
+    TAVILY_API_KEY: str = field(default_factory=lambda: os.getenv("TAVILY_API_KEY", ""))
+    WEB_SEARCH_MAX_RESULTS: int = field(default_factory=lambda: int(os.getenv("WEB_SEARCH_MAX_RESULTS", "4")))
 
     # FastAPI
     FASTAPI_HOST: str = field(default_factory=lambda: os.getenv("FASTAPI_HOST", "0.0.0.0"))
@@ -147,5 +150,5 @@ def validate_required_keys() -> None:
 def get_cors_allowed_origins() -> List[str]:
     """Parse and normalize CORS origins from env."""
     origins = [o.strip() for o in settings.CORS_ALLOWED_ORIGINS.split(",") if o.strip()]
-    return origins or ["http://localhost:5173"]
+    return origins or ["*"]
 

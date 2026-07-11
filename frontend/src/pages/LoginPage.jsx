@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
+import CubeMark from '../components/Brand'
 import {
   ShieldCheck, Briefcase, DollarSign, Cpu, BarChart3, Eye, EyeOff, AlertCircle,
   Sparkles, FileText, Languages, Lock, ArrowRight, Loader2,
@@ -37,7 +38,7 @@ export default function LoginPage() {
     setError(''); setLoading(true)
     try {
       await login(u, p)
-      navigate('/chat')
+      navigate('/workspace')
     } catch (err) {
       setError(err.response?.data?.detail || t('loginFailed') || 'Login failed')
       setLoading(false)
@@ -46,7 +47,7 @@ export default function LoginPage() {
   const onSubmit = (e) => { e.preventDefault(); doLogin(username, password) }
   const demoLogin = async (u) => {
     setError(''); setLoading(true)
-    try { await demoAuth(u); navigate('/chat') }
+    try { await demoAuth(u); navigate('/workspace') }
     catch (err) { setError(err.response?.data?.detail || t('loginFailed') || 'Login failed'); setLoading(false) }
   }
 
@@ -62,7 +63,7 @@ export default function LoginPage() {
       <div className="auth-brand">
         <div className="auth-brand-inner">
           <div className="sidebar-brand" style={{ marginBottom: 28 }}>
-            <div className="sidebar-brand-icon" style={{ width: 46, height: 46 }}><Sparkles size={24} strokeWidth={2.2} /></div>
+            <CubeMark size={48} />
             <div>
               <div className="sidebar-brand-text" style={{ fontSize: '1.5rem' }}>{t('appName') || 'IntelAI'}</div>
               <div className="sidebar-brand-sub">{t('appTagline') || 'AI Analytics & RAG Copilot'}</div>

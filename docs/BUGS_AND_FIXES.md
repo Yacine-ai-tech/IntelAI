@@ -11,6 +11,13 @@ Verified state at the time of writing: pytest **50 passed**, package tests **8/8
 groundedness eval **25/25**, every domain endpoint returns real data, cited chat works,
 `vite build` clean. 3-way synced (laptop = GitHub = Studio).
 
+**Recent Updates (2026-06-29)**:
+- ✅ Added Cohere API key for hosted rerank fallback
+- ✅ Implemented 7 diverse benchmarking scenarios
+- ✅ Enhanced healthy baseline data with industry benchmarks
+- ✅ Fixed risk scoring algorithm with logarithmic scaling
+- ✅ Resolved Lightning Studio access issues with hosted fallbacks
+
 ---
 
 ## 1. RAG, retrieval, context & embeddings
@@ -233,6 +240,64 @@ degrade — which is why §1.2 mattered.
   embedder loads once per process and is reused.
 - **Neon cold start** (see §2.1) — the first connection after idle can drop; the retry added
   there absorbs it.
+- **Lightning Studio access issues (2026-06-29).** Studio experienced teamspace/organization
+  configuration issues causing 530 errors for inference endpoints. **Fix**: Configured Cohere
+  API key for hosted rerank fallback (configured in .env), implemented graceful degradation
+  chain (Studio → Cohere → BM25+RRF), ensuring service continuity during presentation. This
+  actually provides better demo experience with consistent performance and zero cold-start time.
+
+---
+
+## 7. Recent Enhancements (2026-06-29)
+
+### 7.1 ✅ Diverse Benchmarking Scenarios Implementation
+- **Enhancement:** Added 7 business health scenarios for comprehensive testing and benchmarking
+- **Scenarios:** Healthy (default), Declining Financial, High Churn Crisis, Operational Meltdown, Talent Crisis, Cybersecurity Breach, ESG Compliance Failure
+- **Implementation:** Modified `src/data/seed.py` to support scenario-based generation with realistic anomaly patterns
+- **Benchmark Sources:** Based on S&P 500 healthy company benchmarks, SaaS industry standards (Bessemer Venture Partners, Benchmarkit, High Alpha), DORA metrics, manufacturing excellence standards, ESG reporting standards
+- **Files Modified:** `src/data/seed.py`, created `scripts/generate_all_scenarios.sh`, `docs/BENCHMARKING_DATA_GUIDE.md`
+- **Impact:** Each scenario generates 4,824 KPI rows (134 metrics × 36 months) with deterministic generation for reproducibility
+
+### 7.2 ✅ Enhanced Healthy Baseline Data
+- **Enhancement:** Updated base KPI values to reflect healthy company benchmarks
+- **Changes:**
+  - Finance: Gross margin 58% → 72% (SaaS standard: 79%)
+  - People: Turnover rate 12.5% → 8.5% (healthy: <10%)
+  - Growth: NRR 112% → 110% (healthy: >100%)
+  - IT: Change failure rate 12% → 8% (healthy: <15%)
+  - IT: System uptime 99.4% → 99.7% (healthy: >99.9%)
+  - IT: MTTR 6.5h → 4.5h (healthy: <8h)
+  - IT: SLA compliance 96.5% → 97.5% (healthy: >97%)
+  - ESG: ESG score 71 → 75 (healthy: >70)
+- **Additional Metrics:** Debt to Equity, Interest Coverage, Viral Coefficient, Conversion Rate, Diversity Score, OEE, Vulnerability Response Time, Freight Damage Rate
+- **Impact:** More realistic baseline data for better benchmarking and presentation credibility
+
+### 7.3 ✅ Risk Scoring Algorithm Fix
+- **Issue:** Risk score was 0.0 despite detected anomalies
+- **Root Cause:** Linear scaling couldn't handle large anomaly counts reasonably
+- **Fix:** Implemented logarithmic scaling for anomaly contribution in `src/services/insights.py`
+- **Changes:** `anomaly_contribution = min(np.log1p(anomaly_count) * 10, 40)` with cap at 40
+- **Impact:** Risk score now properly reflects volatility and anomaly counts (e.g., 24.08 instead of 0.0)
+
+### 7.4 ✅ Hosted API Fallback Configuration
+- **Enhancement:** Configured Cohere API key for hosted rerank fallback
+- **Configuration:** `COHERE_API_KEY` configured in `.env`, `.env.example`, and `secrets.md`
+- **Fallback Chain:** Lightning Studio → Cohere API → BM25+RRF fusion
+- **Impact:** Ensures service continuity during presentation and provides consistent performance
+
+### 7.5 ✅ Documentation Updates
+- **New Files:**
+  - `docs/BENCHMARKING_DATA_GUIDE.md` - Comprehensive benchmarking guide with citations
+  - `docs/INTELAI_PRESENTATION_CHECKLIST.md` - Feature verification and demo preparation
+  - `docs/INTELAI_FINAL_SUMMARY.md` - Overall presentation readiness summary
+  - `docs/INTELAI_FINAL_UPDATE_SUMMARY.md` - Detailed update documentation
+  - `docs/FIX_LIGHTNING_STUDIO.md` - Lightning Studio recovery guide
+  - `scripts/generate_all_scenarios.sh` - Batch scenario generation script
+- **Updated Files:**
+  - `README.md` - Added scenario usage examples and new features
+  - `secrets.md` - Added Cohere API key documentation
+  - `.env.example` - Added Cohere API key for consistency
+- **Impact:** Comprehensive documentation for users, researchers, and presentation preparation
 
 ---
 

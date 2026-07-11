@@ -3,7 +3,7 @@ import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { ShieldAlert, Search, Activity, CheckCircle2, HeartPulse } from 'lucide-react'
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Tooltip } from 'recharts'
-import { PageHeader, Panel, Grid, Loading, AskCopilot, fmtNum } from '../components/ui'
+import { PageHeader, fmtNum, Loading, Grid, AskCopilot, Panel } from '../components/ui'
 
 const ACCENT = 'var(--p-risk)'
 
@@ -73,7 +73,7 @@ export default function RiskPage() {
       </Grid>
 
       <Panel title={t('anomaliesDetected') || 'Anomaly watchlist'} icon={Search} style={{ marginTop: 18 }}
-        actions={<AskCopilot q="Explain each detected anomaly and the likely root cause." label="Explain anomalies" />}>
+        actions={<AskCopilot q="Explain each detected anomaly and the likely root cause." label={t('lblExplainAnomalies')} />}>
         {(anom.data || []).length > 0 ? (
           <table className="table">
             <thead><tr><th>Metric</th><th>Category</th><th>Period</th><th>Value</th><th>Z-Score</th><th>Severity</th></tr></thead>

@@ -10,7 +10,7 @@ import os
 import uuid
 import time
 import math
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import pandas as pd
@@ -41,12 +41,20 @@ log = get_logger(__name__)
 # APP INITIALIZATION
 # ════════════════════════════════════════════════════════════
 
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await startup()
+    yield
+
 app = FastAPI(
     title="IntelAI API",
     description="Persona-Aware AI Analytics & RAG Copilot — Multi-Domain KPI Intelligence",
     version="2026.3.0",
     docs_url="/api/docs",
     redoc_url="/api/redoc",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -73,6 +81,7 @@ class ChatRequest(BaseModel):
     persona: Optional[str] = None
     session_id: Optional[str] = None
     context: Optional[str] = ""
+    language: Optional[str] = None
 
 class ChatResponse(BaseModel):
     response: str
@@ -81,6 +90,120 @@ class ChatResponse(BaseModel):
     tokens_used: int = 0
     latency_ms: int = 0
     session_id: str = ""
+    blocks: List[Dict[str, Any]] = []
+
+
+def _structure_answer(text: str) -> List[Dict[str, Any]]:
+    """Parse a Markdown-flavoured LLM response into typed answer-blocks.
+
+    Each block is a dict with at least ``{"type": ..., "content": ...}``.
+    Supported types:
+    - ``heading``   — ``# …`` / ``## …`` / ``### …``
+    - ``list``      — ``- …`` / ``* …`` / ``1. …`` lines; ``items`` key holds the list
+    - ``kpi``       — ``**Label:** value`` lines (KPI pill pattern)
+    - ``quote``     — ``> …`` blockquotes
+    - ``code``      — fenced ``` blocks
+    - ``text``      — everything else
+    """
+    import re as _re
+    lines = (text or "").replace("\r\n", "\n").split("\n")
+    blocks: List[Dict[str, Any]] = []
+    buf: List[str] = []
+    in_code = False
+    code_buf: List[str] = []
+    list_buf: List[str] = []
+    list_ordered = False
+
+    def flush_text():
+        t = " ".join(buf).strip()
+        if t:
+            blocks.append({"type": "text", "content": t})
+        buf.clear()
+
+    def flush_list():
+        if list_buf:
+            blocks.append({"type": "list", "ordered": list_ordered, "items": list(list_buf)})
+            list_buf.clear()
+
+    for line in lines:
+        stripped = line.strip()
+
+        # Fenced code block toggle
+        if stripped.startswith("```"):
+            if in_code:
+                flush_list()
+                flush_text()
+                blocks.append({"type": "code", "content": "\n".join(code_buf)})
+                code_buf.clear()
+                in_code = False
+            else:
+                flush_list()
+                flush_text()
+                in_code = True
+            continue
+        if in_code:
+            code_buf.append(line)
+            continue
+
+        # Heading
+        h = _re.match(r"^(#{1,3})\s+(.*)", stripped)
+        if h:
+            flush_list()
+            flush_text()
+            level = len(h.group(1))
+            blocks.append({"type": "heading", "level": level, "content": h.group(2)})
+            continue
+
+        # Blockquote
+        if stripped.startswith("> "):
+            flush_list()
+            flush_text()
+            blocks.append({"type": "quote", "content": stripped[2:]})
+            continue
+
+        # KPI pill: **Label:** value  or  **Label**: value
+        kpi = _re.match(r"^\*\*([^*]+)\*\*:?\s*(.+)$", stripped)
+        if kpi and not stripped.startswith("- ") and not stripped.startswith("* "):
+            flush_list()
+            flush_text()
+            blocks.append({"type": "kpi", "label": kpi.group(1).strip(":. "), "value": kpi.group(2).strip()})
+            continue
+
+        # Unordered list item
+        ul = _re.match(r"^[-*•]\s+(.*)", stripped)
+        if ul:
+            flush_text()
+            if list_buf and list_ordered:
+                flush_list()
+            list_ordered = False
+            list_buf.append(ul.group(1))
+            continue
+
+        # Ordered list item
+        ol = _re.match(r"^\d+[.):]\s+(.*)", stripped)
+        if ol:
+            flush_text()
+            if list_buf and not list_ordered:
+                flush_list()
+            list_ordered = True
+            list_buf.append(ol.group(1))
+            continue
+
+        # Blank line → flush both lists and accumulate paragraph text
+        if not stripped:
+            flush_list()
+            flush_text()
+            continue
+
+        flush_list()
+        buf.append(stripped)
+
+    flush_list()
+    flush_text()
+    if code_buf:
+        blocks.append({"type": "code", "content": "\n".join(code_buf)})
+
+    return blocks
 
 class IngestMetricsRequest(BaseModel):
     data: List[Dict[str, Any]]
@@ -96,6 +219,9 @@ class AgentToolRequest(BaseModel):
     tool: str
     persona: Optional[str] = None
     args: Optional[Dict[str, Any]] = None
+
+class ScenarioRequest(BaseModel):
+    scenario: str
 
 class UserUpdateRequest(BaseModel):
     role: Optional[str] = None
@@ -154,7 +280,7 @@ def _init_default_users():
                     "role": info["role"],
                     "is_active": True,
                     "preferred_language": "en",
-                    "created_at": datetime.utcnow().isoformat(),
+                    "created_at": datetime.now(timezone.utc).isoformat(),
                 }
         log.info("Initialized %d default users (PostgreSQL + cache)", len(_users_db))
     except Exception as e:
@@ -168,7 +294,7 @@ def _init_default_users():
                     "role": info["role"],
                     "is_active": True,
                     "preferred_language": "en",
-                    "created_at": datetime.utcnow().isoformat(),
+                    "created_at": datetime.now(timezone.utc).isoformat(),
                 }
         log.info("Initialized %d default users (in-memory fallback)", len(_users_db))
 
@@ -177,7 +303,6 @@ def _init_default_users():
 # STARTUP
 # ════════════════════════════════════════════════════════════
 
-@app.on_event("startup")
 async def startup():
     """Validate required keys, initialize database, seed default data, start cleanup tasks."""
     log.info("🚀 IntelAI API starting...")
@@ -254,7 +379,7 @@ async def health_check():
         "status": "healthy",
         "service": "IntelAI API",
         "version": "2026.3.0",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "database": "postgresql",
     }
 
@@ -314,6 +439,7 @@ async def login(req: LoginRequest):
             "language": user_data.get("preferred_language", "en"),
             "pages": get_user_pages(role),
             "data_access": get_user_data_categories(role),
+            "actions": __import__('src.core.jwt_auth').core.jwt_auth.ROLE_DEFINITIONS.get(role, {}).get("actions", []),
         },
     }
 
@@ -338,6 +464,7 @@ async def demo_login(role: str):
             "id": ud["id"], "username": role, "role": role,
             "full_name": role.upper(), "language": "en",
             "pages": get_user_pages(role), "data_access": get_user_data_categories(role),
+            "actions": ROLE_DEFINITIONS.get(role, {}).get("actions", []),
         },
     }
 
@@ -357,7 +484,7 @@ async def register(req: RegisterRequest):
         "role": req.role,
         "is_active": True,
         "preferred_language": req.preferred_language,
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
     }
     # Persist to PostgreSQL
     try:
@@ -380,6 +507,7 @@ async def get_me(user: TokenData = Depends(get_current_user)):
         "pages": get_user_pages(user.role),
         "data_access": get_user_data_categories(user.role),
         "preferred_language": user_data.get("preferred_language", user.language),
+        "actions": __import__('src.core.jwt_auth').core.jwt_auth.ROLE_DEFINITIONS.get(user.role, {}).get("actions", []),
     }
 
 
@@ -409,7 +537,7 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
         message=req.message,
         user_role=user.role,
         persona_override=req.persona,
-        language=user.language,
+        language=req.language or user.language,
         context=req.context or "",
     )
 
@@ -436,6 +564,7 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
         "latency_ms": result.get("latency_ms", 0),
         "session_id": session_id,
         "sources": sources,
+        "blocks": _structure_answer(response_text),
     }
 
 
@@ -452,15 +581,29 @@ _GLOSSARY_TEXT_FIELDS = ("definition", "benchmark", "interpretation", "why_it_ma
 
 
 async def _localize_glossary_entry(entry: Dict[str, Any], lang: str) -> Dict[str, Any]:
-    """Return the entry with its prose fields translated to ``lang`` (fr) via the LLM, cached.
-    Numbers/formulas/direction are left untouched. Falls back to English on any error."""
+    """Return the entry with its prose fields in ``lang`` (fr). Prefers the static,
+    pre-generated ``GLOSSARY_FR`` (complete + instant + LLM-independent) and only falls
+    back to on-the-fly LLM translation for any field it doesn't cover. Numbers/formulas
+    are left untouched; English is the final fallback."""
     if lang != "fr" or not entry:
         return entry
-    key = str(entry.get("term") or entry.get("definition", ""))[:80]
+    term = entry.get("term")
+    # 1) Static French overlay — the authoritative, complete source.
+    try:
+        from src.data.glossary_fr import GLOSSARY_FR
+        static = GLOSSARY_FR.get(str(term)) or {}
+    except Exception:
+        static = {}
+    entry = {**entry, **{k: v for k, v in static.items()
+                         if k in _GLOSSARY_TEXT_FIELDS and isinstance(v, str) and v.strip()}}
+    key = str(term or entry.get("definition", ""))[:80]
     if key in _GLOSSARY_FR_CACHE:
         return _GLOSSARY_FR_CACHE[key]
-    fields = {k: entry[k] for k in _GLOSSARY_TEXT_FIELDS if isinstance(entry.get(k), str) and entry[k].strip()}
-    if not fields:
+    # 2) LLM only for any text field the static set didn't cover (rare).
+    remaining = {k: entry[k] for k in _GLOSSARY_TEXT_FIELDS
+                 if isinstance(entry.get(k), str) and entry[k].strip() and k not in static}
+    if not remaining:
+        _GLOSSARY_FR_CACHE[key] = entry
         return entry
     try:
         import json as _json
@@ -468,14 +611,14 @@ async def _localize_glossary_entry(entry: Dict[str, Any], lang: str) -> Dict[str
         prompt = (
             "Translate the string VALUES of this JSON object to French. Keep the keys unchanged, "
             "keep numbers, %, currency and formulas as-is, and return ONLY the JSON object:\n"
-            + _json.dumps(fields, ensure_ascii=False)
+            + _json.dumps(remaining, ensure_ascii=False)
         )
         resp = await llm_call([{"role": "user", "content": prompt}], tier="default",
                               temperature=0.0, max_tokens=500)
         txt = resp["choices"][0]["message"]["content"]
         txt = txt[txt.find("{"): txt.rfind("}") + 1]
         translated = _json.loads(txt)
-        out = {**entry, **{k: v for k, v in translated.items() if k in fields}}
+        out = {**entry, **{k: v for k, v in translated.items() if k in remaining}}
     except Exception as e:
         log.warning("glossary fr translation failed (%s) — serving English", e)
         out = entry
@@ -651,7 +794,8 @@ async def get_kpis(
     # Filter by user's data access
     user_categories = get_user_data_categories(user.role)
     if "*" not in user_categories and "category" in df.columns and not df.empty:
-        df = df[df["category"].isin(user_categories)]
+        user_cat_lower = [c.lower() for c in user_categories]
+        df = df[df["category"].str.lower().isin(user_cat_lower)]
 
     metrics = df.to_dict(orient="records") if not df.empty else []
     return {"metrics": metrics, "count": len(metrics)}
@@ -695,14 +839,18 @@ async def generate_financial_statement(
         if req.statement_type in ("income_statement", "pl", "P&L", "profit_loss"):
             stmt = engine.create_pl_statement(period)
             margins = engine.analyze_margins(stmt)
-            return {"statement": stmt.data, "margins": margins, "period": period, "type": "P&L"}
+            # Convert statement dict to line_items format for frontend
+            line_items = [{"item_name": k, "name": k, "amount": v} for k, v in stmt.data.items()]
+            return {"line_items": line_items, "margins": margins, "period": period, "statement_type": req.statement_type}
         elif req.statement_type in ("balance_sheet", "bs"):
             stmt = engine.create_balance_sheet(period)
             ratios = engine.analyze_ratios(stmt)
-            return {"statement": stmt.data, "ratios": ratios, "period": period, "type": "Balance Sheet"}
+            line_items = [{"item_name": k, "name": k, "amount": v} for k, v in stmt.data.items()]
+            return {"line_items": line_items, "ratios": ratios, "period": period, "statement_type": req.statement_type}
         elif req.statement_type in ("cash_flow", "cf"):
             stmt = engine.create_cash_flow_statement(period)
-            return {"statement": stmt.data, "period": period, "type": "Cash Flow"}
+            line_items = [{"item_name": k, "name": k, "amount": v} for k, v in stmt.data.items()]
+            return {"line_items": line_items, "period": period, "statement_type": req.statement_type}
         else:
             raise HTTPException(status_code=400, detail=f"Unknown statement type: {req.statement_type}")
     except Exception as e:
@@ -947,6 +1095,47 @@ async def get_ops_health(user: TokenData = Depends(get_current_user)):
 
 
 # ════════════════════════════════════════════════════════════
+# GROWTH DOMAIN
+# ════════════════════════════════════════════════════════════
+
+@app.get("/api/v1/growth/summary")
+async def get_growth_summary(user: TokenData = Depends(get_current_user)):
+    from src.services.pg_store import get_kpi_metrics
+    df = get_kpi_metrics(categories=["Growth"])
+    if df.empty:
+        return {"mrr": 0, "arr": 0, "cac": 0, "ltv": 0, "churn_rate": 0, "trends": [], "mrr_trend": 0, "cac_trend": 0, "churn_trend": 0}
+    
+    # Sort and grab latest
+    df = df.sort_values(by="period")
+    latest = df.drop_duplicates(subset=["metric"], keep="last")
+    
+    def _val(metric_name):
+        row = latest[latest["metric"] == metric_name]
+        return float(row["value"].iloc[0]) if not row.empty else 0
+        
+    def _trend(metric_name):
+        m_df = df[df["metric"] == metric_name]
+        if len(m_df) < 2: return 0
+        v1 = m_df.iloc[-2]["value"]
+        v2 = m_df.iloc[-1]["value"]
+        return ((v2 - v1) / v1 * 100) if v1 else 0
+
+    mrr_series = df[df["metric"] == "MRR"][["period", "value"]].tail(12).to_dict("records")
+    
+    return {
+        "mrr": _val("MRR"),
+        "arr": _val("ARR"),
+        "cac": _val("CAC"),
+        "ltv": _val("LTV"),
+        "churn_rate": _val("Churn Rate"),
+        "trends": mrr_series,
+        "mrr_trend": _trend("MRR"),
+        "cac_trend": _trend("CAC"),
+        "churn_trend": _trend("Churn Rate")
+    }
+
+
+# ════════════════════════════════════════════════════════════
 # ESG DOMAIN
 # ════════════════════════════════════════════════════════════
 
@@ -1088,6 +1277,46 @@ async def seed_data(user: TokenData = Depends(require_role("admin"))):
     count = seed_all_domains()
     return {"status": "seeded", "rows": count}
 
+@app.post("/api/v1/admin/scenario")
+async def switch_scenario(req: ScenarioRequest, user: TokenData = Depends(require_role("admin"))):
+    """Switch database scenario for benchmarking (admin only)."""
+    from src.data.seed import seed_database
+    try:
+        # Validate scenario
+        valid_scenarios = ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown", "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]
+        if req.scenario not in valid_scenarios:
+            raise HTTPException(status_code=400, detail=f"Invalid scenario. Valid: {', '.join(valid_scenarios)}")
+        
+        # Seed with new scenario
+        counts = seed_database(replace=True, scenario=req.scenario)
+        return {"status": "success", "scenario": req.scenario, "counts": counts}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/v1/admin/scenario")
+async def get_current_scenario(user: TokenData = Depends(require_role("admin"))):
+    """Get current active scenario (admin only)."""
+    # This would require tracking current scenario in database, for now return default
+    return {"current_scenario": "healthy", "available_scenarios": ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown", "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]}
+
+@app.get("/api/v1/admin/lightning/status")
+async def get_lightning_studio_status(user: TokenData = Depends(require_role("admin"))):
+    """Get Lightning Studio status (admin only)."""
+    from src.services.lightning_studio import get_studio_status
+    return get_studio_status()
+
+@app.post("/api/v1/admin/lightning/wake")
+async def wake_lightning_studio(machine: Optional[str] = None, user: TokenData = Depends(require_role("admin"))):
+    """Wake up Lightning Studio programmatically (admin only)."""
+    from src.services.lightning_studio import wake_studio
+    return wake_studio(machine)
+
+@app.post("/api/v1/admin/lightning/stop")
+async def stop_lightning_studio(user: TokenData = Depends(require_role("admin"))):
+    """Stop Lightning Studio to save compute (admin only)."""
+    from src.services.lightning_studio import stop_studio
+    return stop_studio()
+
 
 @app.post("/api/v1/admin/cleanup")
 async def cleanup_data(user: TokenData = Depends(require_role("admin"))):
@@ -1202,7 +1431,7 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
         if not hits:  # last-resort: retry language-agnostic
             hits = rag._retrieve_documents(q, top_k=n)
         results = [
-            {"title": title, "content": (content or "")[:600], "score": round(float(score), 4)}
+            {"title": title, "content": (content or "")[:600], "score": round(score, 4)}
             for title, content, score in hits
         ]
         return {"results": results, "query": q, "count": len(results)}
@@ -1260,9 +1489,11 @@ async def websocket_chat(websocket: WebSocket):
             persona_override = data.get("persona")
             if data.get("session_id"):
                 session_id = data["session_id"]
+            # Use language from message if provided, otherwise fall back to user language
+            language = data.get("language") or user.language
             result = factory.chat(
                 message=message, user_role=user.role,
-                persona_override=persona_override, language=user.language, history=history,
+                persona_override=persona_override, language=language, history=history,
             )
             history.append({"role": "user", "content": message})
             history.append({"role": "assistant", "content": result["response"]})
@@ -1286,6 +1517,7 @@ async def websocket_chat(websocket: WebSocket):
                 "tokens_used": result.get("tokens_used", 0),
                 "latency_ms": result.get("latency_ms", 0),
                 "sources": result.get("sources", []),
+                "blocks": _structure_answer(result["response"]),
             })
     except WebSocketDisconnect:
         log.info("WebSocket client disconnected")
@@ -1423,7 +1655,7 @@ async def export_data(
     
     export_id = log_data_export(
         username=user.username,
-        export_name=req.source_name or f"export_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
+        export_name=req.source_name or f"export_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}",
         export_format=req.format,
         source_type=req.source_type,
         status="processing",
