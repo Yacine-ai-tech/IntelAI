@@ -7,6 +7,8 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 // Attach JWT token to every request
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token')
@@ -19,7 +21,21 @@ api.interceptors.request.use((config) => {
 // Handle 401 globally
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    const config = error.config;
+    if (config) {
+      config.__retryCount = config.__retryCount || 0;
+      const status = error.response ? error.response.status : null;
+      // Retry on network errors or 502, 503, 504 (Cloudflare auto-wake)
+      if (!status || status >= 500) {
+        if (config.__retryCount < 5) {
+          config.__retryCount += 1;
+          await delay(2000 * config.__retryCount);
+          return api(config);
+        }
+      }
+    }
+    
     if (error.response?.status === 401) {
       localStorage.removeItem('access_token')
       localStorage.removeItem('user')
@@ -41,8 +57,8 @@ export const register = (username, password, role = 'viewer') =>
 export const getMe = () => api.get('/auth/me')
 
 // ── Chat ────────────────────────────────────────────────
-export const sendChat = (message, persona = null, sessionId = null, context = '') =>
-  api.post('/chat', { message, persona, session_id: sessionId, context })
+export const sendChat = (message, persona = null, sessionId = null, context = '', lang = 'en') =>
+  api.post('/chat', { message, persona, session_id: sessionId, context, language: lang })
 
 export const listPersonas = () => api.get('/personas')
 
@@ -97,6 +113,9 @@ export const getHRRecruitment = () => api.get('/hr/recruitment')
 export const getHRTraining = () => api.get('/hr/training')
 export const getHRHealth = () => api.get('/hr/health')
 
+// ── Growth ──────────────────────────────────────────────
+export const getGrowthSummary = () => api.get('/growth/summary')
+
 // ── Logistics ───────────────────────────────────────────
 export const getLogisticsSummary = () => api.get('/logistics/summary')
 export const getLogisticsInventory = () => api.get('/logistics/inventory')
@@ -128,6 +147,8 @@ export const updateUser = (userId, data) => api.put(`/admin/users/${userId}`, da
 export const listRoles = () => api.get('/admin/roles')
 export const getAuditLog = (limit = 100) => api.get('/admin/audit', { params: { limit } })
 export const seedData = () => api.post('/admin/seed')
+export const reindexVectors = (force = true) => api.post(`/admin/reindex?force=${force}`)
+export const cleanupData = () => api.post('/admin/cleanup')
 
 // ── Ingestion ───────────────────────────────────────────
 export const ingestMetrics = (data, sourceName = 'api') =>
@@ -157,5 +178,14 @@ export const downloadFile = (fileId) => api.get(`/files/${fileId}/download`, { r
 
 // ── Status ──────────────────────────────────────────────
 export const getStatus = () => api.get('/status')
+
+// ── Scenario Management ─────────────────────────────────
+export const switchScenario = (scenarioId) => api.post('/admin/scenario', { scenario: scenarioId })
+export const getCurrentScenario = () => api.get('/admin/scenario')
+
+// ── Lightning Studio Management ─────────────────────────
+export const getLightningStatus = () => api.get('/admin/lightning/status')
+export const wakeLightningStudio = (machine) => api.post('/admin/lightning/wake', { machine })
+export const stopLightningStudio = () => api.post('/admin/lightning/stop')
 
 export default api
