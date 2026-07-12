@@ -36,6 +36,11 @@ services:
       CHROMA_DB_PATH: /app/chroma_db
     ports:
       - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+      - chroma-data:/app/chroma_db
     depends_on:
       postgres:
         condition: service_healthy
@@ -49,3 +54,4 @@ services:
 
 volumes:
   postgres-data:
+  chroma-data:

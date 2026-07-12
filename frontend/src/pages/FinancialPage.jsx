@@ -52,7 +52,7 @@ export default function FinancialPage() {
     <div>
       <PageHeader icon={DollarSign} accent={ACCENT} title={t('navFinancial') || 'Financial'}
         subtitle={t('finSubtitle') || 'Financial position, profitability & statements'}
-        actions={<AskCopilot q="Give me a CFO-level read on our financial health: revenue, margin, EBITDA, cash flow and the Rule of 40." />} />
+        actions={<AskCopilot q={t('askCopilot_FinancialPage_GiveMeA')} />} />
 
       <StatGrid>
         {latest.map((k, i) => {
@@ -80,7 +80,7 @@ export default function FinancialPage() {
             </div>
             <div className="form-group">
               <label className="form-label">{t('period') || 'Period'}</label>
-              <input className="form-input" value={period} onChange={e => setPeriod(e.target.value)} placeholder="e.g. 2026-Q1 or 2026-05" />
+              <input className="form-input" value={period} onChange={e => setPeriod(e.target.value)} placeholder={t('finPlaceholder') || 'e.g. 2026-Q1 or 2026-05'} />
             </div>
             <button className="btn btn-primary" type="submit" disabled={loading}>
               {loading ? (t('generating') || 'Generating…') : (t('generate') || 'Generate')}

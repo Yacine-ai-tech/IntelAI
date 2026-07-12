@@ -65,12 +65,12 @@ export default function WorkspacePage() {
   const docCount = kstats?.documents ?? kstats?.total_documents ?? kstats?.count
 
   const QUICK = [
-    { icon: Sparkles, label: t('navAssistant') || 'Ask Executive Copilot', hint: 'Strategic Q&A with sources', to: '/chat' },
-    { icon: TrendingUp, label: t('navForecasting') || 'Run a forecast', hint: 'Monte-Carlo confidence bands', to: '/forecasting' },
-    { icon: Flag, label: 'Review anomalies', hint: `${anomalies.length} flagged across domains`, to: '/analytics' },
-    { icon: BookOpen, label: t('navKnowledge') || 'Search knowledge', hint: 'RAG over indexed documents', to: '/knowledge' },
-    { icon: DollarSign, label: t('navFinancial') || 'Financial statement', hint: 'Generated from live KPIs', to: '/financial' },
-    { icon: ShieldAlert, label: t('navRisk') || 'Risk posture', hint: 'Exposure & concentration', to: '/risk' },
+    { icon: Sparkles, label: t('navAssistant') || 'Ask Executive Copilot', hint: t('hintCopilot') || 'Strategic Q&A with sources', to: '/chat' },
+    { icon: TrendingUp, label: t('navForecasting') || 'Run a forecast', hint: t('hintForecast') || 'Monte-Carlo confidence bands', to: '/forecasting' },
+    { icon: Flag, label: t('reviewAnomalies') || 'Review anomalies', hint: t('hintAnomalies') || `${anomalies.length} flagged across domains`, to: '/analytics' },
+    { icon: BookOpen, label: t('navKnowledge') || 'Search knowledge', hint: t('hintKnowledge') || 'RAG over indexed documents', to: '/knowledge' },
+    { icon: DollarSign, label: t('navFinancial') || 'Financial statement', hint: t('hintFinancial') || 'Generated from live KPIs', to: '/financial' },
+    { icon: ShieldAlert, label: t('navRisk') || 'Risk posture', hint: t('hintRisk') || 'Exposure & concentration', to: '/risk' },
   ]
 
   return (
@@ -81,7 +81,7 @@ export default function WorkspacePage() {
           {greeting}{firstName ? `, ${firstName}` : ''}.
         </h1>
         <p style={{ color: 'var(--text-2)', marginTop: 6, fontSize: 14.5 }}>
-          What strategic question are we solving today?
+          {t('workspaceQuestion') || 'What strategic question are we solving today?'}
         </p>
       </div>
 
@@ -90,22 +90,22 @@ export default function WorkspacePage() {
         <Stat label={t('healthIndex') || 'Business health'} value={hScore} unit="/100" icon={Activity}
           accent={hScore >= 70 ? 'var(--ok)' : hScore >= 45 ? 'var(--warn)' : 'var(--bad)'}
           hint={health?.label} onClick={() => navigate('/analytics')} />
-        <Stat label="Active anomalies" value={anomalies.length} icon={Flag}
+        <Stat label={t('activeAnomalies') || 'Active anomalies'} value={anomalies.length} icon={Flag}
           accent={anomalies.length ? 'var(--anomaly)' : 'var(--ok)'}
           hint={anomalies.length ? 'click to investigate' : 'all clear'} onClick={() => navigate('/analytics')} />
-        <Stat label="Executive personas" value={personas.length || Object.keys(PERSONA_META).length - 1} icon={Users}
+        <Stat label={t('execPersonas') || 'Executive personas'} value={personas.length || Object.keys(PERSONA_META).length - 1} icon={Users}
           accent="var(--accent)" hint="role-scoped intelligence" onClick={() => navigate('/chat')} />
         {docCount != null && (
-          <Stat label="Indexed documents" value={docCount} icon={BookOpen}
+          <Stat label={t('indexedDocs') || 'Indexed documents'} value={docCount} icon={BookOpen}
             accent="var(--primary-2)" hint="knowledge base" onClick={() => navigate('/knowledge')} />
         )}
       </StatGrid>
 
       {/* Persona lenses — the defining feature, not hidden in a dropdown */}
-      <Panel title="Choose your lens" icon={Users}
-        actions={<span style={{ color: 'var(--text-3)', fontSize: 12 }}>same company · different intelligence</span>}>
+      <Panel title={t('chooseLens') || 'Choose your lens'} icon={Users}
+        actions={<span style={{ color: 'var(--text-3)', fontSize: 12 }}>{t('sameCompanyDiffIntell') || 'same company · different intelligence'}</span>}>
         {personas.length === 0 ? (
-          <Loading label="Loading personas…" />
+          <Loading label={t('loadingPersonas') || 'Loading personas…'} />
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: 10 }}>
             {personas.map(p => {
@@ -141,7 +141,7 @@ export default function WorkspacePage() {
       </Panel>
 
       {/* Quick actions — every card routes to a real capability */}
-      <Panel title="Quick actions" icon={Sparkles}>
+      <Panel title={t('quickActions') || 'Quick actions'} icon={Sparkles}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: 10 }}>
           {QUICK.map(q => (
             <button key={q.label} onClick={() => navigate(q.to)}
@@ -165,10 +165,10 @@ export default function WorkspacePage() {
       </Panel>
 
       {/* Pinned insights — anomalies you starred, persisted locally */}
-      <Panel title="Pinned insights" icon={Pin}
+      <Panel title={t('pinnedInsights') || 'Pinned insights'} icon={Pin}
         actions={<span style={{ color: 'var(--text-3)', fontSize: 12 }}>{pinned.length} pinned</span>}>
         {anomalies.length === 0 && pinned.length === 0 ? (
-          <p style={{ color: 'var(--text-3)', fontSize: 13 }}>No anomalies to pin right now.</p>
+          <p style={{ color: 'var(--text-3)', fontSize: 13 }}>{t('noAnomaliesToPin') || 'No anomalies to pin right now.'}</p>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))', gap: 10 }}>
             {anomalies.slice(0, 8).map((a, i) => {
@@ -194,8 +194,8 @@ export default function WorkspacePage() {
 
       {/* Executive brief — real insights summary when available */}
       {summary?.summary && (
-        <Panel title="Latest executive brief" icon={Activity}
-          actions={<button className="btn btn-outline btn-sm" onClick={() => navigate('/analytics')}>Open analytics</button>}>
+        <Panel title={t('latestExecBrief') || 'Latest executive brief'} icon={Activity}
+          actions={<button className="btn btn-outline btn-sm" onClick={() => navigate('/analytics')}>{t('openAnalytics') || 'Open analytics'}</button>}>
           <p style={{ color: 'var(--text-2)', fontSize: 13.5, lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>
             {typeof summary.summary === 'string' ? summary.summary : JSON.stringify(summary.summary)}
           </p>
