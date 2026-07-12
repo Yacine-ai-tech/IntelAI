@@ -20,6 +20,9 @@ services:
       - ./main.py:/app/main.py
       - ./static:/app/static
       - ./logs:/app/logs
+      - ./uploads:/app/uploads
+      - ./data:/app/data
+      - chroma-data:/app/chroma_db
       - ./.env:/app/.env:ro
     ports:
       - "8000:8000"
@@ -43,3 +46,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 20s
+
+volumes:
+  chroma-data:

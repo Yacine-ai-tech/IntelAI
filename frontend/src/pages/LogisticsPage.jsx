@@ -22,7 +22,7 @@ export default function LogisticsPage() {
     <div>
       <PageHeader icon={Package} accent={ACCENT} title={t('navLogistics') || 'Logistics'}
         subtitle={t('logSubtitle') || 'Fulfilment, inventory & transportation'}
-        actions={<AskCopilot q="How is our supply chain performing — on-time delivery, inventory turnover, costs — and where are the risks?" />} />
+        actions={<AskCopilot q={t('askCopilot_LogisticsPage_HowIsOur')} />} />
 
       <DomainHero health={hlt.data} accent={ACCENT} />
 

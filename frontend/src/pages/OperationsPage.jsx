@@ -24,7 +24,7 @@ export default function OperationsPage() {
     <div>
       <PageHeader icon={Settings2} accent={ACCENT} title={t('navOperations') || 'Operations'}
         subtitle={t('opsSubtitle') || 'Efficiency, quality, production & safety'}
-        actions={<AskCopilot q="Summarize operations health — OEE, quality, on-time completion and safety — and the top bottleneck." />} />
+        actions={<AskCopilot q={t('askCopilot_OperationsPage_SummarizeOperationsHealth')} />} />
 
       <DomainHero health={hlt.data} accent={ACCENT} />
 

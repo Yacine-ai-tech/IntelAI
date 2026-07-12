@@ -250,11 +250,21 @@ export function BarList({ items }) {
 }
 
 // ── ask-copilot deep link ────────────────────────────────────
-export function AskCopilot({ q, label = 'Ask Copilot', size = 'sm' }) {
+export function AskCopilot({ q, label, size = 'sm' }) {
+  const { user } = useAuth()
+  const { t } = useTranslation()
   const navigate = useNavigate()
+  
+  const labelText = label || t('askAssistant') || 'Ask Copilot'
+
   return (
-    <button className={`btn btn-outline${size === 'sm' ? ' btn-sm' : ''}`} onClick={() => navigate(`/chat?q=${encodeURIComponent(q)}`)}>
-      <Sparkles size={size === 'sm' ? 13 : 15} /> {label}
+    <button
+      className={`btn btn-primary btn-${size}`}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}
+      onClick={() => window.dispatchEvent(new CustomEvent('open-copilot', { detail: { q } }))}
+    >
+      <Sparkles size={14} />
+      {labelText}
     </button>
   )
 }
