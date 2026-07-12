@@ -17,7 +17,7 @@ export default function GrowthPage() {
     <div>
       <PageHeader icon={Rocket} accent={ACCENT} title={t('navGrowth') || 'Sales & Growth'}
         subtitle={t('growthSubtitle') || 'Revenue pipelines, retention & unit economics'}
-        actions={<AskCopilot q="Analyze our recent MRR and Churn trends. Are our unit economics (LTV/CAC) healthy?" />} />
+        actions={<AskCopilot q={t('askCopilot_GrowthPage_AnalyzeOurRecent')} />} />
 
       <StatGrid>
         <Stat label={t('mrr') || 'MRR'} value={fmtMoney(d.mrr)} trend={d.mrr_trend} icon={DollarSign} accent={ACCENT} good="up" />

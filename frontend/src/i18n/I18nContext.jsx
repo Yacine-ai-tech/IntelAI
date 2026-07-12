@@ -15,7 +15,7 @@ export function I18nProvider({ children }) {
   }, [])
 
   const t = useCallback((key) => {
-    return translations[lang]?.[key] ?? translations.en?.[key] ?? key
+    return translations[lang]?.[key] ?? translations.en?.[key] ?? null
   }, [lang])
 
   // Listen for storage changes from other tabs

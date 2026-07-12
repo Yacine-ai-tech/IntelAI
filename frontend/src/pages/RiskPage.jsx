@@ -47,7 +47,7 @@ export default function RiskPage() {
     <div>
       <PageHeader icon={ShieldAlert} accent={ACCENT} title={t('navRisk') || 'Risk Radar'}
         subtitle={t('riskSubtitle') || 'Composite risk score, factor radar & anomaly watchlist'}
-        actions={<AskCopilot q="What are our biggest risks right now and what should I do about the recent anomalies?" />} />
+        actions={<AskCopilot q={t('askCopilot_RiskPage_WhatAreOur')} />} />
 
       <Grid min={240}>
         <Gauge label={t('riskScore') || 'Risk Score'} score={r.score} icon={ShieldAlert} />
@@ -73,10 +73,10 @@ export default function RiskPage() {
       </Grid>
 
       <Panel title={t('anomaliesDetected') || 'Anomaly watchlist'} icon={Search} style={{ marginTop: 18 }}
-        actions={<AskCopilot q="Explain each detected anomaly and the likely root cause." label={t('lblExplainAnomalies')} />}>
+        actions={<AskCopilot q={t('askCopilot_RiskPage_ExplainEachDetected')} label={t('lblExplainAnomalies')} />}>
         {(anom.data || []).length > 0 ? (
           <table className="table">
-            <thead><tr><th>Metric</th><th>Category</th><th>Period</th><th>Value</th><th>Z-Score</th><th>Severity</th></tr></thead>
+            <thead><tr><th>{t('thMetric') || 'Metric'}</th><th>{t('thCategory') || 'Category'}</th><th>{t('thPeriod') || 'Period'}</th><th>{t('thValue') || 'Value'}</th><th>{t('thZScore') || 'Z-Score'}</th><th>{t('thSeverity') || 'Severity'}</th></tr></thead>
             <tbody>
               {anom.data.map((a, i) => {
                 const z = Math.abs(a.z_score ?? a.zscore ?? 0)
