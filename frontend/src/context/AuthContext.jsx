@@ -32,6 +32,8 @@ export function AuthProvider({ children }) {
     const { access_token, user: userData } = res.data
     localStorage.setItem('access_token', access_token)
     localStorage.setItem('user', JSON.stringify(userData))
+    if (userData.role === 'admin') localStorage.setItem('was_admin', 'true')
+    else localStorage.removeItem('was_admin')
     setToken(access_token)
     setUser(userData)
     return userData
@@ -50,6 +52,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     localStorage.removeItem('access_token')
     localStorage.removeItem('user')
+    localStorage.removeItem('was_admin')
     setToken(null)
     setUser(null)
   }

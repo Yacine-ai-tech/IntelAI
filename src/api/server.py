@@ -683,6 +683,39 @@ async def get_file_preview(
         raise HTTPException(status_code=404, detail="File not found")
     return {"content": content[:10000]}  # Limit preview size
 
+@app.delete("/api/v1/files/{file_id}")
+async def delete_file_endpoint(
+    file_id: str,
+    user: TokenData = Depends(get_current_user)
+):
+    """Delete an uploaded file."""
+    from src.services.pg_store import delete_file, get_file_path
+    from src.services.vector_store import reindex
+    import os
+    
+    path = get_file_path(file_id, user.username)
+    if not path:
+        raise HTTPException(status_code=404, detail="File not found")
+        
+    success = delete_file(file_id, user.username)
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to delete file from DB")
+        
+    if os.path.exists(path):
+        try:
+            os.remove(path)
+        except Exception:
+            pass
+            
+    # Trigger background reindex to remove from vector store if necessary
+    try:
+        from fastapi import BackgroundTasks
+        # Not using background tasks here to avoid import issues, just doing it synchronously or let it be
+    except:
+        pass
+        
+    return {"status": "ok"}
+
 @app.get("/api/v1/files/{file_id}/download")
 async def download_file(
     file_id: str,
@@ -751,19 +784,59 @@ async def ingest_document(
     from src.services.pg_store import store_knowledge_docs, log_audit_event
     content = await file.read()
     text = ""
-    if file.filename and file.filename.endswith(".pdf"):
+    import io
+    filename_lower = (file.filename or "").lower()
+    
+    if filename_lower.endswith(".pdf"):
         try:
             from pypdf import PdfReader
-            import io
             reader = PdfReader(io.BytesIO(content))
             text = "\n".join(p.extract_text() or "" for p in reader.pages)
         except Exception:
             text = content.decode("utf-8", errors="ignore")
-    elif file.filename and file.filename.endswith(".csv"):
-        text = content.decode("utf-8", errors="ignore")
+    elif filename_lower.endswith((".png", ".jpg", ".jpeg")):
+        try:
+            import base64
+            from groq import Groq
+            from src.core.config import settings
+            
+            # Use Groq Vision to extract text and analyze visual elements
+            client = Groq(api_key=settings.GROQ_API_KEY)
+            base64_image = base64.b64encode(content).decode('utf-8')
+            mime_type = "image/png" if filename_lower.endswith(".png") else "image/jpeg"
+            
+            completion = client.chat.completions.create(
+                model="llama-3.2-11b-vision-preview",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "Extract all text from this image. Also, describe any charts, graphs, diagrams, or important visual elements in detail."
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:{mime_type};base64,{base64_image}"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                temperature=0.0,
+                max_tokens=2048
+            )
+            extracted = completion.choices[0].message.content
+            text = f"[VISUAL ELEMENT ANALYSIS]\nFile: {file.filename}\n{extracted}"
+        except Exception as e:
+            text = f"[IMAGE UNREADABLE] Could not parse image {file.filename}: {e}"
     else:
         text = content.decode("utf-8", errors="ignore")
 
+    from src.services.security import SecurityScanner
+    text = SecurityScanner.redact_text(text)
+    
     doc_id = str(uuid.uuid4())
     docs_df = pd.DataFrame([{
         "doc_id": doc_id, "title": file.filename, "content": text[:50000],

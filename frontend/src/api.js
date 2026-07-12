@@ -189,3 +189,5 @@ export const wakeLightningStudio = (machine) => api.post('/admin/lightning/wake'
 export const stopLightningStudio = () => api.post('/admin/lightning/stop')
 
 export default api
+
+export const deleteFile = (fileId) => api.delete(`/files/${fileId}`)

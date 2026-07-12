@@ -23,7 +23,7 @@ export default function ITPage() {
     <div>
       <PageHeader icon={Monitor} accent={ACCENT} title={t('navIT') || 'IT Operations'}
         subtitle={t('itSubtitle') || 'Reliability, security & DevOps performance (DORA)'}
-        actions={<AskCopilot q="How healthy is our IT — uptime, security posture and DORA metrics — vs 2026 benchmarks?" />} />
+        actions={<AskCopilot q={t('askCopilot_ITPage_HowHealthyIs')} />} />
 
       <DomainHero health={hlt.data} accent={ACCENT} />
 
@@ -40,7 +40,7 @@ export default function ITPage() {
 
       <Grid style={{ marginTop: 18 }}>
         <Panel title={t('lblDevOpsDORAMetrics')} icon={GitBranch}
-          actions={<AskCopilot q="Interpret our DORA metrics vs the 2026 elite benchmarks and what to improve first." label={t('lblInterpret')} />}>
+          actions={<AskCopilot q={t('askCopilot_ITPage_InterpretOurDora')} label={t('lblInterpret')} />}>
           <BarList items={[
             { label: 'Deployment frequency (/mo)', value: d.deployment_frequency, display: fmtNum(d.deployment_frequency) },
             { label: 'Lead time (h)', value: d.lead_time_hours, display: fmtNum(d.lead_time_hours) + 'h', color: 'var(--warn)' },

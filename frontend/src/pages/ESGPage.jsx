@@ -29,12 +29,12 @@ export default function ESGPage() {
     <div>
       <PageHeader icon={Leaf} accent={ACCENT} title={t('navESG') || 'ESG & Sustainability'}
         subtitle={t('esgSubtitle') || 'Environmental, social & governance — GHG Protocol / CSRD aligned'}
-        actions={<AskCopilot q="Summarize our ESG position across environment, social and governance, and CSRD readiness." />} />
+        actions={<AskCopilot q={t('askCopilot_ESGPage_SummarizeOurEsg')} />} />
 
       <DomainHero health={esgHealth} accent={ACCENT} />
 
       <Panel title={t('lblCarbonTrend')} icon={Cloud}
-        actions={<AskCopilot q="What is driving our ESG score and how do we improve it under CSRD?" label={t('lblImproveScore')} />}>
+        actions={<AskCopilot q={t('askCopilot_ESGPage_WhatIsDriving')} label={t('lblImproveScore')} />}>
         <AreaTrend data={d.trends || []} y="carbon" color={ACCENT} height={200} />
       </Panel>
 

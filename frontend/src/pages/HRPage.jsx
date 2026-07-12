@@ -23,7 +23,7 @@ export default function HRPage() {
     <div>
       <PageHeader icon={Users} accent={ACCENT} title={t('navHR') || 'Human Resources'}
         subtitle={t('hrSubtitle') || 'Workforce, engagement & talent analytics'}
-        actions={<AskCopilot q="Summarize our people metrics — headcount, turnover, engagement — and what needs attention." />} />
+        actions={<AskCopilot q={t('askCopilot_HRPage_SummarizeOurPeople')} />} />
 
       <DomainHero health={hlt.data} accent={ACCENT} />
 
@@ -40,7 +40,7 @@ export default function HRPage() {
 
       <Grid style={{ marginTop: 18 }}>
         <Panel title={t('lblHeadcountTrend')} icon={Users} style={{ gridColumn: 'span 2' }}>
-          <AreaTrend data={s.trends || []} y="headcount" color={ACCENT} />
+          <AreaTrend data={Array.isArray(s.trends) ? s.trends : []} y="headcount" color={ACCENT} />
         </Panel>
         <Panel title={t('lblRecruitmentFunnel')} icon={UserPlus}>
           <BarList items={[
@@ -56,11 +56,11 @@ export default function HRPage() {
       </Grid>
 
       <Panel title={t('lblByDepartment')} icon={Users} style={{ marginTop: 18 }}
-        actions={<AskCopilot q="Which department has the highest turnover and lowest satisfaction, and why?" label={t('lblAnalyze')} />}>
+        actions={<AskCopilot q={t('askCopilot_HRPage_WhichDepartmentHas')} label={t('lblAnalyze')} />}>
         <table className="table">
-          <thead><tr><th>Department</th><th>Headcount</th><th>Satisfaction</th><th>Turnover</th><th>Avg Salary</th><th>Training</th></tr></thead>
+          <thead><tr><th>{t('thDept') || 'Department'}</th><th>{t('thHeadcount') || 'Headcount'}</th><th>{t('thSat') || 'Satisfaction'}</th><th>{t('thTurnover') || 'Turnover'}</th><th>{t('thAvgSalary') || 'Avg Salary'}</th><th>{t('thTraining') || 'Training'}</th></tr></thead>
           <tbody>
-            {(depts.data || []).map((d, i) => (
+            {(Array.isArray(depts.data) ? depts.data : []).map((d, i) => (
               <tr key={i}>
                 <td style={{ fontWeight: 600 }}>{d.department}</td>
                 <td>{fmtNum(d.headcount)}</td>

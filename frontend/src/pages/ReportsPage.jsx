@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { FileText, Download, FileSpreadsheet, FileJson, FileType, Loader2, AlertTriangle } from 'lucide-react'
+import { useTranslation } from '../i18n/I18nContext'
 import * as api from '../api'
 import { PageHeader, Loading, Panel } from '../components/ui'
 
@@ -29,6 +30,7 @@ function downloadExport(res) {
 }
 
 export default function ReportsPage() {
+  const { t } = useTranslation()
   const [busy, setBusy] = useState('')
   const [err, setErr] = useState('')
 
@@ -52,21 +54,21 @@ export default function ReportsPage() {
 
   return (
     <div>
-      <PageHeader icon={FileText} title="Reports"
-        subtitle="Board-ready exports generated from your live data — no copy-paste."
+      <PageHeader icon={FileText} title={t('navReports') || 'Reports'}
+        subtitle={t('boardExportsTooltip') || 'Board-ready exports generated from your live data — no copy-paste.'}
         accent="var(--p-ceo)" />
 
-      <Panel title="Latest executive brief" icon={FileText}
+      <Panel title={t('latestExecBrief') || 'Latest executive brief'} icon={FileText}
         actions={<button className="btn btn-primary btn-sm" onClick={() => run('pdf')} disabled={busy === 'pdf'}>
-          {busy === 'pdf' ? <Loader2 size={13} className="spin" /> : <Download size={13} />} Board PDF
+          {busy === 'pdf' ? <Loader2 size={13} className="spin" /> : <Download size={13} />} {t('boardPdf') || 'Board PDF'}
         </button>}>
         {isLoading ? <Loading /> : (
           <>
             {health && (
               <div style={{ display: 'flex', gap: 18, marginBottom: 12, flexWrap: 'wrap' }}>
-                <Metric label="Health" value={Math.round(health.score ?? 0)} unit="/100" />
-                {health.label && <Metric label="Status" value={health.label} />}
-                {summary?.risk?.label && <Metric label="Risk" value={summary.risk.label} />}
+                <Metric label={t('healthLabel') || 'Health'} value={Math.round(health.score ?? 0)} unit="/100" />
+                {health.label && <Metric label={t('statusLabel') || 'Status'} value={health.label} />}
+                {summary?.risk?.label && <Metric label={t('riskLabel') || 'Risk'} value={summary.risk.label} />}
               </div>
             )}
             <p style={{ fontSize: 13.5, lineHeight: 1.75, color: 'var(--text-2)', whiteSpace: 'pre-wrap' }}>
@@ -76,7 +78,7 @@ export default function ReportsPage() {
         )}
       </Panel>
 
-      <Panel title="Export formats" icon={Download}>
+      <Panel title={t('exportFormats') || 'Export formats'} icon={Download}>
         {err && (
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--bad)', fontSize: 13, marginBottom: 10 }}>
             <AlertTriangle size={15} /> {err}

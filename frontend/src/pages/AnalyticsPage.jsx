@@ -32,7 +32,7 @@ export default function AnalyticsPage() {
     <div>
       <PageHeader icon={BarChart3} title={t('navAnalytics') || 'Analytics'}
         subtitle={t('analyticsSubtitle') || 'Cross-domain KPI explorer & forecasting'}
-        actions={<AskCopilot q="What are the most important trends across all our KPIs this period?" />} />
+        actions={<AskCopilot q={t('askCopilot_AnalyticsPage_WhatAreThe')} />} />
 
       <StatGrid>
         <Stat label={t('totalMetrics') || 'Metrics'} value={fmtNum(metricNames.length)} icon={Hash} />
@@ -78,7 +78,7 @@ export default function AnalyticsPage() {
         <Panel title={t('allMetrics') || 'All metrics'} icon={Layers} style={{ gridColumn: 'span 2' }}>
           <div style={{ maxHeight: 360, overflowY: 'auto' }}>
             <table className="table">
-              <thead><tr><th>Metric</th><th>Value</th><th>Domain</th><th>Period</th></tr></thead>
+              <thead><tr><th>{t('thMetric') || 'Metric'}</th><th>{t('thValue') || 'Value'}</th><th>{t('thDomain') || 'Domain'}</th><th>{t('thPeriod') || 'Period'}</th></tr></thead>
               <tbody>
                 {kpis.slice(0, 60).map((k, i) => (
                   <tr key={i}>

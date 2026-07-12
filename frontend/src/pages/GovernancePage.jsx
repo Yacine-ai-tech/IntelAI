@@ -2,10 +2,12 @@
 // /admin/roles, /admin/users, /admin/audit. Admin-scoped (guarded by the route).
 import { useQuery } from '@tanstack/react-query'
 import { ShieldCheck, Users, ScrollText, KeyRound, Lock } from 'lucide-react'
+import { useTranslation } from '../i18n/I18nContext'
 import * as api from '../api'
 import { PageHeader, Loading, Empty, Panel } from '../components/ui'
 
 export default function GovernancePage() {
+  const { t } = useTranslation()
   const { data: rolesData, isLoading: rLoading } = useQuery({
     queryKey: ['roles'], queryFn: () => api.listRoles().then(r => r.data?.roles || {}),
   })
@@ -20,12 +22,12 @@ export default function GovernancePage() {
 
   return (
     <div>
-      <PageHeader icon={ShieldCheck} title="Governance"
-        subtitle="Role-based access, the user directory and the audit trail — enforced by the backend, visualized here."
+      <PageHeader icon={ShieldCheck} title={t('navGovernance') || 'Governance'}
+        subtitle={t('govTooltip') || 'Role-based access, the user directory and the audit trail — enforced by the backend, visualized here.'}
         accent="var(--p-risk)" />
 
       {/* RBAC */}
-      <Panel title="Roles & permissions" icon={KeyRound}>
+      <Panel title={t('rolesPermissions') || 'Roles & permissions'} icon={KeyRound}>
         {rLoading ? <Loading /> : Object.keys(roles).length === 0 ? <Empty text="No roles defined." /> : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(240px,1fr))', gap: 12 }}>
             {Object.entries(roles).map(([role, def]) => {
@@ -39,7 +41,7 @@ export default function GovernancePage() {
                   </div>
                   {Array.isArray(actions) && actions.length > 0 && (
                     <div style={{ marginTop: 8 }}>
-                      <div style={{ fontSize: 10.5, textTransform: 'uppercase', letterSpacing: '.04em', color: 'var(--text-3)' }}>Actions</div>
+                      <div style={{ fontSize: 10.5, textTransform: 'uppercase', letterSpacing: '.04em', color: 'var(--text-3)' }}>{t('actions') || 'Actions'}</div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 4 }}>
                         {actions.slice(0, 8).map(a => (
                           <span key={a} style={{ fontSize: 11, padding: '2px 7px', borderRadius: 999, border: '1px solid var(--border)', color: 'var(--text-2)' }}>{a}</span>
@@ -58,13 +60,13 @@ export default function GovernancePage() {
       </Panel>
 
       {/* Users */}
-      <Panel title="User directory" icon={Users}>
+      <Panel title={t('userDirectory') || 'User directory'} icon={Users}>
         {uLoading ? <Loading /> : users.length === 0 ? <Empty text="No users." /> : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ textAlign: 'left', color: 'var(--text-3)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '.04em' }}>
-                  <th style={{ padding: '8px 10px' }}>User</th><th style={{ padding: '8px 10px' }}>Role</th><th style={{ padding: '8px 10px' }}>Status</th>
+                  <th style={{ padding: '8px 10px' }}>{t('thUser') || 'User'}</th><th style={{ padding: '8px 10px' }}>{t('thRole') || 'Role'}</th><th style={{ padding: '8px 10px' }}>{t('thStatus') || 'Status'}</th>
                 </tr>
               </thead>
               <tbody>
@@ -84,7 +86,7 @@ export default function GovernancePage() {
       </Panel>
 
       {/* Audit */}
-      <Panel title="Audit trail" icon={ScrollText}>
+      <Panel title={t('auditTrail') || 'Audit trail'} icon={ScrollText}>
         {aLoading ? <Loading /> : audit.length === 0 ? <Empty text="No audit events recorded." /> : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             {audit.slice(0, 40).map((e, i) => (

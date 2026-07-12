@@ -22,7 +22,7 @@ export default function KnowledgePage() {
     <div>
       <PageHeader icon={BookOpen} title={t('navKnowledge') || 'Knowledge Base'}
         subtitle={t('knSubtitle') || 'Hybrid retrieval (vector + BM25 + reranking) over your indexed docs'}
-        actions={<AskCopilot q="What knowledge do we have indexed, and summarize the most relevant documents." />} />
+        actions={<AskCopilot q={t('askCopilot_KnowledgePage_WhatKnowledgeDo')} />} />
 
       <StatGrid>
         <Stat label={t('totalDocuments') || 'Indexed Documents'} value={fmtNum(docCount)} icon={Database} />
@@ -34,7 +34,7 @@ export default function KnowledgePage() {
         <form onSubmit={onSearch} style={{ display: 'flex', gap: 10, marginBottom: 6 }}>
           <div className="chat-input-wrap" style={{ flex: 1, padding: '6px 14px', margin: 0 }}>
             <Search size={16} style={{ color: 'var(--text-3)' }} />
-            <input className="chat-input" style={{ padding: '6px 0' }} placeholder="e.g. Q1 churn drivers, ESG carbon, MTTR…"
+            <input className="chat-input" style={{ padding: '6px 0' }} placeholder={t('knowledgeSearchPlaceholder') || 'e.g. Q1 churn drivers, ESG carbon, MTTR…'}
               value={q} onChange={e => setQ(e.target.value)} />
           </div>
           <select className="form-input" style={{ width: 90 }} value={n} onChange={e => setN(Number(e.target.value))}>
@@ -74,7 +74,7 @@ export default function KnowledgePage() {
           ))}
           {results.length === 0 && !search.isPending && (
             <Panel style={{ textAlign: 'center', padding: 40, color: 'var(--text-3)' }}>
-              <Search size={38} style={{ margin: '0 auto 12px', opacity: .5 }} /><p>No results. Try different terms.</p>
+              <Search size={38} style={{ margin: '0 auto 12px', opacity: .5 }} /><p>{t('noResultsTryDiff') || 'No results. Try different terms.'}</p>
             </Panel>
           )}
         </div>

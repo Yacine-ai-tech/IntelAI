@@ -6,11 +6,14 @@ import { useQuery } from '@tanstack/react-query'
 import { GitCompareArrows, Send, Loader2, AlertTriangle, Crown, DollarSign, Cpu, Settings2, Users, Leaf, ShieldAlert, BarChart3, Bot } from 'lucide-react'
 import * as api from '../api'
 import { PageHeader, Citations, Panel } from '../components/ui'
+import { useTranslation } from '../i18n/I18nContext'
+import { FormattedContent } from './ChatPage'
 
 const ICON = { general: Bot, ceo: Crown, cfo: DollarSign, cto: Cpu, coo: Settings2, chro: Users, esg: Leaf, risk: ShieldAlert, analyst: BarChart3 }
 const COLOR = { general: 'var(--p-general)', ceo: 'var(--p-ceo)', cfo: 'var(--p-cfo)', cto: 'var(--p-cto)', coo: 'var(--p-coo)', chro: 'var(--p-chro)', esg: 'var(--p-esg)', risk: 'var(--p-risk)', analyst: 'var(--p-analyst)' }
 
 export default function ComparePage() {
+  const { t } = useTranslation()
   const { data: personas = [] } = useQuery({
     queryKey: ['personas'], queryFn: () => api.listPersonas().then(r => r.data?.personas || r.data || []),
   })
@@ -43,20 +46,20 @@ export default function ComparePage() {
 
   return (
     <div>
-      <PageHeader icon={GitCompareArrows} title="Compare personas"
-        subtitle="Ask one question, see two executive lenses answer it side by side — same company, different intelligence."
+      <PageHeader icon={GitCompareArrows} title={t('comparePersonasTitle') || 'Compare personas'}
+        subtitle={t('compareTooltip') || 'Ask one question, see two executive lenses answer it side by side — same company, different intelligence.'}
         accent="var(--accent)" />
 
-      <Panel title="Question">
+      <Panel title={t('questionTitle') || 'Question'}>
         <textarea value={question} onChange={e => setQuestion(e.target.value)} rows={2}
           style={{ width: '100%', background: 'var(--surface-2)', border: '1px solid var(--border-2)', borderRadius: 'var(--r)', padding: '10px 12px', color: 'var(--text)', fontSize: 14, resize: 'vertical', fontFamily: 'inherit' }} />
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', marginTop: 12 }}>
-          <PersonaSelect label="Lens A" value={pa} onChange={setPa} personas={personas} keys={keys} />
-          <PersonaSelect label="Lens B" value={pb} onChange={setPb} personas={personas} keys={keys} />
+          <PersonaSelect label={t('lensA') || 'Lens A'} value={pa} onChange={setPa} personas={personas} keys={keys} />
+          <PersonaSelect label={t('lensB') || 'Lens B'} value={pb} onChange={setPb} personas={personas} keys={keys} />
           <button className="btn btn-primary" onClick={run} disabled={busy || pa === pb || !question.trim()}>
-            {busy ? <Loader2 size={14} className="spin" /> : <Send size={14} />} Compare
+            {busy ? <Loader2 size={14} className="spin" /> : <Send size={14} />} {t('compareButton') || 'Compare'}
           </button>
-          {pa === pb && <span style={{ fontSize: 12, color: 'var(--warn)' }}>Pick two different lenses.</span>}
+          {pa === pb && <span style={{ fontSize: 12, color: 'var(--warn)' }}>{t('pickTwoLenses') || 'Pick two different lenses.'}</span>}
         </div>
         {err && <div style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--bad)', fontSize: 13, marginTop: 10 }}><AlertTriangle size={15} /> {err}</div>}
       </Panel>
@@ -94,7 +97,9 @@ function Answer({ persona, r }) {
         <span style={{ display: 'grid', placeItems: 'center', width: 28, height: 28, borderRadius: 8, background: 'var(--surface-3)', color }}><Icon size={15} /></span>
         <strong style={{ fontSize: 13.5, textTransform: 'uppercase', letterSpacing: '.03em' }}>{r.persona_used || persona}</strong>
       </div>
-      <p style={{ fontSize: 13.5, lineHeight: 1.7, color: 'var(--text-2)', whiteSpace: 'pre-wrap' }}>{r.response}</p>
+      <div style={{ marginTop: 10, fontSize: 13.5, lineHeight: 1.7, color: 'var(--text-2)' }}>
+        <FormattedContent content={r.response} blocks={r.blocks} />
+      </div>
       {Array.isArray(r.sources) && r.sources.length > 0 && <div style={{ marginTop: 12 }}><Citations sources={r.sources} /></div>}
     </div>
   )

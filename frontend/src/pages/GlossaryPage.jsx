@@ -6,8 +6,8 @@ import { BookOpen, Search } from 'lucide-react'
 import { PageHeader, Loading, Empty, Panel } from '../components/ui'
 
 export default function GlossaryPage() {
-  const { t } = useTranslation()
-  const { data: terms = [], isLoading } = useQuery({ queryKey: ['glossary'], queryFn: () => api.getGlossary().then(r => r.data?.terms || []), retry: 1 })
+  const { t, lang } = useTranslation()
+  const { data: terms = [], isLoading } = useQuery({ queryKey: ['glossary', lang], queryFn: () => api.getGlossary(null, lang).then(r => r.data?.terms || []), retry: 1 })
   const [q, setQ] = useState('')
 
   if (isLoading) return <Loading />
@@ -35,7 +35,7 @@ export default function GlossaryPage() {
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
           <Search size={16} color="var(--text-3)" />
           <input className="form-input" style={{ flex: 1, border: 'none', background: 'transparent' }} 
-            placeholder="Search metrics or definitions..." 
+            placeholder={t('searchGlossary') || 'Search metrics or definitions...'} 
             value={q} onChange={e => setQ(e.target.value)} />
         </div>
       </Panel>

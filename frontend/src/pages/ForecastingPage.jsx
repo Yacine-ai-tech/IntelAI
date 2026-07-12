@@ -84,7 +84,7 @@ export default function ForecastingPage() {
     <div>
       <PageHeader icon={TrendingUp} title={t('navForecasting') || 'Forecasting'}
         subtitle={t('fcSubtitle') || 'Monte-Carlo projections with confidence intervals'}
-        actions={metric && <AskCopilot q={`Forecast ${metric} and explain the trend, drivers and confidence.`} />} />
+        actions={metric && <AskCopilot q={(t('askCopilot_Forecast') || 'Forecast {metric} and explain the trend, drivers and confidence.').replace('{metric}', metric)} />} />
 
       <Panel title={t('configureForecast') || 'Configure forecast'} icon={Brain}>
         <div style={{ display: 'flex', gap: 14, alignItems: 'flex-end', flexWrap: 'wrap' }}>

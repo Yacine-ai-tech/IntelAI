@@ -95,7 +95,7 @@ async function printReport(t) {
   const fmt = (v) => typeof v === 'number' ? (Math.abs(v) >= 1e6 ? (v / 1e6).toFixed(2) + 'M' : Math.abs(v) >= 1e3 ? (v / 1e3).toFixed(1) + 'K' : v.toFixed(1)) : (v ?? '—')
   const rows = latest.map(k => `<tr><td>${k.metric_name || k.name}</td><td>${k.category || ''}</td><td style="text-align:right">${fmt(k.value)} ${k.unit || ''}</td><td>${k.period || ''}</td></tr>`).join('')
   const w = window.open('', '_blank')
-  w.document.write(`<!doctype html><html><head><title>IntelAI — Executive Report</title>
+  w.document.write(`<!doctype html><html><head><title>${t('intelAIExecReport') || 'IntelAI — Executive Report'}</title>
   <style>
     body{font-family:Inter,Arial,sans-serif;color:#111;margin:40px;}
     h1{margin:0;font-size:26px;color:#0d9488} .sub{color:#666;margin:2px 0 24px}
@@ -106,16 +106,16 @@ async function printReport(t) {
     td{padding:8px;border-bottom:1px solid #f0f0f0} p.s{line-height:1.6;color:#333}
     @media print{body{margin:18mm}}
   </style></head><body>
-  <h1>IntelAI — Executive Report</h1>
+  <h1>${t('intelAIExecReport') || 'IntelAI — Executive Report'}</h1>
   <div class="sub">${new Date().toLocaleString()}</div>
   <div class="cards">
-    <div class="c"><div class="l">Health Index</div><div class="v">${Math.round(health.score ?? health.health_index ?? 0)}/100</div></div>
-    <div class="c"><div class="l">Risk Score</div><div class="v">${Math.round(risk.score ?? 0)} <span style="font-size:14px;color:#888">${risk.label || ''}</span></div></div>
-    <div class="c"><div class="l">Metrics Tracked</div><div class="v">${latest.length}</div></div>
+    <div class="c"><div class="l">${t('healthIndex') || 'Health Index'}</div><div class="v">${Math.round(health.score ?? health.health_index ?? 0)}/100</div></div>
+    <div class="c"><div class="l">${t('riskScore') || 'Risk Score'}</div><div class="v">${Math.round(risk.score ?? 0)} <span style="font-size:14px;color:#888">${risk.label || ''}</span></div></div>
+    <div class="c"><div class="l">${t('totalMetrics') || 'Metrics Tracked'}</div><div class="v">${latest.length}</div></div>
   </div>
-  ${summary ? `<h3>Executive Summary</h3><p class="s">${summary}</p>` : ''}
-  <h3>Latest KPIs</h3>
-  <table><thead><tr><th>Metric</th><th>Domain</th><th style="text-align:right">Value</th><th>Period</th></tr></thead><tbody>${rows}</tbody></table>
+  ${summary ? `<h3>${t('executiveSummary') || 'Executive Summary'}</h3><p class="s">${summary}</p>` : ''}
+  <h3>${t('latestKPIs') || 'Latest KPIs'}</h3>
+  <table><thead><tr><th>${t('thMetric') || 'Metric'}</th><th>${t('thDomain') || 'Domain'}</th><th style="text-align:right">${t('thValue') || 'Value'}</th><th>${t('thPeriod') || 'Period'}</th></tr></thead><tbody>${rows}</tbody></table>
   </body></html>`)
   w.document.close()
   setTimeout(() => { w.focus(); w.print() }, 400)

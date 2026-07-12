@@ -273,13 +273,12 @@ export default function AdminPage() {
 
       {/* ── Scenarios ── */}
       {tab === 'scenarios' && (
-        <Panel title="Benchmarking Scenarios" icon={FlaskConical}
+        <Panel title={t('benchmarkingScenarios') || 'Benchmarking Scenarios'} icon={FlaskConical}
           actions={<span style={{ fontSize: '.78rem', color: 'var(--text-3)' }}>
-            Active: <b style={{ color: 'var(--primary)' }}>{SCENARIOS.find(s => s.id === activeScenario)?.label || activeScenario}</b>
+            {t('activeColon') || 'Active:'} <b style={{ color: 'var(--primary)' }}>{SCENARIOS.find(s => s.id === activeScenario)?.label || activeScenario}</b>
           </span>}>
           <p style={{ fontSize: '.86rem', color: 'var(--text-2)', marginBottom: 18 }}>
-            Switch the live database to any of the 7 industry-benchmarked scenarios. Each seeds 36 months of KPI data.
-            Affects all live endpoints — copilot answers, dashboards, forecasts.
+            {t('scenarioDesc') || 'Switch the live database to any of the 7 industry-benchmarked scenarios. Each seeds 36 months of KPI data. Affects all live endpoints — copilot answers, dashboards, forecasts.'}
           </p>
           {scenarioMsg && (
             <div className={`alert ${scenarioMsg.startsWith('✓') ? 'alert-success' : 'alert-danger'}`} style={{ marginBottom: 16 }}>
@@ -300,14 +299,14 @@ export default function AdminPage() {
                     <strong style={{ fontSize: '.9rem', color: isActive ? 'var(--primary)' : 'var(--text)' }}>
                       {isActive && '● '}{s.label}
                     </strong>
-                    {isActive && <span className="badge ok">Active</span>}
+                    {isActive && <span className="badge ok">{t('active') || 'Active'}</span>}
                   </div>
                   <p style={{ fontSize: '.8rem', color: 'var(--text-2)', marginBottom: 14 }}>{s.desc}</p>
                   <button
                     className={`btn btn-sm ${isActive ? 'btn-outline' : 'btn-primary'}`}
                     disabled={scenarioLoading || isActive}
                     onClick={() => switchScenario(s.id)}>
-                    {scenarioLoading && !isActive ? <><RefreshCw size={13} className="spin-inline" /> Loading…</> : isActive ? '✓ Current' : 'Activate'}
+                    {scenarioLoading && !isActive ? <><RefreshCw size={13} className="spin-inline" /> {t('loading') || 'Loading…'}</> : isActive ? (<span>✓ {t('current') || 'Current'}</span>) : (t('activate') || 'Activate')}
                   </button>
                 </div>
               )
@@ -323,41 +322,40 @@ export default function AdminPage() {
             <div className={`alert ${infraMsg.startsWith('✓') ? 'alert-success' : 'alert-danger'}`}
               style={{ gridColumn: '1 / -1' }}>{infraMsg}</div>
           )}
-          <Panel title="Vector Store" icon={Activity}>
+          <Panel title={t('vectorStore') || 'Vector Store'} icon={Activity}>
             <p style={{ fontSize: '.86rem', color: 'var(--text-2)', marginBottom: 14 }}>
               Rebuild the persistent vector/BM25 knowledge index from the current knowledge base.
               Run after a large document ingest or if knowledge search returns empty results.
             </p>
             <button className="btn btn-primary" disabled={reindexing} onClick={reindex}>
               {reindexing
-                ? <><RefreshCw size={15} className="spin-inline" /> Reindexing…</>
-                : <><Zap size={15} /> Reindex Knowledge Store</>}
+                ? <><RefreshCw size={15} className="spin-inline" /> {t('reindexing') || 'Reindexing…'}</>
+                : <><Zap size={15} /> {t('reindexDocs') || 'Reindex Knowledge Store'}</>}
             </button>
           </Panel>
 
-          <Panel title="Data Cleanup" icon={Trash2}>
+          <Panel title={t('dataCleanup') || 'Data Cleanup'} icon={Trash2}>
             <p style={{ fontSize: '.86rem', color: 'var(--text-2)', marginBottom: 14 }}>
-              Clear chat history and audit trail. <strong style={{ color: 'var(--warn)' }}>Irreversible.</strong>&nbsp;
-              KPI data, users, and knowledge docs are not affected.
+              {t('clearChatDesc') || 'Clear chat history and audit trail.'} <strong style={{ color: 'var(--warn)' }}>{t('irreversible') || 'Irreversible.'}</strong>&nbsp;
+              {t('noAffectData') || 'KPI data, users, and knowledge docs are not affected.'}
             </p>
             <button className="btn btn-danger" disabled={cleaning} onClick={cleanup}>
               {cleaning
-                ? <><RefreshCw size={15} className="spin-inline" /> Clearing…</>
-                : <><Trash2 size={15} /> Clear History & Audit Trail</>}
+                ? <><RefreshCw size={15} className="spin-inline" /> {t('clearing') || 'Clearing…'}</>
+                : <><Trash2 size={15} /> {t('clearHistoryTrail') || 'Clear History & Audit Trail'}</>}
             </button>
           </Panel>
 
-          <Panel title="Seed Demo Data" icon={FlaskConical}>
+          <Panel title={t('seedDemoData') || 'Seed Demo Data'} icon={FlaskConical}>
             <p style={{ fontSize: '.86rem', color: 'var(--text-2)', marginBottom: 14 }}>
-              Re-seed the KPI catalog with the healthy (S&P 500 baseline) scenario without clearing
-              existing data. Use the Scenarios tab to switch to a different health state.
+              {t('reseedDesc') || 'Re-seed the KPI catalog with the healthy (S&P 500 baseline) scenario without clearing existing data. Use the Scenarios tab to switch to a different health state.'}
             </p>
             <button className="btn btn-outline" onClick={async () => {
               setInfraMsg('')
               try { await api.seedData(); setInfraMsg('✓ Demo data seeded.') }
               catch { setInfraMsg('✗ Seed failed.') }
             }}>
-              <FlaskConical size={15} /> Seed Demo KPIs
+              <FlaskConical size={15} /> {t('seedDemoKpis') || 'Seed Demo KPIs'}
             </button>
           </Panel>
         </div>

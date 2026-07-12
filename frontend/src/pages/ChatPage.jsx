@@ -117,7 +117,7 @@ function KpiBlock({ label, value }) {
 }
 
 // Prefer server-sent blocks[] (structured by _structure_answer); fall back to client-side parsing.
-function FormattedContent({ content, blocks: serverBlocks }) {
+export function FormattedContent({ content, blocks: serverBlocks }) {
   // If the server sent typed blocks use them directly; otherwise parse client-side
   const blocks = (serverBlocks && serverBlocks.length > 0) ? serverBlocks : parseBlocks(content)
 
@@ -176,6 +176,7 @@ function FormattedContent({ content, blocks: serverBlocks }) {
 }
 
 function MessageBubble({ msg }) {
+  const { t } = useTranslation()
   const isUser = msg.role === 'user'
   const Icon = isUser ? User : Sparkles
   return (
@@ -194,7 +195,7 @@ function MessageBubble({ msg }) {
             <Citations sources={msg.sources} />
             {msg.sources?.length > 0 && (
               <a href={`/knowledge-graph?q=${encodeURIComponent(msg.query || 'knowledge')}`} target="_blank" rel="noreferrer" 
-                 className="btn btn-ghost btn-sm" style={{ padding: '2px 8px', fontSize: '.75rem', height: '24px' }} title="Visualize GraphRAG Entities">
+                 className="btn btn-ghost btn-sm" style={{ padding: '2px 8px', fontSize: '.75rem', height: '24px' }} title={t('visualizeGraphRAG') || 'Visualize GraphRAG Entities'}>
                 <Network size={12} style={{ marginRight: 4 }} /> View Graph
               </a>
             )}
@@ -205,7 +206,7 @@ function MessageBubble({ msg }) {
   )
 }
 
-export default function ChatPage() {
+export default function ChatPage({ isWidget = false, initialQuery = '' }) {
   const { user } = useAuth()
   const { t, lang } = useTranslation()
   const [messages, setMessages] = useState([])
@@ -244,11 +245,17 @@ export default function ChatPage() {
 
   // Prefill from a Dashboard "ask copilot" deep-link (?q=…), then clear it from the URL.
   useEffect(() => {
+    if (isWidget) {
+      if (initialQuery) {
+        setInput(initialQuery)
+      }
+      return
+    }
     const pp = searchParams.get('persona')
     if (pp && PERSONA_META[pp]) { setPersona(pp); searchParams.delete('persona'); setSearchParams(searchParams, { replace: true }) }
     const q = searchParams.get('q')
     if (q) { setInput(q); setSearchParams({}, { replace: true }) }
-  }, [searchParams, setSearchParams])
+  }, [searchParams, setSearchParams, isWidget, initialQuery])
 
   // WebSocket
   useEffect(() => {
@@ -332,77 +339,89 @@ export default function ChatPage() {
 
   return (
     <div className="chat-layout" style={{ position: 'relative', overflow: 'hidden' }}>
-      <aside className={`chat-history-panel${showHistory ? ' mobile-open' : ' collapsed'}`}>
-        <div className="chat-history-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 7, fontWeight: 600, fontSize: '.9rem' }}>
-            <History size={15} /> {t('history') || 'History'}
-          </span>
-          <div style={{ display: 'flex', gap: 6 }}>
-            <button className="btn btn-primary btn-sm" onClick={newChat}><Plus size={14} /> {t('newChat') || 'New'}</button>
-            <button className="btn btn-ghost btn-icon mobile-only" onClick={() => setShowHistory(false)}><X size={14} /></button>
+      {!isWidget && (
+        <aside className={`chat-history-panel${showHistory ? ' mobile-open' : ' collapsed'}`}>
+          <div className="chat-history-header" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 7, fontWeight: 600, fontSize: '.9rem', overflow: 'hidden' }}>
+                <History size={15} style={{ flexShrink: 0 }} /> 
+                <span className="truncate" title={t('history') || 'History'}>{t('history') || 'History'}</span>
+              </span>
+              <button className="btn btn-ghost btn-icon mobile-only" onClick={() => setShowHistory(false)}><X size={14} /></button>
+            </div>
+            <button className="btn btn-primary btn-sm" onClick={newChat} style={{ width: '100%', justifyContent: 'center' }}>
+              <Plus size={14} style={{ flexShrink: 0 }} /> 
+              <span className="truncate" title={t('newChat') || 'New'}>{t('newChat') || 'New'}</span>
+            </button>
           </div>
-        </div>
-        <div className="chat-history-list">
-          {sessions.length ? sessions.map(s => {
-            const id = s.id || s.session_id
-            return (
-              <div key={id} className={`chat-history-item${activeSession === id ? ' active' : ''}`} onClick={() => loadSession(id)}>
-                <MessageSquare size={13} style={{ marginRight: 6, verticalAlign: 'middle', opacity: .6 }} />
-                {s.title || `Chat ${String(id).slice(0, 6)}`}
-              </div>
-            )
-          }) : <div style={{ padding: '18px 12px', textAlign: 'center', color: 'var(--text-3)', fontSize: '.8rem' }}>{t('noHistory') || 'No conversations yet'}</div>}
-        </div>
-      </aside>
+          <div className="chat-history-list">
+            {sessions.length ? sessions.map(s => {
+              const id = s.id || s.session_id
+              return (
+                <div key={id} className={`chat-history-item${activeSession === id ? ' active' : ''}`} onClick={() => loadSession(id)}>
+                  <MessageSquare size={13} style={{ marginRight: 6, verticalAlign: 'middle', opacity: .6 }} />
+                  {s.title || `Chat ${String(id).slice(0, 6)}`}
+                </div>
+              )
+            }) : <div style={{ padding: '18px 12px', textAlign: 'center', color: 'var(--text-3)', fontSize: '.8rem' }}>{t('noHistory') || 'No conversations yet'}</div>}
+          </div>
+        </aside>
+      )}
 
       <section className="chat-main" style={{ zIndex: 1 }}>
         <div className="chat-header">
-          <button className="btn btn-ghost btn-icon" onClick={() => setShowHistory(!showHistory)} style={{ marginRight: 6 }}>
-            {showHistory ? <PanelLeftClose size={18} /> : <PanelLeft size={18} />}
-          </button>
+          {!isWidget && (
+            <button className="btn btn-ghost btn-icon" onClick={() => setShowHistory(!showHistory)} style={{ marginRight: 6 }}>
+              {showHistory ? <PanelLeftClose size={18} /> : <PanelLeft size={18} />}
+            </button>
+          )}
           <span className="page-title" style={{ fontSize: '1.05rem' }}><Sparkles size={18} /> Copilot</span>
           <span className="badge" style={{ gap: 6 }}><span className="status-dot" style={{ background: dotColor, boxShadow: `0 0 0 3px color-mix(in srgb, ${dotColor} 20%, transparent)` }} />{status}</span>
           <div className="topbar-spacer" />
-          <div className="persona-row">
-            {user?.role === 'admin' ? (
-              <>
-                <span className="persona-chip" onClick={() => setPersona('')} style={{ '--pc': 'var(--p-general)' }}
-                  {...(persona === '' ? { className: 'persona-chip active' } : {})}>
-                  <span className="dot" /> Auto
-                </span>
-                {personas.map(p => {
-                  const key = p.id || p.persona_id || p.name
-                  const pm = PERSONA_META[key] || PERSONA_META.general
-                  const PIcon = pm.icon
-                  return (
-                    <span key={key} className={`persona-chip${persona === key ? ' active' : ''}`} style={{ '--pc': pm.color }} onClick={() => setPersona(key)}>
-                      <PIcon size={13} /> {p.display_name || pm.label || key}
+          {!isWidget && (
+            <>
+              <div className="persona-row">
+                {user?.role === 'admin' ? (
+                  <>
+                    <span className="persona-chip" onClick={() => setPersona('')} style={{ '--pc': 'var(--p-general)' }}
+                      {...(persona === '' ? { className: 'persona-chip active' } : {})}>
+                      <span className="dot" /> Auto
                     </span>
-                  )
-                })}
-              </>
-            ) : (
-              (() => {
-                const rolePersonaMap = {
-                  "admin": "ceo", "ceo": "ceo", "cfo": "cfo", "cto": "cto",
-                  "coo": "coo", "chro": "chro", "hr": "chro", "esg": "esg", "risk": "risk",
-                  "analyst": "analyst", "viewer": "general", "operations": "coo", "it": "cto",
-                  "custom": "general",
-                }
-                const allowedForRole = rolePersonaMap[user?.role] || 'general'
-                const pm = PERSONA_META[allowedForRole] || PERSONA_META.general
-                const PIcon = pm.icon
-                return (
-                  <span className="persona-chip active" style={{ '--pc': pm.color, cursor: 'default' }}>
-                    <PIcon size={13} /> {pm.label || allowedForRole}
-                  </span>
-                )
-              })()
-            )}
-          </div>
-          <button className="btn btn-ghost btn-icon" onClick={() => setShowKPI(!showKPI)} style={{ marginLeft: 6 }}>
-            {showKPI ? <PanelRightClose size={18} /> : <PanelRight size={18} />}
-          </button>
+                    {personas.map(p => {
+                      const key = p.id || p.persona_id || p.name
+                      const pm = PERSONA_META[key] || PERSONA_META.general
+                      const PIcon = pm.icon
+                      return (
+                        <span key={key} className={`persona-chip${persona === key ? ' active' : ''}`} style={{ '--pc': pm.color }} onClick={() => setPersona(key)}>
+                          <PIcon size={13} /> {p.display_name || pm.label || key}
+                        </span>
+                      )
+                    })}
+                  </>
+                ) : (
+                  (() => {
+                    const rolePersonaMap = {
+                      "admin": "ceo", "ceo": "ceo", "cfo": "cfo", "cto": "cto",
+                      "coo": "coo", "chro": "chro", "hr": "chro", "esg": "esg", "risk": "risk",
+                      "analyst": "analyst", "viewer": "general", "operations": "coo", "it": "cto",
+                      "custom": "general",
+                    }
+                    const allowedForRole = rolePersonaMap[user?.role] || 'general'
+                    const pm = PERSONA_META[allowedForRole] || PERSONA_META.general
+                    const PIcon = pm.icon
+                    return (
+                      <span className="persona-chip active" style={{ '--pc': pm.color, cursor: 'default' }}>
+                        <PIcon size={13} /> {pm.label || allowedForRole}
+                      </span>
+                    )
+                  })()
+                )}
+              </div>
+              <button className="btn btn-ghost btn-icon" onClick={() => setShowKPI(!showKPI)} style={{ marginLeft: 6 }}>
+                {showKPI ? <PanelRightClose size={18} /> : <PanelRight size={18} />}
+              </button>
+            </>
+          )}
         </div>
 
         <div className="chat-messages">
@@ -506,7 +525,7 @@ function ChatKPIRail({ showKPI, setShowKPI }) {
           <div key={i} className="rail-card">
             <div className="rail-card-header">
               <span className="rail-card-title"><Info size={14} /> {name}</span>
-              <span className="rail-card-period">Latest</span>
+              <span className="rail-card-period">{t('latest') || 'Latest'}</span>
             </div>
             <div className="rail-card-value">{fmt(k.value)}</div>
             {change != null && (
