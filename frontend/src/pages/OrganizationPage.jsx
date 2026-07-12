@@ -2,6 +2,7 @@
 // governs each lens. Built from real /personas + /kpis/categories.
 import { useQuery } from '@tanstack/react-query'
 import { Network, Crown, DollarSign, Cpu, Settings2, Users, Leaf, ShieldAlert, BarChart3, Bot } from 'lucide-react'
+import { useTranslation } from '../i18n/I18nContext'
 import * as api from '../api'
 import { PageHeader, Loading, Panel } from '../components/ui'
 
@@ -15,6 +16,7 @@ const PERSONA_COLOR = {
 }
 
 export default function OrganizationPage() {
+  const { t } = useTranslation()
   const { data: personas = [], isLoading } = useQuery({
     queryKey: ['personas'], queryFn: () => api.listPersonas().then(r => r.data?.personas || r.data || []),
   })
@@ -24,12 +26,12 @@ export default function OrganizationPage() {
 
   return (
     <div>
-      <PageHeader icon={Network} title="Organization"
-        subtitle="Departments, the data domains each owns, and the executive persona that governs each lens."
+      <PageHeader icon={Network} title={t('navOrganization') || 'Organization'}
+        subtitle={t('deptDataDomainsTooltip') || 'Departments, the data domains each owns, and the executive persona that governs each lens.'}
         accent="var(--accent)" />
 
-      {isLoading ? <Loading label="Loading organization…" /> : (
-        <Panel title="Executive lenses & data domains" icon={Network}>
+      {isLoading ? <Loading label={t('loadingOrg') || 'Loading organization…'} /> : (
+        <Panel title={t('execLensesDataDomains') || 'Executive lenses & data domains'} icon={Network}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(280px,1fr))', gap: 12 }}>
             {personas.map(p => {
               const key = p.id || p.persona_id || p.name
@@ -50,7 +52,7 @@ export default function OrganizationPage() {
                   {p.description && <p style={{ marginTop: 10, fontSize: 12.5, lineHeight: 1.6, color: 'var(--text-2)' }}>{p.description}</p>}
                   {domains.length > 0 && (
                     <div style={{ marginTop: 10 }}>
-                      <div style={{ fontSize: 10.5, textTransform: 'uppercase', letterSpacing: '.04em', color: 'var(--text-3)', marginBottom: 5 }}>Data domains</div>
+                      <div style={{ fontSize: 10.5, textTransform: 'uppercase', letterSpacing: '.04em', color: 'var(--text-3)', marginBottom: 5 }}>{t('dataDomains') || 'Data domains'}</div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                         {domains.map(d => (
                           <span key={d} style={{ fontSize: 11, padding: '2px 8px', borderRadius: 999, background: 'var(--surface-3)', color: 'var(--text-2)' }}>{d}</span>
@@ -66,7 +68,7 @@ export default function OrganizationPage() {
       )}
 
       {categories.length > 0 && (
-        <Panel title="KPI domains" icon={BarChart3}>
+        <Panel title={t('kpiDomains') || 'KPI domains'} icon={BarChart3}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {categories.map(c => (
               <span key={c} style={{ fontSize: 12.5, padding: '5px 12px', borderRadius: 999, border: '1px solid var(--border)', background: 'var(--surface-2)', color: 'var(--text-2)' }}>{c}</span>

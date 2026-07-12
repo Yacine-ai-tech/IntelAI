@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
 import * as api from '../api'
 import {
-  Database, Upload, FileText, Search, Loader2, CheckCircle2, AlertCircle,
+  Database, Upload, FileText, X, Search, Loader2, CheckCircle2, AlertCircle,
   BarChart3, File, ArrowRight, Table as TableIcon,
 } from 'lucide-react'
 import { PageHeader, Stat, StatGrid, fmtNum, Grid, Empty, Panel, MiniBars } from '../components/ui'
@@ -98,17 +98,31 @@ export default function DataHubPage() {
     } finally { setBusy('') }
   }
 
-  const onUploadDoc = async (file) => {
+  const onPickDoc = (file) => {
     if (!file) return
+    const name = file.name.toLowerCase()
+    if (name.endsWith('.pdf')) {
+      setPreview({ file, isDoc: true, text: 'PDF preview not available in browser. Ready to index.' })
+    } else {
+      const reader = new FileReader()
+      reader.onload = () => setPreview({ file, isDoc: true, text: String(reader.result || '') })
+      reader.readAsText(file)
+    }
+  }
+
+  const onUploadDoc = async () => {
+    if (!preview?.file) return
     setBusy('doc')
     try {
-      await api.uploadDocument(file, 'Knowledge')
-      flash('ok', `${file.name} indexed into the knowledge base.`)
+      await api.uploadDocument(preview.file, 'Knowledge')
+      flash('ok', `${preview.file.name} indexed into the knowledge base.`)
+      setPreview(null)
       refresh()
     } catch (e) {
       flash('err', e?.response?.data?.detail || `Upload failed: ${e.message}`)
     } finally { setBusy('') }
   }
+
 
   const onSearch = async (e) => {
     e.preventDefault()
@@ -154,13 +168,13 @@ export default function DataHubPage() {
           </Panel>
 
           <Panel title={t('addDocument') || 'Add document to knowledge base'} icon={FileText}>
-            <div className={`dropzone${drag === 'doc' ? ' over' : ''}`} {...dz('doc', onUploadDoc)} onClick={() => docRef.current?.click()}>
+            <div className={`dropzone${drag === 'doc' ? ' over' : ''}`} {...dz('doc', onPickDoc)} onClick={() => docRef.current?.click()}>
               {busy === 'doc' ? <Loader2 size={26} className="spin-inline" /> : <FileText size={26} />}
               <div style={{ fontWeight: 600, marginTop: 8 }}>{t('dropDoc') || 'Drop a PDF/TXT/MD or click to choose'}</div>
               <div style={{ fontSize: '.78rem', color: 'var(--text-3)', marginTop: 4 }}>{t('docIndexed') || 'Indexed for the persona RAG copilot'}</div>
             </div>
-            <input ref={docRef} type="file" accept=".pdf,.txt,.csv,.md" style={{ display: 'none' }}
-              onChange={(e) => onUploadDoc(e.target.files[0])} />
+            <input ref={docRef} type="file" accept=".pdf,.txt,.csv,.md,text/plain,text/markdown,text/csv,application/pdf,text/*" style={{ display: 'none' }}
+              onChange={(e) => onPickDoc(e.target.files[0])} />
           </Panel>
         </>
       )}
@@ -175,36 +189,50 @@ export default function DataHubPage() {
 
       {/* Visualize the uploaded data BEFORE ingest */}
       {preview && (
-        <Panel title={`${t('preview') || 'Preview'}: ${preview.file.name}`} icon={TableIcon} style={{ marginTop: 18 }}
+        <Panel title={`${t('preview') || 'Preview'}: ${preview.file.name}`} icon={preview.isDoc ? FileText : TableIcon} style={{ marginTop: 18 }}
           actions={
             <div style={{ display: 'flex', gap: 8 }}>
               <button className="btn btn-sm" onClick={() => setPreview(null)}>{t('cancel') || 'Cancel'}</button>
-              <button className="btn btn-primary btn-sm" disabled={busy === 'csv'} onClick={ingestCSV}>
-                {busy === 'csv' ? <Loader2 size={14} className="spin-inline" /> : <Upload size={14} />} {t('ingest') || 'Ingest'} {preview.rows.length} {t('rows') || 'rows'}
-              </button>
+              {preview.isDoc ? (
+                <button className="btn btn-primary btn-sm" disabled={busy === 'doc'} onClick={onUploadDoc}>
+                  {busy === 'doc' ? <Loader2 size={14} className="spin-inline" /> : <Upload size={14} />} {t('indexDoc') || 'Index Document'}
+                </button>
+              ) : (
+                <button className="btn btn-primary btn-sm" disabled={busy === 'csv'} onClick={ingestCSV}>
+                  {busy === 'csv' ? <Loader2 size={14} className="spin-inline" /> : <Upload size={14} />} {t('ingest') || 'Ingest'} {preview.rows.length} {t('rows') || 'rows'}
+                </button>
+              )}
             </div>
           }>
-          {preview.chart && (
-            <div style={{ marginBottom: 16 }}>
-              <div className="kpi-label" style={{ marginBottom: 6 }}><BarChart3 size={13} style={{ verticalAlign: 'middle' }} /> {t('uploadedDataChart') || 'Uploaded values (latest period)'}</div>
-              <MiniBars data={preview.chart} x="metric" y="value" height={200} />
+          {preview.isDoc ? (
+            <div style={{ maxHeight: 300, overflow: 'auto', padding: 12, background: 'var(--surface-2)', borderRadius: 6, fontSize: '.85rem', fontFamily: 'monospace', whiteSpace: 'pre-wrap' }}>
+              {preview.text}
             </div>
+          ) : (
+            <>
+              {preview.chart && (
+                <div style={{ marginBottom: 16 }}>
+                  <div className="kpi-label" style={{ marginBottom: 6 }}><BarChart3 size={13} style={{ verticalAlign: 'middle' }} /> {t('uploadedDataChart') || 'Uploaded values (latest period)'}</div>
+                  <MiniBars data={preview.chart} x="metric" y="value" height={200} />
+                </div>
+              )}
+              <div style={{ maxHeight: 260, overflow: 'auto' }}>
+                {preview.rows.length ? (
+                  <table className="table">
+                    <thead><tr>{preview.headers.map(h => <th key={h}>{h}</th>)}</tr></thead>
+                    <tbody>
+                      {preview.rows.slice(0, 50).map((r, i) => (
+                        <tr key={i}>{preview.headers.map(h => <td key={h}>{r[h]}</td>)}</tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : <Empty text={t('emptyCsv') || 'No rows found in this CSV.'} />}
+              </div>
+              <div style={{ marginTop: 12, fontSize: '.8rem', color: 'var(--text-3)' }}>
+                {t('showing') || 'Showing'} {Math.min(preview.rows.length, 50)} / {preview.rows.length} {t('rows') || 'rows'}
+              </div>
+            </>
           )}
-          <div style={{ maxHeight: 260, overflow: 'auto' }}>
-            {preview.rows.length ? (
-              <table className="table">
-                <thead><tr>{preview.headers.map(h => <th key={h}>{h}</th>)}</tr></thead>
-                <tbody>
-                  {preview.rows.slice(0, 50).map((r, i) => (
-                    <tr key={i}>{preview.headers.map(h => <td key={h}>{r[h]}</td>)}</tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : <Empty text={t('emptyCsv') || 'No rows found in this CSV.'} />}
-          </div>
-          <div style={{ margintop: 12, marginTop: 12, fontSize: '.8rem', color: 'var(--text-3)' }}>
-            {t('showing') || 'Showing'} {Math.min(preview.rows.length, 50)} / {preview.rows.length} {t('rows') || 'rows'}
-          </div>
         </Panel>
       )}
 
@@ -214,13 +242,28 @@ export default function DataHubPage() {
           actions={<button className="btn btn-outline btn-sm" onClick={() => navigate('/analytics')}>{t('viewInAnalytics') || 'View in Analytics'} <ArrowRight size={13} /></button>}>
           {files.length ? (
             <table className="table">
-              <thead><tr><th>{t('file') || 'File'}</th><th>{t('type') || 'Type'}</th><th>{t('when') || 'When'}</th></tr></thead>
+              <thead><tr><th>{t('file') || 'File'}</th><th>{t('type') || 'Type'}</th><th>{t('when') || 'When'}</th><th style={{width:40}}></th></tr></thead>
               <tbody>
                 {files.map((f, i) => (
-                  <tr key={i}>
+                  <tr key={f.id || i}>
                     <td style={{ fontWeight: 600 }}>{f.file_name || f.filename || f.name || '—'}</td>
                     <td><span className="badge">{f.file_type || f.type || 'file'}</span></td>
                     <td style={{ fontSize: '.8rem', color: 'var(--text-3)' }}>{f.created_at ? new Date(f.created_at).toLocaleString() : '—'}</td>
+                    <td>
+                      {f.id && (
+                        <button className="btn btn-ghost btn-icon btn-sm" title={t('deleteFile') || 'Delete'} onClick={async () => {
+                          if (!confirm(t('confirmDelete') || 'Delete this file?')) return;
+                          try {
+                            await api.deleteFile(f.id);
+                            refresh();
+                          } catch (e) {
+                            flash('err', 'Failed to delete file');
+                          }
+                        }}>
+                          <X size={14} color="var(--text-3)" />
+                        </button>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -231,7 +274,7 @@ export default function DataHubPage() {
         {/* Knowledge search */}
         <Panel title={t('searchKnowledge') || 'Search the knowledge base'} icon={Search}>
           <form onSubmit={onSearch} style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
-            <input className="form-input" style={{ flex: 1 }} value={query} placeholder="e.g. Q1 churn drivers"
+            <input className="form-input" style={{ flex: 1 }} value={query} placeholder={t('searchPlaceholder') || 'e.g. Q1 churn drivers'}
               onChange={(e) => setQuery(e.target.value)} />
             <button className="btn btn-primary" disabled={busy === 'search'}>
               {busy === 'search' ? <Loader2 size={16} className="spin-inline" /> : <Search size={16} />}

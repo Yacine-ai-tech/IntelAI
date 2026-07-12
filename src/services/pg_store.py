@@ -245,14 +245,10 @@ def init_pg_tables():
 # KPI OPERATIONS
 # ═══════════════════════════════════════════════════════════
 
-def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: bool = True) -> None:
+def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: bool = True, replace_prefix: Optional[str] = None) -> None:
     import pandas as pd
     if df.empty:
         return
-    # Build all rows once, then write in a single batched executemany — one round-trip
-    # instead of N. This keeps large seeds (thousands of rows) well within the
-    # connection lifetime of serverless Postgres (Neon scales to zero and can drop a
-    # long row-by-row transaction on cold start).
     params = [
         (
             str(row.get("period", "")),
@@ -271,16 +267,19 @@ def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: 
         "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
     )
     last_err: Optional[Exception] = None
-    for _ in range(3):  # retry: serverless Postgres may drop the first connection on cold start
+    for _ in range(3):
         conn = _get_conn()
         try:
             with conn.cursor() as cur:
                 if replace:
-                    cur.execute("DELETE FROM kpi_metrics WHERE source = %s", [source_name])
+                    if replace_prefix:
+                        cur.execute("DELETE FROM kpi_metrics WHERE source LIKE %s", [f"{replace_prefix}%"])
+                    else:
+                        cur.execute("DELETE FROM kpi_metrics WHERE source = %s", [source_name])
                 cur.executemany(insert_sql, params)
             conn.commit()
             return
-        except Exception as e:  # noqa: BLE001 — retry transient connection drops, re-raise persistent ones
+        except Exception as e:
             last_err = e
             try:
                 conn.rollback()
@@ -465,6 +464,20 @@ def get_user_files(username: str, limit: int = 50, offset: int = 0) -> List[Dict
     finally:
         conn.close()
 
+
+
+def delete_file(file_id: str, username: str) -> bool:
+    """Delete a file from the database for the given user."""
+    conn = _get_conn()
+    try:
+        res = conn.execute(
+            "DELETE FROM uploaded_files WHERE id = %s AND username = %s",
+            [file_id, username]
+        )
+        return res.rowcount > 0
+    except Exception as e:
+        log.warning("Failed to delete file: %s", e)
+        return False
 
 def get_file_content(file_id: str, username: str) -> Optional[str]:
     """Return extracted content for a file owned by a user."""
