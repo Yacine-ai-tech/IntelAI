@@ -66,15 +66,15 @@ export default function ContextualExplainer({ domain, onClose }) {
                   <span className="gloss-term">
                     {e.term}{e.abbr && e.abbr !== e.term ? <span className="gloss-abbr">{e.abbr}</span> : null}
                   </span>
-                  {e.direction === 'up' && <ArrowUp size={13} style={{ color: 'var(--ok)' }} title="Higher is better" />}
-                  {e.direction === 'down' && <ArrowDown size={13} style={{ color: 'var(--ok)' }} title="Lower is better" />}
+                  {e.direction === 'up' && <ArrowUp size={13} style={{ color: 'var(--ok)' }} title={t('higherIsBetter') || 'Higher is better'} />}
+                  {e.direction === 'down' && <ArrowDown size={13} style={{ color: 'var(--ok)' }} title={t('lowerIsBetter') || 'Lower is better'} />}
                 </button>
                 {open && (
                   <div className="gloss-body">
                     <p>{e.definition}</p>
-                    {e.formula && <div className="gloss-row"><b>Formula</b><code>{e.formula}</code></div>}
-                    {e.benchmark && <div className="gloss-row"><b>2026 benchmark</b><span>{e.benchmark}</span></div>}
-                    {e.source && <div className="gloss-row"><b>Source</b><span style={{ color: 'var(--text-3)' }}>{e.source}</span></div>}
+                    {e.formula && <div className="gloss-row"><b>{t('formula') || 'Formula'}</b><code>{e.formula}</code></div>}
+                    {e.benchmark && <div className="gloss-row"><b>{t('benchmark2026') || '2026 benchmark'}</b><span>{e.benchmark}</span></div>}
+                    {e.source && <div className="gloss-row"><b>{t('source') || 'Source'}</b><span style={{ color: 'var(--text-3)' }}>{e.source}</span></div>}
                     <button className="btn btn-outline btn-sm" style={{ marginTop: 10 }} onClick={() => askCopilot(e.term)}>
                       <Sparkles size={13} /> {t('askCopilotInContext') || 'Ask the copilot in context'}
                     </button>

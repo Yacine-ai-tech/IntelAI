@@ -116,19 +116,26 @@ def llm_complete(
     temperature: float = 0.3,
     max_tokens: int = 1024,
     top_p: Optional[float] = None,
+    model: Optional[str] = None,
+    persona_name: Optional[str] = None,
 ) -> Tuple[str, int]:
     """Provider-agnostic chat completion → (text, tokens_used).
 
-    ``LLM_PROVIDER`` picks the backend with a single env var (no vendor lock-in):
-      * ``groq`` (default) — the Groq SDK directly (fastest path).
-      * anything else (``anthropic``/``openai``/``ollama``/…) — routed via LiteLLM, with
-        ``LLM_MODEL`` either a full ``provider/model`` string or a bare model id that gets
-        the provider prefix. Anthropic prompt-cache breakpoints are applied for Claude models.
+    Uses llm_router to resolve the correct model (Claude vs Groq) based on persona tier.
+    Groq models use the native SDK for maximum speed; others route via LiteLLM.
     """
-    provider = (settings.LLM_PROVIDER or "groq").lower()
+    from src.services.llm_router import _resolve, PERSONA_TIER_MAP, _apply_cache_control
+    
+    tier = "default"
+    if persona_name and persona_name.lower() in PERSONA_TIER_MAP:
+        tier = PERSONA_TIER_MAP[persona_name.lower()]
+    
+    resolved_model = model or _resolve(tier)
 
-    if provider == "groq" and _groq_client() is not None:
-        kw: Dict[str, Any] = {"model": settings.LLM_MODEL, "messages": messages,
+    # Fast path: use native Groq SDK if resolved model is a Groq model
+    if resolved_model.startswith("groq/") and _groq_client() is not None:
+        actual_model = resolved_model.replace("groq/", "")
+        kw: Dict[str, Any] = {"model": actual_model, "messages": messages,
                               "temperature": temperature, "max_tokens": max_tokens}
         if top_p is not None:
             kw["top_p"] = top_p
@@ -136,12 +143,10 @@ def llm_complete(
         tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
         return r.choices[0].message.content, tokens
 
-    # Any other provider → LiteLLM.
+    # Any other provider → LiteLLM
     from litellm import completion
-    from src.services.llm_router import _apply_cache_control
-    model = settings.LLM_MODEL if "/" in settings.LLM_MODEL else f"{provider}/{settings.LLM_MODEL}"
-    msgs = _apply_cache_control(messages, model)
-    kw = {"model": model, "messages": msgs, "temperature": temperature, "max_tokens": max_tokens}
+    msgs = _apply_cache_control(messages, resolved_model)
+    kw = {"model": resolved_model, "messages": msgs, "temperature": temperature, "max_tokens": max_tokens}
     if top_p is not None:
         kw["top_p"] = top_p
     r = completion(**kw)
@@ -891,12 +896,38 @@ class AgentPersonaFactory:
         return False
 
     @staticmethod
-    def _needs_web(text: str) -> bool:
+    def _needs_web(text: str, context: str = "") -> bool:
         """True when a question calls for external / real-time / benchmark information that the
-        internal KPI snapshot + knowledge base cannot answer on their own."""
+        internal KPI snapshot + knowledge base cannot answer on their own. Uses LLM for intelligent judgment."""
         t = (text or "").lower()
         if not t.strip():
             return False
+        
+        from src.core.config import settings
+        prompt = (
+            "You are a routing agent for a corporate AI copilot. The user asked: {query}\n"
+            "The internal knowledge base returned the following data:\n---\n{context}\n---\n"
+            "Does the query ask for external market data, news, competitor intel, or current events that are NOT adequately answered by the internal data above? "
+            "Consider the lack of data if the query asks about real-time events. "
+            "Reply with exactly one word: YES or NO."
+        ).format(query=t, context=(context or "No internal data found.")[:2000])
+        
+        try:
+            reply, _ = llm_complete(
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=10,
+                temperature=0.0,
+                model=getattr(settings, "LLM_JUDGE", getattr(settings, "LLM_MODEL", "groq/llama-3.3-70b-versatile"))
+            )
+            if "yes" in reply.lower():
+                return True
+            if "no" in reply.lower():
+                return False
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).warning("LLM Judge failed for _needs_web: %s", e)
+
+        # Fallback to smart triggers if LLM is down
         triggers = (
             "benchmark", "industry", "market", "competitor", "competition", "peer", " vs ",
             "versus", "news", "latest", "regulation", "gdpr", "csrd", "sec filing", "best practice",
@@ -967,7 +998,7 @@ class AgentPersonaFactory:
             retrieved_ctx, sources = self._retrieve_context(message, persona, language)
             # Augment with real-time web search (Tavily) when the question needs external,
             # current or benchmark data — web results are cited by [n] like any other source.
-            if self._needs_web(message):
+            if self._needs_web(message, retrieved_ctx):
                 max_id = max((s.get("id", 0) for s in sources), default=0)
                 web_ctx, web_sources = self._web_context(message, settings.WEB_SEARCH_MAX_RESULTS, max_id)
                 if web_ctx:
@@ -993,7 +1024,12 @@ class AgentPersonaFactory:
             "* EXPLICIT PLAN / STRATEGY / 'give me a plan / roadmap / step-by-step' -> a tailored, "
             "prioritized action plan grounded in the data (each step: what to do, which figure justifies "
             "it, expected impact).\n"
-            "Only include an action plan when the user actually asked for one. Never pad with generic advice.\n\n"
+            "Only include an action plan when the user actually asked for one. Never pad with generic advice.\n"
+            "* CAUSE ANALYSIS & FALLBACK: If asked WHY an anomaly or event occurred, you MUST ONLY state the root causes explicitly found in the internal data. 
+If the internal data lacks the cause:
+  1) State clearly: 'The root cause is not present in the current knowledge base.'
+  2) Instruct the user on what data they should provide or upload (e.g., 'Please upload recent incident post-mortems, QA reports, or market analyses to the Data Hub.').
+  3) Use the provided WEB RESULTS (if available) to offer an industry-standard benchmark or similar known case to help them make an informed decision (e.g., 'In similar industry cases, this is handled by...'). ALWAYS cite the web sources using [n]. Do NOT generate hypothetical generic reasons.\n\n"
             "STEP 2 — WHEN (and only when) the user asks about the business or its data, use the LIVE DATA "
             "block below directly: quote the metric values, mirroring the exact currency and number format "
             "shown (e.g. '$3.6M', '3,6 M€', '3,6 Md FCFA' — never convert currencies), and CITE sources "
