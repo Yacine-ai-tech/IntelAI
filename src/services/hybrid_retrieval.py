@@ -188,6 +188,7 @@ class HybridRetriever:
                 order = sorted(range(len(merged)), key=lambda j: scores[j], reverse=True)[:top_n]
                 return [{"chunk": self._chunks[merged[j]], "score": float(scores[j])} for j in order]
             except Exception as e:  # installed-but-broken reranker (e.g. tokenizer version skew)
+            except Exception as e:  # installed-but-broken reranker (e.g. tokenizer version skew)
                 # Degrade to dense+BM25+RRF fusion instead of failing the whole retrieval.
                 self._reranker_failed = True
                 log.warning("Reranker unavailable (%s) — falling back to RRF fusion for this session", e)
@@ -240,6 +241,7 @@ def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int =
             out.append((title, content, float(hit.get("score", 1.0))))
         return out
     except Exception as e:  # never break the chat path
+    except Exception as e:  # never break the chat path
         log.warning("Hybrid retrieve failed (falling back to vector): %s", e)
         return []
 
@@ -263,7 +265,8 @@ def _trigger_wake() -> None:
 
     def _go():
         try:
-            import json as _json, urllib.request
+            import json as _json
+            import urllib.request
             h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0 (+https://ysiddo-ai-projects.app)"}
             tk = os.getenv("ORCH_TOKEN", "").strip()
             if tk:
@@ -271,6 +274,7 @@ def _trigger_wake() -> None:
             req = urllib.request.Request(url.rstrip("/") + "/wake", data=_json.dumps({}).encode(), headers=h)
             urllib.request.urlopen(req, timeout=90)
         except Exception:
+            import logging; logging.error('Unhandled exception', exc_info=True)
             pass
     import threading
     threading.Thread(target=_go, daemon=True).start()
@@ -290,7 +294,8 @@ def _hosted_rerank(query: str, texts: List[str]) -> Optional[List[float]]:
     if not key:
         return None
     try:
-        import json as _json, urllib.request
+        import json as _json
+        import urllib.request
         if provider == "cohere":
             url = os.getenv("COHERE_BASE_URL", "https://api.cohere.com").rstrip("/") + "/v2/rerank"
             model = os.getenv("HOSTED_RERANK_MODEL", "rerank-v3.5")  # multilingual (EN/FR)
@@ -337,7 +342,8 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
     remote = os.getenv("LIGHTNING_RERANK_URL", "").strip()
     if remote:
         try:
-            import json as _json, urllib.request
+            import json as _json
+            import urllib.request
             body = _json.dumps({"query": query, "texts": texts}).encode()
             h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0 (+https://ysiddo-ai-projects.app)"}
             tk = os.getenv("INFERENCE_TOKEN", "").strip()

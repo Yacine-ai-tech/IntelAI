@@ -13,11 +13,11 @@ Handles all persistence:
 from __future__ import annotations
 
 import uuid
-from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 import psycopg
 from psycopg.rows import dict_row
+import pandas as pd
 
 from src.core.config import settings
 from src.core.logger import get_logger
@@ -246,7 +246,6 @@ def init_pg_tables():
 # ═══════════════════════════════════════════════════════════
 
 def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: bool = True, replace_prefix: Optional[str] = None) -> None:
-    import pandas as pd
     if df.empty:
         return
     params = [
@@ -284,6 +283,7 @@ def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: 
             try:
                 conn.rollback()
             except Exception:
+                import logging; logging.error('Unhandled exception', exc_info=True)
                 pass
         finally:
             conn.close()
@@ -418,7 +418,6 @@ def delete_period(period: str) -> None:
 
 
 def upsert_kpi_targets(targets_df: "pd.DataFrame") -> None:
-    import pandas as pd
     if targets_df.empty:
         return
     conn = _get_conn()
@@ -535,7 +534,6 @@ def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] 
     embedding) — not just content — so a reused doc_id can never end up with a stale title
     paired to new content. ``replace_prefix`` first deletes docs whose doc_id starts with it
     (e.g. ``"seed-"``) so a re-seed with a different doc set leaves no orphaned rows."""
-    import pandas as pd
     if docs_df.empty:
         return
     params = [
@@ -622,6 +620,7 @@ def store_conversation(cid: str, user_msg: str, ai_resp: str, language: str = "e
         )
         conn.commit()
     except Exception:
+        import logging; logging.error('Unhandled exception', exc_info=True)
         pass
     finally:
         conn.close()
@@ -640,6 +639,7 @@ def log_audit_event(actor: str, event_type: str, detail: str) -> None:
         )
         conn.commit()
     except Exception:
+        import logging; logging.error('Unhandled exception', exc_info=True)
         pass
     finally:
         conn.close()
@@ -924,7 +924,7 @@ def clear_user_data() -> Dict[str, int]:
             try:
                 cur = conn.execute(f"DELETE FROM {tbl}")
                 out[tbl] = getattr(cur, "rowcount", 0) or 0
-            except Exception as e:
+            except Exception:
                 out[tbl] = -1
         conn.commit()
     finally:

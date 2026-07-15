@@ -10,7 +10,6 @@ from typing import Any, Dict, List, Optional
 
 import pandas as pd
 
-from src.core.i18n import I18N
 from src.core.logger import get_logger
 from src.services.pg_store import get_kpi_metrics
 

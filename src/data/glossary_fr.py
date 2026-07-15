@@ -3,7 +3,7 @@ Keeps the FR glossary complete + instant + LLM-independent. term -> {field: fr_t
 """
 
 from __future__ import annotations
-from typing import Any, Dict
+from typing import Dict
 
 GLOSSARY_FR: Dict[str, Dict[str, str]] = {
     "Revenue": {

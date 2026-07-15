@@ -20,7 +20,6 @@ the chat path never breaks because a vector DB is misconfigured.
 """
 from __future__ import annotations
 
-import os
 from typing import Any, Dict, List, Optional, Tuple
 
 from src.core.config import settings

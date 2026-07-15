@@ -6,7 +6,6 @@ Entities: department, category, period, metric_name, etc.
 """
 
 from typing import Dict, List, Optional, Any
-from datetime import datetime
 import re
 
 
