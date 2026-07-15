@@ -31,28 +31,18 @@ USAGE:
 from __future__ import annotations
 
 import json
-import uuid
 import time
-import asyncio
 from typing import Any, Dict, List, Optional, Tuple
-from datetime import datetime
-from io import BytesIO
+from datetime import datetime, timezone
 import re
-import logging
 
 import numpy as np
-import pandas as pd
 
 from src.core.config import settings
-from src.core.i18n import I18N, t
+from src.core.i18n import I18N
 from src.core.logger import get_logger
 from src.services.pg_store import (
-    get_conversation_history,
-    get_conversations,
     get_knowledge_docs,
-    store_conversation,
-    store_knowledge_docs,
-    store_chat_session,
 )
 
 log = get_logger(__name__)
@@ -75,6 +65,7 @@ try:
     from sentence_transformers import SentenceTransformer
     _SBERT = True
 except Exception:
+    import logging; logging.error('Unhandled exception', exc_info=True)
     pass
 
 try:
@@ -105,8 +96,8 @@ def llm_available() -> bool:
     if (settings.LLM_PROVIDER or "groq").lower() == "groq":
         return _groq_client() is not None
     try:
-        import litellm  # type: ignore
-        return True
+        import importlib.util
+        return importlib.util.find_spec("litellm") is not None
     except ImportError:
         return False
 
@@ -245,7 +236,7 @@ class UltraFastRAG:
                         if emb_str and isinstance(emb_str, str):
                             try:
                                 doc_embeddings.append(np.array(json.loads(emb_str)))
-                            except:
+                            except Exception:
                                 doc_embeddings.append(np.zeros_like(query_embedding))
                         else:
                             doc_embeddings.append(np.zeros_like(query_embedding))
@@ -695,6 +686,7 @@ def tavily_search(query: str, max_results: int = 4) -> List[Dict[str, Any]]:
                 "score": float(it.get("score", 0) or 0),
             })
         return out
+    except Exception as e:  # network/key/quota — never break the chat
     except Exception as e:  # network/key/quota — never break the chat
         log.warning("Tavily web search failed: %s", e)
         return []
