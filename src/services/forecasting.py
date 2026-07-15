@@ -5,13 +5,12 @@ CPU-friendly: uses scikit-learn LinearRegression (no GPU needed).
 from __future__ import annotations
 
 from datetime import datetime, timedelta
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
 from scipy import stats
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
 
 from src.core.i18n import I18N
 from src.core.logger import get_logger
@@ -39,9 +38,6 @@ class ForecastEngine:
         model = LinearRegression().fit(X, y)
         preds = model.predict(X)
         residual_std = np.std(y - preds)
-
-        mse = mean_squared_error(y, preds)
-        r2 = r2_score(y, preds)
 
         last_idx = df["time_index"].max()
         future_idx = np.arange(last_idx + 1, last_idx + periods + 1).reshape(-1, 1)
