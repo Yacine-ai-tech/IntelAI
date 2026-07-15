@@ -316,6 +316,23 @@ def _hosted_rerank(query: str, texts: List[str]) -> Optional[List[float]]:
                 scores[idx] = float(r.get("relevance_score", 0.0))
         return scores
     except Exception as e:
+        # Fallback to Hugging Face Free Inference API if hosted fails and HF_TOKEN is available
+        hf_token = os.getenv("HF_TOKEN", "").strip()
+        if hf_token:
+            try:
+                import urllib.request
+                import json as _json
+                model = os.getenv("HF_RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
+                url = f"https://api-inference.huggingface.co/models/{model}"
+                h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
+                body = _json.dumps({"inputs": {"source_sentence": query, "sentences": list(texts)}}).encode()
+                req = urllib.request.Request(url, data=body, headers=h)
+                res = _json.loads(urllib.request.urlopen(req, timeout=15).read())
+                if isinstance(res, list) and len(res) == len(texts):
+                    return [float(score) for score in res]
+            except Exception as hf_err:
+                log.warning("HF fallback rerank also unavailable: %s", hf_err)
+        
         log.warning("hosted rerank unavailable (%s) — keeping fusion order", e)
         return None
 

@@ -44,8 +44,26 @@ def _embedder():
 
 def _embed(texts: List[str]):
     import numpy as np
-    vecs = _embedder().encode(list(texts), normalize_embeddings=True, show_progress_bar=False)
-    return np.asarray(vecs, dtype="float32")
+    try:
+        vecs = _embedder().encode(list(texts), normalize_embeddings=True, show_progress_bar=False)
+        return np.asarray(vecs, dtype="float32")
+    except Exception as e:
+        hf_token = os.environ.get("HF_TOKEN", "").strip()
+        if hf_token:
+            log.warning("Local embedding failed (%s), falling back to HF API", e)
+            try:
+                import urllib.request
+                import json as _json
+                model = os.getenv("HF_EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5")
+                url = f"https://api-inference.huggingface.co/pipeline/feature-extraction/{model}"
+                h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
+                body = _json.dumps({"inputs": list(texts)}).encode()
+                req = urllib.request.Request(url, data=body, headers=h)
+                res = _json.loads(urllib.request.urlopen(req, timeout=20).read())
+                return np.asarray(res, dtype="float32")
+            except Exception as hf_err:
+                log.warning("HF fallback embedding failed: %s", hf_err)
+        raise e
 
 
 def _dim() -> int:
