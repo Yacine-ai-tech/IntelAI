@@ -60,4 +60,5 @@ def test_persona_is_frozen_dataclass():
         p.temperature = 0.9  # type: ignore[misc]
         raise AssertionError("Persona should be immutable")
     except Exception:
+        import logging; logging.error('Unhandled exception', exc_info=True)
         pass

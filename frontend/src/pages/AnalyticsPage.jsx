@@ -25,7 +25,9 @@ export default function AnalyticsPage() {
     .map(k => ({ period: k.period, value: Math.round((k.value || 0) * 100) / 100 }))
     .sort((a, b) => (a.period || '').localeCompare(b.period || '')), [kpis, selected])
 
-  if (isLoading) return <Loading />
+  if (isLoading && kpis.length === 0) return <Loading />
+  // Render gracefully even if data fails
+  if (!isLoading && kpis.length === 0 && metricNames.length === 0) return <div className='empty-state-fallback' style={{padding: '50px', textAlign: 'center', color: '#fff'}}><h2>No Analytics Data Available</h2><p>The backend may be offline or returned no data.</p></div>
   const fc = forecast.data
 
   return (
