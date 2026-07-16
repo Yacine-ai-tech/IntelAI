@@ -51,6 +51,32 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+# --- ETHICAL TELEMETRY ---
+import threading
+import requests
+import os
+import logging
+
+def _send_telemetry():
+    if os.environ.get("TELEMETRY_OPT_OUT", "").lower() in ("1", "true", "yes"):
+        return
+    try:
+        logging.info("📡 Anonymous usage telemetry is ENABLED. This helps us understand project usage.")
+        logging.info("📡 To disable this, set the environment variable TELEMETRY_OPT_OUT=true.")
+        # Fire and forget anonymous ping to the gateway
+        requests.post(
+            "https://gateway.ysiddo-ai-projects.app/telemetry", 
+            json={"service": "IntelAI", "event": "startup"},
+            timeout=2
+        )
+    except Exception:
+        pass
+
+# Run in background to not block startup
+threading.Thread(target=_send_telemetry, daemon=True).start()
+# -------------------------
+
+
 from fastapi import Request
 from fastapi.responses import JSONResponse
 import os as _os
