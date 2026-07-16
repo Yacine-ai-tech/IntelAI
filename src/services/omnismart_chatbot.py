@@ -687,7 +687,6 @@ def tavily_search(query: str, max_results: int = 4) -> List[Dict[str, Any]]:
             })
         return out
     except Exception as e:  # network/key/quota — never break the chat
-    except Exception as e:  # network/key/quota — never break the chat
         log.warning("Tavily web search failed: %s", e)
         return []
 

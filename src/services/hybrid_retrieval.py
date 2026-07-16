@@ -188,7 +188,6 @@ class HybridRetriever:
                 order = sorted(range(len(merged)), key=lambda j: scores[j], reverse=True)[:top_n]
                 return [{"chunk": self._chunks[merged[j]], "score": float(scores[j])} for j in order]
             except Exception as e:  # installed-but-broken reranker (e.g. tokenizer version skew)
-            except Exception as e:  # installed-but-broken reranker (e.g. tokenizer version skew)
                 # Degrade to dense+BM25+RRF fusion instead of failing the whole retrieval.
                 self._reranker_failed = True
                 log.warning("Reranker unavailable (%s) — falling back to RRF fusion for this session", e)
@@ -240,7 +239,6 @@ def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int =
             title, content = by_chunk.get(hit["chunk"], ("Document", hit["chunk"]))
             out.append((title, content, float(hit.get("score", 1.0))))
         return out
-    except Exception as e:  # never break the chat path
     except Exception as e:  # never break the chat path
         log.warning("Hybrid retrieve failed (falling back to vector): %s", e)
         return []
