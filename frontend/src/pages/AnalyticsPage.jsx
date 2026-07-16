@@ -1,12 +1,43 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, Component } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import * as api from '../api'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
-import { BarChart3, Hash, Calendar, Layers, FolderKanban, TrendingUp } from 'lucide-react'
+import { BarChart3, Hash, Calendar, Layers, FolderKanban, TrendingUp, AlertTriangle } from 'lucide-react'
 import { PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, AreaTrend, Panel } from '../components/ui'
 
+class AnalyticsErrorBoundary extends Component {
+  constructor(props) { super(props); this.state = { hasError: false, error: null } }
+  static getDerivedStateFromError(error) { return { hasError: true, error } }
+  componentDidCatch(error, info) { console.error('AnalyticsPage error:', error, info) }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text, #fff)' }}>
+          <AlertTriangle size={40} style={{ color: '#f59e0b', marginBottom: 16 }} />
+          <h2 style={{ marginBottom: 8 }}>Analytics Unavailable</h2>
+          <p style={{ color: 'var(--text-2, #94a3b8)', marginBottom: 20 }}>
+            {this.state.error?.message || 'The analytics panel encountered an error.'}
+          </p>
+          <button className="btn btn-primary" onClick={() => this.setState({ hasError: false, error: null })}>
+            Retry
+          </button>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
+
 export default function AnalyticsPage() {
+  return (
+    <AnalyticsErrorBoundary>
+      <AnalyticsInner />
+    </AnalyticsErrorBoundary>
+  )
+}
+
+function AnalyticsInner() {
   const { user, hasAction } = useAuth()
   const { t } = useTranslation()
   const [metric, setMetric] = useState('')
@@ -25,7 +56,9 @@ export default function AnalyticsPage() {
     .map(k => ({ period: k.period, value: Math.round((k.value || 0) * 100) / 100 }))
     .sort((a, b) => (a.period || '').localeCompare(b.period || '')), [kpis, selected])
 
-  if (isLoading) return <Loading />
+  if (isLoading && kpis.length === 0) return <Loading />
+  // Render gracefully even if data fails
+  if (!isLoading && kpis.length === 0 && metricNames.length === 0) return <div className='empty-state-fallback' style={{padding: '50px', textAlign: 'center', color: '#fff'}}><h2>No Analytics Data Available</h2><p>The backend may be offline or returned no data.</p></div>
   const fc = forecast.data
 
   return (

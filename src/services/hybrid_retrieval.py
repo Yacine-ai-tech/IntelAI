@@ -179,15 +179,16 @@ class HybridRetriever:
         rrf = self._rrf_scores(dense, sparse)
         merged = sorted(rrf, key=lambda i: rrf[i], reverse=True)[:cand_n]
 
-        if rerank and _RERANKER and not self._reranker_failed:
+        if rerank and not self._reranker_failed:
             try:
-                reranker = self._ensure_reranker()
-                pairs = [(query, self._chunks[i]) for i in merged]
-                scores = reranker.predict(pairs)
-                scores = [float(s) for s in scores]
-                order = sorted(range(len(merged)), key=lambda j: scores[j], reverse=True)[:top_n]
-                return [{"chunk": self._chunks[merged[j]], "score": float(scores[j])} for j in order]
-            except Exception as e:  # installed-but-broken reranker (e.g. tokenizer version skew)
+                r_func = globals().get("rerank")
+                if r_func:
+                    texts = [self._chunks[i] for i in merged]
+                    scores = r_func(query, texts)
+                    if scores is not None:
+                        order = sorted(range(len(merged)), key=lambda j: scores[j], reverse=True)[:top_n]
+                        return [{"chunk": self._chunks[merged[j]], "score": float(scores[j])} for j in order]
+            except Exception as e:
                 # Degrade to dense+BM25+RRF fusion instead of failing the whole retrieval.
                 self._reranker_failed = True
                 log.warning("Reranker unavailable (%s) — falling back to RRF fusion for this session", e)
@@ -263,7 +264,8 @@ def _trigger_wake() -> None:
 
     def _go():
         try:
-            import json as _json, urllib.request
+            import json as _json
+            import urllib.request
             h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0 (+https://ysiddo-ai-projects.app)"}
             tk = os.getenv("ORCH_TOKEN", "").strip()
             if tk:
@@ -271,6 +273,7 @@ def _trigger_wake() -> None:
             req = urllib.request.Request(url.rstrip("/") + "/wake", data=_json.dumps({}).encode(), headers=h)
             urllib.request.urlopen(req, timeout=90)
         except Exception:
+            import logging; logging.error('Unhandled exception', exc_info=True)
             pass
     import threading
     threading.Thread(target=_go, daemon=True).start()
@@ -290,7 +293,8 @@ def _hosted_rerank(query: str, texts: List[str]) -> Optional[List[float]]:
     if not key:
         return None
     try:
-        import json as _json, urllib.request
+        import json as _json
+        import urllib.request
         if provider == "cohere":
             url = os.getenv("COHERE_BASE_URL", "https://api.cohere.com").rstrip("/") + "/v2/rerank"
             model = os.getenv("HOSTED_RERANK_MODEL", "rerank-v3.5")  # multilingual (EN/FR)
@@ -311,56 +315,97 @@ def _hosted_rerank(query: str, texts: List[str]) -> Optional[List[float]]:
                 scores[idx] = float(r.get("relevance_score", 0.0))
         return scores
     except Exception as e:
+        # Fallback to Hugging Face Free Inference API if hosted fails and HF_TOKEN is available
+        hf_token = os.getenv("HF_TOKEN", "").strip()
+        if hf_token:
+            try:
+                import urllib.request
+                import json as _json
+                model = os.getenv("HF_RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
+                url = f"https://router.huggingface.co/hf-inference/models/{model}"
+                h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
+                body = _json.dumps({"inputs": [f"{query} </s> {t}" for t in texts]}).encode()
+                req = urllib.request.Request(url, data=body, headers=h)
+                res = _json.loads(urllib.request.urlopen(req, timeout=15).read())
+                if isinstance(res, list) and len(res) > 0:
+                    if isinstance(res[0], list) and len(res[0]) == len(texts):
+                        return [float(item["score"]) for item in res[0]]
+                    elif len(res) == len(texts):
+                        return [float(item[0]["score"] if isinstance(item, list) else item.get("score", 0.0)) for item in res]
+            except Exception as hf_err:
+                log.warning("HF fallback rerank also unavailable: %s", hf_err)
+        
         log.warning("hosted rerank unavailable (%s) — keeping fusion order", e)
         return None
 
 
 def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
-    """Score ``(query, text)`` pairs with the BGE CrossEncoder reranker.
-
-    Returns a list of relevance scores aligned with ``texts``, or ``None`` when the reranker
-    is unavailable / has errored (callers then keep their fusion order). Reuses one cached
-    reranker instance so the model loads at most once per process.
-    """
     global _RERANK_RETRIEVER
-    # The CrossEncoder reranker (~600MB) can OOM small instances. Gate it behind USE_RERANKER
-    # (default on) so constrained hosts can disable it and keep dense+BM25 fusion (no crash).
     if os.getenv("USE_RERANKER", "true").strip().lower() not in ("1", "true", "yes", "on"):
         return None
     if not texts:
         return None
 
-    # Remote inference backend (Lightning AI): run the real BGE reranker off-box so small app
-    # tiers (512MB) don't OOM. Set LIGHTNING_RERANK_URL (+ optional INFERENCE_TOKEN). Falls back
-    # to local CrossEncoder, then to None (keep fusion order) when the backend is unreachable
-    # (e.g. the on-demand Studio is asleep) — so search degrades gracefully, never breaks.
-    remote = os.getenv("LIGHTNING_RERANK_URL", "").strip()
-    if remote:
+    provider = os.getenv("RERANK_PROVIDER", "hf").lower()
+
+    def _try_lightning():
+        remote = os.getenv("LIGHTNING_RERANK_URL", "").strip()
+        if remote:
+            try:
+                import json as _json, urllib.request
+                body = _json.dumps({"query": query, "texts": texts}).encode()
+                h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0 (+https://ysiddo-ai-projects.app)"}
+                tk = os.getenv("INFERENCE_TOKEN", "").strip()
+                if tk: h["Authorization"] = "Bearer " + tk
+                req = urllib.request.Request(remote.rstrip("/") + "/rerank", data=body, headers=h)
+                timeout = float(os.getenv("LIGHTNING_RERANK_TIMEOUT", "12"))
+                scores = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["scores"]
+                if isinstance(scores, list) and len(scores) == len(texts):
+                    return [float(s) for s in scores]
+            except Exception as e:
+                log.warning("remote rerank unavailable (%s) — waking studio", e)
+                _trigger_wake()
+        return None
+
+    def _try_hf():
+        hf_token = os.getenv("HF_TOKEN", "").strip()
+        if not hf_token: return None
         try:
-            import json as _json, urllib.request
-            body = _json.dumps({"query": query, "texts": texts}).encode()
-            h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0 (+https://ysiddo-ai-projects.app)"}
-            tk = os.getenv("INFERENCE_TOKEN", "").strip()
-            if tk:
-                h["Authorization"] = "Bearer " + tk
-            req = urllib.request.Request(remote.rstrip("/") + "/rerank", data=body, headers=h)
-            timeout = float(os.getenv("LIGHTNING_RERANK_TIMEOUT", "12"))
-            scores = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["scores"]
-            if isinstance(scores, list) and len(scores) == len(texts):
-                return [float(s) for s in scores]
-        except Exception as e:
-            log.warning("remote rerank unavailable (%s) — falling back + waking studio", e)
-            _trigger_wake()  # on-demand: wake the inference Studio so the next requests get rerank
+            import urllib.request, json as _json
+            model = os.getenv("HF_RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
+            url = f"https://router.huggingface.co/hf-inference/models/{model}"
+            h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
+            body = _json.dumps({"inputs": [f"{query} </s> {t}" for t in texts]}).encode()
+            req = urllib.request.Request(url, data=body, headers=h)
+            res = _json.loads(urllib.request.urlopen(req, timeout=15).read())
+            if isinstance(res, list) and len(res) > 0:
+                if isinstance(res[0], list) and len(res[0]) == len(texts):
+                    return [float(item["score"]) for item in res[0]]
+                elif len(res) == len(texts):
+                    return [float(item[0]["score"] if isinstance(item, list) else item.get("score", 0.0)) for item in res]
+        except Exception as hf_err:
+            log.warning("HF rerank unavailable: %s", hf_err)
+        return None
 
-    # Hosted-API backstop (default OpenAI embeddings → cosine): keeps rerank quality when the
-    # on-demand Studio is unreachable, without loading a 600MB local model. Off unless
-    # HOSTED_RERANK_PROVIDER is set. Returns None (→ fusion order) when disabled or on failure.
-    hosted = _hosted_rerank(query, texts)
-    if hosted is not None:
-        return hosted
+    if provider == "hf":
+        hf = _try_hf()
+        if hf is not None: return hf
+        hosted = _hosted_rerank(query, texts)
+        if hosted is not None: return hosted
+        return _try_lightning()
+    elif provider == "cohere":
+        hosted = _hosted_rerank(query, texts)
+        if hosted is not None: return hosted
+        hf = _try_hf()
+        if hf is not None: return hf
+        return _try_lightning()
+    else: # lightning primary
+        light = _try_lightning()
+        if light is not None: return light
+        hf = _try_hf()
+        if hf is not None: return hf
+        return _hosted_rerank(query, texts)
 
-    # Local CrossEncoder fallback is OFF by default (see _ensure_reranker) — degrade to fusion
-    # order instead of OOM-loading 600MB on a constrained host when the remote backend is down.
     if not _RERANKER or os.getenv("USE_LOCAL_RERANKER", "false").strip().lower() not in ("1", "true", "yes", "on"):
         return None
     if _RERANK_RETRIEVER is None:

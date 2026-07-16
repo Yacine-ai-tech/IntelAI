@@ -31,28 +31,18 @@ USAGE:
 from __future__ import annotations
 
 import json
-import uuid
 import time
-import asyncio
 from typing import Any, Dict, List, Optional, Tuple
-from datetime import datetime
-from io import BytesIO
+from datetime import datetime, timezone
 import re
-import logging
 
 import numpy as np
-import pandas as pd
 
 from src.core.config import settings
-from src.core.i18n import I18N, t
+from src.core.i18n import I18N
 from src.core.logger import get_logger
 from src.services.pg_store import (
-    get_conversation_history,
-    get_conversations,
     get_knowledge_docs,
-    store_conversation,
-    store_knowledge_docs,
-    store_chat_session,
 )
 
 log = get_logger(__name__)
@@ -66,7 +56,7 @@ _SBERT = False
 _TFIDF = False
 
 try:
-    from groq import Groq
+    from groq import Groq  # type: ignore
     _GROQ = True
 except ImportError:
     pass
@@ -75,6 +65,7 @@ try:
     from sentence_transformers import SentenceTransformer
     _SBERT = True
 except Exception:
+    import logging; logging.error('Unhandled exception', exc_info=True)
     pass
 
 try:
@@ -105,8 +96,8 @@ def llm_available() -> bool:
     if (settings.LLM_PROVIDER or "groq").lower() == "groq":
         return _groq_client() is not None
     try:
-        import litellm  # noqa: F401
-        return True
+        import importlib.util
+        return importlib.util.find_spec("litellm") is not None
     except ImportError:
         return False
 
@@ -133,18 +124,19 @@ def llm_complete(
     resolved_model = model or _resolve(tier)
 
     # Fast path: use native Groq SDK if resolved model is a Groq model
-    if resolved_model.startswith("groq/") and _groq_client() is not None:
+    client = _groq_client()
+    if resolved_model.startswith("groq/") and client is not None:
         actual_model = resolved_model.replace("groq/", "")
         kw: Dict[str, Any] = {"model": actual_model, "messages": messages,
                               "temperature": temperature, "max_tokens": max_tokens}
         if top_p is not None:
             kw["top_p"] = top_p
-        r = _groq_client().chat.completions.create(**kw)
+        r = client.chat.completions.create(**kw)
         tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
         return r.choices[0].message.content, tokens
 
     # Any other provider → LiteLLM
-    from litellm import completion
+    from litellm import completion  # type: ignore
     msgs = _apply_cache_control(messages, resolved_model)
     kw = {"model": resolved_model, "messages": msgs, "temperature": temperature, "max_tokens": max_tokens}
     if top_p is not None:
@@ -244,7 +236,7 @@ class UltraFastRAG:
                         if emb_str and isinstance(emb_str, str):
                             try:
                                 doc_embeddings.append(np.array(json.loads(emb_str)))
-                            except:
+                            except Exception:
                                 doc_embeddings.append(np.zeros_like(query_embedding))
                         else:
                             doc_embeddings.append(np.zeros_like(query_embedding))
@@ -252,8 +244,8 @@ class UltraFastRAG:
                     if doc_embeddings:
                         doc_embeddings = np.array(doc_embeddings)
                         similarities = cosine_similarity(
-                            [query_embedding],
-                            doc_embeddings
+                            np.array([query_embedding]),  # type: ignore
+                            doc_embeddings                # type: ignore
                         )[0]
                         
                         top_indices = np.argsort(similarities)[::-1][:top_k]
@@ -401,7 +393,7 @@ class UltraFastRAG:
             ]),
             "type": "rag",
             "document_count": len(documents),
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
         
         # Cache result
@@ -825,15 +817,15 @@ class AgentPersonaFactory:
         try:
             docs = _get_shared_rag()._retrieve_documents(message, top_k=6, language=language)
             for title, content, score in (docs or []):
-                dom = _doc_domain(str(title))
+                dom = _doc_domain(title)
                 if scope and dom and dom not in scope:
                     continue  # out-of-scope company data — persona RBAC
-                doc_blocks.append((str(title), str(content)))
+                doc_blocks.append((title, content))
                 raw_sources.append({
-                    "title": str(title),
-                    "type": "glossary" if str(title).lower().startswith("glossary") else "knowledge",
-                    "relevance": round(float(score), 3),
-                    "snippet": str(content)[:240],
+                    "title": title,
+                    "type": "glossary" if title.lower().startswith("glossary") else "knowledge",
+                    "relevance": round(score, 3),
+                    "snippet": content[:240],
                 })
         except Exception as e:
             log.warning("Doc context retrieval failed: %s", e)
@@ -1025,11 +1017,11 @@ class AgentPersonaFactory:
             "prioritized action plan grounded in the data (each step: what to do, which figure justifies "
             "it, expected impact).\n"
             "Only include an action plan when the user actually asked for one. Never pad with generic advice.\n"
-            "* CAUSE ANALYSIS & FALLBACK: If asked WHY an anomaly or event occurred, you MUST ONLY state the root causes explicitly found in the internal data. 
-If the internal data lacks the cause:
-  1) State clearly: 'The root cause is not present in the current knowledge base.'
-  2) Instruct the user on what data they should provide or upload (e.g., 'Please upload recent incident post-mortems, QA reports, or market analyses to the Data Hub.').
-  3) Use the provided WEB RESULTS (if available) to offer an industry-standard benchmark or similar known case to help them make an informed decision (e.g., 'In similar industry cases, this is handled by...'). ALWAYS cite the web sources using [n]. Do NOT generate hypothetical generic reasons.\n\n"
+            "* CAUSE ANALYSIS & FALLBACK: If asked WHY an anomaly or event occurred, you MUST ONLY state the root causes explicitly found in the internal data.\n"
+            "If the internal data lacks the cause:\n"
+            "  1) State clearly: 'The root cause is not present in the current knowledge base.'\n"
+            "  2) Instruct the user on what data they should provide or upload (e.g., 'Please upload recent incident post-mortems, QA reports, or market analyses to the Data Hub.').\n"
+            "  3) Use the provided WEB RESULTS (if available) to offer an industry-standard benchmark or similar known case to help them make an informed decision (e.g., 'In similar industry cases, this is handled by...'). ALWAYS cite the web sources using [n]. Do NOT generate hypothetical generic reasons.\n\n"
             "STEP 2 — WHEN (and only when) the user asks about the business or its data, use the LIVE DATA "
             "block below directly: quote the metric values, mirroring the exact currency and number format "
             "shown (e.g. '$3.6M', '3,6 M€', '3,6 Md FCFA' — never convert currencies), and CITE sources "
@@ -1086,7 +1078,7 @@ If the internal data lacks the cause:
                 "response": f"Error: {exc}",
                 "persona_used": persona.name,
                 "tokens_used": 0,
-                "latency_ms": int((time.time() - start) * 1000),
+                "latency_ms": (time.time() - start) * 1000,
             }
 
     def list_personas(self, user_role: Optional[str] = None) -> List[Dict[str, Any]]:

@@ -21,6 +21,7 @@ def client():
     return TestClient(app)
 
 
+@pytest.mark.unit
 def test_core_imports():
     """Shared core utilities import cleanly without a database."""
     from src.core import config, logger
@@ -29,6 +30,7 @@ def test_core_imports():
     assert logger is not None
 
 
+@pytest.mark.unit
 def test_app_imports_and_has_routes():
     """The FastAPI app object builds and registers its routes."""
     from src.api.server import app
@@ -36,12 +38,14 @@ def test_app_imports_and_has_routes():
     assert len(app.routes) > 50
 
 
+@pytest.mark.unit
 def test_health_endpoint(client):
     """/health responds 200 in-process (no DB required)."""
     r = client.get("/health")
     assert r.status_code == 200
 
 
+@pytest.mark.unit
 def test_openapi_schema(client):
     """OpenAPI schema is generated and exposes the documented surface."""
     r = client.get("/openapi.json")
@@ -49,6 +53,7 @@ def test_openapi_schema(client):
     assert len(r.json().get("paths", {})) > 20
 
 
+@pytest.mark.unit
 def test_docs_served(client):
     """Interactive API docs are served at the configured docs URL."""
     from src.api.server import app

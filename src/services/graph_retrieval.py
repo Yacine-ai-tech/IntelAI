@@ -6,7 +6,7 @@ Uses entity relationships to find connected KPI records.
 """
 
 import os
-from typing import Dict, List, Optional, Any, Set, Tuple
+from typing import Dict, List, Any, Set, Tuple
 import logging
 from dataclasses import dataclass
 from collections import defaultdict
