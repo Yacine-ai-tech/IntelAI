@@ -42,134 +42,171 @@ def H(token):
 
 # ── Routing / docs (no DB) ───────────────────────────────────────────────────
 
+@pytest.mark.unit
 def test_health(client):
     r = client.get("/health")
     assert r.status_code == 200
 
+@pytest.mark.unit
 def test_openapi_paths(client):
     r = client.get("/openapi.json")
     assert r.status_code == 200
     assert len(r.json().get("paths", {})) > 20
 
+@pytest.mark.unit
 def test_docs_served(client):
     assert client.get("/api/docs").status_code == 200
 
+@pytest.mark.unit
 def test_redoc_served(client):
     assert client.get("/api/redoc").status_code == 200
 
+@pytest.mark.unit
 def test_unknown_api_path_404(client):
     assert client.get("/api/v1/does-not-exist").status_code == 404
 
 
 # ── Auth validation / RBAC gating (no DB) ────────────────────────────────────
 
+@pytest.mark.unit
 def test_login_missing_fields_422(client):
     assert client.post("/api/v1/auth/login", json={"username": "x"}).status_code == 422
 
+@pytest.mark.unit
 def test_me_requires_token(client):
     assert client.get("/api/v1/auth/me").status_code in (401, 403)
 
+@pytest.mark.unit
 def test_me_rejects_bad_token(client):
     assert client.get("/api/v1/auth/me", headers=H("not-a-jwt")).status_code in (401, 403)
 
+@pytest.mark.unit
 def test_kpis_requires_auth(client):
     assert client.get("/api/v1/kpis").status_code in (401, 403)
 
+@pytest.mark.unit
 def test_chat_requires_auth(client):
     assert client.post("/api/v1/chat", json={"message": "hi"}).status_code in (401, 403)
 
+@pytest.mark.unit
 def test_forecast_requires_auth(client):
     assert client.post("/api/v1/forecast", json={"metric": "revenue"}).status_code in (401, 403)
 
+@pytest.mark.unit
 def test_insights_health_requires_auth(client):
     assert client.get("/api/v1/insights/health").status_code in (401, 403)
 
+@pytest.mark.unit
 def test_ingest_requires_auth(client):
     assert client.post("/api/v1/ingest/metrics", json={"data": []}).status_code in (401, 403)
 
+@pytest.mark.unit
 def test_knowledge_search_requires_auth(client):
     assert client.get("/api/v1/knowledge/search", params={"q": "x"}).status_code in (401, 403)
 
+@pytest.mark.unit
 def test_admin_users_requires_auth(client):
     assert client.get("/api/v1/admin/users").status_code in (401, 403)
 
+@pytest.mark.unit
 def test_chat_sessions_requires_auth(client):
     assert client.get("/api/v1/chat/sessions").status_code in (401, 403)
 
 
 # ── Authenticated flows (need a seeded DB → skip gracefully) ─────────────────
 
+@pytest.mark.integration
 def test_login_success(admin_token):
     assert isinstance(admin_token, str) and len(admin_token) > 10
 
+@pytest.mark.integration
 def test_me_returns_user(client, admin_token):
     r = client.get("/api/v1/auth/me", headers=H(admin_token))
     assert r.status_code == 200 and "username" in r.json()
 
+@pytest.mark.integration
 def test_login_wrong_password(client, admin_token):
     r = client.post("/api/v1/auth/login", json={"username": ADMIN["username"], "password": "wrong-pw"})
     assert r.status_code in (400, 401)
 
+@pytest.mark.integration
 def test_register_new_user(client, admin_token):
     u = f"testuser_{os.urandom(4).hex()}"
     r = client.post("/api/v1/auth/register", json={"username": u, "password": "testpass123"})
     assert r.status_code in (200, 201, 400)
 
+@pytest.mark.integration
 def test_kpis_list(client, admin_token):
     assert client.get("/api/v1/kpis", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_kpis_periods(client, admin_token):
     assert client.get("/api/v1/kpis/periods", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_kpis_metrics(client, admin_token):
     assert client.get("/api/v1/kpis/metrics", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_kpis_categories(client, admin_token):
     assert client.get("/api/v1/kpis/categories", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_insights_health(client, admin_token):
     assert client.get("/api/v1/insights/health", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_insights_risk(client, admin_token):
     assert client.get("/api/v1/insights/risk", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_insights_summary(client, admin_token):
     assert client.get("/api/v1/insights/summary", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_insights_anomalies(client, admin_token):
     assert client.get("/api/v1/insights/anomalies", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_forecast(client, admin_token):
     r = client.post("/api/v1/forecast", json={"metric": "revenue", "periods": 3}, headers=H(admin_token))
     assert r.status_code in (200, 400, 404, 422)  # 200 normally; tolerant if metric/data absent
 
+@pytest.mark.integration
 def test_ingest_metrics_valid(client, admin_token):
     payload = {"data": [{"period": "2099Q1", "metric": "test_metric", "value": 1.0, "category": "Finance"}]}
     r = client.post("/api/v1/ingest/metrics", json=payload, headers=H(admin_token))
     assert r.status_code in (200, 201, 400, 422)
 
+@pytest.mark.integration
 def test_ingest_metrics_empty(client, admin_token):
     r = client.post("/api/v1/ingest/metrics", json={"data": []}, headers=H(admin_token))
     assert r.status_code in (200, 400, 422)
 
+@pytest.mark.integration
 def test_knowledge_stats(client, admin_token):
     assert client.get("/api/v1/knowledge/stats", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_chat_sessions_list(client, admin_token):
     assert client.get("/api/v1/chat/sessions", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_admin_users_as_admin(client, admin_token):
     assert client.get("/api/v1/admin/users", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_admin_roles_as_admin(client, admin_token):
     assert client.get("/api/v1/admin/roles", headers=H(admin_token)).status_code == 200
 
+@pytest.mark.integration
 def test_admin_audit_as_admin(client, admin_token):
     assert client.get("/api/v1/admin/audit", headers=H(admin_token)).status_code == 200
 
 
 # ── RBAC: a non-admin must not reach admin endpoints ─────────────────────────
 
+@pytest.mark.integration
 def test_rbac_viewer_blocked(client, admin_token):
     """Register a viewer (non-admin) and confirm admin endpoints are forbidden."""
     u = f"viewer_{os.urandom(4).hex()}"
@@ -183,17 +220,20 @@ def test_rbac_viewer_blocked(client, admin_token):
 
 # ── GraphRAG-lite unit coverage (no DB / no LLM) ─────────────────────────────
 
+@pytest.mark.integration
 def test_graphrag_disabled_returns_empty(monkeypatch):
     from src.services import graph_retrieval
     monkeypatch.delenv("USE_GRAPH_RAG", raising=False)
     assert graph_retrieval.graph_kpi_context("Finance margin vs Engineering headcount") == []
 
+@pytest.mark.integration
 def test_graphrag_enabled_too_few_entities(monkeypatch):
     from src.services import graph_retrieval
     monkeypatch.setenv("USE_GRAPH_RAG", "true")
     # single-entity query → below the multi-hop threshold → empty (vector fallback)
     assert graph_retrieval.graph_kpi_context("hello there") == []
 
+@pytest.mark.integration
 def test_entity_extractor_query_entities():
     from src.services.entity_extractor import get_entity_extractor
     ents = get_entity_extractor().extract_query_entities("finance margin and operations cycle time")
@@ -202,11 +242,13 @@ def test_entity_extractor_query_entities():
 
 # ── GraphRAG-lite persisted sidecar table (DB-backed; seeded by conftest) ─────
 
+@pytest.mark.integration
 def test_kpi_entities_seeded(client, admin_token):
     """The kpi_entities sidecar table is populated at ingest (conftest seed)."""
     from src.services.pg_store import get_kpi_entities
     assert not get_kpi_entities().empty
 
+@pytest.mark.integration
 def test_graphrag_persisted_multihop(client, admin_token, monkeypatch):
     """A multi-hop query (≥2 entities) ranks records via the persisted entity table."""
     from src.services import graph_retrieval

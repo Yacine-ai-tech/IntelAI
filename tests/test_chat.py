@@ -41,16 +41,19 @@ def H(token):
 
 # ── auth gate ────────────────────────────────────────────────
 
+@pytest.mark.unit
 def test_chat_post_requires_auth(client):
     assert client.post("/api/v1/chat", json={"message": "hi"}).status_code in (401, 403)
 
 
+@pytest.mark.unit
 def test_personas_requires_auth(client):
     assert client.get("/api/v1/personas").status_code in (401, 403)
 
 
 # ── shape validation ──────────────────────────────────────────
 
+@pytest.mark.unit
 def test_chat_missing_message_422(client, admin_token):
     r = client.post("/api/v1/chat", json={}, headers=H(admin_token))
     assert r.status_code == 422
@@ -58,6 +61,7 @@ def test_chat_missing_message_422(client, admin_token):
 
 # ── authenticated flows ───────────────────────────────────────
 
+@pytest.mark.integration
 def test_personas_returns_list(client, admin_token):
     r = client.get("/api/v1/personas", headers=H(admin_token))
     assert r.status_code == 200
@@ -67,6 +71,7 @@ def test_personas_returns_list(client, admin_token):
     assert len(body["personas"]) >= 1
 
 
+@pytest.mark.integration
 def test_chat_post_returns_structured_response(client, admin_token):
     """POST /chat must return the structured answer-block envelope."""
     r = client.post(
@@ -90,6 +95,7 @@ def test_chat_post_returns_structured_response(client, admin_token):
         assert isinstance(body["blocks"], list)
 
 
+@pytest.mark.integration
 def test_chat_post_persona_override(client, admin_token):
     """Persona override field must be respected and echoed back."""
     r = client.post(
@@ -102,6 +108,7 @@ def test_chat_post_persona_override(client, admin_token):
         assert "persona_used" in body
 
 
+@pytest.mark.integration
 def test_chat_session_id_persisted(client, admin_token):
     """A session_id provided in the request must be returned unchanged."""
     sid = "test-session-abc123"
@@ -114,6 +121,7 @@ def test_chat_session_id_persisted(client, admin_token):
         assert r.json().get("session_id") == sid
 
 
+@pytest.mark.integration
 def test_chat_generates_new_session_id(client, admin_token):
     """When no session_id is provided, the backend must generate one."""
     r = client.post(
@@ -126,6 +134,7 @@ def test_chat_generates_new_session_id(client, admin_token):
         assert len(sid) > 5
 
 
+@pytest.mark.integration
 def test_chat_language_field_accepted(client, admin_token):
     """The language field must be accepted without error."""
     r = client.post(

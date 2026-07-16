@@ -20,7 +20,7 @@ const URLS = {
 };
 
 const ADMIN_USER = 'admin';
-const ADMIN_PASS = '***REMOVED-CREDENTIAL***';
+const ADMIN_PASS = process.env.ADMIN_PASS || '';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Phase 10 — The Grand Tour Workflow

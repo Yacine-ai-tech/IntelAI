@@ -44,29 +44,78 @@ def _embedder():
 
 def _embed(texts: List[str]):
     import numpy as np
-    try:
+    import os
+    provider = os.environ.get("EMBEDDING_PROVIDER", "hf").lower()
+    
+    def _try_cohere():
+        key = os.environ.get("COHERE_API_KEY", "").strip()
+        if not key: return None
+        import urllib.request, json as _json
+        url = "https://api.cohere.com/v1/embed"
+        # use v3 embeddings which require input_type
+        body = _json.dumps({"texts": list(texts), "model": "embed-multilingual-v3.0", "input_type": "search_document"}).encode()
+        req = urllib.request.Request(url, data=body, headers={"Authorization": "Bearer " + key, "Content-Type": "application/json"})
+        res = _json.loads(urllib.request.urlopen(req, timeout=15).read())
+        return np.asarray(res["embeddings"], dtype="float32")
+
+    def _try_hf():
+        hf_token = os.environ.get("HF_TOKEN", "").strip()
+        if not hf_token: return None
+        import urllib.request, json as _json
+        model = os.environ.get("HF_EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5")
+        url = f"https://router.huggingface.co/hf-inference/pipeline/feature-extraction/{model}"
+        h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
+        body = _json.dumps({"inputs": list(texts)}).encode()
+        req = urllib.request.Request(url, data=body, headers=h)
+        res = _json.loads(urllib.request.urlopen(req, timeout=20).read())
+        return np.asarray(res, dtype="float32")
+        
+    def _try_local():
         vecs = _embedder().encode(list(texts), normalize_embeddings=True, show_progress_bar=False)
         return np.asarray(vecs, dtype="float32")
-    except Exception as e:
-        hf_token = os.environ.get("HF_TOKEN", "").strip()
-        if hf_token:
-            log.warning("Local embedding failed (%s), falling back to HF API", e)
-            try:
-                import urllib.request
-                import json as _json
-                model = os.getenv("HF_EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5")
-                url = f"https://api-inference.huggingface.co/pipeline/feature-extraction/{model}"
-                h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
-                body = _json.dumps({"inputs": list(texts)}).encode()
-                req = urllib.request.Request(url, data=body, headers=h)
-                res = _json.loads(urllib.request.urlopen(req, timeout=20).read())
-                return np.asarray(res, dtype="float32")
-            except Exception as hf_err:
-                log.warning("HF fallback embedding failed: %s", hf_err)
-        raise e
 
+    if provider == "hf":
+        try:
+            res = _try_hf()
+            if res is not None: return res
+        except Exception as e:
+            log.warning("HF fallback embedding failed: %s", e)
+        try:
+            res = _try_cohere()
+            if res is not None: return res
+        except: pass
+        return _try_local()
+    elif provider == "cohere":
+        try:
+            res = _try_cohere()
+            if res is not None: return res
+        except Exception as e:
+            log.warning("Cohere embedding failed (%s) - falling back to HF/Local", e)
+        try:
+            res = _try_hf()
+            if res is not None: return res
+        except Exception as e:
+            log.warning("HF fallback embedding failed: %s", e)
+        return _try_local()
+    else:
+        try:
+            return _try_local()
+        except Exception as e:
+            log.warning("Local embedding failed (%s), falling back to HF/Cohere API", e)
+            try:
+                res = _try_hf()
+                if res is not None: return res
+            except: pass
+            try:
+                res = _try_cohere()
+                if res is not None: return res
+            except: pass
+            raise e
 
 def _dim() -> int:
+    provider = os.environ.get("EMBEDDING_PROVIDER", "hf").lower()
+    if provider in ("cohere", "hf"):
+        return 1024 # embed-english-v3.0 or bge-large-en-v1.5 dim
     emb = _embedder()
     getter = getattr(emb, "get_embedding_dimension", None) or emb.get_sentence_embedding_dimension
     return int(getter())

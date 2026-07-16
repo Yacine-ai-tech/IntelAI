@@ -1,5 +1,8 @@
 # IntelAI
 
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/intelai.svg)](https://pypi.org/project/intelai/)
+
 > **Persona-Aware AI Analytics & RAG Copilot** — 9-persona, role-scoped copilot with
 > GraphRAG-lite retrieval, ML forecasting, bilingual (EN/FR) UI, and board-ready exports.
 
@@ -9,6 +12,7 @@
 
 **Live demo:** https://intelai.ysiddo-ai-projects.app · password-less role login (DEMO_MODE).
 First request may take ~60 s to wake the on-demand backend.
+> Self-hosting: see [SELF_HOSTING.md](SELF_HOSTING.md).
 
 ---
 
@@ -146,3 +150,10 @@ This project collects anonymous, GDPR-compliant startup pings to help the author
 
 <!-- Scarf Analytics Pixel -->
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ada53b5b-d56f-447f-b5ab-a65a061b7d5a" />
+
+## Licensing
+This project is licensed under the [AGPL-3.0 License](LICENSE).
+
+**Commercial Use:** If you wish to use this software commercially without releasing your own source code, please see [COMMERCIAL.md](COMMERCIAL.md) to obtain a commercial license.
+
+**Telemetry:** See [TELEMETRY.md](TELEMETRY.md) for our privacy-first data practices.

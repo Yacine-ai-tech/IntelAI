@@ -4,11 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "omnismart-personas"
-version = "0.1.0"
+version = "0.1.2"
 description = "Role-based, data-scoped LLM persona templates + router for production analytics copilots."
 readme = "README.md"
 requires-python = ">=3.9"
-license = { text = "MIT" }
+license = { text = "AGPL-3.0" }
 authors = [{ name = "Yacine" }]
 keywords = ["llm", "personas", "rag", "rbac", "prompts", "analytics", "copilot"]
 classifiers = [
