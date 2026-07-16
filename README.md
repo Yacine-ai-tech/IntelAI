@@ -1,5 +1,8 @@
 # IntelAI
 
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/intelai.svg)](https://pypi.org/project/intelai/)
+
 > **Persona-Aware AI Analytics & RAG Copilot** — 9-persona, role-scoped copilot with
 > GraphRAG-lite retrieval, ML forecasting, bilingual (EN/FR) UI, and board-ready exports.
 
@@ -9,6 +12,7 @@
 
 **Live demo:** https://intelai.ysiddo-ai-projects.app · password-less role login (DEMO_MODE).
 First request may take ~60 s to wake the on-demand backend.
+> Self-hosting: see [SELF_HOSTING.md](SELF_HOSTING.md).
 
 ---
 
@@ -128,3 +132,28 @@ set the env vars above, attach a Postgres add-on. Deploy the frontend separately
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## ⚖️ License & Enterprise Use (Dual-License)
+
+This project is open-source under the **AGPL-3.0 License**. It is completely free for researchers, students, and open-source hobbyists.
+
+> **Commercial Use:** The AGPLv3 license requires that any proprietary network service (SaaS, internal corporate tools) that uses or modifies this code must also open-source its entire backend. 
+> 
+> If you wish to use this framework in a closed-source commercial environment, or require **Enterprise features** (SSO, Active Directory, Custom VPC Deployment, Strict RBAC), you must obtain a **Commercial License**. 
+> Please reach out to discuss commercial licensing and integration consulting.
+
+## 📡 Anonymous Telemetry
+This project collects anonymous, GDPR-compliant startup pings to help the author understand usage volume and prioritize development. 
+* **What is collected:** Only the project name and a "startup" event timestamp. No PII, no API keys, no user data.
+* **How to disable:** We respect your privacy. To opt-out, simply set `TELEMETRY_OPT_OUT=true` in your `.env` file.
+
+
+<!-- Scarf Analytics Pixel -->
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ada53b5b-d56f-447f-b5ab-a65a061b7d5a" />
+
+## Licensing
+This project is licensed under the [AGPL-3.0 License](LICENSE).
+
+**Commercial Use:** If you wish to use this software commercially without releasing your own source code, please see [COMMERCIAL.md](COMMERCIAL.md) to obtain a commercial license.
+
+**Telemetry:** See [TELEMETRY.md](TELEMETRY.md) for our privacy-first data practices.
