@@ -1,7 +1,6 @@
 import os
 import re
 import pytest
-from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 
 # We skip if playwright isn't available

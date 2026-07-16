@@ -27,14 +27,19 @@ def _init_db():
     
     try:
         init_pg_tables()
+        has_db = True
     except Exception as e:
-        pytest.skip(f"Database unreachable, skipping tests: {e}")
+        import logging
+        logging.warning(f"Database unreachable, skipping DB init: {e}")
+        has_db = False
 
     server._init_default_users()  # populates server._users_db (read by /auth/login)
-    try:
-        empty = get_kpi_metrics().empty
-    except Exception:
-        empty = True
-    if empty:
-        seed_all_domains()
+    
+    if has_db:
+        try:
+            empty = get_kpi_metrics().empty
+        except Exception:
+            empty = True
+        if empty:
+            seed_all_domains()
     yield
