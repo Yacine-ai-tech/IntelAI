@@ -127,7 +127,7 @@ export function Stat({ label, value, unit, icon: Icon, accent = 'var(--primary)'
           {up ? <ArrowUpRight size={13} /> : <ArrowDownRight size={13} />}{Math.abs(trend).toFixed(1)}%
         </div>
       )}
-      {history && history.length >= 2 && (
+      {Array.isArray(history) && history.length >= 2 && (
         <div style={{ height: 60, marginTop: 12, marginLeft: -18, marginRight: -18, marginBottom: -18 }}>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={history}>
@@ -182,7 +182,7 @@ export function Empty({ text = 'No data available.' }) {
 const BRAND_STOPS = [['0%', '#4f46e5'], ['55%', '#2563eb'], ['100%', '#22d3ee']]
 
 export function AreaTrend({ data, x = 'period', y, color = 'var(--primary)', height = 220 }) {
-  if (!data?.length) return <Empty text="No trend data." />
+  if (!Array.isArray(data) || data.length === 0) return <Empty text="No trend data." />
   const id = 'g' + y, sid = 's' + y
   return (
     <div style={{ height }}>
@@ -208,7 +208,7 @@ export function AreaTrend({ data, x = 'period', y, color = 'var(--primary)', hei
 }
 
 export function MiniBars({ data, x = 'period', y, color = 'var(--primary)', height = 220 }) {
-  if (!data?.length) return <Empty text="No data." />
+  if (!Array.isArray(data) || data.length === 0) return <Empty text="No data." />
   const bid = 'b' + y
   return (
     <div style={{ height }}>
