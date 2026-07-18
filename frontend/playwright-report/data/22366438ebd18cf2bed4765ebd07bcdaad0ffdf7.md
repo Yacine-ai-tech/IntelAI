@@ -6,7 +6,7 @@
 
 # Test info
 
-- Name: all_pages.spec.ts >> OmniIntelOS All Pages E2E Suite >> Should successfully load /dashboard page without crashing
+- Name: all_pages.spec.ts >> ysiddo-ai-projects_vol1 All Pages E2E Suite >> Should successfully load /dashboard page without crashing
 - Location: e2e/all_pages.spec.ts:44:5
 
 # Error details
