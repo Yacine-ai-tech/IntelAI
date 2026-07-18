@@ -3,12 +3,15 @@
 # The reusable persona library is packaged separately under packages/omnismart-personas.
 [project]
 name = "intelai"
-version = "0.1.1"
+version = "0.1.2"
 description = "Persona-Aware AI Analytics & RAG Copilot — multi-domain KPI intelligence, GraphRAG-lite, ML forecasting."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "AGPL-3.0" }
 authors = [{ name = "Yacine" }]
+classifiers = [
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+]
 keywords = ["rag", "personas", "analytics", "kpi", "fastapi", "graphrag", "llm"]
 
 [project.urls]
