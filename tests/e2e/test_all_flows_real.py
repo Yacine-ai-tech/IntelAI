@@ -1,10 +1,9 @@
 import os
 import re
 import pytest
-from playwright.sync_api import sync_playwright, expect
-
 # We skip if playwright isn't available
 pytest.importorskip("playwright", reason="Playwright not installed — e2e skipped")
+from playwright.sync_api import sync_playwright, expect
 
 BASE_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 ADMIN_USER = os.getenv("BOOTSTRAP_ADMIN_USERNAME", "admin")
