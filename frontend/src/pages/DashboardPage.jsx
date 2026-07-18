@@ -25,7 +25,7 @@ const CAT = {
 const catOf = (c) => CAT[(c || '').toLowerCase()] || CAT.default
 
 function Sparkline({ data, color }) {
-  if (!data || data.length < 2) return <div style={{ height: 42 }} />
+  if (!Array.isArray(data) || data.length < 2) return <div style={{ height: 42 }} />
   return (
     <div style={{ height: 42, marginTop: 10 }}>
       <ResponsiveContainer width="100%" height="100%">
