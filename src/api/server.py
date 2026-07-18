@@ -249,6 +249,11 @@ class IngestMetricsRequest(BaseModel):
     source_name: str = "api"
     replace: bool = True
 
+class WebhookPayload(BaseModel):
+    source: str
+    schema_type: str
+    data: Any
+
 class FinancialRequest(BaseModel):
     company_id: Optional[str] = None
     period: Optional[str] = None
@@ -792,6 +797,69 @@ async def ingest_metrics(
     store_kpi_metrics(df, source_name=req.source_name, replace=req.replace)
     log_audit_event(user.username, "DATA_INGEST", f"Ingested {len(df)} metrics from {req.source_name}")
     return {"status": "ingested", "rows": len(df), "source": req.source_name}
+
+@app.post("/api/v1/ingest/webhook")
+async def generic_webhook_ingest(
+    payload: WebhookPayload,
+    user: TokenData = Depends(get_current_user),
+):
+    """
+    Generic webhook for external data ingestion (e.g., from StreamPulse or n8n).
+    Implements Strict Schema Enforcement and Background Auto-Categorization.
+    """
+    from src.services.pg_store import log_audit_event
+    import asyncio
+    
+    if payload.schema_type == "kpi_metrics":
+        if not isinstance(payload.data, list):
+            raise HTTPException(status_code=422, detail="data must be a list of metrics")
+        df = pd.DataFrame(payload.data)
+        if df.empty or "metric_name" not in df.columns or "value" not in df.columns:
+            raise HTTPException(status_code=422, detail="Strict schema violation: Missing metric_name or value fields")
+        
+        from src.services.pg_store import store_kpi_metrics
+        store_kpi_metrics(df, source_name=payload.source, replace=False)
+        log_audit_event(user.username, "WEBHOOK_INGEST", f"Ingested {len(df)} metrics from {payload.source}")
+        return {"status": "success", "processed": len(df), "type": "kpi_metrics"}
+        
+    elif payload.schema_type == "knowledge_doc":
+        if not isinstance(payload.data, dict) or "content" not in payload.data:
+            raise HTTPException(status_code=422, detail="Strict schema violation: content field missing")
+        
+        content_text = payload.data["content"]
+        log_audit_event(user.username, "WEBHOOK_INGEST", f"Received knowledge doc from {payload.source}")
+        
+        # Auto-Categorization Pipeline (reusing same backend functions as UI upload)
+        def _process_background():
+            try:
+                from src.services.vector_store import get_vector_store
+                from src.services.llm_router import llm_call
+                import logging
+                vs = get_vector_store()
+                if vs:
+                    # 1. LLM Auto-Categorization
+                    try:
+                        resp = asyncio.run(llm_call([{"role": "user", "content": f"Classify this text into a domain (Finance, HR, Operations, ESG, IT, Growth). Reply with 1 word.\n\nText: {content_text[:500]}"}]))
+                        domain = resp["choices"][0]["message"]["content"].strip()
+                    except:
+                        domain = "General"
+                    
+                    # 2. Add to Vector Store
+                    vs.add_texts(
+                        texts=[content_text],
+                        metadatas=[{"source": payload.source, "domain": domain}]
+                    )
+                    logging.info(f"Webhook doc successfully auto-categorized as {domain} and indexed.")
+            except Exception as e:
+                import logging
+                logging.error(f"Background webhook processing failed: {e}")
+
+        # Fire and forget
+        asyncio.create_task(asyncio.to_thread(_process_background))
+        return {"status": "success", "message": "Document accepted for background processing and categorization", "type": "knowledge_doc"}
+        
+    else:
+        raise HTTPException(status_code=422, detail=f"Unsupported schema_type: {payload.schema_type}")
 
 
 @app.post("/api/v1/ingest/csv")
