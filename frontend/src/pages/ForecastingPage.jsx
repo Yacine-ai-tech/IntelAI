@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { TrendingUp, Play, BarChart3, Brain, Target, Sparkles } from 'lucide-react'
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts'
+import { ComposedChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts'
 import { PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, Empty, Panel } from '../components/ui'
 
 const TIP = { background: 'var(--surface-2)', border: '1px solid var(--border-2)', borderRadius: 8, fontSize: '.78rem', color: 'var(--text)' }
@@ -26,7 +26,7 @@ function ForecastChart({ forecast, t }) {
   return (
     <div style={{ height: 300 }}>
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
+        <ComposedChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
           <defs>
             <linearGradient id="fc" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="var(--primary-2)" stopOpacity={0.32} /><stop offset="100%" stopColor="var(--primary-2)" stopOpacity={0} />
@@ -50,7 +50,7 @@ function ForecastChart({ forecast, t }) {
           {/* dashed CI bounds in the band accent */}
           {hasCI && <Line type="monotone" dataKey="upper" stroke="var(--accent)" strokeWidth={1} strokeDasharray="4 4" dot={false} legendType="none" name="" connectNulls />}
           {hasCI && <Line type="monotone" dataKey="lower" stroke="var(--accent)" strokeWidth={1} strokeDasharray="4 4" dot={false} legendType="none" name="" connectNulls />}
-        </AreaChart>
+        </ComposedChart>
       </ResponsiveContainer>
     </div>
   )
