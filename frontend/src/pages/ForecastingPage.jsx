@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from 'react'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { TrendingUp, Play, BarChart3, Brain, Target, Sparkles } from 'lucide-react'
-import { ComposedChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts'
+import * as Recharts from "recharts";
+const { ComposedChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } = Recharts;
 import { PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, Empty, Panel } from '../components/ui'
 
 const TIP = { background: 'var(--surface-2)', border: '1px solid var(--border-2)', borderRadius: 8, fontSize: '.78rem', color: 'var(--text)' }
