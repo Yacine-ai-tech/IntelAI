@@ -39,7 +39,7 @@ Thumbs.db
 
 # Frontend build artifacts
 frontend/node_modules/
-frontend/dist/
+!frontend/dist/
 
 # Secrets
 secrets.md
