@@ -2,7 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { ShieldAlert, Search, Activity, CheckCircle2, HeartPulse } from 'lucide-react'
-import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Tooltip } from 'recharts'
+import * as Recharts from "recharts";
+const { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Tooltip } = Recharts;
 import { PageHeader, fmtNum, Loading, Grid, AskCopilot, Panel } from '../components/ui'
 
 const ACCENT = 'var(--p-risk)'

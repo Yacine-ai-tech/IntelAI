@@ -2,10 +2,9 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
-import {
-  AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis,
-  CartesianGrid, Tooltip, ResponsiveContainer, Cell,
-} from 'recharts'
+import * as Recharts from "recharts";
+const { AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis,
+  CartesianGrid, Tooltip, ResponsiveContainer, Cell, } = Recharts;
 import { Sparkles, ArrowUpRight, ArrowDownRight, FileText, X, Globe } from 'lucide-react'
 
 // ── formatters ───────────────────────────────────────────────
