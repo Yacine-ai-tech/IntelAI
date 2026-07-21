@@ -77,7 +77,7 @@ persona's `data_access` scope — the same role boundaries, enforced in your Lan
 pip install -e ".[test]" && pytest
 ```
 
-MIT licensed. Part of the [IntelAI](https://github.com/Yacine-ai-tech/IntelAI) project.
+AGPL-3.0 licensed. Part of the [IntelAI](https://github.com/Yacine-ai-tech/IntelAI) project.
 
 ## ⚖️ License & Enterprise Use (Dual-License)
 

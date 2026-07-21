@@ -1,4 +1,4 @@
-# IntelAI — single cloud app. (The old multi-service platform Makefile lives in OmniIntelOS.)
+# IntelAI — single cloud app. (The old multi-service platform Makefile lives in ysiddo-ai-projects_vol1.)
 .PHONY: help dev run test seed eval build deploy-info
 
 help: ## Show available targets
