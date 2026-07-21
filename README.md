@@ -137,7 +137,7 @@ set the env vars above, attach a Postgres add-on. Deploy the frontend separately
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+AGPL-3.0 — see [LICENSE](LICENSE).
 
 ## ⚖️ License & Enterprise Use (Dual-License)
 
