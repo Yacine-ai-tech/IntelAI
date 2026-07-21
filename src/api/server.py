@@ -110,6 +110,22 @@ _static_dir = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.dirname(_
 if _os.path.isdir(_static_dir):
     app.mount("/static", StaticFiles(directory=_static_dir), name="static")
 
+try:
+    _assets_dir = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.dirname(__file__))), "frontend", "dist", "assets")
+    if _os.path.exists(_assets_dir):
+        app.mount("/assets", StaticFiles(directory=_assets_dir), name="assets")
+except Exception as e:
+    import logging
+    logging.warning("assets mount failed: %s", e)
+
+@app.get("/", include_in_schema=False)
+async def serve_spa():
+    import os
+    spa = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "frontend", "dist", "index.html")
+    if os.path.exists(spa):
+        from fastapi.responses import FileResponse
+        return FileResponse(spa)
+    return {"status": "ok", "service": "intelai"}
 
 # ════════════════════════════════════════════════════════════
 # REQUEST / RESPONSE MODELS

@@ -10,7 +10,8 @@ import {
   Crown, DollarSign, Cpu, Settings2, Users, Leaf, ShieldAlert, BarChart3, Bot,
   Info, MoreHorizontal, ArrowUpRight, ArrowDownRight, PanelLeftClose, PanelRightClose, PanelLeft, PanelRight, X, Network
 } from 'lucide-react'
-import { AreaChart, Area, YAxis, ResponsiveContainer } from 'recharts'
+import * as Recharts from "recharts";
+const { AreaChart, Area, YAxis, ResponsiveContainer } = Recharts;
 
 // Persona identity (color + icon + suggested prompts) — the persona-routed RAG copilot.
 const PERSONA_META = {
