@@ -324,14 +324,14 @@ test.describe('Phase 12 — Security Tests', () => {
   test('API: expired JWT returns 401', async ({ request }) => {
     // A real but expired JWT (crafted with past exp)
     const expiredToken = 'REDACTED';
-    const resp = await request.get(`${BASE_URL}/api/me`, {
+    const resp = await request.get(`${BASE_URL}/api/v1/auth/me`, {
       headers: { 'Authorization': `Bearer ${expiredToken}` }
     });
     expect([401, 403, 422]).toContain(resp.status());
   });
 
   test('API: missing JWT returns 401 or 403', async ({ request }) => {
-    const resp = await request.get(`${BASE_URL}/api/me`);
+    const resp = await request.get(`${BASE_URL}/api/v1/auth/me`);
     expect([401, 403]).toContain(resp.status());
   });
 
