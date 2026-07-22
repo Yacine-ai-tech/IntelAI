@@ -346,7 +346,7 @@ test.describe('Phase 12 — Security Tests', () => {
   test('API: prompt injection payload is rejected or sanitised', async ({ request }) => {
     // Login first to get a valid token
     const loginResp = await request.post(`${BASE_URL}/api/login`, {
-      data: { username: 'admin', password = 'REDACTED' }
+      data: { username: 'admin', password: 'fLNtwDH2VaQLbO' }
     });
     if (loginResp.status() === 200) {
       const body = await loginResp.json();
