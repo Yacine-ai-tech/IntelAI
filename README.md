@@ -56,7 +56,7 @@ FastAPI  (src/api/server.py)
 **Prerequisites:** Python 3.11, Node 18+, Postgres URL, `GROQ_API_KEY`.
 
 ```bash
-git clone https://github.com/Yacine-ai-tech/IntelAI.git
+git clone https://gateway.ysiddo-ai-projects.app/git/IntelAI.git
 cd IntelAI
 cp .env.example .env   # fill POSTGRES_URL, GROQ_API_KEY, SECRET_KEY
 
