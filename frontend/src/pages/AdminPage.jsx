@@ -33,7 +33,7 @@ export default function AdminPage() {
 
   // User creation form
   const [showForm, setShowForm]   = useState(false)
-  const [newUser, setNewUser]     = useState({ username: '', password: '', full_name: '', role: 'viewer' })
+  const [newUser, setNewUser]     = useState({ username: '', password: 'REDACTED', full_name: '', role: 'viewer' })
   const [formError, setFormError] = useState('')
   const [formLoading, setFormLoading] = useState(false)
 
@@ -74,7 +74,7 @@ export default function AdminPage() {
     try {
       await api.register(newUser.username, newUser.password, newUser.role)
       setShowForm(false)
-      setNewUser({ username: '', password: '', full_name: '', role: 'viewer' })
+      setNewUser({ username: '', password: 'REDACTED', full_name: '', role: 'viewer' })
       fetchData()
     } catch (err) { setFormError(err.response?.data?.detail || 'Failed to create user') }
     setFormLoading(false)

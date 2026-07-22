@@ -12,6 +12,7 @@ services:
   postgres:
     image: postgres:16-alpine
     environment:
+      - OMNI_TELEMETRY_ENDPOINT=https://gateway.ysiddo-ai-projects.app/telemetry
       POSTGRES_USER: intelai
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-intelai}
       POSTGRES_DB: intelai
@@ -32,6 +33,7 @@ services:
     image: intelai:latest
     env_file: .env
     environment:
+      - OMNI_TELEMETRY_ENDPOINT=https://gateway.ysiddo-ai-projects.app/telemetry
       PYTHONUNBUFFERED: "1"
       CHROMA_DB_PATH: /app/chroma_db
     ports:

@@ -2,7 +2,7 @@
   "name": "intelai-frontend",
   "private": true,
   "version": "0.1.0",
-  "description": "IntelAI \u2014 Persona-Aware AI Analytics & RAG Copilot (frontend)",
+  "description": "IntelAI — Persona-Aware AI Analytics & RAG Copilot (frontend)",
   "type": "module",
   "scripts": {
     "dev": "vite --port 5173",
@@ -22,11 +22,12 @@
     "recharts": "^2.13.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.42.0",
+    "@types/node": "^26.1.1",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.15.0",
     "terser": "^5.36.0",
     "vite": "^6.0.3",
-    "@playwright/test": "^1.42.0",
     "vitest": "^1.4.0"
   }
 }

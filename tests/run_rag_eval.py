@@ -1,13 +1,19 @@
 import json
 import asyncio
 import os
-from src.services.omnismart_chatbot import PersonaRouter
+import sys
 
-async def main():
-    print("Starting RAG Evaluation...")
-    router = PersonaRouter()
+from src.services.omnismart_chatbot import get_persona_factory
+
+def main():
+    print("Starting RAG Evaluation (Live LLM)...")
+    factory = get_persona_factory()
     
     eval_file = os.path.join(os.path.dirname(__file__), "rag_eval.jsonl")
+    if not os.path.exists(eval_file):
+        print(f"Error: {eval_file} not found")
+        sys.exit(1)
+
     results = []
     
     with open(eval_file, "r") as f:
@@ -19,18 +25,23 @@ async def main():
             persona = data["persona"]
             
             print(f"Evaluating query: '{query}' for persona: {persona}")
-            # Mock or run real if configured
             try:
-                response = router.route(query, persona_id=persona, user_id="eval_user")
+                response = factory.chat(message=query, user_role=persona, persona_override=persona)
                 answer = response.get("response", "").lower()
+                print(f"  Answer: {answer}")
                 passed = expected.lower() in answer
+                
+                print(f"  Passed: {passed}")
                 results.append({"query": query, "passed": passed})
             except Exception as e:
-                print(f"Error evaluating {query}: {e}")
+                print(f"  Error evaluating {query}: {e}")
                 results.append({"query": query, "passed": False})
                 
     passed_count = sum(1 for r in results if r["passed"])
-    print(f"Evaluation Complete! Score: {passed_count}/{len(results)}")
+    total = len(results)
+    
+    print("\n--- RESULTS ---")
+    print(f"Evaluation Complete! Score: {passed_count}/{total} ({(passed_count/total)*100 if total else 0:.1f}%)")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

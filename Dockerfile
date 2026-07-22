@@ -19,6 +19,7 @@ RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r /app/requirements.txt --retries 10 --timeout 120
 
 COPY src /app/src
+COPY frontend /app/frontend
 COPY main.py /app/main.py
 
 RUN mkdir -p /app/data /app/uploads /app/logs /app/chroma_db && \

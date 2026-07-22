@@ -1,3 +1,6 @@
+import UserGuidePage from './pages/UserGuidePage'
+import BenchmarkPage from './pages/BenchmarkPage';
+import ApiDocsPage from './pages/ApiDocsPage';
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import Layout from './components/Layout'
@@ -77,6 +80,9 @@ export default function App() {
         <Route path="glossary" element={<ProtectedRoute page="analytics"><GlossaryPage /></ProtectedRoute>} />
       </Route>
       
+      <Route path="/benchmark" element={<BenchmarkPage />} />
+      <Route path="/api-docs" element={<ApiDocsPage />} />
+      <Route path="/user-guide" element={<UserGuidePage />} />
       <Route path="*" element={<Navigate to="/workspace" replace />} />
     </Routes>
   )
