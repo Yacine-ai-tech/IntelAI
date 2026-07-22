@@ -28,8 +28,17 @@ _pool = None
 
 
 def _get_conn():
-    """Get a PostgreSQL connection with dict row factory."""
-    return psycopg.connect(settings.POSTGRES_URL, row_factory=dict_row)
+    """Get a PostgreSQL connection with dict row factory. Includes retry logic for Neon cold-starts."""
+    import time
+    for attempt in range(3):
+        try:
+            return psycopg.connect(settings.POSTGRES_URL, row_factory=dict_row, connect_timeout=15)
+        except Exception as e:
+            if attempt == 2:
+                log.error("Failed to connect to PostgreSQL after 3 attempts: %s", e)
+                raise
+            log.warning("PostgreSQL connection failed (attempt %d/3). Retrying in 2s... (%s)", attempt + 1, e)
+            time.sleep(2)
 
 
 def init_pg_tables():
