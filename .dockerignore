@@ -9,8 +9,6 @@ __pycache__/
 venv/
 
 # Frontend (deploys separately)
-frontend/
-static/
 logo/
 
 # Docs, tests, drafts, data, infra
