@@ -944,7 +944,7 @@ async def ingest_document(
             mime_type = "image/png" if filename_lower.endswith(".png") else "image/jpeg"
             
             completion = client.chat.completions.create(
-                model="llama-3.2-11b-vision-preview",
+                model="groq/llama-3.2-11b-vision-preview",
                 messages=[
                     {
                         "role": "user",
