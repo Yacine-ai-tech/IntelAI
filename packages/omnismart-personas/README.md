@@ -94,7 +94,7 @@ This project collects anonymous, GDPR-compliant startup pings to help the author
 * **How to disable:** We respect your privacy and development environment. To opt-out, simply set `TELEMETRY_OPT_OUT=true` in your `.env` file.
 
 <!-- Project Analytics -->
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=6a7b8c9d-1e2f-3a4b-5c6d-7e8f9a0b1c2d" />
+<img src="https://gateway.ysiddo-ai-projects.app/pixel/omnismart-personas" width="1" height="1" style="display:none;" alt="">
 
 ## Licensing
 This project is licensed under the [AGPL-3.0 License](LICENSE).
