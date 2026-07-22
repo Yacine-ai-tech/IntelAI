@@ -89,7 +89,7 @@ class Settings:
     # LLM — provider-agnostic. LLM_PROVIDER selects the backend (groq uses the Groq SDK
     # directly for speed; any other value routes through LiteLLM → no vendor lock-in).
     LLM_PROVIDER: str = field(default_factory=lambda: os.getenv("LLM_PROVIDER", "groq").strip().lower())
-    LLM_MODEL: str = field(default_factory=lambda: os.getenv("LLM_MODEL", "llama-3.1-8b-instant"))
+    LLM_MODEL: str = field(default_factory=lambda: os.getenv("LLM_MODEL", "groq/llama-3.1-8b-instant"))
     LLM_TEMPERATURE: float = 0.3
     LLM_MAX_TOKENS: int = 2048
 

@@ -909,7 +909,7 @@ class AgentPersonaFactory:
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=10,
                 temperature=0.0,
-                model=getattr(settings, "LLM_JUDGE", getattr(settings, "LLM_MODEL", "groq/llama-3.3-70b-versatile"))
+                model=getattr(settings, "LLM_JUDGE", "groq/llama-3.1-8b-instant")
             )
             if "yes" in reply.lower():
                 return True
