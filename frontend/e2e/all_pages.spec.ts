@@ -38,7 +38,7 @@ test.describe('ysiddo-ai-projects_vol1 All Pages E2E Suite', () => {
 
     if (await emailInput.isVisible({ timeout: 5000 }).catch(() => false)) {
       await emailInput.fill('yacine');
-      await passInput.fill('OmniAdmin@2026!');
+      await passInput.fill('REDACTED_SECRET');
       await submitBtn.click();
       await page.waitForURL(/^(?!.*\/login).*$/, { timeout: 15000 }).catch(() => {});
     }
