@@ -1,3 +1,4 @@
+import UserGuidePage from './pages/UserGuidePage'
 import BenchmarkPage from './pages/BenchmarkPage';
 import ApiDocsPage from './pages/ApiDocsPage';
 import { Routes, Route, Navigate } from 'react-router-dom'
@@ -82,6 +83,7 @@ export default function App() {
       <Route path="*" element={<Navigate to="/workspace" replace />} />
           <Route path="/benchmark" element={<BenchmarkPage />} />
       <Route path="/api-docs" element={<ApiDocsPage />} />
+      <Route path="/user-guide" element={<UserGuidePage />} />
 </Routes>
   )
 }
