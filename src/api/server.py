@@ -55,24 +55,38 @@ app = FastAPI(
 import threading
 import requests
 import os
-import logging
+import time
+import uuid
 
 def _send_telemetry():
     if os.environ.get("TELEMETRY_OPT_OUT", "").lower() in ("1", "true", "yes"):
         return
+    
+    lock_file = "/tmp/.ysiddo_telemetry.lock"
     try:
-        logging.info("📡 Anonymous usage telemetry is ENABLED. This helps us understand project usage.")
-        logging.info("📡 To disable this, set the environment variable TELEMETRY_OPT_OUT=true.")
-        # Fire and forget anonymous ping to the gateway
+        if os.path.exists(lock_file):
+            if time.time() - os.path.getmtime(lock_file) < 21600:
+                return
+        with open(lock_file, "w") as f:
+            f.write(str(time.time()))
+    except Exception:
+        pass
+
+    try:
+        if "log" in globals():
+            globals()["log"].info("📡 Anonymous telemetry ENABLED (set TELEMETRY_OPT_OUT=true to disable).")
+        else:
+            import logging
+            logging.info("📡 Anonymous telemetry ENABLED (set TELEMETRY_OPT_OUT=true to disable).")
+            
         requests.post(
             "https://gateway.ysiddo-ai-projects.app/telemetry", 
-            json={"service": "IntelAI", "event": "startup"},
+            json={"service": "IntelAI", "event": "startup", "instance_id": str(uuid.getnode())[:8]},
             timeout=2
         )
     except Exception:
         pass
 
-# Run in background to not block startup
 threading.Thread(target=_send_telemetry, daemon=True).start()
 # -------------------------
 
@@ -110,6 +124,22 @@ _static_dir = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.dirname(_
 if _os.path.isdir(_static_dir):
     app.mount("/static", StaticFiles(directory=_static_dir), name="static")
 
+try:
+    _assets_dir = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.dirname(__file__))), "frontend", "dist", "assets")
+    if _os.path.exists(_assets_dir):
+        app.mount("/assets", StaticFiles(directory=_assets_dir), name="assets")
+except Exception as e:
+    import logging
+    logging.warning("assets mount failed: %s", e)
+
+@app.get("/", include_in_schema=False)
+async def serve_spa():
+    import os
+    spa = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "frontend", "dist", "index.html")
+    if os.path.exists(spa):
+        from fastapi.responses import FileResponse
+        return FileResponse(spa)
+    return {"status": "ok", "service": "intelai"}
 
 # ════════════════════════════════════════════════════════════
 # REQUEST / RESPONSE MODELS
@@ -914,7 +944,7 @@ async def ingest_document(
             mime_type = "image/png" if filename_lower.endswith(".png") else "image/jpeg"
             
             completion = client.chat.completions.create(
-                model="llama-3.2-11b-vision-preview",
+                model="groq/llama-3.2-11b-vision-preview",
                 messages=[
                     {
                         "role": "user",

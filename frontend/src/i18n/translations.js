@@ -216,9 +216,9 @@ const translations = {
     signIn: 'Sign In',
     signingIn: 'Signing in…',
     username: 'Username',
-    password: 'Password',
+    password: 'REDACTED',
     enterUsername: 'Enter username',
-    enterPassword: 'Enter password',
+    enterPassword: 'REDACTED',
     loginFailed: 'Login failed. Check credentials.',
     quickAccess: 'Quick Access',
 
@@ -965,9 +965,9 @@ const translations = {
     signIn: 'Se connecter',
     signingIn: 'Connexion…',
     username: "Nom d'utilisateur",
-    password: 'Mot de passe',
+    password: 'REDACTED',
     enterUsername: "Entrer le nom d'utilisateur",
-    enterPassword: 'Entrer le mot de passe',
+    enterPassword: 'REDACTED',
     loginFailed: 'Connexion échouée. Vérifiez vos identifiants.',
     quickAccess: 'Accès rapide',
 
