@@ -80,10 +80,10 @@ export default function App() {
         <Route path="glossary" element={<ProtectedRoute page="analytics"><GlossaryPage /></ProtectedRoute>} />
       </Route>
       
-      <Route path="*" element={<Navigate to="/workspace" replace />} />
-          <Route path="/benchmark" element={<BenchmarkPage />} />
+      <Route path="/benchmark" element={<BenchmarkPage />} />
       <Route path="/api-docs" element={<ApiDocsPage />} />
       <Route path="/user-guide" element={<UserGuidePage />} />
-</Routes>
+      <Route path="*" element={<Navigate to="/workspace" replace />} />
+    </Routes>
   )
 }
