@@ -11,14 +11,14 @@ const BASE_URL = process.env.TEST_BASE_URL || BASE_URL + '';
  */
 
 const URLS = {
-  intelai:    process.env.INTELAI_URL    || '/',
-  intelai_api:process.env.INTELAI_API_URL|| '/',
-  docintel:   process.env.DOCINTEL_URL   || '/',
-  docintel_api:process.env.DOCINTEL_API_URL|| '/',
-  agentkit:   process.env.AGENTKIT_URL   || '/',
-  agentkit_api:process.env.AGENTKIT_API_URL|| '/',
-  rageval:    process.env.RAGEVAL_URL    || '/',
-  rageval_api:process.env.RAGEVAL_API_URL|| '/',
+  intelai:    process.env.INTELAI_URL    || 'https://intelai-ui-2026.vercel.app',
+  intelai_api:process.env.INTELAI_API_URL|| 'https://intelai-bwhp.onrender.com',
+  docintel:   process.env.DOCINTEL_URL   || 'https://docintel-ui-2026.vercel.app',
+  docintel_api:process.env.DOCINTEL_API_URL|| 'https://docintel-mm79.onrender.com',
+  agentkit:   process.env.AGENTKIT_URL   || 'https://agentkit-ui-2026.vercel.app',
+  agentkit_api:process.env.AGENTKIT_API_URL|| 'https://agentkit-sbz5.onrender.com',
+  rageval:    process.env.RAGEVAL_URL    || 'https://rageval-ui-2026.vercel.app',
+  rageval_api:process.env.RAGEVAL_API_URL|| 'https://rageval-4xh5.onrender.com',
 };
 
 const ADMIN_USER = 'admin';
@@ -28,6 +28,23 @@ const ADMIN_PASS = process.env.ADMIN_PASS || '';
 // Phase 10 — The Grand Tour Workflow
 // ─────────────────────────────────────────────────────────────────────────────
 test.describe('Phase 10 — Cross-Mesh Grand Tour', () => {
+
+  test.beforeEach(async ({ page }) => {
+    // Intercept relative /api/v1 calls made from Vercel frontends and route them to Render backends
+    await page.route('**/api/v1/**', async route => {
+      const url = route.request().url();
+      if (url.includes('vercel.app')) {
+        let backendUrl = URLS.intelai_api; // default
+        if (url.includes('docintel-ui')) backendUrl = URLS.docintel_api;
+        else if (url.includes('agentkit-ui')) backendUrl = URLS.agentkit_api;
+        else if (url.includes('rageval-ui')) backendUrl = URLS.rageval_api;
+        const newUrl = url.replace(/https:\/\/[^\/]+/, backendUrl.replace(/\/$/, ''));
+        await route.continue({ url: newUrl });
+      } else {
+        await route.continue();
+      }
+    });
+  });
 
   let adminToken: string = '';
 

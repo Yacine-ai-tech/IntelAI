@@ -31,15 +31,19 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) {
+            registration.unregister();
+          }
+        });
         });
       }
     </script>
 
-    <script type="module" crossorigin src="/assets/index-BKnC6NTg.js"></script>
+    <script type="module" crossorigin src="/assets/index-DtGvd9sw.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/vendor-react-BkLi6Ye1.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-icons-0ug-v0Z9.js">
     <link rel="modulepreload" crossorigin href="/assets/vendor-axios-DTgc4F1k.js">
-    <link rel="modulepreload" crossorigin href="/assets/vendor-icons-b730xPfX.js">
     <link rel="modulepreload" crossorigin href="/assets/vendor-charts-YJq65fWd.js">
     <link rel="stylesheet" crossorigin href="/assets/index-Bl-V3iiH.css">
   </head>
