@@ -4,7 +4,7 @@
 
 # CPU-only torch (needed by sentence-transformers for dense embeddings + CrossEncoder reranking).
 --extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.4.1+cpu
+torch==2.5.1+cpu
 
 # ── Core framework ──────────────────────────────
 fastapi>=0.115.0
