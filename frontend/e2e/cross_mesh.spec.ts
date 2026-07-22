@@ -1,5 +1,7 @@
 import { test, expect, request as pwRequest } from '@playwright/test';
 
+const BASE_URL = process.env.TEST_BASE_URL || BASE_URL + '';
+
 /**
  * Phase 10 — Cross-Mesh Workflow Integration
  * Traces a single user journey across all 6 microservices:
@@ -9,14 +11,14 @@ import { test, expect, request as pwRequest } from '@playwright/test';
  */
 
 const URLS = {
-  intelai:    process.env.INTELAI_URL    || 'http://localhost:5173',
-  intelai_api:process.env.INTELAI_API_URL|| 'http://localhost:8000',
-  docintel:   process.env.DOCINTEL_URL   || 'http://localhost:5174',
-  docintel_api:process.env.DOCINTEL_API_URL|| 'http://localhost:8001',
-  agentkit:   process.env.AGENTKIT_URL   || 'http://localhost:5177',
-  agentkit_api:process.env.AGENTKIT_API_URL|| 'http://localhost:8005',
-  rageval:    process.env.RAGEVAL_URL    || 'http://localhost:5176',
-  rageval_api:process.env.RAGEVAL_API_URL|| 'http://localhost:8003',
+  intelai:    process.env.INTELAI_URL    || 'https://intelai-ui-2026.vercel.app',
+  intelai_api:process.env.INTELAI_API_URL|| 'https://intelai-bwhp.onrender.com',
+  docintel:   process.env.DOCINTEL_URL   || 'https://docintel-ui-2026.vercel.app',
+  docintel_api:process.env.DOCINTEL_API_URL|| 'https://docintel-mm79.onrender.com',
+  agentkit:   process.env.AGENTKIT_URL   || 'https://agentkit-ui-2026.vercel.app',
+  agentkit_api:process.env.AGENTKIT_API_URL|| 'https://agentkit-sbz5.onrender.com',
+  rageval:    process.env.RAGEVAL_URL    || 'https://rageval-ui-2026.vercel.app',
+  rageval_api:process.env.RAGEVAL_API_URL|| 'https://rageval-4xh5.onrender.com',
 };
 
 const ADMIN_USER = 'admin';
@@ -27,13 +29,30 @@ const ADMIN_PASS = process.env.ADMIN_PASS || '';
 // ─────────────────────────────────────────────────────────────────────────────
 test.describe('Phase 10 — Cross-Mesh Grand Tour', () => {
 
+  test.beforeEach(async ({ page }) => {
+    // Intercept relative /api/v1 calls made from Vercel frontends and route them to Render backends
+    await page.route('**/api/v1/**', async route => {
+      const url = route.request().url();
+      if (url.includes('vercel.app')) {
+        let backendUrl = URLS.intelai_api; // default
+        if (url.includes('docintel-ui')) backendUrl = URLS.docintel_api;
+        else if (url.includes('agentkit-ui')) backendUrl = URLS.agentkit_api;
+        else if (url.includes('rageval-ui')) backendUrl = URLS.rageval_api;
+        const newUrl = url.replace(/https:\/\/[^\/]+/, backendUrl.replace(/\/$/, ''));
+        await route.continue({ url: newUrl });
+      } else {
+        await route.continue();
+      }
+    });
+  });
+
   let adminToken: string = '';
 
   test.beforeAll(async ({ }) => {
     // Step A: Authenticate at IntelAI and capture JWT
     const ctx = await pwRequest.newContext();
-    const resp = await ctx.post(`${URLS.intelai_api}/api/login`, {
-      data: { username: ADMIN_USER, password: ADMIN_PASS }
+    const resp = await ctx.post(`${URLS.intelai_api}/api/v1/auth/demo-login?role=admin`, {
+      data: {}
     });
     if (resp.ok()) {
       const body = await resp.json();
@@ -75,9 +94,9 @@ test.describe('Phase 10 — Cross-Mesh Grand Tour', () => {
     const services = [
       { name: 'IntelAI',    url: `${URLS.intelai_api}/health` },
       { name: 'DocIntel',   url: `${URLS.docintel_api}/health` },
-      { name: 'VoiceFlow',  url: `${process.env.VOICEFLOW_API_URL || 'http://localhost:8002'}/health` },
+      { name: 'VoiceFlow',  url: `${process.env.VOICEFLOW_API_URL || '/'}/health` },
       { name: 'RAGeval',    url: `${URLS.rageval_api}/health` },
-      { name: 'StreamPulse',url: `${process.env.STREAMPULSE_API_URL || 'http://localhost:8004'}/health` },
+      { name: 'StreamPulse',url: `${process.env.STREAMPULSE_API_URL || '/'}/health` },
       { name: 'AgentKit',   url: `${URLS.agentkit_api}/health` },
     ];
     for (const svc of services) {
@@ -104,31 +123,31 @@ test.describe('Phase 10 — Cross-Mesh Grand Tour', () => {
 // ─────────────────────────────────────────────────────────────────────────────
 test.describe('Phase 11 — AI & RAG Defense (via API)', () => {
 
-  test('IntelAI /api/chat does not return 500 on empty message', async ({ request }) => {
-    const loginResp = await request.post(`${URLS.intelai_api}/api/login`, {
-      data: { username: ADMIN_USER, password: ADMIN_PASS }
+  test('IntelAI /api/v1/chat does not return 500 on empty message', async ({ request }) => {
+    const loginResp = await request.post(`${URLS.intelai_api}/api/v1/auth/demo-login?role=admin`, {
+      data: {}
     });
     if (!loginResp.ok()) { test.skip(); return; }
     const { access_token, token } = await loginResp.json();
     const authToken = access_token || token;
 
-    const chatResp = await request.post(`${URLS.intelai_api}/api/chat`, {
+    const chatResp = await request.post(`${URLS.intelai_api}/api/v1/chat`, {
       headers: { Authorization: `Bearer ${authToken}` },
       data: { message: '', persona: 'admin' }
     });
     expect(chatResp.status()).not.toBe(500);
   });
 
-  test('IntelAI /api/chat handles very long prompt without crashing', async ({ request }) => {
-    const loginResp = await request.post(`${URLS.intelai_api}/api/login`, {
-      data: { username: ADMIN_USER, password: ADMIN_PASS }
+  test('IntelAI /api/v1/chat handles very long prompt without crashing', async ({ request }) => {
+    const loginResp = await request.post(`${URLS.intelai_api}/api/v1/auth/demo-login?role=admin`, {
+      data: {}
     });
     if (!loginResp.ok()) { test.skip(); return; }
     const body = await loginResp.json();
     const authToken = body.access_token || body.token;
 
     const longMessage = 'A'.repeat(10000);
-    const chatResp = await request.post(`${URLS.intelai_api}/api/chat`, {
+    const chatResp = await request.post(`${URLS.intelai_api}/api/v1/chat`, {
       headers: { Authorization: `Bearer ${authToken}` },
       data: { message: longMessage, persona: 'admin' },
       timeout: 30000,

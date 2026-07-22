@@ -30,7 +30,7 @@ First request may take ~60 s to wake the on-demand backend.
 | **GraphRAG-lite** | Multi-hop entity graph for cross-domain queries (`USE_GRAPH_RAG=true`) |
 | **Hybrid retrieval** | Dense + BM25 + RRF + BGE reranker; degrades gracefully |
 | **Answer-block structuring** | Backend parses LLM markdown into typed blocks (heading, kpi, list, quote, code) |
-| **90+ curated KPIs** | Finance, HR, IT, Ops, Logistics, ESG, Growth — 36-month history, 7 benchmarking scenarios |
+| **169 curated KPIs** | Finance, HR, IT, Ops, Logistics, ESG, Growth — 36-month history, 7 benchmarking scenarios |
 | **ML forecasting** | Monte Carlo with confidence bands |
 | **Data export/ingest** | PDF / Excel / CSV / JSON export; CSV & document ingestion |
 | **Auth + RBAC** | JWT, role-based pages, per-persona data scoping, audit log |
@@ -56,7 +56,7 @@ FastAPI  (src/api/server.py)
 **Prerequisites:** Python 3.11, Node 18+, Postgres URL, `GROQ_API_KEY`.
 
 ```bash
-git clone https://github.com/Yacine-ai-tech/IntelAI.git
+git clone https://gateway.ysiddo-ai-projects.app/git/IntelAI.git
 cd IntelAI
 cp .env.example .env   # fill POSTGRES_URL, GROQ_API_KEY, SECRET_KEY
 
@@ -107,10 +107,11 @@ Full interactive reference at `/api/docs`.
 ## Tests
 
 ```bash
-pytest tests/ -q                  # all in-process (no live server needed)
-pytest tests/test_smoke.py -q     # 5 smoke checks (zero deps)
-pytest tests/test_api.py -q       # 30+ auth/RBAC/endpoint checks
-pytest tests/test_chat.py -q      # chat endpoint + answer-block assertions
+pytest tests/ -q                       # all in-process (no live server needed)
+pytest tests/test_smoke.py -q          # 5 smoke checks (zero deps)
+pytest tests/test_api.py -q            # 42 auth/RBAC/endpoint checks
+pytest tests/test_exhaustive_api.py -q # 71 exhaustive API coverage tests
+pytest tests/test_chat.py -q           # 9 chat endpoint + answer-block assertions
 ```
 
 DB-dependent tests run automatically when `POSTGRES_URL` is reachable and skip cleanly otherwise — CI is green without a database.
@@ -131,13 +132,22 @@ Seven seeded scenarios (selectable from the Admin → Scenarios tab or via `POST
 
 ## Deploy
 
-IntelAI deploys as **one cloud service** (`railway.toml` included). Connect the repo on Railway,
-set the env vars above, attach a Postgres add-on. Deploy the frontend separately on Vercel with
-`VITE_API_BASE_URL` pointing to the Railway service URL.
+IntelAI deploys as **one cloud service**. Connect the repo on Render or your preferred host,
+set the env vars above, attach a Postgres add-on (Neon recommended). Deploy the frontend separately on Vercel with
+`VITE_API_BASE_URL` pointing to the backend service URL.
+
+## PyPI Packages
+
+Two reusable packages are extracted from this codebase and published to PyPI:
+
+```bash
+pip install intelai              # v0.1.2 — the full deployable app
+pip install omnismart-personas  # v0.1.3 — persona templates for LangChain RAG projects
+```
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+AGPL-3.0 — see [LICENSE](LICENSE).
 
 ## ⚖️ License & Enterprise Use (Dual-License)
 
@@ -150,12 +160,12 @@ This project is open-source under the **AGPL-3.0 License**. It is completely fre
 
 ## 📡 Anonymous Telemetry
 This project collects anonymous, GDPR-compliant startup pings to help the author understand usage volume and prioritize development. 
-* **What is collected:** Only the project name and a "startup" event timestamp. No PII, no API keys, no user data.
-* **How to disable:** We respect your privacy. To opt-out, simply set `TELEMETRY_OPT_OUT=true` in your `.env` file.
+* **What is collected:** A startup event timestamp and anonymized deployment origin. No API keys, no user prompts, and no sensitive application data is ever collected.
+* **How to disable:** We respect your privacy and development environment. To opt-out, simply set `TELEMETRY_OPT_OUT=true` in your `.env` file.
 
 
-<!-- Scarf Analytics Pixel -->
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ada53b5b-d56f-447f-b5ab-a65a061b7d5a" />
+<!-- Project Analytics -->
+<img src="https://gateway.ysiddo-ai-projects.app/pixel/IntelAI" width="1" height="1" style="display:none;" alt="">
 
 ## Licensing
 This project is licensed under the [AGPL-3.0 License](LICENSE).
