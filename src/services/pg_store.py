@@ -84,7 +84,9 @@ def _get_conn():
             def __enter__(self):
                 return self._c.__enter__()
             def __exit__(self, exc_type, exc_val, exc_tb):
-                return self._c.__exit__(exc_type, exc_val, exc_tb)
+                res = self._c.__exit__(exc_type, exc_val, exc_tb)
+                self.close()
+                return res
         return ConnWrapper(pool)
     # Fallback: direct connection (original behavior)
     import time
