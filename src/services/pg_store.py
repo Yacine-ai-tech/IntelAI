@@ -73,8 +73,19 @@ def _get_conn():
     """
     pool = _init_pool()
     if pool and pool is not False:
-        # Return a pooled connection context manager
-        return pool.connection(timeout=10)
+        class ConnWrapper:
+            def __init__(self, p):
+                self._p = p
+                self._c = p.getconn(timeout=10)
+            def __getattr__(self, item):
+                return getattr(self._c, item)
+            def close(self):
+                self._p.putconn(self._c)
+            def __enter__(self):
+                return self._c.__enter__()
+            def __exit__(self, exc_type, exc_val, exc_tb):
+                return self._c.__exit__(exc_type, exc_val, exc_tb)
+        return ConnWrapper(pool)
     # Fallback: direct connection (original behavior)
     import time
     for attempt in range(3):
