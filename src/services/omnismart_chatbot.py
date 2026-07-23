@@ -783,10 +783,10 @@ class AgentPersonaFactory:
 
         # 1) Live KPI snapshot (latest period), scoped to the persona's domains (RBAC)
         try:
-            from src.services.pg_store import get_kpi_metrics
+            from src.services.pg_store import get_kpi_metrics, get_latest_period
             df = get_kpi_metrics()
             if df is not None and not df.empty:
-                latest = sorted(df["period"].unique())[-1]
+                latest = get_latest_period() or sorted(df["period"].unique())[-1]
                 cur = df[df["period"] == latest]
                 if scope:
                     cur = cur[cur["category"].str.lower().isin(scope)]
