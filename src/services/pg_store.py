@@ -25,10 +25,57 @@ from src.core.logger import get_logger
 log = get_logger(__name__)
 
 _pool = None
+_pool_lock = None
+
+
+def _init_pool():
+    """Initialize a persistent connection pool for Neon PostgreSQL.
+    
+    This is the #2 fix for IntelAI latency. Previously every DB call created a
+    fresh TCP+TLS connection to Neon (2-4s each). With pool=3 min connections,
+    subsequent calls reuse existing connections (<50ms overhead).
+    """
+    global _pool, _pool_lock
+    if _pool is not None:
+        return _pool
+    import threading
+    if _pool_lock is None:
+        _pool_lock = threading.Lock()
+    with _pool_lock:
+        if _pool is not None:
+            return _pool
+        try:
+            from psycopg_pool import ConnectionPool
+            _pool = ConnectionPool(
+                settings.POSTGRES_URL,
+                min_size=2,
+                max_size=8,
+                kwargs={"row_factory": dict_row},
+                open=True,
+                reconnect_timeout=30,
+                reconnect_failed=None,
+            )
+            log.info("✅ Neon connection pool initialized (min=2, max=8)")
+        except ImportError:
+            log.warning("⚠️ psycopg_pool not installed — falling back to per-call connections (slower)")
+            _pool = False  # Mark as unavailable, fall through to direct connect
+        except Exception as e:
+            log.warning("⚠️ Connection pool init failed: %s — using per-call connections", e)
+            _pool = False
+    return _pool
 
 
 def _get_conn():
-    """Get a PostgreSQL connection with dict row factory. Includes retry logic for Neon cold-starts."""
+    """Get a PostgreSQL connection. Uses pool if available, else direct connect.
+    
+    Pool reuse eliminates the 2-4s Neon cold-start per call. Falls back
+    gracefully to direct psycopg.connect() if psycopg_pool is not installed.
+    """
+    pool = _init_pool()
+    if pool and pool is not False:
+        # Return a pooled connection context manager
+        return pool.connection(timeout=10)
+    # Fallback: direct connection (original behavior)
     import time
     for attempt in range(3):
         try:

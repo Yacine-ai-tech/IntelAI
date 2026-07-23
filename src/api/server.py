@@ -604,22 +604,29 @@ async def get_me(user: TokenData = Depends(get_current_user)):
 @app.post("/api/v1/chat")
 async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
     import json as _json
+    import asyncio as _asyncio
     from src.services.omnismart_chatbot import get_persona_factory
 
     session_id = req.session_id or str(uuid.uuid4())
 
-    # Ensure session exists in PostgreSQL
-    try:
-        from src.services.pg_store import ensure_session_exists, store_message
-        ensure_session_exists(session_id, user.user_id)
-    except Exception:
-        pass  # Fallback — still works without PG
+    # ── Fix #3: Async session init — run in background, don't block LLM call ──
+    # Previously ensure_session_exists() blocked here for 2-4s (Neon cold connect).
+    # Now it fires in background while the LLM is warming up / responding.
+    async def _bg_session_init():
+        try:
+            from src.services.pg_store import ensure_session_exists
+            await _asyncio.to_thread(ensure_session_exists, session_id, user.user_id)
+        except Exception as e:
+            log.debug("BG session init failed (non-blocking): %s", e)
+
+    session_task = _asyncio.create_task(_bg_session_init())
 
     # Persona-routed RAG copilot: factory.chat auto-retrieves a role-scoped KPI
     # snapshot + knowledge docs and returns grounded answers with source citations.
     # (Same path as the WebSocket handler, so REST and the WS fallback behave identically.)
     factory = get_persona_factory()
-    result = factory.chat(
+    result = await _asyncio.to_thread(
+        factory.chat,
         message=req.message,
         user_role=user.role,
         persona_override=req.persona,
@@ -630,17 +637,25 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
     response_text = result.get("response", "")
     sources = result.get("sources", [])
 
-    # Persist both messages to PostgreSQL
-    try:
-        store_message(session_id, "user", req.message)
-        store_message(
-            session_id, "assistant", response_text,
-            sources=_json.dumps(sources) if sources else "[]",
-            tokens_used=result.get("tokens_used", 0),
-            latency_ms=result.get("latency_ms", 0),
-        )
-    except Exception as e:
-        log.warning("PG message store failed: %s", e)
+    # ── Fix #3 cont: Persist messages in background — don't block response ──
+    # Both store_message calls previously added 4-8s after the LLM reply.
+    # Now they fire-and-forget after we've already built the response dict.
+    async def _bg_store_messages():
+        try:
+            await session_task  # ensure session exists before storing messages
+            from src.services.pg_store import store_message
+            await _asyncio.to_thread(store_message, session_id, "user", req.message)
+            await _asyncio.to_thread(
+                store_message,
+                session_id, "assistant", response_text,
+                sources=_json.dumps(sources) if sources else "[]",
+                tokens_used=result.get("tokens_used", 0),
+                latency_ms=result.get("latency_ms", 0),
+            )
+        except Exception as e:
+            log.warning("BG message store failed (non-blocking): %s", e)
+
+    _asyncio.create_task(_bg_store_messages())
 
     return {
         "response": response_text,

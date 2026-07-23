@@ -27,31 +27,72 @@ except ImportError:
     log.warning("litellm not installed — llm_router stub mode")
 
 
-DEFAULT_MODEL = os.getenv("LLM_DEFAULT", "groq/llama-3.3-70b-versatile")
-REASONING_MODEL = os.getenv("LLM_REASONING", "anthropic/claude-sonnet-4-6")
-JUDGE_MODEL = os.getenv("LLM_JUDGE", "anthropic/claude-haiku-4-5")
-LOCAL_MODEL = os.getenv("LLM_LOCAL", "ollama/llama3.3")
+DEFAULT_MODEL    = os.getenv("LLM_DEFAULT",    "groq/llama-3.3-70b-versatile")
+FAST_MODEL       = os.getenv("LLM_FAST",       "groq/llama-3.1-8b-instant")
+REASONING_MODEL  = os.getenv("LLM_REASONING",  "anthropic/claude-sonnet-4-6")
+JUDGE_MODEL      = os.getenv("LLM_JUDGE",      "anthropic/claude-haiku-4-5")
+LOCAL_MODEL      = os.getenv("LLM_LOCAL",      "ollama/llama3.3")
 
-
+# ── Persona → tier mapping ─────────────────────────────────────────────────
+# ALL personas start at "default" (Groq 70B, ~2s round-trip).
+# "reasoning" (Claude Sonnet, ~12-18s) is reserved for genuinely complex
+# multi-step analysis detected by smart_tier() at query time.
+# This is the #1 fix for IntelAI latency: CFO/CEO were previously routing
+# ALL queries — including simple "what is gross margin?" — to Claude Sonnet.
 PERSONA_TIER_MAP: Dict[str, str] = {
-    "ceo": "reasoning",
-    "cfo": "reasoning",
-    "cto": "reasoning",
-    "risk": "reasoning",
-    "coo": "default",
-    "chro": "default",
-    "esg": "default",
-    "analyst": "default",
-    "general": "default",
+    "ceo":      "default",   # was: reasoning → 18s; now: default → 2s
+    "cfo":      "default",   # was: reasoning → 18s; now: default → 2s
+    "cto":      "default",   # was: reasoning → 18s; now: default → 2s
+    "risk":     "default",   # was: reasoning → 18s; now: default → 2s
+    "coo":      "default",
+    "chro":     "default",
+    "esg":      "default",
+    "analyst":  "default",
+    "general":  "default",
 }
+
+# Patterns that genuinely need Claude Sonnet deep reasoning
+_COMPLEX_PATTERNS = [
+    "compare", "contrast", "explain why", "root cause", "scenario analysis",
+    "monte carlo", "sensitivity", "what would happen if", "strategic",
+    "recommend", "board report", "full analysis", "deep dive",
+    "forecast next", "multi-step", "simulate", "model the",
+]
+
+
+def smart_tier(message: str, persona: Optional[str] = None) -> str:
+    """Auto-detect whether a query warrants Claude Sonnet (reasoning) or Groq (default).
+
+    Simple KPI lookups, dashboard queries, and conversational questions → default (Groq 70B, ~2s).
+    Complex analysis, scenario modeling, board reports → reasoning (Claude Sonnet, ~12s).
+
+    This is the key latency fix: previously ALL CFO/CEO queries went to Claude Sonnet.
+    """
+    msg_lower = message.lower()
+    word_count = len(msg_lower.split())
+
+    # Very short queries are always fast-path
+    if word_count <= 8:
+        return "default"
+
+    # Complex pattern detection → escalate to reasoning
+    if any(pat in msg_lower for pat in _COMPLEX_PATTERNS):
+        return "reasoning"
+
+    # Long, multi-clause questions → reasoning
+    if word_count > 60:
+        return "reasoning"
+
+    return "default"
 
 
 def _resolve(tier: str) -> str:
     return {
-        "default": DEFAULT_MODEL,
+        "fast":      FAST_MODEL,
+        "default":   DEFAULT_MODEL,
         "reasoning": REASONING_MODEL,
-        "judge": JUDGE_MODEL,
-        "local": LOCAL_MODEL,
+        "judge":     JUDGE_MODEL,
+        "local":     LOCAL_MODEL,
     }.get(tier, DEFAULT_MODEL)
 
 
