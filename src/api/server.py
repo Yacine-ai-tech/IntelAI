@@ -440,6 +440,17 @@ async def startup():
     _asyncio.create_task(_asyncio.to_thread(_vector_selfheal))
     log.info("Vector store self-heal scheduled (background)")
 
+    # WARM UP AI MODELS
+    def _warmup_models():
+        try:
+            from src.services.omnismart_chatbot import get_persona_factory
+            get_persona_factory()
+            log.info("✅ AI models pre-warmed successfully")
+        except Exception as e:
+            log.warning("AI model pre-warm skipped: %s", e)
+            
+    _asyncio.create_task(_asyncio.to_thread(_warmup_models))
+
     log.info("✅ IntelAI API ready")
 
 
@@ -1678,8 +1689,17 @@ async def websocket_chat(websocket: WebSocket):
         _session_ready = False
         await websocket.send_json({"type": "connected", "user": user.username, "session_id": session_id})
 
+        import asyncio
+        from datetime import datetime, timezone
         while True:
-            data = await websocket.receive_json()
+            try:
+                data = await asyncio.wait_for(websocket.receive_json(), timeout=30.0)
+            except asyncio.TimeoutError:
+                try:
+                    await websocket.send_json({"type": "ping", "timestamp": datetime.now(timezone.utc).isoformat()})
+                except Exception:
+                    break
+                continue
             message = data.get("message", "")
             persona_override = data.get("persona")
             if data.get("session_id"):
