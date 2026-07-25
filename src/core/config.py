@@ -61,7 +61,7 @@ class Settings:
 
     # FastAPI
     FASTAPI_HOST: str = field(default_factory=lambda: os.getenv("FASTAPI_HOST", "0.0.0.0"))
-    FASTAPI_PORT: int = field(default_factory=lambda: int(os.getenv("FASTAPI_PORT", "8000")))
+    FASTAPI_PORT: int = field(default_factory=lambda: int(os.getenv("PORT", os.getenv("FASTAPI_PORT", "8000"))))
 
     # Frontend base URL (used for OAuth redirects)
     FRONTEND_URL: str = field(default_factory=lambda: os.getenv("FRONTEND_URL", "http://localhost:5173"))
