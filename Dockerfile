@@ -16,7 +16,7 @@ WORKDIR /app
 
 COPY requirements.txt /app/requirements.txt
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r /app/requirements.txt --retries 10 --timeout 120
+    pip install --no-cache-dir -r /app/requirements.txt --retries 10 --timeout 1000 
 
 COPY src /app/src
 COPY frontend /app/frontend
@@ -32,4 +32,4 @@ EXPOSE 8000
 
 # Honor platform-injected $PORT (Railway/Render/Fly/Heroku); default 8000 locally.
 # exec via sh so $PORT expands AND uvicorn becomes PID 1 (clean SIGTERM shutdown).
-CMD ["sh", "-c", "exec python -m uvicorn src.api.server:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --loop uvloop --http httptools --timeout-keep-alive 30 --log-level warning"]
+CMD ["sh", "-c", "exec python -m uvicorn src.api.server:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --log-level debug"]
