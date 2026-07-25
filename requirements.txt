@@ -4,7 +4,7 @@
 
 # CPU-only torch (needed by sentence-transformers for dense embeddings + CrossEncoder reranking).
 --extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.5.1+cpu
+# torch==2.5.1+cpu
 
 # ── Core framework ──────────────────────────────
 fastapi>=0.115.0
@@ -37,7 +37,7 @@ anthropic>=0.40.0
 openai>=1.55.0
 
 # ── Retrieval — hybrid (dense + BM25 + rerank) ──
-sentence-transformers>=3.1.1   # dense embeddings + CrossEncoder BGE reranker
+# sentence-transformers>=3.1.1   # dense embeddings + CrossEncoder BGE reranker
 rank-bm25>=0.2.2
 sentencepiece>=0.2.0           # XLM-R tokenizer for the BGE reranker (bge-reranker-v2-m3)
 
