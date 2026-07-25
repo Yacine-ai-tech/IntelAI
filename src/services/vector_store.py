@@ -71,6 +71,8 @@ def _embed(texts: List[str]):
         return np.asarray(res, dtype="float32")
         
     def _try_local():
+        if os.environ.get("RENDER"):
+            raise RuntimeError("Local embedding disabled on Render to prevent OOM. Set HF_TOKEN or COHERE_API_KEY.")
         vecs = _embedder().encode(list(texts), normalize_embeddings=True, show_progress_bar=False)
         return np.asarray(vecs, dtype="float32")
 
