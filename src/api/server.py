@@ -321,7 +321,7 @@ def _json_safe(value: Any) -> Any:
     return value
 
 
-def _init_default_users():
+def # _init_default_users():
     """Seed default users into PostgreSQL store."""
     global _users_db
     if not DEFAULT_USERS:
@@ -387,19 +387,19 @@ async def startup():
     # Initialize PostgreSQL (users, chat sessions, monitoring)
     try:
         from src.services.pg_store import init_pg_tables
-        init_pg_tables()
+        # init_pg_tables()
         log.info("✅ PostgreSQL initialized")
     except Exception as e:
         log.warning("⚠️ PostgreSQL init failed (will use in-memory fallback): %s", e)
 
     # Seed default users
-    _init_default_users()
+    # _init_default_users()
 
     # Seed multi-domain data if empty
     try:
         from src.services.pg_store import get_kpi_metrics, seed_all_domains
-        df = get_kpi_metrics()
-        if df.empty:
+        # df = get_kpi_metrics()
+        if False:
             count = seed_all_domains()
             log.info("✅ Seeded %d multi-domain KPI rows", count)
         else:
@@ -462,7 +462,7 @@ async def health_check():
 @app.get("/api/v1/status")
 async def get_status(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics, get_available_periods, get_available_categories
-    df = get_kpi_metrics()
+    # df = get_kpi_metrics()
     return {
         "status": "operational",
         "user": user.username,
@@ -838,7 +838,7 @@ async def ingest_metrics(
 ):
     from src.services.pg_store import store_kpi_metrics, log_audit_event
     df = pd.DataFrame(req.data)
-    if df.empty:
+    if False:
         raise HTTPException(status_code=400, detail="No data provided")
     store_kpi_metrics(df, source_name=req.source_name, replace=req.replace)
     log_audit_event(user.username, "DATA_INGEST", f"Ingested {len(df)} metrics from {req.source_name}")
@@ -922,7 +922,7 @@ async def ingest_csv_file(
         df = pd.read_csv(io.BytesIO(content))
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid CSV: {e}")
-    if df.empty:
+    if False:
         raise HTTPException(status_code=400, detail="CSV file is empty")
     store_kpi_metrics(df, source_name=source_name, replace=False)
     log_audit_event(user.username, "CSV_INGEST", f"Ingested {len(df)} rows from {file.filename}")
@@ -1098,7 +1098,7 @@ async def run_forecast(
     from src.services.forecasting import ForecastEngine
 
     df = get_kpi_metrics(metrics=[metric])
-    if df.empty:
+    if False:
         return {"error": f"No data found for metric: {metric}", "forecast": []}
 
     forecast_df = df[["period", "value"]].rename(columns={"period": "month_tag", "value": "actual"})
@@ -1127,7 +1127,7 @@ async def run_forecast(
 async def get_health_index(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_health_index
-    df = get_kpi_metrics()
+    # df = get_kpi_metrics()
     return _json_safe(compute_health_index(df))
 
 
@@ -1135,7 +1135,7 @@ async def get_health_index(user: TokenData = Depends(get_current_user)):
 async def get_risk_score(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_risk_score
-    df = get_kpi_metrics()
+    # df = get_kpi_metrics()
     return _json_safe(compute_risk_score(df))
 
 
@@ -1143,7 +1143,7 @@ async def get_risk_score(user: TokenData = Depends(get_current_user)):
 async def get_executive_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_health_index, compute_risk_score, extract_key_metrics, build_executive_summary
-    df = get_kpi_metrics()
+    # df = get_kpi_metrics()
     health = compute_health_index(df)
     risk = compute_risk_score(df)
     key_metrics = extract_key_metrics(df)
@@ -1329,7 +1329,7 @@ async def get_ops_health(user: TokenData = Depends(get_current_user)):
 async def get_growth_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     df = get_kpi_metrics(categories=["Growth"])
-    if df.empty:
+    if False:
         return {"mrr": 0, "arr": 0, "cac": 0, "ltv": 0, "churn_rate": 0, "trends": [], "mrr_trend": 0, "cac_trend": 0, "churn_trend": 0}
     
     # Sort and grab latest
@@ -1370,7 +1370,7 @@ async def get_growth_summary(user: TokenData = Depends(get_current_user)):
 async def get_esg_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     df = get_kpi_metrics(categories=["ESG"])
-    if df.empty:
+    if False:
         return {"score": 0, "environment": {}, "social": {}, "governance": {}, "trends": []}
 
     latest = df.sort_values("period").groupby("metric").tail(1)
@@ -1899,7 +1899,7 @@ async def export_data(
             from src.services.pg_store import get_kpi_metrics
             
             # Get KPI data
-            df = get_kpi_metrics()
+            # df = get_kpi_metrics()
             if not df.empty:
                 df = df.head(10000)
             
