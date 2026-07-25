@@ -1,6 +1,6 @@
 import { test, expect, request as pwRequest } from '@playwright/test';
 
-const BASE_URL = process.env.TEST_BASE_URL || BASE_URL + '';
+const BASE_URL = process.env.TEST_BASE_URL || '';
 
 /**
  * Phase 10 — Cross-Mesh Workflow Integration
