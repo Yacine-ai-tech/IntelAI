@@ -39,7 +39,7 @@ openai>=1.55.0
 # ── Retrieval — hybrid (dense + BM25 + rerank) ──
 # sentence-transformers>=3.1.1   # dense embeddings + CrossEncoder BGE reranker
 rank-bm25>=0.2.2
-sentencepiece>=0.2.0           # XLM-R tokenizer for the BGE reranker (bge-reranker-v2-m3)
+# sentencepiece>=0.2.0           # XLM-R tokenizer for the BGE reranker (bge-reranker-v2-m3)
 
 # ── Vector stores (VECTOR_STORE=chroma|pgvector|qdrant; memory needs none) ─
 # chromadb>=0.5.0
@@ -58,4 +58,4 @@ python-docx>=1.1.2
 reportlab>=4.2.0
 
 # ── Lightning AI Studio management ──
-lightning-sdk>=2026.6.0
+# lightning-sdk>=2026.6.0
