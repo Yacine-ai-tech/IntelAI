@@ -16,7 +16,7 @@ WORKDIR /app
 
 COPY requirements.txt /app/requirements.txt
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r /app/requirements.txt --retries 10 --timeout 1000 
+    cat /app/requirements.txt | grep -v '^#' | grep -v '^$' | xargs -n 1 pip install --no-cache-dir --retries 10 --timeout 1000
 
 COPY src /app/src
 COPY frontend /app/frontend
