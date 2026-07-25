@@ -321,7 +321,7 @@ def _json_safe(value: Any) -> Any:
     return value
 
 
-def # _init_default_users():
+def _init_default_users():
     """Seed default users into PostgreSQL store."""
     global _users_db
     if not DEFAULT_USERS:
