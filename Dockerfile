@@ -29,8 +29,6 @@ USER appuser
 
 EXPOSE 8000
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
-  CMD curl -f http://localhost:${PORT:-8000}/health || exit 1
 
 # Honor platform-injected $PORT (Railway/Render/Fly/Heroku); default 8000 locally.
 # exec via sh so $PORT expands AND uvicorn becomes PID 1 (clean SIGTERM shutdown).
