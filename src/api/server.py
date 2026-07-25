@@ -440,16 +440,7 @@ async def startup():
     _asyncio.create_task(_asyncio.to_thread(_vector_selfheal))
     log.info("Vector store self-heal scheduled (background)")
 
-    # WARM UP AI MODELS
-    def _warmup_models():
-        try:
-            from src.services.omnismart_chatbot import get_persona_factory
-            get_persona_factory()
-            log.info("✅ AI models pre-warmed successfully")
-        except Exception as e:
-            log.warning("AI model pre-warm skipped: %s", e)
             
-    _asyncio.create_task(_asyncio.to_thread(_warmup_models))
 
     log.info("✅ IntelAI API ready")
 
