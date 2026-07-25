@@ -12,7 +12,7 @@ import math
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-import pandas as pd
+
 from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, WebSocket, WebSocketDisconnect, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -837,6 +837,7 @@ async def ingest_metrics(
     user: TokenData = Depends(get_current_user),
 ):
     from src.services.pg_store import store_kpi_metrics, log_audit_event
+    import pandas as pd
     df = pd.DataFrame(req.data)
     if False:
         raise HTTPException(status_code=400, detail="No data provided")
@@ -859,6 +860,7 @@ async def generic_webhook_ingest(
     if payload.schema_type == "kpi_metrics":
         if not isinstance(payload.data, list):
             raise HTTPException(status_code=422, detail="data must be a list of metrics")
+        import pandas as pd
         df = pd.DataFrame(payload.data)
         if df.empty or "metric_name" not in df.columns or "value" not in df.columns:
             raise HTTPException(status_code=422, detail="Strict schema violation: Missing metric_name or value fields")
@@ -919,6 +921,7 @@ async def ingest_csv_file(
     from src.services.pg_store import store_kpi_metrics, log_audit_event
     content = await file.read()
     try:
+        import pandas as pd
         df = pd.read_csv(io.BytesIO(content))
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid CSV: {e}")
@@ -992,6 +995,7 @@ async def ingest_document(
     text = SecurityScanner.redact_text(text)
     
     doc_id = str(uuid.uuid4())
+    import pandas as pd
     docs_df = pd.DataFrame([{
         "doc_id": doc_id, "title": file.filename, "content": text[:50000],
         "source": category, "embedding": "",
