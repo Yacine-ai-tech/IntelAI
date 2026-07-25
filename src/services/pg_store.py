@@ -51,11 +51,14 @@ def _init_pool():
                 min_size=2,
                 max_size=8,
                 kwargs={"row_factory": dict_row},
-                open=True,
+                open=False,
                 reconnect_timeout=30,
                 reconnect_failed=None,
             )
-            log.info("✅ Neon connection pool initialized (min=2, max=8)")
+            # Open the pool in the background so it doesn't block startup
+            import threading
+            threading.Thread(target=_pool.open, daemon=True).start()
+            log.info("✅ Neon connection pool initialized (min=2, max=8, lazy open)")
         except ImportError:
             log.warning("⚠️ psycopg_pool not installed — falling back to per-call connections (slower)")
             _pool = False  # Mark as unavailable, fall through to direct connect
