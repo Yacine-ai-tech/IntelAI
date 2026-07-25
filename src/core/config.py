@@ -130,10 +130,9 @@ settings = Settings()
 
 # ── Startup validation ─────────────────────────────────────────────────────
 def validate_required_keys() -> None:
-    """Fail fast if required API keys are missing."""
     missing = []
-    if not settings.GROQ_API_KEY:
-        missing.append("GROQ_API_KEY")
+    if not any([settings.GROQ_API_KEY, settings.ANTHROPIC_API_KEY, settings.GEMINI_API_KEY, settings.OPENAI_API_KEY]):
+        missing.append("ANY_LLM_API_KEY (Groq, Anthropic, Gemini, or OpenAI)")
     if missing:
         raise EnvironmentError(
             f"Missing required environment variables: {', '.join(missing)}. "
