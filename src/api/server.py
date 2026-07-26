@@ -401,8 +401,12 @@ async def startup():
             log.warning("⚠️ PostgreSQL init/seeding skipped in background: %s", e)
 
     import asyncio as _asyncio
-    _asyncio.create_task(_asyncio.to_thread(_bg_db_init))
-    log.info("PostgreSQL initialization scheduled (background)")
+    async def _delayed_db_init():
+        await _asyncio.sleep(5)  # Let Uvicorn bind port and pass initial Render health probe
+        await _asyncio.to_thread(_bg_db_init)
+
+    _asyncio.create_task(_delayed_db_init())
+    log.info("PostgreSQL initialization scheduled (delayed background)")
 
     # Self-heal the persistent vector store WITHOUT blocking startup: embedding-model load +
     # (re)indexing are heavy, so run them in a background thread. The API serves /health, login,
@@ -432,9 +436,12 @@ async def startup():
         except Exception as e:
             log.warning("Vector store self-heal skipped: %s", e)
 
-    import asyncio as _asyncio
-    _asyncio.create_task(_asyncio.to_thread(_vector_selfheal))
-    log.info("Vector store self-heal scheduled (background)")
+    async def _delayed_vector_init():
+        await _asyncio.sleep(15)  # Stagger vector store check to avoid GIL contention with DB init
+        await _asyncio.to_thread(_vector_selfheal)
+
+    _asyncio.create_task(_delayed_vector_init())
+    log.info("Vector store self-heal scheduled (delayed background)")
 
             
 
