@@ -476,7 +476,11 @@ def seed_database(replace: bool = True, scenario: str = "healthy") -> Dict[str, 
     from src.services.pg_store import store_kpi_metrics, store_knowledge_docs, store_kpi_entities
 
     rows = generate_kpi_rows(scenario=scenario)
-    store_kpi_metrics(pd.DataFrame(rows), source_name=f"seed_{scenario}", replace=replace, replace_prefix="seed_")
+    try:
+        store_kpi_metrics(pd.DataFrame(rows), source_name=f"seed_{scenario}", replace=replace, replace_prefix="seed_")
+    except Exception as e:
+        import logging
+        logging.warning("store_kpi_metrics DB write skipped: %s", e)
 
     # GraphRAG-lite: extract entities at ingest and persist them (kpi_entities sidecar table).
     try:
