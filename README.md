@@ -18,7 +18,8 @@
 
 **Live demo:** https://intelai.ysiddo-ai-projects.app · password-less role login (DEMO_MODE).
 First request may take ~60 s to wake the on-demand backend.
-> Self-hosting: see [SELF_HOSTING.md](SELF_HOSTING.md).
+> Self-hosting: see [SELF_HOSTING.md](SELF_HOSTING.md).  
+> Data Model & Benchmarks: see [DATA_SEEDING.md](DATA_SEEDING.md).
 
 ---
 
