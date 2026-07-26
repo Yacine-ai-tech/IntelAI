@@ -459,12 +459,19 @@ async def startup():
 
 @app.get("/health")
 async def health_check():
+    db_status = "ok"
+    try:
+        from src.services.pg_store import _get_conn
+        with _get_conn() as conn:
+            conn.execute("SELECT 1")
+    except Exception as e:
+        db_status = f"error: {str(e)}"
     return {
-        "status": "healthy",
+        "status": "healthy" if db_status == "ok" else "degraded",
         "service": "IntelAI API",
         "version": "2026.3.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),
-        "database": "postgresql",
+        "database": db_status,
     }
 
 
