@@ -457,22 +457,31 @@ async def startup():
 # HEALTH & STATUS
 # ════════════════════════════════════════════════════════════
 
+_last_db_check = 0.0
+_cached_db_status = "ok"
+
 @app.get("/health")
 async def health_check():
-    db_status = "ok"
-    try:
-        from src.services.pg_store import _get_conn
-        with _get_conn() as conn:
-            conn.execute("SELECT 1")
-    except Exception as e:
-        db_status = f"error: {str(e)}"
+    global _last_db_check, _cached_db_status
+    import time
+    now = time.time()
+    if now - _last_db_check > 3600:
+        try:
+            from src.services.pg_store import _get_conn
+            with _get_conn() as conn:
+                conn.execute("SELECT 1")
+            _cached_db_status = "ok"
+        except Exception as e:
+            _cached_db_status = f"error: {str(e)}"
+        _last_db_check = now
     return {
-        "status": "healthy" if db_status == "ok" else "degraded",
+        "status": "healthy" if _cached_db_status == "ok" else "degraded",
         "service": "IntelAI API",
         "version": "2026.3.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),
-        "database": db_status,
+        "database": _cached_db_status,
     }
+
 
 
 @app.get("/api/v1/status")
