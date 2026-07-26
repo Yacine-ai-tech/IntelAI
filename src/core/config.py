@@ -164,9 +164,9 @@ def _apply_gemini_fallback():
             
         for attr in dir(settings):
             if attr.startswith("LLM_") and isinstance(getattr(settings, attr), str):
-                setattr(settings, attr, fallback(getattr(settings, attr)))
+                object.__setattr__(settings, attr, fallback(getattr(settings, attr)))
         
         if hasattr(settings, "JUDGE_MODELS") and isinstance(settings.JUDGE_MODELS, list):
-            settings.JUDGE_MODELS = [fallback(m) for m in settings.JUDGE_MODELS]
+            object.__setattr__(settings, "JUDGE_MODELS", [fallback(m) for m in settings.JUDGE_MODELS])
 
 _apply_gemini_fallback()
