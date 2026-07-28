@@ -33,7 +33,7 @@ services:
         sync: false
       - key: COHERE_API_KEY        # free, no-card key for the rerank backstop
         sync: false
-      - key: OMNIINTEL_INTERNAL_TOKEN  # REQUIRED: must match gateway — set to REDACTED_SECRET
-        value: REDACTED_SECRET
+      - key: OMNIINTEL_INTERNAL_TOKEN  # REQUIRED: must match gateway
+        sync: false
       - key: REQUIRE_INTERNAL_TOKEN
         value: "false"
