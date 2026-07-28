@@ -271,7 +271,51 @@ jobs:
           echo "⚡ Tests run on GitHub Actions runners. Lightning AI Studio is for GPU inference only." >> $GITHUB_STEP_SUMMARY
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # PHASE 7 — Integration Tests (Main Only)
+  # PHASE 7 — Playwright Browser Tests (P1-6/P1-7 Issues)
+  # ═══════════════════════════════════════════════════════════════════════════
+  playwright-tests:
+    name: "Playwright Browser Tests"
+    runs-on: ubuntu-latest
+    needs: [smoke-test]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          
+      - name: Install Playwright dependencies
+        run: |
+          cd frontend
+          npm ci
+          npx playwright install --with-deps chromium
+          
+      - name: Run P1-6 Knowledge Graph Tests
+        env:
+          TEST_BASE_URL: ${{ env.INTELAI_URL }}
+        run: |
+          cd frontend
+          npx playwright test p1_knowledge_graph.spec.ts --reporter=list
+          
+      - name: Run P1-7 Chat Loading Tests
+        env:
+          TEST_BASE_URL: ${{ env.INTELAI_URL }}
+        run: |
+          cd frontend
+          npx playwright test p1_chat_loading.spec.ts --reporter=list
+          
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: frontend/playwright-report/
+          retention-days: 7
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # PHASE 8 — Integration Tests (Main Only)
   # ═══════════════════════════════════════════════════════════════════════════
   integration-tests:
     name: "Integration Tests"

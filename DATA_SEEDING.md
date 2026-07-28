@@ -127,6 +127,8 @@ During ingestion, `src.services.entity_extractor` automatically extracts domain 
 
 If Neon PostgreSQL is unreachable or throttled due to quota limits (`ERROR: Your project has exceeded the data transfer quota`):
 
-1. **Automatic Failover**: `get_kpi_metrics()` in `src/services/pg_store.py` catches database connection errors.
-2. **In-Memory Seed Cache**: Instantly loads `_get_seeded_fallback_df()` containing the 10,452-row seed dataset in-memory (< 1.0 ms latency).
-3. **Continuous Score Calculation**: `HRService` and `calculate_financial_health_score` continue evaluating metrics at **95 / 100 ("Excellent")**, preventing health scores from dropping to `0`.
+1. **Graceful Degradation**: `get_kpi_metrics()` in `src/services/pg_store.py` catches database connection errors and returns empty DataFrames.
+2. **Empty Data Handling**: Health score functions return sensible defaults (e.g., `{"score": 0, "label": "No Data"}`) when data is unavailable.
+3. **Data Re-seeding**: The seed engine can be re-run to restore data once connectivity is restored (`python3 -m src.data.seed`).
+
+**Note**: There is no automatic in-memory fallback. Data availability depends on Neon PostgreSQL connectivity.
