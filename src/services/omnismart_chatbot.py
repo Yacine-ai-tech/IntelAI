@@ -158,17 +158,40 @@ def llm_complete(
                         log.warning("Gemini completion attempt %d failed (%s)", attempt+1, ge)
                         time.sleep(3)
 
-    # Any other provider → LiteLLM
+    # Any other provider → LiteLLM with Gemini fallback
     from litellm import completion  # type: ignore
     msgs = _apply_cache_control(messages, resolved_model)
     kw = {"model": resolved_model, "messages": msgs, "temperature": temperature, "max_tokens": max_tokens}
     if top_p is not None:
         kw["top_p"] = top_p
-    r = completion(**kw)
-    text = r.choices[0].message.content
-    usage = getattr(r, "usage", None)
-    tokens = getattr(usage, "total_tokens", 0) if usage else 0
-    return text, tokens
+    try:
+        r = completion(**kw)
+        text = r.choices[0].message.content
+        usage = getattr(r, "usage", None)
+        tokens = getattr(usage, "total_tokens", 0) if usage else 0
+        return text, tokens
+    except Exception as e:
+        log.warning("LiteLLM completion for %s failed (%s) — trying Gemini fallback", resolved_model, e)
+        gemini_key = os.getenv("GEMINI_API_KEY", "") or getattr(settings, "GEMINI_API_KEY", "")
+        if gemini_key:
+            import time
+            for attempt in range(2):
+                try:
+                    r = completion(
+                        model="gemini/gemini-2.0-flash",
+                        messages=messages,
+                        api_key=gemini_key,
+                        temperature=temperature,
+                        max_tokens=max_tokens
+                    )
+                    text = r.choices[0].message.content
+                    usage = getattr(r, "usage", None)
+                    tokens = getattr(usage, "total_tokens", 0) if usage else 0
+                    return text, tokens
+                except Exception as ge:
+                    log.warning("Gemini fallback attempt %d failed (%s)", attempt+1, ge)
+                    time.sleep(3)
+        raise e
 
 
 # ════════════════════════════════════════════════════════════════════════════
