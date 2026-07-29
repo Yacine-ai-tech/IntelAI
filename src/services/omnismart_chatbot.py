@@ -142,7 +142,7 @@ def llm_complete(
             if gemini_key:
                 from litellm import completion
                 r = completion(
-                    model="gemini/gemini-2.5-flash",
+                    model="gemini/gemini-1.5-flash",
                     messages=messages,
                     api_key=gemini_key,
                     temperature=temperature,
