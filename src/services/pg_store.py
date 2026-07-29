@@ -683,13 +683,13 @@ def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] 
         conn.close()
 
 
-def get_knowledge_docs(limit: int = 100) -> "pd.DataFrame":
+def get_knowledge_docs(limit: int = 2000) -> "pd.DataFrame":
     import pandas as pd
     conn = _get_conn()
     try:
         rows = conn.execute(
             "SELECT doc_id, title, content, source, embedding, language, created_at "
-            "FROM knowledge_base ORDER BY created_at DESC LIMIT %s",
+            "FROM knowledge_base ORDER BY created_at ASC LIMIT %s",
             [limit]
         ).fetchall()
         return pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
