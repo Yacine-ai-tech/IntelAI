@@ -19,8 +19,13 @@ import psycopg
 from psycopg.rows import dict_row
 import pandas as pd
 
-from src.core.config import settings
-from src.core.logger import get_logger
+try:
+    from src.core.config import settings
+    from src.core.logger import get_logger
+except ImportError:
+    from agentkit_mcp.core.config import settings
+    from agentkit_mcp.core.logger import get_logger
+
 
 log = get_logger(__name__)
 
@@ -302,6 +307,42 @@ def init_pg_tables():
             """
         )
         conn.execute("CREATE INDEX IF NOT EXISTS idx_data_spreadsheet_user ON data_spreadsheet(username)")
+
+        
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS monitoring_logs (
+                id          SERIAL PRIMARY KEY,
+                event_type  TEXT NOT NULL,
+                module      TEXT,
+                detail      JSONB DEFAULT '{}'::jsonb,
+                actor       TEXT,
+                created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            )
+        """)
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_monitoring_type ON monitoring_logs(event_type)")
+        
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS integration_credentials (
+                id SERIAL PRIMARY KEY,
+                username TEXT NOT NULL,
+                integration_type TEXT NOT NULL,
+                credentials_encrypted TEXT NOT NULL,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            )
+        """)
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_integration_user ON integration_credentials(username)")
+        
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS oauth_states (
+                state TEXT PRIMARY KEY,
+                username TEXT NOT NULL,
+                integration_type TEXT NOT NULL,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                expires_at TIMESTAMPTZ
+            )
+        """)
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_oauth_state_username ON oauth_states(username)")
 
         conn.commit()
         log.info("✅ PostgreSQL tables initialized")
@@ -1621,5 +1662,85 @@ def export_spreadsheet(
     except Exception as e:
         log.error("Failed to export spreadsheet: %s", e)
         return None
+    finally:
+        conn.close()
+
+
+from datetime import datetime
+
+def store_integration_credentials(username: str, integration_type: str, credentials_encrypted: str) -> None:
+    conn = _get_conn()
+    try:
+        row = conn.execute("SELECT id FROM integration_credentials WHERE username = %s AND integration_type = %s", [username, integration_type]).fetchone()
+        if row:
+            conn.execute("UPDATE integration_credentials SET credentials_encrypted = %s, updated_at = NOW() WHERE id = %s", [credentials_encrypted, row["id"]])
+        else:
+            conn.execute("INSERT INTO integration_credentials (username, integration_type, credentials_encrypted) VALUES (%s, %s, %s)", [username, integration_type, credentials_encrypted])
+        conn.commit()
+    finally:
+        conn.close()
+
+def remove_integration_credentials(username: str, integration_type: str) -> None:
+    conn = _get_conn()
+    try:
+        conn.execute("DELETE FROM integration_credentials WHERE username = %s AND integration_type = %s", [username, integration_type])
+        conn.commit()
+    finally:
+        conn.close()
+
+def get_integration_credentials(username: str, integration_type: str):
+    conn = _get_conn()
+    try:
+        row = conn.execute("SELECT id, credentials_encrypted, created_at, updated_at FROM integration_credentials WHERE username = %s AND integration_type = %s", [username, integration_type]).fetchone()
+        return dict(row) if row else None
+    finally:
+        conn.close()
+
+def store_integration_token_refresh(username: str, integration_type: str, refresh_token: str, expires_in: int = 3600) -> None:
+    from datetime import timedelta
+    expires_at = (datetime.utcnow() + timedelta(seconds=expires_in)).isoformat()
+    conn = _get_conn()
+    try:
+        row = conn.execute("SELECT id FROM integration_credentials WHERE username = %s AND integration_type = %s", [username, integration_type]).fetchone()
+        if row:
+            from agentkit_mcp.core.crypto import encrypt_value
+            import json as _json
+            metadata = {"refresh_token": refresh_token, "expires_at": expires_at}
+            enc = encrypt_value(_json.dumps(metadata))
+            conn.execute("UPDATE integration_credentials SET credentials_encrypted = %s, updated_at = NOW() WHERE id = %s", [enc, row["id"]])
+            conn.commit()
+    finally:
+        conn.close()
+
+def get_integration_refresh_token(username: str, integration_type: str):
+    conn = _get_conn()
+    try:
+        row = conn.execute("SELECT credentials_encrypted FROM integration_credentials WHERE username = %s AND integration_type = %s", [username, integration_type]).fetchone()
+        if not row: return None
+        from agentkit_mcp.core.crypto import decrypt_value
+        import json as _json
+        try:
+            decrypted = decrypt_value(row["credentials_encrypted"])
+            metadata = _json.loads(decrypted)
+            if "refresh_token" in metadata: return metadata
+        except: pass
+        return None
+    finally:
+        conn.close()
+
+def log_monitoring_event(event_type: str, module: str, detail: str, actor: str) -> None:
+    conn = _get_conn()
+    try:
+        conn.execute("INSERT INTO monitoring_logs (event_type, module, detail, actor) VALUES (%s, %s, %s::jsonb, %s)", [event_type, module, detail, actor])
+        conn.commit()
+    finally:
+        conn.close()
+
+def get_monitoring_stats():
+    conn = _get_conn()
+    try:
+        total_users = conn.execute("SELECT COUNT(*) AS c FROM users").fetchone()["c"]
+        total_sessions = conn.execute("SELECT COUNT(*) AS c FROM chat_sessions").fetchone()["c"]
+        return {"users": total_users, "sessions": total_sessions}
     finally:
         conn.close()
