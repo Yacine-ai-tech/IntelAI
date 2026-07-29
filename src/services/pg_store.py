@@ -641,6 +641,7 @@ def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] 
 _DOCS_SEED_CACHE = None
 
 def _get_seeded_fallback_docs() -> "pd.DataFrame":
+    import pandas as pd
     global _DOCS_SEED_CACHE
     if _DOCS_SEED_CACHE is not None:
         return _DOCS_SEED_CACHE.copy()
@@ -661,7 +662,6 @@ def _get_seeded_fallback_docs() -> "pd.DataFrame":
         return _DOCS_SEED_CACHE.copy()
     except Exception as e:
         log.error("Failed to generate seed fallback docs DataFrame: %s", e)
-        import pandas as pd
         return pd.DataFrame()
 
 
