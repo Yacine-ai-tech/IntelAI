@@ -126,14 +126,31 @@ def llm_complete(
     # Fast path: use native Groq SDK if resolved model is a Groq model
     client = _groq_client()
     if resolved_model.startswith("groq/") and client is not None:
-        actual_model = resolved_model.replace("groq/", "")
-        kw: Dict[str, Any] = {"model": actual_model, "messages": messages,
-                              "temperature": temperature, "max_tokens": max_tokens}
-        if top_p is not None:
-            kw["top_p"] = top_p
-        r = client.chat.completions.create(**kw)
-        tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
-        return r.choices[0].message.content, tokens
+        try:
+            actual_model = resolved_model.replace("groq/", "")
+            kw: Dict[str, Any] = {"model": actual_model, "messages": messages,
+                                  "temperature": temperature, "max_tokens": max_tokens}
+            if top_p is not None:
+                kw["top_p"] = top_p
+            r = client.chat.completions.create(**kw)
+            tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
+            return r.choices[0].message.content, tokens
+        except Exception as e:
+            log.warning("Groq completion failed (%s) — falling back to Gemini", e)
+            gemini_key = os.getenv("GEMINI_API_KEY", "") or getattr(settings, "GEMINI_API_KEY", "")
+            if gemini_key:
+                from litellm import completion
+                r = completion(
+                    model="gemini/gemini-2.5-flash",
+                    messages=messages,
+                    api_key=gemini_key,
+                    temperature=temperature,
+                    max_tokens=max_tokens
+                )
+                text = r.choices[0].message.content
+                usage = getattr(r, "usage", None)
+                tokens = getattr(usage, "total_tokens", 0) if usage else 0
+                return text, tokens
 
     # Any other provider → LiteLLM
     from litellm import completion  # type: ignore
@@ -251,13 +268,14 @@ class UltraFastRAG:
                         top_indices = np.argsort(similarities)[::-1][:top_k]
                         results = []
                         for idx in top_indices:
-                            if similarities[idx] > 0.3:  # Relevance threshold
+                            if similarities[idx] > 0.1:  # Relevance threshold
                                 results.append((
                                     docs.iloc[idx]["title"],
                                     docs.iloc[idx]["content"],
                                     float(similarities[idx]),
                                 ))
-                        return results
+                        if results:
+                            return results
                 except Exception as e:
                     log.warning("Semantic search failed: %s", e)
             
@@ -388,7 +406,7 @@ class UltraFastRAG:
             "query": query,
             "response": answer,
             "sources": normalize_sources([
-                {"title": title, "snippet": content[:240], "relevance": sim}
+                {"title": title, "snippet": content[:2000], "relevance": sim}
                 for title, content, sim in documents
             ]),
             "type": "rag",
