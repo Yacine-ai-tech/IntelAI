@@ -137,21 +137,26 @@ def llm_complete(
             return r.choices[0].message.content, tokens
         except Exception as e:
             log.warning("Groq completion failed (%s) — falling back to Gemini", e)
-            import os
+            import os, time
             gemini_key = os.getenv("GEMINI_API_KEY", "") or getattr(settings, "GEMINI_API_KEY", "")
             if gemini_key:
                 from litellm import completion
-                r = completion(
-                    model="gemini/gemini-1.5-flash",
-                    messages=messages,
-                    api_key=gemini_key,
-                    temperature=temperature,
-                    max_tokens=max_tokens
-                )
-                text = r.choices[0].message.content
-                usage = getattr(r, "usage", None)
-                tokens = getattr(usage, "total_tokens", 0) if usage else 0
-                return text, tokens
+                for attempt in range(2):
+                    try:
+                        r = completion(
+                            model="gemini/gemini-2.0-flash",
+                            messages=messages,
+                            api_key=gemini_key,
+                            temperature=temperature,
+                            max_tokens=max_tokens
+                        )
+                        text = r.choices[0].message.content
+                        usage = getattr(r, "usage", None)
+                        tokens = getattr(usage, "total_tokens", 0) if usage else 0
+                        return text, tokens
+                    except Exception as ge:
+                        log.warning("Gemini completion attempt %d failed (%s)", attempt+1, ge)
+                        time.sleep(3)
 
     # Any other provider → LiteLLM
     from litellm import completion  # type: ignore
