@@ -293,7 +293,6 @@ def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "h
             - "cybersecurity_breach": Security incident
             - "esg_compliance_failure": ESG compliance issues
     """
-    rng = random.Random(seed)
     periods = _periods(months)
     
     # Select anomalies based on scenario
@@ -303,7 +302,6 @@ def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "h
     elif scenario in UNHEALTHY_SCENARIOS:
         anomaly_map = {(c, m): (i, mult) for c, m, i, mult in UNHEALTHY_SCENARIOS[scenario]}
     else:
-        # Default to healthy if unknown scenario
         anomaly_map = {(c, m): (i, mult) for c, m, i, mult in ANOMALIES}
     
     rows: List[Dict[str, Any]] = []
@@ -313,8 +311,9 @@ def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "h
             value = base
             for i, period in enumerate(periods):
                 seasonal = 1.0 + 0.03 * math.sin((i % 12) / 12 * 2 * math.pi)
-                noise = 1.0 + rng.gauss(0, 0.02)
-                value = value * (1 + drift) * seasonal * noise
+                # 100% Deterministic empirical curve — zero random numbers (reproducible bit-for-bit)
+                det_variance = 1.0 + 0.015 * math.sin(i * 0.73) + 0.005 * math.cos(i * 1.37)
+                value = value * (1 + drift) * seasonal * det_variance
                 out = value
                 ann = anomaly_map.get((category, metric))
                 if ann and ann[0] == i:
