@@ -638,17 +638,50 @@ def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] 
         conn.close()
 
 
+_DOCS_SEED_CACHE = None
+
+def _get_seeded_fallback_docs() -> "pd.DataFrame":
+    global _DOCS_SEED_CACHE
+    if _DOCS_SEED_CACHE is not None:
+        return _DOCS_SEED_CACHE.copy()
+    try:
+        from src.data.seed import generate_kpi_rows, generate_knowledge_docs
+        rows = generate_kpi_rows()
+        docs = generate_knowledge_docs(rows)
+        try:
+            from src.data.glossary import as_knowledge_docs
+            docs += as_knowledge_docs()
+        except Exception:
+            pass
+        _DOCS_SEED_CACHE = pd.DataFrame([
+            {"doc_id": f"seed-{i}", "title": d["title"], "content": d["content"],
+             "source": d["source"], "embedding": "", "language": "en", "created_at": "2026-01-01T00:00:00Z"}
+            for i, d in enumerate(docs)
+        ])
+        return _DOCS_SEED_CACHE.copy()
+    except Exception as e:
+        log.error("Failed to generate seed fallback docs DataFrame: %s", e)
+        import pandas as pd
+        return pd.DataFrame()
+
+
 def get_knowledge_docs() -> "pd.DataFrame":
     import pandas as pd
-    conn = _get_conn()
     try:
-        rows = conn.execute(
-            "SELECT doc_id, title, content, source, embedding, language, created_at "
-            "FROM knowledge_base ORDER BY created_at DESC"
-        ).fetchall()
-        return pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
-    finally:
-        conn.close()
+        conn = _get_conn()
+        try:
+            rows = conn.execute(
+                "SELECT doc_id, title, content, source, embedding, language, created_at "
+                "FROM knowledge_base ORDER BY created_at DESC"
+            ).fetchall()
+            if rows:
+                return pd.DataFrame([dict(r) for r in rows])
+        finally:
+            conn.close()
+    except Exception as e:
+        log.warning("Postgres query for knowledge_base failed (%s) — falling back to seed docs", e)
+
+    return _get_seeded_fallback_docs()
 
 
 def get_conversation_history(session_id: str) -> "pd.DataFrame":
