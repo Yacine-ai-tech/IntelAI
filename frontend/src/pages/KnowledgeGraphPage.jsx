@@ -105,11 +105,12 @@ export default function KnowledgeGraphPage() {
   const width = 800
   const height = 600
 
-  const run = async () => {
-    if (!query.trim()) return
+  const runQuery = async (searchQuery) => {
+    const qTerm = searchQuery || query
+    if (!qTerm.trim()) return
     setBusy(true)
     try {
-      const r = await api.searchKnowledge(query, 6)
+      const r = await api.searchKnowledge(qTerm, 6)
       const res = r?.data?.results || []
       
       if (res.length === 0) {
@@ -117,7 +118,7 @@ export default function KnowledgeGraphPage() {
         return
       }
 
-      const nodes = [{ id: 'query', type: 'query', label: query }]
+      const nodes = [{ id: 'query', type: 'query', label: qTerm }]
       const links = []
       
       const terms = ['Finance', 'HR', 'Growth', 'Operations', 'Risk', 'ESG', 'IT', 'Logistics']
@@ -165,6 +166,15 @@ export default function KnowledgeGraphPage() {
       setBusy(false)
     }
   }
+
+  const run = () => runQuery(query)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const initialQuery = params.get('q') || 'Revenue'
+    setQuery(initialQuery)
+    runQuery(initialQuery)
+  }, [])
 
   const positions = useForceSimulation(graphData?.nodes || [], graphData?.links || [], width, height)
 
