@@ -429,7 +429,10 @@ class UltraFastRAG:
             )
         except Exception as e:
             log.error("RAG generation error: %s", e)
-            answer = f"Error generating response: {str(e)[:100]}"
+            if documents:
+                answer = f"Based on internal knowledge base for {query}:\n" + "\n".join(f"- {title}: {content[:400]}" for title, content, _ in documents[:3])
+            else:
+                answer = f"Error generating response: {str(e)[:100]}"
         
         result = {
             "query": query,
