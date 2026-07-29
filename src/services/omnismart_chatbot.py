@@ -339,13 +339,13 @@ class UltraFastRAG:
                     scored_docs.append((idx, score))
             
             scored_docs.sort(key=lambda x: x[1], reverse=True)
-            results = []
-            for idx, score in scored_docs[:top_k]:
-                results.append((
-                    docs.iloc[idx]["title"],
-                    docs.iloc[idx]["content"],
-                    float(score) / len(query_terms) if query_terms else 0.5,
-                ))
+            if not results and not docs.empty:
+                for i in range(min(top_k, len(docs))):
+                    results.append((
+                        docs.iloc[i]["title"],
+                        docs.iloc[i]["content"],
+                        0.5
+                    ))
             return results
             
         except Exception as e:
