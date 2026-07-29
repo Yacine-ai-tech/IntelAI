@@ -188,6 +188,6 @@ export const getLightningStatus = () => api.get('/admin/lightning/status')
 export const wakeLightningStudio = (machine) => api.post('/admin/lightning/wake', { machine })
 export const stopLightningStudio = () => api.post('/admin/lightning/stop')
 
-export default api
-
 export const deleteFile = (fileId) => api.delete(`/files/${fileId}`)
+
+export default api
