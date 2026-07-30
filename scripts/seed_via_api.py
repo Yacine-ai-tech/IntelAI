@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-IntelAI Dynamic REST API Ingestion & Seeding Tool.
+IntelAI Pure Real-Data REST API Ingestion Tool.
 
 Iterates recursively over IntelAI/data/ (or user-specified file/directory paths)
 and ingests datasets and documents via official IntelAI REST API endpoints.
 
 Features:
+  • 100% Real Data: Zero synthetic generation or random seed reliance.
   • 100% Zero-Trust: Environment-driven API endpoints & authentication.
   • Recursive Traversal: Recursively finds all files across subdirectories.
   • Multi-Format Support:
@@ -13,13 +14,12 @@ Features:
       - Documents & Images: .pdf, .png, .jpg, .jpeg, .tiff, .bmp, .webp, .doc, .docx, .txt, .md, .json
       - Audio Recordings: .mp3, .wav, .m4a, .ogg, .flac, .aac
   • Flexible Modes:
-      - Full Ingestion (default): Scans whole data folder.
+      - Full Real Ingestion (default): Scans whole IntelAI/data/ folder.
       - Target Ingestion (--path): Ingests specific files or subfolders for incremental additions.
       - Dry Run (--dry-run): Previews discovery & category matching without HTTP calls.
-      - Skip Scenario (--skip-scenario): Skips re-seeding base 78-month metrics when adding new files.
 
 Environment Variables:
-  INTELAI_API_URL : Base URL of the backend (default: http://localhost:8000)
+  INTELAI_API_URL : Base URL of the backend (default: https://intelai.ysiddo-ai-projects.app)
   ADMIN_USERNAME : Admin username for JWT authentication (default: admin@company.com)
   ADMIN_PASSWORD : Admin password for JWT authentication (default: AdminPassword123!)
 
@@ -29,9 +29,6 @@ Usage Examples:
 
   # Ingest specific file or directory
   python3 scripts/seed_via_api.py --path data/documents/AmazonWebServices.pdf
-
-  # Ingest new incremental directory without re-seeding base scenario
-  python3 scripts/seed_via_api.py --path data/new_finance_files/ --skip-scenario
 
   # Preview files to be ingested
   python3 scripts/seed_via_api.py --dry-run
@@ -46,7 +43,7 @@ from typing import List, Tuple, Optional
 import httpx
 
 # ── Environment-Driven Defaults ───────────────────────────────────────────────
-API_BASE_URL = os.getenv("INTELAI_API_URL", "http://localhost:8000").rstrip("/")
+API_BASE_URL = os.getenv("INTELAI_API_URL", "https://intelai.ysiddo-ai-projects.app").rstrip("/")
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin@company.com")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "AdminPassword123!")
 
@@ -62,7 +59,7 @@ DOCUMENT_EXTS = {
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="IntelAI Dynamic REST API Ingestion Tool")
+    parser = argparse.ArgumentParser(description="IntelAI Pure Real-Data REST API Ingestion Tool")
     parser.add_argument(
         "--path", nargs="+", type=str, default=None,
         help="One or more specific file or directory paths to ingest (default: IntelAI/data/)"
@@ -70,10 +67,6 @@ def parse_args():
     parser.add_argument(
         "--category", type=str, default=None,
         help="Override category for ingested files (e.g. Finance, HR, IT, Logistics, Operations, ESG, Growth)"
-    )
-    parser.add_argument(
-        "--skip-scenario", action="store_true",
-        help="Skip re-seeding the 78-month multi-domain historical base scenario"
     )
     parser.add_argument(
         "--dry-run", action="store_true",
@@ -104,23 +97,6 @@ def get_auth_token(client: httpx.Client, dry_run: bool = False) -> str:
     except Exception as e:
         print(f"   ❌ Auth request failed: {e}")
         return ""
-
-
-def seed_scenario(client: httpx.Client, headers: dict, dry_run: bool = False):
-    """Seed multi-domain 78-month KPI scenario via official admin endpoint."""
-    url = f"{API_BASE_URL}/api/v1/admin/scenario"
-    print(f"\n📊 Seeding Core Multi-Domain Historical Scenario via {url}...")
-    if dry_run:
-        print("   [DRY RUN] Would POST /api/v1/admin/scenario {'scenario': 'healthy'}")
-        return
-    try:
-        resp = client.post(url, json={"scenario": "healthy"}, headers=headers)
-        if resp.status_code == 200:
-            print(f"   ✅ Scenario seeded successfully: {resp.json()}")
-        else:
-            print(f"   ⚠️ Scenario seed note ({resp.status_code}): {resp.text}")
-    except Exception as e:
-        print(f"   ❌ Scenario seed error: {e}")
 
 
 def infer_category(file_path: Path, override_cat: Optional[str] = None) -> str:
@@ -190,7 +166,7 @@ def ingest_file(client: httpx.Client, headers: dict, file_path: Path, category: 
     if ext in CSV_EXCEL_EXTS:
         url = f"{API_BASE_URL}/api/v1/ingest/csv"
         source_name = file_path.stem
-        print(f"\n📈 Ingesting Dataset ({category}): {file_path.name} -> {url}")
+        print(f"\n📈 Ingesting Real Dataset ({category}): {file_path.name} -> {url}")
         if dry_run:
             print(f"   [DRY RUN] Would POST {url} with file={file_path.name}, source_name={source_name}")
             return
@@ -215,7 +191,7 @@ def ingest_file(client: httpx.Client, headers: dict, file_path: Path, category: 
         mime_type = mime_type or "application/octet-stream"
 
         file_type = "Audio" if ext in {".mp3", ".wav", ".m4a", ".ogg", ".flac", ".aac"} else "Document/Image"
-        print(f"\n📄 Ingesting {file_type} ({category}): {file_path.name} -> {url}")
+        print(f"\n📄 Ingesting Real {file_type} ({category}): {file_path.name} -> {url}")
         if dry_run:
             print(f"   [DRY RUN] Would POST {url} with file={file_path.name}, category={category}, mime={mime_type}")
             return
@@ -241,12 +217,11 @@ def main():
     args = parse_args()
 
     print("==========================================================")
-    print("🚀 INTELAI DYNAMIC REST API DATA INGESTION TOOL")
+    print("🚀 INTELAI PURE REAL-DATA REST API INGESTION TOOL")
     print("==========================================================")
     print(f"🔗 Base API Endpoint: {API_BASE_URL}")
     print(f"🔒 Admin Account:     {ADMIN_USERNAME}")
-    print(f"🧪 Dry Run Mode:       {'ENABLED' if args.dry_run else 'DISABLED'}")
-    print(f"⏩ Skip Base Scenario: {'YES' if args.skip_scenario else 'NO'}\n")
+    print(f"🧪 Dry Run Mode:       {'ENABLED' if args.dry_run else 'DISABLED'}\n")
 
     # Determine input target paths
     if args.path:
@@ -254,11 +229,11 @@ def main():
     else:
         target_paths = [DEFAULT_DATA_DIR]
 
-    print(f"🔍 Discovering target files in: {[str(p) for p in target_paths]}...")
+    print(f"🔍 Discovering real target files in: {[str(p) for p in target_paths]}...")
     discovered_files = discover_files(target_paths, ext_filter=args.ext)
-    print(f"   📊 Discovered {len(discovered_files)} matching file(s) for ingestion.")
+    print(f"   📊 Discovered {len(discovered_files)} real file(s) for ingestion.")
 
-    if not discovered_files and not (not args.skip_scenario and not args.path):
+    if not discovered_files:
         print("❌ No matching files found to ingest.")
         sys.exit(0)
 
@@ -266,17 +241,13 @@ def main():
         token = get_auth_token(client, dry_run=args.dry_run)
         headers = {"Authorization": f"Bearer {token}"} if token else {}
 
-        # 1. Base Scenario Seed (unless --skip-scenario or specific file path provided)
-        if not args.skip_scenario and not args.path:
-            seed_scenario(client, headers, dry_run=args.dry_run)
-
-        # 2. Process discovered files
+        # Process discovered real files
         for fp in discovered_files:
             category = infer_category(fp, override_cat=args.category)
             ingest_file(client, headers, fp, category=category, dry_run=args.dry_run)
 
     print("\n==========================================================")
-    print("✨ DYNAMIC REST API INGESTION COMPLETED.")
+    print("✨ PURE REAL-DATA REST API INGESTION COMPLETED.")
     print("==========================================================")
 
 
