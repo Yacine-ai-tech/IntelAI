@@ -1167,40 +1167,63 @@ async def run_forecast(
 
 
 # ════════════════════════════════════════════════════════════
-# INSIGHTS & RISK
+# INSIGHTS & RISK (Optimized with 10-second In-Memory TTL Cache for ultra-fast Dashboard load)
 # ════════════════════════════════════════════════════════════
+
+import time as _time
+_INSIGHTS_CACHE: Dict[str, Tuple[float, Any]] = {}
+_CACHE_TTL = 10.0  # seconds
+
+def _get_cached_insight(key: str, compute_fn):
+    now = _time.time()
+    if key in _INSIGHTS_CACHE:
+        ts, val = _INSIGHTS_CACHE[key]
+        if now - ts < _CACHE_TTL:
+            return val
+    val = compute_fn()
+    _INSIGHTS_CACHE[key] = (now, val)
+    return val
+
+def invalidate_insights_cache():
+    _INSIGHTS_CACHE.clear()
 
 @app.get("/api/v1/insights/health")
 async def get_health_index(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_health_index
-    df = get_kpi_metrics()
-    return _json_safe(compute_health_index(df))
+    def _compute():
+        df = get_kpi_metrics()
+        return _json_safe(compute_health_index(df))
+    return _get_cached_insight("health", _compute)
 
 
 @app.get("/api/v1/insights/risk")
 async def get_risk_score(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_risk_score
-    df = get_kpi_metrics()
-    return _json_safe(compute_risk_score(df))
+    def _compute():
+        df = get_kpi_metrics()
+        return _json_safe(compute_risk_score(df))
+    return _get_cached_insight("risk", _compute)
 
 
 @app.get("/api/v1/insights/summary")
 async def get_executive_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_health_index, compute_risk_score, extract_key_metrics, build_executive_summary
-    df = get_kpi_metrics()
-    health = compute_health_index(df)
-    risk = compute_risk_score(df)
-    key_metrics = extract_key_metrics(df)
-    summary = build_executive_summary(df, health, risk, key_metrics)
-    return _json_safe({
-        "health": health,
-        "risk": risk,
-        "key_metrics": key_metrics,
-        "summary": " ".join(summary) if isinstance(summary, list) else summary,
-    })
+    def _compute():
+        df = get_kpi_metrics()
+        health = compute_health_index(df)
+        risk = compute_risk_score(df)
+        key_metrics = extract_key_metrics(df)
+        summary = build_executive_summary(df, health, risk, key_metrics)
+        return _json_safe({
+            "health": health,
+            "risk": risk,
+            "key_metrics": key_metrics,
+            "summary": " ".join(summary) if isinstance(summary, list) else summary,
+        })
+    return _get_cached_insight("summary", _compute)
 
 
 @app.get("/api/v1/insights/anomalies")
@@ -1210,16 +1233,18 @@ async def get_anomalies(
 ):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import detect_anomalies
-    metrics_filter = [metric] if metric else None
-    df = get_kpi_metrics(metrics=metrics_filter)
-    anomalies = detect_anomalies(df)
-    if anomalies.empty:
-        return {"anomalies": [], "count": 0}
-    anom_df = anomalies[anomalies["is_anomaly"] == True]
-    return {
-        "anomalies": anom_df.to_dict(orient="records") if not anom_df.empty else [],
-        "count": len(anom_df),
-    }
+    def _compute():
+        metrics_filter = [metric] if metric else None
+        df = get_kpi_metrics(metrics=metrics_filter)
+        anomalies = detect_anomalies(df)
+        if isinstance(anomalies, pd.DataFrame):
+            if anomalies.empty:
+                return {"anomalies": [], "count": 0}
+            anom_df = anomalies[anomalies["is_anomaly"] == True] if "is_anomaly" in anomalies.columns else anomalies
+            records = anom_df.to_dict(orient="records") if not anom_df.empty else []
+            return {"anomalies": records, "count": len(records)}
+        return {"anomalies": anomalies if isinstance(anomalies, list) else [], "count": len(anomalies) if isinstance(anomalies, list) else 0}
+    return _get_cached_insight(cache_key, _compute)
 
 
 # ════════════════════════════════════════════════════════════
