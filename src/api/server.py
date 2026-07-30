@@ -397,9 +397,12 @@ async def startup():
             log.info("✅ PostgreSQL initialized (background)")
             _init_default_users()
             df = get_kpi_metrics()
-            if df.empty:
+            import os as _os
+            if df.empty and _os.environ.get("AUTO_SEED_IF_EMPTY", "false").lower() == "true":
                 count = seed_all_domains()
                 log.info("✅ Seeded %d multi-domain KPI rows", count)
+            elif df.empty:
+                log.info("ℹ️ Database is empty. Ready for real enterprise data ingestion script.")
             else:
                 log.info("✅ KPI data already present: %d rows", len(df))
         except Exception as e:
