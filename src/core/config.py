@@ -52,17 +52,17 @@ class Settings:
     # PostgreSQL — primary and only database
     POSTGRES_URL: str = field(
         default_factory=lambda: os.getenv(
-            "POSTGRES_URL", "postgresql://intelai:change_me@localhost:5432/intelai"
+            "POSTGRES_URL", "postgresql://user:password@localhost/intelai"
         )
     )
 
     # External Microservice APIs — set via env in production (STRATEGY.md § Decoupling)
     # Defaults target the live production endpoints on the custom domain.
     DOCINTEL_API_URL: str = field(
-        default_factory=lambda: os.getenv("DOCINTEL_API_URL", "https://docintel.ysiddo-ai-projects.app")
+        default_factory=lambda: os.getenv("DOCINTEL_API_URL", "http://localhost:8000")
     )
     VOICEFLOW_API_URL: str = field(
-        default_factory=lambda: os.getenv("VOICEFLOW_API_URL", "https://voiceflow.ysiddo-ai-projects.app")
+        default_factory=lambda: os.getenv("VOICEFLOW_API_URL", "http://localhost:8000")
     )
 
     # LLM API keys — at least one must be set; validated at startup.
