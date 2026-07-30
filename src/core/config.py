@@ -51,6 +51,14 @@ class Settings:
         )
     )
 
+    # External Microservice APIs (STRATEGY.md Decoupling)
+    DOCINTEL_API_URL: str = field(
+        default_factory=lambda: os.getenv("DOCINTEL_API_URL", "https://docintel-backend-2026.onrender.com")
+    )
+    VOICEFLOW_API_URL: str = field(
+        default_factory=lambda: os.getenv("VOICEFLOW_API_URL", "https://voiceflow-backend-2026.onrender.com")
+    )
+
     # API keys — required; validated at startup
     GROQ_API_KEY: str = field(default_factory=lambda: os.getenv("GROQ_API_KEY", ""))
     # Optional: Anthropic (LiteLLM router can fall back to Claude)

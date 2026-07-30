@@ -986,50 +986,51 @@ async def ingest_document(
     import io
     filename_lower = (file.filename or "").lower()
     
-    if filename_lower.endswith(".pdf"):
+    from src.core.config import settings
+    import httpx
+
+    # 1. 🎤 Audio & Meeting Processing (Delegate to VoiceFlow)
+    if filename_lower.endswith((".mp3", ".wav", ".m4a", ".ogg")):
         try:
-            from pypdf import PdfReader
-            reader = PdfReader(io.BytesIO(content))
-            text = "\n".join(p.extract_text() or "" for p in reader.pages)
-        except Exception:
-            text = content.decode("utf-8", errors="ignore")
-    elif filename_lower.endswith((".png", ".jpg", ".jpeg")):
-        try:
-            import base64
-            from groq import Groq
-            from src.core.config import settings
-            
-            # Use Groq Vision to extract text and analyze visual elements
-            client = Groq(api_key=settings.GROQ_API_KEY)
-            base64_image = base64.b64encode(content).decode('utf-8')
-            mime_type = "image/png" if filename_lower.endswith(".png") else "image/jpeg"
-            
-            completion = client.chat.completions.create(
-                model="groq/llama-3.2-11b-vision-preview",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": [
-                            {
-                                "type": "text",
-                                "text": "Extract all text from this image. Also, describe any charts, graphs, diagrams, or important visual elements in detail."
-                            },
-                            {
-                                "type": "image_url",
-                                "image_url": {
-                                    "url": f"data:{mime_type};base64,{base64_image}"
-                                }
-                            }
-                        ]
-                    }
-                ],
-                temperature=0.0,
-                max_tokens=2048
-            )
-            extracted = completion.choices[0].message.content
-            text = f"[VISUAL ELEMENT ANALYSIS]\nFile: {file.filename}\n{extracted}"
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                response = await client.post(
+                    f"{settings.VOICEFLOW_API_URL}/transcribe",
+                    files={"file": (file.filename, content)}
+                )
+                response.raise_for_status()
+                text = response.json().get("text", "")
+                if not text:
+                    text = f"[VOICEFLOW WARNING] Empty transcript for {file.filename}"
         except Exception as e:
-            text = f"[IMAGE UNREADABLE] Could not parse image {file.filename}: {e}"
+            text = f"[VOICEFLOW ERROR] Could not transcribe audio {file.filename}: {e}"
+
+    # 2. 🖼️ Document OCR & Vision AI (Delegate to DocIntel)
+    elif filename_lower.endswith((".pdf", ".png", ".jpg", ".jpeg", ".tiff")):
+        try:
+            # Route A (Vision LLM) for visual images/scans; Route C (OCR / Fast text) for digital PDFs
+            docintel_route = "ocr_fallback" if filename_lower.endswith(".pdf") else "vision_route_a"
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                response = await client.post(
+                    f"{settings.DOCINTEL_API_URL}/extract",
+                    files={"file": (file.filename, content)},
+                    data={"route": docintel_route}
+                )
+                response.raise_for_status()
+                data = response.json()
+                # Handle full_text or fields from DocIntel ProcessResponse
+                fields = data.get("fields", {}) if isinstance(data.get("fields"), dict) else {}
+                text = data.get("full_text") or fields.get("raw_text") or str(fields) if fields else ""
+                if not text:
+                    text = f"[DOCINTEL WARNING] Empty text extraction for {file.filename} (route={docintel_route})"
+        except Exception as e:
+            # Fallback to raw text extraction if DocIntel is unreachable but it's a PDF
+            if filename_lower.endswith(".pdf"):
+                text = content.decode("utf-8", errors="ignore")
+                text = f"[DOCINTEL UNREACHABLE] Raw decoded text: {text}"
+            else:
+                text = f"[DOCINTEL ERROR] Could not parse image {file.filename}: {e}"
+
+    # 3. 📝 Standard Text/JSON
     else:
         text = content.decode("utf-8", errors="ignore")
 
