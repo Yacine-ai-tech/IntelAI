@@ -357,71 +357,17 @@ def _hosted_rerank(query: str, texts: List[str]) -> Optional[List[float]]:
 
 
 def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
+    """Rerank candidates using unified hosted inference adapter (Orchestrator / Cohere / Jina)."""
     global _RERANK_RETRIEVER
     if os.getenv("USE_RERANKER", "true").strip().lower() not in ("1", "true", "yes", "on"):
         return None
     if not texts:
         return None
 
-    provider = os.getenv("RERANK_PROVIDER", "hf").lower()
-
-    def _try_lightning():
-        remote = os.getenv("LIGHTNING_RERANK_URL", "").strip()
-        if remote:
-            try:
-                import json as _json, urllib.request
-                body = _json.dumps({"query": query, "texts": texts}).encode()
-                h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0 (+https://ysiddo-ai-projects.app)"}
-                tk = os.getenv("INFERENCE_TOKEN", "").strip()
-                if tk: h["Authorization"] = "Bearer " + tk
-                req = urllib.request.Request(remote.rstrip("/") + "/rerank", data=body, headers=h)
-                timeout = float(os.getenv("LIGHTNING_RERANK_TIMEOUT", "12"))
-                scores = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["scores"]
-                if isinstance(scores, list) and len(scores) == len(texts):
-                    return [float(s) for s in scores]
-            except Exception as e:
-                log.warning("remote rerank unavailable (%s) — waking studio", e)
-                _trigger_wake()
-        return None
-
-    def _try_hf():
-        hf_token = os.getenv("HF_TOKEN", "").strip()
-        if not hf_token: return None
-        try:
-            import urllib.request, json as _json
-            model = os.getenv("HF_RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
-            url = f"https://router.huggingface.co/hf-inference/models/{model}"
-            h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
-            body = _json.dumps({"inputs": [f"{query} </s> {t}" for t in texts]}).encode()
-            req = urllib.request.Request(url, data=body, headers=h)
-            res = _json.loads(urllib.request.urlopen(req, timeout=15).read())
-            if isinstance(res, list) and len(res) > 0:
-                if isinstance(res[0], list) and len(res[0]) == len(texts):
-                    return [float(item["score"]) for item in res[0]]
-                elif len(res) == len(texts):
-                    return [float(item[0]["score"] if isinstance(item, list) else item.get("score", 0.0)) for item in res]
-        except Exception as hf_err:
-            log.warning("HF rerank unavailable: %s", hf_err)
-        return None
-
-    if provider == "hf":
-        hf = _try_hf()
-        if hf is not None: return hf
-        hosted = _hosted_rerank(query, texts)
-        if hosted is not None: return hosted
-        return _try_lightning()
-    elif provider == "cohere":
-        hosted = _hosted_rerank(query, texts)
-        if hosted is not None: return hosted
-        hf = _try_hf()
-        if hf is not None: return hf
-        return _try_lightning()
-    else: # lightning primary
-        light = _try_lightning()
-        if light is not None: return light
-        hf = _try_hf()
-        if hf is not None: return hf
-        return _hosted_rerank(query, texts)
+    # Try unified hosted rerank (Orchestrator / Cohere / Jina / HF fallback)
+    hosted = _hosted_rerank(query, texts)
+    if hosted is not None:
+        return hosted
 
     if not _RERANKER or os.getenv("USE_LOCAL_RERANKER", "false").strip().lower() not in ("1", "true", "yes", "on"):
         return None
@@ -436,5 +382,7 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
         return [float(s) for s in scores]
     except Exception as e:
         r._reranker_failed = True
+        log.warning("local rerank() unavailable (%s) — keeping fusion order", e)
+        return None
         log.warning("rerank() unavailable (%s) — keeping fusion order", e)
         return None

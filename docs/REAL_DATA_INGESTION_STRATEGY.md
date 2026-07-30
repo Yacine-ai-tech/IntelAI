@@ -323,3 +323,119 @@ POSTGRES_URL=<neon_url> python3 IntelAI/scripts/evaluate_with_rageval_package.py
 - Real company names (AMETEK, Roper Technologies, Parker Hannifin) must be **stripped** before ingestion — use `Arion Manufacturing Group` as the replacement.
 - Never ingest real PII (real employee names, real SSNs). Use IBM HR dataset which is already anonymized.
 - The DB wipe must happen before any ingestion run to avoid duplicate rows.
+
+---
+
+## IntelAI Full Capability Map — Data Requirements Per Feature
+
+> This section maps every IntelAI feature to the data it consumes, so the ingestion strategy can be verified to cover 100% of capabilities.
+
+### 1. Multi-Persona RAG Copilot (`/api/v1/chat`)
+**What it needs**: `knowledge_base` table populated with embeddings. Documents ingested via `/ingest/document`.
+**Data requirement**: At minimum 50 documents across all 7 domains (≥ 7/domain) for meaningful persona routing. The Arion PDFs (annual reports, HR handbooks, ESG certifications) cover this directly.
+**Test**: Ask each persona a domain-specific question and verify RAG sources are cited.
+
+### 2. Business Health Score (`/api/v1/insights/health`)
+**What it needs**: `kpi_metrics` rows with `category` and `value` for at least 3 periods.
+**Data requirement**: 78 months × 7 domains × avg 9 metrics/domain = ~4,900 rows minimum. Full 62K rows (from real ingestion) gives the score statistical validity.
+**Test**: Health score should be non-zero and ≠ 50.0 (the fallback default).
+
+### 3. Risk Radar (`/api/v1/insights/risk` + `/insights/anomalies`)
+**What it needs**: Enough historical variance in `kpi_metrics` to trigger Z-score anomaly detection (needs ≥ 12 periods per metric for std dev to be meaningful).
+**Data requirement**: The 78-month span (Jan 2020 – Jun 2026) provides this. COVID shock in Q1 2020 and restructuring in Q2 2023 should produce detectable anomalies.
+**Test**: At least 3 anomalies should appear in the anomaly watchlist for the Finance and HR domains.
+
+### 4. Monte-Carlo Forecasting (`/api/v1/forecast`)
+**What it needs**: ≥ 12 historical data points per metric (LinearRegression needs sample size for meaningful confidence intervals).
+**Data requirement**: 78 monthly rows per metric. The ISM manufacturing index data covers Operations metrics; SEC filing revenue lines cover Finance metrics.
+**Test**: Run forecast on `revenue_growth` — R² should be > 0.5 for a well-trended metric.
+
+### 5. Financial Statement Generation (`/api/v1/financial/statement`)
+**What it needs**: Finance-domain KPI metrics (`gross_margin`, `net_income`, `ebitda`, `revenue`, `operating_expenses`, `capex`).
+**Data requirement**: At least 8 quarters of Finance KPIs. The SEC 10-K data covers exactly this.
+**Test**: Generate a P&L for 2024 — should return structured statement with real values, not fallback zeros.
+
+### 6. Domain Pages (HR / IT / Ops / Logistics / ESG / Growth / Finance)
+Each domain page calls multiple sub-endpoints. Required KPI categories:
+
+| Domain | Required `category` values in `kpi_metrics` | Key metrics |
+|--------|---------------------------------------------|-------------|
+| Finance | `Finance`, `Revenue` | gross_margin, net_income, ebitda, revenue |
+| Growth | `Growth` | mrr, arr, cac, ltv, churn_rate |
+| HR/People | `People`, `HR` | headcount, turnover_rate, time_to_hire, engagement_score |
+| Operations | `Operations` | oee, throughput, defect_rate, cycle_time |
+| IT | `IT`, `IT_Ops` | uptime, mttr, incident_count, deployment_freq |
+| Logistics | `Logistics`, `Supply Chain` | inventory_turns, on_time_delivery, supplier_reliability |
+| ESG | `ESG` | carbon_emissions, esg_score, energy_consumption, diversity_index |
+
+### 7. Knowledge Graph (`/knowledge-graph` page)
+**What it needs**: Populated `knowledge_base` with documents that have entity relationships (companies, metrics, events, people).
+**Data requirement**: Rich PDF documents where named entities can be extracted. Annual reports naturally contain entity mentions (product names, exec names, facility names).
+**Test**: Search for "Arion" or "Ohio plant" — should return a visible graph with connected nodes.
+
+### 8. Analytics KPI Explorer (`/api/v1/kpis`, `/api/v1/kpis/metrics`)
+**What it needs**: A wide variety of distinct metric names to make the explorer useful.
+**Data requirement**: The strategy targets 78 distinct metrics across 7 domains. Each domain contributes ~11 metrics. The SEC + IBM HR + ISM + EPA data covers all of these.
+**Test**: The metric dropdown in Analytics should show ≥ 78 unique metric names.
+
+### 9. Organization Chart (`/organization` page)
+**What it needs**: HR department data from `/hr/departments`.
+**Data requirement**: HR KPIs must include department-level breakdowns. The IBM HR dataset provides this (Department column maps to sub-department KPIs).
+**Test**: Organization page should render a visual hierarchy with ≥ 5 departments.
+
+### 10. Glossary (`/api/v1/glossary`)
+**What it needs**: Static — built into IntelAI's i18n system. No DB data required.
+**Status**: ✅ Always works regardless of ingestion state.
+
+### 11. Board Report PDF Export (`/data/export?format=pdf`)
+**What it needs**: All KPI and insight data populated (health score, risk score, domain summaries).
+**Data requirement**: Same as items 2–6 above. Full ingestion unlocks meaningful PDF output.
+**Test**: Export a board report — should be > 4 pages with real charts, not empty placeholders.
+
+### 12. Agent Tool Runner (`/api/v1/agent/run`)
+**What it needs**: KPI data for tool calls (get_kpi_trend, get_domain_health, run_forecast, search_knowledge).
+**Data requirement**: Same as above — full KPI + knowledge_base population.
+**Test**: As CEO persona, run `get_kpi_trend` for `revenue_growth` — should return a 78-point series.
+
+### 13. Admin Audit Log (`/api/v1/admin/audit`)
+**What it needs**: User activity (auto-populated by login events).
+**Status**: ✅ Works without ingestion — populated by normal app usage.
+
+---
+
+## Ingestion Completeness Checklist
+
+Run this after ingestion to confirm all capabilities are covered:
+
+```python
+# IntelAI/scripts/validate_ingestion.py
+import psycopg, os
+
+conn = psycopg.connect(os.environ['POSTGRES_URL'])
+cur = conn.cursor()
+
+checks = {
+    'Total KPI rows': 'SELECT COUNT(*) FROM kpi_metrics',
+    'Distinct metrics': 'SELECT COUNT(DISTINCT metric) FROM kpi_metrics',
+    'Distinct categories': 'SELECT COUNT(DISTINCT category) FROM kpi_metrics',
+    'Distinct periods': 'SELECT COUNT(DISTINCT period) FROM kpi_metrics',
+    'Knowledge base docs': 'SELECT COUNT(*) FROM knowledge_base',
+    'Finance rows': "SELECT COUNT(*) FROM kpi_metrics WHERE category ILIKE '%finance%' OR category ILIKE '%revenue%'",
+    'HR rows': "SELECT COUNT(*) FROM kpi_metrics WHERE category ILIKE '%people%' OR category ILIKE '%hr%'",
+    'ESG rows': "SELECT COUNT(*) FROM kpi_metrics WHERE category ILIKE '%esg%'",
+}
+
+print('=== Ingestion Validation ===')
+for label, sql in checks.items():
+    cur.execute(sql)
+    val = cur.fetchone()[0]
+    status = '✅' if val > 0 else '❌'
+    print(f'{status} {label}: {val}')
+```
+
+**Minimum acceptable thresholds:**
+- Total KPI rows: ≥ 30,000
+- Distinct metrics: ≥ 70
+- Distinct categories: ≥ 7
+- Distinct periods: ≥ 60 (months)
+- Knowledge base docs: ≥ 40
