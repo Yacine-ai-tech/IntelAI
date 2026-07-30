@@ -1,22 +1,22 @@
 import React from 'react';
+import { useTranslation } from '../i18n/I18nContext';
 import { BookOpen, Monitor, Terminal, FileCode, CheckCircle, ShieldAlert, 
          Database, Brain, Globe, Zap, Server, Users, ChartBar, AlertTriangle, 
          Lightbulb, Settings, BarChart3, MessageSquare, Network } from 'lucide-react';
 
 export default function UserGuidePage() {
+  const { t } = useTranslation();
   return (
     <div className="p-8 max-w-6xl mx-auto h-full overflow-y-auto">
       <div className="flex items-center gap-3 mb-8">
         <BookOpen className="w-10 h-10 text-blue-500" />
         <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-          IntelAI - Complete User Guide
+          {t('ugTitle')}
         </h1>
       </div>
 
       <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-        IntelAI is an enterprise-grade business intelligence platform with AI-powered copilot capabilities. 
-        It provides real-time KPI dashboards, domain-specific analytics, conversational AI assistance, 
-        and advanced features like Monte Carlo simulations and GraphRAG knowledge relationships.
+        {t('ugSubtitle')}
       </p>
 
       <div className="space-y-8 text-gray-200">
@@ -24,52 +24,53 @@ export default function UserGuidePage() {
         {/* What is IntelAI */}
         <section className="bg-gray-800/50 backdrop-blur-md p-8 rounded-xl border border-gray-700 shadow-2xl">
           <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-white">
-            <Brain className="w-6 h-6 text-purple-400" /> What is IntelAI?
+            <Brain className="w-6 h-6 text-purple-400" /> {t('ugWhatIs')}
           </h2>
           <div className="space-y-4">
             <p className="text-gray-300">
-              IntelAI is a comprehensive business intelligence platform with <strong className="text-blue-400">9 key capabilities</strong>:
+              {t('ugCapabilities')}
             </p>
             <div className="grid md:grid-cols-3 gap-4">
               <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                <h3 className="font-semibold text-green-400 text-lg mb-2">📊 Domain Dashboards</h3>
-                <p className="text-sm text-gray-300">Finance, Growth, Operations, People, ESG, IT, Risk, Governance views with real-time KPIs.</p>
+                <h3 className="font-semibold text-green-400 text-lg mb-2">{t('ugDashboardsTitle')}</h3>
+                <p className="text-sm text-gray-300">{t('ugDashboardsDesc')}</p>
               </div>
               <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                <h3 className="font-semibold text-blue-400 text-lg mb-2">🤖 AI Copilot</h3>
-                <p className="text-sm text-gray-300">Conversational AI assistant with 9 domain-specific personas for natural language queries.</p>
+                <h3 className="font-semibold text-blue-400 text-lg mb-2">{t('ugCopilotTitle')}</h3>
+                <p className="text-sm text-gray-300">{t('ugCopilotDesc')}</p>
               </div>
               <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                <h3 className="font-semibold text-purple-400 text-lg mb-2">🔍 Hybrid RAG</h3>
-                <p className="text-sm text-gray-300">Reciprocal Rank Fusion combining BM25 keyword search with dense vector embeddings.</p>
+                <h3 className="font-semibold text-purple-400 text-lg mb-2">{t('ugRagTitle')}</h3>
+                <p className="text-sm text-gray-300">{t('ugRagDesc')}</p>
               </div>
               <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                <h3 className="font-semibold text-red-400 text-lg mb-2">📈 Forecasting</h3>
-                <p className="text-sm text-gray-300">Time-series forecasting with Monte Carlo simulations for predictive analytics.</p>
+                <h3 className="font-semibold text-red-400 text-lg mb-2">{t('ugForecastingTitle')}</h3>
+                <p className="text-sm text-gray-300">{t('ugForecastingDesc')}</p>
               </div>
               <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                <h3 className="font-semibold text-yellow-400 text-lg mb-2">🕸️ GraphRAG</h3>
-                <p className="text-sm text-gray-300">Knowledge graph relationships for multi-hop queries and context understanding.</p>
+                <h3 className="font-semibold text-yellow-400 text-lg mb-2">{t('ugGraphTitle')}</h3>
+                <p className="text-sm text-gray-300">{t('ugGraphDesc')}</p>
               </div>
               <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                <h3 className="font-semibold text-cyan-400 text-lg mb-2">📋 Glossary</h3>
-                <p className="text-sm text-gray-300">Comprehensive business metrics glossary with definitions and benchmarking.</p>
+                <h3 className="font-semibold text-cyan-400 text-lg mb-2">{t('ugGlossaryTitle')}</h3>
+                <p className="text-sm text-gray-300">{t('ugGlossaryDesc')}</p>
               </div>
               <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                <h3 className="font-semibold text-orange-400 text-lg mb-2">🎯 Scenarios</h3>
-                <p className="text-sm text-gray-300">7 business scenarios for testing: healthy, declining, crisis modes, and more.</p>
+                <h3 className="font-semibold text-orange-400 text-lg mb-2">{t('ugScenariosTitle')}</h3>
+                <p className="text-sm text-gray-300">{t('ugScenariosDesc')}</p>
               </div>
               <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                <h3 className="font-semibold text-pink-400 text-lg mb-2">👥 RBAC</h3>
-                <p className="text-sm text-gray-300">Role-based access control with 11 roles from admin to viewer.</p>
+                <h3 className="font-semibold text-pink-400 text-lg mb-2">{t('ugRbacTitle')}</h3>
+                <p className="text-sm text-gray-300">{t('ugRbacDesc')}</p>
               </div>
               <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                <h3 className="font-semibold text-indigo-400 text-lg mb-2">🌐 Bilingual</h3>
-                <p className="text-sm text-gray-300">English/French support with localized formatting and currency display.</p>
+                <h3 className="font-semibold text-indigo-400 text-lg mb-2">{t('ugBilingualTitle')}</h3>
+                <p className="text-sm text-gray-300">{t('ugBilingualDesc')}</p>
               </div>
             </div>
           </div>
         </section>
+
 
         {/* Domain Personas */}
         <section className="bg-gray-800/50 backdrop-blur-md p-8 rounded-xl border border-gray-700 shadow-2xl">

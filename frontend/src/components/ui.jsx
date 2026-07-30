@@ -31,13 +31,15 @@ const IS_FR = (import.meta.env.VITE_LANGUAGE || 'en').toLowerCase() === 'fr'
 export const fmtMoney = (v) => {
   if (v == null || isNaN(v)) return '—'
   let n = fmtNum(v)                           // e.g. "3.60M" / "850"
-  if (IS_FR) {
+  const isFr = (localStorage.getItem('omni_lang') || import.meta.env.VITE_LANGUAGE || 'en').toLowerCase() === 'fr'
+  if (isFr) {
     n = n.replace('.', ',').replace('B', ' Md').replace('M', ' M').replace('K', ' k')
     // word currencies get a space ("3,60 M FCFA"); symbol currencies attach ("3,60 M€" / "850 €")
     return CCY_WORD ? `${n} ${CCY_SYM}` : (n.includes(' ') ? `${n}${CCY_SYM}` : `${n} ${CCY_SYM}`)
   }
   return CCY_WORD ? `${n} ${CCY_SYM}` : `${CCY_SYM}${n}`           // EN: "$3.60M" / "3.60M FCFA"
 }
+
 export const fmtPct = (v) => (v == null || isNaN(v) ? '—' : (Math.round(v * 10) / 10) + '%')
 
 const CHART_AXIS = { fontSize: 11, fill: 'var(--text-3)' }

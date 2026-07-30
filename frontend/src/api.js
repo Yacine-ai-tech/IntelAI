@@ -9,12 +9,14 @@ const api = axios.create({
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Attach JWT token to every request
+// Attach JWT token and Accept-Language to every request
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token')
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
+  const lang = localStorage.getItem('omni_lang') || 'en'
+  config.headers['Accept-Language'] = lang
   return config
 })
 
@@ -57,8 +59,11 @@ export const register = (username, password, role = 'viewer') =>
 export const getMe = () => api.get('/auth/me')
 
 // ── Chat ────────────────────────────────────────────────
-export const sendChat = (message, persona = null, sessionId = null, context = '', lang = 'en') =>
-  api.post('/chat', { message, persona, session_id: sessionId, context, language: lang })
+export const sendChat = (message, persona = null, sessionId = null, context = '', lang = null) => {
+  const effectiveLang = lang || localStorage.getItem('omni_lang') || 'en'
+  return api.post('/chat', { message, persona, session_id: sessionId, context, language: effectiveLang })
+}
+
 
 export const listPersonas = () => api.get('/personas')
 

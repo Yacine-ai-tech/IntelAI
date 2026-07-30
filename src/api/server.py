@@ -115,6 +115,20 @@ async def verify_internal_token(request: Request, call_next):
     return await call_next(request)
 
 
+@app.middleware("http")
+async def i18n_middleware(request: Request, call_next):
+    from src.core.i18n import I18N
+    lang_header = request.headers.get("accept-language", "")
+    lang_param = request.query_params.get("lang", "")
+    target_lang = "fr" if "fr" in (lang_header + lang_param).lower() else "en"
+    try:
+        I18N.set_language(target_lang)
+    except Exception:
+        pass
+    return await call_next(request)
+
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=get_cors_allowed_origins(),
