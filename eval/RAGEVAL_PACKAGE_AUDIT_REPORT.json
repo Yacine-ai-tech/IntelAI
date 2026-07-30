@@ -1,0 +1,378 @@
+{
+  "service_evaluated": "IntelAI UltraFastRAG",
+  "evaluator_service": "RAGeval (PyPI Package)",
+  "total_queries": 25,
+  "avg_groundedness": 0.232,
+  "avg_overall_quality": 0.1403,
+  "results": [
+    {
+      "case_id": 1,
+      "query": "What is our latest revenue?",
+      "persona": "cfo",
+      "answer": "The provided context does not explicitly mention the latest revenue figure. However, it does mention that capital expend...",
+      "contexts_retrieved": 5,
+      "groundedness": 0.8,
+      "relevance": 0.2,
+      "faithfulness": 0.264,
+      "overall_quality": 0.4528000000000001,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE"
+      ]
+    },
+    {
+      "case_id": 2,
+      "query": "How has gross margin trended this year?",
+      "persona": "cfo",
+      "answer": "According to the provided context from the Orange SA 2024 Registration Document, the consolidated gross margin has remai...",
+      "contexts_retrieved": 5,
+      "groundedness": 1.0,
+      "relevance": 0.2857,
+      "faithfulness": 0.2553,
+      "overall_quality": 0.5653400000000001,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE"
+      ]
+    },
+    {
+      "case_id": 3,
+      "query": "What is EBITDA and how is it changing?",
+      "persona": "cfo",
+      "answer": "Since there are no relevant documents found in the knowledge base, I will provide a general overview of EBITDA and its e...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 4,
+      "query": "Summarize operating cash flow.",
+      "persona": "cfo",
+      "answer": "Since there are no relevant documents found in the knowledge base, I will provide a general overview of operating cash f...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 5,
+      "query": "What is our current MRR and ARR?",
+      "persona": "ceo",
+      "answer": "Since no relevant documents were found in the knowledge base, I don't have access to the current data on Monthly Recurri...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 6,
+      "query": "How is churn rate trending?",
+      "persona": "analyst",
+      "answer": "Since there are no relevant documents found in the knowledge base, I don't have any information on the current trend of ...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 7,
+      "query": "What is our customer acquisition cost versus LTV?",
+      "persona": "ceo",
+      "answer": "Since there are no relevant documents found in the retrieved context from the knowledge base, I don't have any informati...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 8,
+      "query": "What is the net promoter score?",
+      "persona": "analyst",
+      "answer": "The Net Promoter Score (NPS) is a widely used metric to measure customer satisfaction and loyalty. It was first introduc...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 9,
+      "query": "What is our headcount and how is it growing?",
+      "persona": "chro",
+      "answer": "Unfortunately, I couldn't find any relevant information in our knowledge base to provide an answer to your question abou...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 10,
+      "query": "How is employee turnover trending?",
+      "persona": "chro",
+      "answer": "According to the Orange SA 2024 Registration Document, the annual voluntary employee turnover has remained low at 4.2% a...",
+      "contexts_retrieved": 5,
+      "groundedness": 1.0,
+      "relevance": 0.4,
+      "faithfulness": 0.3096,
+      "overall_quality": 0.62192,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE"
+      ]
+    },
+    {
+      "case_id": 11,
+      "query": "What is the engagement score?",
+      "persona": "chro",
+      "answer": "Since there are no relevant documents found in the knowledge base, I'll provide a general answer. \n\nThe engagement score...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 12,
+      "query": "How long does time to hire take?",
+      "persona": "chro",
+      "answer": "Since there are no relevant documents found in the retrieved context, I'll provide a general answer based on common know...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 13,
+      "query": "What is on-time delivery performance?",
+      "persona": "coo",
+      "answer": "Error generating response: litellm.RateLimitError: RateLimitError: GroqException - {\"error\":{\"message\":\"Rate limit reach...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 14,
+      "query": "How is the defect rate?",
+      "persona": "coo",
+      "answer": "Error generating response: litellm.RateLimitError: RateLimitError: GroqException - {\"error\":{\"message\":\"Rate limit reach...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 15,
+      "query": "What is our capacity utilization?",
+      "persona": "coo",
+      "answer": "Error generating response: litellm.RateLimitError: RateLimitError: GroqException - {\"error\":{\"message\":\"Rate limit reach...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 16,
+      "query": "What is system uptime?",
+      "persona": "cto",
+      "answer": "Error generating response: litellm.RateLimitError: RateLimitError: GroqException - {\"error\":{\"message\":\"Rate limit reach...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 17,
+      "query": "How many security incidents have we had?",
+      "persona": "cto",
+      "answer": "Based on internal knowledge base for How many security incidents have we had?:\n- Risk Watchlist \u2014 Recent Anomalies: Dete...",
+      "contexts_retrieved": 5,
+      "groundedness": 0.0,
+      "relevance": 0.2,
+      "faithfulness": 0.6496,
+      "overall_quality": 0.20992000000000002,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 18,
+      "query": "What is our deployment frequency?",
+      "persona": "cto",
+      "answer": "Error generating response: litellm.RateLimitError: RateLimitError: GroqException - {\"error\":{\"message\":\"Rate limit reach...",
+      "contexts_retrieved": 0,
+      "groundedness": 1.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.4,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE"
+      ]
+    },
+    {
+      "case_id": 19,
+      "query": "What is inventory turnover in logistics?",
+      "persona": "coo",
+      "answer": "Based on internal knowledge base for What is inventory turnover in logistics?:\n- Logistics KPI Summary \u2014 2026-07: === EX...",
+      "contexts_retrieved": 5,
+      "groundedness": 0.0,
+      "relevance": 0.3667,
+      "faithfulness": 0.5353,
+      "overall_quality": 0.25374,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 20,
+      "query": "How accurate are our orders?",
+      "persona": "coo",
+      "answer": "Error generating response: litellm.RateLimitError: RateLimitError: GroqException - {\"error\":{\"message\":\"Rate limit reach...",
+      "contexts_retrieved": 0,
+      "groundedness": 1.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.4,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE"
+      ]
+    },
+    {
+      "case_id": 21,
+      "query": "What are our carbon emissions?",
+      "persona": "esg",
+      "answer": "Error generating response: litellm.RateLimitError: RateLimitError: GroqException - {\"error\":{\"message\":\"Rate limit reach...",
+      "contexts_retrieved": 0,
+      "groundedness": 1.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.4,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE"
+      ]
+    },
+    {
+      "case_id": 22,
+      "query": "What percentage of energy is renewable?",
+      "persona": "esg",
+      "answer": "Based on the provided context, there is no relevant information available to answer the question. However, I can provide...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 23,
+      "query": "What is our waste recycling rate?",
+      "persona": "esg",
+      "answer": "Error generating response: litellm.RateLimitError: RateLimitError: GroqException - {\"error\":{\"message\":\"Rate limit reach...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 24,
+      "query": "What recent anomalies should I review for risk?",
+      "persona": "risk",
+      "answer": "Error generating response: litellm.RateLimitError: RateLimitError: GroqException - {\"error\":{\"message\":\"Rate limit reach...",
+      "contexts_retrieved": 0,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "overall_quality": 0.0,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    },
+    {
+      "case_id": 25,
+      "query": "How does headcount relate to finance margin across recent periods?",
+      "persona": "ceo",
+      "answer": "Based on internal knowledge base for How does headcount relate to finance margin across recent periods?:\n- Cross-Domain ...",
+      "contexts_retrieved": 5,
+      "groundedness": 0.0,
+      "relevance": 0.18,
+      "faithfulness": 0.662,
+      "overall_quality": 0.20440000000000003,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION"
+      ]
+    }
+  ]
+}

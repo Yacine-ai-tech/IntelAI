@@ -1,16 +1,14 @@
 """
-IntelAI RAG Evaluation via Standalone RAGeval Service.
+IntelAI RAG Evaluation using the installed PyPI `omnismart-rageval` package.
 
-Respects the STRATEGY.md mindset of Independency:
-RAGeval is an independent LLMOps microservice. IntelAI calls RAGeval's
-REST API (POST /eval/score) to score groundedness, faithfulness, and
-relevance with multi-judge consensus (Claude Haiku 4.5 + Groq LLaMA 3.3).
+This script demonstrates evaluating the IntelAI RAG pipeline using the `rageval` 
+Python package installed from PyPI, proving its effectiveness as a drop-in evaluator.
 """
 import json
 import os
 import sys
-import urllib.request
-import ssl
+import asyncio
+import time
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -20,43 +18,37 @@ sys.path.insert(0, str(ROOT_DIR))
 
 from src.services.omnismart_chatbot import UltraFastRAG
 
-RAGEVAL_URL = os.environ.get("RAGEVAL_URL", "https://rageval.ysiddo-ai-projects.app/eval/score")
-INTERNAL_TOKEN = os.environ.get("OMNIINTEL_INTERNAL_TOKEN", "omniintel-prod-internal-2026")
+# Import RAGEvaluator from the installed package
+try:
+    from rageval.evaluator import RAGEvaluator
+except ImportError:
+    print("❌ Error: `rageval` package is not installed.")
+    print("Please run: pip install omnismart-rageval[eval]")
+    sys.exit(1)
 
 
-def evaluate_query_with_rageval(query: str, answer: str, contexts: List[str], persona: str) -> Dict[str, Any]:
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-
-    payload = {
-        "query": query,
-        "answer": answer,
-        "contexts": contexts,
-        "persona": persona,
-        "model": "intelai-ultrafast-rag"
-    }
-
-    req = urllib.request.Request(
-        RAGEVAL_URL,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "User-Agent": "IntelAI-Evaluation-Client/1.0",
-            "Content-Type": "application/json",
-            "X-OmniIntel-Internal-Token": INTERNAL_TOKEN
-        },
-        method="POST"
-    )
-
+async def evaluate_query_with_package(
+    evaluator: RAGEvaluator, query: str, answer: str, contexts: List[str], persona: str
+) -> Dict[str, Any]:
+    """Score the interaction using the local RAGEvaluator instance."""
     try:
-        res = urllib.request.urlopen(req, timeout=30, context=ctx)
-        return json.loads(res.read().decode())
+        # Score the interaction
+        scores = await evaluator.score_interaction(
+            query=query,
+            answer=answer,
+            chunks=contexts,
+            tokens_used=0,  # Evaluator will compute its own LLM usage during scoring
+            latency_ms=0.0,
+            model="intelai-ultrafast-rag",
+            persona=persona,
+        )
+        return scores
     except Exception as e:
-        print(f"  ⚠️ RAGeval API call failed ({e}) — returning fallback score")
-        return {"overall_quality": 0.85, "groundedness": 0.90, "relevance": 0.80, "error": str(e)}
+        print(f"  ⚠️ rageval package evaluation failed ({e}) — returning fallback score")
+        return {"overall_quality": 0.0, "groundedness": 0.0, "relevance": 0.0, "error": str(e)}
 
 
-def run_rageval_audit() -> Dict[str, Any]:
+async def run_rageval_audit_async() -> Dict[str, Any]:
     eval_file = ROOT_DIR / "src" / "data" / "rag_eval.jsonl"
     if not eval_file.exists():
         eval_file = ROOT_DIR / "tests" / "rag_eval.jsonl"
@@ -67,7 +59,9 @@ def run_rageval_audit() -> Dict[str, Any]:
     rag = UltraFastRAG()
     results = []
 
-    print(f"🚀 Evaluating {len(cases)} queries via independent RAGeval API at {RAGEVAL_URL}...\n")
+    # Initialize the PyPI RAGEvaluator
+    print(f"🚀 Evaluating {len(cases)} queries via PyPI `rageval` package...\n")
+    evaluator = RAGEvaluator()
 
     for i, c in enumerate(cases, 1):
         query = c["query"]
@@ -79,7 +73,9 @@ def run_rageval_audit() -> Dict[str, Any]:
             for s in out.get("sources", [])
         ]
 
-        scores = evaluate_query_with_rageval(query, answer, contexts, persona)
+        # Use the package evaluator asynchronously
+        scores = await evaluate_query_with_package(evaluator, query, answer, contexts, persona)
+        
         g_consensus = scores.get("groundedness_consensus", {}).get("consensus", scores.get("groundedness", 0.0))
 
         results.append({
@@ -98,7 +94,6 @@ def run_rageval_audit() -> Dict[str, Any]:
         print(f"[{i:02d}/{len(cases):02d}] Persona: {persona:<7} | Groundedness: {g_consensus:.2f} | Overall: {scores.get('overall_quality', 0.0):.2f} | Query: '{query}'")
         
         # Sleep to avoid Groq and Gemini rate limits on the free tier
-        import time
         if i < len(cases):
             time.sleep(15)
 
@@ -107,14 +102,14 @@ def run_rageval_audit() -> Dict[str, Any]:
 
     audit_summary = {
         "service_evaluated": "IntelAI UltraFastRAG",
-        "evaluator_service": "RAGeval (Independent LLMOps Microservice)",
+        "evaluator_service": "RAGeval (PyPI Package)",
         "total_queries": len(results),
         "avg_groundedness": round(avg_groundedness, 4),
         "avg_overall_quality": round(avg_overall, 4),
         "results": results
     }
 
-    out_json = ROOT_DIR / "eval" / "RAGEVAL_AUDIT_REPORT.json"
+    out_json = ROOT_DIR / "eval" / "RAGEVAL_PACKAGE_AUDIT_REPORT.json"
     with open(out_json, "w") as f:
         json.dump(audit_summary, f, indent=2)
 
@@ -122,6 +117,8 @@ def run_rageval_audit() -> Dict[str, Any]:
     print(f"📄 Report written to {out_json}")
     return audit_summary
 
+def run_rageval_audit():
+    asyncio.run(run_rageval_audit_async())
 
 if __name__ == "__main__":
     run_rageval_audit()
