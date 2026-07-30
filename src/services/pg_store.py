@@ -387,9 +387,27 @@ def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: 
                     if replace_prefix:
                         cur.execute("DELETE FROM kpi_metrics WHERE source LIKE %s", [f"{replace_prefix}%"])
                     else:
-                        cur.execute("DELETE FROM kpi_metrics WHERE source = %s", [source_name])
-                cur.executemany(insert_sql, params)
             conn.commit()
+            # Automatic GraphRAG-lite Entity & Relationship Extraction
+            try:
+                from src.services.entity_extractor import get_entity_extractor
+                extractor = get_entity_extractor()
+                entity_rows = []
+                for _, row in df.iterrows():
+                    cat = str(row.get("category", ""))
+                    met = str(row.get("metric", ""))
+                    per = str(row.get("period", ""))
+                    ref = f"{cat}|{met}|{per}"
+                    for e in extractor.extract_entities({"category": cat, "metric_name": met, "period": per}):
+                        entity_rows.append({
+                            "record_ref": ref,
+                            "entity_type": e["entity_type"],
+                            "entity_value": e["entity_value"],
+                        })
+                if entity_rows:
+                    store_kpi_entities(entity_rows, replace=False)
+            except Exception as ee:
+                log.warning("Auto entity extraction on CSV ingest note: %s", ee)
             return
         except Exception as e:
             last_err = e
@@ -1072,13 +1090,11 @@ def ensure_session_exists(session_id: str, user_id: str) -> str:
 
 def seed_all_domains() -> int:
     """
-    Seed multi-domain KPI data (+ knowledge-base docs) if the table is empty.
-    Delegates to the robust, deterministic seed in ``src.data.seed``.
-    Returns the number of KPI rows inserted.
+    Deprecated synthetic seed handler. Synthetic seeding is permanently disabled
+    in favor of pure real-data ingestion via official REST API endpoints.
     """
-    from src.data.seed import seed_database  # lazy import avoids circular dependency
-    counts = seed_database(replace=True)
-    return counts.get("kpi_rows", 0)
+    log.info("seed_all_domains called: synthetic seeding disabled (real-data driven platform).")
+    return 0
 
 
 # ════════════════════════════════════════════════════════════════════════════

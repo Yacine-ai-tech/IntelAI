@@ -723,7 +723,7 @@ async def _localize_glossary_entry(entry: Dict[str, Any], lang: str) -> Dict[str
     term = entry.get("term")
     # 1) Static French overlay — the authoritative, complete source.
     try:
-        from src.data.glossary_fr import GLOSSARY_FR
+        from src.knowledge.glossary.fr import GLOSSARY_FR
         static = GLOSSARY_FR.get(str(term)) or {}
     except Exception:
         static = {}
@@ -770,7 +770,7 @@ async def get_glossary(
     explainer and grounds term definitions (no hallucination). ``lang=fr`` returns
     French definitions (LLM-translated + cached; numbers/formulas preserved)."""
     import asyncio
-    from src.data.glossary import for_domain, get_term
+    from src.knowledge.glossary import for_domain, get_term
     lang = (lang or getattr(user, "language", None) or "en").lower()
     if term:
         entry = get_term(term)
@@ -1044,6 +1044,27 @@ async def ingest_document(
         "source": category, "embedding": "",
     }])
     store_knowledge_docs(docs_df)
+    
+    # 4. Auto-Reindex into Vector Store & GraphRAG Entity Extraction
+    try:
+        from src.services.vector_store import reindex
+        reindex([{"doc_id": doc_id, "title": file.filename, "content": text[:50000], "source": category, "category": category}])
+    except Exception as ve:
+        log.warning("Vector store reindex note for %s: %s", file.filename, ve)
+
+    try:
+        from src.services.entity_extractor import get_entity_extractor
+        from src.services.pg_store import store_kpi_entities
+        extractor = get_entity_extractor()
+        doc_entities = extractor.extract_entities({"category": category, "metric_name": file.filename, "period": "doc"})
+        if doc_entities:
+            store_kpi_entities([
+                {"record_ref": f"doc|{doc_id}|{file.filename}", "entity_type": e["entity_type"], "entity_value": e["entity_value"]}
+                for e in doc_entities
+            ], replace=False)
+    except Exception as ee:
+        log.warning("Doc entity extraction note for %s: %s", file.filename, ee)
+
     log_audit_event(user.username, "DOC_INGEST", f"Uploaded {file.filename}")
     return {"status": "ingested", "doc_id": doc_id, "filename": file.filename, "chars": len(text)}
 
@@ -1577,25 +1598,11 @@ async def get_audit_log(limit: int = 100, user: TokenData = Depends(require_role
 
 @app.post("/api/v1/admin/seed")
 async def seed_data(user: TokenData = Depends(require_role("admin"))):
-    from src.services.pg_store import seed_all_domains
-    count = seed_all_domains()
-    return {"status": "seeded", "rows": count}
+    return {"status": "deprecated", "note": "Synthetic seed generation is disabled. Use official REST API ingestion (/api/v1/ingest/csv and /api/v1/ingest/document)."}
 
 @app.post("/api/v1/admin/scenario")
 async def switch_scenario(req: ScenarioRequest, user: TokenData = Depends(require_role("admin"))):
-    """Switch database scenario for benchmarking (admin only)."""
-    from src.data.seed import seed_database
-    try:
-        # Validate scenario
-        valid_scenarios = ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown", "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]
-        if req.scenario not in valid_scenarios:
-            raise HTTPException(status_code=400, detail=f"Invalid scenario. Valid: {', '.join(valid_scenarios)}")
-        
-        # Seed with new scenario
-        counts = seed_database(replace=True, scenario=req.scenario)
-        return {"status": "success", "scenario": req.scenario, "counts": counts}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return {"status": "deprecated", "scenario": req.scenario, "note": "Synthetic scenario seeding is disabled. Ingestion is 100% real-data driven via /api/v1/ingest/*."}
 
 @app.get("/api/v1/admin/scenario")
 async def get_current_scenario(user: TokenData = Depends(require_role("admin"))):
