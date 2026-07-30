@@ -66,3 +66,7 @@ docs/STRATEGY_DRIFT_AUDIT.md
 steps.md
 eval/RAGEVAL_AUDIT_REPORT.json
 venv/
+
+.env.local
+.pytest_cache/
+.coverage
