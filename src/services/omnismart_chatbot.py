@@ -1015,10 +1015,11 @@ class AgentPersonaFactory:
         # The detected language drives retrieval + any fallback text; the LLM is also
         # instructed (system prompt) to mirror the question language in its reply.
         detected = self._detect_language(message)
-        if detected:
-            language = detected
-        elif not language or language == "auto":
+        if detected == "fr" or language == "fr":
+            language = "fr"
+        else:
             language = "en"
+
         
         if not llm_available():
             return {
