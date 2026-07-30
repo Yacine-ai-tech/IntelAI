@@ -387,6 +387,8 @@ def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: 
                     if replace_prefix:
                         cur.execute("DELETE FROM kpi_metrics WHERE source LIKE %s", [f"{replace_prefix}%"])
                     else:
+                        cur.execute("DELETE FROM kpi_metrics WHERE source = %s", [source_name])
+                cur.executemany(insert_sql, params)
             conn.commit()
             # Automatic GraphRAG-lite Entity & Relationship Extraction
             try:
