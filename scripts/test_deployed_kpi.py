@@ -7,7 +7,7 @@ import httpx
 import json
 
 # Deployed service URL
-INTELAI_URL = "https://intelai.ysiddo-ai-projects.app"
+INTELAI_URL = "http://localhost:8000"
 
 def test_health():
     """Test health endpoint"""

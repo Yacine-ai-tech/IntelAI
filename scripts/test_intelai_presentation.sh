@@ -16,8 +16,8 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Configuration
-INTELAI_BASE="https://intelai.ysiddo-ai-projects.app"
-INTELAI_API="https://intelai.ysiddo-ai-projects.app/api/v1"
+INTELAI_BASE="http://localhost:8000"
+INTELAI_API="http://localhost:8000/api/v1"
 
 # Change to IntelAI directory
 cd "$(dirname "$0")/.." || { echo "IntelAI directory not found"; exit 1; }

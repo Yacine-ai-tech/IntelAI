@@ -20,7 +20,7 @@ sys.path.insert(0, str(ROOT_DIR))
 
 from src.services.omnismart_chatbot import UltraFastRAG
 
-RAGEVAL_URL = os.environ.get("RAGEVAL_URL", "https://rageval.ysiddo-ai-projects.app/eval/score")
+RAGEVAL_URL = os.environ.get("RAGEVAL_URL", "http://localhost:8000/eval/score")
 INTERNAL_TOKEN = os.environ.get("OMNIINTEL_INTERNAL_TOKEN", "omniintel-prod-internal-2026")
 
 

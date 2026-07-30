@@ -19,7 +19,7 @@ Features:
       - Skip Scenario (--skip-scenario): Skips re-seeding base 78-month metrics when adding new files.
 
 Environment Variables:
-  INTELAI_API_URL : Base URL of the backend (default: https://intelai.ysiddo-ai-projects.app)
+  INTELAI_API_URL : Base URL of the backend (default: http://localhost:8000)
   ADMIN_USERNAME : Admin username for JWT authentication (default: admin@company.com)
   ADMIN_PASSWORD : Admin password for JWT authentication (default: AdminPassword123!)
 
@@ -46,7 +46,7 @@ from typing import List, Tuple, Optional
 import httpx
 
 # ── Environment-Driven Defaults ───────────────────────────────────────────────
-API_BASE_URL = os.getenv("INTELAI_API_URL", "https://intelai.ysiddo-ai-projects.app").rstrip("/")
+API_BASE_URL = os.getenv("INTELAI_API_URL", "http://localhost:8000").rstrip("/")
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin@company.com")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "AdminPassword123!")
 

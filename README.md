@@ -75,7 +75,7 @@ docker compose up --build                              # app + bundled Postgres
 
 | Variable | Required | Description |
 |---|---|---|
-| `POSTGRES_URL` | ✅ | Neon / Railway / local Postgres |
+| `POSTGRES_URL` | ✅ | Neon / Render / local Postgres |
 | `GROQ_API_KEY` | ✅ | Default LLM provider |
 | `SECRET_KEY` | ✅ | JWT signing key |
 | `ANTHROPIC_API_KEY` | ⬜ | Claude reasoning tier |
