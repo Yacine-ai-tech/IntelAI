@@ -1,5 +1,10 @@
 """
-Unified Configuration — Single source of truth for the entire platform.
+Unified Configuration — Single source of truth for all IntelAI runtime settings.
+
+All values are loaded from environment variables at startup. Defaults are safe
+for local development only. Always set the required secrets (GROQ_API_KEY or
+another LLM key, POSTGRES_URL, SECRET_KEY) via the platform's environment
+configuration (e.g., Render environment variables) before deploying to production.
 """
 from __future__ import annotations
 
@@ -51,19 +56,21 @@ class Settings:
         )
     )
 
-    # External Microservice APIs (STRATEGY.md Decoupling)
+    # External Microservice APIs — set via env in production (STRATEGY.md § Decoupling)
+    # Defaults target the live production endpoints on the custom domain.
     DOCINTEL_API_URL: str = field(
-        default_factory=lambda: os.getenv("DOCINTEL_API_URL", "https://docintel-backend-2026.onrender.com")
+        default_factory=lambda: os.getenv("DOCINTEL_API_URL", "https://docintel.ysiddo-ai-projects.app")
     )
     VOICEFLOW_API_URL: str = field(
-        default_factory=lambda: os.getenv("VOICEFLOW_API_URL", "https://voiceflow-backend-2026.onrender.com")
+        default_factory=lambda: os.getenv("VOICEFLOW_API_URL", "https://voiceflow.ysiddo-ai-projects.app")
     )
 
-    # API keys — required; validated at startup
+    # LLM API keys — at least one must be set; validated at startup.
     GROQ_API_KEY: str = field(default_factory=lambda: os.getenv("GROQ_API_KEY", ""))
-    # Optional: Anthropic (LiteLLM router can fall back to Claude)
+    # Anthropic Claude — optional; enables LiteLLM routing to Claude models.
     ANTHROPIC_API_KEY: str = field(default_factory=lambda: os.getenv("ANTHROPIC_API_KEY", ""))
-    # Optional: Tavily — real-time web search to augment RAG with trustworthy, cited web sources
+    # Tavily — optional; enables real-time web search to augment RAG responses
+    # with cited, up-to-date external sources.
     TAVILY_API_KEY: str = field(default_factory=lambda: os.getenv("TAVILY_API_KEY", ""))
     WEB_SEARCH_MAX_RESULTS: int = field(default_factory=lambda: int(os.getenv("WEB_SEARCH_MAX_RESULTS", "4")))
 
@@ -80,7 +87,8 @@ class Settings:
         )
     )
 
-    # Security
+    # Security — SECRET_KEY must be set to a strong random value in production.
+    # Generate one with: python3 -c "import secrets; print(secrets.token_hex(32))"
     SECRET_KEY: str = field(
         default_factory=lambda: os.getenv("SECRET_KEY", "change-me-in-production")
     )
@@ -94,8 +102,9 @@ class Settings:
     # This is a presentation setting (symbol + locale rules); it does not perform FX conversion.
     CURRENCY: str = field(default_factory=lambda: os.getenv("CURRENCY", "USD").strip().upper())
 
-    # LLM — provider-agnostic. LLM_PROVIDER selects the backend (groq uses the Groq SDK
-    # directly for speed; any other value routes through LiteLLM → no vendor lock-in).
+    # LLM — provider-agnostic routing.
+    # LLM_PROVIDER selects the backend: "groq" uses the Groq SDK directly for lowest
+    # latency; any other value routes through LiteLLM for provider-agnostic compatibility.
     LLM_PROVIDER: str = field(default_factory=lambda: os.getenv("LLM_PROVIDER", "groq").strip().lower())
     LLM_MODEL: str = field(default_factory=lambda: os.getenv("LLM_MODEL", "groq/llama-3.1-8b-instant"))
     LLM_TEMPERATURE: float = 0.3
@@ -109,7 +118,11 @@ class Settings:
     CHUNK_SIZE: int = 900
     CHUNK_OVERLAP: int = 120
 
-    # Vector store backend — memory (in-process) | chroma (dev) | pgvector (prod, Neon) | qdrant (prod)
+    # Vector store backend selection:
+    #   memory   — in-process (development / CI, no persistence)
+    #   chroma   — local ChromaDB (development with persistence)
+    #   pgvector — Neon PostgreSQL with pgvector extension (recommended for production)
+    #   qdrant   — Qdrant Cloud (production; requires QDRANT_URL + QDRANT_API_KEY)
     VECTOR_STORE: str = field(
         default_factory=lambda: os.getenv("VECTOR_STORE", "memory").strip().lower()
     )
@@ -159,7 +172,9 @@ def get_cors_allowed_origins() -> List[str]:
 
 
 
-# --- OPENAI TO GEMINI FALLBACK LOGIC ---
+# Gemini model fallback — when OPENAI_API_KEY is absent but GEMINI_API_KEY is
+# present, any model string containing "openai" or "gpt-" is automatically
+# remapped to Gemini Flash so no code changes are required when switching providers.
 def _apply_gemini_fallback():
     openai_key = getattr(settings, "OPENAI_API_KEY", "") or os.getenv("OPENAI_API_KEY", "")
     gemini_key = getattr(settings, "GEMINI_API_KEY", "") or os.getenv("GEMINI_API_KEY", "")
