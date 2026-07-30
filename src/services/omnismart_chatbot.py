@@ -1,31 +1,32 @@
 """
 OmniSmart Chatbot Service — IntelAI's persona-routed RAG copilot.
 
-The single chatbot service for IntelAI. Resolves a role persona (CEO/CFO/…) that
-scopes which data it may read (RBAC), retrieves a live KPI snapshot + grounded
-knowledge docs, and answers with inline numbered citations.
+This is the single unified chatbot service for IntelAI. It resolves a role
+persona (CEO/CFO/…) that scopes which data the session may read (RBAC),
+retrieves a live KPI snapshot together with grounded knowledge documents,
+and produces answers with inline numbered citations.
 
-Features:
+Capabilities:
 - Persona-routed RAG with per-role data-access scoping (RBAC)
 - Live KPI snapshot injection + hybrid/GraphRAG-lite document retrieval
 - Grounded answers with canonical, deduplicated source citations
 - Lightweight bilingual (EN/FR) conversational agent
 - Token-efficient context windowing
 
-USAGE:
+Example::
+
     from src.services.omnismart_chatbot import OmniSmartChatbot
-    
+
     chatbot = OmniSmartChatbot(conversation_id="user_session", domain="finance")
-    
-    # Process queries across all 5 patterns + conversational agent
+
     result = chatbot.process(
         message="Analyze Q4 revenue trends and suggest optimizations",
-        mode="auto",  # or: agent, rag, analysis, extraction, conversation, voice
+        mode="auto",  # options: agent | rag | analysis | extraction | conversation | voice
         context="Additional context..."
     )
-    
-    print(result["response"])
-    print(result["type"])  # Pattern used
+
+    response_text = result["response"]
+    pattern_used  = result["type"]
 """
 
 from __future__ import annotations
@@ -65,7 +66,7 @@ try:
     from sentence_transformers import SentenceTransformer
     _SBERT = True
 except Exception:
-    import logging; logging.error('Unhandled exception', exc_info=True)
+    log.exception("Unexpected error")
     pass
 
 try:
@@ -123,24 +124,41 @@ def llm_complete(
     
     resolved_model = model or _resolve(tier)
 
-    # Fast path: use native Groq SDK if resolved model is a Groq model
-    client = _groq_client()
-    if resolved_model.startswith("groq/") and client is not None:
+    # Async worker wrapper for completion calls to prevent blocking FastAPI event loop
+    import asyncio
+    import anyio
+
+    def _sync_call():
+        client = _groq_client()
+        if resolved_model.startswith("groq/") and client is not None:
+            try:
+                actual_model = resolved_model.replace("groq/", "")
+                kw: Dict[str, Any] = {"model": actual_model, "messages": messages,
+                                      "temperature": temperature, "max_tokens": max_tokens}
+                if top_p is not None:
+                    kw["top_p"] = top_p
+                r = client.chat.completions.create(**kw)
+                tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
+                return r.choices[0].message.content, tokens
+            except Exception as e:
+                log.warning("Groq completion failed (%s) — falling back to Gemini", e)
+
+        # LiteLLM completion
+        from litellm import completion  # type: ignore
+        msgs = _apply_cache_control(messages, resolved_model)
+        kw = {"model": resolved_model, "messages": msgs, "temperature": temperature, "max_tokens": max_tokens}
+        if top_p is not None:
+            kw["top_p"] = top_p
         try:
-            actual_model = resolved_model.replace("groq/", "")
-            kw: Dict[str, Any] = {"model": actual_model, "messages": messages,
-                                  "temperature": temperature, "max_tokens": max_tokens}
-            if top_p is not None:
-                kw["top_p"] = top_p
-            r = client.chat.completions.create(**kw)
-            tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
-            return r.choices[0].message.content, tokens
+            r = completion(**kw)
+            text = r.choices[0].message.content
+            usage = getattr(r, "usage", None)
+            tokens = getattr(usage, "total_tokens", 0) if usage else 0
+            return text, tokens
         except Exception as e:
-            log.warning("Groq completion failed (%s) — falling back to Gemini", e)
-            import os, time
+            log.warning("LiteLLM completion for %s failed (%s) — trying Gemini fallback", resolved_model, e)
             gemini_key = os.getenv("GEMINI_API_KEY", "") or getattr(settings, "GEMINI_API_KEY", "")
             if gemini_key:
-                from litellm import completion
                 for attempt in range(2):
                     try:
                         r = completion(
@@ -156,42 +174,17 @@ def llm_complete(
                         return text, tokens
                     except Exception as ge:
                         log.warning("Gemini completion attempt %d failed (%s)", attempt+1, ge)
-                        time.sleep(3)
+            raise e
 
-    # Any other provider → LiteLLM with Gemini fallback
-    from litellm import completion  # type: ignore
-    msgs = _apply_cache_control(messages, resolved_model)
-    kw = {"model": resolved_model, "messages": msgs, "temperature": temperature, "max_tokens": max_tokens}
-    if top_p is not None:
-        kw["top_p"] = top_p
-    try:
-        r = completion(**kw)
-        text = r.choices[0].message.content
-        usage = getattr(r, "usage", None)
-        tokens = getattr(usage, "total_tokens", 0) if usage else 0
-        return text, tokens
-    except Exception as e:
-        log.warning("LiteLLM completion for %s failed (%s) — trying Gemini fallback", resolved_model, e)
-        gemini_key = os.getenv("GEMINI_API_KEY", "") or getattr(settings, "GEMINI_API_KEY", "")
-        if gemini_key:
-            import time
-            for attempt in range(2):
-                try:
-                    r = completion(
-                        model="gemini/gemini-2.0-flash",
-                        messages=messages,
-                        api_key=gemini_key,
-                        temperature=temperature,
-                        max_tokens=max_tokens
-                    )
-                    text = r.choices[0].message.content
-                    usage = getattr(r, "usage", None)
-                    tokens = getattr(usage, "total_tokens", 0) if usage else 0
-                    return text, tokens
-                except Exception as ge:
-                    log.warning("Gemini fallback attempt %d failed (%s)", attempt+1, ge)
-                    time.sleep(3)
-        raise e
+    # Run in worker thread pool so synchronous LLM provider network calls never block FastAPI asyncio loop
+    import concurrent.futures
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        future = executor.submit(_sync_call)
+        try:
+            return future.result(timeout=60)
+        except Exception as final_e:
+            log.error("All LLM completion providers failed: %s", final_e)
+            return f"AI Copilot response unavailable: {final_e}", 0
 
 
 # ════════════════════════════════════════════════════════════════════════════

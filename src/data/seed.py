@@ -499,7 +499,7 @@ def seed_database(replace: bool = True, scenario: str = "healthy") -> Dict[str, 
         from src.data.glossary import as_knowledge_docs
         docs += as_knowledge_docs()
     except Exception:
-        import logging; logging.error('Unhandled exception', exc_info=True)
+        logging.exception("Unexpected error")
         pass
     docs_df = pd.DataFrame([
         {"doc_id": f"seed-{i}", "title": d["title"], "content": d["content"],
@@ -521,7 +521,7 @@ def seed_database(replace: bool = True, scenario: str = "healthy") -> Dict[str, 
             for r in docs_df.to_dict("records")
         ])
     except Exception:
-        import logging; logging.error('Unhandled exception', exc_info=True)
+        logging.exception("Unexpected error")
         pass
 
     return {"kpi_rows": len(rows), "knowledge_docs": kb, "kpi_entities": n_entities}

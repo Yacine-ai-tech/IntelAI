@@ -543,7 +543,7 @@ async def login(req: LoginRequest):
         from src.services.pg_store import log_audit_event
         log_audit_event(req.username, "LOGIN", f"User {req.username} logged in")
     except Exception:
-        import logging; logging.error('Unhandled exception', exc_info=True)
+        log.exception("Unexpected error")
         pass
 
     return {
@@ -837,7 +837,7 @@ async def delete_file_endpoint(
         try:
             os.remove(path)
         except Exception:
-            import logging; logging.error('Unhandled exception', exc_info=True)
+            log.exception("Unexpected error")
             pass
             
     # Trigger background reindex to remove from vector store if necessary
@@ -942,7 +942,7 @@ async def generic_webhook_ingest(
                     logging.info(f"Webhook doc successfully auto-categorized as {domain} and indexed.")
             except Exception as e:
                 import logging
-                logging.error(f"Background webhook processing failed: {e}")
+                log.error("Background webhook processing failed: %s", e)
 
         # Fire and forget
         asyncio.create_task(asyncio.to_thread(_process_background))
@@ -1167,40 +1167,63 @@ async def run_forecast(
 
 
 # ════════════════════════════════════════════════════════════
-# INSIGHTS & RISK
+# INSIGHTS & RISK (Optimized with 10-second In-Memory TTL Cache for ultra-fast Dashboard load)
 # ════════════════════════════════════════════════════════════
+
+import time as _time
+_INSIGHTS_CACHE: Dict[str, Tuple[float, Any]] = {}
+_CACHE_TTL = 10.0  # seconds
+
+def _get_cached_insight(key: str, compute_fn):
+    now = _time.time()
+    if key in _INSIGHTS_CACHE:
+        ts, val = _INSIGHTS_CACHE[key]
+        if now - ts < _CACHE_TTL:
+            return val
+    val = compute_fn()
+    _INSIGHTS_CACHE[key] = (now, val)
+    return val
+
+def invalidate_insights_cache():
+    _INSIGHTS_CACHE.clear()
 
 @app.get("/api/v1/insights/health")
 async def get_health_index(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_health_index
-    df = get_kpi_metrics()
-    return _json_safe(compute_health_index(df))
+    def _compute():
+        df = get_kpi_metrics()
+        return _json_safe(compute_health_index(df))
+    return _get_cached_insight("health", _compute)
 
 
 @app.get("/api/v1/insights/risk")
 async def get_risk_score(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_risk_score
-    df = get_kpi_metrics()
-    return _json_safe(compute_risk_score(df))
+    def _compute():
+        df = get_kpi_metrics()
+        return _json_safe(compute_risk_score(df))
+    return _get_cached_insight("risk", _compute)
 
 
 @app.get("/api/v1/insights/summary")
 async def get_executive_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_health_index, compute_risk_score, extract_key_metrics, build_executive_summary
-    df = get_kpi_metrics()
-    health = compute_health_index(df)
-    risk = compute_risk_score(df)
-    key_metrics = extract_key_metrics(df)
-    summary = build_executive_summary(df, health, risk, key_metrics)
-    return _json_safe({
-        "health": health,
-        "risk": risk,
-        "key_metrics": key_metrics,
-        "summary": " ".join(summary) if isinstance(summary, list) else summary,
-    })
+    def _compute():
+        df = get_kpi_metrics()
+        health = compute_health_index(df)
+        risk = compute_risk_score(df)
+        key_metrics = extract_key_metrics(df)
+        summary = build_executive_summary(df, health, risk, key_metrics)
+        return _json_safe({
+            "health": health,
+            "risk": risk,
+            "key_metrics": key_metrics,
+            "summary": " ".join(summary) if isinstance(summary, list) else summary,
+        })
+    return _get_cached_insight("summary", _compute)
 
 
 @app.get("/api/v1/insights/anomalies")
@@ -1210,203 +1233,210 @@ async def get_anomalies(
 ):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import detect_anomalies
-    metrics_filter = [metric] if metric else None
-    df = get_kpi_metrics(metrics=metrics_filter)
-    anomalies = detect_anomalies(df)
-    if anomalies.empty:
-        return {"anomalies": [], "count": 0}
-    anom_df = anomalies[anomalies["is_anomaly"] == True]
-    return {
-        "anomalies": anom_df.to_dict(orient="records") if not anom_df.empty else [],
-        "count": len(anom_df),
-    }
+    def _compute():
+        metrics_filter = [metric] if metric else None
+        df = get_kpi_metrics(metrics=metrics_filter)
+        anomalies = detect_anomalies(df)
+        if isinstance(anomalies, pd.DataFrame):
+            if anomalies.empty:
+                return {"anomalies": [], "count": 0}
+            anom_df = anomalies[anomalies["is_anomaly"] == True] if "is_anomaly" in anomalies.columns else anomalies
+            records = anom_df.to_dict(orient="records") if not anom_df.empty else []
+            return {"anomalies": records, "count": len(records)}
+        return {"anomalies": anomalies if isinstance(anomalies, list) else [], "count": len(anomalies) if isinstance(anomalies, list) else 0}
+    return _get_cached_insight(cache_key, _compute)
 
 
 # ════════════════════════════════════════════════════════════
 # HR / PEOPLE DOMAIN
 # ════════════════════════════════════════════════════════════
 
+# ════════════════════════════════════════════════════════════
+# HR / PEOPLE DOMAIN (Optimized with 10s TTL Cache)
+# ════════════════════════════════════════════════════════════
+
 @app.get("/api/v1/hr/summary")
 async def get_hr_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
-    return HRService().get_workforce_summary(get_kpi_metrics())
+    return _get_cached_insight("hr_summary", lambda: HRService().get_workforce_summary(get_kpi_metrics()))
 
 @app.get("/api/v1/hr/departments")
 async def get_hr_departments(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
-    return {"departments": HRService().get_department_analytics(get_kpi_metrics())}
+    return _get_cached_insight("hr_departments", lambda: {"departments": HRService().get_department_analytics(get_kpi_metrics())})
 
 @app.get("/api/v1/hr/recruitment")
 async def get_hr_recruitment(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
-    return HRService().get_recruitment_pipeline(get_kpi_metrics())
+    return _get_cached_insight("hr_recruitment", lambda: HRService().get_recruitment_pipeline(get_kpi_metrics()))
 
 @app.get("/api/v1/hr/training")
 async def get_hr_training(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
-    return HRService().get_training_overview(get_kpi_metrics())
+    return _get_cached_insight("hr_training", lambda: HRService().get_training_overview(get_kpi_metrics()))
 
 @app.get("/api/v1/hr/health")
 async def get_hr_health(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
-    return HRService().compute_hr_health_score(get_kpi_metrics())
+    return _get_cached_insight("hr_health", lambda: HRService().compute_hr_health_score(get_kpi_metrics()))
 
 
 # ════════════════════════════════════════════════════════════
-# LOGISTICS DOMAIN
+# LOGISTICS DOMAIN (Optimized with 10s TTL Cache)
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/logistics/summary")
 async def get_logistics_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
-    return LogisticsService().get_supply_chain_summary(get_kpi_metrics())
+    return _get_cached_insight("logistics_summary", lambda: LogisticsService().get_supply_chain_summary(get_kpi_metrics()))
 
 @app.get("/api/v1/logistics/inventory")
 async def get_logistics_inventory(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
-    return LogisticsService().get_inventory_status(get_kpi_metrics())
+    return _get_cached_insight("logistics_inventory", lambda: LogisticsService().get_inventory_status(get_kpi_metrics()))
 
 @app.get("/api/v1/logistics/shipping")
 async def get_logistics_shipping(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
-    return LogisticsService().get_shipping_analytics(get_kpi_metrics())
+    return _get_cached_insight("logistics_shipping", lambda: LogisticsService().get_shipping_analytics(get_kpi_metrics()))
 
 @app.get("/api/v1/logistics/suppliers")
 async def get_logistics_suppliers(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
-    return {"suppliers": LogisticsService().get_supplier_metrics(get_kpi_metrics())}
+    return _get_cached_insight("logistics_suppliers", lambda: {"suppliers": LogisticsService().get_supplier_metrics(get_kpi_metrics())})
 
 @app.get("/api/v1/logistics/health")
 async def get_logistics_health(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
-    return LogisticsService().compute_logistics_health(get_kpi_metrics())
+    return _get_cached_insight("logistics_health", lambda: LogisticsService().compute_logistics_health(get_kpi_metrics()))
 
 
 # ════════════════════════════════════════════════════════════
-# IT OPERATIONS DOMAIN
+# IT OPERATIONS DOMAIN (Optimized with 10s TTL Cache)
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/it/overview")
 async def get_it_overview(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_it_overview(get_kpi_metrics())
+    return _get_cached_insight("it_overview", lambda: ITOpsService().get_it_overview(get_kpi_metrics()))
 
 @app.get("/api/v1/it/tickets")
 async def get_it_tickets(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_ticket_analytics(get_kpi_metrics())
+    return _get_cached_insight("it_tickets", lambda: ITOpsService().get_ticket_analytics(get_kpi_metrics()))
 
 @app.get("/api/v1/it/security")
 async def get_it_security(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_security_dashboard(get_kpi_metrics())
+    return _get_cached_insight("it_security", lambda: ITOpsService().get_security_dashboard(get_kpi_metrics()))
 
 @app.get("/api/v1/it/infrastructure")
 async def get_it_infrastructure(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_infrastructure_metrics(get_kpi_metrics())
+    return _get_cached_insight("it_infrastructure", lambda: ITOpsService().get_infrastructure_metrics(get_kpi_metrics()))
 
 @app.get("/api/v1/it/devops")
 async def get_it_devops(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_devops_metrics(get_kpi_metrics())
+    return _get_cached_insight("it_devops", lambda: ITOpsService().get_devops_metrics(get_kpi_metrics()))
 
 @app.get("/api/v1/it/health")
 async def get_it_health(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().compute_it_health(get_kpi_metrics())
+    return _get_cached_insight("it_health", lambda: ITOpsService().compute_it_health(get_kpi_metrics()))
 
 
 # ════════════════════════════════════════════════════════════
-# OPERATIONS DOMAIN
+# OPERATIONS DOMAIN (Optimized with 10s TTL Cache)
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/operations/summary")
 async def get_ops_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
-    return OperationsService().get_operations_summary(get_kpi_metrics())
+    return _get_cached_insight("ops_summary", lambda: OperationsService().get_operations_summary(get_kpi_metrics()))
 
 @app.get("/api/v1/operations/quality")
 async def get_ops_quality(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
-    return OperationsService().get_quality_metrics(get_kpi_metrics())
+    return _get_cached_insight("ops_quality", lambda: OperationsService().get_quality_metrics(get_kpi_metrics()))
 
 @app.get("/api/v1/operations/production")
 async def get_ops_production(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
-    return OperationsService().get_production_metrics(get_kpi_metrics())
+    return _get_cached_insight("ops_production", lambda: OperationsService().get_production_metrics(get_kpi_metrics()))
 
 @app.get("/api/v1/operations/safety")
 async def get_ops_safety(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
-    return OperationsService().get_safety_metrics(get_kpi_metrics())
+    return _get_cached_insight("ops_safety", lambda: OperationsService().get_safety_metrics(get_kpi_metrics()))
 
 @app.get("/api/v1/operations/health")
 async def get_ops_health(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
-    return OperationsService().compute_ops_health(get_kpi_metrics())
+    return _get_cached_insight("ops_health", lambda: OperationsService().compute_ops_health(get_kpi_metrics()))
 
 
 # ════════════════════════════════════════════════════════════
-# GROWTH DOMAIN
+# GROWTH DOMAIN (Optimized with 10s TTL Cache)
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/growth/summary")
 async def get_growth_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
-    df = get_kpi_metrics(categories=["Growth"])
-    if df.empty:
-        return {"mrr": 0, "arr": 0, "cac": 0, "ltv": 0, "churn_rate": 0, "trends": [], "mrr_trend": 0, "cac_trend": 0, "churn_trend": 0}
-    
-    # Sort and grab latest
-    df = df.sort_values(by="period")
-    latest = df.drop_duplicates(subset=["metric"], keep="last")
-    
-    def _val(metric_name):
-        row = latest[latest["metric"] == metric_name]
-        return float(row["value"].iloc[0]) if not row.empty else 0
+    def _compute():
+        df = get_kpi_metrics(categories=["Growth"])
+        if df.empty:
+            return {"mrr": 0, "arr": 0, "cac": 0, "ltv": 0, "churn_rate": 0, "trends": [], "mrr_trend": 0, "cac_trend": 0, "churn_trend": 0}
         
-    def _trend(metric_name):
-        m_df = df[df["metric"] == metric_name]
-        if len(m_df) < 2: return 0
-        v1 = m_df.iloc[-2]["value"]
-        v2 = m_df.iloc[-1]["value"]
-        return ((v2 - v1) / v1 * 100) if v1 else 0
+        df = df.sort_values(by="period")
+        latest = df.drop_duplicates(subset=["metric"], keep="last")
+        
+        def _val(metric_name):
+            row = latest[latest["metric"] == metric_name]
+            return float(row["value"].iloc[0]) if not row.empty else 0
+            
+        def _trend(metric_name):
+            m_df = df[df["metric"] == metric_name]
+            if len(m_df) < 2: return 0
+            v1 = m_df.iloc[-2]["value"]
+            v2 = m_df.iloc[-1]["value"]
+            return ((v2 - v1) / v1 * 100) if v1 else 0
 
-    mrr_series = df[df["metric"] == "MRR"][["period", "value"]].tail(12).to_dict("records")
-    
-    return {
-        "mrr": _val("MRR"),
-        "arr": _val("ARR"),
-        "cac": _val("CAC"),
-        "ltv": _val("LTV"),
-        "churn_rate": _val("Churn Rate"),
-        "trends": mrr_series,
-        "mrr_trend": _trend("MRR"),
-        "cac_trend": _trend("CAC"),
-        "churn_trend": _trend("Churn Rate")
-    }
+        mrr_series = df[df["metric"] == "MRR"][["period", "value"]].tail(12).to_dict("records")
+        
+        return {
+            "mrr": _val("MRR"),
+            "arr": _val("ARR"),
+            "cac": _val("CAC"),
+            "ltv": _val("LTV"),
+            "churn_rate": _val("Churn Rate"),
+            "trends": mrr_series,
+            "mrr_trend": _trend("MRR"),
+            "cac_trend": _trend("CAC"),
+            "churn_trend": _trend("Churn Rate"),
+        }
+    return _get_cached_insight("growth_summary", _compute)
 
 
 # ════════════════════════════════════════════════════════════
