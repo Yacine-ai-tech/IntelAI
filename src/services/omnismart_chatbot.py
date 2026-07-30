@@ -1,31 +1,32 @@
 """
 OmniSmart Chatbot Service — IntelAI's persona-routed RAG copilot.
 
-The single chatbot service for IntelAI. Resolves a role persona (CEO/CFO/…) that
-scopes which data it may read (RBAC), retrieves a live KPI snapshot + grounded
-knowledge docs, and answers with inline numbered citations.
+This is the single unified chatbot service for IntelAI. It resolves a role
+persona (CEO/CFO/…) that scopes which data the session may read (RBAC),
+retrieves a live KPI snapshot together with grounded knowledge documents,
+and produces answers with inline numbered citations.
 
-Features:
+Capabilities:
 - Persona-routed RAG with per-role data-access scoping (RBAC)
 - Live KPI snapshot injection + hybrid/GraphRAG-lite document retrieval
 - Grounded answers with canonical, deduplicated source citations
 - Lightweight bilingual (EN/FR) conversational agent
 - Token-efficient context windowing
 
-USAGE:
+Example::
+
     from src.services.omnismart_chatbot import OmniSmartChatbot
-    
+
     chatbot = OmniSmartChatbot(conversation_id="user_session", domain="finance")
-    
-    # Process queries across all 5 patterns + conversational agent
+
     result = chatbot.process(
         message="Analyze Q4 revenue trends and suggest optimizations",
-        mode="auto",  # or: agent, rag, analysis, extraction, conversation, voice
+        mode="auto",  # options: agent | rag | analysis | extraction | conversation | voice
         context="Additional context..."
     )
-    
-    print(result["response"])
-    print(result["type"])  # Pattern used
+
+    response_text = result["response"]
+    pattern_used  = result["type"]
 """
 
 from __future__ import annotations
@@ -65,7 +66,7 @@ try:
     from sentence_transformers import SentenceTransformer
     _SBERT = True
 except Exception:
-    import logging; logging.error('Unhandled exception', exc_info=True)
+    log.exception("Unexpected error")
     pass
 
 try:

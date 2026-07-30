@@ -543,7 +543,7 @@ async def login(req: LoginRequest):
         from src.services.pg_store import log_audit_event
         log_audit_event(req.username, "LOGIN", f"User {req.username} logged in")
     except Exception:
-        import logging; logging.error('Unhandled exception', exc_info=True)
+        log.exception("Unexpected error")
         pass
 
     return {
@@ -837,7 +837,7 @@ async def delete_file_endpoint(
         try:
             os.remove(path)
         except Exception:
-            import logging; logging.error('Unhandled exception', exc_info=True)
+            log.exception("Unexpected error")
             pass
             
     # Trigger background reindex to remove from vector store if necessary
@@ -942,7 +942,7 @@ async def generic_webhook_ingest(
                     logging.info(f"Webhook doc successfully auto-categorized as {domain} and indexed.")
             except Exception as e:
                 import logging
-                logging.error(f"Background webhook processing failed: {e}")
+                log.error("Background webhook processing failed: %s", e)
 
         # Fire and forget
         asyncio.create_task(asyncio.to_thread(_process_background))

@@ -290,7 +290,7 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
             req = urllib.request.Request(url.rstrip("/") + "/wake", data=_json.dumps({}).encode(), headers=h)
             urllib.request.urlopen(req, timeout=90)
         except Exception:
-            import logging; logging.error('Unhandled exception', exc_info=True)
+            log.exception("Unexpected error")
             pass
     import threading
     threading.Thread(target=_go, daemon=True).start()
