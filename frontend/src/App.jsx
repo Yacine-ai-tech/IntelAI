@@ -33,7 +33,15 @@ import GlossaryPage from './pages/GlossaryPage'
 import { Component } from 'react'
 
 class ErrorBoundary extends Component {
-  state = { hasError: false, error: null }
+  state = { hasError: false, error: null, resetKey: null }
+
+  // Reset when resetKey prop changes (i.e. when route changes)
+  static getDerivedStateFromProps(props, state) {
+    if (props.resetKey !== state.resetKey) {
+      return { hasError: false, error: null, resetKey: props.resetKey }
+    }
+    return null
+  }
 
   static getDerivedStateFromError(error) {
     return { hasError: true, error }
@@ -46,25 +54,42 @@ class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="p-8 text-center text-red-400 bg-red-950/30 rounded-xl border border-red-800/50 m-4" style={{ margin: '40px auto', maxWidth: '600px', padding: '30px' }}>
-          <h2 className="text-xl font-bold mb-2">Component Error</h2>
-          <p className="text-sm opacity-80 mb-4">{this.state.error?.message || "An unexpected error occurred."}</p>
-          <button
-            onClick={() => {
-              this.setState({ hasError: false, error: null })
-              window.location.reload()
-            }}
-            className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-medium rounded-lg text-sm transition"
-            style={{ padding: '8px 16px', background: '#e11d48', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-          >
-            Reload Page
-          </button>
+        <div style={{ margin: '40px auto', maxWidth: '600px', padding: '30px', textAlign: 'center', background: 'var(--surface-2,#1a1a2e)', border: '1px solid var(--bad,#e11d48)', borderRadius: '12px' }}>
+          <h2 style={{ color: 'var(--bad,#e11d48)', marginBottom: 8 }}>Component Error</h2>
+          <p style={{ color: 'var(--text-2,#aaa)', fontSize: '.88rem', marginBottom: 20 }}>
+            {this.state.error?.message || "An unexpected error occurred."}
+          </p>
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
+            <button
+              onClick={() => this.setState({ hasError: false, error: null })}
+              style={{ padding: '8px 20px', background: 'var(--primary,#4f46e5)', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '.85rem' }}
+            >
+              Try Again
+            </button>
+            <button
+              onClick={() => window.location.reload()}
+              style={{ padding: '8px 20px', background: 'transparent', color: 'var(--text-2,#aaa)', border: '1px solid var(--border,#333)', borderRadius: '6px', cursor: 'pointer', fontSize: '.85rem' }}
+            >
+              Reload Page
+            </button>
+          </div>
         </div>
       )
     }
     return this.props.children
   }
 }
+
+/** Thin functional wrapper so we can read location and pass it as resetKey */
+function RouteErrorBoundary({ children }) {
+  const location = useLocation()
+  return (
+    <ErrorBoundary resetKey={location.pathname}>
+      {children}
+        </ErrorBoundary>
+  )
+}
+
 
 function ProtectedRoute({ children, page }) {
   const { isAuthenticated, loading, hasPage } = useAuth()
@@ -82,7 +107,7 @@ export default function App() {
   if (loading) return <div className="text-center" style={{ padding: '100px' }}>Loading IntelAI...</div>
 
   return (
-    <ErrorBoundary>
+    <RouteErrorBoundary>
       <Routes>
         <Route path="/login" element={
           isAuthenticated ? <Navigate to="/workspace" replace /> : <LoginPage />
@@ -122,6 +147,6 @@ export default function App() {
         <Route path="/user-guide" element={<UserGuidePage />} />
         <Route path="*" element={<Navigate to="/workspace" replace />} />
       </Routes>
-    </ErrorBoundary>
+    </RouteErrorBoundary>
   )
 }

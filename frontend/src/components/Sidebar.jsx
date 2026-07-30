@@ -24,13 +24,13 @@ export default function Sidebar({ mobileOpen, onClose, collapsed = false, onTogg
         { to: '/analytics',   label: t('navAnalytics'),   icon: BarChart3,       page: 'analytics' },
         { to: '/forecasting', label: t('navForecasting'), icon: TrendingUp,      page: 'forecasting' },
         { to: '/risk',        label: t('navRisk'),        icon: ShieldAlert,     page: 'risk' },
-        { to: '/financial',   label: t('navFinancial'),   icon: DollarSign,      page: 'cfo' },
       ],
     },
     {
       label: t('sidebarDomains') || 'Domains',
       items: [
         { to: '/growth',     label: t('navGrowth') || 'Growth', icon: TrendingUp, page: 'analytics' },
+        { to: '/financial',  label: t('navFinancial') || 'Financial',  icon: DollarSign, page: 'cfo' },
         { to: '/hr',         label: t('navHR'),         icon: Users,     page: 'hr' },
         { to: '/it',         label: t('navIT'),         icon: Monitor,   page: 'it' },
         { to: '/operations', label: t('navOperations'), icon: Settings2, page: 'operations' },

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
-import { TrendingUp, Play, BarChart3, Brain, Target, Sparkles } from 'lucide-react'
+import { TrendingUp, Play, BarChart3, Brain, Target, Sparkles, Database } from 'lucide-react'
 import * as Recharts from "recharts";
 const { ComposedChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } = Recharts;
 import { PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, Empty, Panel } from '../components/ui'
@@ -9,6 +9,7 @@ import { PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, Empty, P
 const TIP = { background: 'var(--surface-2)', border: '1px solid var(--border-2)', borderRadius: 8, fontSize: '.78rem', color: 'var(--text)' }
 const AXIS = { fontSize: 11, fill: 'var(--text-3)' }
 
+/** ForecastChart receives t as a prop — never accesses it from outer scope. */
 function ForecastChart({ forecast, t }) {
   const hist = (forecast.historical || []).map(h => ({ period: h.period || h.month_tag, value: h.value ?? h.actual }))
   const fc = (forecast.forecast || []).map(f => {
@@ -17,13 +18,14 @@ function ForecastChart({ forecast, t }) {
     const val = f.forecast ?? f.predicted ?? f.value
     return {
       period: f.period || f.month_tag, value: val, lower, upper,
-      // Ranged datum [lower, upper] → a single shaded Monte-Carlo band region.
       band: (lower != null && upper != null) ? [lower, upper] : undefined,
     }
   })
   const data = [...hist, ...fc]
   if (!data.length) return <Empty text="No forecast data." />
   const hasCI = fc.some(f => f.lower != null && f.upper != null)
+  const labelPredicted = t ? (t('predicted') || 'Projection') : 'Projection'
+  const labelBand = t ? (t('confidenceBand') || 'Confidence band') : 'Confidence band'
   return (
     <div style={{ height: 300 }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -44,11 +46,8 @@ function ForecastChart({ forecast, t }) {
           <YAxis tick={AXIS} axisLine={false} tickLine={false} width={52} />
           <Tooltip contentStyle={TIP} />
           <Legend wrapperStyle={{ fontSize: 12 }} />
-          {/* Monte-Carlo confidence band — semi-transparent ranged fill behind the projection */}
-          {hasCI && <Area type="monotone" dataKey="band" stroke="none" fill="url(#mcBand)" name={t('confidenceBand') || 'Confidence band'} connectNulls isAnimationActive={false} />}
-          {/* main projection — brand gradient stroke + soft cyan fill */}
-          <Area type="monotone" dataKey="value" stroke="url(#fcLine)" strokeWidth={2.4} fill="url(#fc)" name={t('predicted') || 'Projection'} />
-          {/* dashed CI bounds in the band accent */}
+          {hasCI && <Area type="monotone" dataKey="band" stroke="none" fill="url(#mcBand)" name={labelBand} connectNulls isAnimationActive={false} />}
+          <Area type="monotone" dataKey="value" stroke="url(#fcLine)" strokeWidth={2.4} fill="url(#fc)" name={labelPredicted} />
           {hasCI && <Line type="monotone" dataKey="upper" stroke="var(--accent)" strokeWidth={1} strokeDasharray="4 4" dot={false} legendType="none" name="" connectNulls />}
           {hasCI && <Line type="monotone" dataKey="lower" stroke="var(--accent)" strokeWidth={1} strokeDasharray="4 4" dot={false} legendType="none" name="" connectNulls />}
         </ComposedChart>
@@ -65,21 +64,56 @@ export default function ForecastingPage() {
   const [forecast, setForecast] = useState(null)
   const [loading, setLoading] = useState(false)
   const [init, setInit] = useState(true)
+  const [noData, setNoData] = useState(false)
 
   useEffect(() => {
-    api.getMetrics().then(r => { const l = r.data?.metrics || []; setMetrics(l); if (l[0]) setMetric(l[0]) })
-      .catch(() => {}).finally(() => setInit(false))
+    api.getMetrics()
+      .then(r => {
+        const l = r.data?.metrics || []
+        setMetrics(l)
+        if (l[0]) {
+          setMetric(l[0])
+        } else {
+          setNoData(true)
+        }
+      })
+      .catch(() => { setNoData(true) })
+      .finally(() => setInit(false))
   }, [])
 
   const run = useCallback(async () => {
-    if (!metric) return
+    if (!metric || loading) return
     setLoading(true)
-    try { setForecast((await api.runForecast(metric, periods)).data) }
-    catch (e) { setForecast({ error: e.response?.data?.detail || 'Forecast failed' }) }
-    setLoading(false)
-  }, [metric, periods])
+    setForecast(null)
+    try {
+      const res = await api.runForecast(metric, periods)
+      setForecast(res.data)
+    } catch (e) {
+      setForecast({ error: e.response?.data?.detail || e.message || 'Forecast failed' })
+    } finally {
+      setLoading(false)
+    }
+  }, [metric, periods, loading])
 
   if (init) return <Loading label={t('loadingMetrics') || 'Loading metrics…'} />
+
+  // No KPI data in DB — show actionable empty state instead of broken UI
+  if (noData || metrics.length === 0) {
+    return (
+      <div>
+        <PageHeader icon={TrendingUp} title={t('navForecasting') || 'Forecasting'}
+          subtitle={t('fcSubtitle') || 'Monte-Carlo projections with confidence intervals'} />
+        <Panel style={{ marginTop: 24, textAlign: 'center', padding: '60px 40px' }}>
+          <Database size={48} style={{ color: 'var(--text-3)', margin: '0 auto 16px', display: 'block' }} />
+          <h3 style={{ color: 'var(--text)', marginBottom: 8 }}>No KPI Data Available</h3>
+          <p style={{ color: 'var(--text-2)', maxWidth: 420, margin: '0 auto 20px' }}>
+            The database has no KPI metrics to forecast. Please ingest business data via the{' '}
+            <a href="/data-hub" style={{ color: 'var(--primary)' }}>Data Hub</a> first.
+          </p>
+        </Panel>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -140,9 +174,9 @@ export default function ForecastingPage() {
         </>
       )}
 
-      {!forecast && (
+      {!forecast && !loading && (
         <Panel style={{ marginTop: 18, textAlign: 'center', padding: 40 }}>
-          <Sparkles size={38} style={{ color: 'var(--primary)', margin: '0 auto 12px' }} />
+          <Sparkles size={38} style={{ color: 'var(--primary)', margin: '0 auto 12px', display: 'block' }} />
           <p style={{ color: 'var(--text-2)' }}>{t('forecastPrompt') || 'Pick a metric and run a forecast.'}</p>
         </Panel>
       )}
