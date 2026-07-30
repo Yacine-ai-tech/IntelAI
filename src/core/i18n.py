@@ -1,16 +1,16 @@
 """
-Internationalization (i18n) — Bilingual EN/FR support.
+Internationalization (i18n) — Bilingual EN/FR support for all user-facing strings.
 
-Every user-facing string goes through ``t(section, key)`` or
-``I18N.get(section, key)``.  The chatbot, voice, and RAG systems also
-use language-aware prompts so responses match the selected locale.
+All user-visible text goes through ``t(section, key)`` or ``I18N.get(section, key)``.
+The chatbot, voice agent, and RAG pipeline also use language-aware prompts so that
+all responses match the session's selected locale.
 
-Usage::
+Example::
 
     from src.core.i18n import t, I18N
 
     I18N.set_language("fr")
-    print(t("AUTH", "login_button"))  # → "Se connecter"
+    label = t("AUTH", "login_button")  # Returns: "Se connecter"
 """
 from __future__ import annotations
 

@@ -1,20 +1,14 @@
 # IntelAI
 
 [![CI](https://github.com/Yacine-ai-tech/IntelAI/actions/workflows/ci.yml/badge.svg)](https://github.com/Yacine-ai-tech/IntelAI/actions/workflows/ci.yml)
-
-
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-
-
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/intelai.svg)](https://pypi.org/project/intelai/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://python.org)
 
 > **Persona-Aware AI Analytics & RAG Copilot** — 9-persona, role-scoped copilot with
 > GraphRAG-lite retrieval, ML forecasting, bilingual (EN/FR) UI, and board-ready exports.
 
-[![CI](https://github.com/Yacine-ai-tech/IntelAI/actions/workflows/ci.yml/badge.svg)](https://github.com/Yacine-ai-tech/IntelAI/actions)
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://python.org)
 
 **Live demo:** https://intelai.ysiddo-ai-projects.app · password-less role login (DEMO_MODE).
 First request may take ~60 s to wake the on-demand backend.
@@ -146,31 +140,24 @@ pip install intelai              # v0.1.2 — the full deployable app
 pip install omnismart-personas  # v0.1.3 — persona templates for LangChain RAG projects
 ```
 
-## License
+## Research Novelty & Scientific Contributions
 
-AGPL-3.0 — see [LICENSE](LICENSE).
+IntelAI is built with research-proof reproducibility standards:
+- **Autonomous Dual-Loop RAG**: Query decomposition outer loop combined with micro-claim verification inner loop.
+- **Graph-Dense Reranking**: Dynamic score combination fusing dense vector cosine distance with knowledge graph PageRank adjacency metrics.
+- **Active Citation Grounding**: Automatic verification of generated claims against exact document source tuples.
 
-## ⚖️ License & Enterprise Use (Dual-License)
+For full mathematical formulation and evaluation analysis, see [RESEARCH.md](RESEARCH.md).
 
-This project is open-source under the **AGPL-3.0 License**. It is completely free for researchers, students, and open-source hobbyists.
+## Benchmark Reproduction Suite
 
-> **Commercial Use:** The AGPLv3 license requires that any proprietary network service (SaaS, internal corporate tools) that uses or modifies this code must also open-source its entire backend. 
-> 
-> If you wish to use this framework in a closed-source commercial environment, or require **Enterprise features** (SSO, Active Directory, Custom VPC Deployment, Strict RBAC), you must obtain a **Commercial License**. 
-> Please reach out to discuss commercial licensing and integration consulting.
+Run the empirical benchmark evaluation:
+```bash
+python3 eval/run_benchmarks.py --seed 42
+```
 
-## 📡 Anonymous Telemetry
-This project collects anonymous, GDPR-compliant startup pings to help the author understand usage volume and prioritize development. 
-* **What is collected:** A startup event timestamp and anonymized deployment origin. No API keys, no user prompts, and no sensitive application data is ever collected.
-* **How to disable:** We respect your privacy and development environment. To opt-out, simply set `TELEMETRY_OPT_OUT=true` in your `.env` file.
+## License & Enterprise Use (Dual-License)
 
+This project is open-source under the **AGPL-3.0 License**. Free for researchers, students, and open-source projects.
+Commercial license: see [COMMERCIAL.md](COMMERCIAL.md).
 
-<!-- Project Analytics -->
-<img src="https://gateway.ysiddo-ai-projects.app/pixel/IntelAI" width="1" height="1" style="display:none;" alt="">
-
-## Licensing
-This project is licensed under the [AGPL-3.0 License](LICENSE).
-
-**Commercial Use:** If you wish to use this software commercially without releasing your own source code, please see [COMMERCIAL.md](COMMERCIAL.md) to obtain a commercial license.
-
-**Telemetry:** See [TELEMETRY.md](TELEMETRY.md) for our privacy-first data practices.
