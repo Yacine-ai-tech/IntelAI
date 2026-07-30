@@ -248,14 +248,31 @@ def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int =
 # ── Standalone reranker (shared by the vector-store retrieval path) ────────────
 _RERANK_RETRIEVER: Optional["HybridRetriever"] = None
 
+# ── Standalone reranker — delegates to inference_adapter ─────────────────────
 
-_LAST_WAKE = 0.0
+def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
+    """
+    Rerank texts against a query. Delegates to inference_adapter which handles
+    the full provider chain: Orchestrator Studio → Cohere → local → None.
+
+    Returns scores aligned with texts (higher = more relevant), or None if all
+    providers fail (caller falls back to BM25/RRF fusion order).
+    """
+    if os.getenv("USE_RERANKER", "true").strip().lower() not in ("1", "true", "yes", "on"):
+        return None
+    if not texts:
+        return None
+    try:
+        from src.services.inference_adapter import rerank as _adapter_rerank  # type: ignore
+    except ImportError:
+        try:
+            from services.inference_adapter import rerank as _adapter_rerank  # type: ignore
+        except ImportError:
+            log.warning("inference_adapter not found — reranking disabled")
+            return None
+    return _adapter_rerank(query, texts)
 
 
-def _trigger_wake() -> None:
-    """Fire-and-forget: ask the orchestrator to wake the on-demand inference Studio. Rate-limited
-    so a burst of failed reranks triggers at most one wake per minute. Non-blocking (daemon thread)."""
-    import time as _t
     global _LAST_WAKE
     url = os.getenv("ORCHESTRATOR_URL", "").strip()
     if not url or (_t.time() - _LAST_WAKE) < 60:
