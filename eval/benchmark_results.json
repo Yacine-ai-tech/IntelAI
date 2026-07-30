@@ -1,0 +1,15 @@
+{
+  "benchmark": "IntelAI Autonomous Dual-Loop RAG & Graph Reranking Evaluation",
+  "seed": 42,
+  "metrics": {
+    "evaluation_queries": 250,
+    "recall_at_3": 0.928,
+    "recall_at_5": 0.988,
+    "mrr_at_5": 0.7733,
+    "ndcg_at_5": 0.8303,
+    "faithfulness_score": 0.9393,
+    "hallucination_mitigation_rate_pct": 97.6,
+    "mean_retrieval_latency_ms": 42.5
+  },
+  "timestamp": "2026-07-30T19:07:25Z"
+}
