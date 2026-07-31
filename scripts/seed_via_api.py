@@ -8,6 +8,7 @@ and ingests datasets and documents via official IntelAI REST API endpoints.
 Features:
   • 100% Real Data: Zero synthetic generation or random seed reliance.
   • 100% Zero-Trust: Environment-driven API endpoints & authentication.
+  • Non-Blocking Job Polling: Polls job status until background completion.
   • Recursive Traversal: Recursively finds all files across subdirectories.
   • Multi-Format Support:
       - Datasets: .csv, .xlsx, .xls
@@ -15,11 +16,11 @@ Features:
       - Audio Recordings: .mp3, .wav, .m4a, .ogg, .flac, .aac
   • Flexible Modes:
       - Full Real Ingestion (default): Scans whole IntelAI/data/ folder.
-      - Target Ingestion (--path): Ingests specific files or subfolders for incremental additions.
+      - Target Ingestion (--path): Ingests specific files or subfolders.
       - Dry Run (--dry-run): Previews discovery & category matching without HTTP calls.
 
 Environment Variables:
-  INTELAI_API_URL : Base URL of the backend (default: https://intelai.ysiddo-ai-projects.app)
+  INTELAI_API_URL : Base URL of the backend (default: http://localhost:8000)
   ADMIN_USERNAME : Admin username for JWT authentication (default: admin@company.com)
   ADMIN_PASSWORD : Admin password for JWT authentication (default: AdminPassword123!)
 
@@ -37,13 +38,14 @@ Usage Examples:
 import argparse
 import os
 import sys
+import time
 import mimetypes
 from pathlib import Path
 from typing import List, Tuple, Optional
 import httpx
 
 # ── Environment-Driven Defaults ───────────────────────────────────────────────
-API_BASE_URL = os.getenv("INTELAI_API_URL", "https://intelai.ysiddo-ai-projects.app").rstrip("/")
+API_BASE_URL = os.getenv("INTELAI_API_URL", "http://localhost:8000").rstrip("/")
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin@company.com")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "AdminPassword123!")
 
@@ -97,6 +99,33 @@ def get_auth_token(client: httpx.Client, dry_run: bool = False) -> str:
     except Exception as e:
         print(f"   ❌ Auth request failed: {e}")
         return ""
+
+
+def poll_job_completion(client: httpx.Client, headers: dict, job_id: str, filename: str):
+    """Poll async job status until completion or failure."""
+    status_url = f"{API_BASE_URL}/api/v1/ingest/jobs/{job_id}"
+    print(f"   ⏳ Polling background job '{job_id}' for {filename}...")
+    for _ in range(60):
+        try:
+            resp = client.get(status_url, headers=headers)
+            if resp.status_code == 200:
+                job = resp.json()
+                status = job.get("status")
+                step = job.get("current_step", "")
+                pct = job.get("progress_pct", 0)
+                if status == "completed":
+                    print(f"   ✅ Job '{job_id}' COMPLETED (100%): {filename}")
+                    return
+                elif status == "failed":
+                    err = job.get("error", "Unknown error")
+                    print(f"   ❌ Job '{job_id}' FAILED: {err}")
+                    return
+                else:
+                    print(f"      • [{pct}%] {step}")
+        except Exception as e:
+            print(f"      • Polling note: {e}")
+        time.sleep(1.0)
+    print(f"   ⚠️ Polling timeout for job '{job_id}'. Heavy processing continues in background.")
 
 
 def infer_category(file_path: Path, override_cat: Optional[str] = None) -> str:
@@ -178,8 +207,13 @@ def ingest_file(client: httpx.Client, headers: dict, file_path: Path, category: 
                     data={"source_name": source_name},
                     headers=headers
                 )
-            if resp.status_code == 200:
-                print(f"   ✅ Ingested dataset {file_path.name}: {resp.json()}")
+            if resp.status_code in (200, 202):
+                res = resp.json()
+                job_id = res.get("job_id")
+                if job_id:
+                    poll_job_completion(client, headers, job_id, file_path.name)
+                else:
+                    print(f"   ✅ Ingested dataset {file_path.name}: {res}")
             else:
                 print(f"   ⚠️ Dataset ingest note ({resp.status_code}): {resp.text}")
         except Exception as e:
@@ -203,8 +237,13 @@ def ingest_file(client: httpx.Client, headers: dict, file_path: Path, category: 
                     data={"category": category},
                     headers=headers
                 )
-            if resp.status_code == 200:
-                print(f"   ✅ Ingested {file_path.name}: {resp.json()}")
+            if resp.status_code in (200, 202):
+                res = resp.json()
+                job_id = res.get("job_id")
+                if job_id:
+                    poll_job_completion(client, headers, job_id, file_path.name)
+                else:
+                    print(f"   ✅ Ingested {file_path.name}: {res}")
             else:
                 print(f"   ⚠️ Ingest note ({resp.status_code}): {resp.text}")
         except Exception as e:
