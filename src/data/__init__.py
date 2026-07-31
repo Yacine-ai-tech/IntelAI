@@ -1,1 +1,0 @@
-"""IntelAI demo-data seeding."""
