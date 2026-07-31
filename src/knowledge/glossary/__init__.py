@@ -11,29 +11,54 @@ from src.knowledge.glossary.en import (
     as_knowledge_docs as as_knowledge_docs_en,
 )
 from src.knowledge.glossary.fr import (
-    GLOSSARY as GLOSSARY_FR,
-    get_term as get_term_fr,
-    for_domain as for_domain_fr,
-    as_knowledge_docs as as_knowledge_docs_fr,
+    GLOSSARY_FR,
 )
 
 # Default aliases (English)
 GLOSSARY = GLOSSARY_EN
 
 def get_term(term: str, lang: str = "en"):
+    entry = get_term_en(term)
+    if not entry:
+        return None
     if lang.lower() == "fr":
-        return get_term_fr(term)
-    return get_term_en(term)
+        res = dict(entry)
+        over = GLOSSARY_FR.get(term, {})
+        res.update(over)
+        return res
+    return entry
 
 def for_domain(domain=None, lang: str = "en"):
+    terms = for_domain_en(domain)
     if lang.lower() == "fr":
-        return for_domain_fr(domain)
-    return for_domain_en(domain)
+        res = {}
+        for t, data in terms.items():
+            entry = dict(data)
+            over = GLOSSARY_FR.get(t, {})
+            entry.update(over)
+            res[t] = entry
+        return res
+    return terms
 
 def as_knowledge_docs(lang: str = "en"):
+    docs = as_knowledge_docs_en()
     if lang.lower() == "fr":
-        return as_knowledge_docs_fr()
-    return as_knowledge_docs_en()
+        res = []
+        for doc in docs:
+            # overlay French if term matches
+            term_name = doc.get("metadata", {}).get("term")
+            if term_name and term_name in GLOSSARY_FR:
+                over = GLOSSARY_FR[term_name]
+                doc_copy = dict(doc)
+                content = doc_copy.get("content", "")
+                if "definition" in over:
+                    content += f"\nDefinition (FR): {over['definition']}"
+                doc_copy["content"] = content
+                res.append(doc_copy)
+            else:
+                res.append(doc)
+        return res
+    return docs
 
 __all__ = [
     "GLOSSARY",
