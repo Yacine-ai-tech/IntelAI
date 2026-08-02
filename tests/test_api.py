@@ -12,24 +12,12 @@ import pytest
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
-os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai_test")
+os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai")
 
-ADMIN = {
-    "username": os.getenv("BOOTSTRAP_ADMIN_USERNAME", "admin"),
-    "password": os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "admin123"),
-}
+ADMIN = {"username": "admin", "password": "admin123"}
 
-
-@pytest.fixture(scope="module")
-def client():
-    from fastapi.testclient import TestClient
-    from src.api.server import app
-    return TestClient(app, headers={"X-OmniIntel-Internal-Token": os.getenv("OMNIINTEL_INTERNAL_TOKEN", "omni-test-token")})
-
-
-@pytest.fixture(scope="module")
+@pytest.fixture
 def admin_token(client):
-    """Bootstrap-admin JWT (admin + schema + seed are ensured by tests/conftest.py)."""
     r = client.post("/api/v1/auth/login", json=ADMIN)
     assert r.status_code == 200 and "access_token" in r.json(), \
         f"admin login failed ({r.status_code}): {r.text[:200]}"

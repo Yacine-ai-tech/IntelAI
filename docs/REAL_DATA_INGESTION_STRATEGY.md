@@ -275,14 +275,14 @@ All datasets must be internally consistent with the Arion Manufacturing Group pr
 - Ensure all dates fall within Jan 2020 – Jun 2026.
 
 ### Step 3 — Ingest into IntelAI
-- Use `IntelAI/scripts/ingest_real_enterprise_data.py` (already written).
-- Insert `kpi_metrics` rows by parsing XLSX tables.
-- Insert `knowledge_base` rows by chunking PDFs (512 tokens, 50 overlap).
-- Re-embed all chunks into Qdrant `company_knowledge` collection.
+- Use `IntelAI/scripts/seed_via_api.py` (the official REST API ingestion tool).
+- Stream datasets via `POST /api/v1/ingest/csv`.
+- Stream documents via `POST /api/v1/ingest/document`.
+- Background ingestion job automatically chunks documents and indexes vector embeddings.
 
 ### Step 4 — Validate
-- Run `python3 global_scripts/wipe_intelai_db.py` to confirm count returns 0 first.
-- Then run `python3 IntelAI/scripts/ingest_real_enterprise_data.py`.
+- Run `python3 IntelAI/scripts/seed_via_api.py --dry-run` to discover & preview ingestion targets.
+- Run `python3 IntelAI/scripts/seed_via_api.py` to trigger full REST API real-data ingestion.
 - Run `python3 IntelAI/scripts/evaluate_with_rageval_package.py` to verify RAG quality.
 - Check `kpi_metrics` row count ≥ 5,000 (78 months × 7 domains × avg 9 KPIs).
 

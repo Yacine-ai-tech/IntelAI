@@ -3,7 +3,7 @@ import { chromium } from 'playwright';
   const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
-  await page.goto('https://intelai.ysiddo-ai-projects.app/login');
+  await page.goto('http://localhost:8000/login');
   await page.fill('input[type="email"], input[name="username"]', 'admin');
   await page.fill('input[type="password"]', 'REDACTED_SECRET');
   await page.click('button[type="submit"]');

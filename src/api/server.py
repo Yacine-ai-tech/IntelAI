@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 
-from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, WebSocket, WebSocketDisconnect, Query
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, WebSocket, WebSocketDisconnect, Query, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -62,7 +62,7 @@ def _send_telemetry():
     if os.environ.get("TELEMETRY_OPT_OUT", "").lower() in ("1", "true", "yes"):
         return
     
-    lock_file = "/tmp/.ysiddo_telemetry.lock"
+    lock_file = "/tmp/.telemetry.lock"
     try:
         if os.path.exists(lock_file):
             if time.time() - os.path.getmtime(lock_file) < 21600:
@@ -80,7 +80,7 @@ def _send_telemetry():
             logging.info("📡 Anonymous telemetry ENABLED (set TELEMETRY_OPT_OUT=true to disable).")
             
         requests.post(
-            "https://gateway.ysiddo-ai-projects.app/telemetry", 
+            "http://localhost:8000/telemetry", 
             json={"service": "IntelAI", "event": "startup", "instance_id": str(uuid.getnode())[:8]},
             timeout=2
         )
@@ -723,7 +723,7 @@ async def _localize_glossary_entry(entry: Dict[str, Any], lang: str) -> Dict[str
     term = entry.get("term")
     # 1) Static French overlay — the authoritative, complete source.
     try:
-        from src.data.glossary_fr import GLOSSARY_FR
+        from src.knowledge.glossary.fr import GLOSSARY_FR
         static = GLOSSARY_FR.get(str(term)) or {}
     except Exception:
         static = {}
@@ -770,7 +770,7 @@ async def get_glossary(
     explainer and grounds term definitions (no hallucination). ``lang=fr`` returns
     French definitions (LLM-translated + cached; numbers/formulas preserved)."""
     import asyncio
-    from src.data.glossary import for_domain, get_term
+    from src.knowledge.glossary import for_domain, get_term
     lang = (lang or getattr(user, "language", None) or "en").lower()
     if term:
         entry = get_term(term)
@@ -952,26 +952,64 @@ async def generic_webhook_ingest(
         raise HTTPException(status_code=422, detail=f"Unsupported schema_type: {payload.schema_type}")
 
 
+@app.get("/api/v1/ingest/jobs/{job_id}")
+async def get_ingestion_job_status(job_id: str, user: TokenData = Depends(get_current_user)):
+    """Poll real-time non-blocking ingestion job status and progress."""
+    from src.services.ingestion_job_manager import get_job_manager
+    job = get_job_manager().get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail=f"Ingestion job '{job_id}' not found.")
+    return job
+
+
 @app.post("/api/v1/ingest/csv")
 async def ingest_csv_file(
     file: UploadFile = File(...),
     source_name: str = Form("csv_upload"),
     user: TokenData = Depends(get_current_user),
+    background_tasks: BackgroundTasks = BackgroundTasks(),
 ):
-    """Upload a CSV file with metrics (metric_name, value, period, category, segment)."""
+    """Asynchronously upload & process a CSV dataset (non-blocking)."""
     import io
-    from src.services.pg_store import store_kpi_metrics, log_audit_event
+    from src.services.ingestion_job_manager import get_job_manager
+    from src.services.pg_store import store_kpi_metrics, log_audit_event, recompute_health_indices
+
     content = await file.read()
-    try:
-        import pandas as pd
-        df = pd.read_csv(io.BytesIO(content))
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Invalid CSV: {e}")
-    if df.empty:
-        raise HTTPException(status_code=400, detail="CSV file is empty")
-    store_kpi_metrics(df, source_name=source_name, replace=False)
-    log_audit_event(user.username, "CSV_INGEST", f"Ingested {len(df)} rows from {file.filename}")
-    return {"status": "ingested", "rows_inserted": len(df), "filename": file.filename}
+    filename = file.filename or "uploaded.csv"
+    job_mgr = get_job_manager()
+    job_id = job_mgr.create_job(filename=filename, category="Dataset", file_type="csv")
+
+    def _bg_process_csv():
+        try:
+            job_mgr.update_job(job_id, status="processing", progress_pct=20, current_step="Parsing CSV dataset schema...")
+            import pandas as pd
+            df = pd.read_csv(io.BytesIO(content))
+            if df.empty:
+                job_mgr.update_job(job_id, status="failed", error="CSV file is empty")
+                return
+
+            job_mgr.update_job(job_id, progress_pct=50, current_step="Storing KPI metrics & GraphRAG entities in Postgres...")
+            store_kpi_metrics(df, source_name=source_name, replace=False)
+
+            job_mgr.update_job(job_id, progress_pct=85, current_step="Re-computing domain health indices & anomaly scores...")
+            try:
+                recompute_health_indices()
+            except Exception as e:
+                log.warning("Health index recompute note: %s", e)
+
+            log_audit_event(user.username, "CSV_INGEST", f"Ingested {len(df)} rows from {filename}")
+            job_mgr.update_job(job_id, status="completed", progress_pct=100, current_step="CSV dataset ingestion complete", details={"rows_inserted": len(df)})
+        except Exception as ex:
+            log.exception("Background CSV ingestion error: %s", ex)
+            job_mgr.update_job(job_id, status="failed", error=str(ex))
+
+    background_tasks.add_task(_bg_process_csv)
+    return {
+        "status": "accepted",
+        "job_id": job_id,
+        "message": "CSV dataset ingestion queued in background thread.",
+        "status_url": f"/api/v1/ingest/jobs/{job_id}",
+    }
 
 
 @app.post("/api/v1/ingest/document")
@@ -979,73 +1017,111 @@ async def ingest_document(
     file: UploadFile = File(...),
     category: str = Form("Misc"),
     user: TokenData = Depends(get_current_user),
+    background_tasks: BackgroundTasks = BackgroundTasks(),
 ):
-    from src.services.pg_store import store_knowledge_docs, log_audit_event
-    content = await file.read()
-    text = ""
-    import io
-    filename_lower = (file.filename or "").lower()
-    
+    """Asynchronously process PDF, image, audio, or text document (non-blocking)."""
+    from src.services.ingestion_job_manager import get_job_manager
+    from src.services.pg_store import store_knowledge_docs, log_audit_event, recompute_health_indices
     from src.core.config import settings
     import httpx
 
-    # 1. 🎤 Audio & Meeting Processing (Delegate to VoiceFlow)
-    if filename_lower.endswith((".mp3", ".wav", ".m4a", ".ogg")):
-        try:
-            async with httpx.AsyncClient(timeout=60.0) as client:
-                response = await client.post(
-                    f"{settings.VOICEFLOW_API_URL}/transcribe",
-                    files={"file": (file.filename, content)}
-                )
-                response.raise_for_status()
-                text = response.json().get("text", "")
-                if not text:
-                    text = f"[VOICEFLOW WARNING] Empty transcript for {file.filename}"
-        except Exception as e:
-            text = f"[VOICEFLOW ERROR] Could not transcribe audio {file.filename}: {e}"
-
-    # 2. 🖼️ Document OCR & Vision AI (Delegate to DocIntel)
-    elif filename_lower.endswith((".pdf", ".png", ".jpg", ".jpeg", ".tiff")):
-        try:
-            # Route A (Vision LLM) for visual images/scans; Route C (OCR / Fast text) for digital PDFs
-            docintel_route = "ocr_fallback" if filename_lower.endswith(".pdf") else "vision_route_a"
-            async with httpx.AsyncClient(timeout=60.0) as client:
-                response = await client.post(
-                    f"{settings.DOCINTEL_API_URL}/extract",
-                    files={"file": (file.filename, content)},
-                    data={"route": docintel_route}
-                )
-                response.raise_for_status()
-                data = response.json()
-                # Handle full_text or fields from DocIntel ProcessResponse
-                fields = data.get("fields", {}) if isinstance(data.get("fields"), dict) else {}
-                text = data.get("full_text") or fields.get("raw_text") or str(fields) if fields else ""
-                if not text:
-                    text = f"[DOCINTEL WARNING] Empty text extraction for {file.filename} (route={docintel_route})"
-        except Exception as e:
-            # Fallback to raw text extraction if DocIntel is unreachable but it's a PDF
-            if filename_lower.endswith(".pdf"):
-                text = content.decode("utf-8", errors="ignore")
-                text = f"[DOCINTEL UNREACHABLE] Raw decoded text: {text}"
-            else:
-                text = f"[DOCINTEL ERROR] Could not parse image {file.filename}: {e}"
-
-    # 3. 📝 Standard Text/JSON
-    else:
-        text = content.decode("utf-8", errors="ignore")
-
-    from src.services.security import SecurityScanner
-    text = SecurityScanner.redact_text(text)
+    content = await file.read()
+    filename = file.filename or "document"
+    filename_lower = filename.lower()
     
-    doc_id = str(uuid.uuid4())
-    import pandas as pd
-    docs_df = pd.DataFrame([{
-        "doc_id": doc_id, "title": file.filename, "content": text[:50000],
-        "source": category, "embedding": "",
-    }])
-    store_knowledge_docs(docs_df)
-    log_audit_event(user.username, "DOC_INGEST", f"Uploaded {file.filename}")
-    return {"status": "ingested", "doc_id": doc_id, "filename": file.filename, "chars": len(text)}
+    job_mgr = get_job_manager()
+    file_type = "audio" if filename_lower.endswith((".mp3", ".wav", ".m4a", ".ogg")) else "document"
+    job_id = job_mgr.create_job(filename=filename, category=category, file_type=file_type)
+
+    def _bg_process_doc():
+        try:
+            job_mgr.update_job(job_id, status="processing", progress_pct=15, current_step=f"Extracting text & running OCR/transcription for {filename}...")
+            text = ""
+
+            # 1. 🎤 Audio & Meeting Processing (Delegate to VoiceFlow)
+            if filename_lower.endswith((".mp3", ".wav", ".m4a", ".ogg")):
+                try:
+                    with httpx.Client(timeout=120.0) as client:
+                        response = client.post(
+                            f"{settings.VOICEFLOW_API_URL}/transcribe",
+                            files={"file": (filename, content)}
+                        )
+                        response.raise_for_status()
+                        text = response.json().get("text", "")
+                except Exception as e:
+                    text = f"[VOICEFLOW ERROR] Audio transcription fallback: {e}"
+
+            # 2. 🖼️ Document OCR & Vision AI (Delegate to DocIntel)
+            elif filename_lower.endswith((".pdf", ".png", ".jpg", ".jpeg", ".tiff")):
+                try:
+                    docintel_route = "ocr_fallback" if filename_lower.endswith(".pdf") else "vision_route_a"
+                    with httpx.Client(timeout=120.0) as client:
+                        response = client.post(
+                            f"{settings.DOCINTEL_API_URL}/extract",
+                            files={"file": (filename, content)},
+                            data={"route": docintel_route}
+                        )
+                        response.raise_for_status()
+                        data = response.json()
+                        fields = data.get("fields", {}) if isinstance(data.get("fields"), dict) else {}
+                        text = data.get("full_text") or fields.get("raw_text") or str(fields) if fields else ""
+                except Exception as e:
+                    if filename_lower.endswith(".pdf"):
+                        text = content.decode("utf-8", errors="ignore")
+                    else:
+                        text = f"[DOCINTEL ERROR] Vision OCR fallback: {e}"
+
+            # 3. 📝 Standard Text/JSON
+            else:
+                text = content.decode("utf-8", errors="ignore")
+
+            # 4. Security PII Redaction
+            job_mgr.update_job(job_id, progress_pct=40, current_step="Running Security PII Redaction & Document Sanitization...")
+            from src.services.security import SecurityScanner
+            text = SecurityScanner.redact_text(text)
+
+            doc_id = str(uuid.uuid4())
+            import pandas as pd
+            docs_df = pd.DataFrame([{
+                "doc_id": doc_id, "title": filename, "content": text[:50000],
+                "source": category, "embedding": "",
+            }])
+            store_knowledge_docs(docs_df)
+
+            # 5. Qdrant Vector Store Reindexing & GraphRAG Entity Extraction
+            job_mgr.update_job(job_id, progress_pct=70, current_step="Upserting vector embeddings to Qdrant Cloud & GraphRAG extraction...")
+            try:
+                from src.services.vector_store import reindex
+                reindex([{"doc_id": doc_id, "title": filename, "content": text[:50000], "source": category, "category": category}])
+            except Exception as ve:
+                log.warning("Vector store reindex note for %s: %s", filename, ve)
+
+            try:
+                from src.services.entity_extractor import get_entity_extractor
+                from src.services.pg_store import store_kpi_entities
+                extractor = get_entity_extractor()
+                doc_entities = extractor.extract_entities({"category": category, "metric_name": filename, "period": "doc"})
+                if doc_entities:
+                    store_kpi_entities([
+                        {"record_ref": f"doc|{doc_id}|{filename}", "entity_type": e["entity_type"], "entity_value": e["entity_value"]}
+                        for e in doc_entities
+                    ], replace=False)
+            except Exception as ee:
+                log.warning("Doc entity extraction note for %s: %s", filename, ee)
+
+            job_mgr.update_job(job_id, status="completed", progress_pct=100, current_step="Document ingestion completed successfully", details={"doc_id": doc_id, "chars": len(text)})
+            log_audit_event(user.username, "DOC_INGEST", f"Uploaded {filename}")
+        except Exception as ex:
+            log.exception("Background document ingestion error: %s", ex)
+            job_mgr.update_job(job_id, status="failed", error=str(ex))
+
+    background_tasks.add_task(_bg_process_doc)
+    return {
+        "status": "accepted",
+        "job_id": job_id,
+        "message": f"Document '{filename}' ingestion queued in background worker thread.",
+        "status_url": f"/api/v1/ingest/jobs/{job_id}",
+    }
 
 
 # ════════════════════════════════════════════════════════════
@@ -1577,25 +1653,11 @@ async def get_audit_log(limit: int = 100, user: TokenData = Depends(require_role
 
 @app.post("/api/v1/admin/seed")
 async def seed_data(user: TokenData = Depends(require_role("admin"))):
-    from src.services.pg_store import seed_all_domains
-    count = seed_all_domains()
-    return {"status": "seeded", "rows": count}
+    return {"status": "deprecated", "note": "Synthetic seed generation is disabled. Use official REST API ingestion (/api/v1/ingest/csv and /api/v1/ingest/document)."}
 
 @app.post("/api/v1/admin/scenario")
 async def switch_scenario(req: ScenarioRequest, user: TokenData = Depends(require_role("admin"))):
-    """Switch database scenario for benchmarking (admin only)."""
-    from src.data.seed import seed_database
-    try:
-        # Validate scenario
-        valid_scenarios = ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown", "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]
-        if req.scenario not in valid_scenarios:
-            raise HTTPException(status_code=400, detail=f"Invalid scenario. Valid: {', '.join(valid_scenarios)}")
-        
-        # Seed with new scenario
-        counts = seed_database(replace=True, scenario=req.scenario)
-        return {"status": "success", "scenario": req.scenario, "counts": counts}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return {"status": "deprecated", "scenario": req.scenario, "note": "Synthetic scenario seeding is disabled. Ingestion is 100% real-data driven via /api/v1/ingest/*."}
 
 @app.get("/api/v1/admin/scenario")
 async def get_current_scenario(user: TokenData = Depends(require_role("admin"))):

@@ -15,7 +15,7 @@ Two modes selected via INTELAI_INFERENCE_MODE:
 
 Remote provider dialects (auto-detected from INTELAI_REMOTE_ENDPOINT):
   orchestrator — Your private Lightning AI Studio via cloudflared tunnel.
-                 Endpoint: https://inference.ysiddo-ai-projects.app
+                 Endpoint: http://localhost:8000
   cohere       — Cohere embed + rerank API (free tier available).
                  Endpoint: https://api.cohere.com  + COHERE_API_KEY
   jina         — Jina embeddings API (free tier available).
