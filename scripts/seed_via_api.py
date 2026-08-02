@@ -88,14 +88,20 @@ def get_auth_token(client: httpx.Client, dry_run: bool = False) -> str:
     url = f"{API_BASE_URL}/api/v1/auth/login"
     print(f"🔑 Authenticating via {url}...")
     try:
-        resp = client.post(url, data={"username": ADMIN_USERNAME, "password": ADMIN_PASSWORD})
+        resp = client.post(url, json={"username": ADMIN_USERNAME, "password": ADMIN_PASSWORD})
         if resp.status_code == 200:
             token = resp.json().get("access_token", "")
             print("   ✅ Authentication successful.")
             return token
-        else:
-            print(f"   ⚠️ Auth response ({resp.status_code}): {resp.text}")
-            return ""
+        # Fallback to demo-login
+        demo_url = f"{API_BASE_URL}/api/v1/auth/demo-login?role=admin"
+        d_resp = client.post(demo_url)
+        if d_resp.status_code == 200:
+            token = d_resp.json().get("access_token", "")
+            print("   ✅ Demo Authentication successful.")
+            return token
+        print(f"   ⚠️ Auth response ({resp.status_code}): {resp.text}")
+        return ""
     except Exception as e:
         print(f"   ❌ Auth request failed: {e}")
         return ""

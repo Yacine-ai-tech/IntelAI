@@ -11,7 +11,13 @@ import pytest
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
-os.environ.setdefault("POSTGRES_URL", "postgresql://user:password@localhost/api/v1/auth/login", json=ADMIN)
+os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai")
+
+ADMIN = {"username": "admin", "password": "admin123"}
+
+@pytest.fixture
+def admin_token(client):
+    r = client.post("/api/v1/auth/login", json=ADMIN)
     assert r.status_code == 200 and "access_token" in r.json(), (
         f"admin login failed ({r.status_code}): {r.text[:200]}"
     )

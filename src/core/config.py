@@ -49,11 +49,8 @@ class Settings:
         default_factory=lambda: os.getenv("CHROMA_DB_PATH", str(CHROMA_DIR))
     )
 
-    # PostgreSQL — primary and only database
     POSTGRES_URL: str = field(
-        default_factory=lambda: os.getenv(
-            "POSTGRES_URL", "postgresql://user:password@localhost/intelai"
-        )
+        default_factory=lambda: os.getenv("POSTGRES_URL", "")
     )
 
     # External Microservice APIs — set via env in production (STRATEGY.md § Decoupling)

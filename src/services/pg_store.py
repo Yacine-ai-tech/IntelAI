@@ -346,6 +346,10 @@ def init_pg_tables():
 
         conn.commit()
         log.info("✅ PostgreSQL tables initialized")
+        try:
+            seed_glossary_knowledge_docs()
+        except Exception as _ge:
+            log.warning("Glossary auto-seed warning: %s", _ge)
     except Exception as e:
         log.error("PostgreSQL init failed: %s", e)
         conn.rollback()
@@ -701,6 +705,26 @@ def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] 
         conn.commit()
     finally:
         conn.close()
+
+
+def seed_glossary_knowledge_docs() -> int:
+    """Persist the 169 curated KPI glossary entries directly into the PostgreSQL knowledge_base DB table."""
+    try:
+        import pandas as pd
+        from src.knowledge.glossary import as_knowledge_docs
+        g_docs = as_knowledge_docs(lang="en")
+        if not g_docs:
+            return 0
+        df = pd.DataFrame(g_docs)
+        df["doc_id"] = [f"glossary-{i+1}" for i in range(len(df))]
+        df["embedding"] = ""
+        df["language"] = "en"
+        store_knowledge_docs(df, replace_prefix="glossary-")
+        log.info("✅ Seeded %d glossary entries directly into PostgreSQL knowledge_base table", len(df))
+        return len(df)
+    except Exception as e:
+        log.warning("⚠️ Failed to seed glossary into DB: %s", e)
+        return 0
 
 
 def get_knowledge_docs(limit: int = 2000) -> "pd.DataFrame":
