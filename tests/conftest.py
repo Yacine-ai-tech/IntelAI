@@ -43,3 +43,11 @@ def _init_db():
         if empty:
             seed_all_domains()
     yield
+
+
+@pytest.fixture
+def client():
+    from fastapi.testclient import TestClient
+    from src.api.server import app
+    with TestClient(app) as c:
+        yield c

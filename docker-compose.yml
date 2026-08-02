@@ -6,13 +6,13 @@
 #   - Production: ONE cloud service built from the Dockerfile (see railway.toml).
 #
 # For local full run, point the app at the bundled Postgres by setting this in .env:
-#   POSTGRES_URL=postgresql://intelai:intelai@postgres:5432/intelai
+#   POSTGRES_URL=postgresql://user:password@localhost/intelai
 
 services:
   postgres:
     image: postgres:16-alpine
     environment:
-      - OMNI_TELEMETRY_ENDPOINT=https://gateway.ysiddo-ai-projects.app/telemetry
+      - OMNI_TELEMETRY_ENDPOINT=http://localhost:8000/telemetry
       POSTGRES_USER: intelai
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-intelai}
       POSTGRES_DB: intelai
@@ -33,7 +33,7 @@ services:
     image: intelai:latest
     env_file: .env
     environment:
-      - OMNI_TELEMETRY_ENDPOINT=https://gateway.ysiddo-ai-projects.app/telemetry
+      - OMNI_TELEMETRY_ENDPOINT=http://localhost:8000/telemetry
       PYTHONUNBUFFERED: "1"
       CHROMA_DB_PATH: /app/chroma_db
     ports:

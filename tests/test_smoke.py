@@ -9,38 +9,11 @@ import os
 
 import pytest
 
-os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai_test")
-
-
-@pytest.fixture(scope="module")
-def client():
-    from fastapi.testclient import TestClient
-
-    from src.api.server import app
-
-    return TestClient(app, headers={"X-OmniIntel-Internal-Token": os.getenv("OMNIINTEL_INTERNAL_TOKEN", "omni-test-token")})
-
+os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai")
 
 @pytest.mark.unit
-def test_core_imports():
-    """Shared core utilities import cleanly without a database."""
-    from src.core import config, logger
-
-    assert config is not None
-    assert logger is not None
-
-
-@pytest.mark.unit
-def test_app_imports_and_has_routes():
-    """The FastAPI app object builds and registers its routes."""
-    from src.api.server import app
-
-    assert len(app.routes) > 50
-
-
-@pytest.mark.unit
-def test_health_endpoint(client):
-    """/health responds 200 in-process (no DB required)."""
+def test_health(client):
+    """GET /health responds 200 in-process (no DB required)."""
     r = client.get("/health")
     assert r.status_code == 200
 

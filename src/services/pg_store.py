@@ -346,6 +346,10 @@ def init_pg_tables():
 
         conn.commit()
         log.info("✅ PostgreSQL tables initialized")
+        try:
+            seed_glossary_knowledge_docs()
+        except Exception as _ge:
+            log.warning("Glossary auto-seed warning: %s", _ge)
     except Exception as e:
         log.error("PostgreSQL init failed: %s", e)
         conn.rollback()
@@ -390,6 +394,26 @@ def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: 
                         cur.execute("DELETE FROM kpi_metrics WHERE source = %s", [source_name])
                 cur.executemany(insert_sql, params)
             conn.commit()
+            # Automatic GraphRAG-lite Entity & Relationship Extraction
+            try:
+                from src.services.entity_extractor import get_entity_extractor
+                extractor = get_entity_extractor()
+                entity_rows = []
+                for _, row in df.iterrows():
+                    cat = str(row.get("category", ""))
+                    met = str(row.get("metric", ""))
+                    per = str(row.get("period", ""))
+                    ref = f"{cat}|{met}|{per}"
+                    for e in extractor.extract_entities({"category": cat, "metric_name": met, "period": per}):
+                        entity_rows.append({
+                            "record_ref": ref,
+                            "entity_type": e["entity_type"],
+                            "entity_value": e["entity_value"],
+                        })
+                if entity_rows:
+                    store_kpi_entities(entity_rows, replace=False)
+            except Exception as ee:
+                log.warning("Auto entity extraction on CSV ingest note: %s", ee)
             return
         except Exception as e:
             last_err = e
@@ -681,6 +705,26 @@ def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] 
         conn.commit()
     finally:
         conn.close()
+
+
+def seed_glossary_knowledge_docs() -> int:
+    """Persist the 169 curated KPI glossary entries directly into the PostgreSQL knowledge_base DB table."""
+    try:
+        import pandas as pd
+        from src.knowledge.glossary import as_knowledge_docs
+        g_docs = as_knowledge_docs(lang="en")
+        if not g_docs:
+            return 0
+        df = pd.DataFrame(g_docs)
+        df["doc_id"] = [f"glossary-{i+1}" for i in range(len(df))]
+        df["embedding"] = ""
+        df["language"] = "en"
+        store_knowledge_docs(df, replace_prefix="glossary-")
+        log.info("✅ Seeded %d glossary entries directly into PostgreSQL knowledge_base table", len(df))
+        return len(df)
+    except Exception as e:
+        log.warning("⚠️ Failed to seed glossary into DB: %s", e)
+        return 0
 
 
 def get_knowledge_docs(limit: int = 2000) -> "pd.DataFrame":
@@ -1072,13 +1116,11 @@ def ensure_session_exists(session_id: str, user_id: str) -> str:
 
 def seed_all_domains() -> int:
     """
-    Seed multi-domain KPI data (+ knowledge-base docs) if the table is empty.
-    Delegates to the robust, deterministic seed in ``src.data.seed``.
-    Returns the number of KPI rows inserted.
+    Deprecated synthetic seed handler. Synthetic seeding is permanently disabled
+    in favor of pure real-data ingestion via official REST API endpoints.
     """
-    from src.data.seed import seed_database  # lazy import avoids circular dependency
-    counts = seed_database(replace=True)
-    return counts.get("kpi_rows", 0)
+    log.info("seed_all_domains called: synthetic seeding disabled (real-data driven platform).")
+    return 0
 
 
 # ════════════════════════════════════════════════════════════════════════════
