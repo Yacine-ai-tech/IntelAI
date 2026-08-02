@@ -8,7 +8,7 @@ import { test, expect, Page } from '@playwright/test';
  */
 
 const BASE_URL = process.env.TEST_BASE_URL || 'https://intelai-ui-2026.vercel.app';
-const API_URL  = process.env.API_BASE_URL  || 'https://intelai-bwhp.onrender.com';
+const API_URL  = process.env.API_BASE_URL  || process.env.STAGING_INTELAI_URL || 'https://intelai-bwhp.onrender.com';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers
@@ -58,7 +58,7 @@ test.describe('Phase 3 — Core Platform E2E (IntelAI)', () => {
   test.describe('Slice 3.1 — Auth & RBAC', () => {
 
     test('admin can access admin page', async ({ page }) => {
-      await loginAs(page, 'yacine', 'REDACTED_SECRET');
+      await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
       await page.goto(`${BASE_URL}/admin`);
       await assertNoReactCrash(page);
       await expect(page.locator('body')).toBeVisible();
@@ -70,7 +70,7 @@ test.describe('Phase 3 — Core Platform E2E (IntelAI)', () => {
     });
 
     test('viewer RBAC — restricted pages redirect or show forbidden', async ({ page }) => {
-      await loginAs(page, 'viewer', 'OmniViewer@2026!');
+      await loginAs(page, 'viewer', process.env.E2E_VIEWER_PASSWORD || 'CHANGE_ME');
       await page.goto(`${BASE_URL}/admin`);
       await assertNoReactCrash(page);
       // Either redirected away from /admin, or sees a 403/forbidden message
@@ -82,7 +82,7 @@ test.describe('Phase 3 — Core Platform E2E (IntelAI)', () => {
     });
 
     test.skip('JWT session persists on browser refresh', async ({ page }) => {
-      await loginAs(page, 'yacine', 'REDACTED_SECRET');
+      await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
       await page.goto(`${BASE_URL}/`);
       await page.waitForLoadState('networkidle');
       
@@ -147,7 +147,7 @@ test.describe('Phase 3 — Core Platform E2E (IntelAI)', () => {
 
     for (const dash of dashboards) {
       test(`${dash.label} dashboard renders without crash`, async ({ page }) => {
-        await loginAs(page, 'yacine', 'REDACTED_SECRET');
+        await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
         await page.goto(`${BASE_URL}${dash.path}`);
         await page.waitForLoadState('domcontentloaded', { timeout: 20000 }).catch(() => {});
         await assertNoReactCrash(page);
@@ -162,7 +162,7 @@ test.describe('Phase 3 — Core Platform E2E (IntelAI)', () => {
   test.describe('Slice 3.3 — Deep Interactions', () => {
 
     test('Knowledge Graph canvas renders', async ({ page }) => {
-      await loginAs(page, 'yacine', 'REDACTED_SECRET');
+      await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
       await page.goto(`${BASE_URL}/knowledge-graph`);
       await page.waitForLoadState('domcontentloaded', { timeout: 20000 }).catch(() => {});
       await assertNoReactCrash(page);
@@ -173,7 +173,7 @@ test.describe('Phase 3 — Core Platform E2E (IntelAI)', () => {
     });
 
     test('Chat page: persona switching and message send', async ({ page }) => {
-      await loginAs(page, 'yacine', 'REDACTED_SECRET');
+      await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
       await page.goto(`${BASE_URL}/chat`);
       await page.waitForLoadState('domcontentloaded');
       await assertNoReactCrash(page);
@@ -251,7 +251,7 @@ test.describe('Phase 6 — Extended UI/UX Validation', () => {
     });
 
     test('Double submit is blocked (no duplicate API calls)', async ({ page }) => {
-      await loginAs(page, 'yacine', 'REDACTED_SECRET');
+      await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
       await page.goto(`${BASE_URL}/settings`);
       await page.waitForLoadState('domcontentloaded');
 
@@ -272,7 +272,7 @@ test.describe('Phase 6 — Extended UI/UX Validation', () => {
 
     test('Network failure shows toast error — not white screen', async ({ page }) => {
       // Abort all API calls to simulate backend down
-      await loginAs(page, 'yacine', 'REDACTED_SECRET');
+      await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
       await page.route(`${BASE_URL}/**`, route => route.abort());
       await page.goto(`${BASE_URL}/`).catch(() => {});
       await page.waitForLoadState('domcontentloaded');
@@ -284,7 +284,7 @@ test.describe('Phase 6 — Extended UI/UX Validation', () => {
 
     test('Slow network shows loading skeleton', async ({ page }) => {
       // Add 3s delay to all API responses
-      await loginAs(page, 'yacine', 'REDACTED_SECRET');
+      await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
       await page.route(`${BASE_URL}/**`, async route => {
         await new Promise(r => setTimeout(r, 3000));
         await route.continue();
@@ -299,7 +299,7 @@ test.describe('Phase 6 — Extended UI/UX Validation', () => {
     });
 
     test('Settings page: Cancel button wipes form state', async ({ page }) => {
-      await loginAs(page, 'yacine', 'REDACTED_SECRET');
+      await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
       await page.goto(`${BASE_URL}/settings`);
       await page.waitForLoadState('domcontentloaded');
       const textInput = page.locator('input[type="text"]').first();
@@ -320,7 +320,7 @@ test.describe('Phase 6 — Extended UI/UX Validation', () => {
   test.describe('Slice 6.4 — Edge Cases & Degradation', () => {
 
     test('404 route does not crash app', async ({ page }) => {
-      await loginAs(page, 'yacine', 'REDACTED_SECRET');
+      await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
       await page.goto(`${BASE_URL}/this-page-does-not-exist-12345`);
       await page.waitForLoadState('domcontentloaded');
       await assertNoReactCrash(page);
@@ -361,7 +361,7 @@ test.describe('Phase 12 — Security Tests', () => {
   test('API: prompt injection payload is rejected or sanitised', async ({ request }) => {
     // Login first to get a valid token
     const loginResp = await request.post(`${BASE_URL}/api/login`, {
-      data: { username: 'admin', password: 'fLNtwDH2VaQLbO' }
+      data: { username: 'admin', password: process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME' }
     });
     if (loginResp.status() === 200) {
       const body = await loginResp.json();
@@ -388,7 +388,7 @@ test.describe('Phase 13 — Accessibility (axe-core)', () => {
 
   for (const route of pagesToAudit) {
     test(`a11y: ${route} has no critical axe violations`, async ({ page }) => {
-      await loginAs(page, 'yacine', 'REDACTED_SECRET');
+      await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
       await page.goto(`${BASE_URL}${route}`);
       await page.waitForLoadState('domcontentloaded');
 
@@ -421,7 +421,7 @@ test.describe('Phase 13 — Accessibility (axe-core)', () => {
 test.describe('Phase 3.3 — Deep Interactivity', () => {
 
   test('Knowledge Graph visualization assertions', async ({ page }) => {
-    await loginAs(page, 'yacine', 'REDACTED_SECRET');
+    await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
     await page.goto(`${BASE_URL}/knowledge/graph`);
     await page.waitForLoadState('domcontentloaded');
     
@@ -435,7 +435,7 @@ test.describe('Phase 3.3 — Deep Interactivity', () => {
   test('Data Export file generation triggers download', async ({ page }) => {
     
 
-    await loginAs(page, 'yacine', 'REDACTED_SECRET');
+    await loginAs(page, 'yacine', process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
     await page.goto(`${BASE_URL}/settings`); // Or wherever export is
     await page.waitForLoadState('domcontentloaded');
 

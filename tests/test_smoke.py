@@ -9,7 +9,11 @@ import os
 
 import pytest
 
-os.environ.setdefault("POSTGRES_URL", "postgresql://user:password@localhost/health responds 200 in-process (no DB required)."""
+os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai")
+
+@pytest.mark.unit
+def test_health(client):
+    """GET /health responds 200 in-process (no DB required)."""
     r = client.get("/health")
     assert r.status_code == 200
 

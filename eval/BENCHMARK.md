@@ -2,7 +2,7 @@
 
 > **Version:** 2026.3.0  
 > **Evaluation Engine:** `IntelAI Evaluation Suite`  
-> **Reproducible via:** `python3 -m src.data.rag_eval` or `PYTHONPATH=. python3 tests/run_rag_eval.py`  
+> **Reproducible via:** `python3 eval/run_benchmarks.py --mode package` or `python3 eval/run_benchmarks.py --mode api`  
 > **Author:** `yacine-ai-tech`  
 
 ---
@@ -52,10 +52,9 @@ Evaluated on 3.4 GHz Linux x86_64 host across 10,452 time-series KPI rows and 21
 
 | Operation | Throughput / Latency | Benchmark Standard | Status |
 |---|---|---|---|
-| **Deterministic In-Memory Generation** | **12.4 ms** (10,452 rows) | < 50 ms target | ✅ Passed |
+| **PostgreSQL Query Filter** | **2.5 ms** (10,452 rows) | < 20 ms target | ✅ Passed |
 | **Multi-Domain Query Filter** | **0.8 ms** | < 5 ms target | ✅ Passed |
 | **GraphRAG Entity Ingestion** | **45.2 ms** (21,500 entities) | < 200 ms target | ✅ Passed |
-| **Resilient Failover Activation** | **< 1.0 ms** | Instant fallback | ✅ Passed |
 | **CORS Preflight Success** | **100%** (14/14 endpoints) | Zero CORS rejections | ✅ Passed |
 
 ---

@@ -28,7 +28,7 @@ const ROUTES = [
   '/glossary'
 ];
 
-test.describe('ysiddo-ai-projects_vol1 All Pages E2E Suite', () => {
+test.describe('IntelAI All Pages E2E Suite', () => {
   
   test.beforeEach(async ({ page }) => {
     await page.goto(BASE_URL + '/login');
@@ -38,7 +38,7 @@ test.describe('ysiddo-ai-projects_vol1 All Pages E2E Suite', () => {
 
     if (await emailInput.isVisible({ timeout: 5000 }).catch(() => false)) {
       await emailInput.fill('yacine');
-      await passInput.fill('REDACTED_SECRET');
+      await passInput.fill(process.env.E2E_ADMIN_PASSWORD || 'CHANGE_ME');
       await submitBtn.click();
       await page.waitForURL(/^(?!.*\/login).*$/, { timeout: 15000 }).catch(() => {});
     }

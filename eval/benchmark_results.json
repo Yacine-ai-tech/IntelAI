@@ -1,15 +1,52 @@
 {
-  "benchmark": "IntelAI Autonomous Dual-Loop RAG & Graph Reranking Evaluation (RAGeval Package)",
+  "benchmark": "IntelAI Multi-Engine Research & Production Benchmark Suite",
   "seed": 42,
-  "evaluator": "rageval.evaluator.RAGEvaluator",
-  "timestamp": "2026-07-31T00:39:37Z",
-  "metrics": {
-    "evaluation_cases": 25,
-    "retrieval_relevance_score": 0.0164,
+  "mode": "package",
+  "timestamp": "2026-08-02T13:58:12Z",
+  "rag_eval_copilot": {
+    "evaluation_cases": 50,
+    "retrieval_relevance_score": 0.3552,
     "groundedness_consensus_score": 0.85,
-    "faithfulness_score": 0.5,
-    "overall_rag_quality_score": 0.4466,
+    "faithfulness_score": 0.5743,
+    "overall_rag_quality_score": 0.5969,
     "hallucination_mitigation_rate_pct": 100.0,
-    "mean_retrieval_latency_ms": 43.17
+    "mean_retrieval_latency_ms": 506.93
+  },
+  "forecasting_engine": {
+    "r_squared": 0.9989,
+    "trend_slope": 5.0096,
+    "forecast_latency_ms": 22.17,
+    "status": "PASS"
+  },
+  "scenario_engine_monte_carlo": {
+    "probability_positive": 62.9,
+    "worst_case": 39.87,
+    "best_case": 650.08,
+    "simulation_latency_ms": 626.13,
+    "status": "PASS"
+  },
+  "anomaly_detection_engine": {
+    "methods_tested": {
+      "zscore": {
+        "anomalies_count": 2,
+        "latency_ms": 5.78
+      },
+      "iqr": {
+        "anomalies_count": 3,
+        "latency_ms": 7.06
+      },
+      "isolation_forest": {
+        "anomalies_count": 3,
+        "latency_ms": 613.68
+      },
+      "ewma": {
+        "anomalies_count": 5,
+        "latency_ms": 5.27
+      }
+    },
+    "status": "PASS"
+  },
+  "bilingual_formatting": {
+    "status": "PASS"
   }
 }
