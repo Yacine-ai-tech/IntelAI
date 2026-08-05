@@ -1,0 +1,58 @@
+{
+  "company": "NexaCore Technologies",
+  "audit_date": "2024-10-15",
+  "triggered_by": "Post-Incident Security Review (Breach Oct 2024)",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "title": "JWT signing key in plaintext SSM",
+      "status": "REMEDIATED",
+      "remediated_at": "2024-10-02"
+    },
+    {
+      "severity": "HIGH",
+      "title": "IMDSv1 enabled on 14 EC2 instances",
+      "status": "REMEDIATED",
+      "remediated_at": "2024-10-04"
+    },
+    {
+      "severity": "HIGH",
+      "title": "Overly permissive IAM role on 3 Lambda functions",
+      "status": "IN PROGRESS",
+      "owner": "DevOps Team"
+    },
+    {
+      "severity": "MEDIUM",
+      "title": "S3 bucket logging disabled for 2 buckets",
+      "status": "REMEDIATED",
+      "remediated_at": "2024-10-08"
+    },
+    {
+      "severity": "MEDIUM",
+      "title": "CloudTrail not enabled in eu-west-1",
+      "status": "REMEDIATED",
+      "remediated_at": "2024-10-06"
+    },
+    {
+      "severity": "LOW",
+      "title": "Unused IAM users (8 offboarded employees)",
+      "status": "REMEDIATED",
+      "remediated_at": "2024-10-10"
+    }
+  ],
+  "vulnerability_counts": {
+    "critical": 1,
+    "high": 12,
+    "medium": 8,
+    "low": 23
+  },
+  "compliance_score_pct": 74.2,
+  "target_compliance_score_pct": 95.0,
+  "soc2_controls_affected": [
+    "CC6.1",
+    "CC6.2",
+    "CC7.1",
+    "CC7.2",
+    "CC9.2"
+  ]
+}

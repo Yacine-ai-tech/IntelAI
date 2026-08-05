@@ -1,0 +1,93 @@
+{
+  "company": "NexaCore Technologies",
+  "account_id": "381742956209",
+  "region_primary": "us-east-1",
+  "region_secondary": "eu-west-1",
+  "currency": "USD",
+  "reports": [
+    {
+      "month": "2020-03",
+      "scenario": "COVID-19 Impact",
+      "total_usd": 18420,
+      "ec2": 9800,
+      "rds": 3200,
+      "s3": 890,
+      "cloudfront": 430,
+      "support": 500,
+      "other": 3600
+    },
+    {
+      "month": "2021-09",
+      "scenario": "Recovery",
+      "total_usd": 24100,
+      "ec2": 12800,
+      "rds": 4100,
+      "s3": 1240,
+      "cloudfront": 680,
+      "support": 500,
+      "other": 4780
+    },
+    {
+      "month": "2023-06",
+      "scenario": "Healthy Baseline",
+      "total_usd": 31800,
+      "ec2": 16400,
+      "rds": 5800,
+      "s3": 2100,
+      "cloudfront": 1200,
+      "support": 500,
+      "other": 5800
+    },
+    {
+      "month": "2024-01",
+      "scenario": "High Churn Crisis",
+      "total_usd": 38200,
+      "ec2": 19600,
+      "rds": 6800,
+      "s3": 2800,
+      "cloudfront": 1400,
+      "support": 500,
+      "other": 7100
+    },
+    {
+      "month": "2024-10",
+      "scenario": "Cybersecurity Breach",
+      "total_usd": 52400,
+      "ec2": 26800,
+      "rds": 8200,
+      "s3": 3400,
+      "cloudfront": 1600,
+      "support": 800,
+      "other": 11600,
+      "incident_surcharge": 4800
+    },
+    {
+      "month": "2025-05",
+      "scenario": "Operational Meltdown Recovery",
+      "total_usd": 41200,
+      "ec2": 21400,
+      "rds": 7100,
+      "s3": 3100,
+      "cloudfront": 1500,
+      "support": 500,
+      "other": 7600
+    },
+    {
+      "month": "2026-03",
+      "scenario": "Full Recovery",
+      "total_usd": 44800,
+      "ec2": 23200,
+      "rds": 7600,
+      "s3": 3400,
+      "cloudfront": 1700,
+      "support": 500,
+      "other": 8400
+    }
+  ],
+  "cost_centers": {
+    "Engineering": "0.45",
+    "ProductionInfra": "0.35",
+    "QA/Staging": "0.12",
+    "DataScience": "0.08"
+  }
+}
