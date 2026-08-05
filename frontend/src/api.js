@@ -20,7 +20,7 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-// Handle 401 globally
+// Handle 401 globally and Render cold-start retries
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -28,24 +28,24 @@ api.interceptors.response.use(
     if (config) {
       config.__retryCount = config.__retryCount || 0;
       const status = error.response ? error.response.status : null;
-      // Retry on network errors or 502, 503, 504 (Cloudflare auto-wake)
+      // Retry on network errors or 5xx (Render cold-start wake-up)
       if (!status || status >= 500) {
-        if (config.__retryCount < 5) {
+        if (config.__retryCount < 8) {
           config.__retryCount += 1;
-          await delay(2000 * config.__retryCount);
+          const waitMs = config.__retryCount <= 2 ? 3000 : 5000;
+          await delay(waitMs);
           return api(config);
         }
       }
     }
-    
     if (error.response?.status === 401) {
-      localStorage.removeItem('access_token')
-      localStorage.removeItem('user')
-      window.location.href = '/login'
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
     }
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);
 
 // ── Auth ────────────────────────────────────────────────
 export const login = (username, password) =>
@@ -194,5 +194,9 @@ export const wakeLightningStudio = (machine) => api.post('/admin/lightning/wake'
 export const stopLightningStudio = () => api.post('/admin/lightning/stop')
 
 export const deleteFile = (fileId) => api.delete(`/files/${fileId}`)
+
+// Wake the backend (call this early on app load to prime Render cold-start)
+export const wakeBackend = () =>
+  api.get('/status').catch(() => api.get('/status'))  // double-attempt on network error
 
 export default api

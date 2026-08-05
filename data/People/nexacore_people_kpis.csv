@@ -1,0 +1,703 @@
+period,category,segment,metric,value,unit,direction,source
+2020-01,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-02,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-03,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-04,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-05,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-06,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-07,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-08,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-09,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-10,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-11,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-12,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-01,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-02,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-03,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-04,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-05,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-06,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-07,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-08,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-09,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-10,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-11,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-12,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-01,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-02,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-03,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-04,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-05,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-06,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-07,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-08,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-09,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-10,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-11,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-12,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-01,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-02,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-03,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-04,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-05,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-06,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-07,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-08,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-09,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-10,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-11,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-12,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-01,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-02,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-03,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-04,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-05,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-06,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-07,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-08,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-09,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-10,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-11,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-12,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-01,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-02,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-03,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-04,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-05,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-06,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-07,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-08,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-09,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-10,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-11,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-12,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-01,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-02,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-03,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-04,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-05,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-06,People,Global,Total Headcount (Count),320.0,Count,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-01,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-02,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-03,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-04,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-05,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-06,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-07,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-08,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-09,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-10,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-11,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-12,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-01,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-02,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-03,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-04,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-05,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-06,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-07,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-08,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-09,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-10,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-11,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-12,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-01,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-02,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-03,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-04,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-05,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-06,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-07,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-08,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-09,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-10,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-11,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-12,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-01,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-02,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-03,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-04,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-05,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-06,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-07,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-08,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-09,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-10,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-11,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-12,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-01,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-02,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-03,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-04,People,Global,Annual Turnover Rate (%),11.62,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-05,People,Global,Annual Turnover Rate (%),14.73,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-06,People,Global,Annual Turnover Rate (%),17.85,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-07,People,Global,Annual Turnover Rate (%),20.97,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-08,People,Global,Annual Turnover Rate (%),24.08,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-09,People,Global,Annual Turnover Rate (%),27.2,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-10,People,Global,Annual Turnover Rate (%),24.08,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-11,People,Global,Annual Turnover Rate (%),20.97,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-12,People,Global,Annual Turnover Rate (%),17.85,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-01,People,Global,Annual Turnover Rate (%),14.73,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-02,People,Global,Annual Turnover Rate (%),11.62,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-03,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-04,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-05,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-06,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-07,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-08,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-09,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-10,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-11,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-12,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-01,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-02,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-03,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-04,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-05,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-06,People,Global,Annual Turnover Rate (%),8.5,%,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-01,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-02,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-03,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-04,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-05,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-06,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-07,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-08,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-09,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-10,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-11,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-12,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-01,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-02,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-03,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-04,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-05,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-06,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-07,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-08,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-09,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-10,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-11,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-12,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-01,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-02,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-03,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-04,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-05,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-06,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-07,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-08,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-09,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-10,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-11,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-12,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-01,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-02,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-03,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-04,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-05,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-06,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-07,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-08,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-09,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-10,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-11,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-12,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-01,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-02,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-03,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-04,People,Global,Time to Hire (Days),37.87,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-05,People,Global,Time to Hire (Days),43.73,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-06,People,Global,Time to Hire (Days),49.6,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-07,People,Global,Time to Hire (Days),55.47,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-08,People,Global,Time to Hire (Days),61.33,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-09,People,Global,Time to Hire (Days),67.2,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-10,People,Global,Time to Hire (Days),61.33,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-11,People,Global,Time to Hire (Days),55.47,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-12,People,Global,Time to Hire (Days),49.6,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-01,People,Global,Time to Hire (Days),43.73,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-02,People,Global,Time to Hire (Days),37.87,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-03,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-04,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-05,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-06,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-07,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-08,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-09,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-10,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-11,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-12,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-01,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-02,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-03,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-04,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-05,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-06,People,Global,Time to Hire (Days),32.0,Days,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-01,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-02,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-03,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-04,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-05,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-06,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-07,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-08,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-09,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-10,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-11,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-12,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-01,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-02,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-03,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-04,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-05,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-06,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-07,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-08,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-09,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-10,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-11,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-12,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-01,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-02,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-03,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-04,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-05,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-06,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-07,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-08,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-09,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-10,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-11,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-12,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-01,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-02,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-03,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-04,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-05,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-06,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-07,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-08,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-09,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-10,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-11,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-12,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-01,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-02,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-03,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-04,People,Global,Employee NPS,28.67,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-05,People,Global,Employee NPS,19.33,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-06,People,Global,Employee NPS,10.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-07,People,Global,Employee NPS,0.67,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-08,People,Global,Employee NPS,-8.67,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-09,People,Global,Employee NPS,-18.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-10,People,Global,Employee NPS,-8.67,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-11,People,Global,Employee NPS,0.67,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-12,People,Global,Employee NPS,10.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-01,People,Global,Employee NPS,19.33,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-02,People,Global,Employee NPS,28.67,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-03,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-04,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-05,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-06,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-07,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-08,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-09,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-10,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-11,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-12,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-01,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-02,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-03,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-04,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-05,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-06,People,Global,Employee NPS,38.0,Score,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-01,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-02,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-03,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-04,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-05,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-06,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-07,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-08,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-09,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-10,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-11,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-12,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-01,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-02,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-03,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-04,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-05,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-06,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-07,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-08,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-09,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-10,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-11,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-12,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-01,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-02,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-03,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-04,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-05,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-06,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-07,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-08,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-09,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-10,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-11,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-12,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-01,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-02,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-03,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-04,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-05,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-06,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-07,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-08,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-09,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-10,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-11,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-12,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-01,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-02,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-03,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-04,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-05,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-06,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-07,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-08,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-09,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-10,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-11,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-12,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-01,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-02,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-03,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-04,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-05,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-06,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-07,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-08,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-09,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-10,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-11,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-12,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-01,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-02,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-03,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-04,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-05,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-06,People,Global,Revenue per Employee (USD),281250.0,USD,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-01,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-02,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-03,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-04,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-05,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-06,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-07,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-08,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-09,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-10,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-11,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-12,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-01,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-02,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-03,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-04,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-05,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-06,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-07,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-08,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-09,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-10,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-11,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-12,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-01,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-02,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-03,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-04,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-05,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-06,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-07,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-08,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-09,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-10,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-11,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-12,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-01,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-02,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-03,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-04,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-05,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-06,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-07,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-08,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-09,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-10,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-11,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-12,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-01,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-02,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-03,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-04,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-05,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-06,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-07,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-08,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-09,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-10,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-11,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-12,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-01,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-02,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-03,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-04,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-05,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-06,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-07,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-08,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-09,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-10,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-11,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-12,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-01,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-02,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-03,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-04,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-05,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-06,People,Global,Offer Acceptance Rate (%),87.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-01,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-02,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-03,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-04,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-05,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-06,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-07,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-08,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-09,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-10,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-11,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-12,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-01,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-02,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-03,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-04,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-05,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-06,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-07,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-08,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-09,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-10,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-11,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-12,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-01,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-02,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-03,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-04,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-05,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-06,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-07,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-08,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-09,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-10,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-11,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-12,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-01,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-02,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-03,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-04,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-05,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-06,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-07,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-08,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-09,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-10,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-11,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-12,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-01,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-02,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-03,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-04,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-05,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-06,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-07,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-08,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-09,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-10,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-11,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-12,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-01,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-02,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-03,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-04,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-05,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-06,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-07,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-08,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-09,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-10,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-11,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-12,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-01,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-02,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-03,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-04,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-05,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-06,People,Global,Open Positions (Count),22.0,Count,down,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-01,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-02,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-03,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-04,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-05,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-06,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-07,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-08,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-09,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-10,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-11,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-12,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-01,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-02,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-03,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-04,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-05,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-06,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-07,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-08,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-09,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-10,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-11,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-12,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-01,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-02,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-03,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-04,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-05,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-06,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-07,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-08,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-09,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-10,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-11,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-12,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-01,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-02,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-03,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-04,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-05,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-06,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-07,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-08,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-09,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-10,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-11,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-12,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-01,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-02,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-03,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-04,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-05,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-06,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-07,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-08,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-09,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-10,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-11,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-12,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-01,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-02,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-03,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-04,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-05,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-06,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-07,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-08,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-09,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-10,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-11,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-12,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-01,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-02,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-03,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-04,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-05,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-06,People,Global,Training Hours per Employee (Hours),2.3,Hours,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-01,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-02,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-03,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-04,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-05,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-06,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-07,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-08,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-09,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-10,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-11,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2020-12,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-01,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-02,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-03,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-04,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-05,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-06,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-07,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-08,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-09,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-10,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-11,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2021-12,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-01,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-02,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-03,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-04,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-05,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-06,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-07,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-08,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-09,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-10,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-11,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2022-12,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-01,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-02,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-03,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-04,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-05,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-06,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-07,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-08,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-09,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-10,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-11,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2023-12,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-01,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-02,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-03,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-04,People,Global,Engagement Score (%),71.19,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-05,People,Global,Engagement Score (%),66.37,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-06,People,Global,Engagement Score (%),61.56,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-07,People,Global,Engagement Score (%),56.75,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-08,People,Global,Engagement Score (%),51.93,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-09,People,Global,Engagement Score (%),47.12,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-10,People,Global,Engagement Score (%),51.93,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-11,People,Global,Engagement Score (%),56.75,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2024-12,People,Global,Engagement Score (%),61.56,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-01,People,Global,Engagement Score (%),66.37,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-02,People,Global,Engagement Score (%),71.19,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-03,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-04,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-05,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-06,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-07,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-08,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-09,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-10,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-11,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2025-12,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-01,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-02,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-03,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-04,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-05,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024
+2026-06,People,Global,Engagement Score (%),76.0,%,up,SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024

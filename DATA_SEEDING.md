@@ -1,134 +1,91 @@
-# IntelAI Data Seeding, Ingestion & Multi-Domain Data Model Specification
+# IntelAI Data Seeding Guide
 
-> **Version:** 2026.3.0  
-> **Author:** `yacine-ai-tech`  
-> **Status:** Production Reference Specification  
+> **Disclaimer**: IntelAI is a completely **company-agnostic** AI analytics copilot. NexaCore Technologies is a fictional reference dataset provided exclusively for demonstration, testing, and illustration purposes. You can (and should) replace this data with your own company's real data.
 
----
+## Overview
+This repository contains a realistic, deterministically generated dataset representing 78 months (2020-01 to 2026-06) of operations for NexaCore Technologies. 
+The data spans 7 core business domains and embeds overlapping crises to demonstrate IntelAI's causal reasoning engines.
 
-## 1. Overview & Data Layer Architecture
-
-`IntelAI` operates a **unified, multi-domain KPI data architecture** as the single source of truth for executive dashboards, ML forecasting, GraphRAG entity linking, and persona-scoped AI copilots.
-
-The data layer uses an **idempotent, deterministic seed engine** (`src/data/seed.py`) with `SEED = 42`. It generates a **78-month (6.5 years, 2020-01 to 2026-06)** continuous time-series dataset containing **10,452 KPI metric rows** across 7 business domains.
-
+## Directory Structure
 ```
-                    ┌──────────────────────────────────────────────┐
-                    │          IntelAI Data Access Layer           │
-                    │         (src/services/pg_store.py)           │
-                    └──────────────────────┬───────────────────────┘
-                                           │
-                    ┌──────────────────────┴───────────────────────┐
-                    │                                              │
-        ┌───────────▼────────────┐                     ┌───────────▼────────────┐
-        │  Primary Data Store    │                     │   Resilient Fallback   │
-        │   Neon PostgreSQL      │                     │ Seed Engine (SEED=42)  │
-        │  (kpi_metrics table)   │                     │  (10,452 In-Mem Rows)  │
-        └────────────────────────┘                     └────────────────────────┘
+data/
+├── ESG/
+│   └── nexacore_esg_kpis.csv
+├── Finance/
+│   └── nexacore_finance_kpis.csv
+├── Growth/
+│   └── nexacore_growth_kpis.csv
+├── IT/
+│   └── nexacore_it_kpis.csv
+├── Logistics/
+│   └── nexacore_logistics_kpis.csv
+├── Operations/
+│   └── nexacore_operations_kpis.csv
+├── People/
+│   └── nexacore_people_kpis.csv
+├── NEXACORE_COMPANY_PROFILE.md
+└── documents/
+    └── (Existing PDF and reference documents)
 ```
 
----
+## Dataset Characteristics
+- **Long Format**: CSVs follow the schema `period,category,segment,metric,value,unit,direction,source`
+- **78 Months**: 2020-01 through 2026-06.
+- **Deterministic**: Data follows specific scenario multipliers rather than random distributions.
 
-## 2. How Data is Seeded, Collected & Sourced
+### Source Attributions
+| Domain | Primary Sources |
+|---|---|
+| **Finance** | Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024 |
+| **Growth** | Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024 |
+| **People** | SHRM 2024 Workforce Analytics; LinkedIn Talent Insights 2024; Mercer Global Talent Trends 2024 |
+| **Operations** | Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024 |
+| **Logistics** | Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024 |
+| **IT** | Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024 |
+| **ESG** | GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024 |
 
-### 2.1 Seed Engine Execution (`src/data/seed.py`)
-Data seeding is fully reproducible via command line or code:
+## Timeline and Scenario Epochs
+| Epoch | Months | Scenario | Key Impacts |
+|---|---|---|---|
+| **Jan 2020 - Jun 2021** | 18 | COVID-19 Impact | Revenue drop, Operations OEE drop, IT Uptime boost, Logistics disrupted |
+| **Jul 2021 - Dec 2022** | 18 | Recovery & Supply Chain Crisis | OTD drops, Order cycle times spike, Margins pressured |
+| **Jan 2023 - Sep 2023** | 9 | Healthy Baseline | Normal operations and 2% monthly revenue growth |
+| **Oct 2023 - Mar 2024** | 6 | High Churn Crisis | SaaS churn spikes, NRR drops, LTV:CAC collapses |
+| **Apr 2024 - Sep 2024** | 6 | Talent Crisis | Turnover spikes, Time-to-hire soars, OPEX increases |
+| **Oct 2024 - Mar 2025** | 6 | Cybersecurity Breach | IT Uptime drops, vulnerabilities spike, Revenue takes minor hit |
+| **Apr 2025 - Sep 2025** | 6 | Operational Meltdown | OEE crashes, Defect rates spike, Logistics OTD drops |
+| **Oct 2025 - Jun 2026** | 9 | Full Recovery | Gradual return to healthy baseline |
 
+## Cross-Domain Correlations
+IntelAI thrives on detecting correlations. Example causality paths embedded in the data:
+1. **Supply Chain Crisis (2021-2022)**: Freight costs rise (Logistics) → Margins pressured (Finance)
+2. **Talent Crisis (2024)**: Turnover spikes (People) → Hiring costs increase (Finance OPEX)
+3. **Cyber Breach (2024-2025)**: API Latency/Incidents spike (IT) → Customer dissatisfaction (Growth NPS)
+4. **Ops Meltdown (2025)**: Defect rate spikes (Operations) → Order Fulfillment delays (Logistics)
+
+## How to Add Your Own Data
+1. Preserve the `data/` folder structure.
+2. Remove or overwrite the NexaCore demonstration CSV files.
+3. Export your real metrics using the exact CSV schema: `period,category,segment,metric,value,unit,direction,source`
+4. Use the ingestion script (see below) to load the data into IntelAI.
+
+## Ingestion Script
+We provide `scripts/seed_via_api.py` to load data via the REST API.
 ```bash
-# Seed default healthy baseline into PostgreSQL:
-python3 -m src.data.seed
+# Basic ingestion
+python3 scripts/seed_via_api.py
 
-# Seed a specific scenario (e.g. declining_financial, high_churn_crisis):
-python3 -m src.data.seed declining_financial
+# Ingest a specific domain
+python3 scripts/seed_via_api.py --domain Finance
+
+# View available scenarios in the dataset
+python3 scripts/seed_via_api.py --scenario
+
+# Validate schemas without uploading
+python3 scripts/seed_via_api.py --validate
+
+# View a summary report post-ingestion
+python3 scripts/seed_via_api.py --report
 ```
 
-Programmatic invocation:
-```python
-from src.data.seed import seed_database, generate_kpi_rows
-
-# Generate 10,452 rows in-memory:
-rows = generate_kpi_rows(scenario="healthy")
-
-# Seed database:
-counts = seed_database(replace=True, scenario="healthy")
-```
-
-### 2.2 Corporate Data Sources & Real Industry Benchmarks
-
-The metric catalog is compiled from public corporate filings and audited industry benchmarks:
-
-1. **Orange SA Public Telecom & Financial Disclosures (10-K / Annual Reports 2020-2025)**:
-   - Used for realistic revenue structures, operating costs, CAPEX/OPEX allocations, customer ARPU, and network infrastructure uptime models.
-2. **FactSet & S&P 500 Profit Margin Analysis (2024)**:
-   - Net profit margins (10-15%) and operating cost ratios for healthy enterprise baselines.
-3. **Bessemer Venture Partners State of the Cloud (2024)**:
-   - SaaS Gross Margin baseline ~79%, Cash Runway > 12 months.
-4. **Meritech Capital Rule of 40 Benchmarks**:
-   - Combined Growth Rate + EBITDA Margin target > 40%.
-5. **High Alpha & OpenView 2024 SaaS Benchmarks**:
-   - Net Revenue Retention (NRR) baseline 110%, Monthly Churn < 4.8%, LTV:CAC Ratio > 4.2x, CAC Payback < 14 months.
-6. **Google DORA (DevOps Research and Assessment) Accelerate Report (2024)**:
-   - System Uptime > 99.95%, Change Failure Rate < 15%, Mean Time to Resolve (MTTR) < 45m.
-7. **Six Sigma Manufacturing & Operations Standards**:
-   - Defect Rate < 2.1%, On-Time Delivery > 93%, Overall Equipment Effectiveness (OEE) > 84%.
-8. **GRI (Global Reporting Initiative) & TCFD ESG Standards**:
-   - Carbon Footprint (tCO2e), Renewable Energy %, Audit Compliance Score.
-
----
-
-## 3. How Data is Imported & Ingested (CSV / Data Hub Pipeline)
-
-External data files (CSVs, Excel, JSON) are imported into `IntelAI` via the Data Hub pipeline (`POST /api/v1/data-hub/upload`):
-
-```
-User / API Upload ──► Schema Normalization ──► Entity Extraction ──► PostgreSQL kpi_metrics
- (CSV / JSON)        (Period, Metric, Value)   (GraphRAG Sidecar)      (& Vector Index)
-```
-
-### 3.1 Database Table Schema (`kpi_metrics`)
-```sql
-CREATE TABLE IF NOT EXISTS kpi_metrics (
-    id SERIAL PRIMARY KEY,
-    period VARCHAR(10) NOT NULL,         -- e.g. '2026-03'
-    category VARCHAR(50) NOT NULL,       -- Finance, Growth, People, Operations, IT, Logistics, ESG
-    segment VARCHAR(100) DEFAULT 'Global',
-    metric VARCHAR(100) NOT NULL,        -- Revenue, Churn Rate, Headcount...
-    value NUMERIC(18,4) NOT NULL,
-    unit VARCHAR(20) DEFAULT 'USD',
-    direction VARCHAR(10) DEFAULT 'up',  -- 'up' (higher is better) | 'down' (lower is better)
-    source VARCHAR(100) DEFAULT 'user_upload',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT kpi_unique_entry UNIQUE (period, category, segment, metric)
-);
-```
-
-### 3.2 GraphRAG Entity Linking Sidecar (`kpi_entities`)
-During ingestion, `src.services.entity_extractor` automatically extracts domain entities (`record_ref → entity_type → entity_value`) into the `kpi_entities` table to enable multi-hop cross-domain graph queries.
-
----
-
-## 4. The 7 Business Health Scenarios
-
-`IntelAI` includes 7 pre-configured health scenarios simulating diverse corporate conditions:
-
-| Scenario Name | Key Multipliers & Anomaly Trajectory | Trigger Command |
-|---|---|---|
-| **1. Healthy** (Default) | Standard S&P 500 baseline: Gross Margin 72%, NRR 110%, Churn 4.8%, Turnover 8.5%, Uptime 99.95%, On-Time Delivery 93%. | `python3 -m src.data.seed healthy` |
-| **2. Declining Financial** | Revenue drops -35%, Gross Margin compresses -25%, Net Profit drops -60%, Cash Runway reduces -50%, Debt-to-Equity spikes +250%. | `python3 -m src.data.seed declining_financial` |
-| **3. High Churn Crisis** | Monthly Churn spikes +350% (to 16.8%), NRR drops below 100% (to 85%), CAC increases +80%, LTV:CAC collapses to 0.6x. | `python3 -m src.data.seed high_churn_crisis` |
-| **4. Operational Meltdown** | On-Time Delivery drops -30% (to 65%), Defect Rate spikes +450% (to 9.4%), Cycle Time increases +220%, Scrap Rate spikes +280%. | `python3 -m src.data.seed operational_meltdown` |
-| **5. Talent Crisis** | Employee Turnover spikes +280% (to 23.8%), Time to Hire increases +220%, Engagement Score drops -35%, Open Positions spike +250%. | `python3 -m src.data.seed talent_crisis` |
-| **6. Cybersecurity Breach** | Security Incidents spike +500%, Critical Vulnerabilities increase +400%, System Uptime drops to 92%, SLA Compliance drops to 88%. | `python3 -m src.data.seed cybersecurity_breach` |
-| **7. ESG Compliance Failure** | ESG Rating drops -35%, Carbon Footprint increases +180%, Privacy Incidents spike +500%, Supplier Non-Compliance increases +30%. | `python3 -m src.data.seed esg_compliance_failure` |
-
----
-
-## 5. High Availability Fallback Architecture
-
-If Neon PostgreSQL is unreachable or throttled due to quota limits (`ERROR: Your project has exceeded the data transfer quota`):
-
-1. **Graceful Degradation**: `get_kpi_metrics()` in `src/services/pg_store.py` catches database connection errors and returns empty DataFrames.
-2. **Empty Data Handling**: Health score functions return sensible defaults (e.g., `{"score": 0, "label": "No Data"}`) when data is unavailable.
-3. **Data Re-seeding**: The seed engine can be re-run to restore data once connectivity is restored (`python3 -m src.data.seed`).
-
-**Note**: There is no automatic in-memory fallback. Data availability depends on Neon PostgreSQL connectivity.
+*Reproducibility Guarantee: Re-running the data generation script will always yield the exact same NexaCore dataset values, ensuring reproducible demonstrations and tests.*
