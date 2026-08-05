@@ -210,8 +210,12 @@ class UltraFastRAG:
         self.max_cache_size = 100
         self.embedding_model = None
         self.vectorstore = None
-        
-        if _SBERT:
+
+        # On Render free tier (512 MB RAM) loading SentenceTransformer causes OOM.
+        # Skip local model loading when the RENDER environment variable is set;
+        # _retrieve_documents will fall back to the HF Inference API instead.
+        import os as _os
+        if _SBERT and not _os.getenv("RENDER"):
             try:
                 self.embedding_model = SentenceTransformer(
                     settings.EMBEDDING_MODEL or "all-MiniLM-L6-v2"
@@ -266,9 +270,27 @@ class UltraFastRAG:
                 log.warning("Hybrid retrieval skipped: %s", e)
 
             # Semantic search with embeddings
-            if _SBERT and self.embedding_model and "embedding" in docs.columns:
+            if "embedding" in docs.columns and (self.embedding_model is not None or _os.getenv("HF_TOKEN")):
                 try:
-                    query_embedding = self.embedding_model.encode([query])[0]
+                    if self.embedding_model is not None:
+                        query_embedding = self.embedding_model.encode([query])[0]
+                    else:
+                        # Render / memory-constrained path: use HF Inference API for embedding.
+                        import urllib.request as _urllib_req
+                        import json as _json
+                        hf_token = _os.environ.get("HF_TOKEN", "").strip()
+                        if hf_token:
+                            _emb_model = _os.environ.get("HF_EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5")
+                            _url = f"https://router.huggingface.co/hf-inference/pipeline/feature-extraction/{_emb_model}"
+                            _h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
+                            _body = _json.dumps({"inputs": [query]}).encode()
+                            _req_obj = _urllib_req.Request(_url, data=_body, headers=_h)
+                            _res = _json.loads(_urllib_req.urlopen(_req_obj, timeout=20).read())
+                            query_embedding = np.array(
+                                _res[0] if isinstance(_res[0], list) else _res, dtype="float32"
+                            )
+                        else:
+                            raise ValueError("HF_TOKEN not set; cannot embed query on Render")
                     doc_embeddings = []
                     
                     for emb_str in docs["embedding"]:
