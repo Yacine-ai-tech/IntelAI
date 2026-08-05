@@ -1,0 +1,62 @@
+{
+  "company": "NexaCore Technologies",
+  "period": "Q1 2024 (Jan\u2013Mar 2024)",
+  "compiled_by": "People Analytics Team",
+  "total_voluntary_exits": 23,
+  "departments": {
+    "Engineering": 9,
+    "Customer Success": 6,
+    "Sales": 4,
+    "Product": 3,
+    "Operations": 1
+  },
+  "primary_exit_reasons": [
+    {
+      "reason": "Compensation below market",
+      "pct": 47.8,
+      "count": 11
+    },
+    {
+      "reason": "Career growth / promotion velocity",
+      "pct": 26.1,
+      "count": 6
+    },
+    {
+      "reason": "Work-life balance / remote policy reversal",
+      "pct": 17.4,
+      "count": 4
+    },
+    {
+      "reason": "Manager relationship",
+      "pct": 8.7,
+      "count": 2
+    }
+  ],
+  "destination_breakdown": [
+    {
+      "type": "Competitor (SaaS Analytics)",
+      "pct": 39.1
+    },
+    {
+      "type": "Large Tech (FAANG/MAMAA)",
+      "pct": 26.1
+    },
+    {
+      "type": "Early-stage startup",
+      "pct": 17.4
+    },
+    {
+      "type": "Unknown / declined to share",
+      "pct": 17.4
+    }
+  ],
+  "regrettable_exits_pct": 78.3,
+  "avg_tenure_months": 21.4,
+  "nps_final_score": 12,
+  "recommendations": [
+    "Immediate out-of-cycle comp review for Engineering and Product (priority: P50+ targeting)",
+    "Reverse office mandate or provide hybrid flex options",
+    "Define and publish updated career ladder with level criteria by Q2",
+    "Manager effectiveness training \u2014 3 managers cited in multiple exits"
+  ]
+}
