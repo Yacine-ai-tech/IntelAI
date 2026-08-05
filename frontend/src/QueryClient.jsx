@@ -7,7 +7,8 @@ const queryClient = new QueryClient({
       cacheTime: 10 * 60 * 1000, // 10 minutes
       refetchOnWindowFocus: false,
       refetchOnMount: false,
-      retry: 1,
+      retry: 3,
+      retryDelay: attemptIndex => Math.min(3000 * (attemptIndex + 1), 15000),
     },
     mutations: {
       retry: 1,
