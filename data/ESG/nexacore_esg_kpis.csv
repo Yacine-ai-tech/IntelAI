@@ -1,0 +1,547 @@
+period,category,segment,metric,value,unit,direction,source
+2020-01,ESG,Global,Carbon Footprint tCO2e (metric tons),1886.0,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-02,ESG,Global,Carbon Footprint tCO2e (metric tons),1925.62,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-03,ESG,Global,Carbon Footprint tCO2e (metric tons),1964.97,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-04,ESG,Global,Carbon Footprint tCO2e (metric tons),2004.03,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-05,ESG,Global,Carbon Footprint tCO2e (metric tons),2042.81,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-06,ESG,Global,Carbon Footprint tCO2e (metric tons),2081.32,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-07,ESG,Global,Carbon Footprint tCO2e (metric tons),2119.54,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-08,ESG,Global,Carbon Footprint tCO2e (metric tons),2157.5,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-09,ESG,Global,Carbon Footprint tCO2e (metric tons),2195.18,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-10,ESG,Global,Carbon Footprint tCO2e (metric tons),2232.58,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-11,ESG,Global,Carbon Footprint tCO2e (metric tons),2269.72,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-12,ESG,Global,Carbon Footprint tCO2e (metric tons),2306.59,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-01,ESG,Global,Carbon Footprint tCO2e (metric tons),2343.19,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-02,ESG,Global,Carbon Footprint tCO2e (metric tons),2379.52,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-03,ESG,Global,Carbon Footprint tCO2e (metric tons),2415.59,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-04,ESG,Global,Carbon Footprint tCO2e (metric tons),2451.39,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-05,ESG,Global,Carbon Footprint tCO2e (metric tons),2486.93,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-06,ESG,Global,Carbon Footprint tCO2e (metric tons),2522.21,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-07,ESG,Global,Carbon Footprint tCO2e (metric tons),2470.55,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-08,ESG,Global,Carbon Footprint tCO2e (metric tons),2419.19,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-09,ESG,Global,Carbon Footprint tCO2e (metric tons),2368.15,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-10,ESG,Global,Carbon Footprint tCO2e (metric tons),2317.42,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-11,ESG,Global,Carbon Footprint tCO2e (metric tons),2267.0,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-12,ESG,Global,Carbon Footprint tCO2e (metric tons),2216.89,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-01,ESG,Global,Carbon Footprint tCO2e (metric tons),2167.08,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-02,ESG,Global,Carbon Footprint tCO2e (metric tons),2117.58,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-03,ESG,Global,Carbon Footprint tCO2e (metric tons),2068.38,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-04,ESG,Global,Carbon Footprint tCO2e (metric tons),2019.48,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-05,ESG,Global,Carbon Footprint tCO2e (metric tons),1970.88,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-06,ESG,Global,Carbon Footprint tCO2e (metric tons),1922.58,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-07,ESG,Global,Carbon Footprint tCO2e (metric tons),1874.58,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-08,ESG,Global,Carbon Footprint tCO2e (metric tons),1826.87,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-09,ESG,Global,Carbon Footprint tCO2e (metric tons),1779.46,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-10,ESG,Global,Carbon Footprint tCO2e (metric tons),1732.34,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-11,ESG,Global,Carbon Footprint tCO2e (metric tons),1685.52,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-12,ESG,Global,Carbon Footprint tCO2e (metric tons),1638.98,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-01,ESG,Global,Carbon Footprint tCO2e (metric tons),1633.57,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-02,ESG,Global,Carbon Footprint tCO2e (metric tons),1628.18,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-03,ESG,Global,Carbon Footprint tCO2e (metric tons),1622.81,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-04,ESG,Global,Carbon Footprint tCO2e (metric tons),1617.45,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-05,ESG,Global,Carbon Footprint tCO2e (metric tons),1612.12,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-06,ESG,Global,Carbon Footprint tCO2e (metric tons),1606.8,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-07,ESG,Global,Carbon Footprint tCO2e (metric tons),1601.49,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-08,ESG,Global,Carbon Footprint tCO2e (metric tons),1596.21,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-09,ESG,Global,Carbon Footprint tCO2e (metric tons),1590.94,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-10,ESG,Global,Carbon Footprint tCO2e (metric tons),1585.69,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-11,ESG,Global,Carbon Footprint tCO2e (metric tons),1580.46,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-12,ESG,Global,Carbon Footprint tCO2e (metric tons),1575.24,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-01,ESG,Global,Carbon Footprint tCO2e (metric tons),1570.04,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-02,ESG,Global,Carbon Footprint tCO2e (metric tons),1564.86,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-03,ESG,Global,Carbon Footprint tCO2e (metric tons),1559.7,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-04,ESG,Global,Carbon Footprint tCO2e (metric tons),1554.55,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-05,ESG,Global,Carbon Footprint tCO2e (metric tons),1549.42,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-06,ESG,Global,Carbon Footprint tCO2e (metric tons),1544.31,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-07,ESG,Global,Carbon Footprint tCO2e (metric tons),1539.21,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-08,ESG,Global,Carbon Footprint tCO2e (metric tons),1534.13,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-09,ESG,Global,Carbon Footprint tCO2e (metric tons),1529.07,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-10,ESG,Global,Carbon Footprint tCO2e (metric tons),1524.02,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-11,ESG,Global,Carbon Footprint tCO2e (metric tons),1519.0,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-12,ESG,Global,Carbon Footprint tCO2e (metric tons),1513.98,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-01,ESG,Global,Carbon Footprint tCO2e (metric tons),1508.99,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-02,ESG,Global,Carbon Footprint tCO2e (metric tons),1504.01,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-03,ESG,Global,Carbon Footprint tCO2e (metric tons),1499.04,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-04,ESG,Global,Carbon Footprint tCO2e (metric tons),1494.1,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-05,ESG,Global,Carbon Footprint tCO2e (metric tons),1489.17,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-06,ESG,Global,Carbon Footprint tCO2e (metric tons),1484.25,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-07,ESG,Global,Carbon Footprint tCO2e (metric tons),1479.35,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-08,ESG,Global,Carbon Footprint tCO2e (metric tons),1474.47,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-09,ESG,Global,Carbon Footprint tCO2e (metric tons),1469.61,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-10,ESG,Global,Carbon Footprint tCO2e (metric tons),1464.76,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-11,ESG,Global,Carbon Footprint tCO2e (metric tons),1459.92,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-12,ESG,Global,Carbon Footprint tCO2e (metric tons),1455.11,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-01,ESG,Global,Carbon Footprint tCO2e (metric tons),1450.3,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-02,ESG,Global,Carbon Footprint tCO2e (metric tons),1445.52,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-03,ESG,Global,Carbon Footprint tCO2e (metric tons),1440.75,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-04,ESG,Global,Carbon Footprint tCO2e (metric tons),1435.99,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-05,ESG,Global,Carbon Footprint tCO2e (metric tons),1431.25,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-06,ESG,Global,Carbon Footprint tCO2e (metric tons),1426.53,metric tons,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-01,ESG,Global,Renewable Energy Ratio (%),50.11,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-02,ESG,Global,Renewable Energy Ratio (%),48.22,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-03,ESG,Global,Renewable Energy Ratio (%),46.33,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-04,ESG,Global,Renewable Energy Ratio (%),44.44,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-05,ESG,Global,Renewable Energy Ratio (%),42.56,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-06,ESG,Global,Renewable Energy Ratio (%),40.67,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-07,ESG,Global,Renewable Energy Ratio (%),38.78,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-08,ESG,Global,Renewable Energy Ratio (%),36.89,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-09,ESG,Global,Renewable Energy Ratio (%),35.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-10,ESG,Global,Renewable Energy Ratio (%),33.11,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-11,ESG,Global,Renewable Energy Ratio (%),31.22,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-12,ESG,Global,Renewable Energy Ratio (%),29.33,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-01,ESG,Global,Renewable Energy Ratio (%),27.44,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-02,ESG,Global,Renewable Energy Ratio (%),25.56,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-03,ESG,Global,Renewable Energy Ratio (%),23.67,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-04,ESG,Global,Renewable Energy Ratio (%),21.78,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-05,ESG,Global,Renewable Energy Ratio (%),19.89,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-06,ESG,Global,Renewable Energy Ratio (%),18.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-07,ESG,Global,Renewable Energy Ratio (%),19.89,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-08,ESG,Global,Renewable Energy Ratio (%),21.78,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-09,ESG,Global,Renewable Energy Ratio (%),23.67,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-10,ESG,Global,Renewable Energy Ratio (%),25.56,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-11,ESG,Global,Renewable Energy Ratio (%),27.44,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-12,ESG,Global,Renewable Energy Ratio (%),29.33,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-01,ESG,Global,Renewable Energy Ratio (%),31.22,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-02,ESG,Global,Renewable Energy Ratio (%),33.11,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-03,ESG,Global,Renewable Energy Ratio (%),35.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-04,ESG,Global,Renewable Energy Ratio (%),36.89,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-05,ESG,Global,Renewable Energy Ratio (%),38.78,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-06,ESG,Global,Renewable Energy Ratio (%),40.67,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-07,ESG,Global,Renewable Energy Ratio (%),42.56,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-08,ESG,Global,Renewable Energy Ratio (%),44.44,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-09,ESG,Global,Renewable Energy Ratio (%),46.33,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-10,ESG,Global,Renewable Energy Ratio (%),48.22,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-11,ESG,Global,Renewable Energy Ratio (%),50.11,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-12,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-01,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-02,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-03,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-04,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-05,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-06,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-07,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-08,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-09,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-10,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-11,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-12,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-01,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-02,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-03,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-04,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-05,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-06,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-07,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-08,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-09,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-10,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-11,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-12,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-01,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-02,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-03,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-04,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-05,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-06,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-07,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-08,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-09,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-10,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-11,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-12,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-01,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-02,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-03,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-04,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-05,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-06,ESG,Global,Renewable Energy Ratio (%),52.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-01,ESG,Global,Board Diversity Ratio (%),37.11,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-02,ESG,Global,Board Diversity Ratio (%),36.22,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-03,ESG,Global,Board Diversity Ratio (%),35.33,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-04,ESG,Global,Board Diversity Ratio (%),34.44,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-05,ESG,Global,Board Diversity Ratio (%),33.56,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-06,ESG,Global,Board Diversity Ratio (%),32.67,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-07,ESG,Global,Board Diversity Ratio (%),31.78,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-08,ESG,Global,Board Diversity Ratio (%),30.89,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-09,ESG,Global,Board Diversity Ratio (%),30.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-10,ESG,Global,Board Diversity Ratio (%),29.11,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-11,ESG,Global,Board Diversity Ratio (%),28.22,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-12,ESG,Global,Board Diversity Ratio (%),27.33,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-01,ESG,Global,Board Diversity Ratio (%),26.44,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-02,ESG,Global,Board Diversity Ratio (%),25.56,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-03,ESG,Global,Board Diversity Ratio (%),24.67,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-04,ESG,Global,Board Diversity Ratio (%),23.78,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-05,ESG,Global,Board Diversity Ratio (%),22.89,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-06,ESG,Global,Board Diversity Ratio (%),22.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-07,ESG,Global,Board Diversity Ratio (%),22.89,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-08,ESG,Global,Board Diversity Ratio (%),23.78,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-09,ESG,Global,Board Diversity Ratio (%),24.67,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-10,ESG,Global,Board Diversity Ratio (%),25.56,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-11,ESG,Global,Board Diversity Ratio (%),26.44,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-12,ESG,Global,Board Diversity Ratio (%),27.33,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-01,ESG,Global,Board Diversity Ratio (%),28.22,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-02,ESG,Global,Board Diversity Ratio (%),29.11,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-03,ESG,Global,Board Diversity Ratio (%),30.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-04,ESG,Global,Board Diversity Ratio (%),30.89,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-05,ESG,Global,Board Diversity Ratio (%),31.78,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-06,ESG,Global,Board Diversity Ratio (%),32.67,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-07,ESG,Global,Board Diversity Ratio (%),33.56,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-08,ESG,Global,Board Diversity Ratio (%),34.44,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-09,ESG,Global,Board Diversity Ratio (%),35.33,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-10,ESG,Global,Board Diversity Ratio (%),36.22,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-11,ESG,Global,Board Diversity Ratio (%),37.11,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-12,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-01,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-02,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-03,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-04,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-05,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-06,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-07,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-08,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-09,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-10,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-11,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-12,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-01,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-02,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-03,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-04,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-05,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-06,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-07,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-08,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-09,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-10,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-11,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-12,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-01,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-02,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-03,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-04,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-05,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-06,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-07,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-08,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-09,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-10,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-11,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-12,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-01,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-02,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-03,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-04,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-05,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-06,ESG,Global,Board Diversity Ratio (%),38.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-01,ESG,Global,Audit Compliance Score (%),97.31,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-02,ESG,Global,Audit Compliance Score (%),96.82,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-03,ESG,Global,Audit Compliance Score (%),96.33,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-04,ESG,Global,Audit Compliance Score (%),95.84,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-05,ESG,Global,Audit Compliance Score (%),95.36,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-06,ESG,Global,Audit Compliance Score (%),94.87,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-07,ESG,Global,Audit Compliance Score (%),94.38,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-08,ESG,Global,Audit Compliance Score (%),93.89,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-09,ESG,Global,Audit Compliance Score (%),93.4,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-10,ESG,Global,Audit Compliance Score (%),92.91,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-11,ESG,Global,Audit Compliance Score (%),92.42,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-12,ESG,Global,Audit Compliance Score (%),91.93,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-01,ESG,Global,Audit Compliance Score (%),91.44,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-02,ESG,Global,Audit Compliance Score (%),90.96,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-03,ESG,Global,Audit Compliance Score (%),90.47,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-04,ESG,Global,Audit Compliance Score (%),89.98,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-05,ESG,Global,Audit Compliance Score (%),89.49,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-06,ESG,Global,Audit Compliance Score (%),89.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-07,ESG,Global,Audit Compliance Score (%),89.49,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-08,ESG,Global,Audit Compliance Score (%),89.98,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-09,ESG,Global,Audit Compliance Score (%),90.47,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-10,ESG,Global,Audit Compliance Score (%),90.96,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-11,ESG,Global,Audit Compliance Score (%),91.44,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-12,ESG,Global,Audit Compliance Score (%),91.93,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-01,ESG,Global,Audit Compliance Score (%),92.42,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-02,ESG,Global,Audit Compliance Score (%),92.91,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-03,ESG,Global,Audit Compliance Score (%),93.4,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-04,ESG,Global,Audit Compliance Score (%),93.89,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-05,ESG,Global,Audit Compliance Score (%),94.38,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-06,ESG,Global,Audit Compliance Score (%),94.87,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-07,ESG,Global,Audit Compliance Score (%),95.36,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-08,ESG,Global,Audit Compliance Score (%),95.84,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-09,ESG,Global,Audit Compliance Score (%),96.33,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-10,ESG,Global,Audit Compliance Score (%),96.82,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-11,ESG,Global,Audit Compliance Score (%),97.31,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-12,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-01,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-02,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-03,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-04,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-05,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-06,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-07,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-08,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-09,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-10,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-11,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-12,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-01,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-02,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-03,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-04,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-05,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-06,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-07,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-08,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-09,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-10,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-11,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-12,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-01,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-02,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-03,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-04,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-05,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-06,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-07,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-08,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-09,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-10,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-11,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-12,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-01,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-02,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-03,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-04,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-05,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-06,ESG,Global,Audit Compliance Score (%),97.8,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-01,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-02,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-03,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-04,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-05,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-06,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-07,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-08,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-09,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-10,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-11,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-12,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-01,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-02,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-03,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-04,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-05,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-06,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-07,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-08,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-09,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-10,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-11,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-12,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-01,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-02,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-03,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-04,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-05,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-06,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-07,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-08,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-09,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-10,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-11,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-12,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-01,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-02,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-03,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-04,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-05,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-06,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-07,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-08,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-09,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-10,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-11,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-12,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-01,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-02,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-03,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-04,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-05,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-06,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-07,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-08,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-09,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-10,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-11,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-12,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-01,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-02,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-03,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-04,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-05,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-06,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-07,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-08,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-09,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-10,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-11,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-12,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-01,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-02,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-03,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-04,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-05,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-06,ESG,Global,Privacy Incident Count (Count),0.0,Count,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-01,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-02,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-03,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-04,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-05,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-06,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-07,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-08,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-09,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-10,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-11,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-12,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-01,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-02,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-03,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-04,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-05,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-06,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-07,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-08,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-09,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-10,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-11,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-12,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-01,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-02,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-03,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-04,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-05,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-06,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-07,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-08,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-09,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-10,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-11,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-12,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-01,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-02,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-03,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-04,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-05,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-06,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-07,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-08,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-09,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-10,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-11,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-12,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-01,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-02,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-03,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-04,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-05,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-06,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-07,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-08,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-09,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-10,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-11,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-12,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-01,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-02,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-03,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-04,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-05,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-06,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-07,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-08,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-09,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-10,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-11,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-12,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-01,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-02,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-03,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-04,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-05,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-06,ESG,Global,Water Usage (m3),4200.0,m3,down,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-01,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-02,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-03,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-04,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-05,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-06,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-07,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-08,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-09,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-10,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-11,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2020-12,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-01,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-02,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-03,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-04,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-05,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-06,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-07,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-08,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-09,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-10,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-11,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2021-12,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-01,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-02,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-03,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-04,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-05,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-06,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-07,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-08,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-09,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-10,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-11,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2022-12,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-01,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-02,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-03,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-04,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-05,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-06,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-07,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-08,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-09,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-10,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-11,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2023-12,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-01,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-02,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-03,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-04,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-05,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-06,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-07,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-08,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-09,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-10,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-11,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2024-12,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-01,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-02,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-03,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-04,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-05,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-06,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-07,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-08,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-09,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-10,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-11,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2025-12,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-01,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-02,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-03,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-04,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-05,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024
+2026-06,ESG,Global,Waste Diverted from Landfill (%),68.0,%,up,GRI Global Reporting Initiative 2024; TCFD Framework 2023; CDP Environmental Data 2024

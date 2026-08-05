@@ -18,21 +18,15 @@ Features:
       - Full Real Ingestion (default): Scans whole IntelAI/data/ folder.
       - Target Ingestion (--path): Ingests specific files or subfolders.
       - Dry Run (--dry-run): Previews discovery & category matching without HTTP calls.
+      - Domain Filter (--domain): Ingests only a specific domain.
+      - Scenario (--scenario): Print which scenario periods are in the data.
+      - Validate (--validate): Check CSVs against kpi_metrics schema before ingesting.
+      - Report (--report): Show summary table per domain after ingestion.
 
 Environment Variables:
   INTELAI_API_URL : Base URL of the backend (default: http://localhost:8000)
   ADMIN_USERNAME : Admin username for JWT authentication (default: admin@company.com)
   ADMIN_PASSWORD : Admin password for JWT authentication (default: AdminPassword123!)
-
-Usage Examples:
-  # Ingest entire IntelAI/data/ recursively (default)
-  python3 scripts/seed_via_api.py
-
-  # Ingest specific file or directory
-  python3 scripts/seed_via_api.py --path data/documents/AmazonWebServices.pdf
-
-  # Preview files to be ingested
-  python3 scripts/seed_via_api.py --dry-run
 """
 
 import argparse
@@ -40,6 +34,8 @@ import os
 import sys
 import time
 import mimetypes
+import csv
+from collections import defaultdict
 from pathlib import Path
 from typing import List, Tuple, Optional
 import httpx
@@ -59,6 +55,19 @@ DOCUMENT_EXTS = {
     ".mp3", ".wav", ".m4a", ".ogg", ".flac", ".aac"
 }
 
+SCENARIOS = [
+    ("2020-01 to 2021-06", "COVID-19 Impact"),
+    ("2021-07 to 2022-12", "Recovery & Supply Chain Crisis"),
+    ("2023-01 to 2023-09", "Healthy Baseline"),
+    ("2023-10 to 2024-03", "High Churn Crisis"),
+    ("2024-04 to 2024-09", "Talent Crisis"),
+    ("2024-10 to 2025-03", "Cybersecurity Breach"),
+    ("2025-04 to 2025-09", "Operational Meltdown"),
+    ("2025-10 to 2026-06", "Full Recovery")
+]
+
+EXPECTED_CSV_HEADER = ["period", "category", "segment", "metric", "value", "unit", "direction", "source"]
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="IntelAI Pure Real-Data REST API Ingestion Tool")
@@ -68,7 +77,7 @@ def parse_args():
     )
     parser.add_argument(
         "--category", type=str, default=None,
-        help="Override category for ingested files (e.g. Finance, HR, IT, Logistics, Operations, ESG, Growth)"
+        help="Override category for ingested files"
     )
     parser.add_argument(
         "--dry-run", action="store_true",
@@ -78,7 +87,55 @@ def parse_args():
         "--ext", nargs="+", type=str, default=None,
         help="Filter file extensions (e.g. --ext .pdf .csv)"
     )
+    parser.add_argument(
+        "--domain", type=str, default=None,
+        help="Ingest only a specific domain (e.g. Finance, Growth, People, Operations, Logistics, IT, ESG)"
+    )
+    parser.add_argument(
+        "--scenario", action="store_true",
+        help="Print which scenario periods are in the data"
+    )
+    parser.add_argument(
+        "--validate", action="store_true",
+        help="Check CSVs against kpi_metrics schema before ingesting"
+    )
+    parser.add_argument(
+        "--report", action="store_true",
+        help="Show summary table per domain after ingestion"
+    )
     return parser.parse_args()
+
+
+def print_scenarios():
+    """Prints the scenario epochs present in the dataset."""
+    print("\n==========================================================")
+    print("📊 DATASET SCENARIO EPOCHS")
+    print("==========================================================")
+    for period, name in SCENARIOS:
+        print(f"  • {period:<20} : {name}")
+    print("==========================================================\n")
+
+
+def validate_csv(file_path: Path) -> bool:
+    """Validates the CSV schema matches EXPECTED_CSV_HEADER."""
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            header = next(reader, None)
+            if header != EXPECTED_CSV_HEADER:
+                print(f"   ❌ Validation failed for {file_path.name}: Header mismatch.")
+                print(f"      Expected: {EXPECTED_CSV_HEADER}")
+                print(f"      Got:      {header}")
+                return False
+            # Check row length
+            for row in reader:
+                if len(row) != len(EXPECTED_CSV_HEADER):
+                    print(f"   ❌ Validation failed for {file_path.name}: Row length mismatch.")
+                    return False
+        return True
+    except Exception as e:
+        print(f"   ❌ Validation error for {file_path.name}: {e}")
+        return False
 
 
 def get_auth_token(client: httpx.Client, dry_run: bool = False) -> str:
@@ -107,8 +164,8 @@ def get_auth_token(client: httpx.Client, dry_run: bool = False) -> str:
         return ""
 
 
-def poll_job_completion(client: httpx.Client, headers: dict, job_id: str, filename: str):
-    """Poll async job status until completion or failure."""
+def poll_job_completion(client: httpx.Client, headers: dict, job_id: str, filename: str) -> bool:
+    """Poll async job status until completion or failure. Returns True if successful."""
     status_url = f"{API_BASE_URL}/api/v1/ingest/jobs/{job_id}"
     print(f"   ⏳ Polling background job '{job_id}' for {filename}...")
     for _ in range(60):
@@ -121,17 +178,19 @@ def poll_job_completion(client: httpx.Client, headers: dict, job_id: str, filena
                 pct = job.get("progress_pct", 0)
                 if status == "completed":
                     print(f"   ✅ Job '{job_id}' COMPLETED (100%): {filename}")
-                    return
+                    return True
                 elif status == "failed":
                     err = job.get("error", "Unknown error")
                     print(f"   ❌ Job '{job_id}' FAILED: {err}")
-                    return
+                    return False
                 else:
-                    print(f"      • [{pct}%] {step}")
+                    sys.stdout.write(f"\r      • [{pct}%] {step}               ")
+                    sys.stdout.flush()
         except Exception as e:
             print(f"      • Polling note: {e}")
         time.sleep(1.0)
-    print(f"   ⚠️ Polling timeout for job '{job_id}'. Heavy processing continues in background.")
+    print(f"\n   ⚠️ Polling timeout for job '{job_id}'. Heavy processing continues in background.")
+    return False
 
 
 def infer_category(file_path: Path, override_cat: Optional[str] = None) -> str:
@@ -141,7 +200,7 @@ def infer_category(file_path: Path, override_cat: Optional[str] = None) -> str:
 
     # Check parent folder name
     parent_name = file_path.parent.name.lower()
-    if parent_name in ["hr", "people"]: return "HR"
+    if parent_name in ["hr", "people"]: return "People"
     if parent_name in ["finance", "invoices", "billing"]: return "Finance"
     if parent_name in ["it", "tech", "security"]: return "IT"
     if parent_name in ["logistics", "supply_chain", "shipping"]: return "Logistics"
@@ -154,7 +213,7 @@ def infer_category(file_path: Path, override_cat: Optional[str] = None) -> str:
     if any(k in fname_lower for k in ["aws", "invoice", "billing", "free_fiber", "saas", "financial"]):
         return "Finance"
     if any(k in fname_lower for k in ["hr", "employee", "payroll", "recruitment", "people"]):
-        return "HR"
+        return "People"
     if any(k in fname_lower for k in ["coolblue", "hosting", "it", "devops", "security", "ticket"]):
         return "IT"
     if any(k in fname_lower for k in ["flipkart", "shipping", "logistics", "supplier", "inventory"]):
@@ -169,7 +228,7 @@ def infer_category(file_path: Path, override_cat: Optional[str] = None) -> str:
     return "General"
 
 
-def discover_files(input_paths: List[Path], ext_filter: Optional[List[str]] = None) -> List[Path]:
+def discover_files(input_paths: List[Path], ext_filter: Optional[List[str]] = None, domain_filter: Optional[str] = None) -> List[Path]:
     """Recursively discover all files from input paths."""
     discovered: List[Path] = []
     ext_set = {e.lower() if e.startswith(".") else f".{e.lower()}" for e in ext_filter} if ext_filter else None
@@ -181,7 +240,9 @@ def discover_files(input_paths: List[Path], ext_filter: Optional[List[str]] = No
         if p.is_file():
             if not p.name.startswith("."):
                 if not ext_set or p.suffix.lower() in ext_set:
-                    discovered.append(p.resolve())
+                    cat = infer_category(p)
+                    if not domain_filter or cat.lower() == domain_filter.lower():
+                        discovered.append(p.resolve())
         elif p.is_dir():
             for root, _, files in os.walk(p):
                 for f in files:
@@ -189,13 +250,15 @@ def discover_files(input_paths: List[Path], ext_filter: Optional[List[str]] = No
                         continue
                     fp = Path(root) / f
                     if not ext_set or fp.suffix.lower() in ext_set:
-                        discovered.append(fp.resolve())
+                        cat = infer_category(fp)
+                        if not domain_filter or cat.lower() == domain_filter.lower():
+                            discovered.append(fp.resolve())
 
     return sorted(list(set(discovered)))
 
 
-def ingest_file(client: httpx.Client, headers: dict, file_path: Path, category: str, dry_run: bool = False):
-    """Route file to correct endpoint based on file extension."""
+def ingest_file(client: httpx.Client, headers: dict, file_path: Path, category: str, dry_run: bool = False) -> bool:
+    """Route file to correct endpoint based on file extension. Returns True if successful."""
     ext = file_path.suffix.lower()
 
     if ext in CSV_EXCEL_EXTS:
@@ -204,7 +267,7 @@ def ingest_file(client: httpx.Client, headers: dict, file_path: Path, category: 
         print(f"\n📈 Ingesting Real Dataset ({category}): {file_path.name} -> {url}")
         if dry_run:
             print(f"   [DRY RUN] Would POST {url} with file={file_path.name}, source_name={source_name}")
-            return
+            return True
         try:
             with open(file_path, "rb") as f:
                 resp = client.post(
@@ -217,13 +280,16 @@ def ingest_file(client: httpx.Client, headers: dict, file_path: Path, category: 
                 res = resp.json()
                 job_id = res.get("job_id")
                 if job_id:
-                    poll_job_completion(client, headers, job_id, file_path.name)
+                    return poll_job_completion(client, headers, job_id, file_path.name)
                 else:
-                    print(f"   ✅ Ingested dataset {file_path.name}: {res}")
+                    print(f"   ✅ Ingested dataset {file_path.name}")
+                    return True
             else:
                 print(f"   ⚠️ Dataset ingest note ({resp.status_code}): {resp.text}")
+                return False
         except Exception as e:
             print(f"   ❌ Dataset ingest error for {file_path.name}: {e}")
+            return False
 
     elif ext in DOCUMENT_EXTS or ext in {".txt", ".md", ".json"}:
         url = f"{API_BASE_URL}/api/v1/ingest/document"
@@ -234,7 +300,7 @@ def ingest_file(client: httpx.Client, headers: dict, file_path: Path, category: 
         print(f"\n📄 Ingesting Real {file_type} ({category}): {file_path.name} -> {url}")
         if dry_run:
             print(f"   [DRY RUN] Would POST {url} with file={file_path.name}, category={category}, mime={mime_type}")
-            return
+            return True
         try:
             with open(file_path, "rb") as f:
                 resp = client.post(
@@ -247,15 +313,19 @@ def ingest_file(client: httpx.Client, headers: dict, file_path: Path, category: 
                 res = resp.json()
                 job_id = res.get("job_id")
                 if job_id:
-                    poll_job_completion(client, headers, job_id, file_path.name)
+                    return poll_job_completion(client, headers, job_id, file_path.name)
                 else:
-                    print(f"   ✅ Ingested {file_path.name}: {res}")
+                    print(f"   ✅ Ingested {file_path.name}")
+                    return True
             else:
                 print(f"   ⚠️ Ingest note ({resp.status_code}): {resp.text}")
+                return False
         except Exception as e:
             print(f"   ❌ Ingest error for {file_path.name}: {e}")
+            return False
     else:
         print(f"\n⏭️ Skipping unsupported file extension ({ext}): {file_path.name}")
+        return False
 
 
 def main():
@@ -266,7 +336,18 @@ def main():
     print("==========================================================")
     print(f"🔗 Base API Endpoint: {API_BASE_URL}")
     print(f"🔒 Admin Account:     {ADMIN_USERNAME}")
-    print(f"🧪 Dry Run Mode:       {'ENABLED' if args.dry_run else 'DISABLED'}\n")
+    print(f"🧪 Dry Run Mode:       {'ENABLED' if args.dry_run else 'DISABLED'}")
+    if args.domain:
+        print(f"🎯 Domain Filter:      {args.domain}")
+    if args.validate:
+        print(f"🛡️  Validation:        ENABLED")
+    print()
+
+    if args.scenario:
+        print_scenarios()
+        if not args.path and not args.domain and not args.validate:
+            # If ONLY --scenario was passed, maybe they just want the info
+            pass
 
     # Determine input target paths
     if args.path:
@@ -275,21 +356,54 @@ def main():
         target_paths = [DEFAULT_DATA_DIR]
 
     print(f"🔍 Discovering real target files in: {[str(p) for p in target_paths]}...")
-    discovered_files = discover_files(target_paths, ext_filter=args.ext)
+    discovered_files = discover_files(target_paths, ext_filter=args.ext, domain_filter=args.domain)
     print(f"   📊 Discovered {len(discovered_files)} real file(s) for ingestion.")
 
     if not discovered_files:
         print("❌ No matching files found to ingest.")
         sys.exit(0)
 
+    # Validation Pass
+    if args.validate:
+        print("\n🔍 Validating CSV Files...")
+        all_valid = True
+        for fp in discovered_files:
+            if fp.suffix.lower() in CSV_EXCEL_EXTS:
+                is_valid = validate_csv(fp)
+                if not is_valid:
+                    all_valid = False
+        if not all_valid:
+            print("❌ Validation failed for one or more files. Aborting ingestion.")
+            sys.exit(1)
+        else:
+            print("✅ All CSV files passed validation.")
+
+    # Ingestion Pass
+    report_stats = defaultdict(lambda: {"success": 0, "failed": 0})
+    
     with httpx.Client(timeout=120.0) as client:
         token = get_auth_token(client, dry_run=args.dry_run)
         headers = {"Authorization": f"Bearer {token}"} if token else {}
 
-        # Process discovered real files
         for fp in discovered_files:
             category = infer_category(fp, override_cat=args.category)
-            ingest_file(client, headers, fp, category=category, dry_run=args.dry_run)
+            success = ingest_file(client, headers, fp, category=category, dry_run=args.dry_run)
+            
+            if success:
+                report_stats[category]["success"] += 1
+            else:
+                report_stats[category]["failed"] += 1
+
+    # Report Pass
+    if args.report:
+        print("\n==========================================================")
+        print("📊 INGESTION SUMMARY REPORT")
+        print("==========================================================")
+        print(f"{'Domain':<15} | {'Successful':<10} | {'Failed':<10}")
+        print("-" * 45)
+        for cat, stats in report_stats.items():
+            print(f"{cat:<15} | {stats['success']:<10} | {stats['failed']:<10}")
+        print("==========================================================")
 
     print("\n==========================================================")
     print("✨ PURE REAL-DATA REST API INGESTION COMPLETED.")

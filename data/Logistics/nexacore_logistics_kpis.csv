@@ -1,0 +1,547 @@
+period,category,segment,metric,value,unit,direction,source
+2020-01,Logistics,Global,On Time Delivery (%),93.42,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-02,Logistics,Global,On Time Delivery (%),92.63,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-03,Logistics,Global,On Time Delivery (%),91.84,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-04,Logistics,Global,On Time Delivery (%),91.06,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-05,Logistics,Global,On Time Delivery (%),90.28,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-06,Logistics,Global,On Time Delivery (%),89.49,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-07,Logistics,Global,On Time Delivery (%),88.71,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-08,Logistics,Global,On Time Delivery (%),87.92,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-09,Logistics,Global,On Time Delivery (%),87.14,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-10,Logistics,Global,On Time Delivery (%),86.35,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-11,Logistics,Global,On Time Delivery (%),85.57,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-12,Logistics,Global,On Time Delivery (%),84.78,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-01,Logistics,Global,On Time Delivery (%),84.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-02,Logistics,Global,On Time Delivery (%),83.21,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-03,Logistics,Global,On Time Delivery (%),82.43,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-04,Logistics,Global,On Time Delivery (%),81.64,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-05,Logistics,Global,On Time Delivery (%),80.86,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-06,Logistics,Global,On Time Delivery (%),80.07,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-07,Logistics,Global,On Time Delivery (%),79.84,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-08,Logistics,Global,On Time Delivery (%),79.62,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-09,Logistics,Global,On Time Delivery (%),79.39,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-10,Logistics,Global,On Time Delivery (%),79.17,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-11,Logistics,Global,On Time Delivery (%),78.94,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-12,Logistics,Global,On Time Delivery (%),78.71,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-01,Logistics,Global,On Time Delivery (%),78.49,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-02,Logistics,Global,On Time Delivery (%),78.26,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-03,Logistics,Global,On Time Delivery (%),78.03,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-04,Logistics,Global,On Time Delivery (%),77.81,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-05,Logistics,Global,On Time Delivery (%),77.58,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-06,Logistics,Global,On Time Delivery (%),77.36,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-07,Logistics,Global,On Time Delivery (%),77.13,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-08,Logistics,Global,On Time Delivery (%),76.9,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-09,Logistics,Global,On Time Delivery (%),76.68,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-10,Logistics,Global,On Time Delivery (%),76.45,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-11,Logistics,Global,On Time Delivery (%),76.23,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-12,Logistics,Global,On Time Delivery (%),76.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-01,Logistics,Global,On Time Delivery (%),78.02,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-02,Logistics,Global,On Time Delivery (%),80.04,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-03,Logistics,Global,On Time Delivery (%),82.07,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-04,Logistics,Global,On Time Delivery (%),84.09,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-05,Logistics,Global,On Time Delivery (%),86.11,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-06,Logistics,Global,On Time Delivery (%),88.13,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-07,Logistics,Global,On Time Delivery (%),90.16,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-08,Logistics,Global,On Time Delivery (%),92.18,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-09,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-10,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-11,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-12,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-01,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-02,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-03,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-04,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-05,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-06,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-07,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-08,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-09,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-10,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-11,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-12,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-01,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-02,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-03,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-04,Logistics,Global,On Time Delivery (%),89.8,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-05,Logistics,Global,On Time Delivery (%),85.41,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-06,Logistics,Global,On Time Delivery (%),81.01,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-07,Logistics,Global,On Time Delivery (%),76.62,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-08,Logistics,Global,On Time Delivery (%),72.22,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-09,Logistics,Global,On Time Delivery (%),67.82,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-10,Logistics,Global,On Time Delivery (%),70.75,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-11,Logistics,Global,On Time Delivery (%),73.69,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-12,Logistics,Global,On Time Delivery (%),76.62,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-01,Logistics,Global,On Time Delivery (%),79.55,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-02,Logistics,Global,On Time Delivery (%),82.48,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-03,Logistics,Global,On Time Delivery (%),85.41,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-04,Logistics,Global,On Time Delivery (%),88.34,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-05,Logistics,Global,On Time Delivery (%),91.27,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-06,Logistics,Global,On Time Delivery (%),94.2,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-01,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-02,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-03,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-04,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-05,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-06,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-07,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-08,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-09,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-10,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-11,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-12,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-01,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-02,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-03,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-04,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-05,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-06,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-07,Logistics,Global,Order Fulfillment Cycle Time (Hours),39.6,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-08,Logistics,Global,Order Fulfillment Cycle Time (Hours),43.2,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-09,Logistics,Global,Order Fulfillment Cycle Time (Hours),46.8,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-10,Logistics,Global,Order Fulfillment Cycle Time (Hours),50.4,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-11,Logistics,Global,Order Fulfillment Cycle Time (Hours),54.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-12,Logistics,Global,Order Fulfillment Cycle Time (Hours),57.6,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-01,Logistics,Global,Order Fulfillment Cycle Time (Hours),61.2,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-02,Logistics,Global,Order Fulfillment Cycle Time (Hours),64.8,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-03,Logistics,Global,Order Fulfillment Cycle Time (Hours),68.4,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-04,Logistics,Global,Order Fulfillment Cycle Time (Hours),72.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-05,Logistics,Global,Order Fulfillment Cycle Time (Hours),75.6,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-06,Logistics,Global,Order Fulfillment Cycle Time (Hours),79.2,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-07,Logistics,Global,Order Fulfillment Cycle Time (Hours),82.8,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-08,Logistics,Global,Order Fulfillment Cycle Time (Hours),86.4,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-09,Logistics,Global,Order Fulfillment Cycle Time (Hours),90.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-10,Logistics,Global,Order Fulfillment Cycle Time (Hours),93.6,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-11,Logistics,Global,Order Fulfillment Cycle Time (Hours),97.2,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-12,Logistics,Global,Order Fulfillment Cycle Time (Hours),100.8,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-01,Logistics,Global,Order Fulfillment Cycle Time (Hours),93.6,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-02,Logistics,Global,Order Fulfillment Cycle Time (Hours),86.4,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-03,Logistics,Global,Order Fulfillment Cycle Time (Hours),79.2,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-04,Logistics,Global,Order Fulfillment Cycle Time (Hours),72.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-05,Logistics,Global,Order Fulfillment Cycle Time (Hours),64.8,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-06,Logistics,Global,Order Fulfillment Cycle Time (Hours),57.6,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-07,Logistics,Global,Order Fulfillment Cycle Time (Hours),50.4,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-08,Logistics,Global,Order Fulfillment Cycle Time (Hours),43.2,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-09,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-10,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-11,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-12,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-01,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-02,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-03,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-04,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-05,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-06,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-07,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-08,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-09,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-10,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-11,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-12,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-01,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-02,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-03,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-04,Logistics,Global,Order Fulfillment Cycle Time (Hours),41.4,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-05,Logistics,Global,Order Fulfillment Cycle Time (Hours),46.8,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-06,Logistics,Global,Order Fulfillment Cycle Time (Hours),52.2,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-07,Logistics,Global,Order Fulfillment Cycle Time (Hours),57.6,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-08,Logistics,Global,Order Fulfillment Cycle Time (Hours),63.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-09,Logistics,Global,Order Fulfillment Cycle Time (Hours),68.4,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-10,Logistics,Global,Order Fulfillment Cycle Time (Hours),64.8,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-11,Logistics,Global,Order Fulfillment Cycle Time (Hours),61.2,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-12,Logistics,Global,Order Fulfillment Cycle Time (Hours),57.6,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-01,Logistics,Global,Order Fulfillment Cycle Time (Hours),54.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-02,Logistics,Global,Order Fulfillment Cycle Time (Hours),50.4,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-03,Logistics,Global,Order Fulfillment Cycle Time (Hours),46.8,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-04,Logistics,Global,Order Fulfillment Cycle Time (Hours),43.2,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-05,Logistics,Global,Order Fulfillment Cycle Time (Hours),39.6,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-06,Logistics,Global,Order Fulfillment Cycle Time (Hours),36.0,Hours,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-01,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-02,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-03,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-04,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-05,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-06,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-07,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-08,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-09,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-10,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-11,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-12,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-01,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-02,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-03,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-04,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-05,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-06,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-07,Logistics,Global,Inventory Turnover Ratio,8.18,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-08,Logistics,Global,Inventory Turnover Ratio,7.95,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-09,Logistics,Global,Inventory Turnover Ratio,7.73,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-10,Logistics,Global,Inventory Turnover Ratio,7.5,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-11,Logistics,Global,Inventory Turnover Ratio,7.28,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-12,Logistics,Global,Inventory Turnover Ratio,7.06,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-01,Logistics,Global,Inventory Turnover Ratio,6.83,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-02,Logistics,Global,Inventory Turnover Ratio,6.61,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-03,Logistics,Global,Inventory Turnover Ratio,6.38,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-04,Logistics,Global,Inventory Turnover Ratio,6.16,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-05,Logistics,Global,Inventory Turnover Ratio,5.94,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-06,Logistics,Global,Inventory Turnover Ratio,5.71,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-07,Logistics,Global,Inventory Turnover Ratio,5.49,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-08,Logistics,Global,Inventory Turnover Ratio,5.26,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-09,Logistics,Global,Inventory Turnover Ratio,5.04,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-10,Logistics,Global,Inventory Turnover Ratio,4.82,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-11,Logistics,Global,Inventory Turnover Ratio,4.59,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-12,Logistics,Global,Inventory Turnover Ratio,4.37,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-01,Logistics,Global,Inventory Turnover Ratio,4.82,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-02,Logistics,Global,Inventory Turnover Ratio,5.26,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-03,Logistics,Global,Inventory Turnover Ratio,5.71,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-04,Logistics,Global,Inventory Turnover Ratio,6.16,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-05,Logistics,Global,Inventory Turnover Ratio,6.61,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-06,Logistics,Global,Inventory Turnover Ratio,7.06,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-07,Logistics,Global,Inventory Turnover Ratio,7.5,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-08,Logistics,Global,Inventory Turnover Ratio,7.95,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-09,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-10,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-11,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-12,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-01,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-02,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-03,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-04,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-05,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-06,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-07,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-08,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-09,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-10,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-11,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-12,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-01,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-02,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-03,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-04,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-05,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-06,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-07,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-08,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-09,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-10,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-11,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-12,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-01,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-02,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-03,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-04,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-05,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-06,Logistics,Global,Inventory Turnover Ratio,8.4,Ratio,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-01,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-02,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-03,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-04,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-05,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-06,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-07,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-08,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-09,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-10,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-11,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-12,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-01,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-02,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-03,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-04,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-05,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-06,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-07,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-08,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-09,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-10,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-11,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-12,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-01,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-02,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-03,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-04,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-05,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-06,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-07,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-08,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-09,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-10,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-11,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-12,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-01,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-02,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-03,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-04,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-05,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-06,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-07,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-08,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-09,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-10,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-11,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-12,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-01,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-02,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-03,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-04,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-05,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-06,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-07,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-08,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-09,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-10,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-11,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-12,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-01,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-02,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-03,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-04,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-05,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-06,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-07,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-08,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-09,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-10,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-11,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-12,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-01,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-02,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-03,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-04,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-05,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-06,Logistics,Global,Supplier Defect Rate (%),0.42,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-01,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-02,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-03,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-04,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-05,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-06,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-07,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-08,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-09,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-10,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-11,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-12,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-01,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-02,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-03,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-04,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-05,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-06,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-07,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-08,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-09,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-10,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-11,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-12,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-01,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-02,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-03,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-04,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-05,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-06,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-07,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-08,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-09,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-10,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-11,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-12,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-01,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-02,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-03,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-04,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-05,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-06,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-07,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-08,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-09,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-10,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-11,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-12,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-01,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-02,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-03,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-04,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-05,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-06,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-07,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-08,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-09,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-10,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-11,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-12,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-01,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-02,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-03,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-04,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-05,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-06,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-07,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-08,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-09,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-10,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-11,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-12,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-01,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-02,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-03,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-04,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-05,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-06,Logistics,Global,Carrying Cost of Inventory (%),21.0,%,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-01,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-02,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-03,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-04,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-05,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-06,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-07,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-08,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-09,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-10,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-11,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-12,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-01,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-02,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-03,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-04,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-05,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-06,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-07,Logistics,Global,Freight Cost per Unit (USD),13.58,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-08,Logistics,Global,Freight Cost per Unit (USD),14.36,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-09,Logistics,Global,Freight Cost per Unit (USD),15.15,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-10,Logistics,Global,Freight Cost per Unit (USD),15.93,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-11,Logistics,Global,Freight Cost per Unit (USD),16.71,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-12,Logistics,Global,Freight Cost per Unit (USD),17.49,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-01,Logistics,Global,Freight Cost per Unit (USD),18.28,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-02,Logistics,Global,Freight Cost per Unit (USD),19.06,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-03,Logistics,Global,Freight Cost per Unit (USD),19.84,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-04,Logistics,Global,Freight Cost per Unit (USD),20.62,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-05,Logistics,Global,Freight Cost per Unit (USD),21.4,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-06,Logistics,Global,Freight Cost per Unit (USD),22.19,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-07,Logistics,Global,Freight Cost per Unit (USD),22.97,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-08,Logistics,Global,Freight Cost per Unit (USD),23.75,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-09,Logistics,Global,Freight Cost per Unit (USD),24.53,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-10,Logistics,Global,Freight Cost per Unit (USD),25.32,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-11,Logistics,Global,Freight Cost per Unit (USD),26.1,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-12,Logistics,Global,Freight Cost per Unit (USD),26.88,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-01,Logistics,Global,Freight Cost per Unit (USD),25.32,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-02,Logistics,Global,Freight Cost per Unit (USD),23.75,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-03,Logistics,Global,Freight Cost per Unit (USD),22.19,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-04,Logistics,Global,Freight Cost per Unit (USD),20.62,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-05,Logistics,Global,Freight Cost per Unit (USD),19.06,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-06,Logistics,Global,Freight Cost per Unit (USD),17.49,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-07,Logistics,Global,Freight Cost per Unit (USD),15.93,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-08,Logistics,Global,Freight Cost per Unit (USD),14.36,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-09,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-10,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-11,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-12,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-01,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-02,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-03,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-04,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-05,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-06,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-07,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-08,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-09,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-10,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-11,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-12,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-01,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-02,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-03,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-04,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-05,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-06,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-07,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-08,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-09,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-10,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-11,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-12,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-01,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-02,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-03,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-04,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-05,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-06,Logistics,Global,Freight Cost per Unit (USD),12.8,USD,down,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-01,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-02,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-03,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-04,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-05,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-06,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-07,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-08,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-09,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-10,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-11,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2020-12,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-01,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-02,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-03,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-04,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-05,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-06,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-07,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-08,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-09,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-10,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-11,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2021-12,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-01,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-02,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-03,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-04,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-05,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-06,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-07,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-08,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-09,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-10,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-11,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2022-12,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-01,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-02,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-03,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-04,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-05,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-06,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-07,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-08,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-09,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-10,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-11,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2023-12,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-01,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-02,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-03,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-04,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-05,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-06,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-07,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-08,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-09,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-10,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-11,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2024-12,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-01,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-02,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-03,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-04,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-05,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-06,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-07,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-08,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-09,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-10,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-11,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2025-12,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-01,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-02,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-03,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-04,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-05,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024
+2026-06,Logistics,Global,Warehouse Utilization (%),78.0,%,up,Gartner Supply Chain 2024; ISM Supply Chain Reports 2022-2024; FedEx Logistics Benchmarks 2024

@@ -10,20 +10,29 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (token) {
-      getMe()
-        .then((res) => {
-          setUser(res.data)
-          setLoading(false)
-        })
-        .catch(() => {
-          localStorage.removeItem('access_token')
-          localStorage.removeItem('user')
-          setToken(null)
-          setUser(null)
-          setLoading(false)
-        })
+      // Retry getMe up to 3 times to handle Render cold-start delay
+      const tryGetMe = async (attemptsLeft) => {
+        try {
+          const res = await getMe();
+          setUser(res.data);
+          setLoading(false);
+        } catch (err) {
+          if (attemptsLeft > 0 && !err.response) {
+            // Network error (likely cold start) - retry after delay
+            await new Promise(r => setTimeout(r, 4000));
+            await tryGetMe(attemptsLeft - 1);
+          } else {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('user');
+            setToken(null);
+            setUser(null);
+            setLoading(false);
+          }
+        }
+      };
+      tryGetMe(3);
     } else {
-      setLoading(false)
+      setLoading(false);
     }
   }, [token])
 

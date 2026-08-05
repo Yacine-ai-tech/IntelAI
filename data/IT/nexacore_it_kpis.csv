@@ -1,0 +1,625 @@
+period,category,segment,metric,value,unit,direction,source
+2020-01,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-02,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-03,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-04,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-05,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-06,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-07,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-08,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-09,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-10,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-11,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-12,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-01,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-02,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-03,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-04,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-05,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-06,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-07,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-08,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-09,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-10,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-11,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-12,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-01,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-02,IT,Global,System Uptime (%),99.98,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-03,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-04,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-05,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-06,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-07,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-08,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-09,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-10,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-11,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-12,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-01,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-02,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-03,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-04,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-05,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-06,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-07,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-08,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-09,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-10,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-11,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-12,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-01,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-02,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-03,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-04,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-05,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-06,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-07,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-08,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-09,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-10,IT,Global,System Uptime (%),98.66,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-11,IT,Global,System Uptime (%),97.35,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-12,IT,Global,System Uptime (%),96.03,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-01,IT,Global,System Uptime (%),94.72,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-02,IT,Global,System Uptime (%),93.41,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-03,IT,Global,System Uptime (%),92.1,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-04,IT,Global,System Uptime (%),93.41,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-05,IT,Global,System Uptime (%),94.72,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-06,IT,Global,System Uptime (%),96.03,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-07,IT,Global,System Uptime (%),97.35,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-08,IT,Global,System Uptime (%),98.66,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-09,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-10,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-11,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-12,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-01,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-02,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-03,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-04,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-05,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-06,IT,Global,System Uptime (%),99.97,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-01,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-02,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-03,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-04,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-05,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-06,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-07,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-08,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-09,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-10,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-11,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-12,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-01,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-02,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-03,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-04,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-05,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-06,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-07,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-08,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-09,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-10,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-11,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-12,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-01,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-02,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-03,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-04,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-05,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-06,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-07,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-08,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-09,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-10,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-11,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-12,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-01,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-02,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-03,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-04,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-05,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-06,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-07,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-08,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-09,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-10,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-11,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-12,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-01,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-02,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-03,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-04,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-05,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-06,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-07,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-08,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-09,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-10,IT,Global,MTTR (Minutes),56.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-11,IT,Global,MTTR (Minutes),88.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-12,IT,Global,MTTR (Minutes),120.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-01,IT,Global,MTTR (Minutes),152.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-02,IT,Global,MTTR (Minutes),184.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-03,IT,Global,MTTR (Minutes),216.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-04,IT,Global,MTTR (Minutes),184.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-05,IT,Global,MTTR (Minutes),152.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-06,IT,Global,MTTR (Minutes),120.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-07,IT,Global,MTTR (Minutes),88.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-08,IT,Global,MTTR (Minutes),56.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-09,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-10,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-11,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-12,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-01,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-02,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-03,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-04,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-05,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-06,IT,Global,MTTR (Minutes),24.0,Minutes,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-01,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-02,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-03,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-04,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-05,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-06,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-07,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-08,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-09,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-10,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-11,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-12,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-01,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-02,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-03,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-04,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-05,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-06,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-07,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-08,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-09,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-10,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-11,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-12,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-01,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-02,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-03,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-04,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-05,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-06,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-07,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-08,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-09,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-10,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-11,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-12,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-01,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-02,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-03,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-04,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-05,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-06,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-07,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-08,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-09,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-10,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-11,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-12,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-01,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-02,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-03,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-04,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-05,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-06,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-07,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-08,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-09,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-10,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-11,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-12,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-01,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-02,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-03,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-04,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-05,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-06,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-07,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-08,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-09,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-10,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-11,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-12,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-01,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-02,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-03,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-04,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-05,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-06,IT,Global,Change Failure Rate (%),3.8,%,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-01,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-02,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-03,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-04,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-05,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-06,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-07,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-08,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-09,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-10,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-11,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-12,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-01,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-02,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-03,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-04,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-05,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-06,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-07,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-08,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-09,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-10,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-11,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-12,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-01,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-02,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-03,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-04,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-05,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-06,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-07,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-08,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-09,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-10,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-11,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-12,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-01,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-02,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-03,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-04,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-05,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-06,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-07,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-08,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-09,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-10,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-11,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-12,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-01,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-02,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-03,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-04,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-05,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-06,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-07,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-08,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-09,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-10,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-11,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-12,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-01,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-02,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-03,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-04,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-05,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-06,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-07,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-08,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-09,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-10,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-11,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-12,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-01,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-02,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-03,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-04,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-05,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-06,IT,Global,Critical Vulnerabilities (Count),0.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-01,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-02,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-03,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-04,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-05,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-06,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-07,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-08,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-09,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-10,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-11,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-12,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-01,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-02,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-03,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-04,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-05,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-06,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-07,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-08,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-09,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-10,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-11,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-12,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-01,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-02,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-03,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-04,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-05,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-06,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-07,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-08,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-09,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-10,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-11,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-12,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-01,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-02,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-03,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-04,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-05,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-06,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-07,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-08,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-09,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-10,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-11,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-12,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-01,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-02,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-03,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-04,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-05,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-06,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-07,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-08,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-09,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-10,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-11,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-12,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-01,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-02,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-03,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-04,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-05,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-06,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-07,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-08,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-09,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-10,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-11,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-12,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-01,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-02,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-03,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-04,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-05,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-06,IT,Global,API P99 Latency (ms),182.0,ms,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-01,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-02,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-03,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-04,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-05,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-06,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-07,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-08,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-09,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-10,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-11,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-12,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-01,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-02,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-03,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-04,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-05,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-06,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-07,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-08,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-09,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-10,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-11,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-12,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-01,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-02,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-03,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-04,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-05,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-06,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-07,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-08,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-09,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-10,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-11,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-12,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-01,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-02,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-03,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-04,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-05,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-06,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-07,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-08,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-09,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-10,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-11,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-12,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-01,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-02,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-03,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-04,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-05,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-06,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-07,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-08,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-09,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-10,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-11,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-12,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-01,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-02,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-03,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-04,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-05,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-06,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-07,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-08,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-09,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-10,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-11,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-12,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-01,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-02,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-03,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-04,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-05,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-06,IT,Global,Deployment Frequency (per week),8.5,Rate,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-01,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-02,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-03,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-04,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-05,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-06,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-07,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-08,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-09,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-10,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-11,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-12,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-01,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-02,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-03,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-04,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-05,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-06,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-07,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-08,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-09,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-10,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-11,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-12,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-01,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-02,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-03,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-04,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-05,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-06,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-07,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-08,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-09,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-10,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-11,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-12,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-01,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-02,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-03,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-04,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-05,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-06,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-07,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-08,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-09,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-10,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-11,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-12,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-01,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-02,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-03,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-04,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-05,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-06,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-07,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-08,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-09,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-10,IT,Global,Open Incidents (Count),6.5,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-11,IT,Global,Open Incidents (Count),10.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-12,IT,Global,Open Incidents (Count),13.5,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-01,IT,Global,Open Incidents (Count),17.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-02,IT,Global,Open Incidents (Count),20.5,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-03,IT,Global,Open Incidents (Count),24.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-04,IT,Global,Open Incidents (Count),20.5,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-05,IT,Global,Open Incidents (Count),17.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-06,IT,Global,Open Incidents (Count),13.5,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-07,IT,Global,Open Incidents (Count),10.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-08,IT,Global,Open Incidents (Count),6.5,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-09,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-10,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-11,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-12,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-01,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-02,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-03,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-04,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-05,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-06,IT,Global,Open Incidents (Count),3.0,Count,down,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-01,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-02,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-03,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-04,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-05,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-06,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-07,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-08,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-09,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-10,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-11,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2020-12,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-01,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-02,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-03,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-04,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-05,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-06,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-07,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-08,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-09,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-10,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-11,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2021-12,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-01,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-02,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-03,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-04,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-05,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-06,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-07,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-08,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-09,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-10,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-11,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2022-12,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-01,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-02,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-03,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-04,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-05,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-06,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-07,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-08,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-09,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-10,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-11,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2023-12,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-01,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-02,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-03,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-04,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-05,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-06,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-07,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-08,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-09,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-10,IT,Global,SLA Compliance (%),97.08,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-11,IT,Global,SLA Compliance (%),94.87,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2024-12,IT,Global,SLA Compliance (%),92.65,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-01,IT,Global,SLA Compliance (%),90.43,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-02,IT,Global,SLA Compliance (%),88.22,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-03,IT,Global,SLA Compliance (%),86.0,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-04,IT,Global,SLA Compliance (%),88.22,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-05,IT,Global,SLA Compliance (%),90.43,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-06,IT,Global,SLA Compliance (%),92.65,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-07,IT,Global,SLA Compliance (%),94.87,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-08,IT,Global,SLA Compliance (%),97.08,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-09,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-10,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-11,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2025-12,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-01,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-02,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-03,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-04,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-05,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024
+2026-06,IT,Global,SLA Compliance (%),99.3,%,up,Google DORA Accelerate Report 2024; NIST Cybersecurity Framework 2024; Gartner IT Operations 2024

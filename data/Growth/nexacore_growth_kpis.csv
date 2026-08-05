@@ -1,0 +1,781 @@
+period,category,segment,metric,value,unit,direction,source
+2020-01,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-02,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-03,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-04,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-05,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-06,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-07,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-08,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-09,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-10,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-11,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-12,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-01,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-02,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-03,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-04,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-05,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-06,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-07,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-08,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-09,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-10,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-11,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-12,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-01,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-02,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-03,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-04,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-05,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-06,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-07,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-08,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-09,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-10,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-11,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-12,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-01,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-02,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-03,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-04,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-05,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-06,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-07,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-08,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-09,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-10,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-11,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-12,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-01,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-02,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-03,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-04,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-05,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-06,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-07,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-08,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-09,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-10,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-11,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-12,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-01,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-02,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-03,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-04,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-05,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-06,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-07,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-08,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-09,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-10,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-11,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-12,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-01,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-02,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-03,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-04,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-05,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-06,Growth,Global,MRR (USD),7500000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-01,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-02,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-03,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-04,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-05,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-06,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-07,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-08,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-09,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-10,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-11,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-12,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-01,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-02,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-03,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-04,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-05,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-06,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-07,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-08,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-09,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-10,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-11,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-12,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-01,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-02,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-03,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-04,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-05,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-06,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-07,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-08,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-09,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-10,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-11,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-12,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-01,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-02,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-03,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-04,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-05,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-06,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-07,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-08,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-09,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-10,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-11,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-12,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-01,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-02,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-03,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-04,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-05,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-06,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-07,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-08,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-09,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-10,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-11,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-12,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-01,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-02,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-03,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-04,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-05,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-06,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-07,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-08,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-09,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-10,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-11,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-12,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-01,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-02,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-03,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-04,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-05,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-06,Growth,Global,ARR (USD),90000000.0,USD,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-01,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-02,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-03,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-04,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-05,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-06,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-07,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-08,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-09,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-10,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-11,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-12,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-01,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-02,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-03,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-04,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-05,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-06,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-07,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-08,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-09,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-10,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-11,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-12,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-01,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-02,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-03,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-04,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-05,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-06,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-07,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-08,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-09,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-10,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-11,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-12,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-01,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-02,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-03,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-04,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-05,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-06,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-07,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-08,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-09,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-10,Growth,Global,Net Revenue Retention (%),107.83,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-11,Growth,Global,Net Revenue Retention (%),103.67,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-12,Growth,Global,Net Revenue Retention (%),99.5,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-01,Growth,Global,Net Revenue Retention (%),95.33,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-02,Growth,Global,Net Revenue Retention (%),91.17,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-03,Growth,Global,Net Revenue Retention (%),87.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-04,Growth,Global,Net Revenue Retention (%),91.17,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-05,Growth,Global,Net Revenue Retention (%),95.33,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-06,Growth,Global,Net Revenue Retention (%),99.5,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-07,Growth,Global,Net Revenue Retention (%),103.67,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-08,Growth,Global,Net Revenue Retention (%),107.83,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-09,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-10,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-11,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-12,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-01,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-02,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-03,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-04,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-05,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-06,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-07,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-08,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-09,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-10,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-11,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-12,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-01,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-02,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-03,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-04,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-05,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-06,Growth,Global,Net Revenue Retention (%),112.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-01,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-02,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-03,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-04,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-05,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-06,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-07,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-08,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-09,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-10,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-11,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-12,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-01,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-02,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-03,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-04,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-05,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-06,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-07,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-08,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-09,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-10,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-11,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-12,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-01,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-02,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-03,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-04,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-05,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-06,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-07,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-08,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-09,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-10,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-11,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-12,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-01,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-02,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-03,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-04,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-05,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-06,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-07,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-08,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-09,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-10,Growth,Global,Monthly Churn Rate (%),1.9,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-11,Growth,Global,Monthly Churn Rate (%),2.6,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-12,Growth,Global,Monthly Churn Rate (%),3.3,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-01,Growth,Global,Monthly Churn Rate (%),4.0,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-02,Growth,Global,Monthly Churn Rate (%),4.7,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-03,Growth,Global,Monthly Churn Rate (%),5.4,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-04,Growth,Global,Monthly Churn Rate (%),4.7,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-05,Growth,Global,Monthly Churn Rate (%),4.0,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-06,Growth,Global,Monthly Churn Rate (%),3.3,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-07,Growth,Global,Monthly Churn Rate (%),2.6,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-08,Growth,Global,Monthly Churn Rate (%),1.9,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-09,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-10,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-11,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-12,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-01,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-02,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-03,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-04,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-05,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-06,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-07,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-08,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-09,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-10,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-11,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-12,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-01,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-02,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-03,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-04,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-05,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-06,Growth,Global,Monthly Churn Rate (%),1.2,%,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-01,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-02,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-03,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-04,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-05,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-06,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-07,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-08,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-09,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-10,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-11,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-12,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-01,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-02,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-03,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-04,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-05,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-06,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-07,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-08,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-09,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-10,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-11,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-12,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-01,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-02,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-03,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-04,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-05,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-06,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-07,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-08,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-09,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-10,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-11,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-12,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-01,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-02,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-03,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-04,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-05,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-06,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-07,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-08,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-09,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-10,Growth,Global,LTV to CAC Ratio,3.68,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-11,Growth,Global,LTV to CAC Ratio,3.17,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-12,Growth,Global,LTV to CAC Ratio,2.65,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-01,Growth,Global,LTV to CAC Ratio,2.13,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-02,Growth,Global,LTV to CAC Ratio,1.62,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-03,Growth,Global,LTV to CAC Ratio,1.1,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-04,Growth,Global,LTV to CAC Ratio,1.62,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-05,Growth,Global,LTV to CAC Ratio,2.13,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-06,Growth,Global,LTV to CAC Ratio,2.65,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-07,Growth,Global,LTV to CAC Ratio,3.17,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-08,Growth,Global,LTV to CAC Ratio,3.68,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-09,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-10,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-11,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-12,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-01,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-02,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-03,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-04,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-05,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-06,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-07,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-08,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-09,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-10,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-11,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-12,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-01,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-02,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-03,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-04,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-05,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-06,Growth,Global,LTV to CAC Ratio,4.2,Ratio,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-01,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-02,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-03,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-04,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-05,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-06,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-07,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-08,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-09,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-10,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-11,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-12,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-01,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-02,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-03,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-04,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-05,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-06,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-07,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-08,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-09,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-10,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-11,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-12,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-01,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-02,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-03,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-04,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-05,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-06,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-07,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-08,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-09,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-10,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-11,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-12,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-01,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-02,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-03,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-04,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-05,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-06,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-07,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-08,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-09,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-10,Growth,Global,CAC Payback Period (Months),13.75,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-11,Growth,Global,CAC Payback Period (Months),16.5,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-12,Growth,Global,CAC Payback Period (Months),19.25,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-01,Growth,Global,CAC Payback Period (Months),22.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-02,Growth,Global,CAC Payback Period (Months),24.75,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-03,Growth,Global,CAC Payback Period (Months),27.5,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-04,Growth,Global,CAC Payback Period (Months),24.75,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-05,Growth,Global,CAC Payback Period (Months),22.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-06,Growth,Global,CAC Payback Period (Months),19.25,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-07,Growth,Global,CAC Payback Period (Months),16.5,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-08,Growth,Global,CAC Payback Period (Months),13.75,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-09,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-10,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-11,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-12,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-01,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-02,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-03,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-04,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-05,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-06,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-07,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-08,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-09,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-10,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-11,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-12,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-01,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-02,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-03,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-04,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-05,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-06,Growth,Global,CAC Payback Period (Months),11.0,Months,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-01,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-02,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-03,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-04,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-05,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-06,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-07,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-08,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-09,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-10,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-11,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-12,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-01,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-02,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-03,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-04,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-05,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-06,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-07,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-08,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-09,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-10,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-11,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-12,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-01,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-02,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-03,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-04,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-05,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-06,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-07,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-08,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-09,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-10,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-11,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-12,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-01,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-02,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-03,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-04,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-05,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-06,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-07,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-08,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-09,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-10,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-11,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-12,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-01,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-02,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-03,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-04,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-05,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-06,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-07,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-08,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-09,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-10,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-11,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-12,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-01,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-02,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-03,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-04,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-05,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-06,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-07,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-08,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-09,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-10,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-11,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-12,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-01,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-02,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-03,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-04,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-05,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-06,Growth,Global,New Customers Added (Count),85.0,Count,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-01,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-02,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-03,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-04,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-05,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-06,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-07,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-08,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-09,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-10,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-11,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-12,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-01,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-02,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-03,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-04,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-05,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-06,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-07,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-08,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-09,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-10,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-11,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-12,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-01,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-02,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-03,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-04,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-05,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-06,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-07,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-08,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-09,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-10,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-11,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-12,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-01,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-02,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-03,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-04,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-05,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-06,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-07,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-08,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-09,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-10,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-11,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-12,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-01,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-02,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-03,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-04,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-05,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-06,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-07,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-08,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-09,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-10,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-11,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-12,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-01,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-02,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-03,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-04,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-05,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-06,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-07,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-08,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-09,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-10,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-11,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-12,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-01,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-02,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-03,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-04,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-05,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-06,Growth,Global,Logo Churn Count (Count),8.0,Count,down,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-01,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-02,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-03,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-04,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-05,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-06,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-07,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-08,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-09,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-10,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-11,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-12,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-01,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-02,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-03,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-04,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-05,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-06,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-07,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-08,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-09,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-10,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-11,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-12,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-01,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-02,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-03,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-04,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-05,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-06,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-07,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-08,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-09,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-10,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-11,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-12,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-01,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-02,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-03,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-04,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-05,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-06,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-07,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-08,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-09,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-10,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-11,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-12,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-01,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-02,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-03,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-04,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-05,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-06,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-07,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-08,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-09,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-10,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-11,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-12,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-01,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-02,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-03,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-04,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-05,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-06,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-07,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-08,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-09,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-10,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-11,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-12,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-01,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-02,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-03,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-04,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-05,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-06,Growth,Global,NPS Score,42.0,Score,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-01,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-02,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-03,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-04,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-05,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-06,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-07,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-08,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-09,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-10,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-11,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2020-12,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-01,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-02,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-03,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-04,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-05,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-06,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-07,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-08,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-09,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-10,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-11,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2021-12,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-01,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-02,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-03,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-04,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-05,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-06,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-07,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-08,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-09,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-10,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-11,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2022-12,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-01,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-02,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-03,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-04,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-05,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-06,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-07,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-08,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-09,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-10,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-11,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2023-12,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-01,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-02,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-03,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-04,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-05,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-06,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-07,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-08,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-09,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-10,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-11,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2024-12,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-01,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-02,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-03,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-04,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-05,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-06,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-07,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-08,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-09,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-10,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-11,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2025-12,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-01,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-02,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-03,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-04,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-05,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
+2026-06,Growth,Global,CSAT Score (%),88.0,%,up,Bessemer State of Cloud 2024; OpenView SaaS Benchmarks 2024; High Alpha Benchmarks 2024
