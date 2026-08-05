@@ -1,0 +1,625 @@
+period,category,segment,metric,value,unit,direction,source
+2020-01,Operations,Global,OEE (%),83.56,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-02,Operations,Global,OEE (%),82.62,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-03,Operations,Global,OEE (%),81.68,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-04,Operations,Global,OEE (%),80.74,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-05,Operations,Global,OEE (%),79.81,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-06,Operations,Global,OEE (%),78.87,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-07,Operations,Global,OEE (%),77.93,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-08,Operations,Global,OEE (%),76.99,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-09,Operations,Global,OEE (%),76.05,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-10,Operations,Global,OEE (%),75.11,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-11,Operations,Global,OEE (%),74.17,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-12,Operations,Global,OEE (%),73.23,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-01,Operations,Global,OEE (%),72.29,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-02,Operations,Global,OEE (%),71.36,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-03,Operations,Global,OEE (%),70.42,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-04,Operations,Global,OEE (%),69.48,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-05,Operations,Global,OEE (%),68.54,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-06,Operations,Global,OEE (%),67.6,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-07,Operations,Global,OEE (%),68.54,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-08,Operations,Global,OEE (%),69.48,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-09,Operations,Global,OEE (%),70.42,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-10,Operations,Global,OEE (%),71.36,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-11,Operations,Global,OEE (%),72.29,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-12,Operations,Global,OEE (%),73.23,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-01,Operations,Global,OEE (%),74.17,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-02,Operations,Global,OEE (%),75.11,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-03,Operations,Global,OEE (%),76.05,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-04,Operations,Global,OEE (%),76.99,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-05,Operations,Global,OEE (%),77.93,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-06,Operations,Global,OEE (%),78.87,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-07,Operations,Global,OEE (%),79.81,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-08,Operations,Global,OEE (%),80.74,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-09,Operations,Global,OEE (%),81.68,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-10,Operations,Global,OEE (%),82.62,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-11,Operations,Global,OEE (%),83.56,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-12,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-01,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-02,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-03,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-04,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-05,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-06,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-07,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-08,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-09,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-10,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-11,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-12,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-01,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-02,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-03,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-04,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-05,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-06,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-07,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-08,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-09,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-10,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-11,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-12,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-01,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-02,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-03,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-04,Operations,Global,OEE (%),79.99,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-05,Operations,Global,OEE (%),75.49,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-06,Operations,Global,OEE (%),70.98,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-07,Operations,Global,OEE (%),66.47,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-08,Operations,Global,OEE (%),61.97,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-09,Operations,Global,OEE (%),57.46,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-10,Operations,Global,OEE (%),60.46,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-11,Operations,Global,OEE (%),63.47,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-12,Operations,Global,OEE (%),66.47,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-01,Operations,Global,OEE (%),69.48,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-02,Operations,Global,OEE (%),72.48,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-03,Operations,Global,OEE (%),75.49,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-04,Operations,Global,OEE (%),78.49,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-05,Operations,Global,OEE (%),81.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-06,Operations,Global,OEE (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-01,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-02,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-03,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-04,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-05,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-06,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-07,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-08,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-09,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-10,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-11,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-12,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-01,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-02,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-03,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-04,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-05,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-06,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-07,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-08,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-09,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-10,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-11,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-12,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-01,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-02,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-03,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-04,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-05,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-06,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-07,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-08,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-09,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-10,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-11,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-12,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-01,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-02,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-03,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-04,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-05,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-06,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-07,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-08,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-09,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-10,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-11,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-12,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-01,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-02,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-03,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-04,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-05,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-06,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-07,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-08,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-09,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-10,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-11,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-12,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-01,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-02,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-03,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-04,Operations,Global,Defect Rate (%),1.74,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-05,Operations,Global,Defect Rate (%),2.38,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-06,Operations,Global,Defect Rate (%),3.03,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-07,Operations,Global,Defect Rate (%),3.67,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-08,Operations,Global,Defect Rate (%),4.31,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-09,Operations,Global,Defect Rate (%),4.95,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-10,Operations,Global,Defect Rate (%),4.52,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-11,Operations,Global,Defect Rate (%),4.09,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-12,Operations,Global,Defect Rate (%),3.67,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-01,Operations,Global,Defect Rate (%),3.24,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-02,Operations,Global,Defect Rate (%),2.81,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-03,Operations,Global,Defect Rate (%),2.38,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-04,Operations,Global,Defect Rate (%),1.96,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-05,Operations,Global,Defect Rate (%),1.53,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-06,Operations,Global,Defect Rate (%),1.1,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-01,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-02,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-03,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-04,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-05,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-06,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-07,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-08,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-09,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-10,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-11,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-12,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-01,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-02,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-03,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-04,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-05,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-06,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-07,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-08,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-09,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-10,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-11,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-12,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-01,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-02,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-03,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-04,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-05,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-06,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-07,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-08,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-09,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-10,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-11,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-12,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-01,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-02,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-03,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-04,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-05,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-06,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-07,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-08,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-09,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-10,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-11,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-12,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-01,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-02,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-03,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-04,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-05,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-06,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-07,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-08,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-09,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-10,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-11,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-12,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-01,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-02,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-03,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-04,Operations,Global,First Pass Yield (%),89.94,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-05,Operations,Global,First Pass Yield (%),86.68,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-06,Operations,Global,First Pass Yield (%),83.41,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-07,Operations,Global,First Pass Yield (%),80.15,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-08,Operations,Global,First Pass Yield (%),76.89,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-09,Operations,Global,First Pass Yield (%),73.63,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-10,Operations,Global,First Pass Yield (%),75.8,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-11,Operations,Global,First Pass Yield (%),77.98,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-12,Operations,Global,First Pass Yield (%),80.15,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-01,Operations,Global,First Pass Yield (%),82.33,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-02,Operations,Global,First Pass Yield (%),84.5,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-03,Operations,Global,First Pass Yield (%),86.68,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-04,Operations,Global,First Pass Yield (%),88.85,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-05,Operations,Global,First Pass Yield (%),91.03,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-06,Operations,Global,First Pass Yield (%),93.2,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-01,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-02,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-03,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-04,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-05,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-06,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-07,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-08,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-09,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-10,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-11,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-12,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-01,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-02,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-03,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-04,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-05,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-06,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-07,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-08,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-09,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-10,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-11,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-12,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-01,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-02,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-03,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-04,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-05,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-06,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-07,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-08,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-09,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-10,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-11,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-12,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-01,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-02,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-03,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-04,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-05,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-06,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-07,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-08,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-09,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-10,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-11,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-12,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-01,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-02,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-03,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-04,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-05,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-06,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-07,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-08,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-09,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-10,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-11,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-12,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-01,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-02,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-03,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-04,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-05,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-06,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-07,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-08,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-09,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-10,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-11,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-12,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-01,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-02,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-03,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-04,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-05,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-06,Operations,Global,MTBF (Hours),1420.0,Hours,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-01,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-02,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-03,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-04,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-05,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-06,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-07,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-08,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-09,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-10,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-11,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-12,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-01,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-02,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-03,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-04,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-05,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-06,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-07,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-08,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-09,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-10,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-11,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-12,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-01,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-02,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-03,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-04,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-05,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-06,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-07,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-08,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-09,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-10,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-11,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-12,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-01,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-02,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-03,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-04,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-05,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-06,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-07,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-08,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-09,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-10,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-11,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-12,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-01,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-02,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-03,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-04,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-05,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-06,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-07,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-08,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-09,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-10,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-11,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-12,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-01,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-02,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-03,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-04,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-05,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-06,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-07,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-08,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-09,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-10,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-11,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-12,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-01,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-02,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-03,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-04,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-05,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-06,Operations,Global,Cycle Time Efficiency (%),94.1,%,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-01,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-02,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-03,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-04,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-05,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-06,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-07,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-08,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-09,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-10,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-11,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-12,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-01,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-02,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-03,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-04,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-05,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-06,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-07,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-08,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-09,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-10,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-11,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-12,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-01,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-02,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-03,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-04,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-05,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-06,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-07,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-08,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-09,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-10,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-11,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-12,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-01,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-02,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-03,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-04,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-05,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-06,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-07,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-08,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-09,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-10,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-11,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-12,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-01,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-02,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-03,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-04,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-05,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-06,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-07,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-08,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-09,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-10,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-11,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-12,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-01,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-02,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-03,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-04,Operations,Global,Scrap Rate (%),3.14,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-05,Operations,Global,Scrap Rate (%),3.99,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-06,Operations,Global,Scrap Rate (%),4.83,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-07,Operations,Global,Scrap Rate (%),5.67,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-08,Operations,Global,Scrap Rate (%),6.52,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-09,Operations,Global,Scrap Rate (%),7.36,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-10,Operations,Global,Scrap Rate (%),6.8,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-11,Operations,Global,Scrap Rate (%),6.24,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-12,Operations,Global,Scrap Rate (%),5.67,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-01,Operations,Global,Scrap Rate (%),5.11,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-02,Operations,Global,Scrap Rate (%),4.55,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-03,Operations,Global,Scrap Rate (%),3.99,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-04,Operations,Global,Scrap Rate (%),3.42,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-05,Operations,Global,Scrap Rate (%),2.86,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-06,Operations,Global,Scrap Rate (%),2.3,%,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-01,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-02,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-03,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-04,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-05,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-06,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-07,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-08,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-09,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-10,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-11,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-12,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-01,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-02,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-03,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-04,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-05,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-06,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-07,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-08,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-09,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-10,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-11,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-12,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-01,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-02,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-03,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-04,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-05,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-06,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-07,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-08,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-09,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-10,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-11,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-12,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-01,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-02,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-03,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-04,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-05,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-06,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-07,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-08,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-09,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-10,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-11,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-12,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-01,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-02,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-03,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-04,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-05,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-06,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-07,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-08,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-09,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-10,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-11,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-12,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-01,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-02,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-03,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-04,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-05,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-06,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-07,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-08,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-09,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-10,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-11,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-12,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-01,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-02,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-03,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-04,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-05,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-06,Operations,Global,Production Output (Units),12400.0,Units,up,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-01,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-02,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-03,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-04,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-05,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-06,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-07,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-08,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-09,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-10,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-11,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2020-12,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-01,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-02,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-03,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-04,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-05,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-06,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-07,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-08,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-09,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-10,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-11,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2021-12,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-01,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-02,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-03,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-04,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-05,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-06,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-07,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-08,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-09,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-10,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-11,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2022-12,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-01,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-02,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-03,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-04,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-05,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-06,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-07,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-08,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-09,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-10,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-11,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2023-12,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-01,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-02,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-03,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-04,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-05,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-06,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-07,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-08,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-09,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-10,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-11,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2024-12,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-01,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-02,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-03,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-04,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-05,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-06,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-07,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-08,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-09,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-10,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-11,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2025-12,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-01,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-02,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-03,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-04,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-05,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024
+2026-06,Operations,Global,Safety Incident Rate (per 200k hours),1.4,Rate,down,Six Sigma Industry Standards 2024; OSHA Safety Data 2024; ISM Manufacturing PMI 2024

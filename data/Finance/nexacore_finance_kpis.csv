@@ -1,0 +1,781 @@
+period,category,segment,metric,value,unit,direction,source
+2020-01,Finance,Global,Revenue (USD),7383333.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-02,Finance,Global,Revenue (USD),7266666.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-03,Finance,Global,Revenue (USD),7150000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-04,Finance,Global,Revenue (USD),7033333.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-05,Finance,Global,Revenue (USD),6916666.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-06,Finance,Global,Revenue (USD),6800000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-07,Finance,Global,Revenue (USD),6683333.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-08,Finance,Global,Revenue (USD),6566666.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-09,Finance,Global,Revenue (USD),6450000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-10,Finance,Global,Revenue (USD),6333333.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-11,Finance,Global,Revenue (USD),6216666.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-12,Finance,Global,Revenue (USD),6100000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-01,Finance,Global,Revenue (USD),5983333.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-02,Finance,Global,Revenue (USD),5866666.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-03,Finance,Global,Revenue (USD),5750000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-04,Finance,Global,Revenue (USD),5633333.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-05,Finance,Global,Revenue (USD),5516666.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-06,Finance,Global,Revenue (USD),5400000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-07,Finance,Global,Revenue (USD),5495833.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-08,Finance,Global,Revenue (USD),5591666.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-09,Finance,Global,Revenue (USD),5687500.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-10,Finance,Global,Revenue (USD),5783333.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-11,Finance,Global,Revenue (USD),5879166.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-12,Finance,Global,Revenue (USD),5975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-01,Finance,Global,Revenue (USD),6070833.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-02,Finance,Global,Revenue (USD),6166666.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-03,Finance,Global,Revenue (USD),6262500.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-04,Finance,Global,Revenue (USD),6358333.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-05,Finance,Global,Revenue (USD),6454166.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-06,Finance,Global,Revenue (USD),6550000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-07,Finance,Global,Revenue (USD),6645833.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-08,Finance,Global,Revenue (USD),6741666.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-09,Finance,Global,Revenue (USD),6837500.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-10,Finance,Global,Revenue (USD),6933333.33,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-11,Finance,Global,Revenue (USD),7029166.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-12,Finance,Global,Revenue (USD),7125000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-01,Finance,Global,Revenue (USD),7267500.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-02,Finance,Global,Revenue (USD),7412850.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-03,Finance,Global,Revenue (USD),7561107.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-04,Finance,Global,Revenue (USD),7712329.14,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-05,Finance,Global,Revenue (USD),7866575.72,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-06,Finance,Global,Revenue (USD),8023907.24,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-07,Finance,Global,Revenue (USD),8184385.38,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-08,Finance,Global,Revenue (USD),8348073.09,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-09,Finance,Global,Revenue (USD),8515034.55,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-10,Finance,Global,Revenue (USD),8387309.03,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-11,Finance,Global,Revenue (USD),8259583.51,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-12,Finance,Global,Revenue (USD),8131858.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-01,Finance,Global,Revenue (USD),8004132.48,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-02,Finance,Global,Revenue (USD),7876406.96,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-03,Finance,Global,Revenue (USD),7748681.44,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-04,Finance,Global,Revenue (USD),7748681.44,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-05,Finance,Global,Revenue (USD),7748681.44,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-06,Finance,Global,Revenue (USD),7748681.44,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-07,Finance,Global,Revenue (USD),7748681.44,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-08,Finance,Global,Revenue (USD),7748681.44,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-09,Finance,Global,Revenue (USD),7748681.44,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-10,Finance,Global,Revenue (USD),7593707.81,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-11,Finance,Global,Revenue (USD),7438734.18,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-12,Finance,Global,Revenue (USD),7283760.56,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-01,Finance,Global,Revenue (USD),7128786.93,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-02,Finance,Global,Revenue (USD),6973813.3,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-03,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-04,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-05,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-06,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-07,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-08,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-09,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-10,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-11,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-12,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-01,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-02,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-03,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-04,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-05,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-06,Finance,Global,Revenue (USD),6818839.67,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-01,Finance,Global,Gross Margin (%),71.64,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-02,Finance,Global,Gross Margin (%),71.28,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-03,Finance,Global,Gross Margin (%),70.92,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-04,Finance,Global,Gross Margin (%),70.56,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-05,Finance,Global,Gross Margin (%),70.2,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-06,Finance,Global,Gross Margin (%),69.84,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-07,Finance,Global,Gross Margin (%),69.48,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-08,Finance,Global,Gross Margin (%),69.12,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-09,Finance,Global,Gross Margin (%),68.76,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-10,Finance,Global,Gross Margin (%),68.4,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-11,Finance,Global,Gross Margin (%),68.04,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-12,Finance,Global,Gross Margin (%),67.68,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-01,Finance,Global,Gross Margin (%),67.32,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-02,Finance,Global,Gross Margin (%),66.96,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-03,Finance,Global,Gross Margin (%),66.6,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-04,Finance,Global,Gross Margin (%),66.24,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-05,Finance,Global,Gross Margin (%),65.88,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-06,Finance,Global,Gross Margin (%),65.52,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-07,Finance,Global,Gross Margin (%),65.64,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-08,Finance,Global,Gross Margin (%),65.76,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-09,Finance,Global,Gross Margin (%),65.88,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-10,Finance,Global,Gross Margin (%),66.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-11,Finance,Global,Gross Margin (%),66.12,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-12,Finance,Global,Gross Margin (%),66.24,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-01,Finance,Global,Gross Margin (%),66.36,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-02,Finance,Global,Gross Margin (%),66.48,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-03,Finance,Global,Gross Margin (%),66.6,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-04,Finance,Global,Gross Margin (%),66.72,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-05,Finance,Global,Gross Margin (%),66.84,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-06,Finance,Global,Gross Margin (%),66.96,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-07,Finance,Global,Gross Margin (%),67.08,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-08,Finance,Global,Gross Margin (%),67.2,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-09,Finance,Global,Gross Margin (%),67.32,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-10,Finance,Global,Gross Margin (%),67.44,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-11,Finance,Global,Gross Margin (%),67.56,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-12,Finance,Global,Gross Margin (%),67.68,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-01,Finance,Global,Gross Margin (%),68.16,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-02,Finance,Global,Gross Margin (%),68.64,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-03,Finance,Global,Gross Margin (%),69.12,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-04,Finance,Global,Gross Margin (%),69.6,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-05,Finance,Global,Gross Margin (%),70.08,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-06,Finance,Global,Gross Margin (%),70.56,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-07,Finance,Global,Gross Margin (%),71.04,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-08,Finance,Global,Gross Margin (%),71.52,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-09,Finance,Global,Gross Margin (%),72.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-10,Finance,Global,Gross Margin (%),71.52,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-11,Finance,Global,Gross Margin (%),71.04,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-12,Finance,Global,Gross Margin (%),70.56,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-01,Finance,Global,Gross Margin (%),70.08,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-02,Finance,Global,Gross Margin (%),69.6,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-03,Finance,Global,Gross Margin (%),69.12,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-04,Finance,Global,Gross Margin (%),69.6,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-05,Finance,Global,Gross Margin (%),70.08,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-06,Finance,Global,Gross Margin (%),70.56,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-07,Finance,Global,Gross Margin (%),71.04,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-08,Finance,Global,Gross Margin (%),71.52,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-09,Finance,Global,Gross Margin (%),72.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-10,Finance,Global,Gross Margin (%),72.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-11,Finance,Global,Gross Margin (%),72.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-12,Finance,Global,Gross Margin (%),72.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-01,Finance,Global,Gross Margin (%),72.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-02,Finance,Global,Gross Margin (%),72.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-03,Finance,Global,Gross Margin (%),72.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-04,Finance,Global,Gross Margin (%),69.84,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-05,Finance,Global,Gross Margin (%),67.68,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-06,Finance,Global,Gross Margin (%),65.52,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-07,Finance,Global,Gross Margin (%),63.36,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-08,Finance,Global,Gross Margin (%),61.2,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-09,Finance,Global,Gross Margin (%),59.04,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-10,Finance,Global,Gross Margin (%),60.48,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-11,Finance,Global,Gross Margin (%),61.92,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-12,Finance,Global,Gross Margin (%),63.36,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-01,Finance,Global,Gross Margin (%),64.8,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-02,Finance,Global,Gross Margin (%),66.24,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-03,Finance,Global,Gross Margin (%),67.68,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-04,Finance,Global,Gross Margin (%),69.12,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-05,Finance,Global,Gross Margin (%),70.56,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-06,Finance,Global,Gross Margin (%),72.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-01,Finance,Global,EBITDA Margin (%),25.35,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-02,Finance,Global,EBITDA Margin (%),24.7,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-03,Finance,Global,EBITDA Margin (%),24.05,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-04,Finance,Global,EBITDA Margin (%),23.4,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-05,Finance,Global,EBITDA Margin (%),22.75,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-06,Finance,Global,EBITDA Margin (%),22.1,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-07,Finance,Global,EBITDA Margin (%),21.45,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-08,Finance,Global,EBITDA Margin (%),20.8,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-09,Finance,Global,EBITDA Margin (%),20.15,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-10,Finance,Global,EBITDA Margin (%),19.5,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-11,Finance,Global,EBITDA Margin (%),18.85,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-12,Finance,Global,EBITDA Margin (%),18.2,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-01,Finance,Global,EBITDA Margin (%),17.55,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-02,Finance,Global,EBITDA Margin (%),16.9,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-03,Finance,Global,EBITDA Margin (%),16.25,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-04,Finance,Global,EBITDA Margin (%),15.6,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-05,Finance,Global,EBITDA Margin (%),14.95,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-06,Finance,Global,EBITDA Margin (%),14.3,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-07,Finance,Global,EBITDA Margin (%),14.69,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-08,Finance,Global,EBITDA Margin (%),15.08,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-09,Finance,Global,EBITDA Margin (%),15.47,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-10,Finance,Global,EBITDA Margin (%),15.86,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-11,Finance,Global,EBITDA Margin (%),16.25,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-12,Finance,Global,EBITDA Margin (%),16.64,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-01,Finance,Global,EBITDA Margin (%),17.03,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-02,Finance,Global,EBITDA Margin (%),17.42,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-03,Finance,Global,EBITDA Margin (%),17.81,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-04,Finance,Global,EBITDA Margin (%),18.2,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-05,Finance,Global,EBITDA Margin (%),18.59,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-06,Finance,Global,EBITDA Margin (%),18.98,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-07,Finance,Global,EBITDA Margin (%),19.37,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-08,Finance,Global,EBITDA Margin (%),19.76,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-09,Finance,Global,EBITDA Margin (%),20.15,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-10,Finance,Global,EBITDA Margin (%),20.54,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-11,Finance,Global,EBITDA Margin (%),20.93,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-12,Finance,Global,EBITDA Margin (%),21.32,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-01,Finance,Global,EBITDA Margin (%),21.84,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-02,Finance,Global,EBITDA Margin (%),22.36,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-03,Finance,Global,EBITDA Margin (%),22.88,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-04,Finance,Global,EBITDA Margin (%),23.4,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-05,Finance,Global,EBITDA Margin (%),23.92,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-06,Finance,Global,EBITDA Margin (%),24.44,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-07,Finance,Global,EBITDA Margin (%),24.96,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-08,Finance,Global,EBITDA Margin (%),25.48,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-09,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-10,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-11,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-12,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-01,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-02,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-03,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-04,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-05,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-06,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-07,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-08,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-09,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-10,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-11,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-12,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-01,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-02,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-03,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-04,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-05,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-06,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-07,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-08,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-09,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-10,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-11,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-12,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-01,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-02,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-03,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-04,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-05,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-06,Finance,Global,EBITDA Margin (%),26.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-01,Finance,Global,Net Profit Margin (%),12.53,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-02,Finance,Global,Net Profit Margin (%),12.06,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-03,Finance,Global,Net Profit Margin (%),11.59,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-04,Finance,Global,Net Profit Margin (%),11.12,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-05,Finance,Global,Net Profit Margin (%),10.65,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-06,Finance,Global,Net Profit Margin (%),10.18,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-07,Finance,Global,Net Profit Margin (%),9.71,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-08,Finance,Global,Net Profit Margin (%),9.24,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-09,Finance,Global,Net Profit Margin (%),8.78,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-10,Finance,Global,Net Profit Margin (%),8.31,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-11,Finance,Global,Net Profit Margin (%),7.84,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-12,Finance,Global,Net Profit Margin (%),7.37,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-01,Finance,Global,Net Profit Margin (%),6.9,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-02,Finance,Global,Net Profit Margin (%),6.43,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-03,Finance,Global,Net Profit Margin (%),5.96,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-04,Finance,Global,Net Profit Margin (%),5.49,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-05,Finance,Global,Net Profit Margin (%),5.02,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-06,Finance,Global,Net Profit Margin (%),4.55,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-07,Finance,Global,Net Profit Margin (%),5.02,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-08,Finance,Global,Net Profit Margin (%),5.49,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-09,Finance,Global,Net Profit Margin (%),5.96,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-10,Finance,Global,Net Profit Margin (%),6.43,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-11,Finance,Global,Net Profit Margin (%),6.9,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-12,Finance,Global,Net Profit Margin (%),7.37,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-01,Finance,Global,Net Profit Margin (%),7.84,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-02,Finance,Global,Net Profit Margin (%),8.31,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-03,Finance,Global,Net Profit Margin (%),8.78,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-04,Finance,Global,Net Profit Margin (%),9.24,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-05,Finance,Global,Net Profit Margin (%),9.71,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-06,Finance,Global,Net Profit Margin (%),10.18,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-07,Finance,Global,Net Profit Margin (%),10.65,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-08,Finance,Global,Net Profit Margin (%),11.12,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-09,Finance,Global,Net Profit Margin (%),11.59,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-10,Finance,Global,Net Profit Margin (%),12.06,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-11,Finance,Global,Net Profit Margin (%),12.53,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-12,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-01,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-02,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-03,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-04,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-05,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-06,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-07,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-08,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-09,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-10,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-11,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-12,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-01,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-02,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-03,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-04,Finance,Global,Net Profit Margin (%),12.52,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-05,Finance,Global,Net Profit Margin (%),12.05,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-06,Finance,Global,Net Profit Margin (%),11.57,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-07,Finance,Global,Net Profit Margin (%),11.09,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-08,Finance,Global,Net Profit Margin (%),10.62,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-09,Finance,Global,Net Profit Margin (%),10.14,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-10,Finance,Global,Net Profit Margin (%),10.62,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-11,Finance,Global,Net Profit Margin (%),11.09,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-12,Finance,Global,Net Profit Margin (%),11.57,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-01,Finance,Global,Net Profit Margin (%),12.05,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-02,Finance,Global,Net Profit Margin (%),12.52,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-03,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-04,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-05,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-06,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-07,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-08,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-09,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-10,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-11,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-12,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-01,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-02,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-03,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-04,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-05,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-06,Finance,Global,Net Profit Margin (%),13.0,%,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-01,Finance,Global,Cash Runway (Months),17.78,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-02,Finance,Global,Cash Runway (Months),17.56,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-03,Finance,Global,Cash Runway (Months),17.34,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-04,Finance,Global,Cash Runway (Months),17.12,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-05,Finance,Global,Cash Runway (Months),16.9,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-06,Finance,Global,Cash Runway (Months),16.68,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-07,Finance,Global,Cash Runway (Months),16.46,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-08,Finance,Global,Cash Runway (Months),16.24,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-09,Finance,Global,Cash Runway (Months),16.02,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-10,Finance,Global,Cash Runway (Months),15.8,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-11,Finance,Global,Cash Runway (Months),15.58,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-12,Finance,Global,Cash Runway (Months),15.36,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-01,Finance,Global,Cash Runway (Months),15.14,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-02,Finance,Global,Cash Runway (Months),14.92,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-03,Finance,Global,Cash Runway (Months),14.7,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-04,Finance,Global,Cash Runway (Months),14.48,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-05,Finance,Global,Cash Runway (Months),14.26,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-06,Finance,Global,Cash Runway (Months),14.04,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-07,Finance,Global,Cash Runway (Months),14.26,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-08,Finance,Global,Cash Runway (Months),14.48,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-09,Finance,Global,Cash Runway (Months),14.7,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-10,Finance,Global,Cash Runway (Months),14.92,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-11,Finance,Global,Cash Runway (Months),15.14,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-12,Finance,Global,Cash Runway (Months),15.36,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-01,Finance,Global,Cash Runway (Months),15.58,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-02,Finance,Global,Cash Runway (Months),15.8,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-03,Finance,Global,Cash Runway (Months),16.02,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-04,Finance,Global,Cash Runway (Months),16.24,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-05,Finance,Global,Cash Runway (Months),16.46,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-06,Finance,Global,Cash Runway (Months),16.68,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-07,Finance,Global,Cash Runway (Months),16.9,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-08,Finance,Global,Cash Runway (Months),17.12,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-09,Finance,Global,Cash Runway (Months),17.34,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-10,Finance,Global,Cash Runway (Months),17.56,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-11,Finance,Global,Cash Runway (Months),17.78,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-12,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-01,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-02,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-03,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-04,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-05,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-06,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-07,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-08,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-09,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-10,Finance,Global,Cash Runway (Months),17.4,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-11,Finance,Global,Cash Runway (Months),16.8,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-12,Finance,Global,Cash Runway (Months),16.2,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-01,Finance,Global,Cash Runway (Months),15.6,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-02,Finance,Global,Cash Runway (Months),15.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-03,Finance,Global,Cash Runway (Months),14.4,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-04,Finance,Global,Cash Runway (Months),15.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-05,Finance,Global,Cash Runway (Months),15.6,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-06,Finance,Global,Cash Runway (Months),16.2,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-07,Finance,Global,Cash Runway (Months),16.8,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-08,Finance,Global,Cash Runway (Months),17.4,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-09,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-10,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-11,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-12,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-01,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-02,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-03,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-04,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-05,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-06,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-07,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-08,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-09,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-10,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-11,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-12,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-01,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-02,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-03,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-04,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-05,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-06,Finance,Global,Cash Runway (Months),18.0,Months,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-01,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-02,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-03,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-04,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-05,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-06,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-07,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-08,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-09,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-10,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-11,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-12,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-01,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-02,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-03,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-04,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-05,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-06,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-07,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-08,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-09,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-10,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-11,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-12,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-01,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-02,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-03,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-04,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-05,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-06,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-07,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-08,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-09,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-10,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-11,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-12,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-01,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-02,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-03,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-04,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-05,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-06,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-07,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-08,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-09,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-10,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-11,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-12,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-01,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-02,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-03,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-04,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-05,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-06,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-07,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-08,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-09,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-10,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-11,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-12,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-01,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-02,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-03,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-04,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-05,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-06,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-07,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-08,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-09,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-10,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-11,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-12,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-01,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-02,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-03,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-04,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-05,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-06,Finance,Global,Debt to Equity Ratio,0.85,Ratio,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-01,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-02,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-03,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-04,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-05,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-06,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-07,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-08,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-09,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-10,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-11,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-12,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-01,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-02,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-03,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-04,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-05,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-06,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-07,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-08,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-09,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-10,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-11,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-12,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-01,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-02,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-03,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-04,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-05,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-06,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-07,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-08,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-09,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-10,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-11,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-12,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-01,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-02,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-03,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-04,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-05,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-06,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-07,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-08,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-09,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-10,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-11,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-12,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-01,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-02,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-03,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-04,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-05,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-06,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-07,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-08,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-09,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-10,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-11,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-12,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-01,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-02,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-03,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-04,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-05,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-06,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-07,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-08,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-09,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-10,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-11,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-12,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-01,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-02,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-03,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-04,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-05,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-06,Finance,Global,CAPEX (USD),750000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-01,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-02,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-03,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-04,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-05,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-06,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-07,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-08,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-09,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-10,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-11,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-12,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-01,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-02,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-03,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-04,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-05,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-06,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-07,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-08,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-09,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-10,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-11,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-12,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-01,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-02,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-03,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-04,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-05,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-06,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-07,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-08,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-09,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-10,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-11,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-12,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-01,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-02,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-03,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-04,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-05,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-06,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-07,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-08,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-09,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-10,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-11,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-12,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-01,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-02,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-03,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-04,Finance,Global,OPEX (USD),2163000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-05,Finance,Global,OPEX (USD),2226000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-06,Finance,Global,OPEX (USD),2289000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-07,Finance,Global,OPEX (USD),2352000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-08,Finance,Global,OPEX (USD),2415000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-09,Finance,Global,OPEX (USD),2478000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-10,Finance,Global,OPEX (USD),2502500.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-11,Finance,Global,OPEX (USD),2527000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-12,Finance,Global,OPEX (USD),2551500.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-01,Finance,Global,OPEX (USD),2576000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-02,Finance,Global,OPEX (USD),2600500.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-03,Finance,Global,OPEX (USD),2625000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-04,Finance,Global,OPEX (USD),2590000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-05,Finance,Global,OPEX (USD),2555000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-06,Finance,Global,OPEX (USD),2520000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-07,Finance,Global,OPEX (USD),2485000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-08,Finance,Global,OPEX (USD),2450000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-09,Finance,Global,OPEX (USD),2415000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-10,Finance,Global,OPEX (USD),2380000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-11,Finance,Global,OPEX (USD),2345000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-12,Finance,Global,OPEX (USD),2310000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-01,Finance,Global,OPEX (USD),2275000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-02,Finance,Global,OPEX (USD),2240000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-03,Finance,Global,OPEX (USD),2205000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-04,Finance,Global,OPEX (USD),2170000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-05,Finance,Global,OPEX (USD),2135000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-06,Finance,Global,OPEX (USD),2100000.0,USD,down,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-01,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-02,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-03,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-04,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-05,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-06,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-07,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-08,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-09,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-10,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-11,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-12,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-01,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-02,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-03,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-04,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-05,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-06,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-07,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-08,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-09,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-10,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-11,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-12,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-01,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-02,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-03,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-04,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-05,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-06,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-07,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-08,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-09,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-10,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-11,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-12,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-01,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-02,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-03,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-04,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-05,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-06,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-07,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-08,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-09,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-10,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-11,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-12,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-01,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-02,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-03,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-04,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-05,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-06,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-07,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-08,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-09,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-10,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-11,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-12,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-01,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-02,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-03,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-04,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-05,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-06,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-07,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-08,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-09,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-10,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-11,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-12,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-01,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-02,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-03,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-04,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-05,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-06,Finance,Global,Operating Cash Flow (USD),975000.0,USD,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-01,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-02,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-03,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-04,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-05,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-06,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-07,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-08,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-09,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-10,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-11,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2020-12,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-01,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-02,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-03,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-04,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-05,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-06,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-07,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-08,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-09,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-10,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-11,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2021-12,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-01,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-02,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-03,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-04,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-05,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-06,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-07,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-08,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-09,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-10,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-11,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2022-12,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-01,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-02,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-03,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-04,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-05,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-06,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-07,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-08,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-09,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-10,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-11,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2023-12,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-01,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-02,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-03,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-04,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-05,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-06,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-07,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-08,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-09,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-10,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-11,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2024-12,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-01,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-02,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-03,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-04,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-05,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-06,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-07,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-08,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-09,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-10,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-11,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2025-12,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-01,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-02,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-03,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-04,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-05,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
+2026-06,Finance,Global,Current Ratio,2.1,Ratio,up,Orange SA Annual Report 2024; FactSet SP500 2024; Bessemer State of Cloud 2024
