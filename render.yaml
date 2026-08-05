@@ -13,6 +13,8 @@ services:
     plan: free
     autoDeploy: false
     envVars:
+      - key: ENVIRONMENT
+        value: production
       - key: POSTGRES_URL          # Neon Postgres (also serves pgvector)
         sync: false
       - key: SECRET_KEY            # python -c "import secrets; print(secrets.token_hex(32))"

@@ -477,6 +477,12 @@ async def startup():
 _last_db_check = 0.0
 _cached_db_status = "ok"
 
+@app.get("/wake", include_in_schema=False)
+async def wake_endpoint():
+    """Lightweight wake-up endpoint for Render cold-start priming. Returns immediately without any DB or ML calls."""
+    from datetime import datetime, timezone
+    return {"status": "awake", "service": "intelai", "ts": datetime.now(timezone.utc).isoformat()}
+
 @app.get("/health")
 async def health_check():
     global _last_db_check, _cached_db_status
