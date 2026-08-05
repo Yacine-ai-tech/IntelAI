@@ -1,0 +1,46 @@
+{
+  "company": "NexaCore Technologies",
+  "registry_updated": "2026-06-01",
+  "ndas": [
+    {
+      "counterparty": "Mercer LLC",
+      "type": "Mutual NDA",
+      "signed": "2024-07-15",
+      "expires": "2027-07-15",
+      "scope": "Compensation benchmarking engagement",
+      "owner": "People Ops"
+    },
+    {
+      "counterparty": "NCC Group (External Pen Test)",
+      "type": "Mutual NDA",
+      "signed": "2024-12-01",
+      "expires": "2026-12-01",
+      "scope": "Penetration testing engagement Q1 2025",
+      "owner": "Security"
+    },
+    {
+      "counterparty": "Norwest Venture Partners",
+      "type": "Mutual NDA",
+      "signed": "2023-11-10",
+      "expires": "2025-11-10",
+      "scope": "Series B fundraise",
+      "owner": "Finance"
+    },
+    {
+      "counterparty": "Flex Ltd.",
+      "type": "Mutual NDA",
+      "signed": "2022-04-01",
+      "expires": "2028-04-01",
+      "scope": "Contract manufacturing \u2014 NXT-EC edge compute modules",
+      "owner": "Operations"
+    },
+    {
+      "counterparty": "Pilot Acquisition Target A (Undisclosed)",
+      "type": "One-way (NexaCore receives)",
+      "signed": "2026-01-15",
+      "expires": "2027-01-15",
+      "scope": "M&A due diligence",
+      "owner": "Corporate Development \u2014 CONFIDENTIAL"
+    }
+  ]
+}
