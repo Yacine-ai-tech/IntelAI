@@ -55,11 +55,11 @@ class Settings:
 
     # External Microservice APIs — set via env in production (STRATEGY.md § Decoupling)
     # Defaults target the live production endpoints on the custom domain.
-    DOCINTEL_API_URL: str = field(
-        default_factory=lambda: os.getenv("DOCINTEL_API_URL", "http://localhost:8000")
+    VISION_API_URL: str = field(
+        default_factory=lambda: os.getenv("VISION_API_URL", "http://localhost:8000")
     )
-    VOICEFLOW_API_URL: str = field(
-        default_factory=lambda: os.getenv("VOICEFLOW_API_URL", "http://localhost:8000")
+    VOICE_API_URL: str = field(
+        default_factory=lambda: os.getenv("VOICE_API_URL", "http://localhost:8000")
     )
 
     # LLM API keys — at least one must be set; validated at startup.
@@ -169,24 +169,5 @@ def get_cors_allowed_origins() -> List[str]:
 
 
 
-# Gemini model fallback — when OPENAI_API_KEY is absent but GEMINI_API_KEY is
-# present, any model string containing "openai" or "gpt-" is automatically
-# remapped to Gemini Flash so no code changes are required when switching providers.
-def _apply_gemini_fallback():
-    openai_key = getattr(settings, "OPENAI_API_KEY", "") or os.getenv("OPENAI_API_KEY", "")
-    gemini_key = getattr(settings, "GEMINI_API_KEY", "") or os.getenv("GEMINI_API_KEY", "")
-    
-    if not openai_key and gemini_key:
-        def fallback(model_str):
-            if model_str and ("openai" in model_str.lower() or "gpt-" in model_str.lower()):
-                return "gemini/gemini-2.5-flash"
-            return model_str
-            
-        for attr in dir(settings):
-            if attr.startswith("LLM_") and isinstance(getattr(settings, attr), str):
-                object.__setattr__(settings, attr, fallback(getattr(settings, attr)))
-        
-        if hasattr(settings, "JUDGE_MODELS") and isinstance(settings.JUDGE_MODELS, list):
-            object.__setattr__(settings, "JUDGE_MODELS", [fallback(m) for m in settings.JUDGE_MODELS])
-
-_apply_gemini_fallback()
+# The Gemini fallback logic has been removed as it violated the decoupled architecture
+# guidelines in STRATEGY.md by forcing IntelAI to route to Gemini when OPENAI_API_KEY was missing.

@@ -12,13 +12,13 @@ const BASE_URL = process.env.TEST_BASE_URL || '';
 
 const URLS = {
   intelai:    process.env.INTELAI_URL    || 'https://intelai-ui-2026.vercel.app',
-  intelai_api:process.env.INTELAI_API_URL|| 'https://intelai-bwhp.onrender.com',
+  intelai_api:process.env.INTELAI_API_URL,
   docintel:   process.env.DOCINTEL_URL   || 'https://docintel-ui-2026.vercel.app',
-  docintel_api:process.env.DOCINTEL_API_URL|| 'https://docintel-mm79.onrender.com',
+  docintel_api:process.env.VISION_API_URL,
   agentkit:   process.env.AGENTKIT_URL   || 'https://agentkit-ui-2026.vercel.app',
-  agentkit_api:process.env.AGENTKIT_API_URL|| 'https://agentkit-sbz5.onrender.com',
+  agentkit_api:process.env.AGENTKIT_API_URL,
   rageval:    process.env.RAGEVAL_URL    || 'https://rageval-ui-2026.vercel.app',
-  rageval_api:process.env.RAGEVAL_API_URL|| 'https://rageval-4xh5.onrender.com',
+  rageval_api:process.env.RAGEVAL_API_URL,
 };
 
 const ADMIN_USER = 'admin';
@@ -94,7 +94,7 @@ test.describe('Phase 10 — Cross-Mesh Grand Tour', () => {
     const services = [
       { name: 'IntelAI',    url: `${URLS.intelai_api}/health` },
       { name: 'DocIntel',   url: `${URLS.docintel_api}/health` },
-      { name: 'VoiceFlow',  url: `${process.env.VOICEFLOW_API_URL || '/'}/health` },
+      { name: 'VoiceFlow',  url: `${process.env.VOICE_API_URL || '/'}/health` },
       { name: 'RAGeval',    url: `${URLS.rageval_api}/health` },
       { name: 'StreamPulse',url: `${process.env.STREAMPULSE_API_URL || '/'}/health` },
       { name: 'AgentKit',   url: `${URLS.agentkit_api}/health` },
