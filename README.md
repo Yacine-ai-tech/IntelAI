@@ -117,7 +117,7 @@ DB-dependent tests run automatically when `POSTGRES_URL` is reachable and skip c
 
 ## Benchmarking Scenarios (Research & Evaluation)
 
-IntelAI provides seven seeded deterministic environments for evaluating RAG retrieval accuracy and forecasting models under structural stress. These scenarios are selectable via the `Admin → Scenarios` tab or API (`POST /api/v1/admin/scenario`):
+IntelAI provides seven seeded deterministic environments for evaluating RAG retrieval accuracy and forecasting models under structural stress. Rather than generating synthetic data, the official seeding process uses the API to ingest **real data**, accurately simulating the production context pipeline. These scenarios are selectable via the `Admin → Scenarios` tab or API (`POST /api/v1/admin/scenario`):
 
 | Scenario | Research Application | Description |
 |---|---|---|
