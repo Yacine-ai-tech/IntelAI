@@ -315,26 +315,6 @@ def _hosted_rerank(query: str, texts: List[str]) -> Optional[List[float]]:
                 scores[idx] = float(r.get("relevance_score", 0.0))
         return scores
     except Exception as e:
-        # Fallback to Hugging Face Free Inference API if hosted fails and HF_TOKEN is available
-        hf_token = os.getenv("HF_TOKEN", "").strip()
-        if hf_token:
-            try:
-                import urllib.request
-                import json as _json
-                model = os.getenv("HF_RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
-                url = f"https://router.huggingface.co/hf-inference/models/{model}"
-                h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
-                body = _json.dumps({"inputs": [f"{query} </s> {t}" for t in texts]}).encode()
-                req = urllib.request.Request(url, data=body, headers=h)
-                res = _json.loads(urllib.request.urlopen(req, timeout=15).read())
-                if isinstance(res, list) and len(res) > 0:
-                    if isinstance(res[0], list) and len(res[0]) == len(texts):
-                        return [float(item["score"]) for item in res[0]]
-                    elif len(res) == len(texts):
-                        return [float(item[0]["score"] if isinstance(item, list) else item.get("score", 0.0)) for item in res]
-            except Exception as hf_err:
-                log.warning("HF fallback rerank also unavailable: %s", hf_err)
-        
         log.warning("hosted rerank unavailable (%s) — keeping fusion order", e)
         return None
 
@@ -348,63 +328,32 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
 
     provider = os.getenv("RERANK_PROVIDER", "hf").lower()
 
-    def _try_lightning():
-        remote = os.getenv("LIGHTNING_RERANK_URL", "").strip()
-        if remote:
-            try:
-                import json as _json, urllib.request
-                body = _json.dumps({"query": query, "texts": texts}).encode()
-                h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0 (+https://ysiddo-ai-projects.app)"}
-                tk = os.getenv("INFERENCE_TOKEN", "").strip()
-                if tk: h["Authorization"] = "Bearer " + tk
-                req = urllib.request.Request(remote.rstrip("/") + "/rerank", data=body, headers=h)
-                timeout = float(os.getenv("LIGHTNING_RERANK_TIMEOUT", "12"))
-                scores = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["scores"]
-                if isinstance(scores, list) and len(scores) == len(texts):
-                    return [float(s) for s in scores]
-            except Exception as e:
-                log.warning("remote rerank unavailable (%s) — waking studio", e)
-                _trigger_wake()
-        return None
-
-    def _try_hf():
-        hf_token = os.getenv("HF_TOKEN", "").strip()
-        if not hf_token: return None
+    def _try_remote():
+        remote = os.getenv("ENDPOINT", "").strip()
+        if not remote:
+            return None
         try:
-            import urllib.request, json as _json
-            model = os.getenv("HF_RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
-            url = f"https://router.huggingface.co/hf-inference/models/{model}"
-            h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
-            body = _json.dumps({"inputs": [f"{query} </s> {t}" for t in texts]}).encode()
-            req = urllib.request.Request(url, data=body, headers=h)
-            res = _json.loads(urllib.request.urlopen(req, timeout=15).read())
-            if isinstance(res, list) and len(res) > 0:
-                if isinstance(res[0], list) and len(res[0]) == len(texts):
-                    return [float(item["score"]) for item in res[0]]
-                elif len(res) == len(texts):
-                    return [float(item[0]["score"] if isinstance(item, list) else item.get("score", 0.0)) for item in res]
-        except Exception as hf_err:
-            log.warning("HF rerank unavailable: %s", hf_err)
+            import json as _json, urllib.request
+            body = _json.dumps({"query": query, "texts": texts}).encode()
+            h = {"Content-Type": "application/json"}
+            tk = os.getenv("INFERENCE_TOKEN", "").strip()
+            if tk: h["Authorization"] = "Bearer " + tk
+            req = urllib.request.Request(remote.rstrip("/") + "/rerank", data=body, headers=h)
+            timeout = 15.0
+            res = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+            scores = res.get("scores", []) if isinstance(res, dict) else res
+            if isinstance(scores, list) and len(scores) > 0 and isinstance(scores[0], dict) and "score" in scores[0]:
+                scores = [item["score"] for item in scores]
+            if isinstance(scores, list) and len(scores) == len(texts):
+                return [float(s) for s in scores]
+        except Exception as e:
+            log.warning("remote rerank unavailable (%s)", e)
         return None
 
-    if provider == "hf":
-        hf = _try_hf()
-        if hf is not None: return hf
-        hosted = _hosted_rerank(query, texts)
-        if hosted is not None: return hosted
-        return _try_lightning()
-    elif provider == "cohere":
-        hosted = _hosted_rerank(query, texts)
-        if hosted is not None: return hosted
-        hf = _try_hf()
-        if hf is not None: return hf
-        return _try_lightning()
-    else: # lightning primary
-        light = _try_lightning()
-        if light is not None: return light
-        hf = _try_hf()
-        if hf is not None: return hf
+    if provider in ("cohere", "jina"):
         return _hosted_rerank(query, texts)
+    else:
+        return _try_remote()
 
     if not _RERANKER or os.getenv("USE_LOCAL_RERANKER", "false").strip().lower() not in ("1", "true", "yes", "on"):
         return None
