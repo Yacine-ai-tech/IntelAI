@@ -1,5 +1,5 @@
 # Top-level project metadata for IntelAI (the deployable app).
-# The app runs via uvicorn (see Dockerfile / railway.toml); deps are in requirements.txt.
+# The app runs via uvicorn (see Dockerfile / render.yaml); deps are in requirements.txt.
 # The reusable persona library is packaged separately under packages/omnismart-personas.
 [project]
 name = "intelai"
