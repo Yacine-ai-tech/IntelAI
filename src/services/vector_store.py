@@ -58,13 +58,13 @@ def _embed(texts: List[str]):
         res = _json.loads(urllib.request.urlopen(req, timeout=15).read())
         return np.asarray(res["embeddings"], dtype="float32")
 
-    def _try_hf():
-        hf_token = os.environ.get("HF_TOKEN", "").strip()
-        if not hf_token: return None
+    def _try_remote():
+        url = os.environ.get("ENDPOINT", "").strip()
+        token = os.environ.get("INFERENCE_TOKEN", "").strip()
+        if not url: return None
         import urllib.request, json as _json
-        model = os.environ.get("HF_EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5")
-        url = f"https://router.huggingface.co/hf-inference/pipeline/feature-extraction/{model}"
-        h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
+        h = {"Content-Type": "application/json"}
+        if token: h["Authorization"] = f"Bearer {token}"
         body = _json.dumps({"inputs": list(texts)}).encode()
         req = urllib.request.Request(url, data=body, headers=h)
         res = _json.loads(urllib.request.urlopen(req, timeout=20).read())
@@ -74,29 +74,20 @@ def _embed(texts: List[str]):
         vecs = _embedder().encode(list(texts), normalize_embeddings=True, show_progress_bar=False)
         return np.asarray(vecs, dtype="float32")
 
-    if provider == "hf":
+    if provider == "remote":
         try:
-            res = _try_hf()
+            res = _try_remote()
             if res is not None: return res
         except Exception as e:
-            log.warning("HF fallback embedding failed: %s", e)
-        try:
-            res = _try_cohere()
-            if res is not None: return res
-        except: pass
-        return _try_local()
+            log.warning("Remote embedding failed: %s", e)
+        return None
     elif provider == "cohere":
         try:
             res = _try_cohere()
             if res is not None: return res
         except Exception as e:
-            log.warning("Cohere embedding failed (%s) - falling back to HF/Local", e)
-        try:
-            res = _try_hf()
-            if res is not None: return res
-        except Exception as e:
-            log.warning("HF fallback embedding failed: %s", e)
-        return _try_local()
+            log.warning("Cohere embedding failed: %s", e)
+        return None
     else:
         try:
             return _try_local()

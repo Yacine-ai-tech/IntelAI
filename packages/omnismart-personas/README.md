@@ -5,6 +5,8 @@ Role-based, **data-scoped** LLM persona templates + router for production analyt
 copilots. The pattern behind IntelAI's 9-persona RAG copilot, extracted as a tiny,
 zero-dependency, pure-Python library.
 
+Personas are designed to operate alongside strict, data-isolated Neon Postgres silos.
+
 A *persona* pairs a **system prompt** with a **data-access scope** (which business
 domains it may see) and a sampling temperature — so the same retrieval system can answer
 through different role-conditioned prompts *and* data filters ("persona-routed RAG").
