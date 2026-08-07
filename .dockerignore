@@ -23,7 +23,7 @@ packages/
 *.md
 docker-compose*.yml
 Makefile
-railway.toml
+render.yaml
 
 # Secrets / local
 .env

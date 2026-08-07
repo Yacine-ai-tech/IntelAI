@@ -80,13 +80,13 @@ docker compose up --build                              # app + bundled Postgres
 
 | Variable | Required | Description |
 |---|---|---|
-| `POSTGRES_URL` | ✅ | Neon / Railway / local Postgres |
+| `POSTGRES_URL` | ✅ | Neon / Render / local Postgres |
 | `GROQ_API_KEY` | ✅ | Default LLM provider |
 | `SECRET_KEY` | ✅ | JWT signing key |
 | `ANTHROPIC_API_KEY` | ⬜ | Claude reasoning tier |
 | `USE_GRAPH_RAG` | ⬜ | `true` = GraphRAG-lite multi-hop |
 | `USE_HYBRID_RETRIEVAL` | ⬜ | `true` = dense+BM25+RRF+reranker |
-| `VECTOR_STORE` | ⬜ | `memory` · `chroma` · `pgvector` · `qdrant` |
+| `VECTOR_STORE` | ⬜ | `memory` · `chroma` (dev) · `pgvector` · `qdrant` (prod) |
 | `LLM_MODEL` | ⬜ | Groq model id (default `llama-3.1-8b-instant`) |
 
 ## Key API Endpoints
@@ -115,25 +115,25 @@ pytest tests/test_chat.py -q      # chat endpoint + answer-block assertions
 
 DB-dependent tests run automatically when `POSTGRES_URL` is reachable and skip cleanly otherwise — CI is green without a database.
 
-## Benchmarking Scenarios
+## Benchmarking Scenarios (Research & Evaluation)
 
-Seven seeded scenarios (selectable from the Admin → Scenarios tab or via `POST /api/v1/admin/scenario`):
+IntelAI provides seven seeded deterministic environments for evaluating RAG retrieval accuracy and forecasting models under structural stress. These scenarios are selectable via the `Admin → Scenarios` tab or API (`POST /api/v1/admin/scenario`):
 
-| Scenario | Description |
-|---|---|
-| `healthy` | S&P 500 baseline |
-| `declining_financial` | Revenue contraction & margin compression |
-| `high_churn_crisis` | Customer retention failure |
-| `operational_meltdown` | OEE collapse & quality failures |
-| `talent_crisis` | High attrition, open-req spike |
-| `cybersecurity_breach` | Security incident — SLA/SLO degrade |
-| `esg_compliance_failure` | Governance failures & emissions spike |
+| Scenario | Research Application | Description |
+|---|---|---|
+| `healthy` | Baseline RAG Eval | S&P 500 baseline with stationary distributions. |
+| `declining_financial` | Trend Reversal | Revenue contraction & margin compression; tests forecast adaptability. |
+| `high_churn_crisis` | Lagging Indicators | Customer retention failure; tests cross-domain correlation (Growth vs Finance). |
+| `operational_meltdown` | Volatility Stress | OEE collapse & quality failures; introduces severe noise to operational metrics. |
+| `talent_crisis` | Sentiment Impact | High attrition, open-req spike; evaluates HR to operational efficiency lag. |
+| `cybersecurity_breach` | Shock Event | Security incident; step-function disruption in SLA/SLO metrics. |
+| `esg_compliance_failure` | Policy Violation | Governance failures & emissions spike; tests multi-hop entity reasoning. |
 
 ## Deploy
 
-IntelAI deploys as **one cloud service** (`railway.toml` included). Connect the repo on Railway,
-set the env vars above, attach a Postgres add-on. Deploy the frontend separately on Vercel with
-`VITE_API_BASE_URL` pointing to the Railway service URL.
+IntelAI deploys as **one cloud service** (`render.yaml` included). Connect the repo on Render,
+set the env vars above, and attach a Postgres add-on. Deploy the frontend separately on Vercel with
+`VITE_API_BASE_URL` pointing to the Render service URL.
 
 ## License
 
@@ -157,9 +157,4 @@ This project collects anonymous, GDPR-compliant startup pings to help the author
 <!-- Scarf Analytics Pixel -->
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ada53b5b-d56f-447f-b5ab-a65a061b7d5a" />
 
-## Licensing
-This project is licensed under the [AGPL-3.0 License](LICENSE).
 
-**Commercial Use:** If you wish to use this software commercially without releasing your own source code, please see [COMMERCIAL.md](COMMERCIAL.md) to obtain a commercial license.
-
-**Telemetry:** See [TELEMETRY.md](TELEMETRY.md) for our privacy-first data practices.

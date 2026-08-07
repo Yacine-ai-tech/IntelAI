@@ -23,6 +23,6 @@ build: ## Build the app image
 	docker build -t intelai:latest .
 
 deploy-info: ## How IntelAI deploys
-	@echo "IntelAI deploys as ONE cloud service built from the Dockerfile (see railway.toml)."
-	@echo "Railway/Fly: connect the repo; set env vars POSTGRES_URL, GROQ_API_KEY,"
+	@echo "IntelAI deploys as ONE cloud service built from the Dockerfile (see render.yaml)."
+	@echo "Render/Fly: connect the repo; set env vars POSTGRES_URL, GROQ_API_KEY,"
 	@echo "ANTHROPIC_API_KEY, TAVILY_API_KEY, SECRET_KEY. Frontend deploys separately (Vercel/Netlify)."
