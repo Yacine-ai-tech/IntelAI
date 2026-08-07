@@ -12,7 +12,7 @@ import pytest
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
-os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai")
+os.environ.setdefault("POSTGRES_URL", os.environ.get("POSTGRES_URL", ""))
 
 ADMIN = {"username": "admin", "password": "admin123"}
 

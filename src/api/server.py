@@ -1044,28 +1044,28 @@ async def ingest_document(
             job_mgr.update_job(job_id, status="processing", progress_pct=15, current_step=f"Extracting text & running OCR/transcription for {filename}...")
             text = ""
 
-            # 1. 🎤 Audio & Meeting Processing (Delegate to VoiceFlow)
+            # 1. 🎤 Audio & Meeting Processing (Delegate to Voice API)
             if filename_lower.endswith((".mp3", ".wav", ".m4a", ".ogg")):
                 try:
                     with httpx.Client(timeout=120.0) as client:
                         response = client.post(
-                            f"{settings.VOICEFLOW_API_URL}/transcribe",
+                            f"{settings.VOICE_API_URL}/transcribe",
                             files={"file": (filename, content)}
                         )
                         response.raise_for_status()
                         text = response.json().get("text", "")
                 except Exception as e:
-                    text = f"[VOICEFLOW ERROR] Audio transcription fallback: {e}"
+                    text = f"[VOICE API ERROR] Audio transcription fallback: {e}"
 
-            # 2. 🖼️ Document OCR & Vision AI (Delegate to DocIntel)
+            # 2. 🖼️ Document OCR & Vision AI (Delegate to Vision API)
             elif filename_lower.endswith((".pdf", ".png", ".jpg", ".jpeg", ".tiff")):
                 try:
-                    docintel_route = "ocr_fallback" if filename_lower.endswith(".pdf") else "vision_route_a"
+                    vision_route = "ocr_fallback" if filename_lower.endswith(".pdf") else "vision_route_a"
                     with httpx.Client(timeout=120.0) as client:
                         response = client.post(
-                            f"{settings.DOCINTEL_API_URL}/extract",
+                            f"{settings.VISION_API_URL}/extract",
                             files={"file": (filename, content)},
-                            data={"route": docintel_route}
+                            data={"route": vision_route}
                         )
                         response.raise_for_status()
                         data = response.json()
@@ -1075,7 +1075,7 @@ async def ingest_document(
                     if filename_lower.endswith(".pdf"):
                         text = content.decode("utf-8", errors="ignore")
                     else:
-                        text = f"[DOCINTEL ERROR] Vision OCR fallback: {e}"
+                        text = f"[VISION API ERROR] Vision OCR fallback: {e}"
 
             # 3. 📝 Standard Text/JSON
             else:

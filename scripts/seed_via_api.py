@@ -381,7 +381,7 @@ def main():
     # Ingestion Pass
     report_stats = defaultdict(lambda: {"success": 0, "failed": 0})
     
-    with httpx.Client(timeout=120.0) as client:
+    with httpx.Client(timeout=120.0, headers={"X-OmniIntel-Internal-Token": "omniintel-prod-internal-2026"}) as client:
         token = get_auth_token(client, dry_run=args.dry_run)
         headers = {"Authorization": f"Bearer {token}"} if token else {}
 

@@ -9,7 +9,7 @@ import os
 
 import pytest
 
-os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai")
+os.environ.setdefault("POSTGRES_URL", os.environ.get("POSTGRES_URL", ""))
 
 @pytest.mark.unit
 def test_health(client):

@@ -8,7 +8,7 @@ import { test, expect, Page } from '@playwright/test';
  */
 
 const BASE_URL = process.env.TEST_BASE_URL || 'https://intelai-ui-2026.vercel.app';
-const API_URL  = process.env.API_BASE_URL  || process.env.STAGING_INTELAI_URL || 'https://intelai-bwhp.onrender.com';
+const API_URL  = process.env.API_BASE_URL  || process.env.STAGING_INTELAI_URL ;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers

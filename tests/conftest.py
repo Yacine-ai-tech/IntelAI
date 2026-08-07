@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 # Force the app to use a test database, NEVER the production Neon DB from .env
-os.environ["POSTGRES_URL"] = os.environ.get("TEST_POSTGRES_URL", "postgresql://localhost/intelai_test")
+os.environ["POSTGRES_URL"] = os.environ.get("TEST_POSTGRES_URL", os.environ.get("POSTGRES_URL", ""))
 # Ensure a bootstrap admin exists for DEFAULT_USERS (used by _init_default_users()).
 os.environ.setdefault("BOOTSTRAP_ADMIN_USERNAME", "admin")
 os.environ.setdefault("BOOTSTRAP_ADMIN_PASSWORD", "admin123")

@@ -141,7 +141,7 @@ def llm_complete(
                 tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
                 return r.choices[0].message.content, tokens
             except Exception as e:
-                log.warning("Groq completion failed (%s) — falling back to Gemini", e)
+                log.warning("Groq completion failed (%s) — falling back to LiteLLM router", e)
 
         # LiteLLM completion
         from litellm import completion  # type: ignore
@@ -156,24 +156,7 @@ def llm_complete(
             tokens = getattr(usage, "total_tokens", 0) if usage else 0
             return text, tokens
         except Exception as e:
-            log.warning("LiteLLM completion for %s failed (%s) — trying Gemini fallback", resolved_model, e)
-            gemini_key = os.getenv("GEMINI_API_KEY", "") or getattr(settings, "GEMINI_API_KEY", "")
-            if gemini_key:
-                for attempt in range(2):
-                    try:
-                        r = completion(
-                            model="gemini/gemini-2.0-flash",
-                            messages=messages,
-                            api_key=gemini_key,
-                            temperature=temperature,
-                            max_tokens=max_tokens
-                        )
-                        text = r.choices[0].message.content
-                        usage = getattr(r, "usage", None)
-                        tokens = getattr(usage, "total_tokens", 0) if usage else 0
-                        return text, tokens
-                    except Exception as ge:
-                        log.warning("Gemini completion attempt %d failed (%s)", attempt+1, ge)
+            log.warning("LiteLLM completion for %s failed (%s)", resolved_model, e)
             raise e
 
     # Run in worker thread pool so synchronous LLM provider network calls never block FastAPI asyncio loop
