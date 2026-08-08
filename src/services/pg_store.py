@@ -12,6 +12,8 @@ Handles all persistence:
 """
 from __future__ import annotations
 
+import contextvars
+import os
 import uuid
 from typing import Any, Dict, List, Optional
 
@@ -28,6 +30,32 @@ except ImportError:
 
 
 log = get_logger(__name__)
+
+# ═══════════════════════════════════════════════════════════
+# DEMO-VISITOR SCOPING
+# ═══════════════════════════════════════════════════════════
+# Anonymous demo isolation, not production multi-tenant auth: this keeps one
+# visitor's ingested/uploaded content from being readable by a different
+# visitor on the shared public demo. Seeded/global demo data (owner_user_id
+# IS NULL) always stays visible to everyone. Set by request middleware in
+# src/api/server.py from the caller's JWT (if any); read implicitly by the
+# KPI query functions below so the ~30 call sites across the codebase don't
+# each need to be threaded with a scope parameter.
+_request_scope_user: "contextvars.ContextVar[Optional[str]]" = contextvars.ContextVar(
+    "request_scope_user", default=None
+)
+
+
+def set_request_scope_user(user_id: Optional[str]) -> None:
+    _request_scope_user.set(user_id)
+
+
+def get_request_scope_user() -> Optional[str]:
+    return _request_scope_user.get()
+
+
+def _demo_session_scoping_enabled() -> bool:
+    return os.getenv("DEMO_SESSION_SCOPING", "true").lower() == "true"
 
 _pool = None
 _pool_lock = None
@@ -162,9 +190,12 @@ def init_pg_tables():
                 unit        TEXT DEFAULT '',
                 direction   TEXT DEFAULT 'higher_is_better',
                 source      TEXT DEFAULT 'manual',
+                owner_user_id TEXT,
                 created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
             )
         """)
+        # Idempotent migration for tables created before owner_user_id existed.
+        conn.execute("ALTER TABLE kpi_metrics ADD COLUMN IF NOT EXISTS owner_user_id TEXT")
         conn.execute("""
             CREATE TABLE IF NOT EXISTS kpi_entities (
                 id            SERIAL PRIMARY KEY,
@@ -362,7 +393,17 @@ def init_pg_tables():
 # KPI OPERATIONS
 # ═══════════════════════════════════════════════════════════
 
-def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: bool = True, replace_prefix: Optional[str] = None) -> None:
+def store_kpi_metrics(
+    df: "pd.DataFrame",
+    source_name: str = "manual",
+    replace: bool = True,
+    replace_prefix: Optional[str] = None,
+    owner_user_id: Optional[str] = None,
+) -> None:
+    """Persist KPI rows. ``owner_user_id=None`` writes global/seeded rows visible to every
+    demo visitor; passing the ingesting visitor's user_id scopes the rows to them only
+    (see get_kpi_metrics). Replace-by-source is scoped to the same owner so one visitor's
+    re-ingest can never delete another visitor's — or the seed data's — rows."""
     if df.empty:
         return
     params = [
@@ -375,12 +416,13 @@ def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: 
             str(row.get("unit", "")),
             str(row.get("direction", "higher_is_better")),
             source_name,
+            owner_user_id,
         )
         for _, row in df.iterrows()
     ]
     insert_sql = (
-        "INSERT INTO kpi_metrics (period, metric, value, category, segment, unit, direction, source) "
-        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        "INSERT INTO kpi_metrics (period, metric, value, category, segment, unit, direction, source, owner_user_id) "
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
     )
     last_err: Optional[Exception] = None
     for _ in range(3):
@@ -389,9 +431,15 @@ def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: 
             with conn.cursor() as cur:
                 if replace:
                     if replace_prefix:
-                        cur.execute("DELETE FROM kpi_metrics WHERE source LIKE %s", [f"{replace_prefix}%"])
+                        cur.execute(
+                            "DELETE FROM kpi_metrics WHERE source LIKE %s AND owner_user_id IS NOT DISTINCT FROM %s",
+                            [f"{replace_prefix}%", owner_user_id],
+                        )
                     else:
-                        cur.execute("DELETE FROM kpi_metrics WHERE source = %s", [source_name])
+                        cur.execute(
+                            "DELETE FROM kpi_metrics WHERE source = %s AND owner_user_id IS NOT DISTINCT FROM %s",
+                            [source_name, owner_user_id],
+                        )
                 cur.executemany(insert_sql, params)
             conn.commit()
             # Automatic GraphRAG-lite Entity & Relationship Extraction
@@ -435,6 +483,10 @@ def get_kpi_metrics(
     segments: Optional[List[str]] = None,
     limit: Optional[int] = 2000,
 ) -> "pd.DataFrame":
+    """Read KPI rows. Demo-session scoping (default on): a visitor always sees the global
+    seeded baseline (owner_user_id IS NULL) plus anything they personally ingested, never
+    another visitor's ingested rows. Scope key comes from the current request's JWT, set by
+    the middleware in src/api/server.py — no caller here needs to pass it explicitly."""
     import pandas as pd
     conn = _get_conn()
     try:
@@ -446,6 +498,9 @@ def get_kpi_metrics(
                 ph = ",".join(["%s"] * len(vals))
                 filters.append(f"{col} IN ({ph})")
                 params.extend(vals)
+        if _demo_session_scoping_enabled():
+            filters.append("(owner_user_id IS NULL OR owner_user_id = %s)")
+            params.append(get_request_scope_user())
         if filters:
             q += " WHERE " + " AND ".join(filters)
         q += " ORDER BY period, metric"
@@ -1042,15 +1097,39 @@ def store_message(
         conn.close()
 
 
-def get_session_messages(session_id: str, limit: int = 100) -> List[Dict[str, Any]]:
+def get_session_messages(session_id: str, user_id: str, limit: int = 100) -> List[Dict[str, Any]]:
+    """Ownership is enforced in the query itself: a session_id belonging to a different
+    user_id returns no rows rather than that user's messages."""
     conn = _get_conn()
     try:
         rows = conn.execute(
-            """SELECT id, role, content, mode, sources, tokens_used, latency_ms, created_at
-               FROM chat_messages WHERE session_id = %s ORDER BY created_at ASC LIMIT %s""",
-            [session_id, limit],
+            """SELECT m.id, m.role, m.content, m.mode, m.sources, m.tokens_used, m.latency_ms, m.created_at
+               FROM chat_messages m
+               JOIN chat_sessions s ON s.id = m.session_id
+               WHERE m.session_id = %s AND s.user_id = %s
+               ORDER BY m.created_at ASC LIMIT %s""",
+            [session_id, user_id, limit],
         ).fetchall()
         return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+def get_or_create_demo_user(user_id: str, username: str, role: str, full_name: str) -> Dict[str, Any]:
+    """Idempotently ensure a per-visitor demo user row exists. Needed because chat_sessions
+    and uploaded_files have a foreign key to users.id — an ephemeral identity still needs a
+    real row. Safe to call on every demo-login; a repeat call for the same (role, session) is
+    a no-op since user_id is deterministic (see server.py's demo_login)."""
+    conn = _get_conn()
+    try:
+        conn.execute(
+            """INSERT INTO users (id, username, password_hash, role, full_name)
+               VALUES (%s, %s, %s, %s, %s)
+               ON CONFLICT (id) DO NOTHING""",
+            [user_id, username, "demo-no-password-login", role, full_name],
+        )
+        conn.commit()
+        return {"id": user_id, "username": username, "role": role}
     finally:
         conn.close()
 
