@@ -35,7 +35,7 @@ First request may take ~60 s to wake the on-demand backend.
 | **Data export/ingest** | PDF / Excel / CSV / JSON export; CSV & document ingestion |
 | **Auth + RBAC** | JWT, role-based pages, per-persona data scoping, audit log |
 | **Admin governance** | User management (create/edit/disable), role viewer, scenario switcher, vector store reindex |
-| **Multi-provider LLM** | Groq (default) / Anthropic via LiteLLM |
+| **Multi-provider LLM** | OpenAI-compatible proxies via LiteLLM (using `LLM_ENDPOINT`) |
 | **Bilingual** | Full EN / FR UI and copilot responses |
 
 ## Architecture
@@ -46,19 +46,19 @@ React + Vite (Recharts · TanStack Query · i18n)   → Vercel / Netlify
 FastAPI  (src/api/server.py)
   auth · chat (9 personas) · KPIs · insights · forecasting · admin
         │
-   PostgreSQL (Neon)          LLM  (Groq / Anthropic via LiteLLM)
+   PostgreSQL (Neon)          LLM  (OpenAI-compatible via LiteLLM)
    KPIs · auth · sessions ·   GraphRAG-lite · hybrid retrieval
    vectors (pgvector opt-in)  BGE reranker · BM25
 ```
 
 ## Quickstart
 
-**Prerequisites:** Python 3.11, Node 18+, Postgres URL, `GROQ_API_KEY`.
+**Prerequisites:** Python 3.11, Node 18+, Postgres URL, `LLM_API_KEY`, `LLM_ENDPOINT`.
 
 ```bash
 git clone https://github.com/Yacine-ai-tech/IntelAI.git
 cd IntelAI
-cp .env.example .env   # fill POSTGRES_URL, GROQ_API_KEY, SECRET_KEY
+cp .env.example .env   # fill POSTGRES_URL, LLM_API_KEY, SECRET_KEY
 
 # Backend (port 8000 — tables & seed created automatically)
 pip install -r requirements.txt
@@ -81,13 +81,13 @@ docker compose up --build                              # app + bundled Postgres
 | Variable | Required | Description |
 |---|---|---|
 | `POSTGRES_URL` | ✅ | Neon / Render / local Postgres |
-| `GROQ_API_KEY` | ✅ | Default LLM provider |
+| `LLM_API_KEY` | ✅ | Default LLM provider key |
 | `SECRET_KEY` | ✅ | JWT signing key |
-| `ANTHROPIC_API_KEY` | ⬜ | Claude reasoning tier |
+| `LLM_ENDPOINT` | ⬜ | OpenAI-compatible endpoint URL (optional if using default) |
 | `USE_GRAPH_RAG` | ⬜ | `true` = GraphRAG-lite multi-hop |
 | `USE_HYBRID_RETRIEVAL` | ⬜ | `true` = dense+BM25+RRF+reranker |
 | `VECTOR_STORE` | ⬜ | `memory` · `chroma` (dev) · `pgvector` · `qdrant` (prod) |
-| `LLM_MODEL` | ⬜ | Groq model id (default `llama-3.1-8b-instant`) |
+| `LLM_MODEL` | ⬜ | Default model id (e.g. `gpt-4o-mini`, `llama-3.1-8b-instant`) |
 
 ## Key API Endpoints
 
