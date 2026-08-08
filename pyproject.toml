@@ -3,7 +3,7 @@
 # The reusable persona library is packaged separately under packages/omnismart-personas.
 [project]
 name = "intelai"
-version = "0.1.2"
+version = "0.1.4"
 description = "Persona-Aware AI Analytics & RAG Copilot — multi-domain KPI intelligence, GraphRAG-lite, ML forecasting."
 readme = "README.md"
 requires-python = ">=3.11"
