@@ -57,4 +57,3 @@ python-docx>=1.1.2
 reportlab>=4.2.0
 
 # ── Lightning AI Studio management ──
-lightning-sdk>=2026.6.0
