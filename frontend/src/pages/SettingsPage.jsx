@@ -43,7 +43,7 @@ export default function SettingsPage() {
   const sys = [
     [t('platform') || 'Platform', 'IntelAI v0.1.0'],
     [t('backend') || 'Backend', 'FastAPI + PostgreSQL'],
-    [t('llmProvider') || 'LLM', 'Groq / Anthropic (LiteLLM router)'],
+    [t('llmProvider') || 'LLM', 'LLM_ENDPOINT (OpenAI-compatible via LiteLLM)'],
     [t('vectorStore') || 'Retrieval', 'Hybrid (vector + BM25 + RRF + reranker)'],
     [t('agentSystem') || 'Agents', 'Persona-Routed RAG (9 personas)'],
     ['Grounding', '64-term glossary · cited answers'],
