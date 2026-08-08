@@ -210,6 +210,8 @@ const translations = {
     navDataHub: 'Data Hub',
     navAdmin: 'Admin',
     navSettings: 'Settings',
+    navApiDocs: 'API Reference',
+    navUserGuide: 'User Guide',
     signOut: 'Sign Out',
 
     // ── Login ───────────────────────────────────────────
@@ -959,6 +961,8 @@ const translations = {
     navDataHub: 'Hub de données',
     navAdmin: 'Administration',
     navSettings: 'Paramètres',
+    navApiDocs: 'Référence API',
+    navUserGuide: "Guide d'utilisation",
     signOut: 'Déconnexion',
 
     // ── Login ───────────────────────────────────────────
