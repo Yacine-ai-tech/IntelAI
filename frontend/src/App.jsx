@@ -26,6 +26,8 @@ import KnowledgePage from './pages/KnowledgePage'
 
 import GrowthPage from './pages/GrowthPage'
 import GlossaryPage from './pages/GlossaryPage'
+import ApiDocs from './pages/ApiDocs'
+import UserGuidePage from './pages/UserGuidePage'
 
 function ProtectedRoute({ children, page }) {
   const { isAuthenticated, loading, hasPage } = useAuth()
@@ -75,6 +77,8 @@ export default function App() {
         <Route path="risk" element={<ProtectedRoute page="risk"><RiskPage /></ProtectedRoute>} />
         <Route path="knowledge" element={<ProtectedRoute page="analytics"><KnowledgePage /></ProtectedRoute>} />
         <Route path="glossary" element={<ProtectedRoute page="analytics"><GlossaryPage /></ProtectedRoute>} />
+        <Route path="user-guide" element={<ProtectedRoute page="assistant"><UserGuidePage /></ProtectedRoute>} />
+        <Route path="api-docs" element={<ProtectedRoute page="assistant"><ApiDocs /></ProtectedRoute>} />
       </Route>
       
       <Route path="*" element={<Navigate to="/workspace" replace />} />
