@@ -9,12 +9,25 @@ const api = axios.create({
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Attach JWT token to every request
+// One anonymous, per-browser id — lets the demo give each visitor their own chat
+// history/uploads instead of everyone sharing one persona's data. Not an auth
+// credential; just keeps visitors from seeing each other's demo content.
+function getDemoSessionId() {
+  let id = localStorage.getItem('demo_session_id')
+  if (!id) {
+    id = (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    localStorage.setItem('demo_session_id', id)
+  }
+  return id
+}
+
+// Attach JWT token + demo session id to every request
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token')
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
+  config.headers['X-Demo-Session-Id'] = getDemoSessionId()
   return config
 })
 

@@ -110,6 +110,25 @@ async def verify_internal_token(request: Request, call_next):
     return await call_next(request)
 
 
+@app.middleware("http")
+async def demo_scope_middleware(request: Request, call_next):
+    """Decodes the caller's JWT (if any) up front so pg_store's KPI reads/writes can scope
+    to the current visitor without every one of their ~30 call sites needing a parameter.
+    Anonymous demo isolation, not production auth — see get_or_create_demo_user / demo_login."""
+    from src.services.pg_store import set_request_scope_user
+    scope_user = None
+    auth_header = request.headers.get("Authorization", "")
+    if auth_header.startswith("Bearer "):
+        try:
+            from src.core.jwt_auth import decode_access_token
+            token_data = decode_access_token(auth_header[len("Bearer "):])
+            scope_user = token_data.user_id
+        except Exception:
+            scope_user = None
+    set_request_scope_user(scope_user)
+    return await call_next(request)
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=get_cors_allowed_origins(),
@@ -520,10 +539,18 @@ async def login(req: LoginRequest):
 
 
 @app.post("/api/v1/auth/demo-login")
-async def demo_login(role: str):
+async def demo_login(role: str, request: Request):
     """One-click 'try as persona' for the demo — issues a token for the role WITHOUT exposing
     any password in the frontend. Gated by DEMO_MODE (default on). Real logins still use passwords
-    (documented in the repo-root `credentials` file)."""
+    (documented in the repo-root `credentials` file).
+
+    Demo-session scoping (default on, DEMO_SESSION_SCOPING): when the caller sends
+    X-Demo-Session-Id, each browser gets its own ephemeral identity per role — deterministic
+    from (role, session id), so the same visitor keeps their chat history/uploads across
+    requests, but two visitors who both pick "cfo" no longer share one user_id and can't see
+    each other's chat sessions or uploaded files. Persona behavior (prompts, RBAC, page/data
+    access) stays keyed by role either way. Falls back to the old shared-per-role identity
+    when no session header is sent or scoping is disabled — not a production auth model."""
     import os as _os
     if _os.getenv("DEMO_MODE", "true").lower() != "true":
         raise HTTPException(status_code=403, detail="Demo mode disabled")
@@ -531,12 +558,23 @@ async def demo_login(role: str):
     role = (role or "").lower()
     if role not in ROLE_DEFINITIONS:
         raise HTTPException(status_code=404, detail=f"Unknown role: {role}")
-    ud = _users_db.get(role) or {"id": str(uuid.uuid4()), "username": role}
-    token = create_access_token(TokenData(user_id=ud["id"], username=role, role=role, language="en"))
+
+    demo_session_id = request.headers.get("X-Demo-Session-Id")
+    if _os.getenv("DEMO_SESSION_SCOPING", "true").lower() == "true" and demo_session_id:
+        from src.services.pg_store import get_or_create_demo_user
+        user_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f"intelai-demo:{role}:{demo_session_id}"))
+        username = f"{role}-{user_id[:8]}"
+        get_or_create_demo_user(user_id, username, role, role.upper())
+    else:
+        ud = _users_db.get(role) or {"id": str(uuid.uuid4()), "username": role}
+        user_id = ud["id"]
+        username = role
+
+    token = create_access_token(TokenData(user_id=user_id, username=username, role=role, language="en"))
     return {
         "access_token": token, "token_type": "bearer",
         "user": {
-            "id": ud["id"], "username": role, "role": role,
+            "id": user_id, "username": username, "role": role,
             "full_name": role.upper(), "language": "en",
             "pages": get_user_pages(role), "data_access": get_user_data_categories(role),
             "actions": ROLE_DEFINITIONS.get(role, {}).get("actions", []),
@@ -824,7 +862,7 @@ async def ingest_metrics(
     df = pd.DataFrame(req.data)
     if df.empty:
         raise HTTPException(status_code=400, detail="No data provided")
-    store_kpi_metrics(df, source_name=req.source_name, replace=req.replace)
+    store_kpi_metrics(df, source_name=req.source_name, replace=req.replace, owner_user_id=user.user_id)
     log_audit_event(user.username, "DATA_INGEST", f"Ingested {len(df)} metrics from {req.source_name}")
     return {"status": "ingested", "rows": len(df), "source": req.source_name}
 
@@ -848,7 +886,7 @@ async def generic_webhook_ingest(
             raise HTTPException(status_code=422, detail="Strict schema violation: Missing metric_name or value fields")
         
         from src.services.pg_store import store_kpi_metrics
-        store_kpi_metrics(df, source_name=payload.source, replace=False)
+        store_kpi_metrics(df, source_name=payload.source, replace=False, owner_user_id=user.user_id)
         log_audit_event(user.username, "WEBHOOK_INGEST", f"Ingested {len(df)} metrics from {payload.source}")
         return {"status": "success", "processed": len(df), "type": "kpi_metrics"}
         
@@ -908,7 +946,7 @@ async def ingest_csv_file(
         raise HTTPException(status_code=400, detail=f"Invalid CSV: {e}")
     if df.empty:
         raise HTTPException(status_code=400, detail="CSV file is empty")
-    store_kpi_metrics(df, source_name=source_name, replace=False)
+    store_kpi_metrics(df, source_name=source_name, replace=False, owner_user_id=user.user_id)
     log_audit_event(user.username, "CSV_INGEST", f"Ingested {len(df)} rows from {file.filename}")
     return {"status": "ingested", "rows_inserted": len(df), "filename": file.filename}
 
@@ -1572,7 +1610,7 @@ async def get_chat_sessions(user: TokenData = Depends(get_current_user)):
 async def get_chat_messages(session_id: str, user: TokenData = Depends(get_current_user)):
     try:
         from src.services.pg_store import get_session_messages
-        messages = get_session_messages(session_id)
+        messages = get_session_messages(session_id, user.user_id)
         return {"messages": messages, "session_id": session_id}
     except Exception as e:
         return {"messages": [], "error": str(e)}
