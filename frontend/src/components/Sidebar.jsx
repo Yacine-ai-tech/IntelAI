@@ -6,7 +6,7 @@ import {
   LayoutDashboard, BarChart3, TrendingUp, Users, Package, Monitor,
   Settings2, Leaf, ShieldAlert, Database, ShieldCheck, Settings,
   LogOut, BookOpen, Sparkles, DollarSign, X, ChevronsLeft, ChevronsRight,
-  Share2, FileText, GitCompareArrows, Network,
+  Share2, FileText, GitCompareArrows, Network, Terminal, LifeBuoy,
 } from 'lucide-react'
 
 export default function Sidebar({ mobileOpen, onClose, collapsed = false, onToggleCollapse = () => {} }) {
@@ -51,6 +51,8 @@ export default function Sidebar({ mobileOpen, onClose, collapsed = false, onTogg
         { to: '/governance', label: t('navGovernance') || 'Governance', icon: ShieldCheck, page: 'admin' },
         { to: '/admin',     label: t('navAdmin'),                    icon: ShieldCheck, page: 'admin' },
         { to: '/settings',  label: t('navSettings'),                 icon: Settings,    page: 'settings' },
+        { to: '/user-guide', label: t('navUserGuide') || 'User Guide', icon: LifeBuoy,  page: 'assistant' },
+        { to: '/api-docs',  label: t('navApiDocs') || 'API Reference', icon: Terminal,  page: 'assistant' },
       ],
     },
   ]
