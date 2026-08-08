@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/docs",
-      "destination": "https://gateway.ysiddo-ai-projects.app/intelai/docs"
+      "destination": "https://gateway.ysiddo-ai-projects.app/intelai/api/docs"
     },
     {
       "source": "/docs/(.*)",
-      "destination": "https://gateway.ysiddo-ai-projects.app/intelai/docs/$1"
+      "destination": "https://gateway.ysiddo-ai-projects.app/intelai/api/docs/$1"
     },
     {
       "source": "/openapi.json",
