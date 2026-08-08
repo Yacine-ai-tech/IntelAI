@@ -24,7 +24,7 @@ ADMIN = {
 def client():
     from fastapi.testclient import TestClient
     from src.api.server import app
-    return TestClient(app, headers={"X-OmniIntel-Internal-Token": os.getenv("OMNIINTEL_INTERNAL_TOKEN", "omni-test-token")})
+    return TestClient(app, headers={"X-OmniIntel-Internal-Token": os.getenv("OMNIINTEL_INTERNAL_TOKEN", "")})
 
 
 @pytest.fixture(scope="module")
