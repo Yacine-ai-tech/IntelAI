@@ -43,7 +43,7 @@ test.describe('Phase 3 — Core Platform E2E (IntelAI)', () => {
   test.describe('Slice 3.1 — Auth & RBAC', () => {
 
     test('admin can access admin page', async ({ page }) => {
-      await loginAs(page, 'admin', 'fLNtwDH2VaQLbO');
+      await loginAs(page, 'admin', '!omni-admin!ai!26');
       await page.goto(`${BASE_URL}/admin`);
       await assertNoReactCrash(page);
       await expect(page.locator('body')).toBeVisible();
@@ -67,7 +67,7 @@ test.describe('Phase 3 — Core Platform E2E (IntelAI)', () => {
     });
 
     test('JWT session persists on browser refresh', async ({ page }) => {
-      await loginAs(page, 'admin', 'fLNtwDH2VaQLbO');
+      await loginAs(page, 'admin', '!omni-admin!ai!26');
       await page.goto(`${BASE_URL}/`);
       await page.reload();
       await page.waitForLoadState('domcontentloaded');
@@ -109,7 +109,7 @@ test.describe('Phase 3 — Core Platform E2E (IntelAI)', () => {
 
     for (const dash of dashboards) {
       test(`${dash.label} dashboard renders without crash`, async ({ page }) => {
-        await loginAs(page, 'admin', 'fLNtwDH2VaQLbO');
+        await loginAs(page, 'admin', '!omni-admin!ai!26');
         await page.goto(`${BASE_URL}${dash.path}`);
         await page.waitForLoadState('networkidle', { timeout: 20000 }).catch(() => {});
         await assertNoReactCrash(page);
@@ -131,7 +131,7 @@ test.describe('Phase 3 — Core Platform E2E (IntelAI)', () => {
   test.describe('Slice 3.3 — Deep Interactions', () => {
 
     test('Knowledge Graph canvas renders', async ({ page }) => {
-      await loginAs(page, 'admin', 'fLNtwDH2VaQLbO');
+      await loginAs(page, 'admin', '!omni-admin!ai!26');
       await page.goto(`${BASE_URL}/knowledge-graph`);
       await page.waitForLoadState('networkidle', { timeout: 20000 }).catch(() => {});
       await assertNoReactCrash(page);
@@ -142,7 +142,7 @@ test.describe('Phase 3 — Core Platform E2E (IntelAI)', () => {
     });
 
     test('Chat page: persona switching and message send', async ({ page }) => {
-      await loginAs(page, 'admin', 'fLNtwDH2VaQLbO');
+      await loginAs(page, 'admin', '!omni-admin!ai!26');
       await page.goto(`${BASE_URL}/chat`);
       await page.waitForLoadState('domcontentloaded');
       await assertNoReactCrash(page);
@@ -220,7 +220,7 @@ test.describe('Phase 6 — Extended UI/UX Validation', () => {
     });
 
     test('Double submit is blocked (no duplicate API calls)', async ({ page }) => {
-      await loginAs(page, 'admin', 'fLNtwDH2VaQLbO');
+      await loginAs(page, 'admin', '!omni-admin!ai!26');
       await page.goto(`${BASE_URL}/settings`);
       await page.waitForLoadState('domcontentloaded');
 
@@ -242,7 +242,7 @@ test.describe('Phase 6 — Extended UI/UX Validation', () => {
     test('Network failure shows toast error — not white screen', async ({ page }) => {
       // Abort all API calls to simulate backend down
       await page.route(`${API_URL}/**`, route => route.abort());
-      await loginAs(page, 'admin', 'fLNtwDH2VaQLbO');
+      await loginAs(page, 'admin', '!omni-admin!ai!26');
       await page.goto(`${BASE_URL}/`);
       await page.waitForLoadState('domcontentloaded');
       await assertNoReactCrash(page);
@@ -257,7 +257,7 @@ test.describe('Phase 6 — Extended UI/UX Validation', () => {
         await new Promise(r => setTimeout(r, 3000));
         await route.continue();
       });
-      await loginAs(page, 'admin', 'fLNtwDH2VaQLbO');
+      await loginAs(page, 'admin', '!omni-admin!ai!26');
       await page.goto(`${BASE_URL}/financial`);
       // Immediately check for a loading indicator
       const skeleton = page.locator(
@@ -268,7 +268,7 @@ test.describe('Phase 6 — Extended UI/UX Validation', () => {
     });
 
     test('Settings page: Cancel button wipes form state', async ({ page }) => {
-      await loginAs(page, 'admin', 'fLNtwDH2VaQLbO');
+      await loginAs(page, 'admin', '!omni-admin!ai!26');
       await page.goto(`${BASE_URL}/settings`);
       await page.waitForLoadState('domcontentloaded');
       const textInput = page.locator('input[type="text"]').first();
@@ -289,7 +289,7 @@ test.describe('Phase 6 — Extended UI/UX Validation', () => {
   test.describe('Slice 6.4 — Edge Cases & Degradation', () => {
 
     test('404 route does not crash app', async ({ page }) => {
-      await loginAs(page, 'admin', 'fLNtwDH2VaQLbO');
+      await loginAs(page, 'admin', '!omni-admin!ai!26');
       await page.goto(`${BASE_URL}/this-page-does-not-exist-12345`);
       await page.waitForLoadState('domcontentloaded');
       await assertNoReactCrash(page);
@@ -330,7 +330,7 @@ test.describe('Phase 12 — Security Tests', () => {
   test('API: prompt injection payload is rejected or sanitised', async ({ request }) => {
     // Login first to get a valid token
     const loginResp = await request.post(`${API_URL}/api/login`, {
-      data: { username: 'admin', password: 'fLNtwDH2VaQLbO' }
+      data: { username: 'admin', password: '!omni-admin!ai!26' }
     });
     if (loginResp.status() === 200) {
       const body = await loginResp.json();
@@ -357,7 +357,7 @@ test.describe('Phase 13 — Accessibility (axe-core)', () => {
 
   for (const route of pagesToAudit) {
     test(`a11y: ${route} has no critical axe violations`, async ({ page }) => {
-      await loginAs(page, 'admin', 'fLNtwDH2VaQLbO');
+      await loginAs(page, 'admin', '!omni-admin!ai!26');
       await page.goto(`${BASE_URL}${route}`);
       await page.waitForLoadState('domcontentloaded');
 
