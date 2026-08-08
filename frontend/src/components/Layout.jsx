@@ -28,6 +28,8 @@ const ROUTES = {
   'data-hub':  { title: 'navDataHub',    domain: null },
   admin:       { title: 'navAdmin',      domain: null },
   settings:    { title: 'navSettings',   domain: null },
+  'user-guide': { title: 'navUserGuide', domain: null },
+  'api-docs':  { title: 'navApiDocs',    domain: null },
 }
 
 export default function Layout() {
