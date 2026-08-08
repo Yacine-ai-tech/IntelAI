@@ -15,8 +15,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 COPY requirements.txt /app/requirements.txt
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r /app/requirements.txt --retries 10 --timeout 120
+RUN pip install --upgrade pip uv && \
+    uv pip install --system --no-cache-dir -r /app/requirements.txt
+
 
 COPY src /app/src
 COPY frontend /app/frontend
@@ -29,9 +30,7 @@ USER appuser
 
 EXPOSE 8000
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
-  CMD curl -f http://localhost:${PORT:-8000}/health || exit 1
 
 # Honor platform-injected $PORT (Railway/Render/Fly/Heroku); default 8000 locally.
 # exec via sh so $PORT expands AND uvicorn becomes PID 1 (clean SIGTERM shutdown).
-CMD ["sh", "-c", "exec python -m uvicorn src.api.server:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --loop uvloop --http httptools --timeout-keep-alive 30 --log-level warning"]
+CMD ["sh", "-c", "exec python -m uvicorn src.api.server:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --log-level debug"]
