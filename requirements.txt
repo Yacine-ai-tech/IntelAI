@@ -3,8 +3,8 @@
 # Single cloud deployment. OCR/voice/integrations belong to the sibling projects.
 
 # CPU-only torch (needed by sentence-transformers for dense embeddings + CrossEncoder reranking).
---extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.4.1+cpu
+# --extra-index-url https://download.pytorch.org/whl/cpu
+# torch==2.5.1+cpu
 
 # ── Core framework ──────────────────────────────
 fastapi>=0.115.0
@@ -12,8 +12,8 @@ uvicorn[standard]>=0.32.0
 python-dotenv>=1.0.1
 python-multipart>=0.0.12
 websockets>=12.0
-uvloop>=0.21.0
-httptools>=0.6.4
+# uvloop>=0.21.0
+# httptools>=0.6.4
 httpx>=0.27.0
 
 # ── Auth (JWT + bcrypt) ─────────────────────────
@@ -23,6 +23,7 @@ bcrypt==4.0.1
 
 # ── Database — PostgreSQL via psycopg 3 (raw SQL, no ORM) ─
 psycopg[binary]>=3.1.18
+psycopg_pool>=3.2.0           # persistent connection pool — eliminates per-call Neon reconnect (Fix #2 for IntelAI latency)
 
 # ── Data ────────────────────────────────────────
 pandas>=2.2.3
@@ -36,18 +37,18 @@ anthropic>=0.40.0
 openai>=1.55.0
 
 # ── Retrieval — hybrid (dense + BM25 + rerank) ──
-sentence-transformers>=3.1.1   # dense embeddings + CrossEncoder BGE reranker
+# sentence-transformers>=3.1.1   # dense embeddings + CrossEncoder BGE reranker
 rank-bm25>=0.2.2
-sentencepiece>=0.2.0           # XLM-R tokenizer for the BGE reranker (bge-reranker-v2-m3)
+# sentencepiece>=0.2.0           # XLM-R tokenizer for the BGE reranker (bge-reranker-v2-m3)
 
 # ── Vector stores (VECTOR_STORE=chroma|pgvector|qdrant; memory needs none) ─
-chromadb>=0.5.0
+# chromadb>=0.5.0
 pgvector>=0.3.0
 qdrant-client>=1.12.0
 
 # ── ML — forecasting, anomaly detection, TF-IDF/cosine ─
-scipy>=1.14.1
-scikit-learn>=1.5.2
+# scipy>=1.14.1
+# scikit-learn>=1.5.2
 
 # ── Document text extraction (PDF/DOCX text, no OCR) ─
 pypdf>=4.3.1
@@ -55,5 +56,3 @@ python-docx>=1.1.2
 
 # ── Board-ready PDF report export ─
 reportlab>=4.2.0
-
-# ── Lightning AI Studio management ──

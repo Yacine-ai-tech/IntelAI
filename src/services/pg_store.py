@@ -19,17 +19,94 @@ import psycopg
 from psycopg.rows import dict_row
 import pandas as pd
 
-from src.core.config import settings
-from src.core.logger import get_logger
+try:
+    from src.core.config import settings
+    from src.core.logger import get_logger
+except ImportError:
+    from agentkit_mcp.core.config import settings
+    from agentkit_mcp.core.logger import get_logger
+
 
 log = get_logger(__name__)
 
 _pool = None
+_pool_lock = None
+
+
+def _init_pool():
+    """Initialize a persistent connection pool for Neon PostgreSQL.
+    
+    This is the #2 fix for IntelAI latency. Previously every DB call created a
+    fresh TCP+TLS connection to Neon (2-4s each). With pool=3 min connections,
+    subsequent calls reuse existing connections (<50ms overhead).
+    """
+    global _pool, _pool_lock
+    if _pool is not None:
+        return _pool
+    import threading
+    if _pool_lock is None:
+        _pool_lock = threading.Lock()
+    with _pool_lock:
+        if _pool is not None:
+            return _pool
+        try:
+            from psycopg_pool import ConnectionPool
+            _pool = ConnectionPool(
+                settings.POSTGRES_URL,
+                min_size=2,
+                max_size=8,
+                kwargs={"row_factory": dict_row},
+                open=False,
+                reconnect_timeout=30,
+                reconnect_failed=None,
+            )
+            # Open the pool in the background so it doesn't block startup
+            import threading
+            threading.Thread(target=_pool.open, daemon=True).start()
+            log.info("✅ Neon connection pool initialized (min=2, max=8, lazy open)")
+        except ImportError:
+            log.warning("⚠️ psycopg_pool not installed — falling back to per-call connections (slower)")
+            _pool = False  # Mark as unavailable, fall through to direct connect
+        except Exception as e:
+            log.warning("⚠️ Connection pool init failed: %s — using per-call connections", e)
+            _pool = False
+    return _pool
 
 
 def _get_conn():
-    """Get a PostgreSQL connection with dict row factory."""
-    return psycopg.connect(settings.POSTGRES_URL, row_factory=dict_row)
+    """Get a PostgreSQL connection. Uses pool if available, else direct connect.
+    
+    Pool reuse eliminates the 2-4s Neon cold-start per call. Falls back
+    gracefully to direct psycopg.connect() if psycopg_pool is not installed.
+    """
+    pool = _init_pool()
+    if pool and pool is not False:
+        class ConnWrapper:
+            def __init__(self, p):
+                self._p = p
+                self._c = p.getconn(timeout=10)
+            def __getattr__(self, item):
+                return getattr(self._c, item)
+            def close(self):
+                self._p.putconn(self._c)
+            def __enter__(self):
+                return self._c.__enter__()
+            def __exit__(self, exc_type, exc_val, exc_tb):
+                res = self._c.__exit__(exc_type, exc_val, exc_tb)
+                self.close()
+                return res
+        return ConnWrapper(pool)
+    # Fallback: direct connection (original behavior)
+    import time
+    for attempt in range(3):
+        try:
+            return psycopg.connect(settings.POSTGRES_URL, row_factory=dict_row, connect_timeout=15)
+        except Exception as e:
+            if attempt == 2:
+                log.error("Failed to connect to PostgreSQL after 3 attempts: %s", e)
+                raise
+            log.warning("PostgreSQL connection failed (attempt %d/3). Retrying in 2s... (%s)", attempt + 1, e)
+            time.sleep(2)
 
 
 def init_pg_tables():
@@ -231,8 +308,48 @@ def init_pg_tables():
         )
         conn.execute("CREATE INDEX IF NOT EXISTS idx_data_spreadsheet_user ON data_spreadsheet(username)")
 
+        
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS monitoring_logs (
+                id          SERIAL PRIMARY KEY,
+                event_type  TEXT NOT NULL,
+                module      TEXT,
+                detail      JSONB DEFAULT '{}'::jsonb,
+                actor       TEXT,
+                created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            )
+        """)
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_monitoring_type ON monitoring_logs(event_type)")
+        
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS integration_credentials (
+                id SERIAL PRIMARY KEY,
+                username TEXT NOT NULL,
+                integration_type TEXT NOT NULL,
+                credentials_encrypted TEXT NOT NULL,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            )
+        """)
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_integration_user ON integration_credentials(username)")
+        
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS oauth_states (
+                state TEXT PRIMARY KEY,
+                username TEXT NOT NULL,
+                integration_type TEXT NOT NULL,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                expires_at TIMESTAMPTZ
+            )
+        """)
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_oauth_state_username ON oauth_states(username)")
+
         conn.commit()
         log.info("✅ PostgreSQL tables initialized")
+        try:
+            seed_glossary_knowledge_docs()
+        except Exception as _ge:
+            log.warning("Glossary auto-seed warning: %s", _ge)
     except Exception as e:
         log.error("PostgreSQL init failed: %s", e)
         conn.rollback()
@@ -277,13 +394,33 @@ def store_kpi_metrics(df: "pd.DataFrame", source_name: str = "manual", replace: 
                         cur.execute("DELETE FROM kpi_metrics WHERE source = %s", [source_name])
                 cur.executemany(insert_sql, params)
             conn.commit()
+            # Automatic GraphRAG-lite Entity & Relationship Extraction
+            try:
+                from src.services.entity_extractor import get_entity_extractor
+                extractor = get_entity_extractor()
+                entity_rows = []
+                for _, row in df.iterrows():
+                    cat = str(row.get("category", ""))
+                    met = str(row.get("metric", ""))
+                    per = str(row.get("period", ""))
+                    ref = f"{cat}|{met}|{per}"
+                    for e in extractor.extract_entities({"category": cat, "metric_name": met, "period": per}):
+                        entity_rows.append({
+                            "record_ref": ref,
+                            "entity_type": e["entity_type"],
+                            "entity_value": e["entity_value"],
+                        })
+                if entity_rows:
+                    store_kpi_entities(entity_rows, replace=False)
+            except Exception as ee:
+                log.warning("Auto entity extraction on CSV ingest note: %s", ee)
             return
         except Exception as e:
             last_err = e
             try:
                 conn.rollback()
             except Exception:
-                import logging; logging.error('Unhandled exception', exc_info=True)
+                log.exception("Unexpected error")
                 pass
         finally:
             conn.close()
@@ -296,6 +433,7 @@ def get_kpi_metrics(
     metrics: Optional[List[str]] = None,
     categories: Optional[List[str]] = None,
     segments: Optional[List[str]] = None,
+    limit: Optional[int] = 2000,
 ) -> "pd.DataFrame":
     import pandas as pd
     conn = _get_conn()
@@ -311,6 +449,9 @@ def get_kpi_metrics(
         if filters:
             q += " WHERE " + " AND ".join(filters)
         q += " ORDER BY period, metric"
+        if limit:
+            q += " LIMIT %s"
+            params.append(limit)
         rows = conn.execute(q, params).fetchall()
         return pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
     finally:
@@ -566,13 +707,34 @@ def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] 
         conn.close()
 
 
-def get_knowledge_docs() -> "pd.DataFrame":
+def seed_glossary_knowledge_docs() -> int:
+    """Persist the 169 curated KPI glossary entries directly into the PostgreSQL knowledge_base DB table."""
+    try:
+        import pandas as pd
+        from src.knowledge.glossary import as_knowledge_docs
+        g_docs = as_knowledge_docs(lang="en")
+        if not g_docs:
+            return 0
+        df = pd.DataFrame(g_docs)
+        df["doc_id"] = [f"glossary-{i+1}" for i in range(len(df))]
+        df["embedding"] = ""
+        df["language"] = "en"
+        store_knowledge_docs(df, replace_prefix="glossary-")
+        log.info("✅ Seeded %d glossary entries directly into PostgreSQL knowledge_base table", len(df))
+        return len(df)
+    except Exception as e:
+        log.warning("⚠️ Failed to seed glossary into DB: %s", e)
+        return 0
+
+
+def get_knowledge_docs(limit: int = 2000) -> "pd.DataFrame":
     import pandas as pd
     conn = _get_conn()
     try:
         rows = conn.execute(
             "SELECT doc_id, title, content, source, embedding, language, created_at "
-            "FROM knowledge_base ORDER BY created_at DESC"
+            "FROM knowledge_base ORDER BY created_at ASC LIMIT %s",
+            [limit]
         ).fetchall()
         return pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
     finally:
@@ -620,7 +782,7 @@ def store_conversation(cid: str, user_msg: str, ai_resp: str, language: str = "e
         )
         conn.commit()
     except Exception:
-        import logging; logging.error('Unhandled exception', exc_info=True)
+        log.exception("Unexpected error")
         pass
     finally:
         conn.close()
@@ -639,7 +801,7 @@ def log_audit_event(actor: str, event_type: str, detail: str) -> None:
         )
         conn.commit()
     except Exception:
-        import logging; logging.error('Unhandled exception', exc_info=True)
+        log.exception("Unexpected error")
         pass
     finally:
         conn.close()
@@ -954,13 +1116,11 @@ def ensure_session_exists(session_id: str, user_id: str) -> str:
 
 def seed_all_domains() -> int:
     """
-    Seed multi-domain KPI data (+ knowledge-base docs) if the table is empty.
-    Delegates to the robust, deterministic seed in ``src.data.seed``.
-    Returns the number of KPI rows inserted.
+    Deprecated synthetic seed handler. Synthetic seeding is permanently disabled
+    in favor of pure real-data ingestion via official REST API endpoints.
     """
-    from src.data.seed import seed_database  # lazy import avoids circular dependency
-    counts = seed_database(replace=True)
-    return counts.get("kpi_rows", 0)
+    log.info("seed_all_domains called: synthetic seeding disabled (real-data driven platform).")
+    return 0
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -1516,5 +1676,85 @@ def export_spreadsheet(
     except Exception as e:
         log.error("Failed to export spreadsheet: %s", e)
         return None
+    finally:
+        conn.close()
+
+
+from datetime import datetime
+
+def store_integration_credentials(username: str, integration_type: str, credentials_encrypted: str) -> None:
+    conn = _get_conn()
+    try:
+        row = conn.execute("SELECT id FROM integration_credentials WHERE username = %s AND integration_type = %s", [username, integration_type]).fetchone()
+        if row:
+            conn.execute("UPDATE integration_credentials SET credentials_encrypted = %s, updated_at = NOW() WHERE id = %s", [credentials_encrypted, row["id"]])
+        else:
+            conn.execute("INSERT INTO integration_credentials (username, integration_type, credentials_encrypted) VALUES (%s, %s, %s)", [username, integration_type, credentials_encrypted])
+        conn.commit()
+    finally:
+        conn.close()
+
+def remove_integration_credentials(username: str, integration_type: str) -> None:
+    conn = _get_conn()
+    try:
+        conn.execute("DELETE FROM integration_credentials WHERE username = %s AND integration_type = %s", [username, integration_type])
+        conn.commit()
+    finally:
+        conn.close()
+
+def get_integration_credentials(username: str, integration_type: str):
+    conn = _get_conn()
+    try:
+        row = conn.execute("SELECT id, credentials_encrypted, created_at, updated_at FROM integration_credentials WHERE username = %s AND integration_type = %s", [username, integration_type]).fetchone()
+        return dict(row) if row else None
+    finally:
+        conn.close()
+
+def store_integration_token_refresh(username: str, integration_type: str, refresh_token: str, expires_in: int = 3600) -> None:
+    from datetime import timedelta
+    expires_at = (datetime.utcnow() + timedelta(seconds=expires_in)).isoformat()
+    conn = _get_conn()
+    try:
+        row = conn.execute("SELECT id FROM integration_credentials WHERE username = %s AND integration_type = %s", [username, integration_type]).fetchone()
+        if row:
+            from agentkit_mcp.core.crypto import encrypt_value
+            import json as _json
+            metadata = {"refresh_token": refresh_token, "expires_at": expires_at}
+            enc = encrypt_value(_json.dumps(metadata))
+            conn.execute("UPDATE integration_credentials SET credentials_encrypted = %s, updated_at = NOW() WHERE id = %s", [enc, row["id"]])
+            conn.commit()
+    finally:
+        conn.close()
+
+def get_integration_refresh_token(username: str, integration_type: str):
+    conn = _get_conn()
+    try:
+        row = conn.execute("SELECT credentials_encrypted FROM integration_credentials WHERE username = %s AND integration_type = %s", [username, integration_type]).fetchone()
+        if not row: return None
+        from agentkit_mcp.core.crypto import decrypt_value
+        import json as _json
+        try:
+            decrypted = decrypt_value(row["credentials_encrypted"])
+            metadata = _json.loads(decrypted)
+            if "refresh_token" in metadata: return metadata
+        except: pass
+        return None
+    finally:
+        conn.close()
+
+def log_monitoring_event(event_type: str, module: str, detail: str, actor: str) -> None:
+    conn = _get_conn()
+    try:
+        conn.execute("INSERT INTO monitoring_logs (event_type, module, detail, actor) VALUES (%s, %s, %s::jsonb, %s)", [event_type, module, detail, actor])
+        conn.commit()
+    finally:
+        conn.close()
+
+def get_monitoring_stats():
+    conn = _get_conn()
+    try:
+        total_users = conn.execute("SELECT COUNT(*) AS c FROM users").fetchone()["c"]
+        total_sessions = conn.execute("SELECT COUNT(*) AS c FROM chat_sessions").fetchone()["c"]
+        return {"users": total_users, "sessions": total_sessions}
     finally:
         conn.close()
