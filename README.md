@@ -123,17 +123,26 @@ DB-dependent tests run automatically when `POSTGRES_URL` is reachable and skip c
 
 ## Benchmarking Scenarios (Research & Evaluation)
 
-IntelAI provides seven seeded deterministic environments for evaluating RAG retrieval accuracy and forecasting models under structural stress. Rather than generating synthetic data, the official seeding process uses the API to ingest **real data**, accurately simulating the production context pipeline. These scenarios are selectable via the `Admin → Scenarios` tab or API (`POST /api/v1/admin/scenario`):
+IntelAI provides seven seeded, deterministic, benchmark-calibrated environments (78 months
+× 7 domains × 146 metrics, formula-derived where a real formula applies — see
+[DATA_SEEDING.md](DATA_SEEDING.md)) for evaluating RAG retrieval accuracy and forecasting
+models under structural stress. Selectable via the `Admin → Scenarios` tab, API
+(`POST /api/v1/admin/scenario`), or `python scripts/seed_via_api.py <scenario>` for a run
+through the real ingestion pipeline instead of a direct DB write:
 
 | Scenario | Research Application | Description |
 |---|---|---|
-| `healthy` | Baseline RAG Eval | S&P 500 baseline with stationary distributions. |
+| `healthy` | Baseline RAG Eval | Stable baseline calibrated to sit inside documented "healthy" benchmark bands. |
 | `declining_financial` | Trend Reversal | Revenue contraction & margin compression; tests forecast adaptability. |
 | `high_churn_crisis` | Lagging Indicators | Customer retention failure; tests cross-domain correlation (Growth vs Finance). |
 | `operational_meltdown` | Volatility Stress | OEE collapse & quality failures; introduces severe noise to operational metrics. |
-| `talent_crisis` | Sentiment Impact | High attrition, open-req spike; evaluates HR to operational efficiency lag. |
+| `talent_crisis` | Sentiment Impact | High attrition, open-req spike; evaluates People-to-Operations efficiency lag. |
 | `cybersecurity_breach` | Shock Event | Security incident; step-function disruption in SLA/SLO metrics. |
 | `esg_compliance_failure` | Policy Violation | Governance failures & emissions spike; tests multi-hop entity reasoning. |
+
+Every scenario also carries a short cross-domain cascade (IT → Logistics/Ops → Growth →
+Finance, mirroring how a real incident's financial impact actually lags its root cause) —
+see DATA_SEEDING.md §4 for the full methodology.
 
 ## Deploy
 
