@@ -59,6 +59,31 @@ class Settings:
     TAVILY_API_KEY: str = field(default_factory=lambda: os.getenv("TAVILY_API_KEY", ""))
     WEB_SEARCH_MAX_RESULTS: int = field(default_factory=lambda: int(os.getenv("WEB_SEARCH_MAX_RESULTS", "4")))
 
+    # External processor delegation — IntelAI's ingestion pipeline calling out to
+    # a pluggable audio/document processor, the same way any sibling tool would.
+    # Neither is hardcoded to a specific project (VoiceFlow/DocIntel): each is
+    # just a base URL an operator points at whatever compliant processor they run.
+    # Contract (mirrors the convention VoiceFlow's own VOICEFLOW_REMOTE_ENDPOINT uses):
+    #   AUDIO_PROCESSOR_URL — POST {url}/pipeline, multipart `file` in,
+    #     {"transcript": {...}, "analysis": {...}} JSON out (VoiceFlow speaks this natively)
+    #   DOC_PROCESSOR_URL   — POST {url}/process, multipart `file` in,
+    #     {"fields": {...}, ...} JSON out (DocIntel speaks this natively)
+    AUDIO_PROCESSOR_URL: str = field(default_factory=lambda: os.getenv("AUDIO_PROCESSOR_URL", "").strip().rstrip("/"))
+    AUDIO_PROCESSOR_TOKEN: str = field(default_factory=lambda: os.getenv("AUDIO_PROCESSOR_TOKEN", ""))
+    DOC_PROCESSOR_URL: str = field(default_factory=lambda: os.getenv("DOC_PROCESSOR_URL", "").strip().rstrip("/"))
+    DOC_PROCESSOR_TOKEN: str = field(default_factory=lambda: os.getenv("DOC_PROCESSOR_TOKEN", ""))
+
+    # Shared secret for the public, HMAC-signed ingestion webhook
+    # (POST /api/v1/webhook/{source_name}) — the machine-to-machine path any
+    # external pusher (StreamPulse, a Kafka HTTP sink connector, n8n, VoiceFlow's
+    # own signed /integrations/relay, plain curl+openssl) can call without a
+    # live user JWT. Same X-Signature-256: sha256=<hmac> convention StreamPulse's
+    # own webhook_receiver.py uses, so anything compatible with one is
+    # compatible with both. Empty by default — the endpoint refuses all
+    # requests (501) rather than silently accepting unauthenticated data when
+    # unset, never a security default of "off".
+    INGEST_WEBHOOK_SECRET: str = field(default_factory=lambda: os.getenv("INGEST_WEBHOOK_SECRET", ""))
+
     # FastAPI
     FASTAPI_HOST: str = field(default_factory=lambda: os.getenv("FASTAPI_HOST", "0.0.0.0"))
     FASTAPI_PORT: int = field(default_factory=lambda: int(os.getenv("FASTAPI_PORT", "8000")))

@@ -66,3 +66,6 @@ docs/STRATEGY_DRIFT_AUDIT.md
 steps.md
 venv/
 frontend/playwright-report/
+
+# Backup from the .env line-ending repair (safe to delete once verified)
+.env.bak-corrupted
