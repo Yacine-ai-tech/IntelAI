@@ -53,12 +53,12 @@ FastAPI  (src/api/server.py)
 
 ## Quickstart
 
-**Prerequisites:** Python 3.11, Node 18+, Postgres URL, `LLM_API_KEY`, `LLM_ENDPOINT`.
+**Prerequisites:** Python 3.11, Node 18+, Postgres URL, `GROQ_API_KEY`.
 
 ```bash
 git clone https://github.com/Yacine-ai-tech/IntelAI.git
 cd IntelAI
-cp .env.example .env   # fill POSTGRES_URL, LLM_API_KEY, SECRET_KEY
+cp .env.example .env   # fill POSTGRES_URL, GROQ_API_KEY, SECRET_KEY — see SELF_HOSTING.md
 
 # Backend (port 8000 — tables & seed created automatically)
 pip install -r requirements.txt
@@ -78,16 +78,22 @@ docker compose up --build                              # app + bundled Postgres
 
 ## Configuration (`.env`)
 
+Full reference with every variable and its default lives in `.env.example`. The ones
+you're most likely to touch:
+
 | Variable | Required | Description |
 |---|---|---|
 | `POSTGRES_URL` | ✅ | Neon / Render / local Postgres |
-| `LLM_API_KEY` | ✅ | Default LLM provider key |
+| `GROQ_API_KEY` | ✅ | Default-tier LLM provider key |
 | `SECRET_KEY` | ✅ | JWT signing key |
-| `LLM_ENDPOINT` | ⬜ | OpenAI-compatible endpoint URL (optional if using default) |
+| `REQUIRE_INTERNAL_TOKEN` | ⬜ | Set `false` for standalone self-hosting — see [SELF_HOSTING.md](SELF_HOSTING.md) |
+| `ANTHROPIC_API_KEY` | ⬜ | Reasoning-tier LLM (CEO/CFO/CTO/Risk personas); falls back to Groq if unset |
+| `LLM_DEFAULT` / `LLM_REASONING` / `LLM_JUDGE` | ⬜ | LiteLLM model IDs per tier (any provider LiteLLM supports) |
 | `USE_GRAPH_RAG` | ⬜ | `true` = GraphRAG-lite multi-hop |
 | `USE_HYBRID_RETRIEVAL` | ⬜ | `true` = dense+BM25+RRF+reranker |
-| `VECTOR_STORE` | ⬜ | `memory` · `chroma` (dev) · `pgvector` · `qdrant` (prod) |
-| `LLM_MODEL` | ⬜ | Default model id (e.g. `gpt-4o-mini`, `llama-3.1-8b-instant`) |
+| `VECTOR_STORE` | ⬜ | `chroma` (dev, default) · `pgvector` · `qdrant` (prod) |
+| `AUDIO_PROCESSOR_URL` / `DOC_PROCESSOR_URL` | ⬜ | Pluggable audio/document processors (e.g. a VoiceFlow/DocIntel instance) |
+| `INGEST_WEBHOOK_SECRET` | ⬜ | Enables the public HMAC-signed `/api/v1/webhook/{source}` ingestion path |
 
 ## Key API Endpoints
 
