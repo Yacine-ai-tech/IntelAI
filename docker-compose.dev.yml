@@ -1,12 +1,13 @@
-# Lightweight dev compose — runs ONLY the FastAPI backend in a Lightning Studio.
+# Lightweight dev compose — runs ONLY the FastAPI backend, meant for a remote dev host
+# (any on-demand cloud box, a home GPU server, etc.) — not just a local machine.
 # No postgres/n8n/grafana/prometheus (those are in docker-compose.yml for full local stack).
-# Database → Neon (POSTGRES_URL in .env). Frontend → runs on the laptop (npm run dev).
+# Database → Neon (POSTGRES_URL in .env). Frontend → runs on your laptop (npm run dev).
 #
-# Usage inside the Studio:
+# Usage on the remote host:
 #   docker compose -f docker-compose.dev.yml up --build
 #   (first build ~3-5 min; subsequent starts use layer cache = fast)
 #
-# Reach it from the laptop: ssh -L 8000:localhost:8000 lightning-intelai
+# Reach it from your laptop: ssh -L 8000:localhost:8000 <your-remote-host>
 # Then: http://localhost:8000/health  and  http://localhost:5173 (Vite on laptop)
 
 services:
