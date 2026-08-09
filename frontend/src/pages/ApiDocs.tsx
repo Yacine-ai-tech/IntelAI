@@ -4,9 +4,14 @@ import {
   ChevronDown, ChevronRight, Lock,
 } from "lucide-react";
 
-// Gateway base URL — matches VITE_API_BASE_URL in frontend/.env.production and the
-// /docs, /openapi.json rewrites in frontend/vercel.json (all point at .../intelai).
-const BASE_URL = "https://gateway.ysiddo-ai-projects.app/intelai";
+// Same resolution order as src/api.js's request client: an explicit VITE_API_BASE_URL
+// (for split frontend/backend deployments) wins, otherwise fall back to the current
+// origin (same-origin deployments, e.g. the Docker single-container setup) — so the
+// copy-paste examples always match wherever this page is actually being served from,
+// author's deployment or any self-hoster's, instead of a hardcoded URL.
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (typeof window !== "undefined" ? window.location.origin : "");
 
 const AUTH_META: Record<string, { label: string; color: string; icon: any }> = {
   public: { label: "Public", color: "var(--ok)", icon: Globe },
