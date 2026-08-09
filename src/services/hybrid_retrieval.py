@@ -111,7 +111,7 @@ class HybridRetriever:
     def _ensure_reranker(self):
         # Local CrossEncoder (~600MB) is OFF by default: loading it on a constrained app host
         # (Railway/Render free) OOM-crashes the process (the 502/restart-loop we hit). The real
-        # BGE reranker runs REMOTELY on the Lightning Studio (see module-level rerank()); a brief
+        # BGE reranker runs REMOTELY on a GPU inference host (see module-level rerank()); a brief
         # outage degrades to dense+BM25+RRF fusion instead. Set USE_LOCAL_RERANKER=true only on a
         # host with RAM headroom.
         if not _RERANKER or os.getenv("USE_LOCAL_RERANKER", "false").strip().lower() not in ("1", "true", "yes", "on"):
@@ -249,41 +249,11 @@ def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int =
 _RERANK_RETRIEVER: Optional["HybridRetriever"] = None
 
 
-_LAST_WAKE = 0.0
-
-
-def _trigger_wake() -> None:
-    """Fire-and-forget: ask the orchestrator to wake the on-demand inference Studio. Rate-limited
-    so a burst of failed reranks triggers at most one wake per minute. Non-blocking (daemon thread)."""
-    import time as _t
-    global _LAST_WAKE
-    url = os.getenv("ORCHESTRATOR_URL", "").strip()
-    if not url or (_t.time() - _LAST_WAKE) < 60:
-        return
-    _LAST_WAKE = _t.time()
-
-    def _go():
-        try:
-            import json as _json
-            import urllib.request
-            h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0 (+https://ysiddo-ai-projects.app)"}
-            tk = os.getenv("ORCH_TOKEN", "").strip()
-            if tk:
-                h["Authorization"] = "Bearer " + tk
-            req = urllib.request.Request(url.rstrip("/") + "/wake", data=_json.dumps({}).encode(), headers=h)
-            urllib.request.urlopen(req, timeout=90)
-        except Exception:
-            import logging; logging.error('Unhandled exception', exc_info=True)
-            pass
-    import threading
-    threading.Thread(target=_go, daemon=True).start()
-
-
 def _hosted_rerank(query: str, texts: List[str]) -> Optional[List[float]]:
     """Hosted-API rerank backstop (a real cross-encoder rerank endpoint — Cohere ``/v2/rerank`` by
     default, Jina ``/v1/rerank`` alternate) so search keeps true rerank quality when the on-demand
-    Lightning Studio is down, WITHOUT loading a ~600MB local cross-encoder (survives on a 512MB
-    host). Off unless ``HOSTED_RERANK_PROVIDER`` (cohere|jina) + the provider's key are set. Returns
+    remote GPU inference host is down, WITHOUT loading a ~600MB local cross-encoder (survives on a
+    512MB host). Off unless ``HOSTED_RERANK_PROVIDER`` (cohere|jina) + the provider's key are set. Returns
     scores aligned with ``texts`` or ``None`` (caller keeps fusion order). Stdlib urllib only — no
     new dependency. Both providers offer a free, no-card tier."""
     provider = os.getenv("HOSTED_RERANK_PROVIDER", "").strip().lower()
@@ -348,8 +318,8 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
 
     provider = os.getenv("RERANK_PROVIDER", "hf").lower()
 
-    def _try_lightning():
-        remote = os.getenv("LIGHTNING_RERANK_URL", "").strip()
+    def _try_remote():
+        remote = os.getenv("RERANK_URL", "").strip()
         if remote:
             try:
                 import json as _json, urllib.request
@@ -358,13 +328,12 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
                 tk = os.getenv("INFERENCE_TOKEN", "").strip()
                 if tk: h["Authorization"] = "Bearer " + tk
                 req = urllib.request.Request(remote.rstrip("/") + "/rerank", data=body, headers=h)
-                timeout = float(os.getenv("LIGHTNING_RERANK_TIMEOUT", "12"))
+                timeout = float(os.getenv("RERANK_TIMEOUT", "12"))
                 scores = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["scores"]
                 if isinstance(scores, list) and len(scores) == len(texts):
                     return [float(s) for s in scores]
             except Exception as e:
-                log.warning("remote rerank unavailable (%s) — waking studio", e)
-                _trigger_wake()
+                log.warning("remote rerank unavailable (%s)", e)
         return None
 
     def _try_hf():
@@ -392,16 +361,16 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
         if hf is not None: return hf
         hosted = _hosted_rerank(query, texts)
         if hosted is not None: return hosted
-        return _try_lightning()
+        return _try_remote()
     elif provider == "cohere":
         hosted = _hosted_rerank(query, texts)
         if hosted is not None: return hosted
         hf = _try_hf()
         if hf is not None: return hf
-        return _try_lightning()
-    else: # lightning primary
-        light = _try_lightning()
-        if light is not None: return light
+        return _try_remote()
+    else: # remote GPU host primary
+        remote = _try_remote()
+        if remote is not None: return remote
         hf = _try_hf()
         if hf is not None: return hf
         return _hosted_rerank(query, texts)

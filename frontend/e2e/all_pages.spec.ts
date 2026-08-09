@@ -26,12 +26,12 @@ const ROUTES = [
   '/glossary'
 ];
 
-test.describe('ysiddo-ai-projects_vol1 All Pages E2E Suite', () => {
+test.describe('IntelAI All Pages E2E Suite', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate to login and authenticate as Admin
     await page.goto('/login');
     // Ensure the login page loaded
-    await expect(page.locator('text=ysiddo-ai-projects_vol1')).toBeVisible();
+    await expect(page.locator('text=IntelAI')).toBeVisible();
     
     // Perform Demo Login for Admin
     await page.click('button:has-text("Admin (Full Access)")');

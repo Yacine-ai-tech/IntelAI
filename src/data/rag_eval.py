@@ -1,6 +1,6 @@
 """IntelAI prompt-eval — lightweight groundedness/recall check for the RAG copilot.
 
-This is IntelAI's own demo-grade eval (the "prompt eval discipline" from STRATEGY §1.4),
+This is IntelAI's own demo-grade eval (the "prompt eval discipline"),
 NOT the standalone RAGeval product. It runs the eval set in ``tests/rag_eval.jsonl``
 through the RAG, then reports keyword recall (did the answer mention the expected terms?)
 and a groundedness proxy (are those terms supported by the retrieved sources?).
@@ -85,7 +85,7 @@ def main() -> None:
         mark = "✅" if r["passed"] else "❌"
         print(f"  {mark} [{r['persona']:>7}] recall={r['answer_recall']} "
               f"ground={r['groundedness']}  {r['query']}")
-    # STRATEGY §1.4 gate: fail if >20% below groundedness threshold
+    # Gate: fail if >20% below groundedness threshold
     if s["below_pct"] > 20:
         print(f"\n⚠️  {s['below_pct']}% below groundedness threshold (>20%) — fix before shipping.")
         sys.exit(1)

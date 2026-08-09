@@ -486,7 +486,7 @@ def seed_database(replace: bool = True, scenario: str = "healthy") -> Dict[str, 
 
     docs = generate_knowledge_docs(rows)
     # Glossary docs: authoritative, sourced definitions so the copilot cites a vetted
-    # source when explaining a metric/term (anti-hallucination — STRATEGY §grounding).
+    # source when explaining a metric/term (anti-hallucination).
     try:
         from src.data.glossary import as_knowledge_docs
         docs += as_knowledge_docs()
