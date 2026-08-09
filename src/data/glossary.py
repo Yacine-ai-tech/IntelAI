@@ -1,7 +1,7 @@
 """IntelAI domain glossary — authoritative, sourced definitions for every metric,
 KPI and abbreviation the copilot reasons about.
 
-Purpose (STRATEGY §"no hallucination, grounded, research-credible"):
+Purpose (no hallucination, grounded, research-credible):
   * Grounds the RAG — these definitions are seeded as knowledge docs so the copilot
     cites a real, vetted source instead of improvising ("explain each term clearly").
   * Powers the per-page contextual explainer in the UI (term → meaning + formula +

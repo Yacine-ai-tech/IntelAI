@@ -3,7 +3,7 @@
 These run without a live server or a real database by importing the FastAPI
 app and exercising it through Starlette's TestClient. The live-server
 integration checks live in ``test_api.py`` and require ``uvicorn`` + Postgres
-to be running (see STATUS.md / Phase 1 Day 11).
+to be running.
 """
 import os
 

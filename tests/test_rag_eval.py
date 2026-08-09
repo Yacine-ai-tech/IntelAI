@@ -12,7 +12,7 @@ def _load():
 
 def test_eval_set_exists_and_sized():
     rows = _load()
-    assert len(rows) >= 20, "prompt-eval set should have >= 20 cases (STRATEGY §1.4)"
+    assert len(rows) >= 20, "prompt-eval set should have >= 20 cases"
 
 
 def test_eval_entries_well_formed():
