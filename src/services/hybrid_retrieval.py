@@ -136,14 +136,21 @@ class HybridRetriever:
         return self._embedder
 
     def _remote_embed(self, texts: List[str]):
-        """Embed via a remote inference host instead of loading the model in-process — same
-        EMBEDDING_ENDPOINT/INFERENCE_MODE/INFERENCE_TOKEN contract RAGeval's evaluator.py
-        uses, so one inference host can serve both services. Off unless INFERENCE_MODE=remote
-        and EMBEDDING_ENDPOINT is set; any failure returns None so the caller falls back to
-        the local model (or skips dense retrieval if no local model is available either)."""
-        if os.getenv("INFERENCE_MODE", "").strip().lower() != "remote":
+        """Embed via a remote inference host instead of loading the model in-process.
+        Two env-var pairs are honored (checked in this order, first match wins):
+          - EMBED_URL / EMBEDDING_PROVIDER=remote — matches this file's own
+            RERANK_URL/RERANK_PROVIDER convention (a shared orchestrator/Studio speaking
+            {"texts":[...]} -> {"embeddings":[...]} at {url}/embed — e.g. the orchestrator's
+            POST /api/inference/embed).
+          - EMBEDDING_ENDPOINT / INFERENCE_MODE=remote — the same contract RAGeval's own
+            evaluator.py uses, so one inference host's env config works for both services.
+        Any failure returns None so the caller falls back to the local model (or skips
+        dense retrieval if no local model is available either)."""
+        remote_on = (os.getenv("EMBEDDING_PROVIDER", "").strip().lower() == "remote"
+                     or os.getenv("INFERENCE_MODE", "").strip().lower() == "remote")
+        if not remote_on:
             return None
-        url = os.getenv("EMBEDDING_ENDPOINT", "").strip()
+        url = os.getenv("EMBED_URL", "").strip() or os.getenv("EMBEDDING_ENDPOINT", "").strip()
         if not url:
             return None
         try:
