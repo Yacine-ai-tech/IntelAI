@@ -74,7 +74,32 @@ def _embed(texts: List[str]):
         vecs = _embedder().encode(list(texts), normalize_embeddings=True, show_progress_bar=False)
         return np.asarray(vecs, dtype="float32")
 
-    if provider == "hf":
+    def _try_remote():
+        # Same pattern as hybrid_retrieval.py's rerank() _try_remote() — point EMBED_URL at any
+        # inference host speaking {"texts":[...]} in / {"scores":[...]} out (a self-hosted GPU
+        # box, the shared orchestrator's /api/inference/embed, etc). Not provider-specific.
+        remote = os.environ.get("EMBED_URL", "").strip()
+        if not remote:
+            return None
+        import urllib.request, json as _json
+        body = _json.dumps({"texts": list(texts)}).encode()
+        h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
+        tk = os.environ.get("INFERENCE_TOKEN", "").strip()
+        if tk: h["Authorization"] = "Bearer " + tk
+        req = urllib.request.Request(remote.rstrip("/") + "/embed", data=body, headers=h)
+        timeout = float(os.environ.get("EMBED_TIMEOUT", "20"))
+        res = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+        vecs = res.get("embeddings")
+        if not (isinstance(vecs, list) and len(vecs) == len(texts)):
+            return None
+        return np.asarray(vecs, dtype="float32")
+
+    if provider == "remote":
+        try:
+            res = _try_remote()
+            if res is not None: return res
+        except Exception as e:
+            log.warning("remote embedding failed: %s", e)
         try:
             res = _try_hf()
             if res is not None: return res
@@ -84,6 +109,22 @@ def _embed(texts: List[str]):
             res = _try_cohere()
             if res is not None: return res
         except: pass
+        return _try_local()
+    elif provider == "hf":
+        try:
+            res = _try_hf()
+            if res is not None: return res
+        except Exception as e:
+            log.warning("HF fallback embedding failed: %s", e)
+        try:
+            res = _try_cohere()
+            if res is not None: return res
+        except: pass
+        try:
+            res = _try_remote()
+            if res is not None: return res
+        except Exception as e:
+            log.warning("remote embedding failed: %s", e)
         return _try_local()
     elif provider == "cohere":
         try:
@@ -96,6 +137,11 @@ def _embed(texts: List[str]):
             if res is not None: return res
         except Exception as e:
             log.warning("HF fallback embedding failed: %s", e)
+        try:
+            res = _try_remote()
+            if res is not None: return res
+        except Exception as e:
+            log.warning("remote embedding failed: %s", e)
         return _try_local()
     else:
         try:
@@ -114,8 +160,8 @@ def _embed(texts: List[str]):
 
 def _dim() -> int:
     provider = os.environ.get("EMBEDDING_PROVIDER", "hf").lower()
-    if provider in ("cohere", "hf"):
-        return 1024 # embed-english-v3.0 or bge-m3 dense dim
+    if provider in ("cohere", "hf", "remote"):
+        return 1024 # embed-english-v3.0 / bge-m3 dense dim — also the orchestrator's default embed model
     emb = _embedder()
     getter = getattr(emb, "get_embedding_dimension", None) or emb.get_sentence_embedding_dimension
     return int(getter())
