@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { configDefaults } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 
 // Dev API target. Defaults to a local backend; set VITE_PROXY_TARGET to develop the
@@ -71,5 +72,11 @@ export default defineConfig({
   // ── CSS performance ───────────────────────────────────────────────
   css: {
     devSourcemap: false,
+  },
+
+  test: {
+    // e2e/ holds Playwright specs (npm run test:e2e) — vitest's default glob would
+    // otherwise also try to collect them and fail on the missing @playwright/test runtime.
+    exclude: [...configDefaults.exclude, 'e2e/**'],
   },
 })
