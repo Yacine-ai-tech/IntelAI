@@ -86,7 +86,7 @@ class HybridRetriever:
 
     def __init__(
         self,
-        embedding_model: str = "BAAI/bge-large-en-v1.5",
+        embedding_model: str = "BAAI/bge-m3",
         reranker_model: str = "BAAI/bge-reranker-v2-m3",
         rrf_k: int = 60,
     ):
@@ -229,7 +229,7 @@ def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int =
         sig = (len(records), hash(tuple(t for t, _ in records)))
         if _HYBRID is None or _HYBRID_SIG != sig:
             r = HybridRetriever(
-                embedding_model=os.getenv("EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5"),
+                embedding_model=os.getenv("EMBEDDING_MODEL", "BAAI/bge-m3"),
                 reranker_model=os.getenv("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3"),
             )
             r.fit([_indexed(t, c) for t, c in records])
