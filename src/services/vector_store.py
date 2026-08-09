@@ -62,7 +62,7 @@ def _embed(texts: List[str]):
         hf_token = os.environ.get("HF_TOKEN", "").strip()
         if not hf_token: return None
         import urllib.request, json as _json
-        model = os.environ.get("HF_EMBEDDING_MODEL", "BAAI/bge-large-en-v1.5")
+        model = os.environ.get("HF_EMBEDDING_MODEL", "BAAI/bge-m3")
         url = f"https://router.huggingface.co/hf-inference/pipeline/feature-extraction/{model}"
         h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
         body = _json.dumps({"inputs": list(texts)}).encode()
@@ -115,7 +115,7 @@ def _embed(texts: List[str]):
 def _dim() -> int:
     provider = os.environ.get("EMBEDDING_PROVIDER", "hf").lower()
     if provider in ("cohere", "hf"):
-        return 1024 # embed-english-v3.0 or bge-large-en-v1.5 dim
+        return 1024 # embed-english-v3.0 or bge-m3 dense dim
     emb = _embedder()
     getter = getattr(emb, "get_embedding_dimension", None) or emb.get_sentence_embedding_dimension
     return int(getter())
