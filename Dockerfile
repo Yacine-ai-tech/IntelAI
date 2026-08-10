@@ -20,7 +20,9 @@ RUN pip install --upgrade pip uv && \
 
 
 COPY src /app/src
-COPY frontend /app/frontend
+# Only the built SPA — see .dockerignore. server.py serves it when present, so one
+# container can host API + UI; a split deploy (Vercel frontend) simply ignores it.
+COPY frontend/dist /app/frontend/dist
 COPY main.py /app/main.py
 
 RUN mkdir -p /app/data /app/uploads /app/logs /app/chroma_db && \
