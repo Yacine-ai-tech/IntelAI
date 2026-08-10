@@ -343,6 +343,24 @@ file: board_policy.pdf
 category: "Finance"   // optional, defaults to "Misc"`,
     response: `{ "status": "ingested", "doc_id": "d41a...", "filename": "board_policy.pdf", "chars": 15234 }`,
   },
+  {
+    method: "POST", path: "/api/v1/ingest/audio", group: "Ingestion", auth: "user",
+    desc: "Transcribe + analyze audio via a pluggable external processor (AUDIO_PROCESSOR_URL — a VoiceFlow instance or any compliant service implementing POST {url}/pipeline). 501 if unconfigured — never a fake transcript.",
+    bodyType: "multipart",
+    body: `// multipart/form-data
+file: meeting.mp3
+category: "Misc"          // optional
+analysis_type: "meeting"  // optional`,
+    response: `{ "status": "ingested", "doc_id": "d41a...", "filename": "meeting.mp3", "transcript": {...}, "analysis": {...} }`,
+  },
+  {
+    method: "POST", path: "/api/v1/webhook/{source_name}", group: "Ingestion", auth: "public",
+    desc: "HMAC-signed public ingestion endpoint for external systems that can't do an interactive JWT login (StreamPulse, a Kafka HTTP sink connector, n8n). No user session — authenticity comes entirely from the signature. 501 if INGEST_WEBHOOK_SECRET isn't configured; 401 on a missing/invalid signature.",
+    bodyType: "json",
+    body: `// Header: X-Signature-256: sha256=<hmac-sha256 hex of the raw body>
+{ "source": "my_system", "schema_type": "kpi_metrics", "data": [...] }`,
+    response: `{ "status": "success", "processed": 42, "type": "kpi_metrics" }`,
+  },
 
   // ── KPIs ─────────────────────────────────────────────────────────────
   {

@@ -1,20 +1,30 @@
-{"query": "What is our Q3 revenue?", "expected": "revenue", "persona": "cfo"}
-{"query": "Are we compliant with ISO 27001?", "expected": "compliant", "persona": "risk"}
-{"query": "Summarize the board meeting.", "expected": "board", "persona": "ceo"}
-{"query": "What are our carbon emissions?", "expected": "carbon", "persona": "esg"}
-{"query": "How many employees joined last month?", "expected": "employees", "persona": "chro"}
-{"query": "What is the marketing budget?", "expected": "budget", "persona": "cmo"}
-{"query": "Are there any supply chain delays?", "expected": "supply", "persona": "coo"}
-{"query": "What is the status of the cloud migration?", "expected": "migration", "persona": "cto"}
-{"query": "Analyze the competitor Q2 report.", "expected": "competitor", "persona": "analyst"}
-{"query": "What is the EBITDA margin?", "expected": "margin", "persona": "cfo"}
-{"query": "Identify cybersecurity threats.", "expected": "threat", "persona": "risk"}
-{"query": "Draft a letter to shareholders.", "expected": "shareholder", "persona": "ceo"}
-{"query": "What is our diversity ratio?", "expected": "diversity", "persona": "esg"}
-{"query": "Update on the wellness program.", "expected": "wellness", "persona": "chro"}
-{"query": "What is the ROI of the latest campaign?", "expected": "roi", "persona": "cmo"}
-{"query": "Show me the inventory turnover.", "expected": "inventory", "persona": "coo"}
-{"query": "When is the server upgrade?", "expected": "server", "persona": "cto"}
-{"query": "What is the market share trend?", "expected": "market", "persona": "analyst"}
-{"query": "Explain the new tax regulation.", "expected": "tax", "persona": "cfo"}
-{"query": "What is our disaster recovery plan?", "expected": "recovery", "persona": "risk"}
+{"query": "What is our current gross margin and how is it trending?", "expected": "margin", "persona": "cfo"}
+{"query": "What is our EBITDA margin this period?", "expected": "ebitda", "persona": "cfo"}
+{"query": "How is Rule of 40 calculated and what is a healthy benchmark?", "expected": "rule of 40", "persona": "cfo"}
+{"query": "What is our cash runway in months?", "expected": "runway", "persona": "cfo"}
+{"query": "Quelle est notre marge brute et comment est-elle calculee?", "expected": "marge", "persona": "cfo"}
+{"query": "What is our net revenue retention rate?", "expected": "retention", "persona": "cfo"}
+{"query": "What is our current monthly churn rate and how does it compare to the healthy benchmark?", "expected": "churn", "persona": "analyst"}
+{"query": "What is our LTV to CAC ratio?", "expected": "ltv", "persona": "analyst"}
+{"query": "Quel est notre taux de desabonnement (churn) actuel?", "expected": "churn", "persona": "analyst"}
+{"query": "What did Salesforce report for revenue in its most recent quarterly earnings release?", "expected": "revenue", "persona": "analyst"}
+{"query": "What is our employee turnover rate and how does it compare to the healthy benchmark?", "expected": "turnover", "persona": "chro"}
+{"query": "What is our employee Net Promoter Score (eNPS)?", "expected": "enps", "persona": "chro"}
+{"query": "What is revenue per employee and why does it matter?", "expected": "revenue per employee", "persona": "chro"}
+{"query": "Quel est notre taux de rotation du personnel (turnover)?", "expected": "turnover", "persona": "chro"}
+{"query": "What is Overall Equipment Effectiveness (OEE) and what is our current value?", "expected": "oee", "persona": "coo"}
+{"query": "What is our current defect rate and first pass yield?", "expected": "defect", "persona": "coo"}
+{"query": "What is our on-time delivery rate?", "expected": "delivery", "persona": "coo"}
+{"query": "What is our current system uptime and how does it compare to the three-nines benchmark?", "expected": "uptime", "persona": "cto"}
+{"query": "What critical vulnerabilities have been identified recently?", "expected": "vulnerabilit", "persona": "cto"}
+{"query": "What is our change failure rate for deployments?", "expected": "change failure", "persona": "cto"}
+{"query": "What is our carbon footprint and how has it trended?", "expected": "carbon", "persona": "esg"}
+{"query": "What is our renewable energy ratio?", "expected": "renewable", "persona": "esg"}
+{"query": "What is our board diversity ratio?", "expected": "diversity", "persona": "esg"}
+{"query": "Quelles sont nos emissions de carbone et notre ratio d'energie renouvelable?", "expected": "carbone", "persona": "esg"}
+{"query": "What security incidents or anomalies have been flagged recently?", "expected": "security", "persona": "risk"}
+{"query": "What is our debt-to-equity ratio and is it within a healthy range?", "expected": "debt", "persona": "risk"}
+{"query": "What is our overall enterprise health score right now?", "expected": "health", "persona": "ceo"}
+{"query": "Summarize the biggest risks and opportunities across all domains this period.", "expected": "risk", "persona": "ceo"}
+{"query": "What is our inventory turnover ratio?", "expected": "inventory", "persona": "general"}
+{"query": "What is the carrying cost of inventory as a percentage of inventory value?", "expected": "carrying cost", "persona": "general"}

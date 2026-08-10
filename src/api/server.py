@@ -1066,7 +1066,19 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> Optional[
     POST {DOC_PROCESSOR_URL}/process, multipart `file` in, JSON `{"fields": {...}}`
     out (DocIntel speaks this natively; any compliant processor can too).
     Returns None on any failure or if unconfigured — the caller falls back
-    to inline extraction, this never raises and never fakes a result."""
+    to inline extraction, this never raises and never fakes a result.
+
+    DOC_PROCESSOR_ROUTE selects which extraction route the processor should use, when
+    it supports route selection (DocIntel: vision_route_a=Claude Sonnet Vision, paid
+    per call; vision_route_b=self-hosted Ollama vision, $0 but needs Ollama running;
+    ocr_fallback=Tesseract OCR, $0, lower fidelity on complex layouts). Defaults to
+    ocr_fallback — the cost-optimized choice — rather than silently inheriting
+    whatever the processor's own default is (DocIntel's own default is the paid
+    Route A, appropriate for the processor's own standalone use but not a sane
+    default for every document this endpoint's pypdf fallback could otherwise
+    handle for free). Set DOC_PROCESSOR_ROUTE=vision_route_a for consistently
+    higher-fidelity extraction on complex/scanned documents if the cost is
+    acceptable, or vision_route_b if you're running your own Ollama vision model."""
     if not settings.DOC_PROCESSOR_URL:
         return None
     try:
@@ -1074,10 +1086,12 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> Optional[
         headers = {}
         if settings.DOC_PROCESSOR_TOKEN:
             headers["Authorization"] = f"Bearer {settings.DOC_PROCESSOR_TOKEN}"
+        route = _os.environ.get("DOC_PROCESSOR_ROUTE", "ocr_fallback")
         async with httpx.AsyncClient(timeout=60) as client:
             resp = await client.post(
                 f"{settings.DOC_PROCESSOR_URL}/process",
                 files={"file": (filename, content)},
+                data={"route": route},
                 headers=headers,
             )
             resp.raise_for_status()
@@ -1103,16 +1117,27 @@ async def ingest_document(
     import io
     filename_lower = (file.filename or "").lower()
 
-    delegated = await _delegate_to_doc_processor(content, file.filename or "upload")
-    if delegated:
-        text = delegated
-    elif filename_lower.endswith(".pdf"):
+    # For text-native PDFs, pypdf is free, fast, and already gets the full text — delegating
+    # to an external vision/OCR processor FIRST would actively lose content (OCR on a page
+    # image extracts less than reading the PDF's real text layer directly, and costs more).
+    # DocIntel earns its keep on scanned/image-only PDFs pypdf can't read at all — so try
+    # pypdf first for .pdf files, and only delegate if that yields too little text to be a
+    # real text layer (found via live testing: a real 60-page text PDF got 80 chars back from
+    # Route C's OCR path vs 669,913 chars from pypdf on the same file).
+    MIN_PYPDF_CHARS = 200
+    if filename_lower.endswith(".pdf"):
         try:
             from pypdf import PdfReader
             reader = PdfReader(io.BytesIO(content))
             text = "\n".join(p.extract_text() or "" for p in reader.pages)
         except Exception:
-            text = content.decode("utf-8", errors="ignore")
+            text = ""
+        if len(text.strip()) < MIN_PYPDF_CHARS:
+            delegated = await _delegate_to_doc_processor(content, file.filename or "upload")
+            if delegated and len(delegated) > len(text):
+                text = delegated
+            elif not text:
+                text = content.decode("utf-8", errors="ignore")
     elif filename_lower.endswith((".png", ".jpg", ".jpeg")):
         try:
             import base64
