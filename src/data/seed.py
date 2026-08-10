@@ -42,7 +42,7 @@ import math
 import random
 from datetime import datetime, timedelta
 from itertools import chain
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 SEED = 42
 MONTHS = 78
@@ -324,6 +324,93 @@ KPI_SPEC: Dict[str, List[Tuple[str, str, float, float, str]]] = {
 }
 ALL_CATEGORIES: List[str] = list(STRATEGIC_KPIS.keys())
 
+# ── VERTICALS (STRATEGY.md §1.4) ─────────────────────────────────────────────
+# The demo dataset reads as a generic company, which is the weakest possible framing for
+# a buyer: STRATEGY.md's point is that "Acme SaaS, ARR $4.2M, churn 3.1%" lands where
+# "Company X" does not. A vertical re-scales the shared catalog to a plausible company of
+# that type and adds the metrics that vertical is actually judged on — it does NOT invent
+# a separate schema, so every dashboard, persona and the copilot keep working unchanged.
+#
+#   scale   multiply a driver's base value (company size / cost structure differences)
+#   extra   additional (metric, unit, base, drift, direction) rows for that domain
+#
+# Healthcare figures follow published US hospital-operations norms (readmission ~15%,
+# bed occupancy ~65-75%, HCAHPS ~70); the SaaS ones follow the same Bessemer-style
+# benchmarks the base catalog is calibrated to.
+VERTICALS: Dict[str, Dict[str, Any]] = {
+    "saas": {
+        "label": "Series A SaaS",
+        "scale": {"Revenue": 0.35, "Headcount": 0.45, "MRR": 0.35},
+        "extra": {
+            "Growth": [
+                ("Trial Signups", "count", 640, 0.020, "up"),
+                ("Trial to Paid Conversion", "%", 22, 0.006, "up"),
+                ("Expansion MRR", "USD", 62_000, 0.022, "up"),
+                ("Logo Retention", "%", 92, 0.002, "up"),
+                ("Seats per Account", "count", 14, 0.008, "up"),
+            ],
+            "IT": [
+                ("Feature Adoption Rate", "%", 41, 0.008, "up"),
+                ("API Error Rate", "%", 0.6, -0.012, "down"),
+            ],
+        },
+    },
+    "healthcare": {
+        "label": "Healthcare provider network",
+        "scale": {"Revenue": 1.8, "Headcount": 4.0, "Operating Costs": 1.9},
+        "extra": {
+            "Operations": [
+                ("Patient Volume", "count", 12_400, 0.010, "up"),
+                ("Bed Occupancy Rate", "%", 71, 0.003, "up"),
+                ("Average Length of Stay", "days", 4.6, -0.006, "down"),
+                ("Readmission Rate (30d)", "%", 14.8, -0.008, "down"),
+                ("Average Wait Time", "minutes", 34, -0.009, "down"),
+            ],
+            "People": [
+                ("Clinical Staff Ratio", "ratio", 1.9, 0.004, "up"),
+                ("Nurse Turnover Rate", "%", 17.5, -0.010, "down"),
+            ],
+            "ESG": [
+                ("Patient Satisfaction (HCAHPS)", "score", 71, 0.004, "up"),
+                ("Clinical Incident Rate", "rate", 2.1, -0.012, "down"),
+                ("HIPAA Audit Findings", "count", 2, -0.015, "down"),
+            ],
+        },
+    },
+    "esg": {
+        "label": "ESG / sustainability reporting",
+        "scale": {"Revenue": 1.2, "Carbon Emissions (tCO2e)": 1.6},
+        "extra": {
+            "ESG": [
+                ("CSRD Readiness Score", "%", 62, 0.010, "up"),
+                ("Scope 3 Supplier Coverage", "%", 48, 0.012, "up"),
+                ("Assured Data Points", "%", 55, 0.011, "up"),
+                ("Energy Intensity", "kWh/$K", 18.5, -0.010, "down"),
+                ("Green Revenue Share", "%", 21, 0.014, "up"),
+                ("Taxonomy-Aligned CapEx", "%", 27, 0.012, "up"),
+            ],
+        },
+    },
+}
+
+
+def kpi_spec_for(vertical: Optional[str] = None) -> Dict[str, List[Tuple[str, str, float, float, str]]]:
+    """KPI_SPEC re-scaled and extended for a vertical (None -> the generic catalog)."""
+    if not vertical:
+        return KPI_SPEC
+    key = vertical.strip().lower()
+    if key not in VERTICALS:
+        raise ValueError(f"unknown vertical {vertical!r}; known: {', '.join(sorted(VERTICALS))}")
+    v = VERTICALS[key]
+    scale, extra = v.get("scale", {}), v.get("extra", {})
+    spec: Dict[str, List[Tuple[str, str, float, float, str]]] = {}
+    for cat, metrics in KPI_SPEC.items():
+        rows = [(m, u, base * scale.get(m, 1.0), drift, direction)
+                for (m, u, base, drift, direction) in metrics]
+        rows.extend(extra.get(cat, []))
+        spec[cat] = rows
+    return spec
+
 # Percentages that legitimately exceed 100 (must NOT be clamped to [0, 100]).
 # Metrics whose realistic value sits within a fraction of a percentage point of the 100%
 # ceiling (e.g. "three nines" uptime) need much tighter noise/seasonality than the blanket
@@ -425,7 +512,8 @@ def _periods(months: int) -> List[str]:
     return [(base + timedelta(days=31 * i)).replace(day=1).strftime("%Y-%m") for i in range(months)]
 
 
-def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "healthy") -> List[Dict[str, Any]]:
+def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "healthy",
+                      vertical: Optional[str] = None) -> List[Dict[str, Any]]:
     """Deterministic multi-domain KPI time series with trend, seasonality, noise, anomalies,
     and formula-derived cross-domain metrics.
 
@@ -448,9 +536,13 @@ def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "h
             - "talent_crisis": HR/talent crisis
             - "cybersecurity_breach": Security incident
             - "esg_compliance_failure": ESG compliance issues
+        vertical: None for the generic company, or saas | healthcare | esg — rescales the
+            same catalog to a plausible company of that type and adds the metrics that
+            vertical is judged on (STRATEGY.md §1.4). Scenarios compose with verticals.
     """
     rng = random.Random(seed)
     periods = _periods(months)
+    spec = kpi_spec_for(vertical)
 
     if scenario == "healthy":
         anomaly_map = {(c, m): (i, mult) for c, m, i, mult in ANOMALIES}
@@ -476,7 +568,7 @@ def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "h
     values: Dict[Tuple[str, str], List[float]] = {}
     rows: List[Dict[str, Any]] = []
 
-    for category, metrics in KPI_SPEC.items():
+    for category, metrics in spec.items():
         for metric, unit, base, drift, direction in metrics:
             series: List[float] = []
             value = base
@@ -680,18 +772,21 @@ def generate_entity_rows(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     return out
 
 
-def seed_database(replace: bool = True, scenario: str = "healthy") -> Dict[str, int]:
+def seed_database(replace: bool = True, scenario: str = "healthy",
+                  vertical: Optional[str] = None) -> Dict[str, int]:
     """Generate + write KPIs, GraphRAG-lite entities, and knowledge docs to Postgres.
 
     Args:
         replace: Whether to replace existing data
         scenario: Health scenario to simulate (healthy, declining_financial, high_churn_crisis, etc.)
+        vertical: None (generic) or saas | healthcare | esg — see VERTICALS / STRATEGY.md §1.4
     """
     import pandas as pd
     from src.services.pg_store import store_kpi_metrics, store_knowledge_docs, store_kpi_entities
 
-    rows = generate_kpi_rows(scenario=scenario)
-    store_kpi_metrics(pd.DataFrame(rows), source_name=f"seed_{scenario}", replace=replace, replace_prefix="seed_")
+    rows = generate_kpi_rows(scenario=scenario, vertical=vertical)
+    source = f"seed_{scenario}" + (f"_{vertical}" if vertical else "")
+    store_kpi_metrics(pd.DataFrame(rows), source_name=source, replace=replace, replace_prefix="seed_")
 
     # GraphRAG-lite: extract entities at ingest and persist them (kpi_entities sidecar table).
     try:
@@ -741,7 +836,7 @@ def main() -> None:
 
     load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
-    # Support scenario selection via command line
+    # CLI:  python -m src.data.seed [scenario] [vertical]
     scenario = "healthy"  # default
     if len(sys.argv) > 1:
         scenario = sys.argv[1]
@@ -749,13 +844,23 @@ def main() -> None:
             print(f"⚠️  Unknown scenario '{scenario}'. Using 'healthy'. Available: {', '.join(['healthy'] + list(UNHEALTHY_SCENARIOS.keys()))}")
             scenario = "healthy"
 
-    counts = seed_database(replace=True, scenario=scenario)
-    n_drivers = sum(len(v) for v in KPI_SPEC.values())
+    vertical = None
+    if len(sys.argv) > 2:
+        vertical = sys.argv[2].strip().lower()
+        if vertical not in VERTICALS:
+            print(f"⚠️  Unknown vertical '{vertical}'. Using the generic catalog. "
+                  f"Available: {', '.join(sorted(VERTICALS))}")
+            vertical = None
+
+    counts = seed_database(replace=True, scenario=scenario, vertical=vertical)
+    spec = kpi_spec_for(vertical)
+    n_drivers = sum(len(v) for v in spec.values())
     n_derived = sum(len(v) for v in DERIVED_KPIS.values())
+    label = f", vertical={vertical} ({VERTICALS[vertical]['label']})" if vertical else ""
     print(f"✅ Seeded {counts['kpi_rows']} KPI rows ({n_drivers} driver/operational metrics + "
-          f"{n_derived} formula-derived metrics across {len(KPI_SPEC)} domains) + "
+          f"{n_derived} formula-derived metrics across {len(spec)} domains) + "
           f"{counts['kpi_entities']} entities + {counts['knowledge_docs']} knowledge docs "
-          f"({MONTHS} months, deterministic seed={SEED}, scenario={scenario}).")
+          f"({MONTHS} months, deterministic seed={SEED}, scenario={scenario}{label}).")
 
 
 if __name__ == "__main__":

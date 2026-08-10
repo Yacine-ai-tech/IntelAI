@@ -165,3 +165,36 @@ pipeline.
 Re-run the ingestion any time with a script matching `scripts/seed_via_api.py`'s
 auth/discovery pattern, pointed at `/api/v1/ingest/document` for non-CSV files under
 `data/<Domain>/`.
+
+## 8. Verticals (STRATEGY.md §1.4)
+
+The generic catalog reads as "Company X", which is the weakest framing for a buyer —
+STRATEGY.md's point is that "Acme SaaS, ARR $4.2M, churn 3.1%" lands where a generic demo
+does not. A vertical **rescales the same catalog** to a plausible company of that type and
+**adds the metrics that vertical is actually judged on**. It is not a separate schema, so
+every dashboard, persona, and the copilot keep working unchanged, and verticals compose
+freely with the 7 health scenarios.
+
+| Vertical | Company shape | Adds |
+|---|---|---|
+| `saas` | Series A SaaS (Revenue ×0.35, Headcount ×0.45) | Trial Signups, Trial→Paid Conversion, Expansion MRR, Logo Retention, Seats per Account, Feature Adoption, API Error Rate |
+| `healthcare` | Provider network (Revenue ×1.8, Headcount ×4.0) | Patient Volume, Bed Occupancy, Avg Length of Stay, 30-day Readmission, Avg Wait Time, Clinical Staff Ratio, Nurse Turnover, HCAHPS, Clinical Incident Rate, HIPAA Audit Findings |
+| `esg` | Sustainability reporting (Revenue ×1.2, emissions ×1.6) | CSRD Readiness, Scope 3 Supplier Coverage, Assured Data Points, Energy Intensity, Green Revenue Share, Taxonomy-Aligned CapEx |
+
+Healthcare figures follow published US hospital-operations norms (readmission ~15%, bed
+occupancy ~65-75%, HCAHPS ~70); SaaS follows the same benchmark sources as the base catalog.
+
+```bash
+python -m src.data.seed healthy healthcare              # DB-direct
+python -m src.data.seed declining_financial saas        # scenario + vertical compose
+python scripts/seed_via_api.py healthy --vertical esg   # through the real ingestion API
+```
+
+Measured output (78 months, seed=42):
+
+| | rows | unique metrics | Revenue (latest) | Headcount |
+|---|---|---|---|---|
+| generic | 11,376 | 146 | — | — |
+| saas | 11,922 | 153 (+7) | 1,838,630 | 76 |
+| healthcare | 12,156 | 156 (+10) | 9,455,813 | 454 |
+| esg | 11,844 | 152 (+6) | 6,303,875 | 113 |
