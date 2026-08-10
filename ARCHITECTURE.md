@@ -125,6 +125,53 @@ errors, failed network requests, and rendered content length per page.
    error-boundary fallback text ("No Analytics Data Available…") correctly firing —
    working as designed, not broken.
 
+## RAG retrieval — why it returned nothing (all measured, not inferred)
+
+Retrieval returned **zero documents** for most queries. The knowledge base was never
+the problem (733 docs; "cash runway" appears in 7, "Rule of 40" in 9). Four independent
+defects, each sufficient on its own to produce an ungrounded answer:
+
+8. **No chunking at all.** `CHUNK_SIZE`/`CHUNK_OVERLAP` have sat in `core/config.py`
+   unreferenced by any code. Documents were embedded whole — 7 docs over 30k chars, max
+   50k. A single fixed-length vector cannot represent a 50k-char report and anything past
+   the model's context window is silently truncated; BM25 term weights dilute the same
+   way. Now split into overlapping passages (733 docs → 1,368 passages) with the matching
+   *passage* returned, not the whole document.
+9. **`TfidfVectorizer(max_features=100)`.** Measured on the real corpus: a 100-word
+   vocabulary in which "runway" does not appear, so "What is our cash runway in months?"
+   scored **0.0000 against every one of the 733 documents** and the path returned nothing.
+   With a realistic vocabulary the same query scores **0.6318** and matches 26 documents.
+   Fixed (50k features, bigrams, sublinear tf, title indexed alongside content).
+10. **The TF-IDF path returned its empty result instead of falling through** to the
+    keyword search below it, so a zero-match TF-IDF run ended retrieval entirely.
+11. **The production embedding endpoint was dead.** `api-inference.huggingface.co` has
+    been retired by HF; dense retrieval had been non-functional in production regardless
+    of the above. Working replacement verified: `router.huggingface.co` (1024-dim, 1.5s).
+    A dead embedding host also killed the *whole* hybrid retriever (BM25 included) —
+    now it degrades to BM25-only with a loud error instead of returning nothing.
+
+### Inference backends — measured
+| Backend | Embed | Rerank |
+|---|---|---|
+| HF router | 200, 1024-dim, 1.5s | 0.82 (relevant) vs 0.000016 (irrelevant) |
+| Orchestrator `/api/inference` | 200, (2,1024), BAAI/bge-m3 | 0.833 vs 0.0000164 |
+
+The orchestrator's studio tunnel was down (Cloudflare **1033**, all 4 studios HTTP 530)
+until woken via `POST /api/studios/1/wake`; both capabilities work once it is up. First
+embed after a cold wake took ~25s, so production timeouts are set generously
+(`EMBED_TIMEOUT=120`, `RERANK_TIMEOUT=90`). Production embed+rerank now point at the
+orchestrator.
+
+## Deployment — why production was broken
+
+12. **Every Render deploy has failed since at least 2026-08-09**: `COPY frontend
+    /app/frontend` → `"/frontend": not found`, because `.dockerignore` excluded all of
+    `frontend/` while the Dockerfile still copied it. The live service has been serving
+    stale code. Fixed (explicit excludes, keep `frontend/dist`, copy only `dist`).
+13. **`SECRET_KEY` was missing on Render while `ENVIRONMENT=production`** — the exact
+    combination `validate_required_keys()` aborts startup on. Set, along with 19 other
+    required vars (delegation URLs, explicit providers, CORS, demo config).
+
 ## Known drift / not yet done
 
 - **Audio ingestion untested with a real file** — `AUDIO_PROCESSOR_URL` is wired to the
