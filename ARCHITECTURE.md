@@ -150,6 +150,26 @@ defects, each sufficient on its own to produce an ungrounded answer:
     A dead embedding host also killed the *whole* hybrid retriever (BM25 included) —
     now it degrades to BM25-only with a loud error instead of returning nothing.
 
+### Retrieval, before vs after (same queries, same corpus, measured)
+| Query | Before | After | Top match |
+|---|---|---|---|
+| What is our cash runway in months? | **0 docs** | **1.000** | Glossary: Cash Runway (26.78 months) |
+| What is our renewable energy ratio? | **0 docs** | 0.905 | Glossary: Renewable Energy % |
+| What is our LTV to CAC ratio? | **0 docs** | 0.994 | Glossary: LTV:CAC |
+| What is our change failure rate? | **0 docs** | 0.994 | Glossary: Change Failure Rate |
+| Quelle est notre marge brute ? | **0 docs** → 0.137 (wrong doc: LTV) | **1.000** | Glossaire: Marge brute (Gross Margin) |
+| Quel est notre taux de rotation du personnel ? | **0 docs** | **1.000** | Glossaire: Taux de rotation du personnel |
+
+The French rows are the fix in defect 14 below; the rest are defects 8–11.
+
+14. **French documents never contained the French name of their own metric.** The FR
+    glossary translated definition/benchmark but kept the English term as the title, so
+    "marge brute" appeared nowhere in the Gross Margin document and no French query could
+    retrieve it. Added 63 French term names + an explicit alias line, only where a genuine
+    standard French term exists — metrics French business usage keeps in English (churn,
+    EBITDA, NRR, OEE, MTTR, KPI, ARR/MRR, uptime) are deliberately left in English rather
+    than given an invented translation.
+
 ### Inference backends — measured
 | Backend | Embed | Rerank |
 |---|---|---|
