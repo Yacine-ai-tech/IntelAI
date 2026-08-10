@@ -732,14 +732,20 @@ def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] 
     (e.g. ``"seed-"``) so a re-seed with a different doc set leaves no orphaned rows."""
     if docs_df.empty:
         return
+    # Postgres text columns reject embedded NUL (0x00) bytes — pypdf's extraction hits
+    # this on some real-world PDFs (embedded fonts/encodings that decode to a stray NUL)
+    # and would otherwise crash the whole ingest request with an unhandled DataError.
+    def _clean(v: Any) -> str:
+        return str(v).replace("\x00", "")
+
     params = [
         (
-            str(row.get("doc_id", "")),
-            str(row.get("title", "")),
-            str(row.get("content", "")),
-            str(row.get("source", "manual")),
-            str(row.get("embedding", "")),
-            str(row.get("language", "en")),
+            _clean(row.get("doc_id", "")),
+            _clean(row.get("title", "")),
+            _clean(row.get("content", "")),
+            _clean(row.get("source", "manual")),
+            _clean(row.get("embedding", "")),
+            _clean(row.get("language", "en")),
         )
         for _, row in docs_df.iterrows()
     ]
@@ -763,19 +769,20 @@ def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] 
 
 
 def seed_glossary_knowledge_docs() -> int:
-    """Persist the 169 curated KPI glossary entries directly into the PostgreSQL knowledge_base DB table."""
+    """Persist the curated KPI glossary entries (English + French) directly into the
+    PostgreSQL knowledge_base DB table — bilingual so the copilot and the hybrid/
+    reranker retrieval path have real FR content to be evaluated against, not just EN."""
     try:
         import pandas as pd
-        from src.knowledge.glossary import as_knowledge_docs
-        g_docs = as_knowledge_docs(lang="en")
+        from src.data.glossary import as_knowledge_docs
+        g_docs = as_knowledge_docs(lang="en") + as_knowledge_docs(lang="fr")
         if not g_docs:
             return 0
         df = pd.DataFrame(g_docs)
-        df["doc_id"] = [f"glossary-{i+1}" for i in range(len(df))]
+        df["doc_id"] = [f"glossary-{d['language']}-{i+1}" for i, d in enumerate(g_docs)]
         df["embedding"] = ""
-        df["language"] = "en"
         store_knowledge_docs(df, replace_prefix="glossary-")
-        log.info("✅ Seeded %d glossary entries directly into PostgreSQL knowledge_base table", len(df))
+        log.info("✅ Seeded %d glossary entries (EN+FR) directly into PostgreSQL knowledge_base table", len(df))
         return len(df)
     except Exception as e:
         log.warning("⚠️ Failed to seed glossary into DB: %s", e)
