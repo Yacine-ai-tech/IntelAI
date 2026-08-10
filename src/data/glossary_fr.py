@@ -411,3 +411,80 @@ GLOSSARY_FR: Dict[str, Dict[str, str]] = {
         "benchmark": "IntelAI évalue ses performances en fonction de l'ancrage (citer ou ne pas affirmer)."
     }
 }
+
+
+# ── French term names ────────────────────────────────────────────────────────
+# Only where a genuine, standard French business/finance term exists. Many of these
+# metrics are used in English *in French business contexts* (churn, EBITDA, NRR, OEE,
+# MTTR, KPI, ARR/MRR, uptime...), so those are deliberately absent rather than given an
+# invented translation — falling back to the English name is the accurate behaviour.
+#
+# Why this exists: the FR knowledge docs translated definition/benchmark but kept the
+# English term as the title, so no FR doc contained the French name of its own metric.
+# Measured effect: "Quelle est notre marge brute?" retrieved LTV/COGS at 0.137 instead
+# of Gross Margin, because the string "marge brute" appeared nowhere in that document.
+TERMS_FR: Dict[str, str] = {
+    "Gross Margin": "Marge brute",
+    "Net Profit": "Bénéfice net",
+    "Revenue": "Chiffre d'affaires",
+    "Operating Costs": "Charges d'exploitation",
+    "Operating Cash Flow": "Flux de trésorerie d'exploitation",
+    "Free Cash Flow": "Flux de trésorerie disponible",
+    "Cash Runway": "Autonomie de trésorerie",
+    "COGS": "Coût des ventes",
+    "Taxes": "Impôts",
+    "Working Capital": "Besoin en fonds de roulement",
+    "Days Sales Outstanding": "Délai moyen de paiement client",
+    "Debt to Equity": "Ratio d'endettement",
+    "Interest Coverage": "Couverture des intérêts",
+    "Customer Count": "Nombre de clients",
+    "Churn Rate": "Taux d'attrition",
+    "Active Users": "Utilisateurs actifs",
+    "Conversion Rate": "Taux de conversion",
+    "Headcount": "Effectif",
+    "Turnover Rate": "Taux de rotation du personnel",
+    "Engagement Score": "Score d'engagement",
+    "Time to Hire": "Délai de recrutement",
+    "Training Hours": "Heures de formation",
+    "Open Positions": "Postes ouverts",
+    "Average Tenure": "Ancienneté moyenne",
+    "Cost per Hire": "Coût par recrutement",
+    "Absenteeism Rate": "Taux d'absentéisme",
+    "Offer Acceptance Rate": "Taux d'acceptation des offres",
+    "Internal Mobility Rate": "Taux de mobilité interne",
+    "Revenue per Employee": "Chiffre d'affaires par employé",
+    "Diversity Score": "Score de diversité",
+    "Defect Rate": "Taux de défauts",
+    "Quality Rate": "Taux de qualité",
+    "Capacity Utilization": "Taux d'utilisation des capacités",
+    "Cycle Time": "Temps de cycle",
+    "First Pass Yield": "Rendement au premier passage",
+    "Cost per Unit": "Coût unitaire",
+    "Unplanned Downtime": "Arrêts non planifiés",
+    "Scrap Rate": "Taux de rebut",
+    "Inventory Turnover": "Rotation des stocks",
+    "Order Accuracy": "Exactitude des commandes",
+    "Fill Rate": "Taux de service",
+    "Stockout Rate": "Taux de rupture de stock",
+    "Carrying Cost": "Coût de possession des stocks",
+    "Avg Lead Time": "Délai moyen d'approvisionnement",
+    "Last Mile Delivery Time": "Délai de livraison du dernier kilomètre",
+    "Days Inventory Outstanding": "Délai d'écoulement des stocks",
+    "Returns Rate": "Taux de retours",
+    "Freight Cost per Unit": "Coût de transport unitaire",
+    "Cloud Spend": "Dépenses cloud",
+    "Cloud Cost per User": "Coût cloud par utilisateur",
+    "Critical Incidents": "Incidents critiques",
+    "Security Incidents": "Incidents de sécurité",
+    "Mean Time to Resolution": "Délai moyen de résolution",
+    "Carbon Emissions (tCO2)": "Émissions de carbone",
+    "Emissions Intensity": "Intensité carbone",
+    "Renewable Energy %": "Part d'énergie renouvelable",
+    "Water Consumption (m3)": "Consommation d'eau",
+    "Waste Recycled %": "Taux de déchets recyclés",
+    "Board Diversity %": "Diversité du conseil d'administration",
+    "Gender Pay Gap": "Écart de rémunération entre les sexes",
+    "Community Investment": "Investissement communautaire",
+    "ESG Score": "Score ESG",
+    "Audit Compliance Score": "Score de conformité d'audit",
+}
