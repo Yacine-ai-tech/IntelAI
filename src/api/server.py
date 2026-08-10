@@ -1059,50 +1059,90 @@ async def ingest_csv_file(
     return {"status": "ingested", "rows_inserted": len(df), "filename": file.filename}
 
 
-async def _delegate_to_doc_processor(content: bytes, filename: str) -> Optional[str]:
-    """If DOC_PROCESSOR_URL is configured, delegate extraction to it instead
-    of the inline pypdf/Groq-Vision path below — the same standalone,
-    not-hardcoded-to-DocIntel principle as AUDIO_PROCESSOR_URL. Contract:
-    POST {DOC_PROCESSOR_URL}/process, multipart `file` in, JSON `{"fields": {...}}`
-    out (DocIntel speaks this natively; any compliant processor can too).
-    Returns None on any failure or if unconfigured — the caller falls back
-    to inline extraction, this never raises and never fakes a result.
+async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
+    """Extract document/image text via the external document processor.
 
-    DOC_PROCESSOR_ROUTE selects which extraction route the processor should use, when
-    it supports route selection (DocIntel: vision_route_a=Claude Sonnet Vision, paid
-    per call; vision_route_b=self-hosted Ollama vision, $0 but needs Ollama running;
-    ocr_fallback=Tesseract OCR, $0, lower fidelity on complex layouts). Defaults to
-    ocr_fallback — the cost-optimized choice — rather than silently inheriting
-    whatever the processor's own default is (DocIntel's own default is the paid
-    Route A, appropriate for the processor's own standalone use but not a sane
-    default for every document this endpoint's pypdf fallback could otherwise
-    handle for free). Set DOC_PROCESSOR_ROUTE=vision_route_a for consistently
-    higher-fidelity extraction on complex/scanned documents if the cost is
-    acceptable, or vision_route_b if you're running your own Ollama vision model."""
+    STRATEGY.md's dependency rule: each of the six tools is standalone and must not
+    do another tool's job. Document/image/vision understanding is DocIntel's domain,
+    so IntelAI does **zero** local PDF/image processing — no pypdf, no vision model.
+    This is the ONLY extraction path; there is deliberately no local fallback, because
+    a silent fallback both violates that boundary and hides a broken processor behind
+    lower-quality output (exactly what happened before: a misconfigured processor
+    returned 80 characters for a 60-page report and the inline path masked it).
+
+    Contract — the processor must implement ONE of these (tried in this order, first
+    that yields text wins; every one is a *different endpoint on the same processor*,
+    not a different processor, so this is not a cross-vendor fallback chain):
+      1. POST {url}/extract/text  -> {"text": "..."}          full document text
+      2. POST {url}/extract/marker-> {"markdown": "..."}      PDF -> Markdown (Marker)
+      3. POST {url}/process       -> {"raw_text"|"fields"}    structured extraction
+    DocIntel speaks all three natively; any compliant processor can too.
+
+    DOC_PROCESSOR_ROUTE picks the processor's extraction route where it supports one
+    (DocIntel: vision_route_a = Claude Sonnet Vision, paid per page; vision_route_b =
+    self-hosted Ollama vision, $0 but needs Ollama; ocr_fallback = Tesseract, $0).
+
+    Raises RuntimeError on failure — the caller turns that into a 502 so the operator
+    sees a real error instead of a silently degraded ingest.
+    """
     if not settings.DOC_PROCESSOR_URL:
-        return None
-    try:
-        import httpx
-        headers = {}
-        if settings.DOC_PROCESSOR_TOKEN:
-            headers["Authorization"] = f"Bearer {settings.DOC_PROCESSOR_TOKEN}"
-        route = _os.environ.get("DOC_PROCESSOR_ROUTE", "ocr_fallback")
-        async with httpx.AsyncClient(timeout=60) as client:
-            resp = await client.post(
-                f"{settings.DOC_PROCESSOR_URL}/process",
-                files={"file": (filename, content)},
-                data={"route": route},
-                headers=headers,
-            )
-            resp.raise_for_status()
-            result = resp.json()
-        fields = result.get("fields")
-        if not fields:
-            return None
-        return "\n".join(f"{k}: {v}" for k, v in fields.items() if v not in (None, "", [], {}))
-    except Exception as e:
-        log.warning("DOC_PROCESSOR_URL delegation failed, falling back to inline extraction: %s", e)
-        return None
+        raise RuntimeError(
+            "DOC_PROCESSOR_URL not configured — IntelAI does not process documents "
+            "itself (see STRATEGY.md standalone rule). Point it at a document "
+            "processor (e.g. a DocIntel instance) to enable document ingestion."
+        )
+    import httpx
+    headers = {}
+    if settings.DOC_PROCESSOR_TOKEN:
+        headers["Authorization"] = f"Bearer {settings.DOC_PROCESSOR_TOKEN}"
+    route = _os.environ.get("DOC_PROCESSOR_ROUTE", "ocr_fallback")
+    timeout = float(_os.environ.get("DOC_PROCESSOR_TIMEOUT", "180"))
+
+    attempts = [
+        ("/extract/text", {"route": route}, ("text",)),
+        ("/extract/marker", None, ("markdown",)),
+        ("/process", {"route": route}, ("raw_text",)),
+    ]
+    errors = []
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        for path, data, keys in attempts:
+            try:
+                resp = await client.post(
+                    f"{settings.DOC_PROCESSOR_URL}{path}",
+                    files={"file": (filename, content)},
+                    data=data,
+                    headers=headers,
+                )
+                if resp.status_code == 404:
+                    errors.append(f"{path}: not implemented by processor")
+                    continue
+                resp.raise_for_status()
+                result = resp.json()
+                for k in keys:
+                    val = result.get(k)
+                    if isinstance(val, str) and val.strip():
+                        return val
+                # /process may only return typed fields (invoice-shaped) — usable, but
+                # it is NOT full document text, so it is the last thing we accept.
+                if path == "/process":
+                    fields = result.get("fields")
+                    if isinstance(fields, dict):
+                        flat = "\n".join(f"{k}: {v}" for k, v in fields.items()
+                                         if not k.startswith("_") and v not in (None, "", [], {}))
+                        if flat.strip():
+                            log.warning(
+                                "Document processor returned only structured fields for %s "
+                                "(no full text) — RAG quality will be poor. Enable "
+                                "/extract/text or /extract/marker on the processor.", filename)
+                            return flat
+                errors.append(f"{path}: returned no usable text ({result.get('error') or 'empty'})")
+            except Exception as e:
+                errors.append(f"{path}: {e}")
+
+    raise RuntimeError(
+        f"document processor at {settings.DOC_PROCESSOR_URL} could not extract text "
+        f"from {filename}. Tried: " + "; ".join(errors)
+    )
 
 
 @app.post("/api/v1/ingest/document")
@@ -1113,70 +1153,22 @@ async def ingest_document(
 ):
     from src.services.pg_store import store_knowledge_docs, log_audit_event
     content = await file.read()
-    text = ""
-    import io
     filename_lower = (file.filename or "").lower()
 
-    # For text-native PDFs, pypdf is free, fast, and already gets the full text — delegating
-    # to an external vision/OCR processor FIRST would actively lose content (OCR on a page
-    # image extracts less than reading the PDF's real text layer directly, and costs more).
-    # DocIntel earns its keep on scanned/image-only PDFs pypdf can't read at all — so try
-    # pypdf first for .pdf files, and only delegate if that yields too little text to be a
-    # real text layer (found via live testing: a real 60-page text PDF got 80 chars back from
-    # Route C's OCR path vs 669,913 chars from pypdf on the same file).
-    MIN_PYPDF_CHARS = 200
-    if filename_lower.endswith(".pdf"):
-        try:
-            from pypdf import PdfReader
-            reader = PdfReader(io.BytesIO(content))
-            text = "\n".join(p.extract_text() or "" for p in reader.pages)
-        except Exception:
-            text = ""
-        if len(text.strip()) < MIN_PYPDF_CHARS:
-            delegated = await _delegate_to_doc_processor(content, file.filename or "upload")
-            if delegated and len(delegated) > len(text):
-                text = delegated
-            elif not text:
-                text = content.decode("utf-8", errors="ignore")
-    elif filename_lower.endswith((".png", ".jpg", ".jpeg")):
-        try:
-            import base64
-            from groq import Groq
-            from src.core.config import settings
-            
-            # Use Groq Vision to extract text and analyze visual elements
-            client = Groq(api_key=settings.GROQ_API_KEY)
-            base64_image = base64.b64encode(content).decode('utf-8')
-            mime_type = "image/png" if filename_lower.endswith(".png") else "image/jpeg"
-            
-            completion = client.chat.completions.create(
-                model="llama-3.2-11b-vision-preview",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": [
-                            {
-                                "type": "text",
-                                "text": "Extract all text from this image. Also, describe any charts, graphs, diagrams, or important visual elements in detail."
-                            },
-                            {
-                                "type": "image_url",
-                                "image_url": {
-                                    "url": f"data:{mime_type};base64,{base64_image}"
-                                }
-                            }
-                        ]
-                    }
-                ],
-                temperature=0.0,
-                max_tokens=2048
-            )
-            extracted = completion.choices[0].message.content
-            text = f"[VISUAL ELEMENT ANALYSIS]\nFile: {file.filename}\n{extracted}"
-        except Exception as e:
-            text = f"[IMAGE UNREADABLE] Could not parse image {file.filename}: {e}"
-    else:
+    # Anything that needs parsing/OCR/vision to read (PDF, image, Office doc) is the
+    # document processor's job, not IntelAI's — STRATEGY.md's standalone rule: a project
+    # must not do another project's work. IntelAI keeps zero PDF/image processing code
+    # and no local fallback; a failing processor surfaces as a 502, not as silently
+    # degraded text. Plain-text formats are read directly because that needs no document
+    # intelligence at all — it's just a decode, not extraction.
+    PLAIN_TEXT_EXT = (".txt", ".md", ".csv", ".json", ".log", ".xml", ".yaml", ".yml", ".tsv")
+    if filename_lower.endswith(PLAIN_TEXT_EXT):
         text = content.decode("utf-8", errors="ignore")
+    else:
+        try:
+            text = await _delegate_to_doc_processor(content, file.filename or "upload")
+        except RuntimeError as e:
+            raise HTTPException(status_code=502, detail=f"doc_processor_failed: {e}")
 
     from src.services.security import SecurityScanner
     text = SecurityScanner.redact_text(text)
@@ -1222,11 +1214,22 @@ async def ingest_audio(
         headers = {}
         if settings.AUDIO_PROCESSOR_TOKEN:
             headers["Authorization"] = f"Bearer {settings.AUDIO_PROCESSOR_TOKEN}"
-        async with httpx.AsyncClient(timeout=120) as client:
+        # Be explicit about the transcription engine rather than inheriting the
+        # processor's own default — VoiceFlow's /pipeline defaults to LOCAL_WHISPERX,
+        # which needs whisperx + a GPU on *its* host and is the wrong choice for a
+        # small cloud instance. AUDIO_PROCESSOR_PROVIDER is passed straight through,
+        # so it's whatever engine names your processor understands (VoiceFlow:
+        # groq | deepgram | assemblyai | remote | local).
+        data = {"analysis_type": analysis_type}
+        provider = _os.environ.get("AUDIO_PROCESSOR_PROVIDER", "").strip()
+        if provider:
+            data["provider"] = provider
+        timeout = float(_os.environ.get("AUDIO_PROCESSOR_TIMEOUT", "300"))
+        async with httpx.AsyncClient(timeout=timeout) as client:
             resp = await client.post(
                 f"{settings.AUDIO_PROCESSOR_URL}/pipeline",
                 files={"file": (file.filename or "audio", content)},
-                data={"analysis_type": analysis_type},
+                data=data,
                 headers=headers,
             )
             resp.raise_for_status()

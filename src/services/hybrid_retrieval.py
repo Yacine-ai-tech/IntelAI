@@ -136,75 +136,76 @@ class HybridRetriever:
         return self._embedder
 
     def _remote_embed(self, texts: List[str]):
-        """Embed via a remote inference host instead of loading the model in-process.
-        Two env-var pairs are honored (checked in this order, first match wins):
-          - EMBED_URL / EMBEDDING_PROVIDER=remote — matches this file's own
-            RERANK_URL/RERANK_PROVIDER convention (a shared orchestrator/Studio speaking
-            {"texts":[...]} -> {"embeddings":[...]} at {url}/embed — e.g. the orchestrator's
-            POST /api/inference/embed).
-          - EMBEDDING_ENDPOINT / INFERENCE_MODE=remote — the same contract RAGeval's own
-            evaluator.py uses, so one inference host's env config works for both services.
-        Any failure returns None so the caller falls back to the local model (or skips
-        dense retrieval if no local model is available either)."""
-        remote_on = (os.getenv("EMBEDDING_PROVIDER", "").strip().lower() == "remote"
-                     or os.getenv("INFERENCE_MODE", "").strip().lower() == "remote")
-        if not remote_on:
-            return None
+        """Embed on the configured remote inference host. Raises on failure — the caller
+        does NOT fall back to a local model (see _encode)."""
         url = os.getenv("EMBED_URL", "").strip() or os.getenv("EMBEDDING_ENDPOINT", "").strip()
         if not url:
-            return None
-        try:
-            import json as _json, urllib.request
-            h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
-            tk = os.getenv("INFERENCE_TOKEN", "").strip()
-            if tk:
-                h["Authorization"] = "Bearer " + tk
-            timeout = float(os.getenv("EMBED_TIMEOUT", "30"))
+            raise RuntimeError(
+                "EMBEDDING_PROVIDER=remote but neither EMBED_URL nor EMBEDDING_ENDPOINT is set")
+        import json as _json, urllib.request
+        h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
+        tk = os.getenv("INFERENCE_TOKEN", "").strip()
+        if tk:
+            h["Authorization"] = "Bearer " + tk
+        timeout = float(os.getenv("EMBED_TIMEOUT", "30"))
 
-            if "huggingface.co" in url:
-                # HF Inference API: POST straight to the model URL with {"inputs": [...]}.
-                # Response is a list of vectors for a sentence-embedding model, or a list of
-                # per-token vectors (one extra nesting level) for a plain feature-extraction
-                # pipeline — mean-pool the token axis in that case.
-                body = _json.dumps({"inputs": texts}).encode()
-                req = urllib.request.Request(url, data=body, headers=h)
-                result = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
-                arr = np.asarray(result, dtype=float)
-                if arr.ndim == 3:
-                    arr = arr.mean(axis=1)
-                return arr
-            else:
-                # Generic contract (a Studio/orchestrator host) — same shape
-                # AUDIO_PROCESSOR_URL/DOC_PROCESSOR_URL use elsewhere in this codebase.
-                body = _json.dumps({"texts": texts, "model": self.embedding_model_name}).encode()
-                req = urllib.request.Request(url.rstrip("/") + "/embed", data=body, headers=h)
-                result = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
-                vecs = result.get("embeddings")
-                if not vecs:
-                    return None
-                return np.asarray(vecs)
-        except Exception as e:
-            log.warning("remote embed unavailable (%s) — falling back to local model", e)
-            return None
+        if "huggingface.co" in url:
+            # HF Inference API: POST straight to the model URL with {"inputs": [...]}.
+            # Response is a list of vectors for a sentence-embedding model, or a list of
+            # per-token vectors (one extra nesting level) for a plain feature-extraction
+            # pipeline — mean-pool the token axis in that case.
+            body = _json.dumps({"inputs": texts}).encode()
+            req = urllib.request.Request(url, data=body, headers=h)
+            result = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+            arr = np.asarray(result, dtype=float)
+            if arr.ndim == 3:
+                arr = arr.mean(axis=1)
+            return arr
+        # Generic contract (a Studio/orchestrator host) — same shape
+        # AUDIO_PROCESSOR_URL/DOC_PROCESSOR_URL use elsewhere in this codebase.
+        body = _json.dumps({"texts": texts, "model": self.embedding_model_name}).encode()
+        req = urllib.request.Request(url.rstrip("/") + "/embed", data=body, headers=h)
+        result = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+        vecs = result.get("embeddings")
+        if not vecs:
+            raise RuntimeError(f"remote embed host returned no embeddings ({url})")
+        return np.asarray(vecs)
 
     def _encode(self, texts: List[str]):
-        """Dense-embed texts: remote inference host first (if configured), else the local
-        sentence-transformers model. Returns None if neither is available."""
-        remote = self._remote_embed(texts)
-        if remote is not None:
-            return remote
+        """Dense-embed texts using EXACTLY the configured provider — no fallback chain.
+
+        EMBEDDING_PROVIDER=local (default)  load the model in-process on this host;
+                                            requires sentence-transformers installed.
+        EMBEDDING_PROVIDER=remote           call EMBED_URL/EMBEDDING_ENDPOINT.
+
+        A silent local<->remote fallback is deliberately NOT provided: it hides a
+        misconfigured or down inference host behind quietly different (usually worse)
+        retrieval, which is far harder to debug than a loud failure. Whichever mode is
+        configured is the mode that runs; if it can't run, this raises.
+        """
+        provider = (os.getenv("EMBEDDING_PROVIDER", "").strip().lower()
+                    or ("remote" if os.getenv("INFERENCE_MODE", "").strip().lower() == "remote"
+                        else "local"))
+        if provider == "remote":
+            return self._remote_embed(texts)
+        if provider != "local":
+            raise RuntimeError(f"EMBEDDING_PROVIDER must be 'local' or 'remote', got {provider!r}")
         embedder = self._ensure_embedder()
         if embedder is None:
-            return None
+            raise RuntimeError(
+                "EMBEDDING_PROVIDER=local but sentence-transformers isn't installed on this "
+                "host. Install it (pip install sentence-transformers) or set "
+                "EMBEDDING_PROVIDER=remote + EMBED_URL.")
         return embedder.encode(texts, show_progress_bar=False)
 
-    def _ensure_reranker(self):
-        # Local CrossEncoder (~600MB) is OFF by default: loading it on a constrained app host
-        # (Railway/Render free) OOM-crashes the process (the 502/restart-loop we hit). The real
-        # BGE reranker runs REMOTELY on a GPU inference host (see module-level rerank()); a brief
-        # outage degrades to dense+BM25+RRF fusion instead. Set USE_LOCAL_RERANKER=true only on a
-        # host with RAM headroom.
-        if not _RERANKER or os.getenv("USE_LOCAL_RERANKER", "false").strip().lower() not in ("1", "true", "yes", "on"):
+    def _ensure_reranker(self, force: bool = False):
+        """Load the local CrossEncoder (~600MB). Only used when RERANK_PROVIDER=local —
+        the module-level rerank() dispatches explicitly, so `force=True` from that path
+        means "the operator asked for local, load it". Note this model does not fit a
+        512MB app host; use RERANK_PROVIDER=remote|cohere|jina|hf on constrained hosts."""
+        if not _RERANKER:
+            raise RuntimeError("sentence-transformers not installed — local reranker unavailable")
+        if not force:
             return None
         if self._reranker is None:
             log.info("Loading reranker (CrossEncoder): %s", self.reranker_model_name)
@@ -340,156 +341,128 @@ def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int =
 _RERANK_RETRIEVER: Optional["HybridRetriever"] = None
 
 
-def _hosted_rerank(query: str, texts: List[str]) -> Optional[List[float]]:
-    """Hosted-API rerank backstop (a real cross-encoder rerank endpoint — Cohere ``/v2/rerank`` by
-    default, Jina ``/v1/rerank`` alternate) so search keeps true rerank quality when the on-demand
-    remote GPU inference host is down, WITHOUT loading a ~600MB local cross-encoder (survives on a
-    512MB host). Off unless ``HOSTED_RERANK_PROVIDER`` (cohere|jina) + the provider's key are set. Returns
-    scores aligned with ``texts`` or ``None`` (caller keeps fusion order). Stdlib urllib only — no
-    new dependency. Both providers offer a free, no-card tier."""
-    provider = os.getenv("HOSTED_RERANK_PROVIDER", "").strip().lower()
-    if provider not in ("cohere", "jina"):
-        return None
-    key = os.getenv("COHERE_API_KEY" if provider == "cohere" else "JINA_API_KEY", "").strip()
-    if not key:
-        return None
-    try:
-        import json as _json
-        import urllib.request
-        if provider == "cohere":
-            url = os.getenv("COHERE_BASE_URL", "https://api.cohere.com").rstrip("/") + "/v2/rerank"
-            model = os.getenv("HOSTED_RERANK_MODEL", "rerank-v3.5")  # multilingual (EN/FR)
-        else:  # jina
-            url = "https://api.jina.ai/v1/rerank"
-            model = os.getenv("HOSTED_RERANK_MODEL", "jina-reranker-v2-base-multilingual")
-        body = _json.dumps({"model": model, "query": query,
-                            "documents": list(texts), "top_n": len(texts)}).encode()
-        req = urllib.request.Request(url, data=body, headers={
-            "Content-Type": "application/json", "Authorization": "Bearer " + key})
-        timeout = float(os.getenv("HOSTED_RERANK_TIMEOUT", "12"))
-        results = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["results"]
-        # Both APIs return [{"index", "relevance_score"}] sorted by score — realign to input order.
-        scores = [0.0] * len(texts)
-        for r in results:
-            idx = r.get("index")
-            if isinstance(idx, int) and 0 <= idx < len(texts):
-                scores[idx] = float(r.get("relevance_score", 0.0))
-        return scores
-    except Exception as e:
-        # Fallback to Hugging Face Free Inference API if hosted fails and HF_TOKEN is available
-        hf_token = os.getenv("HF_TOKEN", "").strip()
-        if hf_token:
-            try:
-                import urllib.request
-                import json as _json
-                model = os.getenv("HF_RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
-                url = f"https://router.huggingface.co/hf-inference/models/{model}"
-                h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
-                body = _json.dumps({"inputs": [f"{query} </s> {t}" for t in texts]}).encode()
-                req = urllib.request.Request(url, data=body, headers=h)
-                res = _json.loads(urllib.request.urlopen(req, timeout=15).read())
-                if isinstance(res, list) and len(res) > 0:
-                    if isinstance(res[0], list) and len(res[0]) == len(texts):
-                        return [float(item["score"]) for item in res[0]]
-                    elif len(res) == len(texts):
-                        return [float(item[0]["score"] if isinstance(item, list) else item.get("score", 0.0)) for item in res]
-            except Exception as hf_err:
-                log.warning("HF fallback rerank also unavailable: %s", hf_err)
-        
-        log.warning("hosted rerank unavailable (%s) — keeping fusion order", e)
-        return None
-
-
-def _try_local_reranker(query: str, texts: List[str]) -> Optional[List[float]]:
-    """Local CrossEncoder reranker — opt-in via USE_LOCAL_RERANKER for hosts with RAM
-    headroom (see _ensure_reranker's docstring on why this is off by default)."""
+def _rerank_local(query: str, texts: List[str]) -> List[float]:
+    """Cross-encoder loaded in-process on this host. Raises if unavailable."""
     global _RERANK_RETRIEVER
-    if not _RERANKER or os.getenv("USE_LOCAL_RERANKER", "false").strip().lower() not in ("1", "true", "yes", "on"):
-        return None
+    if not _RERANKER:
+        raise RuntimeError(
+            "RERANK_PROVIDER=local but sentence-transformers isn't installed on this host. "
+            "Install it, or set RERANK_PROVIDER=remote|cohere|jina|hf.")
     if _RERANK_RETRIEVER is None:
         _RERANK_RETRIEVER = HybridRetriever()
-    r = _RERANK_RETRIEVER
-    if r._reranker_failed:
-        return None
-    try:
-        reranker = r._ensure_reranker()
-        if reranker is None:
-            return None
-        scores = reranker.predict([(query, t) for t in texts])
-        return [float(s) for s in scores]
-    except Exception as e:
-        r._reranker_failed = True
-        log.warning("local reranker unavailable (%s) — falling back to remote/hosted", e)
-        return None
+    reranker = _RERANK_RETRIEVER._ensure_reranker(force=True)
+    scores = reranker.predict([(query, t) for t in texts])
+    return [float(s) for s in scores]
+
+
+def _rerank_remote(query: str, texts: List[str]) -> List[float]:
+    """Self-hosted rerank host (a Studio, the shared orchestrator's
+    POST /api/inference/rerank, or any host speaking
+    {"query","texts":[...]} -> {"scores":[...]}). Raises if unavailable."""
+    remote = os.getenv("RERANK_URL", "").strip()
+    if not remote:
+        raise RuntimeError("RERANK_PROVIDER=remote but RERANK_URL is not set")
+    import json as _json, urllib.request
+    body = _json.dumps({"query": query, "texts": texts}).encode()
+    h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
+    tk = os.getenv("INFERENCE_TOKEN", "").strip()
+    if tk:
+        h["Authorization"] = "Bearer " + tk
+    req = urllib.request.Request(remote.rstrip("/") + "/rerank", data=body, headers=h)
+    timeout = float(os.getenv("RERANK_TIMEOUT", "12"))
+    scores = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["scores"]
+    if not (isinstance(scores, list) and len(scores) == len(texts)):
+        raise RuntimeError(f"remote rerank host returned {len(scores) if isinstance(scores, list) else type(scores)} scores for {len(texts)} texts")
+    return [float(s) for s in scores]
+
+
+def _rerank_hf(query: str, texts: List[str]) -> List[float]:
+    """Hugging Face Inference API cross-encoder. Raises if unavailable."""
+    hf_token = os.getenv("HF_TOKEN", "").strip()
+    if not hf_token:
+        raise RuntimeError("RERANK_PROVIDER=hf but HF_TOKEN is not set")
+    import urllib.request, json as _json
+    model = os.getenv("HF_RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
+    url = f"https://router.huggingface.co/hf-inference/models/{model}"
+    h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
+    body = _json.dumps({"inputs": [f"{query} </s> {t}" for t in texts]}).encode()
+    req = urllib.request.Request(url, data=body, headers=h)
+    res = _json.loads(urllib.request.urlopen(req, timeout=float(os.getenv("RERANK_TIMEOUT", "15"))).read())
+    if isinstance(res, list) and res:
+        if isinstance(res[0], list) and len(res[0]) == len(texts):
+            return [float(item["score"]) for item in res[0]]
+        if len(res) == len(texts):
+            return [float(item[0]["score"] if isinstance(item, list) else item.get("score", 0.0)) for item in res]
+    raise RuntimeError(f"HF rerank returned an unexpected shape for {len(texts)} texts")
+
+
+def _rerank_hosted(query: str, texts: List[str], provider: str) -> List[float]:
+    """Hosted cross-encoder rerank API — Cohere /v2/rerank or Jina /v1/rerank.
+    Raises if unavailable. Stdlib urllib only; both have a free, no-card tier."""
+    key = os.getenv("COHERE_API_KEY" if provider == "cohere" else "JINA_API_KEY", "").strip()
+    if not key:
+        raise RuntimeError(f"RERANK_PROVIDER={provider} but "
+                           f"{'COHERE_API_KEY' if provider == 'cohere' else 'JINA_API_KEY'} is not set")
+    import json as _json, urllib.request
+    if provider == "cohere":
+        url = os.getenv("COHERE_BASE_URL", "https://api.cohere.com").rstrip("/") + "/v2/rerank"
+        model = os.getenv("HOSTED_RERANK_MODEL", "rerank-v3.5")  # multilingual (EN/FR)
+    else:
+        url = "https://api.jina.ai/v1/rerank"
+        model = os.getenv("HOSTED_RERANK_MODEL", "jina-reranker-v2-base-multilingual")
+    body = _json.dumps({"model": model, "query": query,
+                        "documents": list(texts), "top_n": len(texts)}).encode()
+    req = urllib.request.Request(url, data=body, headers={
+        "Content-Type": "application/json", "Authorization": "Bearer " + key})
+    timeout = float(os.getenv("HOSTED_RERANK_TIMEOUT", "12"))
+    results = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["results"]
+    # Both APIs return [{"index", "relevance_score"}] sorted by score — realign to input order.
+    scores = [0.0] * len(texts)
+    for r in results:
+        idx = r.get("index")
+        if isinstance(idx, int) and 0 <= idx < len(texts):
+            scores[idx] = float(r.get("relevance_score", 0.0))
+    return scores
+
+
+_RERANK_BACKENDS = {
+    "local":  lambda q, t: _rerank_local(q, t),
+    "remote": lambda q, t: _rerank_remote(q, t),
+    "hf":     lambda q, t: _rerank_hf(q, t),
+    "cohere": lambda q, t: _rerank_hosted(q, t, "cohere"),
+    "jina":   lambda q, t: _rerank_hosted(q, t, "jina"),
+}
 
 
 def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
+    """Rerank using EXACTLY the configured RERANK_PROVIDER — no fallback chain.
+
+    local  cross-encoder loaded in-process on this host (needs sentence-transformers)
+    remote self-hosted rerank endpoint (RERANK_URL, e.g. the orchestrator)
+    hf     Hugging Face Inference API (HF_TOKEN)
+    cohere Cohere /v2/rerank (COHERE_API_KEY)
+    jina   Jina /v1/rerank (JINA_API_KEY)
+
+    Chaining providers is deliberately NOT done: a silent failover changes retrieval
+    quality (and cost) without anyone noticing, and hides the fact that the intended
+    backend is down. On failure this logs the real error and returns None, which means
+    "keep the RRF fusion order" — an honest, explicit degradation, not a different
+    model quietly answering. Set USE_RERANKER=false to turn reranking off entirely.
+    """
     if os.getenv("USE_RERANKER", "true").strip().lower() not in ("1", "true", "yes", "on"):
         return None
     if not texts:
         return None
 
-    # An operator who explicitly opted into a local model (RAM headroom available) gets it
-    # tried first — no point paying network latency when it's already loaded in-process.
-    local = _try_local_reranker(query, texts)
-    if local is not None:
-        return local
-
-    provider = os.getenv("RERANK_PROVIDER", "hf").lower()
-
-    def _try_remote():
-        remote = os.getenv("RERANK_URL", "").strip()
-        if remote:
-            try:
-                import json as _json, urllib.request
-                body = _json.dumps({"query": query, "texts": texts}).encode()
-                h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
-                tk = os.getenv("INFERENCE_TOKEN", "").strip()
-                if tk: h["Authorization"] = "Bearer " + tk
-                req = urllib.request.Request(remote.rstrip("/") + "/rerank", data=body, headers=h)
-                timeout = float(os.getenv("RERANK_TIMEOUT", "12"))
-                scores = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["scores"]
-                if isinstance(scores, list) and len(scores) == len(texts):
-                    return [float(s) for s in scores]
-            except Exception as e:
-                log.warning("remote rerank unavailable (%s)", e)
+    provider = os.getenv("RERANK_PROVIDER", "local").strip().lower()
+    backend = _RERANK_BACKENDS.get(provider)
+    if backend is None:
+        log.error("RERANK_PROVIDER=%r is not one of %s — skipping rerank",
+                  provider, sorted(_RERANK_BACKENDS))
         return None
-
-    def _try_hf():
-        hf_token = os.getenv("HF_TOKEN", "").strip()
-        if not hf_token: return None
-        try:
-            import urllib.request, json as _json
-            model = os.getenv("HF_RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
-            url = f"https://router.huggingface.co/hf-inference/models/{model}"
-            h = {"Authorization": f"Bearer {hf_token}", "Content-Type": "application/json"}
-            body = _json.dumps({"inputs": [f"{query} </s> {t}" for t in texts]}).encode()
-            req = urllib.request.Request(url, data=body, headers=h)
-            res = _json.loads(urllib.request.urlopen(req, timeout=15).read())
-            if isinstance(res, list) and len(res) > 0:
-                if isinstance(res[0], list) and len(res[0]) == len(texts):
-                    return [float(item["score"]) for item in res[0]]
-                elif len(res) == len(texts):
-                    return [float(item[0]["score"] if isinstance(item, list) else item.get("score", 0.0)) for item in res]
-        except Exception as hf_err:
-            log.warning("HF rerank unavailable: %s", hf_err)
+    try:
+        return backend(query, texts)
+    except Exception as e:
+        log.error("rerank via provider %r failed (%s) — keeping RRF fusion order. "
+                  "Fix the provider config rather than relying on this degradation.", provider, e)
         return None
-
-    if provider == "hf":
-        hf = _try_hf()
-        if hf is not None: return hf
-        hosted = _hosted_rerank(query, texts)
-        if hosted is not None: return hosted
-        return _try_remote()
-    elif provider == "cohere":
-        hosted = _hosted_rerank(query, texts)
-        if hosted is not None: return hosted
-        hf = _try_hf()
-        if hf is not None: return hf
-        return _try_remote()
-    else: # remote GPU host primary
-        remote = _try_remote()
-        if remote is not None: return remote
-        hf = _try_hf()
-        if hf is not None: return hf
-        return _hosted_rerank(query, texts)
