@@ -795,13 +795,21 @@ def as_knowledge_docs(lang: str = "en") -> List[Dict[str, str]]:
     partial translation still yields a complete (not truncated) FR doc set.
     """
     fr_overrides: Dict[str, Dict[str, str]] = {}
+    fr_terms: Dict[str, str] = {}
     if lang == "fr":
-        from src.data.glossary_fr import GLOSSARY_FR
+        from src.data.glossary_fr import GLOSSARY_FR, TERMS_FR
         fr_overrides = GLOSSARY_FR
+        fr_terms = TERMS_FR
 
     docs = []
     for name, e in GLOSSARY.items():
         fr = fr_overrides.get(name, {})
+        # French term name where a standard one exists. Without this, no FR doc contained
+        # the French name of its own metric (title and body both kept the English term),
+        # so a French query could not retrieve it: measured, "Quelle est notre marge
+        # brute?" scored 0.137 against LTV instead of matching Gross Margin at all.
+        fr_name = fr_terms.get(name)
+        display_name = f"{fr_name} ({name})" if fr_name else name
         definition = fr.get("definition", e["definition"])
         benchmark = fr.get("benchmark", e.get("benchmark"))
         label = "Définition" if lang == "fr" else "Definition"
@@ -813,8 +821,12 @@ def as_knowledge_docs(lang: str = "en") -> List[Dict[str, str]]:
         source_label = "Source" if lang == "fr" else "Source"
         domain_label = "domaine" if lang == "fr" else "domain"
 
-        parts = [f"{name}" + (f" ({e['abbr']})" if e.get("abbr") else "") + f" — {domain_label} {e['domain']}.",
+        parts = [f"{display_name}" + (f" ({e['abbr']})" if e.get("abbr") else "") + f" — {domain_label} {e['domain']}.",
                  f"{label}: {definition}"]
+        if fr_name:
+            # Repeat the French name as an explicit alias line so both the sparse (BM25/
+            # TF-IDF) and dense halves of retrieval see the exact phrase a French speaker types.
+            parts.append(f"Aussi appelé : {fr_name}. Terme anglais : {name}.")
         if e.get("formula"):
             parts.append(f"{formula_label}: {e['formula']}.")
         if e.get("direction"):
@@ -823,7 +835,7 @@ def as_knowledge_docs(lang: str = "en") -> List[Dict[str, str]]:
             parts.append(f"{benchmark_label}: {benchmark}")
         parts.append(f"{source_label}: {e['source']}.")
         docs.append({
-            "title": f"Glossaire: {name}" if lang == "fr" else f"Glossary: {name}",
+            "title": f"Glossaire: {display_name}" if lang == "fr" else f"Glossary: {name}",
             "content": " ".join(parts),
             "source": f"glossary/{lang}/{e['domain'].lower()}/{name.lower().replace(' ', '_')}.md",
             "category": e["domain"],
