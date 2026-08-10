@@ -25,6 +25,7 @@ Environment variables (no hardcoded secrets or URLs — see .env.example):
 Usage:
   python scripts/seed_via_api.py                        # healthy scenario, generated catalog
   python scripts/seed_via_api.py declining_financial     # a specific scenario
+  python scripts/seed_via_api.py --vertical healthcare   # rescale to a vertical (1.4)
   python scripts/seed_via_api.py --path data/Finance/    # ingest your own CSVs instead
   python scripts/seed_via_api.py --dry-run               # preview without HTTP calls
 """
@@ -56,6 +57,9 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("scenario", nargs="?", default="healthy",
                     help="healthy | declining_financial | high_churn_crisis | operational_meltdown | "
                          "talent_crisis | cybersecurity_breach | esg_compliance_failure")
+    p.add_argument("--vertical", type=str, default=None,
+                    help="saas | healthcare | esg — rescale the catalog to that vertical "
+                         "and add its metrics (STRATEGY.md 1.4). Omit for the generic company.")
     p.add_argument("--path", type=str, default=None,
                     help="Ingest CSVs from this file/directory instead of generating the seed catalog "
                          "(each CSV needs at least metric_name,value columns; period/category/segment/"
@@ -66,12 +70,12 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
-def write_domain_csvs(scenario: str, out_dir: Path) -> List[Path]:
+def write_domain_csvs(scenario: str, out_dir: Path, vertical: Optional[str] = None) -> List[Path]:
     """Generate the seed catalog and write one CSV per domain — the shape
     POST /api/v1/ingest/csv expects (metric_name, not metric — see server.py)."""
     from src.data.seed import generate_kpi_rows
 
-    rows = generate_kpi_rows(scenario=scenario)
+    rows = generate_kpi_rows(scenario=scenario, vertical=vertical)
     by_category: Dict[str, List[dict]] = defaultdict(list)
     for r in rows:
         by_category[r["category"]].append(r)
@@ -88,7 +92,8 @@ def write_domain_csvs(scenario: str, out_dir: Path) -> List[Path]:
                 writer.writerow({
                     "period": r["period"], "category": r["category"], "segment": r["segment"],
                     "metric_name": r["metric"], "value": r["value"], "unit": r["unit"],
-                    "direction": r["direction"], "source": f"seed_via_api_{scenario}",
+                    "direction": r["direction"],
+                    "source": f"seed_via_api_{scenario}" + (f"_{vertical}" if vertical else ""),
                 })
         paths.append(csv_path)
     return paths
@@ -150,8 +155,10 @@ def main() -> None:
     else:
         import tempfile
         out_dir = (ROOT_DIR / "data") if args.keep_csv else Path(tempfile.mkdtemp(prefix="intelai_seed_"))
-        csv_paths = write_domain_csvs(args.scenario, out_dir)
-        source_desc = f"generated catalog (scenario={args.scenario}) -> {out_dir}"
+        csv_paths = write_domain_csvs(args.scenario, out_dir, args.vertical)
+        source_desc = (f"generated catalog (scenario={args.scenario}"
+                       + (f", vertical={args.vertical}" if args.vertical else "")
+                       + f") -> {out_dir}")
 
     print(f"source: {source_desc}")
     print(f"discovered {len(csv_paths)} CSV file(s)")
