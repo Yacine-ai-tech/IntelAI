@@ -31,12 +31,15 @@ USAGE:
 from __future__ import annotations
 
 import json
+import os
+import threading
 import time
 from typing import Any, Dict, List, Optional, Tuple
 from datetime import datetime, timezone
 import re
 
 import numpy as np
+import requests
 
 from src.core.config import settings
 from src.core.i18n import I18N
@@ -46,6 +49,39 @@ from src.services.pg_store import (
 )
 
 log = get_logger(__name__)
+
+
+def _dogfood_to_rageval(query: str, answer: str, contexts: List[str], persona: str,
+                         model: str, tokens_used: int, latency_ms: float) -> None:
+    """Fire-and-forget: score this live chat interaction via a RAGeval-compatible
+    evaluation service, if one is configured. Same generic HTTP contract as
+    scripts/evaluate_with_rageval.py (POST {url}/eval/log with
+    {query,answer,contexts,persona,model,tokens_used,latency_ms}) — RAG_EVALUATOR_URL
+    has no default, so this is a no-op unless the deployer points it at a real service;
+    it is never hardcoded to a specific evaluator's name or URL. Runs on a background
+    thread so a slow or unreachable evaluator never adds latency to the chat response.
+    """
+    url = os.environ.get("RAG_EVALUATOR_URL", "").strip().rstrip("/")
+    if not url:
+        return
+    token = os.environ.get("RAG_EVALUATOR_TOKEN", "").strip()
+
+    def _send() -> None:
+        try:
+            headers = {"Content-Type": "application/json"}
+            if token:
+                headers["Authorization"] = f"Bearer {token}"
+            requests.post(
+                f"{url}/eval/log",
+                json={"query": query, "answer": answer, "contexts": contexts,
+                      "persona": persona, "model": model,
+                      "tokens_used": tokens_used, "latency_ms": latency_ms},
+                headers=headers, timeout=5,
+            )
+        except Exception as e:
+            log.warning("RAGeval dogfood log failed (non-fatal): %s", e)
+
+    threading.Thread(target=_send, daemon=True).start()
 
 # ════════════════════════════════════════════════════════════════════════════
 # LAZY-LOADED DEPENDENCIES
@@ -109,18 +145,20 @@ def llm_complete(
     top_p: Optional[float] = None,
     model: Optional[str] = None,
     persona_name: Optional[str] = None,
-) -> Tuple[str, int]:
-    """Provider-agnostic chat completion → (text, tokens_used).
+) -> Tuple[str, int, str]:
+    """Provider-agnostic chat completion → (text, tokens_used, resolved_model).
 
     Uses llm_router to resolve the correct model (Claude vs Groq) based on persona tier.
-    Groq models use the native SDK for maximum speed; others route via LiteLLM.
+    Groq models use the native SDK for maximum speed; others route via LiteLLM. The
+    resolved model string is returned too so callers (e.g. RAGeval dogfood logging)
+    can attribute cost/quality to the model that actually served the request.
     """
     from src.services.llm_router import _resolve, PERSONA_TIER_MAP, _apply_cache_control
-    
+
     tier = "default"
     if persona_name and persona_name.lower() in PERSONA_TIER_MAP:
         tier = PERSONA_TIER_MAP[persona_name.lower()]
-    
+
     resolved_model = model or _resolve(tier)
 
     # Fast path: use native Groq SDK if resolved model is a Groq model
@@ -133,7 +171,7 @@ def llm_complete(
             kw["top_p"] = top_p
         r = client.chat.completions.create(**kw)
         tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
-        return r.choices[0].message.content, tokens
+        return r.choices[0].message.content, tokens, resolved_model
 
     # Any other provider → LiteLLM
     from litellm import completion  # type: ignore
@@ -145,7 +183,7 @@ def llm_complete(
     text = r.choices[0].message.content
     usage = getattr(r, "usage", None)
     tokens = getattr(usage, "total_tokens", 0) if usage else 0
-    return text, tokens
+    return text, tokens, resolved_model
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -372,7 +410,7 @@ class UltraFastRAG:
 
         # Generate response (provider-agnostic — LLM_PROVIDER selects Groq/LiteLLM)
         try:
-            answer, _ = llm_complete(
+            answer, _, _ = llm_complete(
                 messages=[
                     {"role": "system", "content": system_instruction},
                     {"role": "user", "content": user_content},
@@ -905,7 +943,7 @@ class AgentPersonaFactory:
         ).format(query=t, context=(context or "No internal data found.")[:2000])
         
         try:
-            reply, _ = llm_complete(
+            reply, _, _ = llm_complete(
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=10,
                 temperature=0.0,
@@ -1056,13 +1094,20 @@ class AgentPersonaFactory:
         messages.append({"role": "user", "content": f"{data_block}\n\n=== QUESTION ===\n{message}"})
 
         try:
-            reply, tokens = llm_complete(
+            reply, tokens, resolved_model = llm_complete(
                 messages=messages,
                 max_tokens=2048,
                 temperature=persona.temperature,
                 top_p=0.9,
             )
             latency = int((time.time() - start) * 1000)
+
+            _dogfood_to_rageval(
+                query=message, answer=reply,
+                contexts=[f"{s.get('title', '')}: {s.get('snippet') or s.get('preview') or ''}" for s in sources],
+                persona=persona.name, model=resolved_model,
+                tokens_used=tokens, latency_ms=latency,
+            )
 
             return {
                 "response": reply,
