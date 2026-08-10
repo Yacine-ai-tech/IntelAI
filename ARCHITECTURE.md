@@ -217,6 +217,34 @@ The last full measurement (25/30 cases, avg groundedness 22.8%, overall 11.6%) p
 every retrieval fix in this document AND used evaluator 0.1.9 — it is a stale baseline on
 both sides and should not be quoted as the current state of either system.
 
+## Step 10 — production-parity run (prod CMD, same origin, no dev proxy)
+
+Ran the Dockerfile's actual CMD (`uvicorn src.api.server:app`) with FastAPI serving
+`frontend/dist` itself — the single-container topology from SELF_HOSTING.md — rather than
+the Vite dev server. That immediately surfaced a bug dev mode cannot show:
+
+15. **Every client-side route 404'd in the single-container deployment.** `/dashboard`,
+    `/chat`, `/api-docs`, `/settings`, `/knowledge-graph`, `/financial` — all 404; only
+    `/` worked. The frontend is a client-side-routed React app, so those paths exist only
+    in the browser's router and FastAPI had no fallback. Practical effect for a
+    self-hoster: the app loads and in-app navigation works, but **refreshing any page,
+    opening a bookmark, or following a shared link fails**. The hosted demo masks it
+    entirely — `vercel.json` already rewrites `/(.*)` to `/index.html` — which is exactly
+    why it survived this long. (VoiceFlow already had such a catch-all; IntelAI was the
+    outlier.) Fixed with a last-registered SPA fallback that excludes api/health/docs/
+    assets paths so a wrong endpoint still returns a JSON 404 rather than HTML.
+    Verified after the fix: all six deep links 200 and return the SPA; a bogus
+    `/api/v1/does-not-exist` still returns `{"detail":"Not Found"}` with 404.
+
+Static analysis (`pyflakes src/ scripts/ main.py`) is clean — only cosmetic findings
+(duplicate `import os`/`uuid` in server.py, one unused local in pg_store.py, one unused
+import in scripts/api_audit.py); no correctness defects.
+
+**Docker itself was not run** — no docker binary and no passwordless sudo in this
+environment — so the image build is unverified. What was verified is the thing the image
+would run: the exact production CMD, same-origin static serving from `frontend/dist`, and
+the API under that topology.
+
 ## Known drift / not yet done
 
 - **Audio ingestion untested with a real file** — `AUDIO_PROCESSOR_URL` is wired to the
