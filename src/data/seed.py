@@ -6,21 +6,32 @@ services), the cross-domain analytics, the persona RAG copilot (per-metric + per
 knowledge docs), and the glossary-grounded explainer. Adding a metric here is the only
 step needed for it to appear across the whole product — no schema change, no migration.
 
-The catalog is split for clarity (both halves are seeded into the same ``kpi_metrics``
-table, so there is still exactly one source):
+The catalog has three layers, all seeded into the same ``kpi_metrics`` table (one source):
 
-  * ``STRATEGIC_KPIS``    — the board/exec "metrics that matter" per domain. Every one of
-                            these has a sourced, benchmarked definition in ``glossary.py``
-                            so the copilot can explain and cite it.
+  * ``STRATEGIC_KPIS``    — driver metrics: independently modeled (trend + seasonality +
+                            noise), the base inputs everything else is computed from.
   * ``OPERATIONAL_DETAIL``— the operational counters each domain dashboard also displays
                             (ticket/vuln counts, recruitment funnel, inventory sub-stats…).
-                            Self-explanatory, so they are not all glossary-backed.
+  * ``DERIVED_KPIS``     — metrics computed FROM the driver values above via the actual
+                            formula documented for them (e.g. Gross Margin =
+                            (Revenue-COGS)/Revenue), not an independent random walk. Some
+                            pull from a different domain than the one they're filed under
+                            (Rule of 40 needs Finance's EBITDA margin; Revenue per Employee
+                            needs both Finance and People) — that's intentional: it's the
+                            same cross-domain synthesis the Overall Enterprise Health
+                            Index does, just at the individual-metric level.
 
-Coverage is intentionally a curated, credible set — NOT every metric a company could
-track. The long tail is handled by user uploads (CSV ingest writes arbitrary
-``(category, metric, value)`` rows into the same table, scoped by category/RBAC).
+Every STRATEGIC_KPIS metric has a sourced, benchmarked definition in ``glossary.py`` so the
+copilot can explain and cite it. Coverage is intentionally a curated, credible set — NOT
+every metric a company could track. The long tail is handled by user uploads (CSV ingest
+writes arbitrary ``(category, metric, value)`` rows into the same table, scoped by
+category/RBAC).
 
-Idempotent: writes directly to Postgres via ``pg_store`` (replace=True).
+Idempotent: writes directly to Postgres via ``pg_store`` (replace=True). This is the fast,
+in-process path the server itself uses on first boot and for instant Admin/API scenario
+switching. For a true end-to-end exercise of the real ingestion pipeline (the same data,
+delivered through POST /api/v1/ingest/csv instead of a direct DB write), see
+``scripts/seed_via_api.py`` — see DATA_SEEDING.md for when to use which.
 
 Run standalone:  python -m src.data.seed         (uses POSTGRES_URL from env/.env)
 Or from code:    from src.data.seed import seed_database; seed_database()
@@ -31,107 +42,115 @@ import math
 import random
 from datetime import datetime, timedelta
 from itertools import chain
-from typing import Any, Dict, List, Tuple
+from typing import Any, Callable, Dict, List, Tuple
 
 SEED = 42
 MONTHS = 78
 SEGMENT = "Global"
 
-# Tuple schema per metric: (metric, unit, base_value, monthly_drift, direction)
+# Tuple schema per driver metric: (metric, unit, base_value, monthly_drift, direction)
 #   drift     = average month-over-month relative change in the "good" direction
 #   direction = "up" (higher is better) | "down" (lower is better)
+#
+# Base values are calibrated to sit inside each metric's documented "Healthy Target" band
+# (see DATA_SEEDING.md for the full source table — Orange SA, Bessemer Cloud, Google DORA,
+# GRI, Six Sigma benchmarks) so the "healthy" scenario actually reads as healthy against
+# those thresholds, not just a plausible-looking number in isolation.
 
-# ── STRATEGIC: the "metrics that matter" — every one is defined in glossary.py ──
+# ── STRATEGIC: driver KPIs — every one is defined in glossary.py ──
 STRATEGIC_KPIS: Dict[str, List[Tuple[str, str, float, float, str]]] = {
     "Finance": [
         ("Revenue", "USD", 2_400_000, 0.018, "up"),
-        ("Gross Margin", "%", 72, 0.002, "up"),  # Healthy SaaS: 79% gross margin
-        ("EBITDA", "USD", 540_000, 0.020, "up"),
-        ("Operating Costs", "USD", 1_300_000, -0.006, "down"),
-        ("Net Profit", "USD", 360_000, 0.022, "up"),
+        # COGS and Operating Costs are DERIVED (see DERIVED_KPIS below) as a slowly-improving
+        # ratio of Revenue rather than independent drivers — two independently compounding
+        # trends (Revenue up, costs down) diverge to unrealistic margins over 78 months.
+        ("Taxes", "USD", 95_000, 0.010, "down"),
         ("Operating Cash Flow", "USD", 480_000, 0.015, "up"),
         ("Free Cash Flow", "USD", 300_000, 0.016, "up"),
-        ("COGS", "USD", 1_008_000, 0.009, "down"),
-        ("Taxes", "USD", 95_000, 0.010, "down"),
         ("Working Capital", "USD", 2_100_000, 0.008, "up"),
-        ("Rule of 40", "%", 46, 0.003, "up"),
         ("Days Sales Outstanding", "days", 45, -0.006, "down"),
-        ("Cash Runway", "months", 19, 0.004, "up"),
-        ("Debt to Equity", "ratio", 0.8, -0.005, "down"),
+        ("Cash Runway", "months", 19, 0.004, "up"),         # healthy: >12 months
+        ("Debt to Equity", "ratio", 0.8, -0.005, "down"),   # healthy: <1.5x
         ("Interest Coverage", "ratio", 4.5, 0.010, "up"),
     ],
     "Growth": [
-        ("MRR", "USD", 410_000, 0.025, "up"),
-        ("ARR", "USD", 4_900_000, 0.024, "up"),
+        # MRR/ARR are DERIVED from Finance's Revenue (see DERIVED_KPIS) — a subscription
+        # business's MRR *is* its monthly revenue; tracking it as a second, independently
+        # drifting number let it silently diverge from Finance's own Revenue figure.
         ("Customer Count", "count", 1_250, 0.018, "up"),
-        ("Churn Rate", "%", 4.8, -0.010, "down"),
-        ("CAC", "USD", 1_100, -0.008, "down"),
+        ("Churn Rate", "%", 1.3, -0.010, "down"),           # healthy: <1.5% monthly logo churn
+        ("Expansion Rate", "%", 11.5, 0.003, "up"),         # -> Net Revenue Retention (derived)
+        # CAC is DERIVED from LTV via a target LTV:CAC band (see DERIVED_KPIS) — same
+        # divergence problem as COGS/Revenue above if left as two independent drivers.
         ("LTV", "USD", 9_800, 0.014, "up"),
-        ("LTV:CAC", "ratio", 4.2, 0.010, "up"),
-        ("Net Promoter Score", "score", 42, 0.006, "up"),
-        ("Net Revenue Retention", "%", 110, 0.003, "up"),  # Healthy: >100%
-        ("CAC Payback", "months", 14, -0.008, "down"),
-        ("ARPU", "USD", 320, 0.010, "up"),
+        ("Net Promoter Score", "score", 42, 0.006, "up"),   # customer NPS (distinct from People's eNPS)
+        ("ARPU", "USD", 380, 0.010, "up"),
         ("Active Users", "count", 9_800, 0.020, "up"),
         ("Viral Coefficient", "ratio", 0.8, 0.005, "up"),
         ("Conversion Rate", "%", 3.5, 0.008, "up"),
     ],
     "People": [
-        ("Headcount", "count", 240, 0.012, "up"),
-        ("Turnover Rate", "%", 8.5, -0.010, "down"),  # Healthy: <10%
+        # 90 employees on ~$29M ARR (~$320k revenue/employee) — a lean, efficient B2B SaaS
+        # headcount-to-revenue ratio, not the 240 an earlier draft used (which put Revenue
+        # per Employee well under the healthy $300k+ tech benchmark).
+        ("Headcount", "count", 90, 0.012, "up"),
+        ("Turnover Rate", "%", 8.5, -0.010, "down"),        # healthy: 5-10% annualized
+        ("Employee Net Promoter (eNPS)", "score", 32, 0.005, "up"),  # healthy: >=+30
         ("Engagement Score", "score", 74, 0.004, "up"),
-        ("Time to Hire", "days", 38, -0.008, "down"),
+        ("Time to Hire", "days", 33, -0.008, "down"),       # healthy: <35 days
         ("Training Hours", "hours", 22, 0.010, "up"),
-        ("Open Positions", "count", 28, -0.004, "down"),
+        ("Open Positions", "count", 10, -0.004, "down"),
         ("Average Tenure", "years", 4.1, 0.006, "up"),
         ("Cost per Hire", "USD", 4_200, -0.006, "down"),
         ("Absenteeism Rate", "%", 3.2, -0.010, "down"),
         ("Quality of Hire", "score", 78, 0.005, "up"),
-        ("Offer Acceptance Rate", "%", 84, 0.004, "up"),
+        ("Offer Acceptance Rate", "%", 86, 0.004, "up"),    # healthy: >=85%
         ("Internal Mobility Rate", "%", 18, 0.010, "up"),
-        ("Revenue per Employee", "USD", 235_000, 0.012, "up"),
         ("Diversity Score", "score", 72, 0.003, "up"),
     ],
     "Operations": [
-        ("On-time Delivery", "%", 93, 0.003, "up"),
-        ("Cycle Time", "days", 14, -0.009, "down"),
-        ("Defect Rate", "%", 2.1, -0.013, "down"),
-        ("Capacity Utilization", "%", 78, 0.004, "up"),
-        ("Production Efficiency", "%", 84, 0.004, "up"),
-        ("Safety Incident Rate", "rate", 1.4, -0.015, "down"),
-        ("First Pass Yield", "%", 95.5, 0.002, "up"),
+        ("Availability Rate", "%", 90, 0.002, "up"),        # -> OEE = Av * Perf * Qual (derived)
+        ("Performance Rate", "%", 93, 0.002, "up"),
         ("Quality Rate", "%", 97, 0.002, "up"),
+        ("Standard Cycle Time", "days", 13.3, 0.0, "down"), # target cycle time -> Cycle Time Efficiency
+        ("Cycle Time", "days", 14, -0.009, "down"),         # actual cycle time
+        ("On-time Delivery", "%", 93, 0.003, "up"),
+        ("Defect Rate", "%", 0.9, -0.013, "down"),          # healthy: <1.0%
+        ("Capacity Utilization", "%", 78, 0.004, "up"),
+        ("Safety Incident Rate", "rate", 1.4, -0.015, "down"),
+        ("First Pass Yield", "%", 93, 0.002, "up"),         # healthy: >=92%
         ("Throughput", "units", 5_200, 0.010, "up"),
         ("Unplanned Downtime", "hours", 42, -0.010, "down"),
         ("Cost per Unit", "USD", 12.5, -0.007, "down"),
         ("Schedule Adherence", "%", 91, 0.003, "up"),
         ("Scrap Rate", "%", 3.1, -0.011, "down"),
-        ("OEE", "%", 85, 0.003, "up"),
     ],
     "IT": [
-        ("System Uptime", "%", 99.7, 0.0006, "up"),
-        ("Mean Time to Resolution", "hours", 4.5, -0.012, "down"),  # Healthy: <8 hours
+        ("System Uptime", "%", 99.96, 0.00006, "up"),       # healthy: >=99.95% ("three nines")
+        ("Mean Time to Resolution", "hours", 4.5, -0.012, "down"),
         ("Security Incidents", "count", 7, -0.018, "down"),
-        ("Critical Incidents", "count", 2, -0.020, "down"),
+        ("Critical Vulnerabilities (CVSS>=9)", "count", 1, -0.020, "down"),  # healthy: 0
+        ("API P99 Latency", "ms", 220, -0.004, "down"),     # healthy: <250ms
         ("Cloud Cost per User", "USD", 180, -0.006, "down"),
         ("Cloud Spend", "USD", 240_000, -0.004, "down"),
         ("Deployment Frequency", "per_month", 18, 0.020, "up"),
         ("Lead Time for Changes", "hours", 9, -0.012, "down"),
-        ("Change Failure Rate", "%", 8, -0.015, "down"),  # Healthy: <15%
+        ("Change Failure Rate", "%", 4.5, -0.015, "down"),  # healthy: <5%
         ("SLA Compliance", "%", 97.5, 0.002, "up"),
         ("Security Score", "score", 85, 0.005, "up"),
         ("IT Satisfaction", "score", 7.6, 0.005, "up"),
         ("Vulnerability Response Time", "days", 3, -0.010, "down"),
     ],
     "Logistics": [
-        ("Inventory Turnover", "ratio", 6.2, 0.012, "up"),
+        ("Inventory Turnover", "ratio", 6.2, 0.012, "up"),  # healthy: 6-12x
         ("Order Accuracy", "%", 97.5, 0.002, "up"),
         ("Perfect Order Rate", "%", 94, 0.003, "up"),
-        ("On-Time Delivery Rate", "%", 95, 0.003, "up"),
+        ("On-Time Delivery Rate", "%", 95, 0.003, "up"),    # healthy: >=95%
+        ("Order Fulfillment Cycle Time", "hours", 44, -0.008, "down"),  # healthy: <48h
+        ("Supplier Defect Rate", "%", 0.4, -0.012, "down"), # healthy: <0.5%
         ("Fill Rate", "%", 96, 0.002, "up"),
         ("Stockout Rate", "%", 2.5, -0.011, "down"),
         ("Freight Cost per Unit", "USD", 18, -0.007, "down"),
-        ("Carrying Cost", "USD", 320_000, -0.005, "down"),
         ("Warehouse Utilization", "%", 72, 0.005, "up"),
         ("Avg Lead Time", "days", 6.5, -0.008, "down"),
         ("Last Mile Delivery Time", "days", 3.2, -0.010, "down"),
@@ -141,28 +160,117 @@ STRATEGIC_KPIS: Dict[str, List[Tuple[str, str, float, float, str]]] = {
     ],
     "ESG": [
         ("ESG Score", "score", 75, 0.004, "up"),
-        ("Carbon Emissions (tCO2)", "tonnes_CO2e", 8_400, -0.014, "down"),
+        ("Carbon Emissions (tCO2e)", "tonnes_CO2e", 8_400, -0.014, "down"),
         ("Scope 1 Emissions", "tonnes_CO2e", 1_200, -0.012, "down"),
         ("Scope 2 Emissions", "tonnes_CO2e", 2_100, -0.013, "down"),
         ("Scope 3 Emissions", "tonnes_CO2e", 5_100, -0.010, "down"),
         ("Emissions Intensity", "tCO2e/$M", 3.5, -0.012, "down"),
-        ("Renewable Energy %", "%", 38, 0.012, "up"),
+        ("Renewable Energy %", "%", 62, 0.012, "up"),       # healthy: >=60%
         ("Water Consumption (m3)", "cubic_meters", 12_000, -0.008, "down"),
         ("Waste Recycled %", "%", 61, 0.008, "up"),
-        ("Diversity Score", "score", 68, 0.005, "up"),
-        ("Board Diversity %", "%", 33, 0.010, "up"),
+        ("Audit Compliance Score", "%", 98, 0.001, "up"),   # healthy: >=98%
+        ("Board Diversity %", "%", 41, 0.010, "up"),        # healthy: >=40%
         ("Gender Pay Gap", "%", 8.5, -0.010, "down"),
         ("Community Investment", "USD", 180_000, 0.012, "up"),
+    ],
+}
+
+# ── DERIVED: computed from driver values via the documented formula, not a random walk ──
+# Each entry: (metric, unit, direction, formula(v) -> float | None)
+#   v(category, metric) looks up an already-generated value for the SAME period (drivers
+#   are generated first, then derived metrics — see generate_kpi_rows). Cross-domain lookups
+#   are the point: this is where "Overall Enterprise Health" synthesis actually happens.
+#   Returns None if an input isn't available yet (e.g. YoY growth before month 12) — the
+#   row is skipped for that period rather than faked.
+DerivedFn = Callable[[Callable[[str, str], float], int], "float | None"]
+
+def _ramp(i: int, start: float, end: float, months: int = MONTHS) -> float:
+    """Linear ramp from ``start`` to ``end`` over the series — used for cost/target ratios
+    that should trend mildly over 6.5 years without compounding-drift runaway."""
+    return start + (end - start) * min(i / months, 1.0)
+
+
+DERIVED_KPIS: Dict[str, List[Tuple[str, str, str, DerivedFn]]] = {
+    "Finance": [
+        # COGS/Operating Costs as a slowly-improving ratio of Revenue (operating leverage
+        # from scale) rather than an independent driver — keeps margins in a realistic band
+        # instead of two independently-compounding trends diverging over 78 months.
+        ("COGS", "USD", "down", lambda v, i: v("Finance", "Revenue") * _ramp(i, 0.28, 0.25)),
+        ("Operating Costs", "USD", "down", lambda v, i: v("Finance", "Revenue") * _ramp(i, 0.47, 0.43)),
+        ("Gross Margin", "%", "up",
+         lambda v, i: (v("Finance", "Revenue") - v("Finance", "COGS")) / v("Finance", "Revenue") * 100),
+        ("EBITDA", "USD", "up",
+         lambda v, i: v("Finance", "Revenue") - v("Finance", "COGS") - v("Finance", "Operating Costs")),
+        ("EBITDA Margin", "%", "up",
+         lambda v, i: (v("Finance", "Revenue") - v("Finance", "COGS") - v("Finance", "Operating Costs"))
+                      / v("Finance", "Revenue") * 100),
+        # Net Profit approximates D&A + interest as a fixed 7.5% of revenue rather than
+        # tracking full non-operating detail — documented approximation, not fabricated.
+        ("Net Profit", "USD", "up",
+         lambda v, i: (v("Finance", "Revenue") - v("Finance", "COGS") - v("Finance", "Operating Costs"))
+                      - v("Finance", "Taxes") - 0.075 * v("Finance", "Revenue")),
+        ("Net Profit Margin", "%", "up",
+         lambda v, i: (((v("Finance", "Revenue") - v("Finance", "COGS") - v("Finance", "Operating Costs"))
+                        - v("Finance", "Taxes") - 0.075 * v("Finance", "Revenue")) / v("Finance", "Revenue")) * 100),
+    ],
+    "Growth": [
+        # MRR *is* Finance's monthly Revenue for a subscription business — derived so the two
+        # can never silently diverge into two different "revenue" figures for one company.
+        ("MRR", "USD", "up", lambda v, i: v("Finance", "Revenue")),
+        ("ARR", "USD", "up", lambda v, i: v("Finance", "Revenue") * 12),
+        # CAC as a target LTV:CAC band (mildly improving, 3.6x -> 4.1x) rather than an
+        # independent driver — same divergence problem as COGS above otherwise.
+        ("CAC", "USD", "down", lambda v, i: v("Growth", "LTV") / _ramp(i, 4.0, 4.5)),
+        ("LTV:CAC", "ratio", "up", lambda v, i: v("Growth", "LTV") / v("Growth", "CAC")),
+        ("CAC Payback", "months", "down",
+         lambda v, i: v("Growth", "CAC") / (v("Growth", "ARPU") * (v("Finance", "Gross Margin") / 100))),
+        ("Net Revenue Retention", "%", "up",
+         lambda v, i: 100 - v("Growth", "Churn Rate") + v("Growth", "Expansion Rate")),
+        # Rule of 40: trailing-12mo revenue growth % + EBITDA margin % — the standard SaaS
+        # balance-of-growth-and-profit benchmark. None before month 12 (no YoY baseline yet).
+        ("Rule of 40", "%", "up",
+         lambda v, i: (
+             ((v("Finance", "Revenue") / v("Finance", "Revenue", i - 12)) - 1) * 100
+             + v("Finance", "EBITDA Margin")
+         ) if i >= 12 else None),
+    ],
+    "People": [
+        # Revenue per Employee: Finance's monthly Revenue annualized over People's Headcount —
+        # the canonical cross-domain productivity metric (healthy tech benchmark: >=$300k).
+        ("Revenue per Employee", "USD", "up",
+         lambda v, i: (v("Finance", "Revenue") * 12) / v("People", "Headcount")),
+    ],
+    "Operations": [
+        ("OEE", "%", "up",
+         lambda v, i: (v("Operations", "Availability Rate") / 100) * (v("Operations", "Performance Rate") / 100)
+                      * (v("Operations", "Quality Rate") / 100) * 100),
+        ("Cycle Time Efficiency", "%", "up",
+         lambda v, i: v("Operations", "Standard Cycle Time") / v("Operations", "Cycle Time") * 100),
+    ],
+    "Logistics": [
+        # Carrying Cost as a ratio of Inventory Value (15-25% healthy band) rather than an
+        # independent driver — same reasoning as Finance's COGS above.
+        ("Carrying Cost", "USD", "down",
+         lambda v, i: v("Logistics", "Inventory Value") * _ramp(i, 0.20, 0.17)),
+        ("Carrying Cost of Inventory", "%", "down",
+         lambda v, i: v("Logistics", "Carrying Cost") / v("Logistics", "Inventory Value") * 100),
+    ],
+    "IT": [
+        # MTBF approximates monthly operational hours (30 days * 24h) over incident count as
+        # a proxy for failure count — a simplification (real MTBF needs a per-asset failure
+        # log), documented as such rather than presented as precise.
+        ("MTBF", "hours", "up",
+         lambda v, i: (30 * 24) / max(v("IT", "Critical Vulnerabilities (CVSS>=9)") + 0.1, 0.1)),
     ],
 }
 
 # ── OPERATIONAL DETAIL: counters the domain dashboards display (not all glossary-backed) ──
 OPERATIONAL_DETAIL: Dict[str, List[Tuple[str, str, float, float, str]]] = {
     "People": [
-        ("Applications Received", "count", 320, 0.010, "up"),
-        ("Interviews Scheduled", "count", 90, 0.008, "up"),
-        ("Offers Extended", "count", 32, 0.006, "up"),
-        ("Offers Accepted", "count", 27, 0.006, "up"),
+        ("Applications Received", "count", 120, 0.010, "up"),
+        ("Interviews Scheduled", "count", 34, 0.008, "up"),
+        ("Offers Extended", "count", 12, 0.006, "up"),
+        ("Offers Accepted", "count", 10, 0.006, "up"),
         ("Average Salary", "USD", 95_000, 0.006, "up"),
         ("Training Completion", "%", 88, 0.004, "up"),
     ],
@@ -180,7 +288,7 @@ OPERATIONAL_DETAIL: Dict[str, List[Tuple[str, str, float, float, str]]] = {
         ("Open Tickets", "count", 45, -0.008, "down"),
         ("Server Count", "count", 320, 0.010, "up"),
         ("Open Vulnerabilities", "count", 34, -0.015, "down"),
-        ("Critical Vulnerabilities", "count", 3, -0.020, "down"),
+        ("Critical Incidents", "count", 2, -0.020, "down"),
         ("Compliance Score", "score", 91, 0.003, "up"),
         ("Phishing Attempts Blocked", "count", 1_450, 0.010, "up"),
         ("Backup Success Rate", "%", 99.2, 0.0005, "up"),
@@ -196,6 +304,8 @@ OPERATIONAL_DETAIL: Dict[str, List[Tuple[str, str, float, float, str]]] = {
         ("Overstock %", "%", 4, -0.008, "down"),
         ("SKU Count", "count", 1_850, 0.008, "up"),
         ("Inventory Value", "USD", 2_400_000, 0.006, "up"),
+        # Carrying Cost is DERIVED as a ratio of Inventory Value (see DERIVED_KPIS) rather
+        # than an independent driver, for the same reason as Finance's COGS above.
         ("Damaged Rate", "%", 1.2, -0.010, "down"),
         ("Avg Transit Days", "days", 4.5, -0.008, "down"),
         ("Cost per Shipment", "USD", 22, -0.006, "down"),
@@ -203,18 +313,29 @@ OPERATIONAL_DETAIL: Dict[str, List[Tuple[str, str, float, float, str]]] = {
     "ESG": [
         ("Ethics Training", "%", 92, 0.003, "up"),
         ("Supplier ESG Compliance", "%", 88, 0.004, "up"),
-        ("Data Privacy Incidents", "count", 1, -0.020, "down"),
+        ("Data Privacy Incidents", "count", 0, -0.020, "down"),  # healthy: 0
     ],
 }
 
-# Merged catalog — the single source generated into kpi_metrics.
+# Merged catalog — every metric generated into kpi_metrics (drivers + operational + derived).
 KPI_SPEC: Dict[str, List[Tuple[str, str, float, float, str]]] = {
     cat: list(chain(STRATEGIC_KPIS[cat], OPERATIONAL_DETAIL.get(cat, [])))
     for cat in STRATEGIC_KPIS
 }
+ALL_CATEGORIES: List[str] = list(STRATEGIC_KPIS.keys())
 
 # Percentages that legitimately exceed 100 (must NOT be clamped to [0, 100]).
-PCT_OVER_100 = {"Net Revenue Retention"}
+# Metrics whose realistic value sits within a fraction of a percentage point of the 100%
+# ceiling (e.g. "three nines" uptime) need much tighter noise/seasonality than the blanket
+# 2%/3% used for everything else — otherwise the noise alone swings them into the ceiling
+# clamp every month, drowning out both the underlying trend and any scenario anomaly.
+TIGHT_VARIANCE_METRICS = {"System Uptime": 0.0006}
+
+PCT_OVER_100 = {"Net Revenue Retention", "Rule of 40", "OEE", "Cycle Time Efficiency"}
+
+# Margin metrics that can legitimately go negative (a net loss, a margin squeezed below
+# zero by rising costs) — the declining_financial scenario needs this to show real distress.
+PCT_ALLOW_NEGATIVE = {"EBITDA Margin", "Net Profit Margin", "Rule of 40"}
 
 # Deterministic anomalies: (category, metric, month_index, multiplier) — give Risk a signal.
 # Healthy baseline company with occasional issues for risk detection demo
@@ -226,49 +347,75 @@ ANOMALIES: List[Tuple[str, str, int, float]] = [
     ("People", "Turnover Rate", 9, 1.8),         # attrition spike (HR concern)
 ]
 
-# Unhealthy company scenarios for diverse benchmarking
+# Unhealthy company scenarios for diverse benchmarking. Each list starts with the scenario's
+# primary-domain anomalies (as before), then adds a short CROSS-DOMAIN CASCADE — later-month
+# secondary anomalies in other domains — modeling the "Cross-Domain Risk Propagation" chain
+# from the data strategy spec (e.g. a security breach doesn't stay in IT: it disrupts
+# operations/logistics a couple months later, which shows up as customer churn a couple
+# months after that, which shows up as a revenue dip in Finance after that). Severity
+# multipliers are calibrated to land inside each metric's documented "Risk/Failure
+# Threshold" band, not arbitrary.
 UNHEALTHY_SCENARIOS: Dict[str, List[Tuple[str, str, int, float]]] = {
     "declining_financial": [
-        ("Finance", "Revenue", 6, 0.65),        # major revenue decline
-        ("Finance", "Gross Margin", 6, 0.75),    # margin compression
-        ("Finance", "Net Profit", 8, 0.4),       # profit collapse
-        ("Finance", "Cash Runway", 10, 0.5),    # cash crunch
-        ("Finance", "Debt to Equity", 12, 2.5), # debt explosion
+        ("Finance", "Revenue", 6, 0.65),         # major revenue decline
+        ("Finance", "COGS", 6, 1.25),            # -> Gross Margin compression (derived)
+        ("Finance", "Operating Costs", 8, 1.3),  # -> EBITDA margin collapse (derived)
+        ("Finance", "Cash Runway", 10, 0.3),     # cash crunch, well under the 4mo failure line
+        ("Finance", "Debt to Equity", 12, 3.8),  # debt explosion, above the 3.0x failure line
+        # cascade: cash crisis forces hiring freeze + growth slowdown
+        ("People", "Open Positions", 14, 0.4),
+        ("Growth", "Customer Count", 16, 0.9),
     ],
     "high_churn_crisis": [
-        ("Growth", "Churn Rate", 4, 3.5),       # churn crisis
+        ("Growth", "Churn Rate", 4, 4.2),        # churn crisis, above the 5% failure line combined w/ base
+        ("Growth", "Expansion Rate", 4, 0.3),    # -> NRR collapse (derived), below 90% failure line
         ("Growth", "Customer Count", 5, 0.85),   # customer loss
-        ("Growth", "Net Revenue Retention", 6, 0.85), # NRR collapse
-        ("Growth", "CAC", 7, 1.8),              # CAC spike
-        ("Growth", "LTV:CAC", 8, 0.6),         # unit economics breakdown
+        ("Growth", "CAC", 7, 1.8),               # CAC spike
+        ("Growth", "LTV", 8, 0.55),              # -> LTV:CAC breakdown (derived), below 1.5x failure line
+        # cascade: retention crisis hits revenue and morale
+        ("Finance", "Revenue", 10, 0.82),
+        ("People", "Engagement Score", 11, 0.8),
     ],
     "operational_meltdown": [
-        ("Operations", "On-time Delivery", 3, 0.7),    # delivery failure
-        ("Operations", "Defect Rate", 4, 4.5),         # quality crisis
-        ("Operations", "Cycle Time", 5, 2.2),          # slowdown
+        ("Operations", "On-time Delivery", 3, 0.7),     # delivery failure
+        ("Operations", "Quality Rate", 4, 0.6),         # -> OEE collapse (derived), below 60% failure line
+        ("Operations", "Availability Rate", 4, 0.75),   # -> OEE collapse (derived)
+        ("Operations", "Cycle Time", 5, 2.6),           # -> Cycle Time Efficiency collapse (derived)
         ("Operations", "Unplanned Downtime", 6, 3.5),   # major outage
-        ("Operations", "Scrap Rate", 7, 2.8),         # waste spike
+        ("Operations", "Scrap Rate", 7, 2.8),           # waste spike
+        # cascade: production failures reach the customer and the supply chain
+        ("Logistics", "On-Time Delivery Rate", 9, 0.78),
+        ("Growth", "Churn Rate", 11, 2.5),
     ],
     "talent_crisis": [
-        ("People", "Turnover Rate", 5, 2.8),         # talent exodus
-        ("People", "Time to Hire", 6, 2.2),          # hiring freeze
+        ("People", "Turnover Rate", 5, 2.8),         # talent exodus, above the 20% failure line
+        ("People", "Time to Hire", 6, 2.2),          # hiring freeze, above the 65-day failure line
+        ("People", "Employee Net Promoter (eNPS)", 7, -1.6),  # collapse into negative eNPS (failure: <-10)
         ("People", "Engagement Score", 7, 0.65),      # engagement collapse
         ("People", "Open Positions", 8, 2.5),         # unfilled roles
         ("People", "Quality of Hire", 9, 0.7),         # hiring quality drop
+        # cascade: understaffing hits delivery and output
+        ("Operations", "Labor Productivity", 11, 0.75),
+        ("IT", "Deployment Frequency", 12, 0.6),
     ],
     "cybersecurity_breach": [
         ("IT", "Security Incidents", 2, 5.0),         # major breach
-        ("IT", "Critical Incidents", 2, 4.0),         # critical escalation
-        ("IT", "System Uptime", 3, 0.92),            # availability hit
-        ("IT", "SLA Compliance", 4, 0.88),           # SLA breach
-        ("IT", "Security Score", 5, 0.6),            # security score collapse
+        ("IT", "Critical Vulnerabilities (CVSS>=9)", 2, 8.0),  # above the 5-unpatched failure line
+        ("IT", "System Uptime", 3, 0.985),             # step down under the 99.0% failure line
+        ("IT", "SLA Compliance", 4, 0.88),            # SLA breach
+        ("IT", "Security Score", 5, 0.6),             # security score collapse
+        # cascade: breach fallout reaches operations, then customers, then revenue
+        ("Logistics", "On-Time Delivery Rate", 5, 0.82),
+        ("Growth", "Churn Rate", 7, 2.4),
+        ("Finance", "Revenue", 9, 0.88),
     ],
     "esg_compliance_failure": [
         ("ESG", "ESG Score", 8, 0.65),              # ESG rating drop
         ("ESG", "Carbon Emissions (tCO2e)", 9, 1.8), # emissions spike
-        ("ESG", "Data Privacy Incidents", 10, 5.0), # privacy breach
+        ("ESG", "Data Privacy Incidents", 10, 6.0),  # privacy breach (healthy baseline is 0)
         ("ESG", "Supplier ESG Compliance", 11, 0.7), # supply chain issues
-        ("ESG", "Board Diversity %", 12, 0.6),      # governance failure
+        ("ESG", "Board Diversity %", 12, 0.55),      # governance failure, below 15% failure line
+        ("ESG", "Audit Compliance Score", 12, 0.83), # below the 85% failure line
     ],
 }
 
@@ -279,8 +426,17 @@ def _periods(months: int) -> List[str]:
 
 
 def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "healthy") -> List[Dict[str, Any]]:
-    """Deterministic multi-domain KPI time series with trend, seasonality, noise, anomalies.
-    
+    """Deterministic multi-domain KPI time series with trend, seasonality, noise, anomalies,
+    and formula-derived cross-domain metrics.
+
+    Two passes:
+      1. Every STRATEGIC_KPIS + OPERATIONAL_DETAIL driver metric is generated independently
+         (trend + seasonality + noise + any scenario anomaly), exactly as before.
+      2. Every DERIVED_KPIS metric is computed FROM those already-generated driver values for
+         the same period (and, for cross-domain formulas like Rule of 40, other periods/
+         domains) — so e.g. Gross Margin always actually equals (Revenue-COGS)/Revenue for
+         that period, not an independently-drifting number that happens to start near 72%.
+
     Args:
         months: Number of months to generate
         seed: Random seed for reproducibility
@@ -295,44 +451,88 @@ def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "h
     """
     rng = random.Random(seed)
     periods = _periods(months)
-    
-    # Select anomalies based on scenario
-    anomaly_map = {}
+
     if scenario == "healthy":
         anomaly_map = {(c, m): (i, mult) for c, m, i, mult in ANOMALIES}
     elif scenario in UNHEALTHY_SCENARIOS:
         anomaly_map = {(c, m): (i, mult) for c, m, i, mult in UNHEALTHY_SCENARIOS[scenario]}
     else:
-        # Default to healthy if unknown scenario
         anomaly_map = {(c, m): (i, mult) for c, m, i, mult in ANOMALIES}
-    
+
+    def _clamp(metric: str, unit: str, out: float) -> float:
+        if unit != "%":
+            return out
+        # Margins can legitimately go negative (a net loss, a margin squeezed by rising
+        # costs) — that's exactly the signal the declining_financial scenario needs to
+        # show. Flooring them at 0 would silently hide the failure case they exist to model.
+        if metric not in PCT_ALLOW_NEGATIVE:
+            out = max(0.0, out)
+        if metric not in PCT_OVER_100:
+            out = min(100.0, out)
+        return out
+
+    # ── Pass 1: driver metrics ──
+    # values[(category, metric)] = [value_month_0, value_month_1, ...]
+    values: Dict[Tuple[str, str], List[float]] = {}
     rows: List[Dict[str, Any]] = []
 
     for category, metrics in KPI_SPEC.items():
         for metric, unit, base, drift, direction in metrics:
+            series: List[float] = []
             value = base
+            tight = TIGHT_VARIANCE_METRICS.get(metric)
             for i, period in enumerate(periods):
-                seasonal = 1.0 + 0.03 * math.sin((i % 12) / 12 * 2 * math.pi)
-                noise = 1.0 + rng.gauss(0, 0.02)
-                value = value * (1 + drift) * seasonal * noise
+                if tight is not None:
+                    seasonal = 1.0
+                    noise = 1.0 + rng.gauss(0, tight)
+                else:
+                    seasonal = 1.0 + 0.03 * math.sin((i % 12) / 12 * 2 * math.pi)
+                    noise = 1.0 + rng.gauss(0, 0.02)
+                # A constant drift compounded for 78 straight months runs away to unrealistic
+                # extremes (a company doesn't grow/shrink at a fixed monthly rate for 6.5
+                # years straight — real trends saturate). Decay it with a ~30-month half-life
+                # so the first couple of years carry most of the trend and the series settles
+                # into a plausible plateau, instead of diverging.
+                decayed_drift = drift * (0.5 ** (i / 30.0))
+                value = value * (1 + decayed_drift) * seasonal * noise
                 out = value
                 ann = anomaly_map.get((category, metric))
                 if ann and ann[0] == i:
                     out = value * ann[1]
-                if unit == "%":
-                    out = max(0.0, out)
-                    if metric not in PCT_OVER_100:
-                        out = min(100.0, out)
+                out = _clamp(metric, unit, out)
+                series.append(out)
                 rows.append({
-                    "period": period,
-                    "metric": metric,
-                    "value": round(out, 2),
-                    "category": category,
-                    "segment": SEGMENT,
-                    "unit": unit,
-                    "direction": direction,
-                    "scenario": scenario,  # Track scenario for analysis
+                    "period": period, "metric": metric, "value": round(out, 2),
+                    "category": category, "segment": SEGMENT, "unit": unit,
+                    "direction": direction, "scenario": scenario,
                 })
+            values[(category, metric)] = series
+
+    # ── Pass 2: derived metrics — computed from the driver values above ──
+    for category, specs in DERIVED_KPIS.items():
+        for metric, unit, direction, formula in specs:
+            for i, period in enumerate(periods):
+                def v(cat: str, met: str, idx: int = i) -> float:
+                    return values[(cat, met)][idx]
+                try:
+                    out = formula(v, i)
+                except (KeyError, IndexError, ZeroDivisionError, TypeError):
+                    out = None
+                if out is None:
+                    continue
+                # A scenario anomaly can target a metric that's now derived (e.g. COGS,
+                # CAC) rather than a Pass-1 driver — apply it here too, same as Pass 1.
+                ann = anomaly_map.get((category, metric))
+                if ann and ann[0] == i:
+                    out = out * ann[1]
+                out = _clamp(metric, unit, out)
+                values.setdefault((category, metric), [None] * months)[i] = out
+                rows.append({
+                    "period": period, "metric": metric, "value": round(out, 2),
+                    "category": category, "segment": SEGMENT, "unit": unit,
+                    "direction": direction, "scenario": scenario,
+                })
+
     return rows
 
 
@@ -343,7 +543,7 @@ def generate_knowledge_docs(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     latest = sorted(df["period"].unique())[-1]
     docs: List[Dict[str, str]] = []
 
-    for category in KPI_SPEC:
+    for category in ALL_CATEGORIES:
         cdf = df[(df["category"] == category) & (df["period"] == latest)]
         lines = [f"- {r.metric}: {r.value} {r.unit}".rstrip() for r in cdf.itertuples()]
         docs.append({
@@ -386,7 +586,7 @@ def generate_knowledge_docs(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
                     f"## INDUSTRY DATA ALIGNMENT\n"
                     f"To ensure trustworthiness, this data is cross-referenced with public enterprise datasets (2020-2026):\n"
                     f"- **Finance:** Reconciled against SEC EDGAR XBRL filings and the secfsdstools extraction methodology.\n"
-                    f"- **HR:** Benchmarked against the open-source IBM HR Analytics Employee Attrition dataset norms.\n"
+                    f"- **People:** Benchmarked against the open-source IBM HR Analytics Employee Attrition dataset norms.\n"
                     f"- **ESG:** Audited following the French national Open Data (data.gouv.fr) CSRD reporting standards and Portail RSE guidelines.\n"
                     f"- **IT Security:** Correlated with the European Repository of Cyber Incidents (EuRepoC) and Verizon DBIR dataset standards.\n"
                     f"- **Logistics:** Aligned with The Supply Chain Data Hub and Upply Open Data metrics.\n"
@@ -402,7 +602,9 @@ def generate_knowledge_docs(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
         "content": (
             "Engineering and Operations headcount (People domain) trended up while Finance "
             "gross margin improved, indicating efficient scaling. Watch the People turnover "
-            "spike and the Finance revenue dip in recent periods for correlation."
+            "spike and the Finance revenue dip in recent periods for correlation. Revenue per "
+            "Employee (People domain) is computed directly from Finance's Revenue divided by "
+            "People's Headcount — a rising headcount without matching revenue growth pulls it down."
         ),
         "source": "seed/cross_people_finance.md",
     })
@@ -414,6 +616,19 @@ def generate_knowledge_docs(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
             "(Finance). These drive the Risk radar and anomaly insights."
         ),
         "source": "seed/risk_watchlist.md",
+    })
+    docs.append({
+        "title": "Methodology — Cross-Domain Risk Propagation",
+        "content": (
+            "IntelAI's unhealthy-company scenarios model how a failure in one domain cascades "
+            "into others, not just the domain where it originates. The pattern used across all "
+            "scenarios: IT/Cybersecurity incidents cascade into Logistics & Operations "
+            "(shipping delays, defect spikes), which cascades into Growth & Customer Success "
+            "(dissatisfaction, churn spikes), which cascades into Finance & Liquidity (revenue "
+            "collapse, cash burn). Each scenario's anomalies are staged several months apart to "
+            "reflect the real lag between a root cause and its downstream financial impact."
+        ),
+        "source": "seed/methodology_cascade.md",
     })
 
     docs.append({
@@ -467,7 +682,7 @@ def generate_entity_rows(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
 
 def seed_database(replace: bool = True, scenario: str = "healthy") -> Dict[str, int]:
     """Generate + write KPIs, GraphRAG-lite entities, and knowledge docs to Postgres.
-    
+
     Args:
         replace: Whether to replace existing data
         scenario: Health scenario to simulate (healthy, declining_financial, high_churn_crisis, etc.)
@@ -523,9 +738,9 @@ def main() -> None:
     from dotenv import load_dotenv
     from pathlib import Path
     import sys
-    
+
     load_dotenv(Path(__file__).resolve().parents[2] / ".env")
-    
+
     # Support scenario selection via command line
     scenario = "healthy"  # default
     if len(sys.argv) > 1:
@@ -533,12 +748,14 @@ def main() -> None:
         if scenario not in ["healthy"] + list(UNHEALTHY_SCENARIOS.keys()):
             print(f"⚠️  Unknown scenario '{scenario}'. Using 'healthy'. Available: {', '.join(['healthy'] + list(UNHEALTHY_SCENARIOS.keys()))}")
             scenario = "healthy"
-    
+
     counts = seed_database(replace=True, scenario=scenario)
-    n_metrics = sum(len(v) for v in KPI_SPEC.values())
-    print(f"✅ Seeded {counts['kpi_rows']} KPI rows ({n_metrics} metrics across "
-          f"{len(KPI_SPEC)} domains) + {counts['kpi_entities']} entities + "
-          f"{counts['knowledge_docs']} knowledge docs ({MONTHS} months, deterministic seed={SEED}, scenario={scenario}).")
+    n_drivers = sum(len(v) for v in KPI_SPEC.values())
+    n_derived = sum(len(v) for v in DERIVED_KPIS.values())
+    print(f"✅ Seeded {counts['kpi_rows']} KPI rows ({n_drivers} driver/operational metrics + "
+          f"{n_derived} formula-derived metrics across {len(KPI_SPEC)} domains) + "
+          f"{counts['kpi_entities']} entities + {counts['knowledge_docs']} knowledge docs "
+          f"({MONTHS} months, deterministic seed={SEED}, scenario={scenario}).")
 
 
 if __name__ == "__main__":

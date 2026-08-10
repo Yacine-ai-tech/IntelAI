@@ -19,7 +19,14 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     proxy: {
-      '/api': {
+      // Trailing slash matters: a bare '/api' prefix is a naive string match, so it also
+      // captures the frontend's own /api-docs route (since "/api-docs".startsWith("/api"))
+      // and silently forwards it to the backend, which has no matching handler — found live
+      // as a real, reproducible hang navigating to /api-docs in dev (backend 404s some of
+      // the time, hangs other times whenever it coincides with a DB-connection retry, since
+      // an unrelated middleware runs on every request regardless of route match). '/api/'
+      // only matches the real backend namespace (/api/v1/*, /api/redoc, ...).
+      '/api/': {
         target: PROXY_TARGET,
         changeOrigin: true,
         ws: true,            // proxy WebSocket (/api/v1/ws/chat) to the backend

@@ -4,3 +4,8 @@ pytest>=7.4
 # httpx is already in requirements.txt (used by tests + integrations)
 # playwright is optional; install separately for the e2e suite:
 #   pip install playwright && playwright install chromium
+
+# Optional: only needed for scripts/evaluate_with_rageval_package.py (in-process RAG
+# evaluation via the RAGeval package instead of its REST API). Not a core dependency —
+# IntelAI has no import-time dependency on RAGeval; see STRATEGY.md's dependency rule.
+# omnismart-rageval>=0.1.11
