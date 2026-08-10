@@ -785,23 +785,48 @@ def for_domain(domain: Optional[str] = None) -> List[Dict[str, Any]]:
     return out
 
 
-def as_knowledge_docs() -> List[Dict[str, str]]:
-    """Render the glossary as RAG knowledge docs so the copilot can cite definitions."""
+def as_knowledge_docs(lang: str = "en") -> List[Dict[str, str]]:
+    """Render the glossary as RAG knowledge docs so the copilot can cite definitions.
+
+    lang="fr" overlays src.data.glossary_fr's static French definition/benchmark
+    translations onto the same GLOSSARY entries (domain/formula/direction/source
+    aren't translated — they're standard/technical, not prose). Falls back to the
+    English definition/benchmark for any term glossary_fr.py doesn't cover, so a
+    partial translation still yields a complete (not truncated) FR doc set.
+    """
+    fr_overrides: Dict[str, Dict[str, str]] = {}
+    if lang == "fr":
+        from src.data.glossary_fr import GLOSSARY_FR
+        fr_overrides = GLOSSARY_FR
+
     docs = []
     for name, e in GLOSSARY.items():
-        parts = [f"{name}" + (f" ({e['abbr']})" if e.get("abbr") else "") + f" — {e['domain']} domain.",
-                 f"Definition: {e['definition']}"]
+        fr = fr_overrides.get(name, {})
+        definition = fr.get("definition", e["definition"])
+        benchmark = fr.get("benchmark", e.get("benchmark"))
+        label = "Définition" if lang == "fr" else "Definition"
+        formula_label = "Formule" if lang == "fr" else "Formula"
+        direction_label = ("Idéalement plus élevé." if e.get("direction") == "up" else "Idéalement plus bas.") \
+            if lang == "fr" else \
+            (f"Better when {'higher' if e.get('direction') == 'up' else 'lower'}.")
+        benchmark_label = "Référence 2026" if lang == "fr" else "2026 benchmark"
+        source_label = "Source" if lang == "fr" else "Source"
+        domain_label = "domaine" if lang == "fr" else "domain"
+
+        parts = [f"{name}" + (f" ({e['abbr']})" if e.get("abbr") else "") + f" — {domain_label} {e['domain']}.",
+                 f"{label}: {definition}"]
         if e.get("formula"):
-            parts.append(f"Formula: {e['formula']}.")
+            parts.append(f"{formula_label}: {e['formula']}.")
         if e.get("direction"):
-            parts.append(f"Better when {'higher' if e['direction'] == 'up' else 'lower'}.")
-        if e.get("benchmark"):
-            parts.append(f"2026 benchmark: {e['benchmark']}")
-        parts.append(f"Source: {e['source']}.")
+            parts.append(direction_label)
+        if benchmark:
+            parts.append(f"{benchmark_label}: {benchmark}")
+        parts.append(f"{source_label}: {e['source']}.")
         docs.append({
-            "title": f"Glossary: {name}" + (f" ({e['abbr']})" if e.get("abbr") else ""),
+            "title": f"Glossaire: {name}" if lang == "fr" else f"Glossary: {name}",
             "content": " ".join(parts),
-            "source": f"glossary/{e['domain'].lower()}/{name.lower().replace(' ', '_')}.md",
+            "source": f"glossary/{lang}/{e['domain'].lower()}/{name.lower().replace(' ', '_')}.md",
             "category": e["domain"],
+            "language": lang,
         })
     return docs

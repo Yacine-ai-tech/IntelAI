@@ -53,12 +53,12 @@ FastAPI  (src/api/server.py)
 
 ## Quickstart
 
-**Prerequisites:** Python 3.11, Node 18+, Postgres URL, `LLM_API_KEY`, `LLM_ENDPOINT`.
+**Prerequisites:** Python 3.11, Node 18+, Postgres URL, `GROQ_API_KEY`.
 
 ```bash
 git clone https://github.com/Yacine-ai-tech/IntelAI.git
 cd IntelAI
-cp .env.example .env   # fill POSTGRES_URL, LLM_API_KEY, SECRET_KEY
+cp .env.example .env   # fill POSTGRES_URL, GROQ_API_KEY, SECRET_KEY — see SELF_HOSTING.md
 
 # Backend (port 8000 — tables & seed created automatically)
 pip install -r requirements.txt
@@ -78,16 +78,22 @@ docker compose up --build                              # app + bundled Postgres
 
 ## Configuration (`.env`)
 
+Full reference with every variable and its default lives in `.env.example`. The ones
+you're most likely to touch:
+
 | Variable | Required | Description |
 |---|---|---|
 | `POSTGRES_URL` | ✅ | Neon / Render / local Postgres |
-| `LLM_API_KEY` | ✅ | Default LLM provider key |
+| `GROQ_API_KEY` | ✅ | Default-tier LLM provider key |
 | `SECRET_KEY` | ✅ | JWT signing key |
-| `LLM_ENDPOINT` | ⬜ | OpenAI-compatible endpoint URL (optional if using default) |
+| `REQUIRE_INTERNAL_TOKEN` | ⬜ | Set `false` for standalone self-hosting — see [SELF_HOSTING.md](SELF_HOSTING.md) |
+| `ANTHROPIC_API_KEY` | ⬜ | Reasoning-tier LLM (CEO/CFO/CTO/Risk personas); falls back to Groq if unset |
+| `LLM_DEFAULT` / `LLM_REASONING` / `LLM_JUDGE` | ⬜ | LiteLLM model IDs per tier (any provider LiteLLM supports) |
 | `USE_GRAPH_RAG` | ⬜ | `true` = GraphRAG-lite multi-hop |
 | `USE_HYBRID_RETRIEVAL` | ⬜ | `true` = dense+BM25+RRF+reranker |
-| `VECTOR_STORE` | ⬜ | `memory` · `chroma` (dev) · `pgvector` · `qdrant` (prod) |
-| `LLM_MODEL` | ⬜ | Default model id (e.g. `gpt-4o-mini`, `llama-3.1-8b-instant`) |
+| `VECTOR_STORE` | ⬜ | `chroma` (dev, default) · `pgvector` · `qdrant` (prod) |
+| `AUDIO_PROCESSOR_URL` / `DOC_PROCESSOR_URL` | ⬜ | Pluggable audio/document processors (e.g. a VoiceFlow/DocIntel instance) |
+| `INGEST_WEBHOOK_SECRET` | ⬜ | Enables the public HMAC-signed `/api/v1/webhook/{source}` ingestion path |
 
 ## Key API Endpoints
 
@@ -117,17 +123,26 @@ DB-dependent tests run automatically when `POSTGRES_URL` is reachable and skip c
 
 ## Benchmarking Scenarios (Research & Evaluation)
 
-IntelAI provides seven seeded deterministic environments for evaluating RAG retrieval accuracy and forecasting models under structural stress. Rather than generating synthetic data, the official seeding process uses the API to ingest **real data**, accurately simulating the production context pipeline. These scenarios are selectable via the `Admin → Scenarios` tab or API (`POST /api/v1/admin/scenario`):
+IntelAI provides seven seeded, deterministic, benchmark-calibrated environments (78 months
+× 7 domains × 146 metrics, formula-derived where a real formula applies — see
+[DATA_SEEDING.md](DATA_SEEDING.md)) for evaluating RAG retrieval accuracy and forecasting
+models under structural stress. Selectable via the `Admin → Scenarios` tab, API
+(`POST /api/v1/admin/scenario`), or `python scripts/seed_via_api.py <scenario>` for a run
+through the real ingestion pipeline instead of a direct DB write:
 
 | Scenario | Research Application | Description |
 |---|---|---|
-| `healthy` | Baseline RAG Eval | S&P 500 baseline with stationary distributions. |
+| `healthy` | Baseline RAG Eval | Stable baseline calibrated to sit inside documented "healthy" benchmark bands. |
 | `declining_financial` | Trend Reversal | Revenue contraction & margin compression; tests forecast adaptability. |
 | `high_churn_crisis` | Lagging Indicators | Customer retention failure; tests cross-domain correlation (Growth vs Finance). |
 | `operational_meltdown` | Volatility Stress | OEE collapse & quality failures; introduces severe noise to operational metrics. |
-| `talent_crisis` | Sentiment Impact | High attrition, open-req spike; evaluates HR to operational efficiency lag. |
+| `talent_crisis` | Sentiment Impact | High attrition, open-req spike; evaluates People-to-Operations efficiency lag. |
 | `cybersecurity_breach` | Shock Event | Security incident; step-function disruption in SLA/SLO metrics. |
 | `esg_compliance_failure` | Policy Violation | Governance failures & emissions spike; tests multi-hop entity reasoning. |
+
+Every scenario also carries a short cross-domain cascade (IT → Logistics/Ops → Growth →
+Finance, mirroring how a real incident's financial impact actually lags its root cause) —
+see DATA_SEEDING.md §4 for the full methodology.
 
 ## Deploy
 

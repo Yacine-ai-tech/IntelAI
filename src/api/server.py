@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import pandas as pd
-from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, WebSocket, WebSocketDisconnect, Query
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, WebSocket, WebSocketDisconnect, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -26,7 +26,7 @@ from src.core.jwt_auth import (
     create_access_token, get_current_user, require_role, get_user_data_categories, get_user_pages,
     ROLE_DEFINITIONS, DEFAULT_USERS,
 )
-from src.core.config import get_cors_allowed_origins
+from src.core.config import get_cors_allowed_origins, settings
 
 
 log = get_logger(__name__)
@@ -51,38 +51,76 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# --- ETHICAL TELEMETRY ---
+# --- ETHICAL TELEMETRY (see TELEMETRY.md) ---
 import threading
 import requests
 import os
 import time
 import uuid
 
+
+def _telemetry_instance_id() -> str:
+    """
+    A random, locally-generated install ID — NOT derived from MAC address or any other
+    hardware fingerprint. Persisted under LOGS_DIR so repeat startups of the same install
+    report the same ID (for dedup on the receiving end); delete the file to reset it.
+    See TELEMETRY.md for why this is a random UUID rather than a hardware-derived value.
+    """
+    id_file = os.path.join(str(settings.LOGS_DIR), ".telemetry_instance_id")
+    try:
+        if os.path.exists(id_file):
+            existing = open(id_file).read().strip()
+            if existing:
+                return existing
+    except Exception:
+        pass
+    new_id = uuid.uuid4().hex[:16]
+    try:
+        with open(id_file, "w") as f:
+            f.write(new_id)
+    except Exception:
+        pass
+    return new_id
+
+
 def _send_telemetry():
+    """
+    One anonymous startup ping per ~6h to TELEMETRY_URL, so the project can count distinct
+    installs. Sends only {service, event, instance_id} — no request data, document/KPI
+    content, or credentials. Disable entirely with TELEMETRY_OPT_OUT=true.
+    """
     if os.environ.get("TELEMETRY_OPT_OUT", "").lower() in ("1", "true", "yes"):
         return
-    
-    lock_file = "/tmp/.ysiddo_telemetry.lock"
+
+    lock_file = os.path.join(str(settings.LOGS_DIR), ".telemetry_last_ping")
     try:
-        if os.path.exists(lock_file):
-            if time.time() - os.path.getmtime(lock_file) < 21600:
-                return
+        if os.path.exists(lock_file) and time.time() - os.path.getmtime(lock_file) < 21600:
+            return
         with open(lock_file, "w") as f:
             f.write(str(time.time()))
     except Exception:
         pass
 
     try:
+        telemetry_url = os.environ.get(
+            "TELEMETRY_URL", "https://gateway.ysiddo-ai-projects.app/telemetry"
+        )
         if "log" in globals():
-            globals()["log"].info("📡 Anonymous telemetry ENABLED (set TELEMETRY_OPT_OUT=true to disable).")
+            globals()["log"].info(
+                "Anonymous telemetry ping to %s (set TELEMETRY_OPT_OUT=true to disable).",
+                telemetry_url,
+            )
         else:
             import logging
-            logging.info("📡 Anonymous telemetry ENABLED (set TELEMETRY_OPT_OUT=true to disable).")
-            
+            logging.info(
+                "Anonymous telemetry ping to %s (set TELEMETRY_OPT_OUT=true to disable).",
+                telemetry_url,
+            )
+
         requests.post(
-            "https://gateway.ysiddo-ai-projects.app/telemetry", 
-            json={"service": "IntelAI", "event": "startup", "instance_id": str(uuid.getnode())[:8]},
-            timeout=2
+            telemetry_url,
+            json={"service": "IntelAI", "event": "startup", "instance_id": _telemetry_instance_id()},
+            timeout=2,
         )
     except Exception:
         pass
@@ -97,8 +135,16 @@ import os as _os
 
 @app.middleware("http")
 async def verify_internal_token(request: Request, call_next):
-    # Allow health checks and public auth routes
-    if request.url.path in ["/health", "/docs", "/openapi.json", "/api/redoc"] or request.url.path.startswith("/api/v1/auth/"):
+    # Allow health checks, public auth routes, and the public HMAC-signed
+    # ingestion webhook (/api/v1/webhook/{source_name}) — its own signature
+    # check IS its auth. Gating it behind X-OmniIntel-Internal-Token too would
+    # defeat the entire point of a machine-to-machine endpoint: no external
+    # pusher (StreamPulse, a Kafka HTTP sink connector, n8n) can practically
+    # obtain an IntelAI-internal secret, only the shared HMAC secret they were
+    # actually given for this integration.
+    if (request.url.path in ["/health", "/docs", "/openapi.json", "/api/redoc"]
+            or request.url.path.startswith("/api/v1/auth/")
+            or request.url.path.startswith("/api/v1/webhook/")):
         return await call_next(request)
         
     token = request.headers.get("X-OmniIntel-Internal-Token")
@@ -866,37 +912,41 @@ async def ingest_metrics(
     log_audit_event(user.username, "DATA_INGEST", f"Ingested {len(df)} metrics from {req.source_name}")
     return {"status": "ingested", "rows": len(df), "source": req.source_name}
 
-@app.post("/api/v1/ingest/webhook")
-async def generic_webhook_ingest(
-    payload: WebhookPayload,
-    user: TokenData = Depends(get_current_user),
-):
-    """
-    Generic webhook for external data ingestion (e.g., from StreamPulse or n8n).
-    Implements Strict Schema Enforcement and Background Auto-Categorization.
-    """
+async def _process_webhook_payload(payload: WebhookPayload, actor: str) -> Dict[str, Any]:
+    """Shared ingestion logic for both the JWT-gated /api/v1/ingest/webhook
+    (internal/authenticated use) and the HMAC-signed public
+    /api/v1/webhook/{source_name} (external system-to-system use — StreamPulse,
+    a Kafka HTTP sink connector, n8n, or VoiceFlow's own signed relay).
+    Implements Strict Schema Enforcement and Background Auto-Categorization."""
     from src.services.pg_store import log_audit_event
     import asyncio
-    
+
     if payload.schema_type == "kpi_metrics":
         if not isinstance(payload.data, list):
             raise HTTPException(status_code=422, detail="data must be a list of metrics")
         df = pd.DataFrame(payload.data)
         if df.empty or "metric_name" not in df.columns or "value" not in df.columns:
             raise HTTPException(status_code=422, detail="Strict schema violation: Missing metric_name or value fields")
-        
+        # store_kpi_metrics() reads the "metric" column, not "metric_name" — without this
+        # rename every webhook-ingested row was silently stored with metric='', discarding
+        # the actual metric name entirely (found via live verification, fixed here).
+        df = df.rename(columns={"metric_name": "metric"})
+
         from src.services.pg_store import store_kpi_metrics
-        store_kpi_metrics(df, source_name=payload.source, replace=False, owner_user_id=user.user_id)
-        log_audit_event(user.username, "WEBHOOK_INGEST", f"Ingested {len(df)} metrics from {payload.source}")
+        # owner_user_id=None: external system-to-system feeds are real ingested
+        # data, not one visitor's private demo scratch space — same as an
+        # authenticated ingest with no specific owner.
+        store_kpi_metrics(df, source_name=payload.source, replace=False, owner_user_id=None)
+        log_audit_event(actor, "WEBHOOK_INGEST", f"Ingested {len(df)} metrics from {payload.source}")
         return {"status": "success", "processed": len(df), "type": "kpi_metrics"}
-        
+
     elif payload.schema_type == "knowledge_doc":
         if not isinstance(payload.data, dict) or "content" not in payload.data:
             raise HTTPException(status_code=422, detail="Strict schema violation: content field missing")
-        
+
         content_text = payload.data["content"]
-        log_audit_event(user.username, "WEBHOOK_INGEST", f"Received knowledge doc from {payload.source}")
-        
+        log_audit_event(actor, "WEBHOOK_INGEST", f"Received knowledge doc from {payload.source}")
+
         # Auto-Categorization Pipeline (reusing same backend functions as UI upload)
         def _process_background():
             try:
@@ -911,7 +961,7 @@ async def generic_webhook_ingest(
                         domain = resp["choices"][0]["message"]["content"].strip()
                     except:
                         domain = "General"
-                    
+
                     # 2. Add to Vector Store
                     vs.add_texts(
                         texts=[content_text],
@@ -925,9 +975,62 @@ async def generic_webhook_ingest(
         # Fire and forget
         asyncio.create_task(asyncio.to_thread(_process_background))
         return {"status": "success", "message": "Document accepted for background processing and categorization", "type": "knowledge_doc"}
-        
+
     else:
         raise HTTPException(status_code=422, detail=f"Unsupported schema_type: {payload.schema_type}")
+
+
+@app.post("/api/v1/ingest/webhook")
+async def generic_webhook_ingest(
+    payload: WebhookPayload,
+    user: TokenData = Depends(get_current_user),
+):
+    """Authenticated (JWT) generic webhook for internal/UI-driven ingestion."""
+    return await _process_webhook_payload(payload, actor=user.username)
+
+
+def _verify_webhook_signature(body: bytes, signature: str) -> bool:
+    """HMAC-SHA256 of the raw body against INGEST_WEBHOOK_SECRET — same
+    `sha256=<hex>` convention StreamPulse's own webhook_receiver.py verifies
+    against, so anything that can sign a request for StreamPulse can sign one
+    for this endpoint with zero changes beyond the URL and secret."""
+    import hashlib
+    import hmac as _hmac
+    if not settings.INGEST_WEBHOOK_SECRET or not signature:
+        return False
+    expected = _hmac.new(settings.INGEST_WEBHOOK_SECRET.encode(), body, hashlib.sha256).hexdigest()
+    sig = signature.replace("sha256=", "")
+    return _hmac.compare_digest(expected, sig)
+
+
+@app.post("/api/v1/webhook/{source_name}")
+async def public_signed_webhook_ingest(source_name: str, request: Request):
+    """Public, HMAC-signed ingestion endpoint for external systems that can't
+    do an interactive JWT login — StreamPulse, a Kafka HTTP sink connector,
+    n8n, or VoiceFlow's own signed /integrations/relay. No user session
+    required; authenticity comes entirely from the signature.
+
+    Body: {"source": "...", "schema_type": "kpi_metrics"|"knowledge_doc", "data": ...}
+    Header: X-Signature-256: sha256=<hmac-sha256 hex of the raw body>
+
+    501 if INGEST_WEBHOOK_SECRET isn't configured — this endpoint refuses all
+    requests rather than silently accepting unauthenticated data. 401 on a
+    missing/invalid signature.
+    """
+    if not settings.INGEST_WEBHOOK_SECRET:
+        raise HTTPException(status_code=501, detail="INGEST_WEBHOOK_SECRET not configured — public webhook ingestion is disabled")
+    body = await request.body()
+    signature = request.headers.get("X-Signature-256", "")
+    if not _verify_webhook_signature(body, signature):
+        raise HTTPException(status_code=401, detail="invalid_signature")
+    try:
+        import json as _json
+        raw = _json.loads(body or b"{}")
+    except Exception:
+        raise HTTPException(status_code=400, detail="invalid_json")
+    raw.setdefault("source", source_name)
+    payload = WebhookPayload(**raw)
+    return await _process_webhook_payload(payload, actor=f"webhook:{source_name}")
 
 
 @app.post("/api/v1/ingest/csv")
@@ -946,9 +1049,60 @@ async def ingest_csv_file(
         raise HTTPException(status_code=400, detail=f"Invalid CSV: {e}")
     if df.empty:
         raise HTTPException(status_code=400, detail="CSV file is empty")
+    # store_kpi_metrics() reads the "metric" column — the docstring above documents
+    # "metric_name" as the CSV header, so without this rename a correctly-formatted
+    # upload would silently store every row with metric='' (same bug as the webhook
+    # path, fixed there too; found via live verification).
+    df = df.rename(columns={"metric_name": "metric"})
     store_kpi_metrics(df, source_name=source_name, replace=False, owner_user_id=user.user_id)
     log_audit_event(user.username, "CSV_INGEST", f"Ingested {len(df)} rows from {file.filename}")
     return {"status": "ingested", "rows_inserted": len(df), "filename": file.filename}
+
+
+async def _delegate_to_doc_processor(content: bytes, filename: str) -> Optional[str]:
+    """If DOC_PROCESSOR_URL is configured, delegate extraction to it instead
+    of the inline pypdf/Groq-Vision path below — the same standalone,
+    not-hardcoded-to-DocIntel principle as AUDIO_PROCESSOR_URL. Contract:
+    POST {DOC_PROCESSOR_URL}/process, multipart `file` in, JSON `{"fields": {...}}`
+    out (DocIntel speaks this natively; any compliant processor can too).
+    Returns None on any failure or if unconfigured — the caller falls back
+    to inline extraction, this never raises and never fakes a result.
+
+    DOC_PROCESSOR_ROUTE selects which extraction route the processor should use, when
+    it supports route selection (DocIntel: vision_route_a=Claude Sonnet Vision, paid
+    per call; vision_route_b=self-hosted Ollama vision, $0 but needs Ollama running;
+    ocr_fallback=Tesseract OCR, $0, lower fidelity on complex layouts). Defaults to
+    ocr_fallback — the cost-optimized choice — rather than silently inheriting
+    whatever the processor's own default is (DocIntel's own default is the paid
+    Route A, appropriate for the processor's own standalone use but not a sane
+    default for every document this endpoint's pypdf fallback could otherwise
+    handle for free). Set DOC_PROCESSOR_ROUTE=vision_route_a for consistently
+    higher-fidelity extraction on complex/scanned documents if the cost is
+    acceptable, or vision_route_b if you're running your own Ollama vision model."""
+    if not settings.DOC_PROCESSOR_URL:
+        return None
+    try:
+        import httpx
+        headers = {}
+        if settings.DOC_PROCESSOR_TOKEN:
+            headers["Authorization"] = f"Bearer {settings.DOC_PROCESSOR_TOKEN}"
+        route = _os.environ.get("DOC_PROCESSOR_ROUTE", "ocr_fallback")
+        async with httpx.AsyncClient(timeout=60) as client:
+            resp = await client.post(
+                f"{settings.DOC_PROCESSOR_URL}/process",
+                files={"file": (filename, content)},
+                data={"route": route},
+                headers=headers,
+            )
+            resp.raise_for_status()
+            result = resp.json()
+        fields = result.get("fields")
+        if not fields:
+            return None
+        return "\n".join(f"{k}: {v}" for k, v in fields.items() if v not in (None, "", [], {}))
+    except Exception as e:
+        log.warning("DOC_PROCESSOR_URL delegation failed, falling back to inline extraction: %s", e)
+        return None
 
 
 @app.post("/api/v1/ingest/document")
@@ -962,14 +1116,28 @@ async def ingest_document(
     text = ""
     import io
     filename_lower = (file.filename or "").lower()
-    
+
+    # For text-native PDFs, pypdf is free, fast, and already gets the full text — delegating
+    # to an external vision/OCR processor FIRST would actively lose content (OCR on a page
+    # image extracts less than reading the PDF's real text layer directly, and costs more).
+    # DocIntel earns its keep on scanned/image-only PDFs pypdf can't read at all — so try
+    # pypdf first for .pdf files, and only delegate if that yields too little text to be a
+    # real text layer (found via live testing: a real 60-page text PDF got 80 chars back from
+    # Route C's OCR path vs 669,913 chars from pypdf on the same file).
+    MIN_PYPDF_CHARS = 200
     if filename_lower.endswith(".pdf"):
         try:
             from pypdf import PdfReader
             reader = PdfReader(io.BytesIO(content))
             text = "\n".join(p.extract_text() or "" for p in reader.pages)
         except Exception:
-            text = content.decode("utf-8", errors="ignore")
+            text = ""
+        if len(text.strip()) < MIN_PYPDF_CHARS:
+            delegated = await _delegate_to_doc_processor(content, file.filename or "upload")
+            if delegated and len(delegated) > len(text):
+                text = delegated
+            elif not text:
+                text = content.decode("utf-8", errors="ignore")
     elif filename_lower.endswith((".png", ".jpg", ".jpeg")):
         try:
             import base64
@@ -1021,6 +1189,72 @@ async def ingest_document(
     store_knowledge_docs(docs_df)
     log_audit_event(user.username, "DOC_INGEST", f"Uploaded {file.filename}")
     return {"status": "ingested", "doc_id": doc_id, "filename": file.filename, "chars": len(text)}
+
+
+@app.post("/api/v1/ingest/audio")
+async def ingest_audio(
+    file: UploadFile = File(...),
+    category: str = Form("Misc"),
+    analysis_type: str = Form("meeting"),
+    user: TokenData = Depends(get_current_user),
+):
+    """Audio → knowledge base, via a pluggable external audio processor —
+    IntelAI's ingestion pipeline calling out to any tool that can make audio
+    processing for its audio data, the same generic shape as
+    _delegate_to_doc_processor() above for documents. Not hardcoded to
+    VoiceFlow: AUDIO_PROCESSOR_URL is any base URL implementing
+    POST {url}/pipeline (multipart `file` in, {"transcript", "analysis"} JSON
+    out) — VoiceFlow speaks this contract natively, but so could anything
+    else. 501 if AUDIO_PROCESSOR_URL isn't configured — never a fake
+    transcript."""
+    if not settings.AUDIO_PROCESSOR_URL:
+        raise HTTPException(
+            status_code=501,
+            detail="AUDIO_PROCESSOR_URL not configured — set it to a running audio "
+                   "processor (e.g. a VoiceFlow instance) to enable audio ingestion.",
+        )
+    from src.services.pg_store import store_knowledge_docs, log_audit_event
+    from src.services.security import SecurityScanner
+
+    content = await file.read()
+    try:
+        import httpx
+        headers = {}
+        if settings.AUDIO_PROCESSOR_TOKEN:
+            headers["Authorization"] = f"Bearer {settings.AUDIO_PROCESSOR_TOKEN}"
+        async with httpx.AsyncClient(timeout=120) as client:
+            resp = await client.post(
+                f"{settings.AUDIO_PROCESSOR_URL}/pipeline",
+                files={"file": (file.filename or "audio", content)},
+                data={"analysis_type": analysis_type},
+                headers=headers,
+            )
+            resp.raise_for_status()
+            result = resp.json()
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"audio_processor_failed: {e}")
+
+    transcript = result.get("transcript", {})
+    analysis = result.get("analysis", {})
+    transcript_text = transcript.get("text", "") if isinstance(transcript, dict) else str(transcript)
+    if not transcript_text.strip():
+        raise HTTPException(status_code=502, detail="audio_processor_returned_no_transcript")
+
+    text = SecurityScanner.redact_text(transcript_text)
+    summary_fields = "\n".join(f"{k}: {v}" for k, v in analysis.items() if v not in (None, "", [], {})) if isinstance(analysis, dict) else ""
+    full_content = f"{text}\n\n[ANALYSIS]\n{summary_fields}" if summary_fields else text
+
+    doc_id = str(uuid.uuid4())
+    docs_df = pd.DataFrame([{
+        "doc_id": doc_id, "title": file.filename or "audio upload", "content": full_content[:50000],
+        "source": category, "embedding": "",
+    }])
+    store_knowledge_docs(docs_df)
+    log_audit_event(user.username, "AUDIO_INGEST", f"Processed {file.filename} via {settings.AUDIO_PROCESSOR_URL}")
+    return {
+        "status": "ingested", "doc_id": doc_id, "filename": file.filename,
+        "chars": len(text), "transcript": transcript, "analysis": analysis,
+    }
 
 
 # ════════════════════════════════════════════════════════════

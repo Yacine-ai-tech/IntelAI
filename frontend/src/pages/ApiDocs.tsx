@@ -4,9 +4,14 @@ import {
   ChevronDown, ChevronRight, Lock,
 } from "lucide-react";
 
-// Gateway base URL — matches VITE_API_BASE_URL in frontend/.env.production and the
-// /docs, /openapi.json rewrites in frontend/vercel.json (all point at .../intelai).
-const BASE_URL = "https://gateway.ysiddo-ai-projects.app/intelai";
+// Same resolution order as src/api.js's request client: an explicit VITE_API_BASE_URL
+// (for split frontend/backend deployments) wins, otherwise fall back to the current
+// origin (same-origin deployments, e.g. the Docker single-container setup) — so the
+// copy-paste examples always match wherever this page is actually being served from,
+// author's deployment or any self-hoster's, instead of a hardcoded URL.
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (typeof window !== "undefined" ? window.location.origin : "");
 
 const AUTH_META: Record<string, { label: string; color: string; icon: any }> = {
   public: { label: "Public", color: "var(--ok)", icon: Globe },
@@ -337,6 +342,24 @@ source_name: "csv_upload"   // optional, defaults to "csv_upload"`,
 file: board_policy.pdf
 category: "Finance"   // optional, defaults to "Misc"`,
     response: `{ "status": "ingested", "doc_id": "d41a...", "filename": "board_policy.pdf", "chars": 15234 }`,
+  },
+  {
+    method: "POST", path: "/api/v1/ingest/audio", group: "Ingestion", auth: "user",
+    desc: "Transcribe + analyze audio via a pluggable external processor (AUDIO_PROCESSOR_URL — a VoiceFlow instance or any compliant service implementing POST {url}/pipeline). 501 if unconfigured — never a fake transcript.",
+    bodyType: "multipart",
+    body: `// multipart/form-data
+file: meeting.mp3
+category: "Misc"          // optional
+analysis_type: "meeting"  // optional`,
+    response: `{ "status": "ingested", "doc_id": "d41a...", "filename": "meeting.mp3", "transcript": {...}, "analysis": {...} }`,
+  },
+  {
+    method: "POST", path: "/api/v1/webhook/{source_name}", group: "Ingestion", auth: "public",
+    desc: "HMAC-signed public ingestion endpoint for external systems that can't do an interactive JWT login (StreamPulse, a Kafka HTTP sink connector, n8n). No user session — authenticity comes entirely from the signature. 501 if INGEST_WEBHOOK_SECRET isn't configured; 401 on a missing/invalid signature.",
+    bodyType: "json",
+    body: `// Header: X-Signature-256: sha256=<hmac-sha256 hex of the raw body>
+{ "source": "my_system", "schema_type": "kpi_metrics", "data": [...] }`,
+    response: `{ "status": "success", "processed": 42, "type": "kpi_metrics" }`,
   },
 
   // ── KPIs ─────────────────────────────────────────────────────────────
