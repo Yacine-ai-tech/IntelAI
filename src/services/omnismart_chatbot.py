@@ -299,24 +299,38 @@ class UltraFastRAG:
                 except Exception as e:
                     log.warning("Semantic search failed: %s", e)
             
-            # Fallback to TF-IDF
+            # Fallback to TF-IDF.
+            # max_features was 100, which capped the vocabulary at the 100 most frequent
+            # corpus terms — measured on the real 733-doc knowledge base, "runway" was not
+            # among them, so "What is our cash runway in months?" scored 0.0000 against
+            # EVERY document and this path returned nothing. With a realistic vocabulary the
+            # same query scores 0.63 and matches 26 documents. Also index title+content:
+            # titles carry the metric name ("Glossary: Cash Runway") and were being ignored.
             if _TFIDF:
                 try:
-                    vectorizer = TfidfVectorizer(max_features=100, stop_words='english')
-                    doc_vectors = vectorizer.fit_transform(docs["content"].fillna(""))
+                    corpus = (docs["title"].fillna("") + ". " + docs["title"].fillna("")
+                              + ". " + docs["content"].fillna(""))
+                    vectorizer = TfidfVectorizer(
+                        max_features=50000, stop_words="english", sublinear_tf=True,
+                        ngram_range=(1, 2),
+                    )
+                    doc_vectors = vectorizer.fit_transform(corpus)
                     query_vector = vectorizer.transform([query])
                     similarities = cosine_similarity(query_vector, doc_vectors)[0]
-                    
+
                     top_indices = np.argsort(similarities)[::-1][:top_k]
                     results = []
                     for idx in top_indices:
-                        if similarities[idx] > 0.1:
+                        if similarities[idx] > 0.05:
                             results.append((
                                 docs.iloc[idx]["title"],
                                 docs.iloc[idx]["content"],
                                 float(similarities[idx]),
                             ))
-                    return results
+                    # Only return if something actually matched — an empty list here used to
+                    # be returned as the final answer, skipping the keyword fallback below.
+                    if results:
+                        return results
                 except Exception as e:
                     log.warning("TF-IDF search failed: %s", e)
             
