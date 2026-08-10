@@ -192,6 +192,31 @@ orchestrator.
     combination `validate_required_keys()` aborts startup on. Set, along with 19 other
     required vars (delegation URLs, explicit providers, CORS, demo config).
 
+## RAGeval re-measurement — deliberately deferred (not skipped)
+
+The end-to-end RAG quality re-run is blocked on RAGeval being mid-flight, and running it
+early would produce numbers that measure a stale evaluator rather than IntelAI:
+
+| | State when checked (2026-08-10) |
+|---|---|
+| `omnismart-rageval` installed here | **0.1.9** |
+| PyPI latest | 0.1.14 |
+| RAGeval repo `pyproject.toml` | 0.1.15 (unreleased) |
+| Uncommitted files in the RAGeval repo | 12 (api.py, core/config.py, requirements.txt, …) |
+
+**Retest preconditions** — all three must hold, then re-run
+`scripts/evaluate_with_rageval_package.py` (in-process) and
+`scripts/evaluate_with_rageval.py` (against the live service):
+1. RAGeval's working tree is committed (`git -C ../RAGeval status --porcelain` empty)
+   and pushed;
+2. PyPI shows the new version and it is installed here
+   (`pip install -U omnismart-rageval`; confirm `importlib.metadata.version` matches);
+3. the live RAGeval deployment is running that same version.
+
+The last full measurement (25/30 cases, avg groundedness 22.8%, overall 11.6%) predates
+every retrieval fix in this document AND used evaluator 0.1.9 — it is a stale baseline on
+both sides and should not be quoted as the current state of either system.
+
 ## Known drift / not yet done
 
 - **Audio ingestion untested with a real file** — `AUDIO_PROCESSOR_URL` is wired to the
