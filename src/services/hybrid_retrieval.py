@@ -22,14 +22,39 @@ from src.core.logger import get_logger
 log = get_logger(__name__)
 
 try:
+    import numpy as np
+    _NUMPY = True
+except ImportError:  # pragma: no cover — numpy is a hard dependency, this is a safety net only
+    _NUMPY = False
+    log.warning("numpy not installed — dense retrieval disabled")
+
+# Local embedding/reranker models (sentence-transformers, ~1.3GB with torch) are commented
+# out of requirements.txt by default — they OOM a 512MB deploy host. Dense retrieval's math
+# (cosine similarity) only needs numpy, which IS a hard dependency; the embedding VECTORS
+# themselves can come from a remote inference host instead (see _remote_embed below), so
+# dense retrieval still works on a constrained host as long as EMBEDDING_ENDPOINT is set —
+# _DENSE (can we do the math) and _LOCAL_EMBED (can we also load a model in-process) are
+# deliberately separate capabilities.
+_DENSE = _NUMPY
+try:
     from sentence_transformers import SentenceTransformer
     from sentence_transformers import CrossEncoder
-    from sklearn.metrics.pairwise import cosine_similarity
-    import numpy as np
-    _DENSE = True
+    _LOCAL_EMBED = True
 except ImportError:
-    _DENSE = False
-    log.warning("sentence-transformers / sklearn not installed — dense retrieval disabled")
+    _LOCAL_EMBED = False
+    log.info("sentence-transformers not installed — local embedding/reranker unavailable "
+             "(remote EMBEDDING_ENDPOINT / RERANK_URL still work)")
+
+
+def _cosine_similarity(a, b):
+    """Minimal cosine-similarity matrix (rows of ``a`` vs rows of ``b``) — avoids a
+    scikit-learn dependency for a single function; numpy is already a hard dependency."""
+    a = np.asarray(a, dtype=float)
+    b = np.asarray(b, dtype=float)
+    a_norm = a / np.clip(np.linalg.norm(a, axis=1, keepdims=True), 1e-12, None)
+    b_norm = b / np.clip(np.linalg.norm(b, axis=1, keepdims=True), 1e-12, None)
+    return a_norm @ b_norm.T
+
 
 try:
     from rank_bm25 import BM25Okapi
@@ -41,7 +66,9 @@ except ImportError:
 # The BGE reranker is loaded via sentence-transformers' CrossEncoder (not FlagEmbedding) —
 # CrossEncoder uses the fast HF tokenizer and avoids FlagEmbedding's slow-tokenizer path,
 # which breaks on newer transformers (XLMRobertaTokenizer.prepare_for_model removed).
-_RERANKER = _DENSE
+# Local-only capability (see _LOCAL_EMBED note above) — the remote rerank path in rerank()
+# below doesn't depend on this at all.
+_RERANKER = _LOCAL_EMBED
 
 import re as _re
 _WORD_RE = _re.compile(r"[a-z0-9]+")
@@ -101,12 +128,75 @@ class HybridRetriever:
         self._bm25 = None
 
     def _ensure_embedder(self):
-        if not _DENSE:
+        if not _LOCAL_EMBED:
             return None
         if self._embedder is None:
             log.info("Loading embedder: %s", self.embedding_model_name)
             self._embedder = SentenceTransformer(self.embedding_model_name)
         return self._embedder
+
+    def _remote_embed(self, texts: List[str]):
+        """Embed via a remote inference host instead of loading the model in-process.
+        Two env-var pairs are honored (checked in this order, first match wins):
+          - EMBED_URL / EMBEDDING_PROVIDER=remote — matches this file's own
+            RERANK_URL/RERANK_PROVIDER convention (a shared orchestrator/Studio speaking
+            {"texts":[...]} -> {"embeddings":[...]} at {url}/embed — e.g. the orchestrator's
+            POST /api/inference/embed).
+          - EMBEDDING_ENDPOINT / INFERENCE_MODE=remote — the same contract RAGeval's own
+            evaluator.py uses, so one inference host's env config works for both services.
+        Any failure returns None so the caller falls back to the local model (or skips
+        dense retrieval if no local model is available either)."""
+        remote_on = (os.getenv("EMBEDDING_PROVIDER", "").strip().lower() == "remote"
+                     or os.getenv("INFERENCE_MODE", "").strip().lower() == "remote")
+        if not remote_on:
+            return None
+        url = os.getenv("EMBED_URL", "").strip() or os.getenv("EMBEDDING_ENDPOINT", "").strip()
+        if not url:
+            return None
+        try:
+            import json as _json, urllib.request
+            h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
+            tk = os.getenv("INFERENCE_TOKEN", "").strip()
+            if tk:
+                h["Authorization"] = "Bearer " + tk
+            timeout = float(os.getenv("EMBED_TIMEOUT", "30"))
+
+            if "huggingface.co" in url:
+                # HF Inference API: POST straight to the model URL with {"inputs": [...]}.
+                # Response is a list of vectors for a sentence-embedding model, or a list of
+                # per-token vectors (one extra nesting level) for a plain feature-extraction
+                # pipeline — mean-pool the token axis in that case.
+                body = _json.dumps({"inputs": texts}).encode()
+                req = urllib.request.Request(url, data=body, headers=h)
+                result = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+                arr = np.asarray(result, dtype=float)
+                if arr.ndim == 3:
+                    arr = arr.mean(axis=1)
+                return arr
+            else:
+                # Generic contract (a Studio/orchestrator host) — same shape
+                # AUDIO_PROCESSOR_URL/DOC_PROCESSOR_URL use elsewhere in this codebase.
+                body = _json.dumps({"texts": texts, "model": self.embedding_model_name}).encode()
+                req = urllib.request.Request(url.rstrip("/") + "/embed", data=body, headers=h)
+                result = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+                vecs = result.get("embeddings")
+                if not vecs:
+                    return None
+                return np.asarray(vecs)
+        except Exception as e:
+            log.warning("remote embed unavailable (%s) — falling back to local model", e)
+            return None
+
+    def _encode(self, texts: List[str]):
+        """Dense-embed texts: remote inference host first (if configured), else the local
+        sentence-transformers model. Returns None if neither is available."""
+        remote = self._remote_embed(texts)
+        if remote is not None:
+            return remote
+        embedder = self._ensure_embedder()
+        if embedder is None:
+            return None
+        return embedder.encode(texts, show_progress_bar=False)
 
     def _ensure_reranker(self):
         # Local CrossEncoder (~600MB) is OFF by default: loading it on a constrained app host
@@ -125,7 +215,7 @@ class HybridRetriever:
         """Index a corpus of text chunks for retrieval."""
         self._chunks = list(chunks)
         if _DENSE and chunks:
-            self._chunk_vecs = self._ensure_embedder().encode(chunks, show_progress_bar=False)
+            self._chunk_vecs = self._encode(chunks)
         if _BM25 and chunks:
             tokenized = [_tokenize(c) for c in chunks]
             self._bm25 = BM25Okapi(tokenized)
@@ -133,9 +223,10 @@ class HybridRetriever:
     def _dense_rank(self, query: str, top_n: int) -> List[Tuple[int, float]]:
         if not (_DENSE and self._chunk_vecs is not None):
             return []
-        emb = self._ensure_embedder()
-        q_vec = emb.encode([query])
-        sims = cosine_similarity(q_vec, self._chunk_vecs)[0]
+        q_vec = self._encode([query])
+        if q_vec is None:
+            return []
+        sims = _cosine_similarity(q_vec, self._chunk_vecs)[0]
         idxs = sims.argsort()[::-1][:top_n]
         return [(int(i), float(sims[i])) for i in idxs]
 
@@ -309,12 +400,40 @@ def _hosted_rerank(query: str, texts: List[str]) -> Optional[List[float]]:
         return None
 
 
-def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
+def _try_local_reranker(query: str, texts: List[str]) -> Optional[List[float]]:
+    """Local CrossEncoder reranker — opt-in via USE_LOCAL_RERANKER for hosts with RAM
+    headroom (see _ensure_reranker's docstring on why this is off by default)."""
     global _RERANK_RETRIEVER
+    if not _RERANKER or os.getenv("USE_LOCAL_RERANKER", "false").strip().lower() not in ("1", "true", "yes", "on"):
+        return None
+    if _RERANK_RETRIEVER is None:
+        _RERANK_RETRIEVER = HybridRetriever()
+    r = _RERANK_RETRIEVER
+    if r._reranker_failed:
+        return None
+    try:
+        reranker = r._ensure_reranker()
+        if reranker is None:
+            return None
+        scores = reranker.predict([(query, t) for t in texts])
+        return [float(s) for s in scores]
+    except Exception as e:
+        r._reranker_failed = True
+        log.warning("local reranker unavailable (%s) — falling back to remote/hosted", e)
+        return None
+
+
+def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
     if os.getenv("USE_RERANKER", "true").strip().lower() not in ("1", "true", "yes", "on"):
         return None
     if not texts:
         return None
+
+    # An operator who explicitly opted into a local model (RAM headroom available) gets it
+    # tried first — no point paying network latency when it's already loaded in-process.
+    local = _try_local_reranker(query, texts)
+    if local is not None:
+        return local
 
     provider = os.getenv("RERANK_PROVIDER", "hf").lower()
 
@@ -324,7 +443,7 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
             try:
                 import json as _json, urllib.request
                 body = _json.dumps({"query": query, "texts": texts}).encode()
-                h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0 (+https://ysiddo-ai-projects.app)"}
+                h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
                 tk = os.getenv("INFERENCE_TOKEN", "").strip()
                 if tk: h["Authorization"] = "Bearer " + tk
                 req = urllib.request.Request(remote.rstrip("/") + "/rerank", data=body, headers=h)
@@ -374,19 +493,3 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
         hf = _try_hf()
         if hf is not None: return hf
         return _hosted_rerank(query, texts)
-
-    if not _RERANKER or os.getenv("USE_LOCAL_RERANKER", "false").strip().lower() not in ("1", "true", "yes", "on"):
-        return None
-    if _RERANK_RETRIEVER is None:
-        _RERANK_RETRIEVER = HybridRetriever()
-    r = _RERANK_RETRIEVER
-    if r._reranker_failed:
-        return None
-    try:
-        reranker = r._ensure_reranker()
-        scores = reranker.predict([(query, t) for t in texts])
-        return [float(s) for s in scores]
-    except Exception as e:
-        r._reranker_failed = True
-        log.warning("rerank() unavailable (%s) — keeping fusion order", e)
-        return None
