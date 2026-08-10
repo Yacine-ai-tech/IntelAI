@@ -137,7 +137,20 @@ class HybridRetriever:
 
     def _remote_embed(self, texts: List[str]):
         """Embed on the configured remote inference host. Raises on failure — the caller
-        does NOT fall back to a local model (see _encode)."""
+        does NOT fall back to a local model (see _encode).
+
+        Sent in batches (EMBED_BATCH_SIZE, default 32): indexing the whole knowledge
+        base is hundreds of chunks, and hosted inference APIs reject or time out on a
+        single huge payload.
+        """
+        batch = max(1, int(os.getenv("EMBED_BATCH_SIZE", "32")))
+        if len(texts) > batch:
+            parts = [self._remote_embed_batch(texts[i:i + batch])
+                     for i in range(0, len(texts), batch)]
+            return np.vstack(parts)
+        return self._remote_embed_batch(texts)
+
+    def _remote_embed_batch(self, texts: List[str]):
         url = os.getenv("EMBED_URL", "").strip() or os.getenv("EMBEDDING_ENDPOINT", "").strip()
         if not url:
             raise RuntimeError(
@@ -213,18 +226,38 @@ class HybridRetriever:
         return self._reranker
 
     def fit(self, chunks: List[str]) -> None:
-        """Index a corpus of text chunks for retrieval."""
+        """Index a corpus of text chunks for retrieval.
+
+        Dense and sparse are two *halves of one retriever*, not two interchangeable
+        providers — so if the embedding backend is unavailable we log the real error
+        loudly and still build BM25, because returning BM25-only results is far better
+        than returning nothing. (This is not the silent provider-swapping that
+        _encode deliberately refuses to do: the configured embedding provider is never
+        substituted for a different one; dense simply drops out of the fusion.)
+        """
         self._chunks = list(chunks)
+        self._chunk_vecs = None
         if _DENSE and chunks:
-            self._chunk_vecs = self._encode(chunks)
+            try:
+                self._chunk_vecs = self._encode(chunks)
+            except Exception as e:
+                log.error("Dense embedding unavailable (%s) — indexing BM25-only. "
+                          "Retrieval quality is degraded; fix EMBEDDING_PROVIDER/EMBED_URL.", e)
         if _BM25 and chunks:
             tokenized = [_tokenize(c) for c in chunks]
             self._bm25 = BM25Okapi(tokenized)
+        if self._chunk_vecs is None and self._bm25 is None:
+            log.error("Neither dense nor sparse retrieval is available — hybrid retrieval "
+                      "will return nothing. Install rank-bm25 and/or fix the embedding provider.")
 
     def _dense_rank(self, query: str, top_n: int) -> List[Tuple[int, float]]:
         if not (_DENSE and self._chunk_vecs is not None):
             return []
-        q_vec = self._encode([query])
+        try:
+            q_vec = self._encode([query])
+        except Exception as e:
+            log.error("Dense query embedding failed (%s) — using sparse ranking only", e)
+            return []
         if q_vec is None:
             return []
         sims = _cosine_similarity(q_vec, self._chunk_vecs)[0]
@@ -301,36 +334,96 @@ def hybrid_enabled() -> bool:
     return os.getenv("USE_HYBRID_RETRIEVAL", "false").strip().lower() in ("1", "true", "yes", "on")
 
 
-def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int = 5):
-    """Hybrid (dense+BM25+RRF+rerank) over knowledge docs.
+def chunk_text(text: str, size: int, overlap: int) -> List[str]:
+    """Split text into overlapping passages on natural boundaries.
 
-    ``records`` = list of ``(title, content)``. Returns ``[(title, content, score)]`` —
-    the shape the chatbot's retrieval expects — or ``[]`` when disabled/unavailable/failed
-    (caller falls back to the existing vector/TF-IDF path). The retriever is cached and only
-    re-fit when the document set changes.
+    Retrieval units must be passages, not whole documents: an embedding model
+    compresses whatever it is given into one fixed-length vector, so embedding a
+    30k-character report yields a vector that represents the document's average
+    topic and matches no specific question well (and anything past the model's
+    context window is silently truncated away). BM25 degrades the same way — term
+    weights get diluted across an entire document. Splitting on paragraph, then
+    sentence, then hard-cut boundaries keeps passages semantically coherent, and
+    the overlap stops an answer that straddles a boundary from being lost.
+    """
+    text = (text or "").strip()
+    if not text or len(text) <= size:
+        return [text] if text else []
+    paras = [p.strip() for p in _re.split(r"\n\s*\n", text) if p.strip()]
+    chunks, cur = [], ""
+    for p in paras:
+        if len(p) > size:  # a single oversized paragraph -> sentence-split it
+            for s in _re.split(r"(?<=[.!?])\s+", p):
+                if len(cur) + len(s) + 1 <= size:
+                    cur = f"{cur} {s}".strip()
+                else:
+                    if cur:
+                        chunks.append(cur)
+                    cur = s[:size] if len(s) > size else s
+        elif len(cur) + len(p) + 2 <= size:
+            cur = f"{cur}\n\n{p}".strip()
+        else:
+            if cur:
+                chunks.append(cur)
+            cur = p
+    if cur:
+        chunks.append(cur)
+    if overlap > 0 and len(chunks) > 1:
+        stitched = [chunks[0]]
+        for prev, nxt in zip(chunks, chunks[1:]):
+            stitched.append((prev[-overlap:] + "\n" + nxt).strip())
+        chunks = stitched
+    return chunks
+
+
+def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int = 5):
+    """Hybrid (dense+BM25+RRF+rerank) over knowledge docs, at passage granularity.
+
+    ``records`` = list of ``(title, content)``. Returns ``[(title, passage, score)]`` —
+    the shape the chatbot's retrieval expects — or ``[]`` when disabled/unavailable/failed.
+    The retriever is cached and only re-fit when the document set changes.
+
+    Documents are split into overlapping passages (CHUNK_SIZE/CHUNK_OVERLAP) before
+    indexing, and what is returned is the matching *passage*, not the whole document:
+    feeding a whole 30k-char report into the answer prompt buries the one relevant
+    sentence in noise and burns the context budget, which is exactly how a retrieval
+    "hit" still produces an ungrounded answer.
     """
     global _HYBRID, _HYBRID_SIG
     if not hybrid_enabled() or not records or not (_DENSE or _BM25):
         return []
     try:
-        # Index "title. title. content" so the title (which carries the metric name /
+        size = int(os.getenv("CHUNK_SIZE", "900"))
+        overlap = int(os.getenv("CHUNK_OVERLAP", "120"))
+
+        # Index "title. title. passage" so the title (which carries the metric name /
         # acronym, e.g. "Glossary: NRR (NRR)") is searchable and weighted — a query for
-        # "NRR" then surfaces the NRR doc instead of an arbitrary keyword match.
+        # "NRR" then surfaces the NRR passage instead of an arbitrary keyword match.
         def _indexed(t, c):
             return f"{t}. {t}. {c}"
-        sig = (len(records), hash(tuple(t for t, _ in records)))
+
+        passages: List[Tuple[str, str]] = []          # (title, passage)
+        for title, content in records:
+            for piece in chunk_text(content or "", size, overlap):
+                passages.append((title, piece))
+        if not passages:
+            return []
+
+        sig = (len(passages), hash(tuple(t for t, _ in passages)), size, overlap)
         if _HYBRID is None or _HYBRID_SIG != sig:
             r = HybridRetriever(
                 embedding_model=os.getenv("EMBEDDING_MODEL", "BAAI/bge-m3"),
                 reranker_model=os.getenv("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3"),
             )
-            r.fit([_indexed(t, c) for t, c in records])
+            log.info("Hybrid index: %d docs -> %d passages (size=%d overlap=%d)",
+                     len(records), len(passages), size, overlap)
+            r.fit([_indexed(t, c) for t, c in passages])
             _HYBRID, _HYBRID_SIG = r, sig
-        by_chunk = {_indexed(t, c): (t, c) for t, c in records}
+        by_chunk = {_indexed(t, c): (t, c) for t, c in passages}
         out = []
         for hit in _HYBRID.retrieve(query, top_n=top_k):
-            title, content = by_chunk.get(hit["chunk"], ("Document", hit["chunk"]))
-            out.append((title, content, float(hit.get("score", 1.0))))
+            title, passage = by_chunk.get(hit["chunk"], ("Document", hit["chunk"]))
+            out.append((title, passage, float(hit.get("score", 1.0))))
         return out
     except Exception as e:  # never break the chat path
         log.warning("Hybrid retrieve failed (falling back to vector): %s", e)
