@@ -22,6 +22,7 @@ logs/
 *.log
 tmp/
 test-results/
+eval/*.json
 
 # Large data (keep schema, not runtime data)
 enhanced_synthetic_dataset/pdf/
@@ -66,3 +67,6 @@ docs/STRATEGY_DRIFT_AUDIT.md
 steps.md
 venv/
 frontend/playwright-report/
+
+# Backup from the .env line-ending repair (safe to delete once verified)
+.env.bak-corrupted
