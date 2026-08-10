@@ -15,6 +15,7 @@ Vector store via env: VECTOR_STORE=chroma | qdrant (default: chroma in dev)
 from __future__ import annotations
 
 import os
+import time
 from typing import Any, Dict, List, Optional, Tuple
 
 from src.core.logger import get_logger
@@ -44,6 +45,70 @@ except ImportError:
     _LOCAL_EMBED = False
     log.info("sentence-transformers not installed — local embedding/reranker unavailable "
              "(remote EMBEDDING_ENDPOINT / RERANK_URL still work)")
+
+
+def _is_still_waking(result: Any) -> bool:
+    """True when a remote inference host answered 'not ready yet, I'm starting'.
+
+    An on-demand GPU host (the shared orchestrator routing to a sleeping Lightning
+    Studio) does NOT hold the connection open while it boots — it answers in ~2s with
+    HTTP 200 and an error body, having *triggered* the wake:
+        {"error": "HTTP Error 530: <none>", "studio": 1, "_woke": true, ...}
+    So a longer socket timeout is useless here; the client has to come back later.
+    Sleeping is the normal, expected state of a free-tier studio, not a fault.
+    """
+    if not isinstance(result, dict):
+        return False
+    if not result.get("error"):
+        return False
+    if result.get("_woke"):
+        return True
+    blob = f"{result.get('error')} {result.get('failover_errors', '')}"
+    return "530" in blob or "waking" in blob.lower() or "cold" in blob.lower()
+
+
+def _post_json_awaiting_wake(url: str, payload: Dict[str, Any], headers: Dict[str, str],
+                             timeout: float, what: str) -> Any:
+    """POST JSON, retrying while the host reports it is still waking up.
+
+    This is a retry against the SAME configured provider — not the silent
+    provider-chaining that _encode/rerank deliberately refuse to do. The provider never
+    changes; we simply wait for the one that was chosen to finish booting, which is the
+    documented behaviour of an on-demand GPU host and is the orchestrator's own wake
+    logic doing its job (we never poke its wake endpoint ourselves).
+
+    Budget: INFERENCE_WAKE_TIMEOUT seconds total (default 420 — a cold Lightning Studio
+    plus tunnel typically needs a couple of minutes), polled with backoff.
+    """
+    import json as _json, urllib.request
+    budget = float(os.getenv("INFERENCE_WAKE_TIMEOUT", "420"))
+    delay = float(os.getenv("INFERENCE_RETRY_DELAY", "15"))
+    deadline = time.monotonic() + budget
+    attempt = 0
+    last_desc = "unknown"
+    while True:
+        attempt += 1
+        try:
+            req = urllib.request.Request(url, data=_json.dumps(payload).encode(), headers=headers)
+            result = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+            if not _is_still_waking(result):
+                if attempt > 1:
+                    log.info("%s ready after %d attempt(s)", what, attempt)
+                return result
+            last_desc = str(result.get("error"))[:120]
+        except Exception as e:
+            # A transport-level failure can also mean "still coming up" — keep waiting
+            # until the budget is spent, then surface the real error.
+            last_desc = f"{type(e).__name__}: {e}"[:120]
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise RuntimeError(
+                f"{what}: host still not ready after {budget:.0f}s "
+                f"({attempt} attempts). Last: {last_desc}")
+        log.info("%s: host still waking (attempt %d, %s) — retrying in %.0fs "
+                 "(%.0fs of budget left)", what, attempt, last_desc, delay, remaining)
+        time.sleep(min(delay, max(remaining, 0)))
+        delay = min(delay * 1.5, 60.0)
 
 
 def _cosine_similarity(a, b):
@@ -176,9 +241,12 @@ class HybridRetriever:
             return arr
         # Generic contract (a Studio/orchestrator host) — same shape
         # AUDIO_PROCESSOR_URL/DOC_PROCESSOR_URL use elsewhere in this codebase.
-        body = _json.dumps({"texts": texts, "model": self.embedding_model_name}).encode()
-        req = urllib.request.Request(url.rstrip("/") + "/embed", data=body, headers=h)
-        result = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+        # Waits through an on-demand host's cold start (see _post_json_awaiting_wake).
+        result = _post_json_awaiting_wake(
+            url.rstrip("/") + "/embed",
+            {"texts": texts, "model": self.embedding_model_name},
+            h, timeout, "remote embed",
+        )
         vecs = result.get("embeddings")
         if not vecs:
             raise RuntimeError(f"remote embed host returned no embeddings ({url})")
@@ -455,15 +523,17 @@ def _rerank_remote(query: str, texts: List[str]) -> List[float]:
     remote = os.getenv("RERANK_URL", "").strip()
     if not remote:
         raise RuntimeError("RERANK_PROVIDER=remote but RERANK_URL is not set")
-    import json as _json, urllib.request
-    body = _json.dumps({"query": query, "texts": texts}).encode()
     h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
     tk = os.getenv("INFERENCE_TOKEN", "").strip()
     if tk:
         h["Authorization"] = "Bearer " + tk
-    req = urllib.request.Request(remote.rstrip("/") + "/rerank", data=body, headers=h)
     timeout = float(os.getenv("RERANK_TIMEOUT", "12"))
-    scores = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["scores"]
+    # Waits through an on-demand host's cold start, same as the embed path.
+    result = _post_json_awaiting_wake(
+        remote.rstrip("/") + "/rerank",
+        {"query": query, "texts": texts}, h, timeout, "remote rerank",
+    )
+    scores = result.get("scores")
     if not (isinstance(scores, list) and len(scores) == len(texts)):
         raise RuntimeError(f"remote rerank host returned {len(scores) if isinstance(scores, list) else type(scores)} scores for {len(texts)} texts")
     return [float(s) for s in scores]
