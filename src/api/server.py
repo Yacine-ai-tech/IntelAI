@@ -2199,3 +2199,39 @@ async def export_data(
         log.error("Data export error: %s", e)
         update_export_log(export_id=export_id, status="failed", error_message=str(e)[:500])
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# ════════════════════════════════════════════════════════════
+# SPA CATCH-ALL — must stay LAST (routes are matched in definition order)
+# ════════════════════════════════════════════════════════════
+
+@app.get("/{full_path:path}", include_in_schema=False)
+async def spa_fallback(full_path: str):
+    """Serve the SPA's index.html for client-side routes.
+
+    The frontend is a client-side-routed React app, so /dashboard, /chat, /api-docs …
+    exist only in the browser's router — the server has no route for them. Without this
+    fallback the single-container deployment (FastAPI serving frontend/dist itself, per
+    SELF_HOSTING.md and the Dockerfile) 404s on every deep link: refreshing any page,
+    opening a bookmark, or following a shared URL all fail, and only "/" works. Verified
+    against the real production topology (uvicorn src.api.server:app, no dev proxy):
+    /dashboard, /chat, /api-docs, /settings and /knowledge-graph all returned 404 before
+    this existed.
+
+    A split deploy (Vercel frontend + this API) never hit it because vercel.json already
+    rewrites /(.*) to /index.html — which is exactly why it survived: the hosted demo
+    masks a bug that every self-hoster would hit immediately.
+
+    API/doc paths are excluded so a genuinely wrong endpoint still returns a JSON 404
+    instead of silently handing back HTML (which would surface downstream as a confusing
+    JSON-parse error rather than "that route doesn't exist").
+    """
+    import os as _o
+    from fastapi.responses import FileResponse
+    if full_path.startswith(("api/", "health", "docs", "openapi.json", "metrics", "static/", "assets/")):
+        raise HTTPException(status_code=404, detail="Not Found")
+    spa = _o.path.join(_o.path.dirname(_o.path.dirname(_o.path.dirname(__file__))),
+                       "frontend", "dist", "index.html")
+    if _o.path.exists(spa):
+        return FileResponse(spa)
+    raise HTTPException(status_code=404, detail="Not Found")
