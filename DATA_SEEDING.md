@@ -125,3 +125,43 @@ period,category,segment,metric_name,value,unit,direction,source
 
 Only `metric_name` and `value` are required; the rest default sensibly (see
 `store_kpi_metrics()` in `src/services/pg_store.py`).
+
+## 7. Real document corpus (knowledge base, not KPI rows)
+
+The KPI catalog above is numeric time series. A RAG copilot also needs real prose to
+retrieve and cite — so alongside it, `data/<Domain>/` holds a real, sourced, multi-format
+document corpus ingested through `POST /api/v1/ingest/document` (the same endpoint a
+self-hoster's own upload goes through), not generated text:
+
+| Domain | File(s) | Source | Format |
+|---|---|---|---|
+| Finance | Salesforce 10-K (FY2026) + two 10-Qs | SEC EDGAR (public, no auth) | Real filing text (HTML->text) |
+| Finance | Orange S.A. H1 2025 financial report (French) | assets.orange.com (official IR) | PDF, French |
+| Finance | Sonatel Group FY/Q3 2025 results (FCFA figures) | sonatel.sn press releases | Markdown (transcribed from the official release text — the source PDF wouldn't download intact in this environment; see the file header for the honest note on that) |
+| Growth | Salesforce Q1 FY27 earnings release | SEC EDGAR (8-K exhibit) | Real filing text |
+| People | IBM HR Analytics Employee Attrition dataset (1,470 real records) | github.com/IBM/employee-attrition-aif360 (official IBM repo) | CSV |
+| People | HR employee churn dataset (~14,999 real records) | Public mirror (pycaret/datasets) | CSV |
+| Operations | US industrial production index + capacity utilization | FRED (Federal Reserve Economic Data), 1919-present | CSV |
+| Logistics | US freight transportation index + business inventories | FRED | CSV |
+| IT | Recent real CVEs (critical severity + 2026 recent) | NVD (National Vulnerability Database) REST API | JSON |
+| IT | DORA 2024 State of DevOps report findings | dora.dev (Google Cloud/DORA, official) | Markdown |
+| ESG | Salesforce FY25 Stakeholder Impact Report | salesforce.com (official) | PDF |
+| ESG | Global CO2 emissions by country, 2018-2022 | World Bank Open Data API | JSON |
+
+**Bilingual + multi-currency**: the Orange/Sonatel documents are real French-language
+content with FCFA (XOF)-denominated figures — deliberately included so the hybrid
+retrieval/reranking path (§ hybrid_retrieval.py) has real non-English content to be
+evaluated against, not just the glossary's static FR translations.
+
+**Known gap, stated plainly**: audio ingestion (`POST /api/v1/ingest/audio`) was not
+exercised with real audio in this pass — it requires `AUDIO_PROCESSOR_URL` pointed at a
+running compliant processor (a VoiceFlow instance or equivalent), which wasn't available
+in this environment. A real, freely-licensed audio file (a Federal Reserve Bank of
+Richmond "Speaking of the Economy" podcast episode, real economic-policy content, direct
+MP3 from their official Libsyn RSS feed) is staged at `data/Growth/*.mp3` for whenever an
+audio processor is configured — it was not fabricated, just not yet run through the
+pipeline.
+
+Re-run the ingestion any time with a script matching `scripts/seed_via_api.py`'s
+auth/discovery pattern, pointed at `/api/v1/ingest/document` for non-CSV files under
+`data/<Domain>/`.
