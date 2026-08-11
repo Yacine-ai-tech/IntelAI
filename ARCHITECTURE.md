@@ -245,6 +245,39 @@ environment — so the image build is unverified. What was verified is the thing
 would run: the exact production CMD, same-origin static serving from `frontend/dist`, and
 the API under that topology.
 
+## Steps 7 & 9 — cross-project integration + real writes
+
+16. **Three id sequences had fallen behind their tables — every INSERT was failing.**
+    Found by exercising the HMAC-signed webhook's *happy path* (the auth paths were
+    already correct: 501 with no secret configured, 401 for missing and for wrong
+    signature). A correctly-signed request returned **500**:
+    `psycopg.errors.UniqueViolation: duplicate key value violates unique constraint
+    "kpi_metrics_pkey" DETAIL: Key (id)=(3) already exists.`
+
+    | table | rows / max(id) | sequence was at |
+    |---|---|---|
+    | `kpi_metrics` | 10,452 | **3** |
+    | `kpi_entities` | 50,783 | **1** |
+    | `audit_trail` | 23 | **1** |
+
+    So KPI ingestion (webhook **and** CSV **and** metrics), GraphRAG entity writes, and
+    audit logging were all broken on insert — a silent, total write outage on the live
+    database. The INSERTs never name `id`, so this came from rows arriving outside the
+    sequence (bulk COPY / dump-restore / a migration carrying ids across), which is how a
+    seeded database normally gets populated — meaning it will recur.
+
+    Fixed durably rather than by hand: `_resync_serial_sequences()` runs at startup,
+    finds every SERIAL sequence in `public`, and `setval`s it to
+    `GREATEST(max(id), current sequence value)` — never rewinds a healthy sequence, is
+    idempotent, and self-heals after any future bulk load. Confirmed in the startup log
+    of a fresh boot: `Verified/resynced 3 id sequence(s)`.
+
+    Verified after the fix, against the real database: a correctly-signed webhook returns
+    `{"status":"success","processed":1,"type":"kpi_metrics"}` 200. The single probe row
+    was written with an unmistakable tag (`metric='WebhookVerifyProbe'`,
+    `source='CLAUDE_VERIFY_PROBE'`), then deleted with verification — `kpi_metrics` is
+    back to exactly 10,452 rows and 0 probe rows remain.
+
 ## Known drift / not yet done
 
 - **Audio ingestion untested with a real file** — `AUDIO_PROCESSOR_URL` is wired to the
