@@ -101,6 +101,70 @@ def _init_pool():
     return _pool
 
 
+def _resync_serial_sequences(conn) -> int:
+    """Make every SERIAL sequence point past the largest id already in its table.
+
+    A sequence that has fallen behind its table is a silent, total write outage: the next
+    INSERT reuses an existing id and dies with
+    `UniqueViolation: duplicate key value violates unique constraint "<tbl>_pkey"`.
+    It happens whenever rows arrive without going through the sequence — a bulk COPY, a
+    dump/restore, a migration that carried ids across — which is exactly how a seeded
+    database gets populated.
+
+    Found live, and it was not hypothetical: kpi_metrics held 10,452 rows with its
+    sequence at 3, kpi_entities 50,783 rows with its sequence at 1, audit_trail 23 rows
+    at 1 — so KPI ingestion (webhook/CSV/metrics), GraphRAG entity writes, and audit
+    logging were all failing on every insert.
+
+    Runs at startup: cheap (one query plus a setval per out-of-date sequence), idempotent,
+    and self-healing after any future bulk load. Never lowers a sequence.
+    """
+    fixed = 0
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT c.relname AS tbl, a.attname AS col,
+                       pg_get_serial_sequence(c.relname, a.attname) AS seq
+                FROM pg_class c
+                JOIN pg_attribute a ON a.attrelid = c.oid AND a.attnum > 0
+                JOIN pg_namespace n ON n.oid = c.relnamespace
+                WHERE c.relkind = 'r' AND n.nspname = 'public'
+                  AND pg_get_serial_sequence(c.relname, a.attname) IS NOT NULL
+            """)
+            targets = cur.fetchall()
+
+        for row in targets:
+            tbl = row["tbl"] if isinstance(row, dict) else row[0]
+            col = row["col"] if isinstance(row, dict) else row[1]
+            seq = row["seq"] if isinstance(row, dict) else row[2]
+            with conn.cursor() as cur:
+                # setval(..., max(id)) so the NEXT nextval() returns max(id)+1.
+                # GREATEST(...) with the sequence's own value guarantees this never
+                # rewinds a healthy sequence (which would reintroduce the collision).
+                cur.execute(
+                    f'SELECT setval(%s, GREATEST((SELECT COALESCE(MAX("{col}"), 0) FROM "{tbl}"), '
+                    f'(SELECT last_value FROM {seq})))', [seq])
+                cur.execute(f'SELECT last_value FROM {seq}')
+                new_val = cur.fetchone()
+                new_val = new_val["last_value"] if isinstance(new_val, dict) else new_val[0]
+                cur.execute(f'SELECT COALESCE(MAX("{col}"), 0) AS m FROM "{tbl}"')
+                mx = cur.fetchone()
+                mx = mx["m"] if isinstance(mx, dict) else mx[0]
+            if new_val >= mx and mx > 0:
+                fixed += 1
+        conn.commit()
+        if fixed:
+            log.info("✅ Verified/resynced %d id sequence(s)", fixed)
+    except Exception as e:
+        # Never block startup on this — it is a repair, not a requirement.
+        log.warning("Sequence resync skipped: %s", e)
+        try:
+            conn.rollback()
+        except Exception:
+            pass
+    return fixed
+
+
 def _get_conn():
     """Get a PostgreSQL connection. Uses pool if available, else direct connect.
     
@@ -377,6 +441,7 @@ def init_pg_tables():
 
         conn.commit()
         log.info("✅ PostgreSQL tables initialized")
+        _resync_serial_sequences(conn)
         try:
             seed_glossary_knowledge_docs()
         except Exception as _ge:
