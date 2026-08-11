@@ -54,7 +54,13 @@ def score_via_evaluator(client: httpx.Client, query: str, answer: str,
                          contexts: List[str], persona: str) -> Dict[str, Any]:
     headers = {"Content-Type": "application/json"}
     if RAG_EVALUATOR_TOKEN:
+        # Sent under both names: `Authorization: Bearer` is the generic form any
+        # RAG_EVALUATOR_URL-compatible service would recognize; `X-OmniIntel-Internal-Token`
+        # is what the upstream RAGeval project's own internal-token gate actually checks
+        # (REQUIRE_INTERNAL_TOKEN=true by default) — set RAG_EVALUATOR_TOKEN to the same
+        # value as that deployment's OMNIINTEL_INTERNAL_TOKEN and both are satisfied.
         headers["Authorization"] = f"Bearer {RAG_EVALUATOR_TOKEN}"
+        headers["X-OmniIntel-Internal-Token"] = RAG_EVALUATOR_TOKEN
     resp = client.post(
         f"{RAG_EVALUATOR_URL}/eval/score",
         json={"query": query, "answer": answer, "contexts": contexts, "persona": persona,
