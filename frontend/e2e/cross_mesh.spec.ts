@@ -63,9 +63,9 @@ test.describe('Phase 10 — Cross-Mesh Grand Tour', () => {
     expect([200, 401, 403, 404]).toContain(resp.status());
   });
 
-  test('Step D: RAGeval API — evaluations endpoint reachable', async ({ request }) => {
+  test('Step D: RAGeval API — query log endpoint reachable', async ({ request }) => {
     if (!adminToken) test.skip();
-    const resp = await request.get(`${URLS.rageval_api}/api/evaluations`, {
+    const resp = await request.get(`${URLS.rageval_api}/eval/queries`, {
       headers: { 'Authorization': `Bearer ${adminToken}` }
     });
     expect([200, 401, 403, 404]).toContain(resp.status());
