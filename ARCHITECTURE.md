@@ -4,7 +4,7 @@ Single source of truth for what's actually confirmed working, what's unverified,
 known drift — kept current as this audit progresses. Everything under "Confirmed
 working" was actually run and observed, not inferred from reading code.
 
-Last updated: 2026-08-10 (live audit session).
+Last updated: 2026-08-14 (live production verification session).
 
 ## Confirmed working (actually run and observed)
 
@@ -433,9 +433,64 @@ ingesting again, split it first.
 - **`DATA_SEEDING.md` rewritten** from an internal audit/changelog voice into standing
   public documentation. Same facts (row counts, sources, known gaps), different framing.
 
+## 2026-08-14 pass, continued — full async refactor, production verification
+
+- **Every remaining blocking call in the request path moved off the event loop.** All 80
+  `pg_store` call sites in `server.py` now run via `await asyncio.to_thread(...)`, plus
+  both `factory.chat(...)` call sites (REST and WebSocket) — the actual LLM+retrieval work,
+  the single most expensive call in a chat request. A background pre-warm task now loads
+  the RAG index at startup (mirrors the existing `_vector_selfheal()` pattern) so the first
+  real chat request doesn't pay that cost inline.
+- **`llm_complete()` had no timeout at all** on either the Groq SDK or LiteLLM call —
+  confirmed live as the cause of a >2-minute chat hang. Fixed with an explicit
+  `LLM_TIMEOUT` (default 30s), now also set explicitly in the live Render env.
+- **`vector_store.py`'s `_embed()` had a real, previously-undiscovered fallback chain** —
+  four nested silent-fallback branches (e.g. `remote`→hf→cohere→local) that an earlier
+  cleanup pass only fixed in `hybrid_retrieval.py`, missing this file entirely. Rewritten
+  to the same explicit `local`/`remote`-only contract with URL-shape dispatch, raising
+  clearly on failure instead of silently degrading to a different provider.
+- **`QdrantVectorStore` was reading `CHROMA_COLLECTION`** (copy-paste bug from the Chroma
+  class) instead of its own collection name. Added a dedicated `QDRANT_COLLECTION` setting.
+- **Embed batching + document-length capping** added to `vector_store.py`'s `reindex()` —
+  some real ingested documents (Orange SA's 277K-char filing, Salesforce's 133K-char ESG
+  report) made even single-document embed calls to the remote provider time out. Batches
+  at `EMBED_BATCH_SIZE` (env-configurable) and caps per-document content at
+  `VECTOR_STORE_CONTENT_CHARS` (default 4000) before embedding. Verified: full reindex now
+  completes, 455/455 points in Qdrant, collection status green.
+- **Production env vars had silently drifted from every local `.env` fix.**
+  `render.yaml`'s `sync: false` vars mean Render's dashboard holds independent values never
+  touched by local edits — discovered by inspecting the live service directly via the
+  Render API. All corrected values (`EMBED_URL`, `RERANK_URL`, `INFERENCE_TOKEN`,
+  `EMBEDDING_MODEL`, `EMBED_BATCH_SIZE`, `LLM_TIMEOUT`) pushed to the live dashboard and
+  the service restarted to pick them up. Also removed three now-dead live vars matching
+  the local cleanup: `HF_TOKEN` (duplicated `INFERENCE_TOKEN`'s value, unused now that
+  `RERANK_PROVIDER=hf` isn't used), `RERANKER_ENDPOINT` (zero code references),
+  `EMBEDDING_ENDPOINT` (dead now that `EMBED_URL` is set; pointed at HF's deprecated
+  `api-inference.huggingface.co` domain).
+- **Chat verified end-to-end against real production** (`intelai.ysiddo-ai-projects.app`,
+  through the public Cloudflare gateway, not a direct Render URL): multiple real requests
+  with a live admin JWT, each returning grounded answers with real citations against the
+  seeded knowledge base and live KPI data. One 502 was observed and traced to a genuine
+  restart-transition window (request landed while a just-triggered redeploy was still
+  swapping instances) — an immediate retry succeeded cleanly; not a recurring issue.
+- **HF vs. orchestrator latency, both verified live, then reset to HF per instruction.**
+  With `EMBED_URL`/`RERANK_URL` pointed at HF's serverless inference: 40–78s per chat
+  response, all inside the timeout budget (embed ≤60s, rerank ≤45s, LLM ≤30s), no hangs —
+  slow because of HF's shared free-tier latency, not a bug. Same test against the
+  orchestrator's already-running Studio (`inference-vol1`, CPU-only, no wake needed):
+  first call 44s (real one-time model-load cost on the Studio), then 15.8s and 40.1s warm —
+  meaningfully faster on average but with its own variance and a real cold-start risk (a
+  bare embed call alone took 26s before its model was in memory) if the Studio's process
+  restarts. Reset back to HF as the active config afterward, confirmed live with one more
+  successful chat call post-reset.
+
 ## Environment this was verified against
 
 Local dev run (`python main.py`) pointed at the **real production Neon Postgres** (by
 explicit user go-ahead, since no local/Docker Postgres was available in this sandbox).
 Qdrant configured but unreachable from this environment (`qdrant-client` not installed
 here) — falls back to in-process retrieval. LLM calls are real (Groq, Anthropic).
+
+The 2026-08-14 continuation pass above was verified directly against the live Render
+production deployment and the live orchestrator, not this local sandbox — per explicit
+instruction to test against the real production app rather than local reproduction.
