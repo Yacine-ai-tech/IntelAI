@@ -123,6 +123,9 @@ class Settings:
         default_factory=lambda: os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
     )
     CHROMA_COLLECTION: str = "company_knowledge"
+    QDRANT_COLLECTION: str = field(
+        default_factory=lambda: os.getenv("QDRANT_COLLECTION", "company_knowledge")
+    )
     CHUNK_SIZE: int = 900
     CHUNK_OVERLAP: int = 120
 
