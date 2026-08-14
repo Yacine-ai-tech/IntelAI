@@ -330,7 +330,15 @@ def reindex(docs: Optional[List[Doc]] = None, force: bool = False) -> int:
     if docs is None:
         from src.services.pg_store import get_knowledge_docs
         df = get_knowledge_docs()
-        docs = [{"doc_id": r.doc_id, "title": r.title, "content": r.content,
+        # This store keeps one embedding per document (not per-chunk, unlike
+        # hybrid_retrieval.py's proper chunking) — some real documents in this corpus
+        # are 100K+ chars (a 56-page report), and embedding that whole string as one
+        # HF request is what actually made a 455-doc reindex outlast every timeout
+        # tried so far, not the batch count. Capped to what's actually useful for a
+        # single dense vector anyway; the fused chat path still gets full-length
+        # chunks from hybrid_retrieval.py separately.
+        cap = int(os.getenv("VECTOR_STORE_CONTENT_CHARS", "4000"))
+        docs = [{"doc_id": r.doc_id, "title": r.title, "content": (r.content or "")[:cap],
                  "source": r.source, "category": ""} for r in df.itertuples()]
     return vs.upsert(docs)
 
