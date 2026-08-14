@@ -1,200 +1,217 @@
-# IntelAI Data Seeding & Multi-Domain Data Model
+# IntelAI Data: what is in the database, and where every number came from
 
-How IntelAI's demo/seed dataset is built, what it's grounded in, and the two ways to load
-it. This describes the actual current implementation (`src/data/seed.py`,
-`scripts/seed_via_api.py`) — not an aspirational spec.
+This describes the dataset IntelAI actually runs on, how it is rebuilt, and what is
+known to be missing. It documents the current implementation, not an intended one.
 
-## 1. Shape of the catalog
+The short version: **the KPI baseline is real published data, not generated.** Every
+row in `kpi_metrics` carries the identifier of the statistical series it came from, so
+any figure on a dashboard can be traced to a publisher and re-checked by a third party.
 
-- **78 months** of continuous history, 2020-01 through 2026-06 (`MONTHS = 78` in
-  `src/data/seed.py`).
-- **7 domains**: Finance, Growth, People, Operations, Logistics, IT, ESG.
-- **146 metrics** per period, three layers:
-  - **Driver metrics** (`STRATEGIC_KPIS` + `OPERATIONAL_DETAIL`) — independently modeled
-    with trend + seasonality + noise. Every `STRATEGIC_KPIS` metric has a sourced,
-    benchmarked definition in `src/data/glossary.py`.
-  - **Derived metrics** (`DERIVED_KPIS`) — computed FROM driver values via the actual
-    documented formula for that metric (e.g. Gross Margin = `(Revenue-COGS)/Revenue`),
-    not a second independent random walk that happens to start near a plausible number.
-    Some are deliberately cross-domain (Rule of 40 needs Finance's EBITDA margin; Revenue
-    per Employee needs both Finance and People) — that's the same synthesis the Overall
-    Enterprise Health Index does, applied at the individual-metric level.
-- Base values are calibrated to sit inside each metric's documented "healthy" band (see
-  §3) so the `healthy` scenario actually reads as healthy against real benchmarks, not
-  just a plausible-looking number in isolation.
+## 1. Why the generated catalog is no longer the baseline
 
-## 2. Why drift is decayed, and why some metrics are ratios
+An earlier dataset filled `kpi_metrics` with 10,452 rows of `source='seed_healthy'` —
+values produced by `src/data/seed.py`'s model of a plausible company. Alongside it,
+413 knowledge-base documents summarised those values in prose that described itself as
+"the authoritative, comprehensive record … audited by the internal compliance team",
+above figures such as `Gross Margin: 100.0 %`.
 
-A metric compounding a constant month-over-month drift for 78 straight months runs away
-to unrealistic extremes — no real company grows or shrinks at a fixed rate for 6.5 years
-straight. Two mitigations, both in `generate_kpi_rows()`:
+Nothing about that is checkable, and the wording asserted an authority the data did not
+have. Both were removed. The generator itself is kept — it is genuinely useful for
+offline demos and for the scenario switcher — but it is no longer what the database is
+seeded with, and its rows are labelled so they can never be mistaken for measurements.
+See §6.
 
-- **Decayed drift**: every driver's drift is multiplied by `0.5 ** (i / 30)` — a ~30-month
-  half-life, so the trend is strongest in year one and settles into a plateau rather than
-  diverging.
-- **Ratio-derived costs**: metrics that are naturally a *fraction of another metric*
-  (COGS, Operating Costs, CAC, Carrying Cost) are computed as `driver * ratio(month)`
-  instead of drifting independently — otherwise two independently-compounding trends (say,
-  Revenue growing while COGS shrinks) diverge into an implausible margin over 6.5 years.
-  See `_ramp()` and the `DERIVED_KPIS` entries that use it.
+## 2. The real KPI layer
 
-## 3. Sources & benchmarks
-
-Base values and healthy/risk thresholds are calibrated against public corporate filings
-and industry benchmark reports, not invented numbers:
-
-- **Finance**: SaaS gross-margin and Rule-of-40 norms (Bessemer Cloud Index), general
-  corporate financial-health ratios (cash runway, D/E) from standard corporate finance
-  benchmarking.
-- **Growth**: SaaS NRR/churn/LTV:CAC/CAC-payback benchmarks (Bessemer Cloud Index,
-  common SaaS-metrics industry reporting).
-- **People**: turnover, time-to-hire, eNPS, revenue-per-employee tech-industry norms
-  (SHRM, common HR-analytics benchmarking).
-- **Operations**: OEE/FPY/defect-rate Six Sigma / lean-manufacturing world-class
-  benchmarks.
-- **Logistics**: on-time-delivery, inventory-turnover, carrying-cost supply-chain
-  benchmarking norms.
-- **IT**: uptime/MTTR/change-failure-rate DORA (DevOps Research and Assessment) metrics,
-  standard SLA/vulnerability-management targets.
-- **ESG**: renewable-energy ratio, board-diversity, audit-compliance norms drawn from GRI
-  (Global Reporting Initiative) — style CSRD/ESG reporting benchmarks.
-
-This grounds *where the numbers should sit*, not a claim that the generated series is
-real historical data for a real company — it's a synthetic, seeded, reproducible dataset
-calibrated against real-world benchmarks. See `eval/BENCHMARK.md` (if present) for any
-actual measured accuracy/eval numbers, which are a separate, honestly-labeled thing from
-this seed catalog.
-
-## 4. The 7 health scenarios + cross-domain cascade
-
-`UNHEALTHY_SCENARIOS` in `src/data/seed.py` (plus `healthy`) — selectable via
-`Admin → Scenarios` or `POST /api/v1/admin/scenario`:
-
-| Scenario | What it stresses |
-|---|---|
-| `healthy` | Baseline, occasional minor anomalies |
-| `declining_financial` | Revenue/margin collapse, cash crunch, debt spike |
-| `high_churn_crisis` | Churn/NRR/LTV:CAC breakdown |
-| `operational_meltdown` | OEE/quality/downtime failure |
-| `talent_crisis` | Turnover/eNPS/hiring collapse |
-| `cybersecurity_breach` | Security incidents, uptime/SLA breach |
-| `esg_compliance_failure` | ESG score/compliance/governance failure |
-
-Each scenario starts with anomalies in its primary domain, then adds a short **cross-domain
-cascade** — secondary anomalies in *other* domains at later month offsets — modeling the
-same chain a real incident follows: an IT/Cybersecurity failure cascades into
-Logistics/Operations delays, which cascades into Growth/customer churn, which cascades
-into Finance/revenue. Severity multipliers are calibrated to land inside each metric's
-documented Risk/Failure Threshold band, not arbitrary numbers — see the comments next to
-each entry in `UNHEALTHY_SCENARIOS`.
-
-## 5. Two ways to load it — which one to use
-
-| | `src/data/seed.py` (`seed_database()`) | `scripts/seed_via_api.py` |
-|---|---|---|
-| Path | Direct write to Postgres via `pg_store` | `POST /api/v1/ingest/csv` per domain, through the real API |
-| Speed | Instant | Real HTTP round-trips, auth, CSV parsing |
-| Used by | Server first-boot, `POST /api/v1/admin/seed`/`/admin/scenario` (needs to be instant) | Standalone script, run manually |
-| What it exercises | Nothing but the DB write path | The actual self-hoster-facing upload flow: auth, CSV schema, RBAC, the `metric_name`→`metric` column mapping |
-| Good for | Local dev bootstrap, instant scenario switching in the Admin UI | Demoing/testing the real ingestion pipeline end-to-end; feeding IntelAI *your own* CSVs instead of the generated catalog (`--path`) |
-
-Both consume the exact same `generate_kpi_rows()` catalog — one source of truth for the
-dataset; the only difference is the delivery mechanism.
+`scripts/fetch_real_kpis.py` downloads the sources; `scripts/build_real_kpis.py` turns
+them into KPI rows; `scripts/seed_real_kpis_via_api.py` loads them through the public
+API. Nothing in that chain generates, interpolates, smooths or extends a value: where a
+publisher has no observation for a period, no row is written.
 
 ```bash
-# Fast, direct (what the server does on first boot):
-python -m src.data.seed declining_financial
-
-# Through the real API (what a self-hoster demoing the upload pipeline would run):
-python scripts/seed_via_api.py declining_financial
-
-# Ingest your own data instead of the generated catalog:
-python scripts/seed_via_api.py --path /path/to/your/csvs/
+python scripts/fetch_real_kpis.py          # download to data/<Domain>/
+python scripts/build_real_kpis.py          # -> data/real_kpis/<domain>_real.csv
+python scripts/seed_real_kpis_via_api.py   # -> POST /api/v1/ingest/csv (global scope)
 ```
 
-## 6. Bringing your own data
+**Measured result: 2,070 rows, 7 domains, 26 distinct sources, 0 rows without provenance.**
 
-`scripts/seed_via_api.py --path <file-or-dir>` ingests real CSVs instead of the generated
-catalog — point it at your own exports. Expected columns (matches
-`POST /api/v1/ingest/csv`'s contract, documented in `server.py`):
+| Domain | Rows | Metrics | Sources |
+|---|---|---|---|
+| ESG | 644 | 5 | World Bank (4 indicators), FRED |
+| People | 366 | 9 | FRED (4 series), IBM HR survey |
+| IT | 251 | 8 | FRED (2 series), NVD |
+| Finance | 242 | 6 | FRED (4 series), Sonatel |
+| Growth | 209 | 3 | FRED (3 series) |
+| Operations | 180 | 2 | FRED (INDPRO, TCU) |
+| Logistics | 178 | 2 | FRED (BUSINV, TSIFRGHTC) |
+
+Provenance strings are `fred:<SERIES_ID>`, `worldbank:<INDICATOR>`, `nvd:cve-2.0`,
+`ibm-hr:attrition-survey`, `sonatel:<period>` — each resolves to a public URL, which
+the digests in §4 print next to the figures.
+
+### What each source is, and its real limitations
+
+| Source | Used for | Frequency | Honest limitation |
+|---|---|---|---|
+| FRED (St. Louis Fed) | 18 series across all 7 domains | monthly, some quarterly | US-only macro indicators; they describe an economy, not one company |
+| World Bank Open Data | 4 ESG indicators | **annual** | latest year is 2022–2024 depending on indicator; no monthly ESG data exists free |
+| NVD 2.0 API | published CVE counts by severity | monthly | a **400-per-window sample**, not the full population — comparable between months because every window is sampled identically, and the metric is named "Published CVEs (sampled)" for that reason |
+| IBM HR attrition survey | 5 workforce aggregates | **single period** | a cross-section of individual employees with no date column. It yields point-in-time aggregates under one period; inventing a monthly history from it would be fabrication |
+| Sonatel communiqués | 3 published FCFA figures | half-year / 9-month | transcribed from the official release text, in FCFA (XOF) |
+
+Two consequences worth stating plainly rather than hiding behind a filled-in grid:
+
+- **The domains are not equally deep.** Real monthly series are abundant for Finance,
+  People, Operations and Logistics, and scarce-to-nonexistent for ESG. ESG gets breadth
+  of indicator instead of frequency, because that is the frequency at which the data
+  exists.
+- **There are no "scenarios" in real data.** The seven health scenarios (§6) are a
+  property of the generator. Published statistics do not come with a healthy/declining
+  switch, and none was invented for them.
+
+World Bank data is filtered to a relevant set of countries and aggregates (world total,
+the FCFA zone matching the Sonatel/Orange material, and the largest emitters) — see
+`WORLDBANK_SEGMENTS` in `build_real_kpis.py`. That is a relevance filter on *which*
+published rows are loaded; the values themselves are exactly as published.
+
+## 3. The document, image and audio corpus
+
+`scripts/ingest_real_corpus.py` walks `data/<Domain>/` and posts each file to the
+endpoint for its type — documents and images to `POST /api/v1/ingest/document`, audio to
+`POST /api/v1/ingest/audio`. IntelAI performs **no** extraction itself: documents and
+images go to the configured document processor, audio to the audio processor
+(STRATEGY.md's standalone rule). The directory name becomes the row's category.
+
+```bash
+python scripts/ingest_real_corpus.py --purge     # re-ingest everything
+python scripts/ingest_real_corpus.py --only sonatel --dry-run
+```
+
+Measured: **15 of 17 files ingested, 434,548 characters.**
+
+| Domain | File | Source | Result |
+|---|---|---|---|
+| Finance | Salesforce 10-K FY2026 | SEC EDGAR | 53,981 chars |
+| Finance | Salesforce 10-Q ×2 | SEC EDGAR | 31,874 + 27,929 chars |
+| Finance | Sonatel results (FCFA, French) | sonatel.sn communiqués | 1,341 chars |
+| Growth | Salesforce Q1 FY27 earnings release | SEC EDGAR 8-K exhibit | 20,293 chars |
+| Growth | Richmond Fed podcast episode (MP3, 5.4MB) | Richmond Fed official RSS | **13,186 chars transcript** via the audio processor |
+| People | IBM HR attrition | IBM employee-attrition repo | 128,965 chars (**832 records**) |
+| People | HR employee churn | public mirror | 154,025 chars (**4,093 records**) |
+| IT | DORA 2024 findings | dora.dev | 1,638 chars |
+| Finance/Ops/Logistics/People | 5 FRED chart PNGs | FRED published charts | 211–286 chars each, via OCR |
+| ESG | Salesforce FY25 Stakeholder Impact Report | salesforce.com | **32 chars — see below** |
+
+**Corrections to earlier claims in this file.** The IBM dataset is **832 rows, not
+1,470**, and the churn dataset is **4,093 rows, not ~14,999** — both downloads are
+partial relative to the canonical published datasets. The aggregates in §2 are computed
+from what is actually on disk, so they describe the sample held here, not the full
+datasets.
+
+**Images are real, and deliberately so.** The six PNGs are FRED's own published charts
+of series that are already in `kpi_metrics` — so a vision/OCR result can be checked
+against the stored numbers, which a decorative stock image would not allow.
+
+**Raw series are not knowledge-base documents.** `fred_*.csv`, `worldbank_*.json`,
+`nvd_*.json` and `.log` files are the *input* to the KPI layer and are skipped by the
+corpus ingester. A CSV of 90 numbers retrieves badly and only restates data the KPI
+tables already hold exactly; 10,000 lines of Apache access logs chunk into thousands of
+near-identical passages that crowd out real answers.
+
+### Known gaps, unresolved
+
+- **Orange S.A. H1-2025 report (890KB, 82pp, French): not ingested.** The document
+  processor's origin returns a Cloudflare 502 on this file specifically, on every route,
+  while `/health` and smaller files succeed. It extracted 276,265 characters in earlier
+  testing, so this is a processor-side regression, not a missing capability.
+- **`fred_chart_RSXFS.png`: not ingested.** Consistent 502 from the same processor,
+  while the other five charts of near-identical size succeed.
+- **Salesforce ESG PDF: 32 characters.** The file is malformed at source. It previously
+  yielded 31,729 characters, so the processor could read it before; it cannot now.
+
+These three are external to IntelAI and are recorded here rather than papered over.
+
+## 4. KPI digests — how numbers become retrievable text
+
+The retrieval index searches `knowledge_base`, not `kpi_metrics`, so without a text
+representation the assistant cannot answer "what was unemployment in June 2026" even
+though the number is in the database. `scripts/build_kpi_digest_docs.py` writes that
+text, in **English and French**, for the most recent 18 periods per domain.
+
+Every line is a restatement of a stored value plus the series it came from. There is no
+commentary, no target, no explanation of why a number moved, and no claim of audit —
+which is precisely how the documents this replaced went wrong.
+
+```bash
+python scripts/build_kpi_digest_docs.py --months 18   # -> data/kpi_digests/<Domain>/
+python scripts/ingest_real_corpus.py --only _en.md
+```
+
+## 5. Glossary
+
+202 rows, 101 terms × EN/FR, seeded from `src/data/glossary.py` +
+`src/data/glossary_fr.py` on startup (idempotent — the count is stable across restarts).
+French names are only assigned where a genuine standard French term exists, rather than
+machine-translating every entry.
+
+A legacy single-language set of 101 rows under `glossary/<domain>/…` was removed: it
+duplicated the English entries with slightly different wording, and near-duplicate
+passages compete with each other in retrieval.
+
+## 6. The generator, and what it is now for
+
+`src/data/seed.py` still builds a modelled 7-domain catalog with driver metrics, formula-
+derived metrics, decayed drift, seven health scenarios with cross-domain cascades, and
+three verticals (`saas`, `healthcare`, `esg`). It remains the right tool for an offline
+demo, for the Admin scenario switcher, and for testing the pipeline without network
+access.
+
+It is **not** what the live database is seeded with, and its output must never be
+presented as measurement. Anything it writes is labelled `seed_*` so it is separable
+from sourced rows by a single query:
+
+```sql
+SELECT source, COUNT(*) FROM kpi_metrics GROUP BY 1;   -- generated vs sourced
+```
+
+```bash
+python -m src.data.seed healthy healthcare           # DB-direct, generated data
+python -m src.data.seed declining_financial saas     # scenario + vertical compose
+```
+
+Verticals rescale the same catalog and add the metrics that vertical is judged on
+(SaaS: trial conversion, expansion MRR, logo retention; healthcare: bed occupancy,
+readmission, HCAHPS; ESG: CSRD readiness, Scope 3 coverage). Measured output, seed=42:
+generic 11,376 rows / 146 metrics; saas 11,922 / 153; healthcare 12,156 / 156; esg
+11,844 / 152.
+
+## 7. Bringing your own data
+
+`POST /api/v1/ingest/csv` takes:
 
 ```
 period,category,segment,metric_name,value,unit,direction,source
 2026-01,Finance,Global,Revenue,2500000,USD,up,my_export
 ```
 
-Only `metric_name` and `value` are required; the rest default sensibly (see
-`store_kpi_metrics()` in `src/services/pg_store.py`).
+Only `metric_name` and `value` are required. Two behaviours worth knowing:
 
-## 7. Real document corpus (knowledge base, not KPI rows)
+- **A per-row `source` column is preserved** as that row's provenance; `source_name`
+  labels rows that don't carry one. (Previously every row was stamped with the single
+  form field, which erased exactly the provenance that makes a figure checkable.)
+- **Rows are scoped to the uploader by default**, so one visitor's upload never appears
+  on another's dashboard. `global_scope=true` writes the shared baseline with a NULL
+  owner and is restricted to admins — this is what the seeding scripts use.
 
-The KPI catalog above is numeric time series. A RAG copilot also needs real prose to
-retrieve and cite — so alongside it, `data/<Domain>/` holds a real, sourced, multi-format
-document corpus ingested through `POST /api/v1/ingest/document` (the same endpoint a
-self-hoster's own upload goes through), not generated text:
+## 8. Evaluation set
 
-| Domain | File(s) | Source | Format |
-|---|---|---|---|
-| Finance | Salesforce 10-K (FY2026) + two 10-Qs | SEC EDGAR (public, no auth) | Real filing text (HTML->text) |
-| Finance | Orange S.A. H1 2025 financial report (French) | assets.orange.com (official IR) | PDF, French |
-| Finance | Sonatel Group FY/Q3 2025 results (FCFA figures) | sonatel.sn press releases | Markdown (transcribed from the official release text — the source PDF wouldn't download intact in this environment; see the file header for the honest note on that) |
-| Growth | Salesforce Q1 FY27 earnings release | SEC EDGAR (8-K exhibit) | Real filing text |
-| People | IBM HR Analytics Employee Attrition dataset (1,470 real records) | github.com/IBM/employee-attrition-aif360 (official IBM repo) | CSV |
-| People | HR employee churn dataset (~14,999 real records) | Public mirror (pycaret/datasets) | CSV |
-| Operations | US industrial production index + capacity utilization | FRED (Federal Reserve Economic Data), 1919-present | CSV |
-| Logistics | US freight transportation index + business inventories | FRED | CSV |
-| IT | Recent real CVEs (critical severity + 2026 recent) | NVD (National Vulnerability Database) REST API | JSON |
-| IT | DORA 2024 State of DevOps report findings | dora.dev (Google Cloud/DORA, official) | Markdown |
-| ESG | Salesforce FY25 Stakeholder Impact Report | salesforce.com (official) | PDF |
-| ESG | Global CO2 emissions by country, 2018-2022 | World Bank Open Data API | JSON |
+`tests/rag_eval.jsonl` is generated by `scripts/build_rag_eval_set.py` from the database,
+not written by hand. Each case names a metric that exists for a period that exists, or a
+document that is present in `knowledge_base`; cases that cannot be verified are dropped
+rather than shipped.
 
-**Bilingual + multi-currency**: the Orange/Sonatel documents are real French-language
-content with FCFA (XOF)-denominated figures — deliberately included so the hybrid
-retrieval/reranking path (§ hybrid_retrieval.py) has real non-English content to be
-evaluated against, not just the glossary's static FR translations.
-
-**Known gap, stated plainly**: audio ingestion (`POST /api/v1/ingest/audio`) was not
-exercised with real audio in this pass — it requires `AUDIO_PROCESSOR_URL` pointed at a
-running compliant processor (a VoiceFlow instance or equivalent), which wasn't available
-in this environment. A real, freely-licensed audio file (a Federal Reserve Bank of
-Richmond "Speaking of the Economy" podcast episode, real economic-policy content, direct
-MP3 from their official Libsyn RSS feed) is staged at `data/Growth/*.mp3` for whenever an
-audio processor is configured — it was not fabricated, just not yet run through the
-pipeline.
-
-Re-run the ingestion any time with a script matching `scripts/seed_via_api.py`'s
-auth/discovery pattern, pointed at `/api/v1/ingest/document` for non-CSV files under
-`data/<Domain>/`.
-
-## 8. Verticals (STRATEGY.md §1.4)
-
-The generic catalog reads as "Company X", which is the weakest framing for a buyer —
-STRATEGY.md's point is that "Acme SaaS, ARR $4.2M, churn 3.1%" lands where a generic demo
-does not. A vertical **rescales the same catalog** to a plausible company of that type and
-**adds the metrics that vertical is actually judged on**. It is not a separate schema, so
-every dashboard, persona, and the copilot keep working unchanged, and verticals compose
-freely with the 7 health scenarios.
-
-| Vertical | Company shape | Adds |
-|---|---|---|
-| `saas` | Series A SaaS (Revenue ×0.35, Headcount ×0.45) | Trial Signups, Trial→Paid Conversion, Expansion MRR, Logo Retention, Seats per Account, Feature Adoption, API Error Rate |
-| `healthcare` | Provider network (Revenue ×1.8, Headcount ×4.0) | Patient Volume, Bed Occupancy, Avg Length of Stay, 30-day Readmission, Avg Wait Time, Clinical Staff Ratio, Nurse Turnover, HCAHPS, Clinical Incident Rate, HIPAA Audit Findings |
-| `esg` | Sustainability reporting (Revenue ×1.2, emissions ×1.6) | CSRD Readiness, Scope 3 Supplier Coverage, Assured Data Points, Energy Intensity, Green Revenue Share, Taxonomy-Aligned CapEx |
-
-Healthcare figures follow published US hospital-operations norms (readmission ~15%, bed
-occupancy ~65-75%, HCAHPS ~70); SaaS follows the same benchmark sources as the base catalog.
-
-```bash
-python -m src.data.seed healthy healthcare              # DB-direct
-python -m src.data.seed declining_financial saas        # scenario + vertical compose
-python scripts/seed_via_api.py healthy --vertical esg   # through the real ingestion API
-```
-
-Measured output (78 months, seed=42):
-
-| | rows | unique metrics | Revenue (latest) | Headcount |
-|---|---|---|---|---|
-| generic | 11,376 | 146 | — | — |
-| saas | 11,922 | 153 (+7) | 1,838,630 | 76 |
-| healthcare | 12,156 | 156 (+10) | 9,455,813 | 454 |
-| esg | 11,844 | 152 (+6) | 6,303,875 | 113 |
+This matters because the previous set asked about gross margin, EBITDA and net profit —
+metrics that belonged to the deleted generated data. Against the real corpus those
+questions have no answer, so the scores would have measured the mismatch rather than the
+system.

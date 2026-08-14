@@ -192,30 +192,38 @@ orchestrator.
     combination `validate_required_keys()` aborts startup on. Set, along with 19 other
     required vars (delegation URLs, explicit providers, CORS, demo config).
 
-## RAGeval re-measurement — deliberately deferred (not skipped)
+## RAGeval re-measurement — preconditions now met (2026-08-11)
 
-The end-to-end RAG quality re-run is blocked on RAGeval being mid-flight, and running it
-early would produce numbers that measure a stale evaluator rather than IntelAI:
+The re-run was deferred while RAGeval was mid-flight, because measuring against a stale
+evaluator would have produced numbers about the evaluator rather than IntelAI. All three
+preconditions now hold:
 
-| | State when checked (2026-08-10) |
-|---|---|
-| `omnismart-rageval` installed here | **0.1.9** |
-| PyPI latest | 0.1.14 |
-| RAGeval repo `pyproject.toml` | 0.1.15 (unreleased) |
-| Uncommitted files in the RAGeval repo | 12 (api.py, core/config.py, requirements.txt, …) |
+| | 2026-08-10 (blocked) | 2026-08-11 (verified) |
+|---|---|---|
+| RAGeval working tree | 12 uncommitted files | **clean**, at `7183196` "bump to 0.1.16, published to PyPI" |
+| PyPI latest | 0.1.14 | **0.1.16** |
+| Installed here | 0.1.9 | **0.1.16** |
 
-**Retest preconditions** — all three must hold, then re-run
-`scripts/evaluate_with_rageval_package.py` (in-process) and
-`scripts/evaluate_with_rageval.py` (against the live service):
-1. RAGeval's working tree is committed (`git -C ../RAGeval status --porcelain` empty)
-   and pushed;
-2. PyPI shows the new version and it is installed here
-   (`pip install -U omnismart-rageval`; confirm `importlib.metadata.version` matches);
-3. the live RAGeval deployment is running that same version.
+The package imports as `rageval`; `RAGEvaluator.score_interaction(...)` is unchanged, so
+the existing scripts are compatible. 0.1.16 adds
+`score_groundedness_consensus(answer, context)` — multi-judge consensus across the
+configured `JUDGE_MODELS` — which is the right instrument for the research benchmarking
+in steps 12–15.
 
-The last full measurement (25/30 cases, avg groundedness 22.8%, overall 11.6%) predates
-every retrieval fix in this document AND used evaluator 0.1.9 — it is a stale baseline on
-both sides and should not be quoted as the current state of either system.
+**The evaluation set had to be rebuilt first, and this matters for interpreting any
+score.** The previous 30 cases asked about gross margin, EBITDA and net profit — metrics
+that belonged to the deleted generated data. Against the real corpus those questions have
+no answer, so the scores would have measured the mismatch, not the system. The set is now
+generated from the database by `scripts/build_rag_eval_set.py`: 38 cases (19 KPI, 7
+French, 9 document, 2 glossary, 1 cross-domain) across 8 personas, each naming a metric
+that exists for a period that exists or a document present in `knowledge_base`. Cases
+that cannot be verified are dropped rather than shipped — one was, for a glossary term
+that does not exist.
+
+The old measurement (25/30 cases, avg groundedness 22.8%, overall 11.6%) is stale on
+**three** counts now — it predates every retrieval fix here, used evaluator 0.1.9, and
+was scored against a corpus that no longer exists. It is not a baseline for anything and
+should not be quoted.
 
 ## Step 10 — production-parity run (prod CMD, same origin, no dev proxy)
 
@@ -277,6 +285,77 @@ the API under that topology.
     was written with an unmistakable tag (`metric='WebhookVerifyProbe'`,
     `source='CLAUDE_VERIFY_PROBE'`), then deleted with verification — `kpi_metrics` is
     back to exactly 10,452 rows and 0 probe rows remain.
+
+## The dataset was generated, not measured — replaced 2026-08-11
+
+The per-project database migration was expected to deliver real data. It did not: the new
+database (`ep-wandering-mode…/neondb`) was a verbatim copy of the old one — identical
+counts (10,452 / 50,783 / 733 / 24) — and `kpi_metrics` was **100% `source='seed_healthy'`**,
+the generated catalog. Of 733 knowledge documents only **17** were real; 413 were generated
+KPI summaries that described themselves as *"the authoritative, comprehensive record …
+audited by the internal compliance team"* above figures including `Gross Margin: 100.0 %`.
+
+Replaced with published data, loaded through the public API:
+
+| | before | after |
+|---|---|---|
+| `kpi_metrics` | 10,452 rows, 1 source (`seed_healthy`) | **2,070 rows, 26 real sources, 0 without provenance** |
+| real documents | 17 (5 truncated at 50,000 chars) | 251 incl. 236 bilingual KPI digests |
+| audio | none persisted | 13,186-char transcript (Richmond Fed MP3, via the audio processor) |
+| images | **none existed in the corpus at all** | 5 FRED chart PNGs, OCR'd via the document processor |
+| glossary | 303 rows, 101 duplicated titles | 202 rows, 0 duplicate titles |
+
+Verification that the numbers are the publishers': `fred:INDPRO` 2026-06 stored `102.6395`
+against `102.6395` in the downloaded series (2026-04 and 2026-05 also match exactly).
+Generated rows were backed up before deletion.
+
+### Bugs this surfaced, all fixed
+
+1. **Silent 50,000-char truncation** (`server.py` document + audio ingest). An 82-page
+   filing extracting 277k characters kept its first 50k and the response said nothing.
+   Nothing downstream needs a pre-truncated row — `chunk_text()` splits at index time.
+   Measured after: HR CSV 50,000 → **154,025**; attrition 50,000 → **128,965**; 10-K → 53,981.
+2. **Per-row provenance was discarded.** `store_kpi_metrics()` stamped every row with the
+   single `source_name` form field, erasing exactly what makes a figure checkable. A
+   per-row `source` column now wins; `source_name` remains the default.
+3. **The official API could not seed the shared baseline.** `/api/v1/ingest/csv` scoped
+   rows to the uploader, so "seed through the API" could only produce data private to
+   whoever ran it. Added admin-only `global_scope=true` (NULL owner), keeping the
+   per-user default that exists for good multi-tenant reasons.
+4. **One env var fed two endpoints with different route vocabularies.**
+   `DOC_PROCESSOR_ROUTE=ocr_fallback` went to both `/process` (which accepts it) and
+   `/extract/text` (which accepts `auto|marker|ocr`). Matching neither branch, it fell to
+   the weakest path — and a 32-character result for a 1.2MB report was then accepted as
+   success. Split into `DOC_PROCESSOR_TEXT_ROUTE` (default `ocr`, fast and $0 for digital
+   PDFs) and `DOC_PROCESSOR_ROUTE`; added `DOC_PROCESSOR_MIN_CHARS` so a non-empty but
+   implausibly short extraction escalates to the next endpoint instead of being accepted.
+5. **101 duplicate glossary rows** — a legacy single-language set coexisting with the
+   EN/FR set, near-identical passages competing in retrieval.
+
+### Honest limits of the real data
+
+- **The domains are not equally deep.** Real monthly series are abundant for Finance,
+  People, Operations, Logistics; ESG has no free monthly series, so it gets breadth of
+  indicator (4 World Bank annual indicators) instead of frequency.
+- **NVD is a 400-per-window sample**, not the full population — comparable across months
+  because every window is sampled identically, and named "Published CVEs (sampled)".
+- **The IBM HR survey has no date column.** It yields point-in-time aggregates under one
+  period; a monthly history was not invented from it.
+- **There are no scenarios in real data.** The seven health scenarios remain a property of
+  the generator, which is retained for offline demos and labelled `seed_*` so it can never
+  be confused with measurement.
+- Corrected two overstatements in the previous documentation: the IBM dataset is **832
+  rows, not 1,470**, and the churn dataset **4,093, not ~14,999** — both downloads are
+  partial relative to the published originals.
+
+### Blocked externally (document processor)
+
+Three files cannot currently be ingested: the Orange S.A. H1-2025 report (890KB, 82pp),
+`fred_chart_RSXFS.png`, and the Salesforce ESG PDF (stuck at 32 chars). All return
+Cloudflare **502s from the processor's origin on every route**, while `/health` and other
+files of similar size succeed — and all three extracted successfully in earlier testing
+(the Orange report yielded 276,265 chars). This is a processor-side regression, recorded
+rather than worked around.
 
 ## Known drift / not yet done
 
