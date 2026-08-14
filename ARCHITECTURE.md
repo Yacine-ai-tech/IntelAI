@@ -348,20 +348,45 @@ Generated rows were backed up before deletion.
   rows, not 1,470**, and the churn dataset **4,093, not ~14,999** — both downloads are
   partial relative to the published originals.
 
-### Blocked externally (document processor)
+### Previously blocked externally — resolved 2026-08-14
 
-Three files cannot currently be ingested: the Orange S.A. H1-2025 report (890KB, 82pp),
-`fred_chart_RSXFS.png`, and the Salesforce ESG PDF (stuck at 32 chars). All return
-Cloudflare **502s from the processor's origin on every route**, while `/health` and other
-files of similar size succeed — and all three extracted successfully in earlier testing
-(the Orange report yielded 276,265 chars). This is a processor-side regression, recorded
-rather than worked around.
+The three files noted below as blocked are now ingested. Root cause turned out to be two
+different things, not one:
+
+- **The Salesforce ESG PDF's 32 characters were real, not a processor bug** — the source
+  file itself was truncated (`pypdf`: "Stream has ended unexpectedly", no EOF marker), a
+  corrupted download. Re-fetching the canonical URL pulled down what Salesforce currently
+  serves there, which is the **FY26** report (56pp, 6.4MB) — the FY25-named file at that
+  URL has been superseded. Ingested as `salesforce_fy26_stakeholder_impact_report.pdf`,
+  133,482 chars.
+- **The Orange report and the RSXFS chart were genuinely hitting a Cloudflare edge timeout**
+  on Render's free tier — large synchronous `/extract/text` calls (Marker especially, but
+  even the OCR route on an 80+-page PDF) can exceed it. `/batch/upload` doesn't help here;
+  it only runs the `/process` structured-extraction path, not `/extract/text`. Fix was
+  mechanical: split each PDF into chunks small enough to finish inside the timeout (Orange:
+  4×~20pp; the single-page PNG needed no split, just retried after the processor recovered
+  from an unrelated resource-exhaustion window) and concatenate the extracted text.
+  Orange: 277,828 chars (four quarters, paced ~45s apart to avoid re-triggering the
+  processor's own overload — it 503/429'd under back-to-back large requests). RSXFS chart:
+  253 chars, in line with the other five FRED chart OCRs.
+
+Not a code bug in either IntelAI or DocIntel — a bad source file in one case, a real
+resource ceiling on free-tier hosting in the other. If a similarly large document needs
+ingesting again, split it first.
 
 ## Known drift / not yet done
 
-- **Audio ingestion untested with a real file** — `AUDIO_PROCESSOR_URL` is wired to the
-  live VoiceFlow, but `POST /api/v1/ingest/audio` hasn't been called with a real audio
-  file yet in this pass.
+- **Real architectural fix for the request-blocking bug is still open.** The 30s
+  `statement_timeout` (see below) bounds the damage but doesn't fix the cause: every
+  `pg_store.py` function is synchronous psycopg called directly from `async def` route
+  handlers, so one slow/stuck query blocks the event loop for every concurrent request —
+  confirmed live (`/health`, zero DB access, unresponsive 5+ min, three separate times).
+  The real fix is moving each of the ~90 call sites in `server.py` onto
+  `asyncio.to_thread`. Surveyed but deliberately not done in this pass — the call sites
+  aren't uniform (statement-only calls, calls embedded in dict literals, multi-line
+  calls, and at least one route handler that happens to share a name with a `pg_store`
+  function), so a blind mechanical sweep risked introducing a worse bug than the one
+  being fixed. Treat as its own dedicated pass.
 - **`/agent/run`, `/agent/tools`, `/chatbot/domain`, `/admin/vsdebug`** — real backend
   endpoints with zero UI callers anywhere in the frontend (only referenced in
   `ApiDocs.tsx`'s own documentation). Not confirmed broken, just confirmed unreachable
@@ -373,10 +398,35 @@ rather than worked around.
   `qdrant-client` installed, so all local testing in this pass ran against in-process
   retrieval, not the configured `VECTOR_STORE=qdrant`. The live Render deployment may
   behave differently; not verified in this pass.
-- **Production-parity deployment test** (Docker build, prod CMD) — not yet done in this
-  pass.
-- **Steps 8/9 (portfolio-wide env hygiene, further live-write verification)** — not yet
-  done in this pass.
+- **Steps 8 (portfolio-wide env hygiene)** — explicitly out of scope for this pass per
+  the session's own instruction (IntelAI + the orchestrator only).
+
+## 2026-08-14 pass — bugs found and fixed, provider switch
+
+- **`pg_store.delete_file()` was silently a no-op.** Missing both `conn.commit()` and
+  `conn.close()` — it reported `True` on every delete while the pool rolled back the
+  uncommitted transaction on return. Deletes have never actually persisted in production
+  until this fix. Verified against the live DB: insert → delete → fresh connection
+  confirms the row is gone; pool size stays flat across repeated calls (no leak either).
+- **The request-blocking bug above** — found live via a full frontend click-through
+  (`/health` unresponsive 5+ min, three times). Bounded with a 30s `statement_timeout` on
+  every connection (`SHOW statement_timeout` → `30s`, verified). Real fix still open, see
+  above.
+- **Reranking now dispatches on `RERANK_URL`'s shape, the same way embedding already did.**
+  `local` / `remote` was already the only real choice for embedding — `remote` picks the
+  right request/response shape from the URL itself (HF vs. a generic self-hosted host),
+  so switching providers is only ever an endpoint + a token, never a code change.
+  Reranking had drifted from that: HF was its own separate `RERANK_PROVIDER=hf`, config-only
+  provider switching didn't work the same way for both. `_rerank_remote()` now does the same
+  URL-shape dispatch, so `local`/`remote` is genuinely the only choice for either.
+- **Both embed and rerank config verified working end-to-end** through the real app code
+  (correct ranking on a sanity pair). `INFERENCE_TOKEN` + `EMBED_URL`/`RERANK_URL` currently
+  point at the endpoint that's actually reachable; swapping providers is an env-only change.
+- **All internal-planning-doc references scrubbed from the public repo** — 12 mentions
+  across code comments/docstrings/`.gitignore` referenced an internal-only file by name;
+  removed, the underlying rules they described are unchanged and still documented here.
+- **`DATA_SEEDING.md` rewritten** from an internal audit/changelog voice into standing
+  public documentation. Same facts (row counts, sources, known gaps), different framing.
 
 ## Environment this was verified against
 
