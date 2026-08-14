@@ -302,7 +302,15 @@ def get_user_data_categories(role: str) -> List[str]:
     role_def = ROLE_DEFINITIONS.get(role, {})
     access = role_def.get("data_access", [])
     if "*" in access:
-        return ["Finance", "Growth", "Operations", "People", "ESG", "Customer", "Macro", "Other"]
+        # Every real category currently in kpi_metrics (see get_available_categories()) —
+        # this list drifted out of sync when IT and Logistics were added: a wildcard role
+        # (admin) silently saw zero rows for either category from GET /api/v1/kpis, since
+        # that endpoint re-filters by this hardcoded list even after the DB query itself
+        # returns the real rows. "Customer"/"Macro"/"Other" aren't real category values in
+        # kpi_metrics — kept for backward compatibility with any caller still checking for
+        # them, but real category names should be the source of truth going forward.
+        return ["Finance", "Growth", "Operations", "People", "ESG", "IT", "Logistics",
+                "Customer", "Macro", "Other"]
     return access
 
 
