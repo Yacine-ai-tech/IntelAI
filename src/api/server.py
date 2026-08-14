@@ -170,7 +170,15 @@ async def demo_scope_middleware(request: Request, call_next):
             scope_user = token_data.user_id
         except Exception:
             scope_user = None
-    await asyncio.to_thread(set_request_scope_user, scope_user)
+    # NOT asyncio.to_thread: this is a trivial in-memory contextvars.ContextVar.set(),
+    # no blocking I/O to offload. to_thread runs the target in a COPY of the current
+    # context (contextvars.copy_context().run(...)), so a set() made inside it is
+    # thrown away with that copy — every later get_request_scope_user() in THIS
+    # request's real context silently saw the ContextVar's default (None), not the
+    # user just decoded from the JWT. That silently broke demo-session data scoping
+    # on every request: KPI reads fell back to "owner_user_id IS NULL" only, so a
+    # visitor's own ingested rows never matched their own scope filter.
+    set_request_scope_user(scope_user)
     return await call_next(request)
 
 
