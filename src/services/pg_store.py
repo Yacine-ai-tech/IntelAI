@@ -471,6 +471,18 @@ def store_kpi_metrics(
     re-ingest can never delete another visitor's — or the seed data's — rows."""
     if df.empty:
         return
+    # A per-row "source" column wins over the caller's source_name. Rows loaded from
+    # published statistics each carry their own origin (fred:INDPRO, worldbank:...,
+    # nvd:cve-2.0), and stamping the whole upload with one label erased exactly the
+    # provenance that makes a number checkable. source_name remains the default for
+    # uploads that have no per-row origin.
+    def _source_of(row) -> str:
+        s = row.get("source")
+        if s is None:
+            return source_name
+        s = str(s).strip()
+        return s or source_name
+
     params = [
         (
             str(row.get("period", "")),
@@ -480,7 +492,7 @@ def store_kpi_metrics(
             str(row.get("segment", "")),
             str(row.get("unit", "")),
             str(row.get("direction", "higher_is_better")),
-            source_name,
+            _source_of(row),
             owner_user_id,
         )
         for _, row in df.iterrows()
@@ -734,10 +746,13 @@ def delete_file(file_id: str, username: str) -> bool:
             "DELETE FROM uploaded_files WHERE id = %s AND username = %s",
             [file_id, username]
         )
+        conn.commit()
         return res.rowcount > 0
     except Exception as e:
         log.warning("Failed to delete file: %s", e)
         return False
+    finally:
+        conn.close()
 
 def get_file_content(file_id: str, username: str) -> Optional[str]:
     """Return extracted content for a file owned by a user."""

@@ -1,0 +1,645 @@
+period,category,segment,metric_name,value,unit,direction,source
+2019-01,ESG,US,"CO2 Emissions, Transport",5159.726035,tonnes_CO2e,down,fred:EMISSCO2TOTVTTTOUSA
+2020-01,ESG,US,"CO2 Emissions, Transport",4594.7178,tonnes_CO2e,down,fred:EMISSCO2TOTVTTTOUSA
+2021-01,ESG,US,"CO2 Emissions, Transport",4911.226943,tonnes_CO2e,down,fred:EMISSCO2TOTVTTTOUSA
+2020-01,ESG,Africa Eastern and Southern,Renewable Energy Share,65.7823798017466,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,Africa Eastern and Southern,Renewable Energy Share,62.6907096127666,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,Africa Eastern and Southern,Renewable Energy Share,61.5875298317964,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,Africa Eastern and Southern,Renewable Energy Share,61.4269497576408,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,Africa Eastern and Southern,Renewable Energy Share,61.8228841937413,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,Africa Eastern and Southern,Renewable Energy Share,61.6702780479896,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,Africa Western and Central,Renewable Energy Share,75.846980103796,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,Africa Western and Central,Renewable Energy Share,75.0787881678252,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,Africa Western and Central,Renewable Energy Share,75.4765777368905,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,Africa Western and Central,Renewable Energy Share,76.1016805879549,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,Africa Western and Central,Renewable Energy Share,75.7968398295924,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,Africa Western and Central,Renewable Energy Share,76.181670524591,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,European Union,Renewable Energy Share,21.0591470733795,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,European Union,Renewable Energy Share,19.3440009483852,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,European Union,Renewable Energy Share,18.7249884796166,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,European Union,Renewable Energy Share,17.6857102209371,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,European Union,Renewable Energy Share,17.523235814157,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,European Union,Renewable Energy Share,17.6122764341327,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,Sub-Saharan Africa,Renewable Energy Share,70.2701133853785,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,Sub-Saharan Africa,Renewable Energy Share,68.1693850218034,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,Sub-Saharan Africa,Renewable Energy Share,67.6660713231228,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,Sub-Saharan Africa,Renewable Energy Share,67.8175544668556,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,Sub-Saharan Africa,Renewable Energy Share,67.9625238161754,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,Sub-Saharan Africa,Renewable Energy Share,68.0255515815612,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,World,Renewable Energy Share,19.7355641050053,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,World,Renewable Energy Share,18.5751641385934,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,World,Renewable Energy Share,18.1052270747944,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,World,Renewable Energy Share,17.8541835016377,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,World,Renewable Energy Share,17.6281084915531,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,World,Renewable Energy Share,17.4035082673572,%,up,worldbank:EG.FEC.RNEW.ZS
+2022-01,ESG,Burkina Faso,Renewable Energy Share,71.4,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,Burkina Faso,Renewable Energy Share,71.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,Burkina Faso,Renewable Energy Share,73.1,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,Burkina Faso,Renewable Energy Share,72.7,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,Burkina Faso,Renewable Energy Share,73.7,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,Burkina Faso,Renewable Energy Share,74.6,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,Burkina Faso,Renewable Energy Share,77.1,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,Burkina Faso,Renewable Energy Share,78.8,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,China,Renewable Energy Share,15.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,China,Renewable Energy Share,14.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,China,Renewable Energy Share,14.3,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,China,Renewable Energy Share,13.5,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,China,Renewable Energy Share,13.1,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,China,Renewable Energy Share,12.6,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,China,Renewable Energy Share,12.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,Cote d'Ivoire,Renewable Energy Share,58.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,Cote d'Ivoire,Renewable Energy Share,61.8,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,Cote d'Ivoire,Renewable Energy Share,61.1,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,Cote d'Ivoire,Renewable Energy Share,60.5,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,Cote d'Ivoire,Renewable Energy Share,62.5,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,Cote d'Ivoire,Renewable Energy Share,64.0,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,Cote d'Ivoire,Renewable Energy Share,64.5,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,France,Renewable Energy Share,16.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,France,Renewable Energy Share,16.8,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,France,Renewable Energy Share,15.5,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,France,Renewable Energy Share,15.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,France,Renewable Energy Share,14.1,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,France,Renewable Energy Share,14.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,France,Renewable Energy Share,13.3,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,Germany,Renewable Energy Share,17.6,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,Germany,Renewable Energy Share,18.5,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,Germany,Renewable Energy Share,17.1,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,Germany,Renewable Energy Share,16.0,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,Germany,Renewable Energy Share,15.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,Germany,Renewable Energy Share,14.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,Germany,Renewable Energy Share,14.6,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,India,Renewable Energy Share,34.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,India,Renewable Energy Share,36.1,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,India,Renewable Energy Share,33.5,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,India,Renewable Energy Share,32.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,India,Renewable Energy Share,32.5,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,India,Renewable Energy Share,33.0,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,India,Renewable Energy Share,33.4,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,Japan,Renewable Energy Share,8.8,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,Japan,Renewable Energy Share,8.5,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,Japan,Renewable Energy Share,7.8,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,Japan,Renewable Energy Share,7.3,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,Japan,Renewable Energy Share,6.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,Japan,Renewable Energy Share,6.4,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,Japan,Renewable Energy Share,6.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2022-01,ESG,Mali,Renewable Energy Share,71.1,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,Mali,Renewable Energy Share,71.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,Mali,Renewable Energy Share,72.8,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,Mali,Renewable Energy Share,74.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,Mali,Renewable Energy Share,77.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,Mali,Renewable Energy Share,77.0,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,Mali,Renewable Energy Share,77.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,Mali,Renewable Energy Share,81.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,Niger,Renewable Energy Share,79.6,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,Niger,Renewable Energy Share,81.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,Niger,Renewable Energy Share,80.7,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,Niger,Renewable Energy Share,82.0,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,Niger,Renewable Energy Share,82.0,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,Niger,Renewable Energy Share,80.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,Niger,Renewable Energy Share,78.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,Nigeria,Renewable Energy Share,80.3,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,Nigeria,Renewable Energy Share,81.8,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,Nigeria,Renewable Energy Share,80.1,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,Nigeria,Renewable Energy Share,80.8,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,Nigeria,Renewable Energy Share,81.6,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,Nigeria,Renewable Energy Share,81.1,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,Nigeria,Renewable Energy Share,81.3,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,Senegal,Renewable Energy Share,35.4,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,Senegal,Renewable Energy Share,38.7,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,Senegal,Renewable Energy Share,36.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,Senegal,Renewable Energy Share,34.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,Senegal,Renewable Energy Share,36.8,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,Senegal,Renewable Energy Share,36.7,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,Senegal,Renewable Energy Share,39.1,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,South Africa,Renewable Energy Share,9.7,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,South Africa,Renewable Energy Share,9.8,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,South Africa,Renewable Energy Share,8.7,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,South Africa,Renewable Energy Share,8.0,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,South Africa,Renewable Energy Share,7.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,South Africa,Renewable Energy Share,7.8,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,South Africa,Renewable Energy Share,7.6,%,up,worldbank:EG.FEC.RNEW.ZS
+2021-01,ESG,United States,Renewable Energy Share,10.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2020-01,ESG,United States,Renewable Energy Share,11.0,%,up,worldbank:EG.FEC.RNEW.ZS
+2019-01,ESG,United States,Renewable Energy Share,10.2,%,up,worldbank:EG.FEC.RNEW.ZS
+2018-01,ESG,United States,Renewable Energy Share,9.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2017-01,ESG,United States,Renewable Energy Share,9.7,%,up,worldbank:EG.FEC.RNEW.ZS
+2016-01,ESG,United States,Renewable Energy Share,9.3,%,up,worldbank:EG.FEC.RNEW.ZS
+2015-01,ESG,United States,Renewable Energy Share,8.9,%,up,worldbank:EG.FEC.RNEW.ZS
+2023-01,ESG,Africa Eastern and Southern,Energy Use per Capita,565.221624381903,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,Africa Eastern and Southern,Energy Use per Capita,568.382394434424,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,Africa Eastern and Southern,Energy Use per Capita,579.961578587522,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,Africa Eastern and Southern,Energy Use per Capita,568.192083165737,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,Africa Eastern and Southern,Energy Use per Capita,588.962750250377,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,Africa Eastern and Southern,Energy Use per Capita,585.540908067939,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,Africa Eastern and Southern,Energy Use per Capita,599.372081461706,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,Africa Eastern and Southern,Energy Use per Capita,608.596688850584,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,Africa Eastern and Southern,Energy Use per Capita,610.019227944214,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,Africa Western and Central,Energy Use per Capita,345.236396215776,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,Africa Western and Central,Energy Use per Capita,352.912345385847,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,Africa Western and Central,Energy Use per Capita,353.122558892368,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,Africa Western and Central,Energy Use per Capita,343.240792316795,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,Africa Western and Central,Energy Use per Capita,345.326858990897,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,Africa Western and Central,Energy Use per Capita,327.790575644589,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,Africa Western and Central,Energy Use per Capita,335.960510419465,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,Africa Western and Central,Energy Use per Capita,345.394099103756,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,Africa Western and Central,Energy Use per Capita,338.060445444575,count,down,worldbank:EG.USE.PCAP.KG.OE
+2024-01,ESG,European Union,Energy Use per Capita,2821.39665655907,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,European Union,Energy Use per Capita,2780.2009151871,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,European Union,Energy Use per Capita,2922.75168024871,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,European Union,Energy Use per Capita,3109.88687759671,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,European Union,Energy Use per Capita,2933.9871843456,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,European Union,Energy Use per Capita,3149.89746458067,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,European Union,Energy Use per Capita,3211.86260683638,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,European Union,Energy Use per Capita,3244.3990547838,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,European Union,Energy Use per Capita,3193.84744220649,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,European Union,Energy Use per Capita,3176.28838380569,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,Sub-Saharan Africa,Energy Use per Capita,479.776598165151,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,Sub-Saharan Africa,Energy Use per Capita,484.618352161849,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,Sub-Saharan Africa,Energy Use per Capita,491.630188608771,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,Sub-Saharan Africa,Energy Use per Capita,480.431676827338,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,Sub-Saharan Africa,Energy Use per Capita,493.72892471979,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,Sub-Saharan Africa,Energy Use per Capita,484.620724652716,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,Sub-Saharan Africa,Energy Use per Capita,496.105146627956,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,Sub-Saharan Africa,Energy Use per Capita,505.405045747097,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,Sub-Saharan Africa,Energy Use per Capita,503.414832513788,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,World,Energy Use per Capita,1866.43382235569,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,World,Energy Use per Capita,1852.6195423046,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,World,Energy Use per Capita,1852.54433235952,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,World,Energy Use per Capita,1763.03007378467,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,World,Energy Use per Capita,1829.83708515689,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,World,Energy Use per Capita,1827.8405798596,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,World,Energy Use per Capita,1804.7451296215,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,World,Energy Use per Capita,1786.11677409809,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,World,Energy Use per Capita,1790.65674725323,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,Burkina Faso,Energy Use per Capita,325.943903136553,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,Burkina Faso,Energy Use per Capita,312.969408025336,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,Burkina Faso,Energy Use per Capita,310.286656956393,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,Burkina Faso,Energy Use per Capita,314.361721282852,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,Burkina Faso,Energy Use per Capita,302.824064766459,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,Burkina Faso,Energy Use per Capita,300.040816859599,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,Burkina Faso,Energy Use per Capita,285.3378108006,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,Burkina Faso,Energy Use per Capita,271.637810972099,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,Burkina Faso,Energy Use per Capita,279.23778984182,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,China,Energy Use per Capita,2850.94152906511,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,China,Energy Use per Capita,2676.48200976111,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,China,Energy Use per Capita,2623.79959356116,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,China,Energy Use per Capita,2465.96954605987,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,China,Energy Use per Capita,2397.96868908473,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,China,Energy Use per Capita,2310.87757050979,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,China,Energy Use per Capita,2215.91139022057,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,China,Energy Use per Capita,2149.2047500244,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,China,Energy Use per Capita,2175.1544486832,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,Cote d'Ivoire,Energy Use per Capita,483.503922762538,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,Cote d'Ivoire,Energy Use per Capita,483.894918210023,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,Cote d'Ivoire,Energy Use per Capita,475.7701142407,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,Cote d'Ivoire,Energy Use per Capita,385.900911896689,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,Cote d'Ivoire,Energy Use per Capita,376.743212908005,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,Cote d'Ivoire,Energy Use per Capita,358.54922881191,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,Cote d'Ivoire,Energy Use per Capita,392.588824263082,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,Cote d'Ivoire,Energy Use per Capita,391.655583364613,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,Cote d'Ivoire,Energy Use per Capita,383.889010732408,count,down,worldbank:EG.USE.PCAP.KG.OE
+2024-01,ESG,France,Energy Use per Capita,3184.7895085475,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,France,Energy Use per Capita,3136.12237461475,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,France,Energy Use per Capita,3100.1897815932,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,France,Energy Use per Capita,3469.83398574773,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,France,Energy Use per Capita,3228.48915727036,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,France,Energy Use per Capita,3605.53190025511,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,France,Energy Use per Capita,3669.37065950443,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,France,Energy Use per Capita,3705.41111644137,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,France,Energy Use per Capita,3718.17053401513,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,France,Energy Use per Capita,3799.19260526718,count,down,worldbank:EG.USE.PCAP.KG.OE
+2024-01,ESG,Germany,Energy Use per Capita,2824.59006117053,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,Germany,Energy Use per Capita,2928.19658713867,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,Germany,Energy Use per Capita,3261.8564081995,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,Germany,Energy Use per Capita,3467.03057027911,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,Germany,Energy Use per Capita,3349.19931383762,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,Germany,Energy Use per Capita,3570.88159282488,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,Germany,Energy Use per Capita,3659.22924485198,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,Germany,Energy Use per Capita,3763.19404182465,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,Germany,Energy Use per Capita,3765.21799936242,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,Germany,Energy Use per Capita,3780.85027551891,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,India,Energy Use per Capita,763.197899394641,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,India,Energy Use per Capita,727.902200094024,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,India,Energy Use per Capita,676.814293488143,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,India,Energy Use per Capita,632.239828540427,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,India,Energy Use per Capita,666.977347524506,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,India,Energy Use per Capita,668.303370218852,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,India,Energy Use per Capita,648.014718317903,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,India,Energy Use per Capita,627.273531026365,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,India,Energy Use per Capita,622.339883988149,count,down,worldbank:EG.USE.PCAP.KG.OE
+2024-01,ESG,Japan,Energy Use per Capita,3005.89902824379,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,Japan,Energy Use per Capita,3039.14126131753,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,Japan,Energy Use per Capita,3129.65861717499,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,Japan,Energy Use per Capita,3196.03970960845,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,Japan,Energy Use per Capita,3046.85480668859,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,Japan,Energy Use per Capita,3261.62024942915,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,Japan,Energy Use per Capita,3343.05412833973,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,Japan,Energy Use per Capita,3391.05041453219,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,Japan,Energy Use per Capita,3370.8877963853,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,Japan,Energy Use per Capita,3400.59271053608,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,Niger,Energy Use per Capita,161.259233880072,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,Niger,Energy Use per Capita,161.353257368424,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,Niger,Energy Use per Capita,150.08935016997,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,Niger,Energy Use per Capita,147.815374164245,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,Niger,Energy Use per Capita,148.12495085486,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,Niger,Energy Use per Capita,146.101584927786,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,Niger,Energy Use per Capita,143.831599652126,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,Niger,Energy Use per Capita,147.452096053348,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,Niger,Energy Use per Capita,148.786532469365,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,Nigeria,Energy Use per Capita,319.900429211784,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,Nigeria,Energy Use per Capita,333.698006196423,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,Nigeria,Energy Use per Capita,334.476501487262,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,Nigeria,Energy Use per Capita,324.45517224141,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,Nigeria,Energy Use per Capita,331.04474710561,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,Nigeria,Energy Use per Capita,300.45746967174,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,Nigeria,Energy Use per Capita,316.730326522651,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,Nigeria,Energy Use per Capita,331.486140542982,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,Nigeria,Energy Use per Capita,320.318542380023,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,Senegal,Energy Use per Capita,291.050601075038,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,Senegal,Energy Use per Capita,315.965932815121,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,Senegal,Energy Use per Capita,294.173427358174,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,Senegal,Energy Use per Capita,280.607903309744,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,Senegal,Energy Use per Capita,298.559525125339,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,Senegal,Energy Use per Capita,274.379032674082,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,Senegal,Energy Use per Capita,278.019674604295,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,Senegal,Energy Use per Capita,287.042022425235,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,Senegal,Energy Use per Capita,296.775621300382,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,South Africa,Energy Use per Capita,1938.50916018053,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,South Africa,Energy Use per Capita,1938.30644693274,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,South Africa,Energy Use per Capita,2124.62297436572,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,South Africa,Energy Use per Capita,2037.46194166103,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,South Africa,Energy Use per Capita,2231.91074710296,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,South Africa,Energy Use per Capita,2184.87777550689,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,South Africa,Energy Use per Capita,2283.45815447669,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,South Africa,Energy Use per Capita,2311.76901865151,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,South Africa,Energy Use per Capita,2257.19467617813,count,down,worldbank:EG.USE.PCAP.KG.OE
+2024-01,ESG,United States,Energy Use per Capita,6361.4447017904,count,down,worldbank:EG.USE.PCAP.KG.OE
+2023-01,ESG,United States,Energy Use per Capita,6364.46726343838,count,down,worldbank:EG.USE.PCAP.KG.OE
+2022-01,ESG,United States,Energy Use per Capita,6512.09816744798,count,down,worldbank:EG.USE.PCAP.KG.OE
+2021-01,ESG,United States,Energy Use per Capita,6445.82621225492,count,down,worldbank:EG.USE.PCAP.KG.OE
+2020-01,ESG,United States,Energy Use per Capita,6141.5241450627,count,down,worldbank:EG.USE.PCAP.KG.OE
+2019-01,ESG,United States,Energy Use per Capita,6700.93033990565,count,down,worldbank:EG.USE.PCAP.KG.OE
+2018-01,ESG,United States,Energy Use per Capita,6738.27272433986,count,down,worldbank:EG.USE.PCAP.KG.OE
+2017-01,ESG,United States,Energy Use per Capita,6590.83509745633,count,down,worldbank:EG.USE.PCAP.KG.OE
+2016-01,ESG,United States,Energy Use per Capita,6663.4963294418,count,down,worldbank:EG.USE.PCAP.KG.OE
+2015-01,ESG,United States,Energy Use per Capita,6789.64733291075,count,down,worldbank:EG.USE.PCAP.KG.OE
+2024-01,ESG,Africa Eastern and Southern,Total Greenhouse Gas Emissions,1548.7374,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,Africa Eastern and Southern,Total Greenhouse Gas Emissions,1518.6354,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,Africa Eastern and Southern,Total Greenhouse Gas Emissions,1497.7963,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,Africa Eastern and Southern,Total Greenhouse Gas Emissions,1490.5839,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,Africa Eastern and Southern,Total Greenhouse Gas Emissions,1474.7119,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,Africa Eastern and Southern,Total Greenhouse Gas Emissions,1491.9557,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,Africa Eastern and Southern,Total Greenhouse Gas Emissions,1457.6726,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,Africa Eastern and Southern,Total Greenhouse Gas Emissions,1437.2969,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,Africa Eastern and Southern,Total Greenhouse Gas Emissions,1415.4722,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,Africa Eastern and Southern,Total Greenhouse Gas Emissions,1396.4417,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,Africa Western and Central,Total Greenhouse Gas Emissions,896.0976,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,Africa Western and Central,Total Greenhouse Gas Emissions,869.4107,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,Africa Western and Central,Total Greenhouse Gas Emissions,860.2701,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,Africa Western and Central,Total Greenhouse Gas Emissions,851.1541,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,Africa Western and Central,Total Greenhouse Gas Emissions,822.7538,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,Africa Western and Central,Total Greenhouse Gas Emissions,838.8348,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,Africa Western and Central,Total Greenhouse Gas Emissions,806.006,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,Africa Western and Central,Total Greenhouse Gas Emissions,777.0404,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,Africa Western and Central,Total Greenhouse Gas Emissions,766.9368,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,Africa Western and Central,Total Greenhouse Gas Emissions,756.5263,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,European Union,Total Greenhouse Gas Emissions,3164.6646,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,European Union,Total Greenhouse Gas Emissions,3222.5192,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,European Union,Total Greenhouse Gas Emissions,3483.1059,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,European Union,Total Greenhouse Gas Emissions,3572.3655,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,European Union,Total Greenhouse Gas Emissions,3395.6039,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,European Union,Total Greenhouse Gas Emissions,3683.7541,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,European Union,Total Greenhouse Gas Emissions,3834.9113,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,European Union,Total Greenhouse Gas Emissions,3915.2259,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,European Union,Total Greenhouse Gas Emissions,3894.3913,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,European Union,Total Greenhouse Gas Emissions,3885.9444,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,Sub-Saharan Africa,Total Greenhouse Gas Emissions,2444.835,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,Sub-Saharan Africa,Total Greenhouse Gas Emissions,2388.0461,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,Sub-Saharan Africa,Total Greenhouse Gas Emissions,2358.0664,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,Sub-Saharan Africa,Total Greenhouse Gas Emissions,2341.738,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,Sub-Saharan Africa,Total Greenhouse Gas Emissions,2297.4657,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,Sub-Saharan Africa,Total Greenhouse Gas Emissions,2330.7905,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,Sub-Saharan Africa,Total Greenhouse Gas Emissions,2263.6786,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,Sub-Saharan Africa,Total Greenhouse Gas Emissions,2214.3373,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,Sub-Saharan Africa,Total Greenhouse Gas Emissions,2182.409,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,Sub-Saharan Africa,Total Greenhouse Gas Emissions,2152.968,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,World,Total Greenhouse Gas Emissions,53206.40126586,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,World,Total Greenhouse Gas Emissions,52540.765868581,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,World,Total Greenhouse Gas Emissions,51748.121503622,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,World,Total Greenhouse Gas Emissions,51187.953401185,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,World,Total Greenhouse Gas Emissions,48962.126893051,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,World,Total Greenhouse Gas Emissions,50829.629009719,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,World,Total Greenhouse Gas Emissions,50566.421973899,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,World,Total Greenhouse Gas Emissions,49478.56006411,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,World,Total Greenhouse Gas Emissions,48655.806379257,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,World,Total Greenhouse Gas Emissions,48451.420672913,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,Burkina Faso,Total Greenhouse Gas Emissions,34.9177,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,Burkina Faso,Total Greenhouse Gas Emissions,34.5921,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,Burkina Faso,Total Greenhouse Gas Emissions,35.7426,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,Burkina Faso,Total Greenhouse Gas Emissions,35.4369,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,Burkina Faso,Total Greenhouse Gas Emissions,30.1952,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,Burkina Faso,Total Greenhouse Gas Emissions,33.7747,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,Burkina Faso,Total Greenhouse Gas Emissions,32.6026,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,Burkina Faso,Total Greenhouse Gas Emissions,31.0,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,Burkina Faso,Total Greenhouse Gas Emissions,29.8729,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,Burkina Faso,Total Greenhouse Gas Emissions,29.01,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,China,Total Greenhouse Gas Emissions,15536.1217,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,China,Total Greenhouse Gas Emissions,15411.7834,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,China,Total Greenhouse Gas Emissions,14857.4011,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,China,Total Greenhouse Gas Emissions,14866.4936,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,China,Total Greenhouse Gas Emissions,14230.2296,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,China,Total Greenhouse Gas Emissions,14052.8622,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,China,Total Greenhouse Gas Emissions,13740.9299,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,China,Total Greenhouse Gas Emissions,13160.5935,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,China,Total Greenhouse Gas Emissions,12913.087,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,China,Total Greenhouse Gas Emissions,12931.0416,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,Cote d'Ivoire,Total Greenhouse Gas Emissions,38.0267,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,Cote d'Ivoire,Total Greenhouse Gas Emissions,36.7288,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,Cote d'Ivoire,Total Greenhouse Gas Emissions,36.5208,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,Cote d'Ivoire,Total Greenhouse Gas Emissions,35.0561,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,Cote d'Ivoire,Total Greenhouse Gas Emissions,30.1406,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,Cote d'Ivoire,Total Greenhouse Gas Emissions,29.8106,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,Cote d'Ivoire,Total Greenhouse Gas Emissions,27.9065,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,Cote d'Ivoire,Total Greenhouse Gas Emissions,28.4254,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,Cote d'Ivoire,Total Greenhouse Gas Emissions,27.5021,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,Cote d'Ivoire,Total Greenhouse Gas Emissions,26.3751,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,France,Total Greenhouse Gas Emissions,378.1202,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,France,Total Greenhouse Gas Emissions,390.7429,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,France,Total Greenhouse Gas Emissions,417.181,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,France,Total Greenhouse Gas Emissions,430.8782,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,France,Total Greenhouse Gas Emissions,401.5864,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,France,Total Greenhouse Gas Emissions,443.9014,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,France,Total Greenhouse Gas Emissions,452.3491,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,France,Total Greenhouse Gas Emissions,465.7704,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,France,Total Greenhouse Gas Emissions,462.9622,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,France,Total Greenhouse Gas Emissions,461.6707,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,Germany,Total Greenhouse Gas Emissions,674.3583,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,Germany,Total Greenhouse Gas Emissions,685.6584,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,Germany,Total Greenhouse Gas Emissions,758.3872,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,Germany,Total Greenhouse Gas Emissions,773.6886,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,Germany,Total Greenhouse Gas Emissions,747.0268,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,Germany,Total Greenhouse Gas Emissions,806.0433,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,Germany,Total Greenhouse Gas Emissions,859.3059,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,Germany,Total Greenhouse Gas Emissions,890.4565,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,Germany,Total Greenhouse Gas Emissions,906.921,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,Germany,Total Greenhouse Gas Emissions,904.2443,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,India,Total Greenhouse Gas Emissions,4371.1693,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,India,Total Greenhouse Gas Emissions,4206.3289,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,India,Total Greenhouse Gas Emissions,3961.5256,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,India,Total Greenhouse Gas Emissions,3719.5632,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,India,Total Greenhouse Gas Emissions,3461.05,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,India,Total Greenhouse Gas Emissions,3641.2932,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,India,Total Greenhouse Gas Emissions,3634.4229,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,India,Total Greenhouse Gas Emissions,3495.5015,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,India,Total Greenhouse Gas Emissions,3353.9184,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,India,Total Greenhouse Gas Emissions,3310.4591,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,Japan,Total Greenhouse Gas Emissions,1063.3358,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,Japan,Total Greenhouse Gas Emissions,1094.0243,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,Japan,Total Greenhouse Gas Emissions,1142.3046,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,Japan,Total Greenhouse Gas Emissions,1172.1252,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,Japan,Total Greenhouse Gas Emissions,1151.0677,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,Japan,Total Greenhouse Gas Emissions,1215.1408,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,Japan,Total Greenhouse Gas Emissions,1254.5984,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,Japan,Total Greenhouse Gas Emissions,1305.6904,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,Japan,Total Greenhouse Gas Emissions,1320.9354,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,Japan,Total Greenhouse Gas Emissions,1324.4225,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,Mali,Total Greenhouse Gas Emissions,48.0085,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,Mali,Total Greenhouse Gas Emissions,46.6113,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,Mali,Total Greenhouse Gas Emissions,44.5054,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,Mali,Total Greenhouse Gas Emissions,44.9904,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,Mali,Total Greenhouse Gas Emissions,42.5403,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,Mali,Total Greenhouse Gas Emissions,40.8478,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,Mali,Total Greenhouse Gas Emissions,40.0831,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,Mali,Total Greenhouse Gas Emissions,38.3074,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,Mali,Total Greenhouse Gas Emissions,35.5893,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,Mali,Total Greenhouse Gas Emissions,32.2094,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,Niger,Total Greenhouse Gas Emissions,41.1461,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,Niger,Total Greenhouse Gas Emissions,40.0722,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,Niger,Total Greenhouse Gas Emissions,41.3587,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,Niger,Total Greenhouse Gas Emissions,39.194,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,Niger,Total Greenhouse Gas Emissions,37.1947,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,Niger,Total Greenhouse Gas Emissions,35.5174,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,Niger,Total Greenhouse Gas Emissions,33.6528,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,Niger,Total Greenhouse Gas Emissions,32.1503,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,Niger,Total Greenhouse Gas Emissions,30.9389,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,Niger,Total Greenhouse Gas Emissions,29.588,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,Nigeria,Total Greenhouse Gas Emissions,350.5554,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,Nigeria,Total Greenhouse Gas Emissions,337.7767,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,Nigeria,Total Greenhouse Gas Emissions,334.7699,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,Nigeria,Total Greenhouse Gas Emissions,342.7471,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,Nigeria,Total Greenhouse Gas Emissions,333.6847,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,Nigeria,Total Greenhouse Gas Emissions,360.0857,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,Nigeria,Total Greenhouse Gas Emissions,346.5287,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,Nigeria,Total Greenhouse Gas Emissions,334.5341,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,Nigeria,Total Greenhouse Gas Emissions,336.7501,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,Nigeria,Total Greenhouse Gas Emissions,342.3975,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,Senegal,Total Greenhouse Gas Emissions,31.7206,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,Senegal,Total Greenhouse Gas Emissions,31.0754,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,Senegal,Total Greenhouse Gas Emissions,31.5008,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,Senegal,Total Greenhouse Gas Emissions,29.5487,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,Senegal,Total Greenhouse Gas Emissions,27.1618,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,Senegal,Total Greenhouse Gas Emissions,26.4657,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,Senegal,Total Greenhouse Gas Emissions,25.915,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,Senegal,Total Greenhouse Gas Emissions,24.9618,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,Senegal,Total Greenhouse Gas Emissions,24.9588,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,Senegal,Total Greenhouse Gas Emissions,23.4251,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,South Africa,Total Greenhouse Gas Emissions,569.8096,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,South Africa,Total Greenhouse Gas Emissions,555.4453,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,South Africa,Total Greenhouse Gas Emissions,556.0799,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,South Africa,Total Greenhouse Gas Emissions,575.4292,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,South Africa,Total Greenhouse Gas Emissions,576.999,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,South Africa,Total Greenhouse Gas Emissions,604.7019,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,South Africa,Total Greenhouse Gas Emissions,600.3929,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,South Africa,Total Greenhouse Gas Emissions,599.0716,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,South Africa,Total Greenhouse Gas Emissions,582.2042,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,South Africa,Total Greenhouse Gas Emissions,584.9499,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,United States,Total Greenhouse Gas Emissions,5912.6177,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2023-01,ESG,United States,Total Greenhouse Gas Emissions,5890.9864,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2022-01,ESG,United States,Total Greenhouse Gas Emissions,6074.2362,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2021-01,ESG,United States,Total Greenhouse Gas Emissions,6000.5067,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2020-01,ESG,United States,Total Greenhouse Gas Emissions,5703.9154,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2019-01,ESG,United States,Total Greenhouse Gas Emissions,6248.2429,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2018-01,ESG,United States,Total Greenhouse Gas Emissions,6370.4476,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2017-01,ESG,United States,Total Greenhouse Gas Emissions,6183.6445,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2016-01,ESG,United States,Total Greenhouse Gas Emissions,6237.738,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2015-01,ESG,United States,Total Greenhouse Gas Emissions,6364.0037,tonnes_CO2e,down,worldbank:EN.GHG.ALL.MT.CE.AR5
+2024-01,ESG,Africa Eastern and Southern,CO2 Emissions (excl. LULUCF),634.4063,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,Africa Eastern and Southern,CO2 Emissions (excl. LULUCF),619.3657,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,Africa Eastern and Southern,CO2 Emissions (excl. LULUCF),618.5414,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,Africa Eastern and Southern,CO2 Emissions (excl. LULUCF),631.4195,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,Africa Eastern and Southern,CO2 Emissions (excl. LULUCF),613.7192,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,Africa Eastern and Southern,CO2 Emissions (excl. LULUCF),655.3423,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,Africa Eastern and Southern,CO2 Emissions (excl. LULUCF),646.7127,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,Africa Eastern and Southern,CO2 Emissions (excl. LULUCF),637.9923,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,Africa Eastern and Southern,CO2 Emissions (excl. LULUCF),628.154,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,Africa Eastern and Southern,CO2 Emissions (excl. LULUCF),623.606,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,Africa Western and Central,CO2 Emissions (excl. LULUCF),261.934,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,Africa Western and Central,CO2 Emissions (excl. LULUCF),251.6472,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,Africa Western and Central,CO2 Emissions (excl. LULUCF),259.3996,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,Africa Western and Central,CO2 Emissions (excl. LULUCF),255.7641,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,Africa Western and Central,CO2 Emissions (excl. LULUCF),236.4906,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,Africa Western and Central,CO2 Emissions (excl. LULUCF),239.1588,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,Africa Western and Central,CO2 Emissions (excl. LULUCF),228.9951,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,Africa Western and Central,CO2 Emissions (excl. LULUCF),216.099,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,Africa Western and Central,CO2 Emissions (excl. LULUCF),220.3771,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,Africa Western and Central,CO2 Emissions (excl. LULUCF),209.7144,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,European Union,CO2 Emissions (excl. LULUCF),2462.3895,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,European Union,CO2 Emissions (excl. LULUCF),2509.6953,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,European Union,CO2 Emissions (excl. LULUCF),2748.6639,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,European Union,CO2 Emissions (excl. LULUCF),2818.308,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,European Union,CO2 Emissions (excl. LULUCF),2638.4092,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,European Union,CO2 Emissions (excl. LULUCF),2908.383,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,European Union,CO2 Emissions (excl. LULUCF),3048.6211,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,European Union,CO2 Emissions (excl. LULUCF),3114.6913,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,European Union,CO2 Emissions (excl. LULUCF),3089.9324,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,European Union,CO2 Emissions (excl. LULUCF),3082.0529,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,Sub-Saharan Africa,CO2 Emissions (excl. LULUCF),896.3403,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,Sub-Saharan Africa,CO2 Emissions (excl. LULUCF),871.0129,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,Sub-Saharan Africa,CO2 Emissions (excl. LULUCF),877.941,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,Sub-Saharan Africa,CO2 Emissions (excl. LULUCF),887.1836,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,Sub-Saharan Africa,CO2 Emissions (excl. LULUCF),850.2098,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,Sub-Saharan Africa,CO2 Emissions (excl. LULUCF),894.5011,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,Sub-Saharan Africa,CO2 Emissions (excl. LULUCF),875.7078,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,Sub-Saharan Africa,CO2 Emissions (excl. LULUCF),854.0913,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,Sub-Saharan Africa,CO2 Emissions (excl. LULUCF),848.5311,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,Sub-Saharan Africa,CO2 Emissions (excl. LULUCF),833.3204,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,World,CO2 Emissions (excl. LULUCF),39632.6642185422,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,World,CO2 Emissions (excl. LULUCF),39112.6887901013,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,World,CO2 Emissions (excl. LULUCF),38548.1189427624,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,World,CO2 Emissions (excl. LULUCF),38219.9967667893,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,World,CO2 Emissions (excl. LULUCF),36209.8616367057,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,World,CO2 Emissions (excl. LULUCF),38008.4891307628,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,World,CO2 Emissions (excl. LULUCF),37905.9615465527,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,World,CO2 Emissions (excl. LULUCF),37020.0281885751,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,World,CO2 Emissions (excl. LULUCF),36390.7852703318,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,World,CO2 Emissions (excl. LULUCF),36292.5234154345,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,Burkina Faso,CO2 Emissions (excl. LULUCF),6.4757,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,Burkina Faso,CO2 Emissions (excl. LULUCF),6.2637,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,Burkina Faso,CO2 Emissions (excl. LULUCF),6.4885,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,Burkina Faso,CO2 Emissions (excl. LULUCF),6.4371,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,Burkina Faso,CO2 Emissions (excl. LULUCF),5.7011,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,Burkina Faso,CO2 Emissions (excl. LULUCF),5.6993,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,Burkina Faso,CO2 Emissions (excl. LULUCF),5.412,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,Burkina Faso,CO2 Emissions (excl. LULUCF),4.5408,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,Burkina Faso,CO2 Emissions (excl. LULUCF),3.9314,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,Burkina Faso,CO2 Emissions (excl. LULUCF),3.9361,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,China,CO2 Emissions (excl. LULUCF),13124.728,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,China,CO2 Emissions (excl. LULUCF),13021.242,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,China,CO2 Emissions (excl. LULUCF),12518.6844,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,China,CO2 Emissions (excl. LULUCF),12551.8645,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,China,CO2 Emissions (excl. LULUCF),11964.1285,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,China,CO2 Emissions (excl. LULUCF),11813.0582,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,China,CO2 Emissions (excl. LULUCF),11527.5117,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,China,CO2 Emissions (excl. LULUCF),10999.4188,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,China,CO2 Emissions (excl. LULUCF),10773.7258,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,China,CO2 Emissions (excl. LULUCF),10749.8966,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,Cote d'Ivoire,CO2 Emissions (excl. LULUCF),18.811,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,Cote d'Ivoire,CO2 Emissions (excl. LULUCF),17.925,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,Cote d'Ivoire,CO2 Emissions (excl. LULUCF),18.4103,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,Cote d'Ivoire,CO2 Emissions (excl. LULUCF),17.2006,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,Cote d'Ivoire,CO2 Emissions (excl. LULUCF),13.2881,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,Cote d'Ivoire,CO2 Emissions (excl. LULUCF),13.1832,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,Cote d'Ivoire,CO2 Emissions (excl. LULUCF),12.3432,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,Cote d'Ivoire,CO2 Emissions (excl. LULUCF),12.33,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,Cote d'Ivoire,CO2 Emissions (excl. LULUCF),11.4035,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,Cote d'Ivoire,CO2 Emissions (excl. LULUCF),11.265,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,France,CO2 Emissions (excl. LULUCF),274.4505,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,France,CO2 Emissions (excl. LULUCF),284.1541,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,France,CO2 Emissions (excl. LULUCF),307.6802,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,France,CO2 Emissions (excl. LULUCF),316.7044,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,France,CO2 Emissions (excl. LULUCF),287.0868,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,France,CO2 Emissions (excl. LULUCF),322.9043,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,France,CO2 Emissions (excl. LULUCF),328.5501,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,France,CO2 Emissions (excl. LULUCF),338.709,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,France,CO2 Emissions (excl. LULUCF),334.7732,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,France,CO2 Emissions (excl. LULUCF),332.1533,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,Germany,CO2 Emissions (excl. LULUCF),579.9356,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,Germany,CO2 Emissions (excl. LULUCF),589.6596,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,Germany,CO2 Emissions (excl. LULUCF),658.0886,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,Germany,CO2 Emissions (excl. LULUCF),670.667,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,Germany,CO2 Emissions (excl. LULUCF),642.0878,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,Germany,CO2 Emissions (excl. LULUCF),696.5002,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,Germany,CO2 Emissions (excl. LULUCF),746.6974,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,Germany,CO2 Emissions (excl. LULUCF),774.4767,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,Germany,CO2 Emissions (excl. LULUCF),789.2489,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,Germany,CO2 Emissions (excl. LULUCF),784.9143,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,India,CO2 Emissions (excl. LULUCF),3153.8291,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,India,CO2 Emissions (excl. LULUCF),3014.5226,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,India,CO2 Emissions (excl. LULUCF),2807.0805,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,India,CO2 Emissions (excl. LULUCF),2597.9343,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,India,CO2 Emissions (excl. LULUCF),2356.959,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,India,CO2 Emissions (excl. LULUCF),2551.4851,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,India,CO2 Emissions (excl. LULUCF),2556.7189,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,India,CO2 Emissions (excl. LULUCF),2441.2015,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,India,CO2 Emissions (excl. LULUCF),2311.9771,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,India,CO2 Emissions (excl. LULUCF),2278.2296,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,Japan,CO2 Emissions (excl. LULUCF),972.267,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,Japan,CO2 Emissions (excl. LULUCF),1002.4382,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,Japan,CO2 Emissions (excl. LULUCF),1050.5032,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,Japan,CO2 Emissions (excl. LULUCF),1080.206,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,Japan,CO2 Emissions (excl. LULUCF),1060.2269,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,Japan,CO2 Emissions (excl. LULUCF),1123.813,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,Japan,CO2 Emissions (excl. LULUCF),1163.1278,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,Japan,CO2 Emissions (excl. LULUCF),1212.9423,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,Japan,CO2 Emissions (excl. LULUCF),1228.6537,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,Japan,CO2 Emissions (excl. LULUCF),1232.5762,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,Mali,CO2 Emissions (excl. LULUCF),7.4121,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,Mali,CO2 Emissions (excl. LULUCF),7.177,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,Mali,CO2 Emissions (excl. LULUCF),7.4928,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,Mali,CO2 Emissions (excl. LULUCF),7.3008,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,Mali,CO2 Emissions (excl. LULUCF),6.8432,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,Mali,CO2 Emissions (excl. LULUCF),6.1138,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,Mali,CO2 Emissions (excl. LULUCF),5.782,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,Mali,CO2 Emissions (excl. LULUCF),5.1611,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,Mali,CO2 Emissions (excl. LULUCF),4.5795,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,Mali,CO2 Emissions (excl. LULUCF),3.5312,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,Niger,CO2 Emissions (excl. LULUCF),3.2142,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,Niger,CO2 Emissions (excl. LULUCF),3.1629,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,Niger,CO2 Emissions (excl. LULUCF),3.2178,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,Niger,CO2 Emissions (excl. LULUCF),2.8588,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,Niger,CO2 Emissions (excl. LULUCF),2.4096,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,Niger,CO2 Emissions (excl. LULUCF),2.3731,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,Niger,CO2 Emissions (excl. LULUCF),2.0278,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,Niger,CO2 Emissions (excl. LULUCF),1.9739,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,Niger,CO2 Emissions (excl. LULUCF),2.1674,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,Niger,CO2 Emissions (excl. LULUCF),2.1698,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,Nigeria,CO2 Emissions (excl. LULUCF),131.9101,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,Nigeria,CO2 Emissions (excl. LULUCF),125.8687,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,Nigeria,CO2 Emissions (excl. LULUCF),129.0417,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,Nigeria,CO2 Emissions (excl. LULUCF),130.9005,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,Nigeria,CO2 Emissions (excl. LULUCF),118.9178,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,Nigeria,CO2 Emissions (excl. LULUCF),126.1061,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,Nigeria,CO2 Emissions (excl. LULUCF),121.4082,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,Nigeria,CO2 Emissions (excl. LULUCF),116.0398,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,Nigeria,CO2 Emissions (excl. LULUCF),123.4796,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,Nigeria,CO2 Emissions (excl. LULUCF),118.4539,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,Senegal,CO2 Emissions (excl. LULUCF),14.2023,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,Senegal,CO2 Emissions (excl. LULUCF),13.717,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,Senegal,CO2 Emissions (excl. LULUCF),14.5438,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,Senegal,CO2 Emissions (excl. LULUCF),13.1241,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,Senegal,CO2 Emissions (excl. LULUCF),10.8149,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,Senegal,CO2 Emissions (excl. LULUCF),11.0288,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,Senegal,CO2 Emissions (excl. LULUCF),10.7355,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,Senegal,CO2 Emissions (excl. LULUCF),10.2029,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,Senegal,CO2 Emissions (excl. LULUCF),10.2971,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,Senegal,CO2 Emissions (excl. LULUCF),9.2184,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,South Africa,CO2 Emissions (excl. LULUCF),440.1678,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,South Africa,CO2 Emissions (excl. LULUCF),427.2669,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,South Africa,CO2 Emissions (excl. LULUCF),429.3281,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,South Africa,CO2 Emissions (excl. LULUCF),448.5635,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,South Africa,CO2 Emissions (excl. LULUCF),450.8617,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,South Africa,CO2 Emissions (excl. LULUCF),477.5446,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,South Africa,CO2 Emissions (excl. LULUCF),473.4182,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,South Africa,CO2 Emissions (excl. LULUCF),469.5833,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,South Africa,CO2 Emissions (excl. LULUCF),460.1959,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,South Africa,CO2 Emissions (excl. LULUCF),462.2677,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2024-01,ESG,United States,CO2 Emissions (excl. LULUCF),4632.1649,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2023-01,ESG,United States,CO2 Emissions (excl. LULUCF),4618.2675,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2022-01,ESG,United States,CO2 Emissions (excl. LULUCF),4815.7665,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2021-01,ESG,United States,CO2 Emissions (excl. LULUCF),4754.3785,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2020-01,ESG,United States,CO2 Emissions (excl. LULUCF),4466.8765,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2019-01,ESG,United States,CO2 Emissions (excl. LULUCF),4967.9122,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2018-01,ESG,United States,CO2 Emissions (excl. LULUCF),5118.3744,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2017-01,ESG,United States,CO2 Emissions (excl. LULUCF),4959.4579,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2016-01,ESG,United States,CO2 Emissions (excl. LULUCF),5028.952,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5
+2015-01,ESG,United States,CO2 Emissions (excl. LULUCF),5132.9841,tonnes_CO2e,down,worldbank:EN.GHG.CO2.MT.CE.AR5

@@ -1,30 +1,38 @@
-{"query": "What is our current gross margin and how is it trending?", "expected": "margin", "persona": "cfo"}
-{"query": "What is our EBITDA margin this period?", "expected": "ebitda", "persona": "cfo"}
-{"query": "How is Rule of 40 calculated and what is a healthy benchmark?", "expected": "rule of 40", "persona": "cfo"}
-{"query": "What is our cash runway in months?", "expected": "runway", "persona": "cfo"}
-{"query": "Quelle est notre marge brute et comment est-elle calculee?", "expected": "marge", "persona": "cfo"}
-{"query": "What is our net revenue retention rate?", "expected": "retention", "persona": "cfo"}
-{"query": "What is our current monthly churn rate and how does it compare to the healthy benchmark?", "expected": "churn", "persona": "analyst"}
-{"query": "What is our LTV to CAC ratio?", "expected": "ltv", "persona": "analyst"}
-{"query": "Quel est notre taux de desabonnement (churn) actuel?", "expected": "churn", "persona": "analyst"}
-{"query": "What did Salesforce report for revenue in its most recent quarterly earnings release?", "expected": "revenue", "persona": "analyst"}
-{"query": "What is our employee turnover rate and how does it compare to the healthy benchmark?", "expected": "turnover", "persona": "chro"}
-{"query": "What is our employee Net Promoter Score (eNPS)?", "expected": "enps", "persona": "chro"}
-{"query": "What is revenue per employee and why does it matter?", "expected": "revenue per employee", "persona": "chro"}
-{"query": "Quel est notre taux de rotation du personnel (turnover)?", "expected": "turnover", "persona": "chro"}
-{"query": "What is Overall Equipment Effectiveness (OEE) and what is our current value?", "expected": "oee", "persona": "coo"}
-{"query": "What is our current defect rate and first pass yield?", "expected": "defect", "persona": "coo"}
-{"query": "What is our on-time delivery rate?", "expected": "delivery", "persona": "coo"}
-{"query": "What is our current system uptime and how does it compare to the three-nines benchmark?", "expected": "uptime", "persona": "cto"}
-{"query": "What critical vulnerabilities have been identified recently?", "expected": "vulnerabilit", "persona": "cto"}
-{"query": "What is our change failure rate for deployments?", "expected": "change failure", "persona": "cto"}
-{"query": "What is our carbon footprint and how has it trended?", "expected": "carbon", "persona": "esg"}
-{"query": "What is our renewable energy ratio?", "expected": "renewable", "persona": "esg"}
-{"query": "What is our board diversity ratio?", "expected": "diversity", "persona": "esg"}
-{"query": "Quelles sont nos emissions de carbone et notre ratio d'energie renouvelable?", "expected": "carbone", "persona": "esg"}
-{"query": "What security incidents or anomalies have been flagged recently?", "expected": "security", "persona": "risk"}
-{"query": "What is our debt-to-equity ratio and is it within a healthy range?", "expected": "debt", "persona": "risk"}
-{"query": "What is our overall enterprise health score right now?", "expected": "health", "persona": "ceo"}
-{"query": "Summarize the biggest risks and opportunities across all domains this period.", "expected": "risk", "persona": "ceo"}
-{"query": "What is our inventory turnover ratio?", "expected": "inventory", "persona": "general"}
-{"query": "What is the carrying cost of inventory as a percentage of inventory value?", "expected": "carrying cost", "persona": "general"}
+{"query": "Report the recorded value of CO2 Emissions (excl. LULUCF) for 2024-01.", "expected": "co2 emissions (excl. lulucf)", "persona": "esg", "domain": "ESG", "provenance": "worldbank:EN.GHG.CO2.MT.CE.AR5", "kind": "kpi"}
+{"query": "How did CO2 Emissions, Transport stand in 2021-01, and where does that figure come from?", "expected": "co2 emissions, transport", "persona": "esg", "domain": "ESG", "provenance": "fred:EMISSCO2TOTVTTTOUSA", "kind": "kpi"}
+{"query": "Report the recorded value of Energy Use per Capita for 2024-01.", "expected": "energy use per capita", "persona": "esg", "domain": "ESG", "provenance": "worldbank:EG.USE.PCAP.KG.OE", "kind": "kpi"}
+{"query": "Donnez le chiffre enregistré pour CO2 Emissions (excl. LULUCF) au titre de 2024-01.", "expected": "co2 emissions (excl. lulucf)", "persona": "esg", "domain": "ESG", "provenance": "worldbank:EN.GHG.CO2.MT.CE.AR5", "kind": "kpi-fr"}
+{"query": "How did Chiffre d'affaires stand in 2025-09, and where does that figure come from?", "expected": "chiffre d'affaires", "persona": "cfo", "domain": "Finance", "provenance": "sonatel:9m-2025", "kind": "kpi"}
+{"query": "How did Consumer Price Index stand in 2026-06, and where does that figure come from?", "expected": "consumer price index", "persona": "cfo", "domain": "Finance", "provenance": "fred:CPIAUCSL", "kind": "kpi"}
+{"query": "What was Corporate Profits After Tax in 2026-01?", "expected": "corporate profits after tax", "persona": "cfo", "domain": "Finance", "provenance": "fred:CP", "kind": "kpi"}
+{"query": "Quelle était la valeur de Chiffre d'affaires en 2025-09 ?", "expected": "chiffre d'affaires", "persona": "cfo", "domain": "Finance", "provenance": "sonatel:9m-2025", "kind": "kpi-fr"}
+{"query": "How did Consumer Sentiment Index stand in 2026-06, and where does that figure come from?", "expected": "consumer sentiment index", "persona": "analyst", "domain": "Growth", "provenance": "fred:UMCSENT", "kind": "kpi"}
+{"query": "Report the recorded value of E-Commerce Retail Sales for 2026-01.", "expected": "e-commerce retail sales", "persona": "analyst", "domain": "Growth", "provenance": "fred:ECOMSA", "kind": "kpi"}
+{"query": "How did Retail Sales stand in 2026-06, and where does that figure come from?", "expected": "retail sales", "persona": "analyst", "domain": "Growth", "provenance": "fred:RSXFS", "kind": "kpi"}
+{"query": "Quelle était la valeur de Consumer Sentiment Index en 2026-06 ?", "expected": "consumer sentiment index", "persona": "analyst", "domain": "Growth", "provenance": "fred:UMCSENT", "kind": "kpi-fr"}
+{"query": "What was Computer Systems Design Employment in 2026-07?", "expected": "computer systems design employment", "persona": "cto", "domain": "IT", "provenance": "fred:CES6054150001", "kind": "kpi"}
+{"query": "Report the recorded value of Published CVEs (sampled) for 2026-06.", "expected": "published cves (sampled)", "persona": "cto", "domain": "IT", "provenance": "nvd:cve-2.0", "kind": "kpi"}
+{"query": "Report the recorded value of Published CVEs (sampled) — Critical Severity for 2026-06.", "expected": "published cves (sampled) — critical severity", "persona": "cto", "domain": "IT", "provenance": "nvd:cve-2.0", "kind": "kpi"}
+{"query": "Quelle était la valeur de Computer Systems Design Employment en 2026-07 ?", "expected": "computer systems design employment", "persona": "cto", "domain": "IT", "provenance": "fred:CES6054150001", "kind": "kpi-fr"}
+{"query": "What was Business Inventories in 2026-05?", "expected": "business inventories", "persona": "coo", "domain": "Logistics", "provenance": "fred:BUSINV", "kind": "kpi"}
+{"query": "How did Freight Transportation Index stand in 2026-05, and where does that figure come from?", "expected": "freight transportation index", "persona": "coo", "domain": "Logistics", "provenance": "fred:TSIFRGHTC", "kind": "kpi"}
+{"query": "Quelle était la valeur de Business Inventories en 2026-05 ?", "expected": "business inventories", "persona": "coo", "domain": "Logistics", "provenance": "fred:BUSINV", "kind": "kpi-fr"}
+{"query": "How did Capacity Utilization stand in 2026-06, and where does that figure come from?", "expected": "capacity utilization", "persona": "coo", "domain": "Operations", "provenance": "fred:TCU", "kind": "kpi"}
+{"query": "Report the recorded value of Industrial Production Index for 2026-06.", "expected": "industrial production index", "persona": "coo", "domain": "Operations", "provenance": "fred:INDPRO", "kind": "kpi"}
+{"query": "Donnez le chiffre enregistré pour Capacity Utilization au titre de 2026-06.", "expected": "capacity utilization", "persona": "coo", "domain": "Operations", "provenance": "fred:TCU", "kind": "kpi-fr"}
+{"query": "How did Attrition Rate stand in 2024-01, and where does that figure come from?", "expected": "attrition rate", "persona": "chro", "domain": "People", "provenance": "ibm-hr:attrition-survey", "kind": "kpi"}
+{"query": "How did Average Employee Age stand in 2024-01, and where does that figure come from?", "expected": "average employee age", "persona": "chro", "domain": "People", "provenance": "ibm-hr:attrition-survey", "kind": "kpi"}
+{"query": "How did Average Hourly Earnings stand in 2026-07, and where does that figure come from?", "expected": "average hourly earnings", "persona": "chro", "domain": "People", "provenance": "fred:CES0500000003", "kind": "kpi"}
+{"query": "Quelle était la valeur de Attrition Rate en 2024-01 ?", "expected": "attrition rate", "persona": "chro", "domain": "People", "provenance": "ibm-hr:attrition-survey", "kind": "kpi-fr"}
+{"query": "What does Salesforce's annual report say about its revenue and business risks?", "expected": "salesforce_10k_2026", "persona": "cfo", "domain": "document", "provenance": "salesforce_10K_2026.txt", "kind": "document"}
+{"query": "Summarise the most recent Salesforce quarterly results.", "expected": "salesforce_10q_2026q1", "persona": "cfo", "domain": "document", "provenance": "salesforce_10Q_2026Q1.txt", "kind": "document"}
+{"query": "What did Salesforce report in its latest earnings release?", "expected": "salesforce_q1fy27_earnings_release", "persona": "analyst", "domain": "document", "provenance": "salesforce_q1fy27_earnings_release.txt", "kind": "document"}
+{"query": "Quel chiffre d'affaires le Groupe Sonatel a-t-il publié, et en quelle devise ?", "expected": "sonatel_resultats_fcfa_verified", "persona": "cfo", "domain": "document", "provenance": "sonatel_resultats_fcfa_verified.md", "kind": "document"}
+{"query": "What revenue did Sonatel Group report in FCFA?", "expected": "sonatel_resultats_fcfa_verified", "persona": "cfo", "domain": "document", "provenance": "sonatel_resultats_fcfa_verified.md", "kind": "document"}
+{"query": "What do the DORA findings say about software delivery performance?", "expected": "dora_2024_report_findings", "persona": "cto", "domain": "document", "provenance": "dora_2024_report_findings.md", "kind": "document"}
+{"query": "What does the HR attrition data show about employees who left?", "expected": "ibm_hr_attrition", "persona": "chro", "domain": "document", "provenance": "ibm_hr_attrition.csv", "kind": "document"}
+{"query": "What factors appear in the employee churn dataset?", "expected": "hr_employee_churn", "persona": "chro", "domain": "document", "provenance": "hr_employee_churn.csv", "kind": "document"}
+{"query": "What was discussed in the Richmond Fed recording about family transfers?", "expected": "richmond_fed_family_transfers_2026", "persona": "ceo", "domain": "document", "provenance": "richmond_fed_family_transfers_2026.mp3", "kind": "document"}
+{"query": "What does capacity utilization mean?", "expected": "capacity utilization", "persona": "general", "domain": "glossary", "provenance": "glossary:Capacity Utilization", "kind": "glossary"}
+{"query": "Define revenue as this system uses the term.", "expected": "revenue", "persona": "general", "domain": "glossary", "provenance": "glossary:Revenue", "kind": "glossary"}
+{"query": "Give an overview of how ESG and Finance indicators are tracking.", "expected": "esg", "persona": "ceo", "domain": "cross", "provenance": "multiple", "kind": "cross-domain"}

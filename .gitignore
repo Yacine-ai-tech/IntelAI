@@ -12,6 +12,7 @@ build/
 # Env
 .env
 *.env
+.env.bak*
 
 # Data / runtime
 chroma_db/

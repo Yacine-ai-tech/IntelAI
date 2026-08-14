@@ -1,0 +1,13 @@
+# People — Synthèse des indicateurs réels (2026-07)
+
+Valeurs enregistrées pour les indicateurs People en 2026-07. Chaque chiffre est reproduit tel que publié par sa source ; l'identifiant de la source suit chaque ligne.
+
+## Séries couvertes
+- Salaire horaire moyen: 38 USD  (source: fred:CES0500000003)
+- Taux de chômage: 4.10 %  (source: fred:UNRATE)
+
+## Sources
+- fred:CES0500000003 — https://fred.stlouisfed.org/series/CES0500000003
+- fred:UNRATE — https://fred.stlouisfed.org/series/UNRATE
+
+Il s'agit d'observations issues de séries statistiques publiées, et non d'objectifs, de prévisions ou de comptes internes.

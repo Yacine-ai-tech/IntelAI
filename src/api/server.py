@@ -1037,9 +1037,21 @@ async def public_signed_webhook_ingest(source_name: str, request: Request):
 async def ingest_csv_file(
     file: UploadFile = File(...),
     source_name: str = Form("csv_upload"),
+    global_scope: bool = Form(False),
     user: TokenData = Depends(get_current_user),
 ):
-    """Upload a CSV file with metrics (metric_name, value, period, category, segment)."""
+    """Upload a CSV file with metrics (metric_name, value, period, category, segment).
+
+    Rows are scoped to the uploader by default, so one visitor's upload never shows
+    up on another's dashboard. Seeding the shared baseline is the deliberate
+    exception: `global_scope=true` writes rows with a NULL owner, visible to
+    everyone, and is restricted to admins because it edits what every visitor sees.
+    Without this the documented "seed through the official API" path could only ever
+    produce data private to whoever ran it.
+
+    A per-row `source` column is preserved as each row's provenance; `source_name`
+    labels rows that don't carry one.
+    """
     import io
     from src.services.pg_store import store_kpi_metrics, log_audit_event
     content = await file.read()
@@ -1054,9 +1066,21 @@ async def ingest_csv_file(
     # upload would silently store every row with metric='' (same bug as the webhook
     # path, fixed there too; found via live verification).
     df = df.rename(columns={"metric_name": "metric"})
-    store_kpi_metrics(df, source_name=source_name, replace=False, owner_user_id=user.user_id)
-    log_audit_event(user.username, "CSV_INGEST", f"Ingested {len(df)} rows from {file.filename}")
-    return {"status": "ingested", "rows_inserted": len(df), "filename": file.filename}
+
+    if global_scope and (user.role or "").lower() != "admin":
+        raise HTTPException(status_code=403, detail="global_scope requires an admin role")
+    owner = None if global_scope else user.user_id
+
+    store_kpi_metrics(df, source_name=source_name, replace=False, owner_user_id=owner)
+    log_audit_event(
+        user.username, "CSV_INGEST",
+        f"Ingested {len(df)} rows from {file.filename}"
+        f"{' (global baseline)' if global_scope else ''}",
+    )
+    return {
+        "status": "ingested", "rows_inserted": len(df), "filename": file.filename,
+        "scope": "global" if global_scope else "user",
+    }
 
 
 async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
@@ -1078,9 +1102,21 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
       3. POST {url}/process       -> {"raw_text"|"fields"}    structured extraction
     DocIntel speaks all three natively; any compliant processor can too.
 
-    DOC_PROCESSOR_ROUTE picks the processor's extraction route where it supports one
-    (DocIntel: vision_route_a = Claude Sonnet Vision, paid per page; vision_route_b =
-    self-hosted Ollama vision, $0 but needs Ollama; ocr_fallback = Tesseract, $0).
+    The two route-taking endpoints do NOT share a route vocabulary, so they get one
+    setting each. Sending one value to both meant whichever endpoint didn't recognise
+    it quietly fell back to its weakest path — a 1.2MB report came back as 32
+    characters that way, and the caller had no way to tell that from a short document.
+      DOC_PROCESSOR_TEXT_ROUTE -> /extract/text: auto | marker | ocr
+          "auto" prefers Marker (structured Markdown), which is what STRATEGY.md
+          §3.10 designates for text destined for a RAG index, and falls back to the
+          native text layer when Marker is not installed.
+      DOC_PROCESSOR_ROUTE      -> /process: vision_route_a (Claude Sonnet Vision,
+          paid per page) | vision_route_b (self-hosted Ollama, $0) | ocr_fallback
+          (Tesseract, $0).
+
+    A result that is non-empty but implausibly short is treated as a miss rather than
+    a success: extraction continues to the next endpoint and the longest result wins.
+    Accepting the first non-empty string let a near-empty extraction mask a good one.
 
     Raises RuntimeError on failure — the caller turns that into a 502 so the operator
     sees a real error instead of a silently degraded ingest.
@@ -1095,14 +1131,17 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
     headers = {}
     if settings.DOC_PROCESSOR_TOKEN:
         headers["Authorization"] = f"Bearer {settings.DOC_PROCESSOR_TOKEN}"
-    route = _os.environ.get("DOC_PROCESSOR_ROUTE", "ocr_fallback")
+    vision_route = _os.environ.get("DOC_PROCESSOR_ROUTE", "ocr_fallback")
+    text_route = _os.environ.get("DOC_PROCESSOR_TEXT_ROUTE", "auto")
     timeout = float(_os.environ.get("DOC_PROCESSOR_TIMEOUT", "180"))
+    min_yield = int(_os.environ.get("DOC_PROCESSOR_MIN_CHARS", "200"))
 
     attempts = [
-        ("/extract/text", {"route": route}, ("text",)),
+        ("/extract/text", {"route": text_route}, ("text",)),
         ("/extract/marker", None, ("markdown",)),
-        ("/process", {"route": route}, ("raw_text",)),
+        ("/process", {"route": vision_route}, ("raw_text",)),
     ]
+    best = ""
     errors = []
     async with httpx.AsyncClient(timeout=timeout) as client:
         for path, data, keys in attempts:
@@ -1121,7 +1160,14 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
                 for k in keys:
                     val = result.get(k)
                     if isinstance(val, str) and val.strip():
-                        return val
+                        if len(val.strip()) >= min_yield:
+                            return val
+                        # Too little to be a real extraction of this document: hold
+                        # it as a floor and let the next endpoint try to beat it.
+                        if len(val.strip()) > len(best):
+                            best = val
+                        errors.append(
+                            f"{path}: only {len(val.strip())} chars (< {min_yield})")
                 # /process may only return typed fields (invoice-shaped) — usable, but
                 # it is NOT full document text, so it is the last thing we accept.
                 if path == "/process":
@@ -1138,6 +1184,16 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
                 errors.append(f"{path}: returned no usable text ({result.get('error') or 'empty'})")
             except Exception as e:
                 errors.append(f"{path}: {e}")
+
+    if best.strip():
+        # Every endpoint came in under the yield floor. Some text beats none, but say
+        # so loudly — this is the signature of a document the processor cannot really
+        # read (a malformed or scanned-only PDF), not of a short document.
+        log.warning(
+            "Document processor returned only %d chars for %s — below the %d-char "
+            "floor on every route. Tried: %s", len(best.strip()), filename, min_yield,
+            "; ".join(errors))
+        return best
 
     raise RuntimeError(
         f"document processor at {settings.DOC_PROCESSOR_URL} could not extract text "
@@ -1174,8 +1230,13 @@ async def ingest_document(
     text = SecurityScanner.redact_text(text)
     
     doc_id = str(uuid.uuid4())
+    # Store the extracted text in full. A fixed character cap here silently threw away
+    # the tail of every long document — an 82-page filing extracting 277k chars kept
+    # only its first 50k, and nothing in the response said so. Nothing downstream needs
+    # a pre-truncated row: hybrid_retrieval.chunk_text() splits documents into passages
+    # at index time, so a whole document is the correct unit to persist.
     docs_df = pd.DataFrame([{
-        "doc_id": doc_id, "title": file.filename, "content": text[:50000],
+        "doc_id": doc_id, "title": file.filename, "content": text,
         "source": category, "embedding": "",
     }])
     store_knowledge_docs(docs_df)
@@ -1249,7 +1310,9 @@ async def ingest_audio(
 
     doc_id = str(uuid.uuid4())
     docs_df = pd.DataFrame([{
-        "doc_id": doc_id, "title": file.filename or "audio upload", "content": full_content[:50000],
+        # Full transcript — see the note on document ingestion above; a long recording's
+        # transcript is chunked at index time, not truncated at write time.
+        "doc_id": doc_id, "title": file.filename or "audio upload", "content": full_content,
         "source": category, "embedding": "",
     }])
     store_knowledge_docs(docs_df)

@@ -1,0 +1,252 @@
+period,category,segment,metric_name,value,unit,direction,source
+2019-01,IT,US,Software Publishers Employment,439.0,count,up,fred:CES5051200001
+2019-02,IT,US,Software Publishers Employment,437.2,count,up,fred:CES5051200001
+2019-03,IT,US,Software Publishers Employment,442.4,count,up,fred:CES5051200001
+2019-04,IT,US,Software Publishers Employment,436.8,count,up,fred:CES5051200001
+2019-05,IT,US,Software Publishers Employment,437.6,count,up,fred:CES5051200001
+2019-06,IT,US,Software Publishers Employment,449.8,count,up,fred:CES5051200001
+2019-07,IT,US,Software Publishers Employment,440.8,count,up,fred:CES5051200001
+2019-08,IT,US,Software Publishers Employment,433.1,count,up,fred:CES5051200001
+2019-09,IT,US,Software Publishers Employment,433.6,count,up,fred:CES5051200001
+2019-10,IT,US,Software Publishers Employment,426.1,count,up,fred:CES5051200001
+2019-11,IT,US,Software Publishers Employment,433.6,count,up,fred:CES5051200001
+2019-12,IT,US,Software Publishers Employment,437.3,count,up,fred:CES5051200001
+2020-01,IT,US,Software Publishers Employment,435.9,count,up,fred:CES5051200001
+2020-02,IT,US,Software Publishers Employment,439.1,count,up,fred:CES5051200001
+2020-03,IT,US,Software Publishers Employment,432.2,count,up,fred:CES5051200001
+2020-04,IT,US,Software Publishers Employment,223.6,count,up,fred:CES5051200001
+2020-05,IT,US,Software Publishers Employment,213.3,count,up,fred:CES5051200001
+2020-06,IT,US,Software Publishers Employment,223.7,count,up,fred:CES5051200001
+2020-07,IT,US,Software Publishers Employment,225.7,count,up,fred:CES5051200001
+2020-08,IT,US,Software Publishers Employment,251.5,count,up,fred:CES5051200001
+2020-09,IT,US,Software Publishers Employment,296.1,count,up,fred:CES5051200001
+2020-10,IT,US,Software Publishers Employment,277.8,count,up,fred:CES5051200001
+2020-11,IT,US,Software Publishers Employment,287.1,count,up,fred:CES5051200001
+2020-12,IT,US,Software Publishers Employment,296.3,count,up,fred:CES5051200001
+2021-01,IT,US,Software Publishers Employment,313.9,count,up,fred:CES5051200001
+2021-02,IT,US,Software Publishers Employment,318.6,count,up,fred:CES5051200001
+2021-03,IT,US,Software Publishers Employment,330.5,count,up,fred:CES5051200001
+2021-04,IT,US,Software Publishers Employment,344.0,count,up,fred:CES5051200001
+2021-05,IT,US,Software Publishers Employment,351.9,count,up,fred:CES5051200001
+2021-06,IT,US,Software Publishers Employment,357.6,count,up,fred:CES5051200001
+2021-07,IT,US,Software Publishers Employment,396.4,count,up,fred:CES5051200001
+2021-08,IT,US,Software Publishers Employment,404.1,count,up,fred:CES5051200001
+2021-09,IT,US,Software Publishers Employment,423.3,count,up,fred:CES5051200001
+2021-10,IT,US,Software Publishers Employment,433.2,count,up,fred:CES5051200001
+2021-11,IT,US,Software Publishers Employment,435.8,count,up,fred:CES5051200001
+2021-12,IT,US,Software Publishers Employment,442.2,count,up,fred:CES5051200001
+2022-01,IT,US,Software Publishers Employment,440.5,count,up,fred:CES5051200001
+2022-02,IT,US,Software Publishers Employment,442.0,count,up,fred:CES5051200001
+2022-03,IT,US,Software Publishers Employment,447.6,count,up,fred:CES5051200001
+2022-04,IT,US,Software Publishers Employment,441.9,count,up,fred:CES5051200001
+2022-05,IT,US,Software Publishers Employment,449.8,count,up,fred:CES5051200001
+2022-06,IT,US,Software Publishers Employment,452.1,count,up,fred:CES5051200001
+2022-07,IT,US,Software Publishers Employment,455.7,count,up,fred:CES5051200001
+2022-08,IT,US,Software Publishers Employment,449.8,count,up,fred:CES5051200001
+2022-09,IT,US,Software Publishers Employment,445.2,count,up,fred:CES5051200001
+2022-10,IT,US,Software Publishers Employment,448.3,count,up,fred:CES5051200001
+2022-11,IT,US,Software Publishers Employment,456.1,count,up,fred:CES5051200001
+2022-12,IT,US,Software Publishers Employment,435.8,count,up,fred:CES5051200001
+2023-01,IT,US,Software Publishers Employment,415.9,count,up,fred:CES5051200001
+2023-02,IT,US,Software Publishers Employment,412.5,count,up,fred:CES5051200001
+2023-03,IT,US,Software Publishers Employment,419.7,count,up,fred:CES5051200001
+2023-04,IT,US,Software Publishers Employment,423.8,count,up,fred:CES5051200001
+2023-05,IT,US,Software Publishers Employment,426.9,count,up,fred:CES5051200001
+2023-06,IT,US,Software Publishers Employment,415.6,count,up,fred:CES5051200001
+2023-07,IT,US,Software Publishers Employment,406.1,count,up,fred:CES5051200001
+2023-08,IT,US,Software Publishers Employment,390.0,count,up,fred:CES5051200001
+2023-09,IT,US,Software Publishers Employment,383.2,count,up,fred:CES5051200001
+2023-10,IT,US,Software Publishers Employment,377.5,count,up,fred:CES5051200001
+2023-11,IT,US,Software Publishers Employment,395.8,count,up,fred:CES5051200001
+2023-12,IT,US,Software Publishers Employment,397.8,count,up,fred:CES5051200001
+2024-01,IT,US,Software Publishers Employment,402.6,count,up,fred:CES5051200001
+2024-02,IT,US,Software Publishers Employment,401.5,count,up,fred:CES5051200001
+2024-03,IT,US,Software Publishers Employment,399.5,count,up,fred:CES5051200001
+2024-04,IT,US,Software Publishers Employment,391.9,count,up,fred:CES5051200001
+2024-05,IT,US,Software Publishers Employment,390.0,count,up,fred:CES5051200001
+2024-06,IT,US,Software Publishers Employment,385.9,count,up,fred:CES5051200001
+2024-07,IT,US,Software Publishers Employment,383.8,count,up,fred:CES5051200001
+2024-08,IT,US,Software Publishers Employment,384.1,count,up,fred:CES5051200001
+2024-09,IT,US,Software Publishers Employment,378.8,count,up,fred:CES5051200001
+2024-10,IT,US,Software Publishers Employment,371.7,count,up,fred:CES5051200001
+2024-11,IT,US,Software Publishers Employment,368.9,count,up,fred:CES5051200001
+2024-12,IT,US,Software Publishers Employment,370.7,count,up,fred:CES5051200001
+2025-01,IT,US,Software Publishers Employment,367.0,count,up,fred:CES5051200001
+2025-02,IT,US,Software Publishers Employment,365.1,count,up,fred:CES5051200001
+2025-03,IT,US,Software Publishers Employment,359.3,count,up,fred:CES5051200001
+2025-04,IT,US,Software Publishers Employment,358.6,count,up,fred:CES5051200001
+2025-05,IT,US,Software Publishers Employment,354.9,count,up,fred:CES5051200001
+2025-06,IT,US,Software Publishers Employment,354.3,count,up,fred:CES5051200001
+2025-07,IT,US,Software Publishers Employment,355.0,count,up,fred:CES5051200001
+2025-08,IT,US,Software Publishers Employment,349.0,count,up,fred:CES5051200001
+2025-09,IT,US,Software Publishers Employment,348.8,count,up,fred:CES5051200001
+2025-10,IT,US,Software Publishers Employment,348.0,count,up,fred:CES5051200001
+2025-11,IT,US,Software Publishers Employment,347.6,count,up,fred:CES5051200001
+2025-12,IT,US,Software Publishers Employment,346.1,count,up,fred:CES5051200001
+2026-01,IT,US,Software Publishers Employment,352.4,count,up,fred:CES5051200001
+2026-02,IT,US,Software Publishers Employment,339.1,count,up,fred:CES5051200001
+2026-03,IT,US,Software Publishers Employment,336.6,count,up,fred:CES5051200001
+2026-04,IT,US,Software Publishers Employment,331.4,count,up,fred:CES5051200001
+2026-05,IT,US,Software Publishers Employment,325.6,count,up,fred:CES5051200001
+2026-06,IT,US,Software Publishers Employment,322.8,count,up,fred:CES5051200001
+2026-07,IT,US,Software Publishers Employment,332.7,count,up,fred:CES5051200001
+2019-01,IT,US,Computer Systems Design Employment,2153.6,count,up,fred:CES6054150001
+2019-02,IT,US,Computer Systems Design Employment,2156.9,count,up,fred:CES6054150001
+2019-03,IT,US,Computer Systems Design Employment,2168.7,count,up,fred:CES6054150001
+2019-04,IT,US,Computer Systems Design Employment,2180.7,count,up,fred:CES6054150001
+2019-05,IT,US,Computer Systems Design Employment,2189.4,count,up,fred:CES6054150001
+2019-06,IT,US,Computer Systems Design Employment,2199.7,count,up,fred:CES6054150001
+2019-07,IT,US,Computer Systems Design Employment,2208.2,count,up,fred:CES6054150001
+2019-08,IT,US,Computer Systems Design Employment,2216.4,count,up,fred:CES6054150001
+2019-09,IT,US,Computer Systems Design Employment,2214.1,count,up,fred:CES6054150001
+2019-10,IT,US,Computer Systems Design Employment,2213.8,count,up,fred:CES6054150001
+2019-11,IT,US,Computer Systems Design Employment,2218.9,count,up,fred:CES6054150001
+2019-12,IT,US,Computer Systems Design Employment,2213.6,count,up,fred:CES6054150001
+2020-01,IT,US,Computer Systems Design Employment,2228.5,count,up,fred:CES6054150001
+2020-02,IT,US,Computer Systems Design Employment,2234.1,count,up,fred:CES6054150001
+2020-03,IT,US,Computer Systems Design Employment,2219.8,count,up,fred:CES6054150001
+2020-04,IT,US,Computer Systems Design Employment,2165.8,count,up,fred:CES6054150001
+2020-05,IT,US,Computer Systems Design Employment,2166.1,count,up,fred:CES6054150001
+2020-06,IT,US,Computer Systems Design Employment,2167.7,count,up,fred:CES6054150001
+2020-07,IT,US,Computer Systems Design Employment,2167.2,count,up,fred:CES6054150001
+2020-08,IT,US,Computer Systems Design Employment,2180.6,count,up,fred:CES6054150001
+2020-09,IT,US,Computer Systems Design Employment,2191.3,count,up,fred:CES6054150001
+2020-10,IT,US,Computer Systems Design Employment,2202.5,count,up,fred:CES6054150001
+2020-11,IT,US,Computer Systems Design Employment,2208.3,count,up,fred:CES6054150001
+2020-12,IT,US,Computer Systems Design Employment,2222.1,count,up,fred:CES6054150001
+2021-01,IT,US,Computer Systems Design Employment,2232.6,count,up,fred:CES6054150001
+2021-02,IT,US,Computer Systems Design Employment,2249.0,count,up,fred:CES6054150001
+2021-03,IT,US,Computer Systems Design Employment,2260.5,count,up,fred:CES6054150001
+2021-04,IT,US,Computer Systems Design Employment,2272.3,count,up,fred:CES6054150001
+2021-05,IT,US,Computer Systems Design Employment,2279.1,count,up,fred:CES6054150001
+2021-06,IT,US,Computer Systems Design Employment,2296.9,count,up,fred:CES6054150001
+2021-07,IT,US,Computer Systems Design Employment,2319.6,count,up,fred:CES6054150001
+2021-08,IT,US,Computer Systems Design Employment,2332.0,count,up,fred:CES6054150001
+2021-09,IT,US,Computer Systems Design Employment,2348.9,count,up,fred:CES6054150001
+2021-10,IT,US,Computer Systems Design Employment,2361.2,count,up,fred:CES6054150001
+2021-11,IT,US,Computer Systems Design Employment,2377.8,count,up,fred:CES6054150001
+2021-12,IT,US,Computer Systems Design Employment,2389.5,count,up,fred:CES6054150001
+2022-01,IT,US,Computer Systems Design Employment,2406.9,count,up,fred:CES6054150001
+2022-02,IT,US,Computer Systems Design Employment,2413.6,count,up,fred:CES6054150001
+2022-03,IT,US,Computer Systems Design Employment,2436.5,count,up,fred:CES6054150001
+2022-04,IT,US,Computer Systems Design Employment,2441.6,count,up,fred:CES6054150001
+2022-05,IT,US,Computer Systems Design Employment,2453.3,count,up,fred:CES6054150001
+2022-06,IT,US,Computer Systems Design Employment,2458.3,count,up,fred:CES6054150001
+2022-07,IT,US,Computer Systems Design Employment,2457.1,count,up,fred:CES6054150001
+2022-08,IT,US,Computer Systems Design Employment,2462.0,count,up,fred:CES6054150001
+2022-09,IT,US,Computer Systems Design Employment,2469.3,count,up,fred:CES6054150001
+2022-10,IT,US,Computer Systems Design Employment,2479.0,count,up,fred:CES6054150001
+2022-11,IT,US,Computer Systems Design Employment,2482.9,count,up,fred:CES6054150001
+2022-12,IT,US,Computer Systems Design Employment,2483.0,count,up,fred:CES6054150001
+2023-01,IT,US,Computer Systems Design Employment,2478.6,count,up,fred:CES6054150001
+2023-02,IT,US,Computer Systems Design Employment,2481.3,count,up,fred:CES6054150001
+2023-03,IT,US,Computer Systems Design Employment,2483.5,count,up,fred:CES6054150001
+2023-04,IT,US,Computer Systems Design Employment,2482.4,count,up,fred:CES6054150001
+2023-05,IT,US,Computer Systems Design Employment,2478.2,count,up,fred:CES6054150001
+2023-06,IT,US,Computer Systems Design Employment,2472.9,count,up,fred:CES6054150001
+2023-07,IT,US,Computer Systems Design Employment,2470.7,count,up,fred:CES6054150001
+2023-08,IT,US,Computer Systems Design Employment,2467.0,count,up,fred:CES6054150001
+2023-09,IT,US,Computer Systems Design Employment,2456.5,count,up,fred:CES6054150001
+2023-10,IT,US,Computer Systems Design Employment,2454.0,count,up,fred:CES6054150001
+2023-11,IT,US,Computer Systems Design Employment,2451.1,count,up,fred:CES6054150001
+2023-12,IT,US,Computer Systems Design Employment,2449.8,count,up,fred:CES6054150001
+2024-01,IT,US,Computer Systems Design Employment,2446.9,count,up,fred:CES6054150001
+2024-02,IT,US,Computer Systems Design Employment,2444.6,count,up,fred:CES6054150001
+2024-03,IT,US,Computer Systems Design Employment,2439.8,count,up,fred:CES6054150001
+2024-04,IT,US,Computer Systems Design Employment,2441.0,count,up,fred:CES6054150001
+2024-05,IT,US,Computer Systems Design Employment,2440.6,count,up,fred:CES6054150001
+2024-06,IT,US,Computer Systems Design Employment,2444.7,count,up,fred:CES6054150001
+2024-07,IT,US,Computer Systems Design Employment,2442.6,count,up,fred:CES6054150001
+2024-08,IT,US,Computer Systems Design Employment,2437.2,count,up,fred:CES6054150001
+2024-09,IT,US,Computer Systems Design Employment,2437.6,count,up,fred:CES6054150001
+2024-10,IT,US,Computer Systems Design Employment,2433.4,count,up,fred:CES6054150001
+2024-11,IT,US,Computer Systems Design Employment,2429.2,count,up,fred:CES6054150001
+2024-12,IT,US,Computer Systems Design Employment,2431.4,count,up,fred:CES6054150001
+2025-01,IT,US,Computer Systems Design Employment,2426.3,count,up,fred:CES6054150001
+2025-02,IT,US,Computer Systems Design Employment,2416.7,count,up,fred:CES6054150001
+2025-03,IT,US,Computer Systems Design Employment,2408.9,count,up,fred:CES6054150001
+2025-04,IT,US,Computer Systems Design Employment,2411.3,count,up,fred:CES6054150001
+2025-05,IT,US,Computer Systems Design Employment,2410.3,count,up,fred:CES6054150001
+2025-06,IT,US,Computer Systems Design Employment,2399.9,count,up,fred:CES6054150001
+2025-07,IT,US,Computer Systems Design Employment,2395.7,count,up,fred:CES6054150001
+2025-08,IT,US,Computer Systems Design Employment,2394.0,count,up,fred:CES6054150001
+2025-09,IT,US,Computer Systems Design Employment,2387.6,count,up,fred:CES6054150001
+2025-10,IT,US,Computer Systems Design Employment,2379.7,count,up,fred:CES6054150001
+2025-11,IT,US,Computer Systems Design Employment,2381.5,count,up,fred:CES6054150001
+2025-12,IT,US,Computer Systems Design Employment,2380.6,count,up,fred:CES6054150001
+2026-01,IT,US,Computer Systems Design Employment,2374.2,count,up,fred:CES6054150001
+2026-02,IT,US,Computer Systems Design Employment,2379.1,count,up,fred:CES6054150001
+2026-03,IT,US,Computer Systems Design Employment,2369.6,count,up,fred:CES6054150001
+2026-04,IT,US,Computer Systems Design Employment,2369.5,count,up,fred:CES6054150001
+2026-05,IT,US,Computer Systems Design Employment,2370.0,count,up,fred:CES6054150001
+2026-06,IT,US,Computer Systems Design Employment,2369.2,count,up,fred:CES6054150001
+2026-07,IT,US,Computer Systems Design Employment,2366.4,count,up,fred:CES6054150001
+1999-03,IT,Global,Published CVEs (sampled),1.0,count,down,nvd:cve-2.0
+1999-12,IT,Global,Published CVEs (sampled),1.0,count,down,nvd:cve-2.0
+2000-04,IT,Global,Published CVEs (sampled),1.0,count,down,nvd:cve-2.0
+2000-12,IT,Global,Published CVEs (sampled),1.0,count,down,nvd:cve-2.0
+2001-05,IT,Global,Published CVEs (sampled),1.0,count,down,nvd:cve-2.0
+2001-06,IT,Global,Published CVEs (sampled),2.0,count,down,nvd:cve-2.0
+2001-07,IT,Global,Published CVEs (sampled),2.0,count,down,nvd:cve-2.0
+2001-08,IT,Global,Published CVEs (sampled),3.0,count,down,nvd:cve-2.0
+2001-10,IT,Global,Published CVEs (sampled),2.0,count,down,nvd:cve-2.0
+2001-12,IT,Global,Published CVEs (sampled),2.0,count,down,nvd:cve-2.0
+2002-03,IT,Global,Published CVEs (sampled),2.0,count,down,nvd:cve-2.0
+2002-07,IT,Global,Published CVEs (sampled),2.0,count,down,nvd:cve-2.0
+2025-01,IT,Global,Published CVEs (sampled),400.0,count,down,nvd:cve-2.0
+2025-04,IT,Global,Published CVEs (sampled),400.0,count,down,nvd:cve-2.0
+2025-06,IT,Global,Published CVEs (sampled),90.0,count,down,nvd:cve-2.0
+2025-07,IT,Global,Published CVEs (sampled),310.0,count,down,nvd:cve-2.0
+2025-09,IT,Global,Published CVEs (sampled),269.0,count,down,nvd:cve-2.0
+2025-10,IT,Global,Published CVEs (sampled),131.0,count,down,nvd:cve-2.0
+2025-12,IT,Global,Published CVEs (sampled),400.0,count,down,nvd:cve-2.0
+2026-03,IT,Global,Published CVEs (sampled),400.0,count,down,nvd:cve-2.0
+2026-06,IT,Global,Published CVEs (sampled),425.0,count,down,nvd:cve-2.0
+1999-03,IT,Global,Published CVEs (sampled) — Critical Severity,1.0,count,down,nvd:cve-2.0
+1999-12,IT,Global,Published CVEs (sampled) — Critical Severity,1.0,count,down,nvd:cve-2.0
+2000-04,IT,Global,Published CVEs (sampled) — Critical Severity,1.0,count,down,nvd:cve-2.0
+2000-12,IT,Global,Published CVEs (sampled) — Critical Severity,1.0,count,down,nvd:cve-2.0
+2001-05,IT,Global,Published CVEs (sampled) — Critical Severity,1.0,count,down,nvd:cve-2.0
+2001-06,IT,Global,Published CVEs (sampled) — Critical Severity,2.0,count,down,nvd:cve-2.0
+2001-07,IT,Global,Published CVEs (sampled) — Critical Severity,2.0,count,down,nvd:cve-2.0
+2001-08,IT,Global,Published CVEs (sampled) — Critical Severity,3.0,count,down,nvd:cve-2.0
+2001-10,IT,Global,Published CVEs (sampled) — Critical Severity,2.0,count,down,nvd:cve-2.0
+2001-12,IT,Global,Published CVEs (sampled) — Critical Severity,2.0,count,down,nvd:cve-2.0
+2002-03,IT,Global,Published CVEs (sampled) — Critical Severity,2.0,count,down,nvd:cve-2.0
+2002-07,IT,Global,Published CVEs (sampled) — Critical Severity,2.0,count,down,nvd:cve-2.0
+2025-01,IT,Global,Published CVEs (sampled) — Critical Severity,9.0,count,down,nvd:cve-2.0
+2025-01,IT,Global,Published CVEs (sampled) — High Severity,68.0,count,down,nvd:cve-2.0
+2025-01,IT,Global,Published CVEs (sampled) — Low Severity,2.0,count,down,nvd:cve-2.0
+2025-01,IT,Global,Published CVEs (sampled) — Medium Severity,239.0,count,down,nvd:cve-2.0
+2025-04,IT,Global,Published CVEs (sampled) — Critical Severity,18.0,count,down,nvd:cve-2.0
+2025-04,IT,Global,Published CVEs (sampled) — High Severity,127.0,count,down,nvd:cve-2.0
+2025-04,IT,Global,Published CVEs (sampled) — Low Severity,1.0,count,down,nvd:cve-2.0
+2025-04,IT,Global,Published CVEs (sampled) — Medium Severity,243.0,count,down,nvd:cve-2.0
+2025-06,IT,Global,Published CVEs (sampled) — Critical Severity,10.0,count,down,nvd:cve-2.0
+2025-06,IT,Global,Published CVEs (sampled) — High Severity,34.0,count,down,nvd:cve-2.0
+2025-06,IT,Global,Published CVEs (sampled) — Low Severity,5.0,count,down,nvd:cve-2.0
+2025-06,IT,Global,Published CVEs (sampled) — Medium Severity,39.0,count,down,nvd:cve-2.0
+2025-07,IT,Global,Published CVEs (sampled) — Critical Severity,35.0,count,down,nvd:cve-2.0
+2025-07,IT,Global,Published CVEs (sampled) — High Severity,117.0,count,down,nvd:cve-2.0
+2025-07,IT,Global,Published CVEs (sampled) — Low Severity,9.0,count,down,nvd:cve-2.0
+2025-07,IT,Global,Published CVEs (sampled) — Medium Severity,142.0,count,down,nvd:cve-2.0
+2025-09,IT,Global,Published CVEs (sampled) — Critical Severity,34.0,count,down,nvd:cve-2.0
+2025-09,IT,Global,Published CVEs (sampled) — High Severity,77.0,count,down,nvd:cve-2.0
+2025-09,IT,Global,Published CVEs (sampled) — Low Severity,10.0,count,down,nvd:cve-2.0
+2025-09,IT,Global,Published CVEs (sampled) — Medium Severity,136.0,count,down,nvd:cve-2.0
+2025-10,IT,Global,Published CVEs (sampled) — Critical Severity,2.0,count,down,nvd:cve-2.0
+2025-10,IT,Global,Published CVEs (sampled) — High Severity,38.0,count,down,nvd:cve-2.0
+2025-10,IT,Global,Published CVEs (sampled) — Medium Severity,78.0,count,down,nvd:cve-2.0
+2025-12,IT,Global,Published CVEs (sampled) — Critical Severity,23.0,count,down,nvd:cve-2.0
+2025-12,IT,Global,Published CVEs (sampled) — High Severity,113.0,count,down,nvd:cve-2.0
+2025-12,IT,Global,Published CVEs (sampled) — Low Severity,42.0,count,down,nvd:cve-2.0
+2025-12,IT,Global,Published CVEs (sampled) — Medium Severity,126.0,count,down,nvd:cve-2.0
+2026-03,IT,Global,Published CVEs (sampled) — Critical Severity,55.0,count,down,nvd:cve-2.0
+2026-03,IT,Global,Published CVEs (sampled) — High Severity,171.0,count,down,nvd:cve-2.0
+2026-03,IT,Global,Published CVEs (sampled) — Low Severity,21.0,count,down,nvd:cve-2.0
+2026-03,IT,Global,Published CVEs (sampled) — Medium Severity,148.0,count,down,nvd:cve-2.0
+2026-06,IT,Global,Published CVEs (sampled) — Critical Severity,30.0,count,down,nvd:cve-2.0
+2026-06,IT,Global,Published CVEs (sampled) — High Severity,193.0,count,down,nvd:cve-2.0
+2026-06,IT,Global,Published CVEs (sampled) — Low Severity,19.0,count,down,nvd:cve-2.0
+2026-06,IT,Global,Published CVEs (sampled) — Medium Severity,171.0,count,down,nvd:cve-2.0
+2026-06,IT,Global,Published CVEs (sampled) — None Severity,1.0,count,down,nvd:cve-2.0
