@@ -222,10 +222,13 @@ class HybridRetriever:
                 "EMBEDDING_PROVIDER=remote but neither EMBED_URL nor EMBEDDING_ENDPOINT is set")
         import json as _json, urllib.request
         h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
+        timeout = float(os.getenv("EMBED_TIMEOUT", "30"))
+        # INFERENCE_TOKEN is the credential for whatever EMBED_URL/EMBEDDING_ENDPOINT
+        # currently points at — HF, the orchestrator, or any other compliant host. Set
+        # its value to match whichever endpoint is configured; the code stays agnostic.
         tk = os.getenv("INFERENCE_TOKEN", "").strip()
         if tk:
             h["Authorization"] = "Bearer " + tk
-        timeout = float(os.getenv("EMBED_TIMEOUT", "30"))
 
         if "huggingface.co" in url:
             # HF Inference API: POST straight to the model URL with {"inputs": [...]}.
@@ -517,9 +520,11 @@ def _rerank_local(query: str, texts: List[str]) -> List[float]:
 
 
 def _rerank_remote(query: str, texts: List[str]) -> List[float]:
-    """Self-hosted rerank host (a Studio, the shared orchestrator's
-    POST /api/inference/rerank, or any host speaking
-    {"query","texts":[...]} -> {"scores":[...]}). Raises if unavailable."""
+    """RERANK_URL + INFERENCE_TOKEN, provider-agnostic — same split as _remote_embed_batch:
+    dispatches on the URL's own shape, not a named-vendor config flag. A huggingface.co
+    URL is called in HF's native cross-encoder shape; anything else via the generic
+    POST {url}/rerank contract ({"query","texts":[...]} -> {"scores":[...]}) that a
+    Studio, the shared orchestrator, or any other compliant host can implement."""
     remote = os.getenv("RERANK_URL", "").strip()
     if not remote:
         raise RuntimeError("RERANK_PROVIDER=remote but RERANK_URL is not set")
@@ -528,6 +533,19 @@ def _rerank_remote(query: str, texts: List[str]) -> List[float]:
     if tk:
         h["Authorization"] = "Bearer " + tk
     timeout = float(os.getenv("RERANK_TIMEOUT", "12"))
+
+    if "huggingface.co" in remote:
+        import urllib.request, json as _json
+        body = _json.dumps({"inputs": [f"{query} </s> {t}" for t in texts]}).encode()
+        req = urllib.request.Request(remote, data=body, headers=h)
+        res = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+        if isinstance(res, list) and res:
+            if isinstance(res[0], list) and len(res[0]) == len(texts):
+                return [float(item["score"]) for item in res[0]]
+            if len(res) == len(texts):
+                return [float(item[0]["score"] if isinstance(item, list) else item.get("score", 0.0)) for item in res]
+        raise RuntimeError(f"HF rerank returned an unexpected shape for {len(texts)} texts")
+
     # Waits through an on-demand host's cold start, same as the embed path.
     result = _post_json_awaiting_wake(
         remote.rstrip("/") + "/rerank",
