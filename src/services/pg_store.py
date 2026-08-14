@@ -83,7 +83,15 @@ def _init_pool():
                 settings.POSTGRES_URL,
                 min_size=2,
                 max_size=8,
-                kwargs={"row_factory": dict_row},
+                # Every DB call in this module is synchronous and invoked directly from
+                # async route handlers (no to_thread/executor) — a query that hangs
+                # therefore blocks the single event loop for every concurrent request,
+                # including ones that touch no DB at all. Confirmed live: /health, a
+                # static in-memory response with no DB access, went unresponsive for
+                # 5+ minutes because of this. A server-side statement_timeout turns an
+                # indefinite hang into a bounded failure instead of fixing the
+                # underlying blocking-call architecture, which this alone does not.
+                kwargs={"row_factory": dict_row, "options": "-c statement_timeout=30000"},
                 open=False,
                 reconnect_timeout=30,
                 reconnect_failed=None,
@@ -192,7 +200,8 @@ def _get_conn():
     import time
     for attempt in range(3):
         try:
-            return psycopg.connect(settings.POSTGRES_URL, row_factory=dict_row, connect_timeout=15)
+            return psycopg.connect(settings.POSTGRES_URL, row_factory=dict_row, connect_timeout=15,
+                                    options="-c statement_timeout=30000")
         except Exception as e:
             if attempt == 2:
                 log.error("Failed to connect to PostgreSQL after 3 attempts: %s", e)
