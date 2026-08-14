@@ -5,8 +5,8 @@ IntelAI RAG evaluation via a standalone RAGeval-compatible evaluation service.
 Runs every case in tests/rag_eval.jsonl through IntelAI's own RAG pipeline
 (UltraFastRAG), then sends {query, answer, contexts, persona} to an external evaluator's
 POST /eval/score for multi-judge groundedness/relevance/faithfulness scoring — keeping
-IntelAI's own process free of judge-model calls, the same "RAGeval is an independent
-LLMOps microservice" separation STRATEGY.md's dependency rule asks for.
+IntelAI's own process free of judge-model calls, in line with treating RAGeval as an
+independent LLMOps microservice rather than an in-process dependency.
 
 This is NOT hardcoded to any specific evaluator. RAG_EVALUATOR_URL has no default — if
 you clone this repo and run your own evaluation service (RAGeval or otherwise) that

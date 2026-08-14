@@ -1086,8 +1086,8 @@ async def ingest_csv_file(
 async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
     """Extract document/image text via the external document processor.
 
-    STRATEGY.md's dependency rule: each of the six tools is standalone and must not
-    do another tool's job. Document/image/vision understanding is DocIntel's domain,
+    By design, each tool in this project family is standalone and must not do
+    another tool's job. Document/image/vision understanding is DocIntel's domain,
     so IntelAI does **zero** local PDF/image processing — no pypdf, no vision model.
     This is the ONLY extraction path; there is deliberately no local fallback, because
     a silent fallback both violates that boundary and hides a broken processor behind
@@ -1107,9 +1107,9 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
     it quietly fell back to its weakest path — a 1.2MB report came back as 32
     characters that way, and the caller had no way to tell that from a short document.
       DOC_PROCESSOR_TEXT_ROUTE -> /extract/text: auto | marker | ocr
-          "auto" prefers Marker (structured Markdown), which is what STRATEGY.md
-          §3.10 designates for text destined for a RAG index, and falls back to the
-          native text layer when Marker is not installed.
+          "auto" prefers Marker (structured Markdown), the better choice for text
+          destined for a RAG index, and falls back to the native text layer when
+          Marker is not installed.
       DOC_PROCESSOR_ROUTE      -> /process: vision_route_a (Claude Sonnet Vision,
           paid per page) | vision_route_b (self-hosted Ollama, $0) | ocr_fallback
           (Tesseract, $0).
@@ -1124,7 +1124,7 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
     if not settings.DOC_PROCESSOR_URL:
         raise RuntimeError(
             "DOC_PROCESSOR_URL not configured — IntelAI does not process documents "
-            "itself (see STRATEGY.md standalone rule). Point it at a document "
+            "itself, by design. Point it at a document "
             "processor (e.g. a DocIntel instance) to enable document ingestion."
         )
     import httpx
@@ -1212,8 +1212,8 @@ async def ingest_document(
     filename_lower = (file.filename or "").lower()
 
     # Anything that needs parsing/OCR/vision to read (PDF, image, Office doc) is the
-    # document processor's job, not IntelAI's — STRATEGY.md's standalone rule: a project
-    # must not do another project's work. IntelAI keeps zero PDF/image processing code
+    # document processor's job, not IntelAI's — a project must not do another
+    # project's work. IntelAI keeps zero PDF/image processing code
     # and no local fallback; a failing processor surfaces as a 502, not as silently
     # degraded text. Plain-text formats are read directly because that needs no document
     # intelligence at all — it's just a decode, not extraction.
