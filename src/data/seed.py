@@ -324,9 +324,9 @@ KPI_SPEC: Dict[str, List[Tuple[str, str, float, float, str]]] = {
 }
 ALL_CATEGORIES: List[str] = list(STRATEGIC_KPIS.keys())
 
-# ── VERTICALS (STRATEGY.md §1.4) ─────────────────────────────────────────────
+# ── VERTICALS ─────────────────────────────────────────────────────────────────
 # The demo dataset reads as a generic company, which is the weakest possible framing for
-# a buyer: STRATEGY.md's point is that "Acme SaaS, ARR $4.2M, churn 3.1%" lands where
+# a buyer: "Acme SaaS, ARR $4.2M, churn 3.1%" lands where
 # "Company X" does not. A vertical re-scales the shared catalog to a plausible company of
 # that type and adds the metrics that vertical is actually judged on — it does NOT invent
 # a separate schema, so every dashboard, persona and the copilot keep working unchanged.
@@ -538,7 +538,7 @@ def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "h
             - "esg_compliance_failure": ESG compliance issues
         vertical: None for the generic company, or saas | healthcare | esg — rescales the
             same catalog to a plausible company of that type and adds the metrics that
-            vertical is judged on (STRATEGY.md §1.4). Scenarios compose with verticals.
+            vertical is judged on. Scenarios compose with verticals.
     """
     rng = random.Random(seed)
     periods = _periods(months)
@@ -779,7 +779,7 @@ def seed_database(replace: bool = True, scenario: str = "healthy",
     Args:
         replace: Whether to replace existing data
         scenario: Health scenario to simulate (healthy, declining_financial, high_churn_crisis, etc.)
-        vertical: None (generic) or saas | healthcare | esg — see VERTICALS / STRATEGY.md §1.4
+        vertical: None (generic) or saas | healthcare | esg — see VERTICALS above
     """
     import pandas as pd
     from src.services.pg_store import store_kpi_metrics, store_knowledge_docs, store_kpi_entities

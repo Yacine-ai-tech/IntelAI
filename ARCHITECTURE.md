@@ -367,7 +367,7 @@ rather than worked around.
   `ApiDocs.tsx`'s own documentation). Not confirmed broken, just confirmed unreachable
   from the app itself — worth a decision (wire to UI, or accept as API-only/
   power-user features).
-- **Vertical positioning datasets** (3 flavored demo datasets per STRATEGY.md §1.4) —
+- **Vertical positioning datasets** (3 flavored demo datasets — saas/healthcare/esg) —
   still not done.
 - **Qdrant not exercised locally** — the dev/test environment doesn't have
   `qdrant-client` installed, so all local testing in this pass ran against in-process

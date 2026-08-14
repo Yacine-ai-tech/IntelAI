@@ -1,4 +1,4 @@
-# Render Blueprint — disaster-recovery / one-click redeploy (e.g. if the Railway credit runs out).
+# Render Blueprint — one-click redeploy of the IntelAI backend.
 # Render builds from ./Dockerfile (which honors $PORT) and health-checks /health.
 # No secrets live here: every key is `sync: false`, so Render prompts for the value in the dashboard.
 # IntelAI loads ML when local rerank/embedding is on — on Render free (512MB) keep heavy ML OFF-box:
