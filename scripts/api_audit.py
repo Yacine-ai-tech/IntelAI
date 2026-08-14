@@ -25,7 +25,7 @@ import requests
 # ─────────────────────────────────────────────────────────────────────────────
 BASE_URL = os.environ.get("TEST_BASE_URL", "http://localhost:8000")
 
-# In CI the services may all be on the same Railway/Render host.
+# In CI the services may all be on the same host.
 # Override per-service with env vars if needed.
 SERVICES = {
     "IntelAI":    os.environ.get("INTELAI_BASE_URL",    BASE_URL),

@@ -7,5 +7,5 @@ pytest>=7.4
 
 # Optional: only needed for scripts/evaluate_with_rageval_package.py (in-process RAG
 # evaluation via the RAGeval package instead of its REST API). Not a core dependency —
-# IntelAI has no import-time dependency on RAGeval; see STRATEGY.md's dependency rule.
+# IntelAI has no import-time dependency on RAGeval, by design.
 # omnismart-rageval>=0.1.11

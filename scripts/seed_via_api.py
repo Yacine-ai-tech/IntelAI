@@ -59,7 +59,7 @@ def parse_args() -> argparse.Namespace:
                          "talent_crisis | cybersecurity_breach | esg_compliance_failure")
     p.add_argument("--vertical", type=str, default=None,
                     help="saas | healthcare | esg — rescale the catalog to that vertical "
-                         "and add its metrics (STRATEGY.md 1.4). Omit for the generic company.")
+                         "and add its metrics. Omit for the generic company.")
     p.add_argument("--path", type=str, default=None,
                     help="Ingest CSVs from this file/directory instead of generating the seed catalog "
                          "(each CSV needs at least metric_name,value columns; period/category/segment/"

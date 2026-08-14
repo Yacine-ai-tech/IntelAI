@@ -1,25 +1,26 @@
 # IntelAI Data: what is in the database, and where every number came from
 
-This describes the dataset IntelAI actually runs on, how it is rebuilt, and what is
-known to be missing. It documents the current implementation, not an intended one.
+This describes the dataset IntelAI runs on, how to rebuild it, and what is known to be
+missing. It documents the current implementation, not an intended one.
 
 The short version: **the KPI baseline is real published data, not generated.** Every
 row in `kpi_metrics` carries the identifier of the statistical series it came from, so
 any figure on a dashboard can be traced to a publisher and re-checked by a third party.
 
-## 1. Why the generated catalog is no longer the baseline
+## 1. Two data sources, kept clearly separate
 
-An earlier dataset filled `kpi_metrics` with 10,452 rows of `source='seed_healthy'` —
-values produced by `src/data/seed.py`'s model of a plausible company. Alongside it,
-413 knowledge-base documents summarised those values in prose that described itself as
-"the authoritative, comprehensive record … audited by the internal compliance team",
-above figures such as `Gross Margin: 100.0 %`.
+IntelAI ships with two ways to populate its database, and they answer different needs:
 
-Nothing about that is checkable, and the wording asserted an authority the data did not
-have. Both were removed. The generator itself is kept — it is genuinely useful for
-offline demos and for the scenario switcher — but it is no longer what the database is
-seeded with, and its rows are labelled so they can never be mistaken for measurements.
-See §6.
+- **A real KPI + document pipeline** (this document, §2–5) — public economic series,
+  filings and reports, pulled from their original publishers with per-row provenance.
+  This is what production runs on.
+- **A synthetic scenario generator** (§6) — a modelled company with configurable health
+  scenarios (`healthy`, `declining_financial`, `high_churn_crisis`, ...), useful for
+  offline demos and for exercising the pipeline without network access.
+
+Every row from the generator is labelled `source='seed_*'` so the two can never be
+confused, and a single query separates them (see §6). Nothing generated is presented on
+a dashboard as a measurement.
 
 ## 2. The real KPI layer
 
@@ -57,7 +58,7 @@ the digests in §4 print next to the figures.
 | FRED (St. Louis Fed) | 18 series across all 7 domains | monthly, some quarterly | US-only macro indicators; they describe an economy, not one company |
 | World Bank Open Data | 4 ESG indicators | **annual** | latest year is 2022–2024 depending on indicator; no monthly ESG data exists free |
 | NVD 2.0 API | published CVE counts by severity | monthly | a **400-per-window sample**, not the full population — comparable between months because every window is sampled identically, and the metric is named "Published CVEs (sampled)" for that reason |
-| IBM HR attrition survey | 5 workforce aggregates | **single period** | a cross-section of individual employees with no date column. It yields point-in-time aggregates under one period; inventing a monthly history from it would be fabrication |
+| IBM HR attrition survey | 5 workforce aggregates | **single period** | a cross-section of individual employees with no date column. It yields point-in-time aggregates under one period; a monthly history is not derivable from it |
 | Sonatel communiqués | 3 published FCFA figures | half-year / 9-month | transcribed from the official release text, in FCFA (XOF) |
 
 Two consequences worth stating plainly rather than hiding behind a filled-in grid:
@@ -80,8 +81,8 @@ published rows are loaded; the values themselves are exactly as published.
 `scripts/ingest_real_corpus.py` walks `data/<Domain>/` and posts each file to the
 endpoint for its type — documents and images to `POST /api/v1/ingest/document`, audio to
 `POST /api/v1/ingest/audio`. IntelAI performs **no** extraction itself: documents and
-images go to the configured document processor, audio to the audio processor
-(STRATEGY.md's standalone rule). The directory name becomes the row's category.
+images go to the configured document processor, audio to the audio processor —
+each tool in this project family stays standalone. The directory name becomes the row's category.
 
 ```bash
 python scripts/ingest_real_corpus.py --purge     # re-ingest everything
@@ -103,11 +104,9 @@ Measured: **15 of 17 files ingested, 434,548 characters.**
 | Finance/Ops/Logistics/People | 5 FRED chart PNGs | FRED published charts | 211–286 chars each, via OCR |
 | ESG | Salesforce FY25 Stakeholder Impact Report | salesforce.com | **32 chars — see below** |
 
-**Corrections to earlier claims in this file.** The IBM dataset is **832 rows, not
-1,470**, and the churn dataset is **4,093 rows, not ~14,999** — both downloads are
-partial relative to the canonical published datasets. The aggregates in §2 are computed
-from what is actually on disk, so they describe the sample held here, not the full
-datasets.
+The IBM dataset (832 rows) and the churn dataset (4,093 rows) are both partial relative
+to the full published datasets. The aggregates in §2 are computed from what is actually
+on disk, so they describe the sample held here, not the full source dataset.
 
 **Images are real, and deliberately so.** The six PNGs are FRED's own published charts
 of series that are already in `kpi_metrics` — so a vision/OCR result can be checked
@@ -116,21 +115,22 @@ against the stored numbers, which a decorative stock image would not allow.
 **Raw series are not knowledge-base documents.** `fred_*.csv`, `worldbank_*.json`,
 `nvd_*.json` and `.log` files are the *input* to the KPI layer and are skipped by the
 corpus ingester. A CSV of 90 numbers retrieves badly and only restates data the KPI
-tables already hold exactly; 10,000 lines of Apache access logs chunk into thousands of
+tables already hold exactly; 10,000 lines of access logs would chunk into thousands of
 near-identical passages that crowd out real answers.
 
-### Known gaps, unresolved
+### Known gaps
 
 - **Orange S.A. H1-2025 report (890KB, 82pp, French): not ingested.** The document
   processor's origin returns a Cloudflare 502 on this file specifically, on every route,
   while `/health` and smaller files succeed. It extracted 276,265 characters in earlier
-  testing, so this is a processor-side regression, not a missing capability.
+  testing, so this looks like a processor-side regression rather than a missing capability.
 - **`fred_chart_RSXFS.png`: not ingested.** Consistent 502 from the same processor,
   while the other five charts of near-identical size succeed.
-- **Salesforce ESG PDF: 32 characters.** The file is malformed at source. It previously
-  yielded 31,729 characters, so the processor could read it before; it cannot now.
+- **Salesforce ESG PDF: 32 characters.** The file appears malformed at source. It
+  previously yielded 31,729 characters, so the processor could read it before; it cannot now.
 
-These three are external to IntelAI and are recorded here rather than papered over.
+These three are external to IntelAI (document-processor-side) and are recorded here
+rather than papered over.
 
 ## 4. KPI digests — how numbers become retrievable text
 
@@ -141,7 +141,7 @@ text, in **English and French**, for the most recent 18 periods per domain.
 
 Every line is a restatement of a stored value plus the series it came from. There is no
 commentary, no target, no explanation of why a number moved, and no claim of audit —
-which is precisely how the documents this replaced went wrong.
+grounded numbers only.
 
 ```bash
 python scripts/build_kpi_digest_docs.py --months 18   # -> data/kpi_digests/<Domain>/
@@ -155,15 +155,11 @@ python scripts/ingest_real_corpus.py --only _en.md
 French names are only assigned where a genuine standard French term exists, rather than
 machine-translating every entry.
 
-A legacy single-language set of 101 rows under `glossary/<domain>/…` was removed: it
-duplicated the English entries with slightly different wording, and near-duplicate
-passages compete with each other in retrieval.
+## 6. The generator, and what it is for
 
-## 6. The generator, and what it is now for
-
-`src/data/seed.py` still builds a modelled 7-domain catalog with driver metrics, formula-
+`src/data/seed.py` builds a modelled 7-domain catalog with driver metrics, formula-
 derived metrics, decayed drift, seven health scenarios with cross-domain cascades, and
-three verticals (`saas`, `healthcare`, `esg`). It remains the right tool for an offline
+three verticals (`saas`, `healthcare`, `esg`). It is the right tool for an offline
 demo, for the Admin scenario switcher, and for testing the pipeline without network
 access.
 
@@ -198,8 +194,7 @@ period,category,segment,metric_name,value,unit,direction,source
 Only `metric_name` and `value` are required. Two behaviours worth knowing:
 
 - **A per-row `source` column is preserved** as that row's provenance; `source_name`
-  labels rows that don't carry one. (Previously every row was stamped with the single
-  form field, which erased exactly the provenance that makes a figure checkable.)
+  labels rows that don't carry one.
 - **Rows are scoped to the uploader by default**, so one visitor's upload never appears
   on another's dashboard. `global_scope=true` writes the shared baseline with a NULL
   owner and is restricted to admins — this is what the seeding scripts use.
@@ -208,10 +203,7 @@ Only `metric_name` and `value` are required. Two behaviours worth knowing:
 
 `tests/rag_eval.jsonl` is generated by `scripts/build_rag_eval_set.py` from the database,
 not written by hand. Each case names a metric that exists for a period that exists, or a
-document that is present in `knowledge_base`; cases that cannot be verified are dropped
-rather than shipped.
-
-This matters because the previous set asked about gross margin, EBITDA and net profit —
-metrics that belonged to the deleted generated data. Against the real corpus those
-questions have no answer, so the scores would have measured the mismatch rather than the
-system.
+document that is present in `knowledge_base`; cases that cannot be verified against the
+live data are dropped rather than shipped. That keeps the eval set honest about what the
+system can actually answer, rather than testing against questions the corpus has no
+answer for.
