@@ -49,7 +49,27 @@ def _embed(texts: List[str]):
     (HF vs. the generic self-hosted contract), same as there; INFERENCE_TOKEN is the
     credential for whichever endpoint is configured. Raises on failure rather than
     quietly trying another provider — a silent swap changes retrieval quality and
-    hides a misconfigured or down host."""
+    hides a misconfigured or down host.
+
+    Chunks into EMBED_BATCH_SIZE-sized calls for the remote path — a bulk reindex
+    passes hundreds of documents in one call, and asking a remote host to embed all
+    of them in a single request can outlast EMBED_TIMEOUT even though each individual
+    document would embed quickly (confirmed live: 455 texts, one request, timeout;
+    EMBED_BATCH_SIZE was already a configured env var but nothing in this module read
+    it)."""
+    provider = (os.environ.get("EMBEDDING_PROVIDER", "").strip().lower()
+                or ("remote" if os.environ.get("INFERENCE_MODE", "").strip().lower() == "remote"
+                    else "local"))
+    if provider == "remote" and len(texts) > 1:
+        batch_size = int(os.environ.get("EMBED_BATCH_SIZE", "32"))
+        if len(texts) > batch_size:
+            import numpy as np
+            chunks = [_embed_batch(texts[i:i + batch_size]) for i in range(0, len(texts), batch_size)]
+            return np.concatenate(chunks, axis=0)
+    return _embed_batch(texts)
+
+
+def _embed_batch(texts: List[str]):
     import numpy as np
     provider = (os.environ.get("EMBEDDING_PROVIDER", "").strip().lower()
                 or ("remote" if os.environ.get("INFERENCE_MODE", "").strip().lower() == "remote"
