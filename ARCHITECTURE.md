@@ -388,9 +388,13 @@ ingesting again, split it first.
   The 30s `statement_timeout` stays as a second line of defense for the case this doesn't
   cover — a slow query *within* one of those threads still ties up that thread, just no
   longer the whole event loop.
-- **`/agent/run`, `/agent/tools`, `/chatbot/domain`, `/admin/vsdebug`** — real backend
-  endpoints with zero UI callers anywhere in the frontend (only referenced in
-  `ApiDocs.tsx`'s own documentation). Not confirmed broken, just confirmed unreachable
+- **`/agent/run`, `/agent/tools`, `/chatbot/domain`, `/admin/vsdebug`, `/ingest/audio`**
+  — real backend endpoints with zero UI callers anywhere in the frontend (only
+  referenced in `ApiDocs.tsx`'s own documentation). `/ingest/audio` in particular is a
+  fully working, tested feature (real VoiceFlow transcription confirmed this session)
+  with no page to drive it — every other ingestion path (CSV, document, webhook) has
+  one. Full UI parity audit re-run this session: everything else the frontend calls
+  exists on the backend and vice versa. Not confirmed broken, just confirmed unreachable
   from the app itself — worth a decision (wire to UI, or accept as API-only/
   power-user features).
 - **Vertical positioning datasets** (3 flavored demo datasets — saas/healthcare/esg) —
