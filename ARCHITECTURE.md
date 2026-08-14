@@ -376,17 +376,18 @@ ingesting again, split it first.
 
 ## Known drift / not yet done
 
-- **Real architectural fix for the request-blocking bug is still open.** The 30s
-  `statement_timeout` (see below) bounds the damage but doesn't fix the cause: every
-  `pg_store.py` function is synchronous psycopg called directly from `async def` route
-  handlers, so one slow/stuck query blocks the event loop for every concurrent request —
-  confirmed live (`/health`, zero DB access, unresponsive 5+ min, three separate times).
-  The real fix is moving each of the ~90 call sites in `server.py` onto
-  `asyncio.to_thread`. Surveyed but deliberately not done in this pass — the call sites
-  aren't uniform (statement-only calls, calls embedded in dict literals, multi-line
-  calls, and at least one route handler that happens to share a name with a `pg_store`
-  function), so a blind mechanical sweep risked introducing a worse bug than the one
-  being fixed. Treat as its own dedicated pass.
+- **Request-blocking bug fixed.** Every `pg_store.py` call site in `server.py` (80 sites)
+  now runs via `asyncio.to_thread` instead of directly on the event loop — done via an
+  AST-based rewrite (exact source spans from `ast.Call` node offsets, not line-pattern
+  regex) so it's correct regardless of context: dict-literal values, nested calls,
+  multi-line calls, all handled the same way. Verified: the file still parses, the
+  targeted `test_unit_hybrid_retrieval.py` still passes, and the transform only touched
+  calls inside `async def` handlers — the three sync call sites (one startup-time
+  function that runs before the server accepts traffic, and two genuinely dead functions,
+  `_load_chat_history`/`_store_chat`, defined but never called anywhere) were left alone.
+  The 30s `statement_timeout` stays as a second line of defense for the case this doesn't
+  cover — a slow query *within* one of those threads still ties up that thread, just no
+  longer the whole event loop.
 - **`/agent/run`, `/agent/tools`, `/chatbot/domain`, `/admin/vsdebug`** — real backend
   endpoints with zero UI callers anywhere in the frontend (only referenced in
   `ApiDocs.tsx`'s own documentation). Not confirmed broken, just confirmed unreachable
