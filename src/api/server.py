@@ -6,6 +6,7 @@ Operations, ESG, Growth/Risk.
 """
 from __future__ import annotations
 
+import asyncio
 import os
 import uuid
 import math
@@ -146,13 +147,13 @@ async def verify_internal_token(request: Request, call_next):
             or request.url.path.startswith("/api/v1/auth/")
             or request.url.path.startswith("/api/v1/webhook/")):
         return await call_next(request)
-        
+
     token = request.headers.get("X-OmniIntel-Internal-Token")
     expected_token = _os.environ.get("OMNIINTEL_INTERNAL_TOKEN", "")
-    
+
     if token != expected_token and _os.environ.get("REQUIRE_INTERNAL_TOKEN", "true").lower() == "true":
         return JSONResponse(status_code=403, content={"detail": "Missing or invalid X-OmniIntel-Internal-Token"})
-        
+
     return await call_next(request)
 
 
@@ -171,7 +172,7 @@ async def demo_scope_middleware(request: Request, call_next):
             scope_user = token_data.user_id
         except Exception:
             scope_user = None
-    set_request_scope_user(scope_user)
+    await asyncio.to_thread(set_request_scope_user, scope_user)
     return await call_next(request)
 
 
@@ -453,7 +454,7 @@ async def startup():
     # Initialize PostgreSQL (users, chat sessions, monitoring)
     try:
         from src.services.pg_store import init_pg_tables
-        init_pg_tables()
+        await asyncio.to_thread(init_pg_tables)
         log.info("✅ PostgreSQL initialized")
     except Exception as e:
         log.warning("⚠️ PostgreSQL init failed (will use in-memory fallback): %s", e)
@@ -464,9 +465,9 @@ async def startup():
     # Seed multi-domain data if empty
     try:
         from src.services.pg_store import get_kpi_metrics, seed_all_domains
-        df = get_kpi_metrics()
+        df = await asyncio.to_thread(get_kpi_metrics)
         if df.empty:
-            count = seed_all_domains()
+            count = await asyncio.to_thread(seed_all_domains)
             log.info("✅ Seeded %d multi-domain KPI rows", count)
         else:
             log.info("✅ KPI data already present: %d rows", len(df))
@@ -505,6 +506,22 @@ async def startup():
     _asyncio.create_task(_asyncio.to_thread(_vector_selfheal))
     log.info("Vector store self-heal scheduled (background)")
 
+    # The comment above claims chat is available immediately after startup — it wasn't:
+    # _get_shared_rag() is a lazy singleton, so the FIRST real chat message (not this
+    # self-heal, which only covers the separate, currently-unused Qdrant path) paid the
+    # full embedding-index-build cost inline (confirmed live: minutes, not seconds).
+    # Same fix, same pattern — build it here instead, off the request path.
+    def _rag_prewarm():
+        try:
+            from src.services.omnismart_chatbot import _get_shared_rag
+            _get_shared_rag()
+            log.info("✅ Chat retrieval index pre-warmed (background)")
+        except Exception as e:
+            log.warning("Chat retrieval pre-warm skipped: %s", e)
+
+    _asyncio.create_task(_asyncio.to_thread(_rag_prewarm))
+    log.info("Chat retrieval pre-warm scheduled (background)")
+
     log.info("✅ IntelAI API ready")
 
 
@@ -526,14 +543,14 @@ async def health_check():
 @app.get("/api/v1/status")
 async def get_status(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics, get_available_periods, get_available_categories
-    df = get_kpi_metrics()
+    df = await asyncio.to_thread(get_kpi_metrics)
     return {
         "status": "operational",
         "user": user.username,
         "role": user.role,
         "total_kpis": len(df),
-        "periods": get_available_periods(),
-        "categories": get_available_categories(),
+        "periods": await asyncio.to_thread(get_available_periods),
+        "categories": await asyncio.to_thread(get_available_categories),
         "domains": ["Finance", "Growth", "People", "Operations", "IT", "ESG"],
     }
 
@@ -563,7 +580,7 @@ async def login(req: LoginRequest):
 
     try:
         from src.services.pg_store import log_audit_event
-        log_audit_event(req.username, "LOGIN", f"User {req.username} logged in")
+        await asyncio.to_thread(log_audit_event, req.username, "LOGIN", f"User {req.username} logged in")
     except Exception:
         import logging; logging.error('Unhandled exception', exc_info=True)
         pass
@@ -610,7 +627,7 @@ async def demo_login(role: str, request: Request):
         from src.services.pg_store import get_or_create_demo_user
         user_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f"intelai-demo:{role}:{demo_session_id}"))
         username = f"{role}-{user_id[:8]}"
-        get_or_create_demo_user(user_id, username, role, role.upper())
+        await asyncio.to_thread(get_or_create_demo_user, user_id, username, role, role.upper())
     else:
         ud = _users_db.get(role) or {"id": str(uuid.uuid4()), "username": role}
         user_id = ud["id"]
@@ -648,7 +665,7 @@ async def register(req: RegisterRequest):
     # Persist to PostgreSQL
     try:
         from src.services.pg_store import create_user
-        create_user(req.username, pw_hash, req.role, req.preferred_language)
+        await asyncio.to_thread(create_user, req.username, pw_hash, req.role, req.preferred_language)
     except Exception as e:
         log.warning("PG user creation failed: %s", e)
     return {"status": "registered", "user_id": user_id, "username": req.username}
@@ -684,7 +701,7 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
     # Ensure session exists in PostgreSQL
     try:
         from src.services.pg_store import ensure_session_exists, store_message
-        ensure_session_exists(session_id, user.user_id)
+        await asyncio.to_thread(ensure_session_exists, session_id, user.user_id)
     except Exception:
         pass  # Fallback — still works without PG
 
@@ -692,7 +709,11 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
     # snapshot + knowledge docs and returns grounded answers with source citations.
     # (Same path as the WebSocket handler, so REST and the WS fallback behave identically.)
     factory = get_persona_factory()
-    result = factory.chat(
+    # factory.chat is the expensive part of this request — retrieval + an LLM completion,
+    # typically seconds — and is synchronous throughout (sync retrieval, sync LLM client
+    # calls). Off the event loop so one in-flight chat can't stall every other request.
+    result = await asyncio.to_thread(
+        factory.chat,
         message=req.message,
         user_role=user.role,
         persona_override=req.persona,
@@ -705,8 +726,8 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
 
     # Persist both messages to PostgreSQL
     try:
-        store_message(session_id, "user", req.message)
-        store_message(
+        await asyncio.to_thread(store_message, session_id, "user", req.message)
+        await asyncio.to_thread(store_message,
             session_id, "assistant", response_text,
             sources=_json.dumps(sources) if sources else "[]",
             tokens_used=result.get("tokens_used", 0),
@@ -827,7 +848,7 @@ async def get_user_files(
 ):
     """Get user's uploaded files."""
     from src.services.pg_store import get_user_files
-    files = get_user_files(user.username, limit=limit, offset=offset)
+    files = await asyncio.to_thread(get_user_files, user.username, limit=limit, offset=offset)
     return files
 
 @app.get("/api/v1/files/{file_id}/preview")
@@ -837,7 +858,7 @@ async def get_file_preview(
 ):
     """Get file preview content."""
     from src.services.pg_store import get_file_content
-    content = get_file_content(file_id, user.username)
+    content = await asyncio.to_thread(get_file_content, file_id, user.username)
     if not content:
         raise HTTPException(status_code=404, detail="File not found")
     return {"content": content[:10000]}  # Limit preview size
@@ -850,29 +871,29 @@ async def delete_file_endpoint(
     """Delete an uploaded file."""
     from src.services.pg_store import delete_file, get_file_path
     import os
-    
-    path = get_file_path(file_id, user.username)
+
+    path = await asyncio.to_thread(get_file_path, file_id, user.username)
     if not path:
         raise HTTPException(status_code=404, detail="File not found")
-        
-    success = delete_file(file_id, user.username)
+
+    success = await asyncio.to_thread(delete_file, file_id, user.username)
     if not success:
         raise HTTPException(status_code=500, detail="Failed to delete file from DB")
-        
+
     if os.path.exists(path):
         try:
             os.remove(path)
         except Exception:
             import logging; logging.error('Unhandled exception', exc_info=True)
             pass
-            
+
     # Trigger background reindex to remove from vector store if necessary
     try:
         pass
         # Not using background tasks here to avoid import issues, just doing it synchronously or let it be
     except:
         pass
-        
+
     return {"status": "ok"}
 
 @app.get("/api/v1/files/{file_id}/download")
@@ -882,7 +903,7 @@ async def download_file(
 ):
     """Download file."""
     from src.services.pg_store import get_file_path
-    file_path = get_file_path(file_id, user.username)
+    file_path = await asyncio.to_thread(get_file_path, file_id, user.username)
     if not file_path or not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="File not found")
 
@@ -908,8 +929,8 @@ async def ingest_metrics(
     df = pd.DataFrame(req.data)
     if df.empty:
         raise HTTPException(status_code=400, detail="No data provided")
-    store_kpi_metrics(df, source_name=req.source_name, replace=req.replace, owner_user_id=user.user_id)
-    log_audit_event(user.username, "DATA_INGEST", f"Ingested {len(df)} metrics from {req.source_name}")
+    await asyncio.to_thread(store_kpi_metrics, df, source_name=req.source_name, replace=req.replace, owner_user_id=user.user_id)
+    await asyncio.to_thread(log_audit_event, user.username, "DATA_INGEST", f"Ingested {len(df)} metrics from {req.source_name}")
     return {"status": "ingested", "rows": len(df), "source": req.source_name}
 
 async def _process_webhook_payload(payload: WebhookPayload, actor: str) -> Dict[str, Any]:
@@ -936,8 +957,8 @@ async def _process_webhook_payload(payload: WebhookPayload, actor: str) -> Dict[
         # owner_user_id=None: external system-to-system feeds are real ingested
         # data, not one visitor's private demo scratch space — same as an
         # authenticated ingest with no specific owner.
-        store_kpi_metrics(df, source_name=payload.source, replace=False, owner_user_id=None)
-        log_audit_event(actor, "WEBHOOK_INGEST", f"Ingested {len(df)} metrics from {payload.source}")
+        await asyncio.to_thread(store_kpi_metrics, df, source_name=payload.source, replace=False, owner_user_id=None)
+        await asyncio.to_thread(log_audit_event, actor, "WEBHOOK_INGEST", f"Ingested {len(df)} metrics from {payload.source}")
         return {"status": "success", "processed": len(df), "type": "kpi_metrics"}
 
     elif payload.schema_type == "knowledge_doc":
@@ -945,7 +966,7 @@ async def _process_webhook_payload(payload: WebhookPayload, actor: str) -> Dict[
             raise HTTPException(status_code=422, detail="Strict schema violation: content field missing")
 
         content_text = payload.data["content"]
-        log_audit_event(actor, "WEBHOOK_INGEST", f"Received knowledge doc from {payload.source}")
+        await asyncio.to_thread(log_audit_event, actor, "WEBHOOK_INGEST", f"Received knowledge doc from {payload.source}")
 
         # Auto-Categorization Pipeline (reusing same backend functions as UI upload)
         def _process_background():
@@ -1071,8 +1092,8 @@ async def ingest_csv_file(
         raise HTTPException(status_code=403, detail="global_scope requires an admin role")
     owner = None if global_scope else user.user_id
 
-    store_kpi_metrics(df, source_name=source_name, replace=False, owner_user_id=owner)
-    log_audit_event(
+    await asyncio.to_thread(store_kpi_metrics, df, source_name=source_name, replace=False, owner_user_id=owner)
+    await asyncio.to_thread(log_audit_event,
         user.username, "CSV_INGEST",
         f"Ingested {len(df)} rows from {file.filename}"
         f"{' (global baseline)' if global_scope else ''}",
@@ -1228,7 +1249,7 @@ async def ingest_document(
 
     from src.services.security import SecurityScanner
     text = SecurityScanner.redact_text(text)
-    
+
     doc_id = str(uuid.uuid4())
     # Store the extracted text in full. A fixed character cap here silently threw away
     # the tail of every long document — an 82-page filing extracting 277k chars kept
@@ -1239,8 +1260,8 @@ async def ingest_document(
         "doc_id": doc_id, "title": file.filename, "content": text,
         "source": category, "embedding": "",
     }])
-    store_knowledge_docs(docs_df)
-    log_audit_event(user.username, "DOC_INGEST", f"Uploaded {file.filename}")
+    await asyncio.to_thread(store_knowledge_docs, docs_df)
+    await asyncio.to_thread(log_audit_event, user.username, "DOC_INGEST", f"Uploaded {file.filename}")
     return {"status": "ingested", "doc_id": doc_id, "filename": file.filename, "chars": len(text)}
 
 
@@ -1315,8 +1336,8 @@ async def ingest_audio(
         "doc_id": doc_id, "title": file.filename or "audio upload", "content": full_content,
         "source": category, "embedding": "",
     }])
-    store_knowledge_docs(docs_df)
-    log_audit_event(user.username, "AUDIO_INGEST", f"Processed {file.filename} via {settings.AUDIO_PROCESSOR_URL}")
+    await asyncio.to_thread(store_knowledge_docs, docs_df)
+    await asyncio.to_thread(log_audit_event, user.username, "AUDIO_INGEST", f"Processed {file.filename} via {settings.AUDIO_PROCESSOR_URL}")
     return {
         "status": "ingested", "doc_id": doc_id, "filename": file.filename,
         "chars": len(text), "transcript": transcript, "analysis": analysis,
@@ -1338,7 +1359,7 @@ async def get_kpis(
     periods = [period] if period else None
     categories = [category] if category else None
     segments = [segment] if segment else None
-    df = get_kpi_metrics(periods=periods, categories=categories, segments=segments)
+    df = await asyncio.to_thread(get_kpi_metrics, periods=periods, categories=categories, segments=segments)
 
     # Filter by user's data access
     user_categories = get_user_data_categories(user.role)
@@ -1353,19 +1374,19 @@ async def get_kpis(
 @app.get("/api/v1/kpis/periods")
 async def get_kpi_periods(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_available_periods
-    return {"periods": get_available_periods()}
+    return {"periods": await asyncio.to_thread(get_available_periods)}
 
 
 @app.get("/api/v1/kpis/metrics")
 async def get_kpi_metric_names(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_available_metrics
-    return {"metrics": get_available_metrics()}
+    return {"metrics": await asyncio.to_thread(get_available_metrics)}
 
 
 @app.get("/api/v1/kpis/categories")
 async def get_kpi_categories(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_available_categories
-    return {"categories": get_available_categories()}
+    return {"categories": await asyncio.to_thread(get_available_categories)}
 
 
 # ════════════════════════════════════════════════════════════
@@ -1382,7 +1403,7 @@ async def generate_financial_statement(
     period = req.period
     if not period:
         from src.services.pg_store import get_latest_period
-        period = get_latest_period() or "2025-06"
+        period = await asyncio.to_thread(get_latest_period) or "2025-06"
 
     try:
         if req.statement_type in ("income_statement", "pl", "P&L", "profit_loss"):
@@ -1419,7 +1440,7 @@ async def run_forecast(
     from src.services.pg_store import get_kpi_metrics
     from src.services.forecasting import ForecastEngine
 
-    df = get_kpi_metrics(metrics=[metric])
+    df = await asyncio.to_thread(get_kpi_metrics, metrics=[metric])
     if df.empty:
         return {"error": f"No data found for metric: {metric}", "forecast": []}
 
@@ -1449,7 +1470,7 @@ async def run_forecast(
 async def get_health_index(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_health_index
-    df = get_kpi_metrics()
+    df = await asyncio.to_thread(get_kpi_metrics)
     return _json_safe(compute_health_index(df))
 
 
@@ -1457,7 +1478,7 @@ async def get_health_index(user: TokenData = Depends(get_current_user)):
 async def get_risk_score(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_risk_score
-    df = get_kpi_metrics()
+    df = await asyncio.to_thread(get_kpi_metrics)
     return _json_safe(compute_risk_score(df))
 
 
@@ -1465,7 +1486,7 @@ async def get_risk_score(user: TokenData = Depends(get_current_user)):
 async def get_executive_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_health_index, compute_risk_score, extract_key_metrics, build_executive_summary
-    df = get_kpi_metrics()
+    df = await asyncio.to_thread(get_kpi_metrics)
     health = compute_health_index(df)
     risk = compute_risk_score(df)
     key_metrics = extract_key_metrics(df)
@@ -1486,7 +1507,7 @@ async def get_anomalies(
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import detect_anomalies
     metrics_filter = [metric] if metric else None
-    df = get_kpi_metrics(metrics=metrics_filter)
+    df = await asyncio.to_thread(get_kpi_metrics, metrics=metrics_filter)
     anomalies = detect_anomalies(df)
     if anomalies.empty:
         return {"anomalies": [], "count": 0}
@@ -1505,31 +1526,31 @@ async def get_anomalies(
 async def get_hr_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
-    return HRService().get_workforce_summary(get_kpi_metrics())
+    return HRService().get_workforce_summary(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/hr/departments")
 async def get_hr_departments(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
-    return {"departments": HRService().get_department_analytics(get_kpi_metrics())}
+    return {"departments": HRService().get_department_analytics(await asyncio.to_thread(get_kpi_metrics))}
 
 @app.get("/api/v1/hr/recruitment")
 async def get_hr_recruitment(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
-    return HRService().get_recruitment_pipeline(get_kpi_metrics())
+    return HRService().get_recruitment_pipeline(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/hr/training")
 async def get_hr_training(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
-    return HRService().get_training_overview(get_kpi_metrics())
+    return HRService().get_training_overview(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/hr/health")
 async def get_hr_health(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
-    return HRService().compute_hr_health_score(get_kpi_metrics())
+    return HRService().compute_hr_health_score(await asyncio.to_thread(get_kpi_metrics))
 
 
 # ════════════════════════════════════════════════════════════
@@ -1540,31 +1561,31 @@ async def get_hr_health(user: TokenData = Depends(get_current_user)):
 async def get_logistics_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
-    return LogisticsService().get_supply_chain_summary(get_kpi_metrics())
+    return LogisticsService().get_supply_chain_summary(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/logistics/inventory")
 async def get_logistics_inventory(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
-    return LogisticsService().get_inventory_status(get_kpi_metrics())
+    return LogisticsService().get_inventory_status(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/logistics/shipping")
 async def get_logistics_shipping(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
-    return LogisticsService().get_shipping_analytics(get_kpi_metrics())
+    return LogisticsService().get_shipping_analytics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/logistics/suppliers")
 async def get_logistics_suppliers(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
-    return {"suppliers": LogisticsService().get_supplier_metrics(get_kpi_metrics())}
+    return {"suppliers": LogisticsService().get_supplier_metrics(await asyncio.to_thread(get_kpi_metrics))}
 
 @app.get("/api/v1/logistics/health")
 async def get_logistics_health(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
-    return LogisticsService().compute_logistics_health(get_kpi_metrics())
+    return LogisticsService().compute_logistics_health(await asyncio.to_thread(get_kpi_metrics))
 
 
 # ════════════════════════════════════════════════════════════
@@ -1575,37 +1596,37 @@ async def get_logistics_health(user: TokenData = Depends(get_current_user)):
 async def get_it_overview(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_it_overview(get_kpi_metrics())
+    return ITOpsService().get_it_overview(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/it/tickets")
 async def get_it_tickets(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_ticket_analytics(get_kpi_metrics())
+    return ITOpsService().get_ticket_analytics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/it/security")
 async def get_it_security(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_security_dashboard(get_kpi_metrics())
+    return ITOpsService().get_security_dashboard(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/it/infrastructure")
 async def get_it_infrastructure(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_infrastructure_metrics(get_kpi_metrics())
+    return ITOpsService().get_infrastructure_metrics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/it/devops")
 async def get_it_devops(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_devops_metrics(get_kpi_metrics())
+    return ITOpsService().get_devops_metrics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/it/health")
 async def get_it_health(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
-    return ITOpsService().compute_it_health(get_kpi_metrics())
+    return ITOpsService().compute_it_health(await asyncio.to_thread(get_kpi_metrics))
 
 
 # ════════════════════════════════════════════════════════════
@@ -1616,31 +1637,31 @@ async def get_it_health(user: TokenData = Depends(get_current_user)):
 async def get_ops_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
-    return OperationsService().get_operations_summary(get_kpi_metrics())
+    return OperationsService().get_operations_summary(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/operations/quality")
 async def get_ops_quality(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
-    return OperationsService().get_quality_metrics(get_kpi_metrics())
+    return OperationsService().get_quality_metrics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/operations/production")
 async def get_ops_production(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
-    return OperationsService().get_production_metrics(get_kpi_metrics())
+    return OperationsService().get_production_metrics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/operations/safety")
 async def get_ops_safety(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
-    return OperationsService().get_safety_metrics(get_kpi_metrics())
+    return OperationsService().get_safety_metrics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/operations/health")
 async def get_ops_health(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
-    return OperationsService().compute_ops_health(get_kpi_metrics())
+    return OperationsService().compute_ops_health(await asyncio.to_thread(get_kpi_metrics))
 
 
 # ════════════════════════════════════════════════════════════
@@ -1650,18 +1671,18 @@ async def get_ops_health(user: TokenData = Depends(get_current_user)):
 @app.get("/api/v1/growth/summary")
 async def get_growth_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
-    df = get_kpi_metrics(categories=["Growth"])
+    df = await asyncio.to_thread(get_kpi_metrics, categories=["Growth"])
     if df.empty:
         return {"mrr": 0, "arr": 0, "cac": 0, "ltv": 0, "churn_rate": 0, "trends": [], "mrr_trend": 0, "cac_trend": 0, "churn_trend": 0}
-    
+
     # Sort and grab latest
     df = df.sort_values(by="period")
     latest = df.drop_duplicates(subset=["metric"], keep="last")
-    
+
     def _val(metric_name):
         row = latest[latest["metric"] == metric_name]
         return float(row["value"].iloc[0]) if not row.empty else 0
-        
+
     def _trend(metric_name):
         m_df = df[df["metric"] == metric_name]
         if len(m_df) < 2: return 0
@@ -1670,7 +1691,7 @@ async def get_growth_summary(user: TokenData = Depends(get_current_user)):
         return ((v2 - v1) / v1 * 100) if v1 else 0
 
     mrr_series = df[df["metric"] == "MRR"][["period", "value"]].tail(12).to_dict("records")
-    
+
     return {
         "mrr": _val("MRR"),
         "arr": _val("ARR"),
@@ -1691,7 +1712,7 @@ async def get_growth_summary(user: TokenData = Depends(get_current_user)):
 @app.get("/api/v1/esg/summary")
 async def get_esg_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
-    df = get_kpi_metrics(categories=["ESG"])
+    df = await asyncio.to_thread(get_kpi_metrics, categories=["ESG"])
     if df.empty:
         return {"score": 0, "environment": {}, "social": {}, "governance": {}, "trends": []}
 
@@ -1814,7 +1835,7 @@ async def list_roles(user: TokenData = Depends(get_current_user)):
 async def get_audit_log(limit: int = 100, user: TokenData = Depends(require_role("admin", "risk"))):
     try:
         from src.services.pg_store import get_audit_trail
-        df = get_audit_trail(limit=limit)
+        df = await asyncio.to_thread(get_audit_trail, limit=limit)
         return {"logs": df.to_dict(orient="records") if not df.empty else []}
     except Exception as e:
         return {"logs": [], "error": str(e)}
@@ -1823,7 +1844,7 @@ async def get_audit_log(limit: int = 100, user: TokenData = Depends(require_role
 @app.post("/api/v1/admin/seed")
 async def seed_data(user: TokenData = Depends(require_role("admin"))):
     from src.services.pg_store import seed_all_domains
-    count = seed_all_domains()
+    count = await asyncio.to_thread(seed_all_domains)
     return {"status": "seeded", "rows": count}
 
 @app.post("/api/v1/admin/scenario")
@@ -1835,7 +1856,7 @@ async def switch_scenario(req: ScenarioRequest, user: TokenData = Depends(requir
         valid_scenarios = ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown", "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]
         if req.scenario not in valid_scenarios:
             raise HTTPException(status_code=400, detail=f"Invalid scenario. Valid: {', '.join(valid_scenarios)}")
-        
+
         # Seed with new scenario
         counts = seed_database(replace=True, scenario=req.scenario)
         return {"status": "success", "scenario": req.scenario, "counts": counts}
@@ -1855,7 +1876,7 @@ async def get_current_scenario(user: TokenData = Depends(require_role("admin")))
 async def cleanup_data(user: TokenData = Depends(require_role("admin"))):
     """Wipe safe-to-delete data (chat history + audit trail); keeps KPI/knowledge/seed data."""
     from src.services.pg_store import clear_user_data
-    return {"status": "cleaned", "deleted": clear_user_data()}
+    return {"status": "cleaned", "deleted": await asyncio.to_thread(clear_user_data)}
 
 
 @app.get("/api/v1/admin/vsdebug")
@@ -1900,7 +1921,7 @@ async def reindex_vectors(force: bool = True, user: TokenData = Depends(require_
 async def get_chat_sessions(user: TokenData = Depends(get_current_user)):
     try:
         from src.services.pg_store import get_user_sessions
-        sessions = get_user_sessions(user.user_id, limit=50)
+        sessions = await asyncio.to_thread(get_user_sessions, user.user_id, limit=50)
         return {"sessions": sessions}
     except Exception as e:
         return {"sessions": [], "error": str(e)}
@@ -1910,7 +1931,7 @@ async def get_chat_sessions(user: TokenData = Depends(get_current_user)):
 async def get_chat_messages(session_id: str, user: TokenData = Depends(get_current_user)):
     try:
         from src.services.pg_store import get_session_messages
-        messages = get_session_messages(session_id, user.user_id)
+        messages = await asyncio.to_thread(get_session_messages, session_id, user.user_id)
         return {"messages": messages, "session_id": session_id}
     except Exception as e:
         return {"messages": [], "error": str(e)}
@@ -1920,7 +1941,7 @@ async def get_chat_messages(session_id: str, user: TokenData = Depends(get_curre
 async def create_new_session(user: TokenData = Depends(get_current_user)):
     try:
         from src.services.pg_store import create_chat_session
-        session_id = create_chat_session(user.user_id)
+        session_id = await asyncio.to_thread(create_chat_session, user.user_id)
         return {"session_id": session_id, "title": "New Chat"}
     except Exception as e:
         return {"session_id": str(uuid.uuid4()), "error": str(e)}
@@ -1930,7 +1951,7 @@ async def create_new_session(user: TokenData = Depends(get_current_user)):
 async def rename_session(session_id: str, req: Dict[str, str], user: TokenData = Depends(get_current_user)):
     try:
         from src.services.pg_store import update_session_title
-        update_session_title(session_id, req.get("title", "Untitled"))
+        await asyncio.to_thread(update_session_title, session_id, req.get("title", "Untitled"))
         return {"status": "updated"}
     except Exception as e:
         return {"error": str(e)}
@@ -1940,7 +1961,7 @@ async def rename_session(session_id: str, req: Dict[str, str], user: TokenData =
 async def delete_chat_session(session_id: str, user: TokenData = Depends(get_current_user)):
     try:
         from src.services.pg_store import delete_session
-        delete_session(session_id)
+        await asyncio.to_thread(delete_session, session_id)
         return {"status": "deleted"}
     except Exception as e:
         return {"error": str(e)}
@@ -1976,7 +1997,7 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
 async def knowledge_stats(user: TokenData = Depends(get_current_user)):
     try:
         from src.services.pg_store import get_knowledge_docs
-        docs = get_knowledge_docs()
+        docs = await asyncio.to_thread(get_knowledge_docs)
         embedded = 0
         if not docs.empty and "embedding" in docs.columns:
             embedded = docs["embedding"].notna().sum()
@@ -2024,7 +2045,8 @@ async def websocket_chat(websocket: WebSocket):
                 session_id = data["session_id"]
             # Use language from message if provided, otherwise fall back to user language
             language = data.get("language") or user.language
-            result = factory.chat(
+            result = await asyncio.to_thread(
+                factory.chat,
                 message=message, user_role=user.role,
                 persona_override=persona_override, language=language, history=history,
             )
@@ -2036,10 +2058,10 @@ async def websocket_chat(websocket: WebSocket):
                 import json as _json
                 from src.services.pg_store import ensure_session_exists, store_message
                 if not _session_ready:
-                    ensure_session_exists(session_id, getattr(user, "user_id", user.username))
+                    await asyncio.to_thread(ensure_session_exists, session_id, getattr(user, "user_id", user.username))
                     _session_ready = True
-                store_message(session_id, "user", message)
-                store_message(session_id, "assistant", result["response"],
+                await asyncio.to_thread(store_message, session_id, "user", message)
+                await asyncio.to_thread(store_message, session_id, "assistant", result["response"],
                               sources=_json.dumps(result.get("sources", [])))
             except Exception as e:
                 log.warning("WS message persistence failed: %s", e)
@@ -2098,7 +2120,7 @@ async def set_chatbot_domain(
 ):
     """
     Set user's chatbot domain preference (finance, hr, ops, esg, growth, general).
-    
+
     This personalizes the conversational agent to focus on a specific domain.
     """
     valid_domains = ["finance", "hr", "ops", "esg", "growth", "general"]
@@ -2107,18 +2129,18 @@ async def set_chatbot_domain(
             status_code=400,
             detail=f"Invalid domain. Must be one of: {', '.join(valid_domains)}"
         )
-    
+
     from src.services.pg_store import (
         set_user_default_domain,
         update_domain_history,
     )
-    
+
     try:
         set_user_default_domain(user.username, domain)
         update_domain_history(user.username, domain)
-        
+
         log.info("Domain set to %s for user %s", domain, user.username)
-        
+
         return {
             "status": "success",
             "domain": domain,
@@ -2133,9 +2155,9 @@ async def set_chatbot_domain(
 async def get_chatbot_domain(user: TokenData = Depends(get_current_user)):
     """Get user's current chatbot domain preference."""
     from src.services.pg_store import get_user_default_domain
-    
+
     try:
-        domain = get_user_default_domain(user.username)
+        domain = await asyncio.to_thread(get_user_default_domain, user.username)
         return {
             "domain": domain,
             "valid_domains": ["finance", "hr", "ops", "esg", "growth", "general"],
@@ -2175,7 +2197,7 @@ async def export_data(
 ):
     """
     Export data in various formats (CSV, XLSX, PDF, JSON).
-    
+
     Supports sources:
     - kpis: Export KPI metrics
     - spreadsheet: Export mini-spreadsheet data
@@ -2185,8 +2207,8 @@ async def export_data(
     from src.services.pg_store import log_data_export, update_export_log
     import io
     import base64
-    
-    export_id = log_data_export(
+
+    export_id = await asyncio.to_thread(log_data_export,
         username=user.username,
         export_name=req.source_name or f"export_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}",
         export_format=req.format,
@@ -2194,28 +2216,28 @@ async def export_data(
         status="processing",
         query=req.query,
     )
-    
+
     try:
         if req.source_type == "spreadsheet":
             if not req.source_name:
                 raise HTTPException(status_code=400, detail="source_name required")
-            
+
             from src.services.pg_store import export_spreadsheet
-            
-            data = export_spreadsheet(user.username, req.source_name, req.format)
+
+            data = await asyncio.to_thread(export_spreadsheet, user.username, req.source_name, req.format)
             if not data:
                 raise HTTPException(status_code=404, detail="Spreadsheet not found")
-            
+
             filename = f"{req.source_name}.{req.format}"
-        
+
         elif req.source_type == "kpis":
             from src.services.pg_store import get_kpi_metrics
-            
+
             # Get KPI data
-            df = get_kpi_metrics()
+            df = await asyncio.to_thread(get_kpi_metrics)
             if not df.empty:
                 df = df.head(10000)
-            
+
             if req.format == "csv":
                 data = df.to_csv(index=False)
                 filename = "kpis_export.csv"
@@ -2233,17 +2255,17 @@ async def export_data(
                 filename = "board_report.pdf"
             else:
                 raise HTTPException(status_code=400, detail=f"Unsupported format: {req.format}")
-        
+
         else:
             raise HTTPException(status_code=400, detail=f"Unsupported source: {req.source_type}")
-        
-        update_export_log(
+
+        await asyncio.to_thread(update_export_log,
             export_id=export_id,
             status="completed",
             file_size_bytes=len(data.encode()) if isinstance(data, str) else len(data),
             row_count=len(data.split("\n")) if req.format == "csv" else 1,
         )
-        
+
         # csv/json are returned as text; xlsx is base64-encoded so the client can
         # decode and download it directly (no separate download round-trip).
         return {
@@ -2255,12 +2277,12 @@ async def export_data(
             "data": data,
             "download_url": f"/api/v1/exports/{export_id}/download",
         }
-    
+
     except HTTPException:
         raise
     except Exception as e:
         log.error("Data export error: %s", e)
-        update_export_log(export_id=export_id, status="failed", error_message=str(e)[:500])
+        await asyncio.to_thread(update_export_log, export_id=export_id, status="failed", error_message=str(e)[:500])
         raise HTTPException(status_code=500, detail=str(e))
 
 

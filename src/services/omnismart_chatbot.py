@@ -167,13 +167,18 @@ def llm_complete(
         tier = PERSONA_TIER_MAP[persona_name.lower()]
 
     resolved_model = model or _resolve(tier)
+    # Neither the Groq SDK nor LiteLLM bound this by default — a provider having
+    # connectivity trouble hung the whole chat request (confirmed live: >2 min on a
+    # single message) with nothing in this codebase to cut it short.
+    timeout_s = float(os.getenv("LLM_TIMEOUT", "30"))
 
     # Fast path: use native Groq SDK if resolved model is a Groq model
     client = _groq_client()
     if resolved_model.startswith("groq/") and client is not None:
         actual_model = resolved_model.replace("groq/", "")
         kw: Dict[str, Any] = {"model": actual_model, "messages": messages,
-                              "temperature": temperature, "max_tokens": max_tokens}
+                              "temperature": temperature, "max_tokens": max_tokens,
+                              "timeout": timeout_s}
         if top_p is not None:
             kw["top_p"] = top_p
         r = client.chat.completions.create(**kw)
@@ -183,7 +188,8 @@ def llm_complete(
     # Any other provider → LiteLLM
     from litellm import completion  # type: ignore
     msgs = _apply_cache_control(messages, resolved_model)
-    kw = {"model": resolved_model, "messages": msgs, "temperature": temperature, "max_tokens": max_tokens}
+    kw = {"model": resolved_model, "messages": msgs, "temperature": temperature,
+          "max_tokens": max_tokens, "timeout": timeout_s}
     if top_p is not None:
         kw["top_p"] = top_p
     r = completion(**kw)
