@@ -484,6 +484,52 @@ ingesting again, split it first.
   restarts. Reset back to HF as the active config afterward, confirmed live with one more
   successful chat call post-reset.
 
+## 2026-08-14 pass, continued further — real browser click-through found 2 live bugs, both fixed
+
+A real Playwright browser (not curl) driven against production surfaced two genuine bugs
+that curl-only testing had missed entirely:
+
+- **`/chat` and `/api-docs` loaded as blank pages on direct navigation/refresh in
+  production.** Root cause: the Cloudflare gateway's route-to-backend-vs-frontend
+  heuristic (`cloudflare-worker/src/index.js`) matched a bare `startsWith('/api')` and
+  had `'/chat'` in its explicit backend-route list — so the frontend's own `/chat` and
+  `/api-docs` *page* routes were sent to Render (which has no route for them) instead of
+  Vercel. The backend's SPA catch-all then served its own stale bundled
+  `frontend/dist/index.html`, referencing JS chunk hashes the live Vercel deploy no
+  longer has (404s, React never mounts). Fixed: `/api` now requires its trailing slash,
+  and `'/chat'` was dropped from the list — every real backend chat/API endpoint already
+  lives under `/api/` or `/api/v1/`. Verified live: both routes now return `x-vercel-cache`
+  headers, and every JS chunk referenced in the served HTML resolves 200.
+- **Demo-session data scoping was silently broken on every single request** (not just
+  under load) — a real regression from this session's own earlier async refactor.
+  `set_request_scope_user()` sets a `contextvars.ContextVar` and does no I/O, but got
+  wrapped in `asyncio.to_thread` along with every other `pg_store` call. `to_thread` runs
+  its target inside a *copy* of the current context; a `.set()` made there is discarded
+  with that copy, so every later `get_request_scope_user()` in the request's real context
+  kept seeing the ContextVar's default (`None`) instead of the JWT's `user_id` — a
+  visitor's own ingested rows never actually matched their own scope filter. Surfaced by
+  the browser test as intermittent 500s on `/api/v1/insights/*` and `/api/v1/kpis` when
+  the Chat page fired them concurrently on mount — a serial curl retest couldn't
+  reproduce it, which is what made it worth chasing down rather than dismissing as
+  browser flakiness. Fixed by calling it directly (no thread offload needed for an
+  in-memory set). Verified live: the exact concurrent-request pattern that 500'd before
+  now returns 200 on all four endpoints.
+- **`/api/v1/kpis` is slow under concurrent load** (~19s solo, ~36s when four endpoints
+  hit the DB at once) — a real, separate performance characteristic (an unfiltered query
+  against the full KPI table, no `category`/`period` narrowing), not a correctness bug;
+  it now returns 200 rather than 500, just slowly. Not fixed further this pass — flagged
+  here rather than silently left unmentioned.
+- **`/api/v1/ingest/audio` returned 502 in production** — traced to Cloudflare's Bot
+  Fight Mode issuing a `managed_challenge` against IntelAI's own server-to-server call to
+  VoiceFlow's `/pipeline` (confirmed via Cloudflare's firewall event log, exact timestamp
+  match to the failing requests). VoiceFlow itself and IntelAI's own delegation code were
+  both fine — Cloudflare's edge was intercepting the request before it ever reached
+  VoiceFlow's app code. Free-plan Bot Fight Mode cannot be bypassed by a WAF custom rule
+  or header check (confirmed via a direct Cloudflare API test). Fixed with an account-wide
+  Cloudflare IP Access Rule allowlisting the specific Render egress IP seen in the
+  firewall log. Verified live: the same real audio file now ingests successfully
+  end-to-end (real transcript, real doc_id, stored in the knowledge base).
+
 ## Environment this was verified against
 
 Local dev run (`python main.py`) pointed at the **real production Neon Postgres** (by
