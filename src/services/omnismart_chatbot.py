@@ -846,7 +846,11 @@ class AgentPersonaFactory:
         doc_blocks: List[Tuple[str, str]] = []
         scope = {c.lower() for c in (getattr(persona, "data_access", None) or [])}
 
-        # 1) Live KPI snapshot (latest period), scoped to the persona's domains (RBAC)
+        # 1) Live KPI snapshot (latest period), scoped to the persona's domains (RBAC).
+        # PLUS: a question naming a specific past period ("... in 2024-01?", "for 2021-01")
+        # asks about a period that is, by definition, almost never the latest one — the
+        # snapshot alone can never ground those, no matter how good retrieval otherwise
+        # is. Detect a YYYY-MM in the message and fetch that period's rows too.
         try:
             from src.services.pg_store import get_kpi_metrics
             df = get_kpi_metrics()
@@ -870,6 +874,31 @@ class AgentPersonaFactory:
                         "title": f"Live KPI snapshot · {latest}", "type": "kpi", "relevance": 1.0,
                         "snippet": f"{', '.join(cats)} metrics for {latest}", "source": f"kpi/{latest}",
                     })
+
+                asked_periods = set(re.findall(r"\b(?:19|20)\d{2}-(?:0[1-9]|1[0-2])\b", message))
+                asked_periods.discard(latest)
+                if asked_periods:
+                    hist = df[df["period"].isin(asked_periods)]
+                    if scope:
+                        hist = hist[hist["category"].str.lower().isin(scope)]
+                    hist_lines = []
+                    for period in sorted(asked_periods & set(hist["period"].unique())):
+                        pdf = hist[hist["period"] == period]
+                        for cat in sorted(pdf["category"].unique()):
+                            cdf = pdf[pdf["category"] == cat]
+                            metrics = "; ".join(
+                                f"{r.metric}={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
+                                for r in cdf.itertuples()
+                            )
+                            hist_lines.append(f"- {cat} ({period}): {metrics}")
+                    if hist_lines:
+                        hist_block = "\n".join(hist_lines)
+                        parts_period = ", ".join(sorted(asked_periods & set(hist["period"].unique())))
+                        raw_sources.append({
+                            "title": f"Historical KPI data · {parts_period}", "type": "kpi", "relevance": 1.0,
+                            "snippet": f"metrics for {parts_period}", "source": f"kpi/{parts_period}",
+                        })
+                        kpi_block = (kpi_block + "\n\n" + hist_block) if kpi_block else hist_block
         except Exception as e:
             log.warning("KPI context retrieval failed: %s", e)
 
