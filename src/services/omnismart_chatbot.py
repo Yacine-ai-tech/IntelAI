@@ -640,9 +640,31 @@ class PersonaContext:
 # CITATIONS — one canonical schema for every retrieval path
 # ════════════════════════════════════════════════════════════════════════════
 
-# The 7 business domains personas are scoped to (lowercased). Mirrors the ``data_access``
-# values in PERSONA_TEMPLATES — used to enforce RBAC on retrieved knowledge docs.
-_KPI_DOMAINS = {"finance", "growth", "operations", "people", "esg", "it", "logistics"}
+# Real domain names, read from the KPI data itself rather than hardcoded — a fixed set
+# here silently mis-scopes documents on a dataset that isn't this project's own 7 demo
+# domains: an unrecognised domain returns None from _doc_domain() below, and None is
+# treated as "domain-agnostic" (kept for every persona), which is a cross-domain leak on
+# someone else's real dataset, not just a wrong label on this one. TTL-cached (matches
+# the existing _HYBRID_SIG cache pattern in this module) so this doesn't add a DB round
+# trip to every chat message.
+_kpi_domains_cache: Optional[set] = None
+_kpi_domains_cache_ts: float = 0.0
+_KPI_DOMAINS_TTL = 300  # seconds
+
+
+def _kpi_domains() -> set:
+    global _kpi_domains_cache, _kpi_domains_cache_ts
+    now = time.time()
+    if _kpi_domains_cache is None or (now - _kpi_domains_cache_ts) > _KPI_DOMAINS_TTL:
+        try:
+            from src.services.pg_store import get_available_categories
+            _kpi_domains_cache = {c.lower() for c in get_available_categories()}
+            _kpi_domains_cache_ts = now
+        except Exception as e:
+            log.warning("Failed to refresh KPI domain set: %s", e)
+            if _kpi_domains_cache is None:
+                _kpi_domains_cache = set()
+    return _kpi_domains_cache
 
 
 def _doc_domain(title: str) -> Optional[str]:
@@ -652,10 +674,11 @@ def _doc_domain(title: str) -> Optional[str]:
     ``"People KPI Summary — 2026-12"`` — so retrieval can be scoped to a persona's
     ``data_access`` the same way the live KPI snapshot is."""
     t = (title or "").lower()
+    domains = _kpi_domains()
     m = re.search(r"\(([a-z& ]+)\)", t)  # "... (People)"
-    if m and m.group(1).strip() in _KPI_DOMAINS:
+    if m and m.group(1).strip() in domains:
         return m.group(1).strip()
-    for d in _KPI_DOMAINS:  # "People KPI Summary ...", "Finance KPI Summary ..."
+    for d in domains:  # "People KPI Summary ...", "Finance KPI Summary ..."
         if t.startswith(d + " kpi") or t.startswith(d + " summary"):
             return d
     return None

@@ -297,20 +297,30 @@ def require_data_access(category: str):
     return data_checker
 
 
-def get_user_data_categories(role: str) -> List[str]:
-    """Get the data categories accessible to a given role."""
+def get_user_data_categories(role: str, all_categories: Optional[List[str]] = None) -> List[str]:
+    """Get the data categories accessible to a given role.
+
+    A wildcard role ("*") means "every category that actually exists" — not a fixed
+    list. A hardcoded list here drifts every time a new domain is added to the KPI
+    catalog (confirmed live: a hardcoded list missing "IT"/"Logistics" silently zeroed
+    out GET /api/v1/kpis for both, for every wildcard-access role, until this was found
+    and the list patched by hand — which just moves the same bug to the next new
+    domain). It also breaks the moment anyone deploys IntelAI against a different
+    dataset with different domain names, since this app is meant to be data-agnostic,
+    not hardwired to whatever the current 7 demo domains happen to be.
+
+    `all_categories`: the caller's own query of get_available_categories() (a DISTINCT
+    SELECT against kpi_metrics), passed in explicitly rather than fetched here so this
+    stays a synchronous, DB-free function — the caller decides how/where to run the
+    actual query (e.g. via asyncio.to_thread from an async route handler). Falls back to
+    an empty list (not a guessed default) when the caller has no data yet — an empty
+    wildcard-access result is honest; a hardcoded guess would just reintroduce this bug
+    under a different name.
+    """
     role_def = ROLE_DEFINITIONS.get(role, {})
     access = role_def.get("data_access", [])
     if "*" in access:
-        # Every real category currently in kpi_metrics (see get_available_categories()) —
-        # this list drifted out of sync when IT and Logistics were added: a wildcard role
-        # (admin) silently saw zero rows for either category from GET /api/v1/kpis, since
-        # that endpoint re-filters by this hardcoded list even after the DB query itself
-        # returns the real rows. "Customer"/"Macro"/"Other" aren't real category values in
-        # kpi_metrics — kept for backward compatibility with any caller still checking for
-        # them, but real category names should be the source of truth going forward.
-        return ["Finance", "Growth", "Operations", "People", "ESG", "IT", "Logistics",
-                "Customer", "Macro", "Other"]
+        return all_categories if all_categories is not None else []
     return access
 
 

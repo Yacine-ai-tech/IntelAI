@@ -591,6 +591,9 @@ async def login(req: LoginRequest):
         import logging; logging.error('Unhandled exception', exc_info=True)
         pass
 
+    from src.services.pg_store import get_available_categories
+    all_categories = await asyncio.to_thread(get_available_categories)
+
     return {
         "access_token": token,
         "token_type": "bearer",
@@ -601,7 +604,7 @@ async def login(req: LoginRequest):
             "full_name": user_data["username"].replace("_", " ").title(),
             "language": user_data.get("preferred_language", "en"),
             "pages": get_user_pages(role),
-            "data_access": get_user_data_categories(role),
+            "data_access": get_user_data_categories(role, all_categories),
             "actions": __import__('src.core.jwt_auth').core.jwt_auth.ROLE_DEFINITIONS.get(role, {}).get("actions", []),
         },
     }
@@ -640,12 +643,14 @@ async def demo_login(role: str, request: Request):
         username = role
 
     token = create_access_token(TokenData(user_id=user_id, username=username, role=role, language="en"))
+    from src.services.pg_store import get_available_categories
+    all_categories = await asyncio.to_thread(get_available_categories)
     return {
         "access_token": token, "token_type": "bearer",
         "user": {
             "id": user_id, "username": username, "role": role,
             "full_name": role.upper(), "language": "en",
-            "pages": get_user_pages(role), "data_access": get_user_data_categories(role),
+            "pages": get_user_pages(role), "data_access": get_user_data_categories(role, all_categories),
             "actions": ROLE_DEFINITIONS.get(role, {}).get("actions", []),
         },
     }
@@ -680,6 +685,8 @@ async def register(req: RegisterRequest):
 @app.get("/api/v1/auth/me")
 async def get_me(user: TokenData = Depends(get_current_user)):
     user_data = _users_db.get(user.username, {})
+    from src.services.pg_store import get_available_categories
+    all_categories = await asyncio.to_thread(get_available_categories)
     return {
         "id": user.user_id,
         "username": user.username,
@@ -687,7 +694,7 @@ async def get_me(user: TokenData = Depends(get_current_user)):
         "full_name": user.username.replace("_", " ").title(),
         "language": user.language,
         "pages": get_user_pages(user.role),
-        "data_access": get_user_data_categories(user.role),
+        "data_access": get_user_data_categories(user.role, all_categories),
         "preferred_language": user_data.get("preferred_language", user.language),
         "actions": __import__('src.core.jwt_auth').core.jwt_auth.ROLE_DEFINITIONS.get(user.role, {}).get("actions", []),
     }
@@ -1361,14 +1368,15 @@ async def get_kpis(
     segment: Optional[str] = None,
     user: TokenData = Depends(get_current_user),
 ):
-    from src.services.pg_store import get_kpi_metrics
+    from src.services.pg_store import get_kpi_metrics, get_available_categories
     periods = [period] if period else None
     categories = [category] if category else None
     segments = [segment] if segment else None
     df = await asyncio.to_thread(get_kpi_metrics, periods=periods, categories=categories, segments=segments)
 
     # Filter by user's data access
-    user_categories = get_user_data_categories(user.role)
+    all_categories = await asyncio.to_thread(get_available_categories)
+    user_categories = get_user_data_categories(user.role, all_categories)
     if "*" not in user_categories and "category" in df.columns and not df.empty:
         user_cat_lower = [c.lower() for c in user_categories]
         df = df[df["category"].str.lower().isin(user_cat_lower)]
