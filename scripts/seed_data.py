@@ -868,7 +868,7 @@ def stage_corpus(purge: bool, only: str, dry_run: bool, timeout: float) -> int:
         headers = _auth_headers(token)
         for path, category, kind in items:
             endpoint = "audio" if kind == "audio" else "document"
-            data = {"category": category}
+            data = {"category": category, "global_scope": "true"}
             if kind == "audio":
                 data["analysis_type"] = "meeting"
             try:

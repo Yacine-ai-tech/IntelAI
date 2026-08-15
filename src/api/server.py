@@ -24,7 +24,7 @@ from src.core.logger import get_logger
 from src.core.jwt_auth import (
     TokenData, LoginRequest, RegisterRequest,
     hash_password, verify_password,
-    create_access_token, get_current_user, require_role, get_user_data_categories, get_user_pages,
+    create_access_token, get_current_user, require_role, require_page, get_user_data_categories, get_user_pages,
     ROLE_DEFINITIONS, DEFAULT_USERS,
 )
 from src.core.config import get_cors_allowed_origins, settings
@@ -90,6 +90,8 @@ def _send_telemetry():
     installs. Sends only {service, event, instance_id} — no request data, document/KPI
     content, or credentials. Disable entirely with TELEMETRY_OPT_OUT=true.
     """
+    if os.environ.get("TELEMETRY_OPT_OUT", "").strip().lower() in ("true", "1", "yes"):
+        return
 
     lock_file = os.path.join(str(settings.LOGS_DIR), ".telemetry_last_ping")
     try:
@@ -535,14 +537,55 @@ async def startup():
 # HEALTH & STATUS
 # ════════════════════════════════════════════════════════════
 
+def _health_db_check() -> str:
+    try:
+        from src.services.pg_store import _get_conn
+        conn = _get_conn()
+        try:
+            conn.execute("SELECT 1")
+            return "ok"
+        finally:
+            conn.close()
+    except Exception as e:
+        return f"unreachable: {e}"
+
+
+def _health_vector_store_check() -> str:
+    try:
+        from src.services.vector_store import get_vector_store
+        vs = get_vector_store()
+        if vs is None:
+            return "memory (no persistent store configured)"
+        vs.count()
+        return "ok"
+    except Exception as e:
+        return f"unreachable: {e}"
+
+
 @app.get("/health")
 async def health_check():
+    # The configured Render + docker-compose health check — previously a hardcoded
+    # "postgresql" string regardless of whether the DB was actually reachable, so a
+    # dead connection pool never showed up here. Bounded so a slow DB can't make this
+    # endpoint itself the timeout; still returns 200 (informational, not a hard gate)
+    # to avoid turning a transient DB hiccup into a restart storm.
+    try:
+        db_status, vs_status = await asyncio.wait_for(
+            asyncio.gather(
+                asyncio.to_thread(_health_db_check),
+                asyncio.to_thread(_health_vector_store_check),
+            ),
+            timeout=5.0,
+        )
+    except asyncio.TimeoutError:
+        db_status = vs_status = "timeout"
     return {
-        "status": "healthy",
+        "status": "healthy" if db_status == "ok" else "degraded",
         "service": "IntelAI API",
         "version": "2026.3.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),
-        "database": "postgresql",
+        "database": db_status,
+        "vector_store": vs_status,
     }
 
 
@@ -610,6 +653,25 @@ async def login(req: LoginRequest):
     }
 
 
+_DEMO_LOGIN_HITS: Dict[str, List[float]] = {}
+_DEMO_LOGIN_LIMIT = int(os.environ.get("DEMO_LOGIN_RATE_LIMIT", "20"))
+_DEMO_LOGIN_WINDOW_S = 300.0
+
+
+def _check_demo_login_rate_limit(request: Request) -> None:
+    """Fixed-window limiter, per client IP: WEB_CONCURRENCY=1 means an in-memory dict is
+    safe (no cross-worker consistency issue). Without this, demo-login — no password, no
+    auth — hands out a real JWT (including role=admin, full data_access) to anyone who
+    calls it, as many times as they like."""
+    ip = request.headers.get("X-Forwarded-For", "").split(",")[0].strip() or (request.client.host if request.client else "unknown")
+    now = time.time()
+    hits = [t for t in _DEMO_LOGIN_HITS.get(ip, []) if now - t < _DEMO_LOGIN_WINDOW_S]
+    if len(hits) >= _DEMO_LOGIN_LIMIT:
+        raise HTTPException(status_code=429, detail="Too many demo-login attempts. Please wait a few minutes.")
+    hits.append(now)
+    _DEMO_LOGIN_HITS[ip] = hits
+
+
 @app.post("/api/v1/auth/demo-login")
 async def demo_login(role: str, request: Request):
     """One-click 'try as persona' for the demo — issues a token for the role WITHOUT exposing
@@ -626,6 +688,7 @@ async def demo_login(role: str, request: Request):
     import os as _os
     if _os.getenv("DEMO_MODE", "true").lower() != "true":
         raise HTTPException(status_code=403, detail="Demo mode disabled")
+    _check_demo_login_rate_limit(request)
     from src.core.jwt_auth import ROLE_DEFINITIONS
     role = (role or "").lower()
     if role not in ROLE_DEFINITIONS:
@@ -718,6 +781,13 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
     except Exception:
         pass  # Fallback — still works without PG
 
+    # Prior turns in this session — without this, every REST message was answered with
+    # no memory of the conversation despite a real session_id being tracked (confirmed
+    # live: a follow-up question referring to the previous answer got no continuity).
+    # The WebSocket handler already keeps this in memory per-connection; REST has no
+    # persistent connection to hold that state in, so it's loaded from Postgres instead.
+    history = await asyncio.to_thread(_load_chat_history, user.user_id, session_id)
+
     # Persona-routed RAG copilot: factory.chat auto-retrieves a role-scoped KPI
     # snapshot + knowledge docs and returns grounded answers with source citations.
     # (Same path as the WebSocket handler, so REST and the WS fallback behave identically.)
@@ -732,6 +802,7 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
         persona_override=req.persona,
         language=req.language or user.language,
         context=req.context or "",
+        history=history,
     )
 
     response_text = result.get("response", "")
@@ -984,27 +1055,41 @@ async def _process_webhook_payload(payload: WebhookPayload, actor: str) -> Dict[
         # Auto-Categorization Pipeline (reusing same backend functions as UI upload)
         def _process_background():
             try:
+                from src.services.pg_store import store_knowledge_docs
                 from src.services.vector_store import get_vector_store
                 from src.services.llm_router import llm_call
-                import logging
+                import pandas as _pd
+
+                # 1. LLM Auto-Categorization
+                try:
+                    resp = asyncio.run(llm_call([{"role": "user", "content": f"Classify this text into a domain (Finance, HR, Operations, ESG, IT, Growth). Reply with 1 word.\n\nText: {content_text[:500]}"}]))
+                    domain = resp["choices"][0]["message"]["content"].strip()
+                except Exception:
+                    domain = "General"
+
+                # 2. Persist to knowledge_base — the single source of truth every
+                # retrieval path reads from (vector store, hybrid, in-process). Global/
+                # shared, same as an external system-to-system KPI feed above.
+                doc_id = str(uuid.uuid4())
+                title = f"{payload.source} — {domain}"
+                docs_df = _pd.DataFrame([{
+                    "doc_id": doc_id, "title": title, "content": content_text,
+                    "source": payload.source, "embedding": "",
+                }])
+                store_knowledge_docs(docs_df, owner_user_id=None)
+
+                # 3. Index it immediately. add_texts() never existed on any vector-store
+                # backend (ChromaVectorStore/PgVectorStore/QdrantVectorStore only
+                # implement upsert/query/count/reset) — every webhook knowledge_doc
+                # raised AttributeError here, silently caught below, while the endpoint
+                # still returned HTTP 200 "success" (confirmed live).
                 vs = get_vector_store()
                 if vs:
-                    # 1. LLM Auto-Categorization
-                    try:
-                        resp = asyncio.run(llm_call([{"role": "user", "content": f"Classify this text into a domain (Finance, HR, Operations, ESG, IT, Growth). Reply with 1 word.\n\nText: {content_text[:500]}"}]))
-                        domain = resp["choices"][0]["message"]["content"].strip()
-                    except:
-                        domain = "General"
-
-                    # 2. Add to Vector Store
-                    vs.add_texts(
-                        texts=[content_text],
-                        metadatas=[{"source": payload.source, "domain": domain}]
-                    )
-                    logging.info(f"Webhook doc successfully auto-categorized as {domain} and indexed.")
+                    vs.upsert([{"doc_id": doc_id, "title": title, "content": content_text[:4000],
+                                "source": payload.source, "category": domain}])
+                log.info(f"Webhook doc successfully auto-categorized as {domain} and indexed.")
             except Exception as e:
-                import logging
-                logging.error(f"Background webhook processing failed: {e}")
+                log.error(f"Background webhook processing failed: {e}")
 
         # Fire and forget
         asyncio.create_task(asyncio.to_thread(_process_background))
@@ -1239,9 +1324,17 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
 async def ingest_document(
     file: UploadFile = File(...),
     category: str = Form("Misc"),
+    global_scope: bool = Form(False),
     user: TokenData = Depends(get_current_user),
 ):
     from src.services.pg_store import store_knowledge_docs, log_audit_event
+    # Default private: an uploaded document belongs to its uploader only, never the
+    # shared corpus every visitor's chat can retrieve — the same owner_user_id contract
+    # as the CSV KPI endpoint below. global_scope=true (admin-only) is how seed_data.py's
+    # digest/corpus stage seeds the real shared baseline through this same endpoint.
+    if global_scope and (user.role or "").lower() != "admin":
+        raise HTTPException(status_code=403, detail="global_scope requires an admin role")
+    owner = None if global_scope else user.user_id
     content = await file.read()
     filename_lower = (file.filename or "").lower()
 
@@ -1260,8 +1353,12 @@ async def ingest_document(
         except RuntimeError as e:
             raise HTTPException(status_code=502, detail=f"doc_processor_failed: {e}")
 
+    # Off the event loop: some of SecurityScanner's DLP patterns (DOTALL private-key
+    # blocks, the credit-card catch-all) are backtracking-prone, and this is a
+    # WEB_CONCURRENCY=1 deployment — a multi-second scan on a large document
+    # previously froze every other in-flight request for its whole duration.
     from src.services.security import SecurityScanner
-    text = SecurityScanner.redact_text(text)
+    text = await asyncio.to_thread(SecurityScanner.redact_text, text)
 
     doc_id = str(uuid.uuid4())
     # Store the extracted text in full. A fixed character cap here silently threw away
@@ -1273,9 +1370,12 @@ async def ingest_document(
         "doc_id": doc_id, "title": file.filename, "content": text,
         "source": category, "embedding": "",
     }])
-    await asyncio.to_thread(store_knowledge_docs, docs_df)
+    await asyncio.to_thread(store_knowledge_docs, docs_df, owner_user_id=owner)
     await asyncio.to_thread(log_audit_event, user.username, "DOC_INGEST", f"Uploaded {file.filename}")
-    return {"status": "ingested", "doc_id": doc_id, "filename": file.filename, "chars": len(text)}
+    return {
+        "status": "ingested", "doc_id": doc_id, "filename": file.filename, "chars": len(text),
+        "scope": "global" if global_scope else "user",
+    }
 
 
 @app.post("/api/v1/ingest/audio")
@@ -1283,6 +1383,7 @@ async def ingest_audio(
     file: UploadFile = File(...),
     category: str = Form("Misc"),
     analysis_type: str = Form("meeting"),
+    global_scope: bool = Form(False),
     user: TokenData = Depends(get_current_user),
 ):
     """Audio → knowledge base, via a pluggable external audio processor —
@@ -1294,6 +1395,9 @@ async def ingest_audio(
     out) — VoiceFlow speaks this contract natively, but so could anything
     else. 501 if AUDIO_PROCESSOR_URL isn't configured — never a fake
     transcript."""
+    if global_scope and (user.role or "").lower() != "admin":
+        raise HTTPException(status_code=403, detail="global_scope requires an admin role")
+    owner = None if global_scope else user.user_id
     if not settings.AUDIO_PROCESSOR_URL:
         raise HTTPException(
             status_code=501,
@@ -1338,7 +1442,7 @@ async def ingest_audio(
     if not transcript_text.strip():
         raise HTTPException(status_code=502, detail="audio_processor_returned_no_transcript")
 
-    text = SecurityScanner.redact_text(transcript_text)
+    text = await asyncio.to_thread(SecurityScanner.redact_text, transcript_text)
     summary_fields = "\n".join(f"{k}: {v}" for k, v in analysis.items() if v not in (None, "", [], {})) if isinstance(analysis, dict) else ""
     full_content = f"{text}\n\n[ANALYSIS]\n{summary_fields}" if summary_fields else text
 
@@ -1349,11 +1453,12 @@ async def ingest_audio(
         "doc_id": doc_id, "title": file.filename or "audio upload", "content": full_content,
         "source": category, "embedding": "",
     }])
-    await asyncio.to_thread(store_knowledge_docs, docs_df)
+    await asyncio.to_thread(store_knowledge_docs, docs_df, owner_user_id=owner)
     await asyncio.to_thread(log_audit_event, user.username, "AUDIO_INGEST", f"Processed {file.filename} via {settings.AUDIO_PROCESSOR_URL}")
     return {
         "status": "ingested", "doc_id": doc_id, "filename": file.filename,
         "chars": len(text), "transcript": transcript, "analysis": analysis,
+        "scope": "global" if global_scope else "user",
     }
 
 
@@ -1410,7 +1515,7 @@ async def get_kpi_categories(user: TokenData = Depends(get_current_user)):
 @app.post("/api/v1/financial/statement")
 async def generate_financial_statement(
     req: FinancialRequest,
-    user: TokenData = Depends(get_current_user),
+    user: TokenData = Depends(require_page("financial")),
 ):
     from src.services.financial import FinancialStatementEngine
     engine = FinancialStatementEngine()
@@ -1555,31 +1660,31 @@ async def get_anomalies(
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/hr/summary")
-async def get_hr_summary(user: TokenData = Depends(get_current_user)):
+async def get_hr_summary(user: TokenData = Depends(require_page("hr"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
     return HRService().get_workforce_summary(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/hr/departments")
-async def get_hr_departments(user: TokenData = Depends(get_current_user)):
+async def get_hr_departments(user: TokenData = Depends(require_page("hr"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
     return {"departments": HRService().get_department_analytics(await asyncio.to_thread(get_kpi_metrics))}
 
 @app.get("/api/v1/hr/recruitment")
-async def get_hr_recruitment(user: TokenData = Depends(get_current_user)):
+async def get_hr_recruitment(user: TokenData = Depends(require_page("hr"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
     return HRService().get_recruitment_pipeline(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/hr/training")
-async def get_hr_training(user: TokenData = Depends(get_current_user)):
+async def get_hr_training(user: TokenData = Depends(require_page("hr"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
     return HRService().get_training_overview(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/hr/health")
-async def get_hr_health(user: TokenData = Depends(get_current_user)):
+async def get_hr_health(user: TokenData = Depends(require_page("hr"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.hr import HRService
     return HRService().compute_hr_health_score(await asyncio.to_thread(get_kpi_metrics))
@@ -1590,31 +1695,31 @@ async def get_hr_health(user: TokenData = Depends(get_current_user)):
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/logistics/summary")
-async def get_logistics_summary(user: TokenData = Depends(get_current_user)):
+async def get_logistics_summary(user: TokenData = Depends(require_page("logistics"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
     return LogisticsService().get_supply_chain_summary(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/logistics/inventory")
-async def get_logistics_inventory(user: TokenData = Depends(get_current_user)):
+async def get_logistics_inventory(user: TokenData = Depends(require_page("logistics"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
     return LogisticsService().get_inventory_status(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/logistics/shipping")
-async def get_logistics_shipping(user: TokenData = Depends(get_current_user)):
+async def get_logistics_shipping(user: TokenData = Depends(require_page("logistics"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
     return LogisticsService().get_shipping_analytics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/logistics/suppliers")
-async def get_logistics_suppliers(user: TokenData = Depends(get_current_user)):
+async def get_logistics_suppliers(user: TokenData = Depends(require_page("logistics"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
     return {"suppliers": LogisticsService().get_supplier_metrics(await asyncio.to_thread(get_kpi_metrics))}
 
 @app.get("/api/v1/logistics/health")
-async def get_logistics_health(user: TokenData = Depends(get_current_user)):
+async def get_logistics_health(user: TokenData = Depends(require_page("logistics"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.logistics import LogisticsService
     return LogisticsService().compute_logistics_health(await asyncio.to_thread(get_kpi_metrics))
@@ -1625,37 +1730,37 @@ async def get_logistics_health(user: TokenData = Depends(get_current_user)):
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/it/overview")
-async def get_it_overview(user: TokenData = Depends(get_current_user)):
+async def get_it_overview(user: TokenData = Depends(require_page("it"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
     return ITOpsService().get_it_overview(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/it/tickets")
-async def get_it_tickets(user: TokenData = Depends(get_current_user)):
+async def get_it_tickets(user: TokenData = Depends(require_page("it"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
     return ITOpsService().get_ticket_analytics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/it/security")
-async def get_it_security(user: TokenData = Depends(get_current_user)):
+async def get_it_security(user: TokenData = Depends(require_page("it"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
     return ITOpsService().get_security_dashboard(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/it/infrastructure")
-async def get_it_infrastructure(user: TokenData = Depends(get_current_user)):
+async def get_it_infrastructure(user: TokenData = Depends(require_page("it"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
     return ITOpsService().get_infrastructure_metrics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/it/devops")
-async def get_it_devops(user: TokenData = Depends(get_current_user)):
+async def get_it_devops(user: TokenData = Depends(require_page("it"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
     return ITOpsService().get_devops_metrics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/it/health")
-async def get_it_health(user: TokenData = Depends(get_current_user)):
+async def get_it_health(user: TokenData = Depends(require_page("it"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.it_ops import ITOpsService
     return ITOpsService().compute_it_health(await asyncio.to_thread(get_kpi_metrics))
@@ -1666,31 +1771,31 @@ async def get_it_health(user: TokenData = Depends(get_current_user)):
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/operations/summary")
-async def get_ops_summary(user: TokenData = Depends(get_current_user)):
+async def get_ops_summary(user: TokenData = Depends(require_page("operations"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
     return OperationsService().get_operations_summary(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/operations/quality")
-async def get_ops_quality(user: TokenData = Depends(get_current_user)):
+async def get_ops_quality(user: TokenData = Depends(require_page("operations"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
     return OperationsService().get_quality_metrics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/operations/production")
-async def get_ops_production(user: TokenData = Depends(get_current_user)):
+async def get_ops_production(user: TokenData = Depends(require_page("operations"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
     return OperationsService().get_production_metrics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/operations/safety")
-async def get_ops_safety(user: TokenData = Depends(get_current_user)):
+async def get_ops_safety(user: TokenData = Depends(require_page("operations"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
     return OperationsService().get_safety_metrics(await asyncio.to_thread(get_kpi_metrics))
 
 @app.get("/api/v1/operations/health")
-async def get_ops_health(user: TokenData = Depends(get_current_user)):
+async def get_ops_health(user: TokenData = Depends(require_page("operations"))):
     from src.services.pg_store import get_kpi_metrics
     from src.services.operations import OperationsService
     return OperationsService().compute_ops_health(await asyncio.to_thread(get_kpi_metrics))
@@ -1701,7 +1806,7 @@ async def get_ops_health(user: TokenData = Depends(get_current_user)):
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/growth/summary")
-async def get_growth_summary(user: TokenData = Depends(get_current_user)):
+async def get_growth_summary(user: TokenData = Depends(require_page("analytics"))):
     from src.services.pg_store import get_kpi_metrics
     df = await asyncio.to_thread(get_kpi_metrics, categories=["Growth"])
     if df.empty:
@@ -1742,7 +1847,7 @@ async def get_growth_summary(user: TokenData = Depends(get_current_user)):
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/esg/summary")
-async def get_esg_summary(user: TokenData = Depends(get_current_user)):
+async def get_esg_summary(user: TokenData = Depends(require_page("esg"))):
     from src.services.pg_store import get_kpi_metrics
     df = await asyncio.to_thread(get_kpi_metrics, categories=["ESG"])
     if df.empty:
@@ -1817,7 +1922,8 @@ async def agent_run_tool(req: AgentToolRequest, user: TokenData = Depends(get_cu
     persona = req.persona or factory.get_persona_for_role(user.role)
     if persona not in factory.allowed_personas_for_role(user.role):
         raise HTTPException(status_code=403, detail=f"Persona '{persona}' not allowed for your role")
-    return _json_safe(run_tool(persona, req.tool, req.args or {}))
+    result = await asyncio.to_thread(run_tool, persona, req.tool, req.args or {})
+    return _json_safe(result)
 
 
 # ════════════════════════════════════════════════════════════
@@ -1988,8 +2094,12 @@ async def create_new_session(user: TokenData = Depends(get_current_user)):
 async def rename_session(session_id: str, req: Dict[str, str], user: TokenData = Depends(get_current_user)):
     try:
         from src.services.pg_store import update_session_title
-        await asyncio.to_thread(update_session_title, session_id, req.get("title", "Untitled"))
+        updated = await asyncio.to_thread(update_session_title, session_id, user.user_id, req.get("title", "Untitled"))
+        if not updated:
+            raise HTTPException(status_code=404, detail="Session not found")
         return {"status": "updated"}
+    except HTTPException:
+        raise
     except Exception as e:
         return {"error": str(e)}
 
@@ -1998,8 +2108,12 @@ async def rename_session(session_id: str, req: Dict[str, str], user: TokenData =
 async def delete_chat_session(session_id: str, user: TokenData = Depends(get_current_user)):
     try:
         from src.services.pg_store import delete_session
-        await asyncio.to_thread(delete_session, session_id)
+        deleted = await asyncio.to_thread(delete_session, session_id, user.user_id)
+        if not deleted:
+            raise HTTPException(status_code=404, detail="Session not found")
         return {"status": "deleted"}
+    except HTTPException:
+        raise
     except Exception as e:
         return {"error": str(e)}
 
@@ -2122,16 +2236,17 @@ async def websocket_chat(websocket: WebSocket):
 # ════════════════════════════════════════════════════════════
 
 def _load_chat_history(user_id: str, session_id: str) -> List[Dict[str, str]]:
+    """Was previously dead code AND broken: get_conversation_history()'s query aliases
+    role AS user_message, content AS ai_response — both columns are truthy on every row
+    regardless of who sent it, so the old version here pushed a bogus {"role": "user",
+    "content": "assistant"} turn (the literal role string, not real content) for every
+    row. get_session_messages() is the function this codebase already uses correctly
+    for this exact table (see GET .../messages) — same ownership-scoped query, real
+    role/content columns."""
     try:
-        from src.services.pg_store import get_conversation_history
-        df = get_conversation_history(session_id)
-        history = []
-        if not df.empty:
-            for _, row in df.iterrows():
-                if row.get("user_message"):
-                    history.append({"role": "user", "content": str(row["user_message"])})
-                if row.get("ai_response"):
-                    history.append({"role": "assistant", "content": str(row["ai_response"])})
+        from src.services.pg_store import get_session_messages
+        rows = get_session_messages(session_id, user_id)
+        history = [{"role": r["role"], "content": r["content"]} for r in rows if r.get("role") and r.get("content")]
         return history[-10:]
     except Exception:
         return []
@@ -2173,8 +2288,8 @@ async def set_chatbot_domain(
     )
 
     try:
-        set_user_default_domain(user.username, domain)
-        update_domain_history(user.username, domain)
+        await asyncio.to_thread(set_user_default_domain, user.username, domain)
+        await asyncio.to_thread(update_domain_history, user.username, domain)
 
         log.info("Domain set to %s for user %s", domain, user.username)
 

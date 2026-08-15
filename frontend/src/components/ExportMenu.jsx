@@ -90,10 +90,10 @@ async function printReport(t) {
   const risk = riskR.value?.data || {}
   const summary = sumR.value?.data?.summary || ''
   // latest reading per metric
-  const seen = {}; kpis.forEach(k => { const n = k.metric_name || k.name; if (!seen[n] || (k.period > seen[n].period)) seen[n] = k })
+  const seen = {}; kpis.forEach(k => { const n = k.metric; if (!seen[n] || (k.period > seen[n].period)) seen[n] = k })
   const latest = Object.values(seen)
   const fmt = (v) => typeof v === 'number' ? (Math.abs(v) >= 1e6 ? (v / 1e6).toFixed(2) + 'M' : Math.abs(v) >= 1e3 ? (v / 1e3).toFixed(1) + 'K' : v.toFixed(1)) : (v ?? '—')
-  const rows = latest.map(k => `<tr><td>${k.metric_name || k.name}</td><td>${k.category || ''}</td><td style="text-align:right">${fmt(k.value)} ${k.unit || ''}</td><td>${k.period || ''}</td></tr>`).join('')
+  const rows = latest.map(k => `<tr><td>${k.metric}</td><td>${k.category || ''}</td><td style="text-align:right">${fmt(k.value)} ${k.unit || ''}</td><td>${k.period || ''}</td></tr>`).join('')
   const w = window.open('', '_blank')
   w.document.write(`<!doctype html><html><head><title>${t('intelAIExecReport') || 'IntelAI — Executive Report'}</title>
   <style>
