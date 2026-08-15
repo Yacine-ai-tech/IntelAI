@@ -24,33 +24,30 @@ env:
 jobs:
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # PHASE 1 — Deploy: Trigger Render deploy on each project's account
+  # PHASE 0 — Unit tests against the PR's own code (every other job below only
+  # pings already-deployed production URLs, which for a PR haven't changed yet —
+  # this is the only job that actually exercises the diff before it merges).
   # ═══════════════════════════════════════════════════════════════════════════
-  deploy:
-    name: "Trigger Render Deploy"
+  unit-tests:
+    name: "Unit Tests"
     runs-on: ubuntu-latest
-    # Only deploy on push to main or develop, not on PRs
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
-
-      - name: Trigger deploy on relevant deployment provider
-        env:
-          SERVICE_ID: ${{ secrets.SERVICE_ID }}
-          DEPLOYMENT_API_KEY: ${{ secrets.DEPLOYMENT_API_KEY }}
-          DEPLOYMENT_API_ENDPOINT: ${{ secrets.DEPLOYMENT_API_ENDPOINT }}
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
         run: |
-          if [ -n "$SERVICE_ID" ] && [ -n "$DEPLOYMENT_API_KEY" ]; then
-            echo "Triggering deploy for service $SERVICE_ID..."
-            curl -s -X POST \
-              "${DEPLOYMENT_API_ENDPOINT}/services/$SERVICE_ID/deploys" \
-              -H "Authorization: Bearer $DEPLOYMENT_API_KEY" \
-              -H "Content-Type: application/json" \
-              -d "{}" | python3 -c "import sys,json; raw=sys.stdin.read(); print('Deployment Response:', raw)"
-          else
-            echo "⚠ SERVICE_ID or DEPLOYMENT_API_KEY not set. Skipping deploy trigger."
-          fi
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio
+      - name: Run unit tests (in-memory, no DB/LLM keys required)
+        run: python -m pytest
 
+  # ═══════════════════════════════════════════════════════════════════════════
+  # PHASE 1 — Deploy: see deploy.yml, the single dedicated workflow for this
+  # (removed the duplicate deploy-trigger job that used to live here — every push
+  # to main/master/develop was firing two separate Render deploy API calls).
   # ═══════════════════════════════════════════════════════════════════════════
   # PHASE 2 — Wait for Deploy + Smoke Test all 6 live endpoints
   # NOTE: E2E tests run on GitHub Actions runners ONLY — never locally.
@@ -58,7 +55,6 @@ jobs:
   smoke-test:
     name: "E2E Smoke Tests — Live Render Endpoints"
     runs-on: ubuntu-latest
-    needs: [deploy]
     if: always()
     steps:
       - uses: actions/checkout@v4
