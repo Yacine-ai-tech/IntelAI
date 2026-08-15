@@ -527,6 +527,7 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 .alert { padding:12px 15px; border-radius:var(--r); display:flex; align-items:center; gap:10px; font-size:.86rem; border:1px solid transparent; }
 .alert-danger { background:var(--bad-soft); border-color:var(--bad); color:var(--bad); }
 .alert-success { background:var(--ok-soft); border-color:var(--ok); color:var(--ok); }
+.alert-warning { background:var(--warn-soft); border-color:var(--warn); color:var(--warn); }
 .loading-overlay { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(10,12,18,.7); z-index:100; }
 .spinner, .spin { width:34px; height:34px; border:3px solid var(--surface-3); border-top-color:var(--primary);
   border-radius:50%; animation:spin .8s linear infinite; }

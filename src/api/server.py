@@ -1454,6 +1454,24 @@ async def run_forecast(
     forecast_df = forecast_df.groupby("month_tag").agg({"actual": "mean"}).reset_index()
     forecast_df = forecast_df.sort_values("month_tag")
 
+    # Some real metrics (e.g. a one-time survey stat like Attrition Rate, seeded from a
+    # single CSV snapshot rather than a recurring monthly series) genuinely have too few
+    # distinct periods to fit any trend. ForecastEngine already guards this (returns an
+    # empty forecast / zeroed explanation rather than crashing), but returning that
+    # silently reads as "the forecast is 0%", not "there isn't enough data to forecast" —
+    # confirmed live: the UI rendered a real-looking-but-meaningless R²=0.000 result with
+    # nothing telling the user why. Flag it explicitly instead.
+    if len(forecast_df) < 2:
+        return {
+            "metric": metric,
+            "historical": forecast_df.to_dict(orient="records"),
+            "forecast": [],
+            "explanation": None,
+            "insufficient_data": True,
+            "message": f"'{metric}' has only {len(forecast_df)} historical period(s) — at least 2 "
+                       f"are needed to forecast a trend.",
+        }
+
     try:
         engine = ForecastEngine()
         result = engine.time_series_forecast(forecast_df, periods=periods)
