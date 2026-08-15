@@ -724,8 +724,15 @@ def stage_digests(months: int, dry_run: bool) -> int:
 
     conn = _get_conn()
     with conn.cursor() as c:
+        # owner_user_id IS NULL only — this writes a document into the SHARED
+        # knowledge base, so a query with no scope filter here would bake any
+        # user's own privately-uploaded rows into text every other visitor's
+        # chat can retrieve. Confirmed live: a leftover single-row test fixture
+        # scoped to one throwaway user_id ended up in a real digest document
+        # before this filter existed.
         c.execute("""SELECT period, category, metric, value, unit, segment, source
-                     FROM kpi_metrics ORDER BY category, period, metric""")
+                     FROM kpi_metrics WHERE owner_user_id IS NULL
+                     ORDER BY category, period, metric""")
         rows = [dict(r) for r in c.fetchall()]
     conn.close()
     if not rows:
