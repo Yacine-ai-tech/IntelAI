@@ -3,15 +3,17 @@
 Valeurs enregistrées pour les indicateurs People en 2025-05. Chaque chiffre est reproduit tel que publié par sa source ; l'identifiant de la source suit chaque ligne.
 
 ## Séries couvertes
-- Salaire horaire moyen: 36 USD  (source: fred:CES0500000003)
-- Offres d'emploi: 7,310.00 count  (source: fred:JTSJOL)
-- Taux de démission: 2.10 %  (source: fred:JTSQUR)
-- Taux de chômage: 4.30 %  (source: fred:UNRATE)
+- Salaire horaire moyen [External — US Market Context]: 36 USD  (source: fred:CES0500000003)
+- Offres d'emploi [External — US Market Context]: 7,310.00 count  (source: fred:JTSJOL)
+- Taux de démission [External — US Market Context]: 2.10 %  (source: fred:JTSQUR)
+- Taux de chômage [External — US Market Context]: 4.30 %  (source: fred:UNRATE)
 
 ## Sources
 - fred:CES0500000003 — https://fred.stlouisfed.org/series/CES0500000003
 - fred:JTSJOL — https://fred.stlouisfed.org/series/JTSJOL
 - fred:JTSQUR — https://fred.stlouisfed.org/series/JTSQUR
 - fred:UNRATE — https://fred.stlouisfed.org/series/UNRATE
+
+Les lignes marquées contexte externe / marché sont des statistiques publiées que cet opérateur ouest-africain suit à titre de contexte de planification (taux américains/mondiaux, emploi, demande) — elles ne représentent pas la performance propre de l'entreprise.
 
 Il s'agit d'observations issues de séries statistiques publiées, et non d'objectifs, de prévisions ou de comptes internes.

@@ -3,11 +3,13 @@
 Valeurs enregistrées pour les indicateurs People en 2026-07. Chaque chiffre est reproduit tel que publié par sa source ; l'identifiant de la source suit chaque ligne.
 
 ## Séries couvertes
-- Salaire horaire moyen: 38 USD  (source: fred:CES0500000003)
-- Taux de chômage: 4.10 %  (source: fred:UNRATE)
+- Salaire horaire moyen [External — US Market Context]: 38 USD  (source: fred:CES0500000003)
+- Taux de chômage [External — US Market Context]: 4.10 %  (source: fred:UNRATE)
 
 ## Sources
 - fred:CES0500000003 — https://fred.stlouisfed.org/series/CES0500000003
 - fred:UNRATE — https://fred.stlouisfed.org/series/UNRATE
+
+Les lignes marquées contexte externe / marché sont des statistiques publiées que cet opérateur ouest-africain suit à titre de contexte de planification (taux américains/mondiaux, emploi, demande) — elles ne représentent pas la performance propre de l'entreprise.
 
 Il s'agit d'observations issues de séries statistiques publiées, et non d'objectifs, de prévisions ou de comptes internes.
