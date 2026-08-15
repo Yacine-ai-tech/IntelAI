@@ -109,7 +109,13 @@ export default function ForecastingPage() {
 
       {forecast?.error && <div className="alert alert-danger" style={{ marginTop: 18 }}>⚠️ {forecast.error}</div>}
 
-      {forecast && !forecast.error && (
+      {forecast?.insufficient_data && (
+        <div className="alert alert-warning" style={{ marginTop: 18 }}>
+          ⚠️ {forecast.message || (t('insufficientForecastData') || 'Not enough historical data to forecast this metric.')}
+        </div>
+      )}
+
+      {forecast && !forecast.error && !forecast.insufficient_data && (
         <>
           <StatGrid style={{ marginTop: 18 }}>
             <Stat label={t('metric') || 'Metric'} value={forecast.metric || metric} icon={BarChart3} />
