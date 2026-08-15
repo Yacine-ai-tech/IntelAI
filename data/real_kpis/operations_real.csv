@@ -1,181 +1,181 @@
 period,category,segment,metric_name,value,unit,direction,source
-2019-01,Operations,US,Industrial Production Index,103.4021,index,up,fred:INDPRO
-2019-02,Operations,US,Industrial Production Index,102.8371,index,up,fred:INDPRO
-2019-03,Operations,US,Industrial Production Index,102.8757,index,up,fred:INDPRO
-2019-04,Operations,US,Industrial Production Index,102.274,index,up,fred:INDPRO
-2019-05,Operations,US,Industrial Production Index,102.392,index,up,fred:INDPRO
-2019-06,Operations,US,Industrial Production Index,102.4375,index,up,fred:INDPRO
-2019-07,Operations,US,Industrial Production Index,101.9408,index,up,fred:INDPRO
-2019-08,Operations,US,Industrial Production Index,102.639,index,up,fred:INDPRO
-2019-09,Operations,US,Industrial Production Index,102.2917,index,up,fred:INDPRO
-2019-10,Operations,US,Industrial Production Index,101.4281,index,up,fred:INDPRO
-2019-11,Operations,US,Industrial Production Index,101.9372,index,up,fred:INDPRO
-2019-12,Operations,US,Industrial Production Index,101.7003,index,up,fred:INDPRO
-2020-01,Operations,US,Industrial Production Index,101.0338,index,up,fred:INDPRO
-2020-02,Operations,US,Industrial Production Index,101.3735,index,up,fred:INDPRO
-2020-03,Operations,US,Industrial Production Index,97.4078,index,up,fred:INDPRO
-2020-04,Operations,US,Industrial Production Index,84.5619,index,up,fred:INDPRO
-2020-05,Operations,US,Industrial Production Index,85.9604,index,up,fred:INDPRO
-2020-06,Operations,US,Industrial Production Index,91.5934,index,up,fred:INDPRO
-2020-07,Operations,US,Industrial Production Index,95.0256,index,up,fred:INDPRO
-2020-08,Operations,US,Industrial Production Index,95.9549,index,up,fred:INDPRO
-2020-09,Operations,US,Industrial Production Index,95.9669,index,up,fred:INDPRO
-2020-10,Operations,US,Industrial Production Index,96.7394,index,up,fred:INDPRO
-2020-11,Operations,US,Industrial Production Index,97.0816,index,up,fred:INDPRO
-2020-12,Operations,US,Industrial Production Index,98.363,index,up,fred:INDPRO
-2021-01,Operations,US,Industrial Production Index,98.8822,index,up,fred:INDPRO
-2021-02,Operations,US,Industrial Production Index,95.6149,index,up,fred:INDPRO
-2021-03,Operations,US,Industrial Production Index,98.3856,index,up,fred:INDPRO
-2021-04,Operations,US,Industrial Production Index,98.5587,index,up,fred:INDPRO
-2021-05,Operations,US,Industrial Production Index,99.4333,index,up,fred:INDPRO
-2021-06,Operations,US,Industrial Production Index,99.7987,index,up,fred:INDPRO
-2021-07,Operations,US,Industrial Production Index,100.2519,index,up,fred:INDPRO
-2021-08,Operations,US,Industrial Production Index,100.0437,index,up,fred:INDPRO
-2021-09,Operations,US,Industrial Production Index,98.8579,index,up,fred:INDPRO
-2021-10,Operations,US,Industrial Production Index,100.1861,index,up,fred:INDPRO
-2021-11,Operations,US,Industrial Production Index,100.8654,index,up,fred:INDPRO
-2021-12,Operations,US,Industrial Production Index,100.5726,index,up,fred:INDPRO
-2022-01,Operations,US,Industrial Production Index,100.1856,index,up,fred:INDPRO
-2022-02,Operations,US,Industrial Production Index,100.8064,index,up,fred:INDPRO
-2022-03,Operations,US,Industrial Production Index,101.3907,index,up,fred:INDPRO
-2022-04,Operations,US,Industrial Production Index,101.44,index,up,fred:INDPRO
-2022-05,Operations,US,Industrial Production Index,101.3335,index,up,fred:INDPRO
-2022-06,Operations,US,Industrial Production Index,101.018,index,up,fred:INDPRO
-2022-07,Operations,US,Industrial Production Index,101.223,index,up,fred:INDPRO
-2022-08,Operations,US,Industrial Production Index,101.0963,index,up,fred:INDPRO
-2022-09,Operations,US,Industrial Production Index,101.2918,index,up,fred:INDPRO
-2022-10,Operations,US,Industrial Production Index,101.2529,index,up,fred:INDPRO
-2022-11,Operations,US,Industrial Production Index,100.9552,index,up,fred:INDPRO
-2022-12,Operations,US,Industrial Production Index,99.7664,index,up,fred:INDPRO
-2023-01,Operations,US,Industrial Production Index,100.505,index,up,fred:INDPRO
-2023-02,Operations,US,Industrial Production Index,100.6416,index,up,fred:INDPRO
-2023-03,Operations,US,Industrial Production Index,101.0205,index,up,fred:INDPRO
-2023-04,Operations,US,Industrial Production Index,101.253,index,up,fred:INDPRO
-2023-05,Operations,US,Industrial Production Index,100.9286,index,up,fred:INDPRO
-2023-06,Operations,US,Industrial Production Index,100.1196,index,up,fred:INDPRO
-2023-07,Operations,US,Industrial Production Index,100.9067,index,up,fred:INDPRO
-2023-08,Operations,US,Industrial Production Index,100.8393,index,up,fred:INDPRO
-2023-09,Operations,US,Industrial Production Index,101.0211,index,up,fred:INDPRO
-2023-10,Operations,US,Industrial Production Index,100.4689,index,up,fred:INDPRO
-2023-11,Operations,US,Industrial Production Index,100.8639,index,up,fred:INDPRO
-2023-12,Operations,US,Industrial Production Index,100.6031,index,up,fred:INDPRO
-2024-01,Operations,US,Industrial Production Index,99.2223,index,up,fred:INDPRO
-2024-02,Operations,US,Industrial Production Index,100.285,index,up,fred:INDPRO
-2024-03,Operations,US,Industrial Production Index,100.4575,index,up,fred:INDPRO
-2024-04,Operations,US,Industrial Production Index,100.2434,index,up,fred:INDPRO
-2024-05,Operations,US,Industrial Production Index,100.863,index,up,fred:INDPRO
-2024-06,Operations,US,Industrial Production Index,100.894,index,up,fred:INDPRO
-2024-07,Operations,US,Industrial Production Index,99.9757,index,up,fred:INDPRO
-2024-08,Operations,US,Industrial Production Index,100.4309,index,up,fred:INDPRO
-2024-09,Operations,US,Industrial Production Index,99.8084,index,up,fred:INDPRO
-2024-10,Operations,US,Industrial Production Index,99.4695,index,up,fred:INDPRO
-2024-11,Operations,US,Industrial Production Index,99.2925,index,up,fred:INDPRO
-2024-12,Operations,US,Industrial Production Index,100.3273,index,up,fred:INDPRO
-2025-01,Operations,US,Industrial Production Index,100.0647,index,up,fred:INDPRO
-2025-02,Operations,US,Industrial Production Index,101.0993,index,up,fred:INDPRO
-2025-03,Operations,US,Industrial Production Index,101.0404,index,up,fred:INDPRO
-2025-04,Operations,US,Industrial Production Index,101.1279,index,up,fred:INDPRO
-2025-05,Operations,US,Industrial Production Index,100.9655,index,up,fred:INDPRO
-2025-06,Operations,US,Industrial Production Index,101.4785,index,up,fred:INDPRO
-2025-07,Operations,US,Industrial Production Index,101.894,index,up,fred:INDPRO
-2025-08,Operations,US,Industrial Production Index,101.6247,index,up,fred:INDPRO
-2025-09,Operations,US,Industrial Production Index,101.668,index,up,fred:INDPRO
-2025-10,Operations,US,Industrial Production Index,101.2195,index,up,fred:INDPRO
-2025-11,Operations,US,Industrial Production Index,101.0344,index,up,fred:INDPRO
-2025-12,Operations,US,Industrial Production Index,101.4941,index,up,fred:INDPRO
-2026-01,Operations,US,Industrial Production Index,101.0388,index,up,fred:INDPRO
-2026-02,Operations,US,Industrial Production Index,101.9263,index,up,fred:INDPRO
-2026-03,Operations,US,Industrial Production Index,101.6172,index,up,fred:INDPRO
-2026-04,Operations,US,Industrial Production Index,102.4196,index,up,fred:INDPRO
-2026-05,Operations,US,Industrial Production Index,102.5606,index,up,fred:INDPRO
-2026-06,Operations,US,Industrial Production Index,102.6395,index,up,fred:INDPRO
-2019-01,Operations,US,Capacity Utilization,79.1024,%,up,fred:TCU
-2019-02,Operations,US,Capacity Utilization,78.5877,%,up,fred:TCU
-2019-03,Operations,US,Capacity Utilization,78.5337,%,up,fred:TCU
-2019-04,Operations,US,Capacity Utilization,77.9898,%,up,fred:TCU
-2019-05,Operations,US,Capacity Utilization,77.9962,%,up,fred:TCU
-2019-06,Operations,US,Capacity Utilization,77.9493,%,up,fred:TCU
-2019-07,Operations,US,Capacity Utilization,77.4935,%,up,fred:TCU
-2019-08,Operations,US,Capacity Utilization,77.9497,%,up,fred:TCU
-2019-09,Operations,US,Capacity Utilization,77.6205,%,up,fred:TCU
-2019-10,Operations,US,Capacity Utilization,76.9099,%,up,fred:TCU
-2019-11,Operations,US,Capacity Utilization,77.252,%,up,fred:TCU
-2019-12,Operations,US,Capacity Utilization,77.0416,%,up,fred:TCU
-2020-01,Operations,US,Capacity Utilization,76.519,%,up,fred:TCU
-2020-02,Operations,US,Capacity Utilization,76.7764,%,up,fred:TCU
-2020-03,Operations,US,Capacity Utilization,73.7887,%,up,fred:TCU
-2020-04,Operations,US,Capacity Utilization,64.0847,%,up,fred:TCU
-2020-05,Operations,US,Capacity Utilization,65.1874,%,up,fred:TCU
-2020-06,Operations,US,Capacity Utilization,69.5218,%,up,fred:TCU
-2020-07,Operations,US,Capacity Utilization,72.2103,%,up,fred:TCU
-2020-08,Operations,US,Capacity Utilization,73.0192,%,up,fred:TCU
-2020-09,Operations,US,Capacity Utilization,73.1451,%,up,fred:TCU
-2020-10,Operations,US,Capacity Utilization,73.8636,%,up,fred:TCU
-2020-11,Operations,US,Capacity Utilization,74.2637,%,up,fred:TCU
-2020-12,Operations,US,Capacity Utilization,75.3903,%,up,fred:TCU
-2021-01,Operations,US,Capacity Utilization,75.9401,%,up,fred:TCU
-2021-02,Operations,US,Capacity Utilization,73.5725,%,up,fred:TCU
-2021-03,Operations,US,Capacity Utilization,75.8472,%,up,fred:TCU
-2021-04,Operations,US,Capacity Utilization,76.1216,%,up,fred:TCU
-2021-05,Operations,US,Capacity Utilization,76.931,%,up,fred:TCU
-2021-06,Operations,US,Capacity Utilization,77.3367,%,up,fred:TCU
-2021-07,Operations,US,Capacity Utilization,77.7972,%,up,fred:TCU
-2021-08,Operations,US,Capacity Utilization,77.7308,%,up,fred:TCU
-2021-09,Operations,US,Capacity Utilization,76.8871,%,up,fred:TCU
-2021-10,Operations,US,Capacity Utilization,77.9838,%,up,fred:TCU
-2021-11,Operations,US,Capacity Utilization,78.562,%,up,fred:TCU
-2021-12,Operations,US,Capacity Utilization,78.3687,%,up,fred:TCU
-2022-01,Operations,US,Capacity Utilization,78.088,%,up,fred:TCU
-2022-02,Operations,US,Capacity Utilization,78.5777,%,up,fred:TCU
-2022-03,Operations,US,Capacity Utilization,79.0253,%,up,fred:TCU
-2022-04,Operations,US,Capacity Utilization,79.0418,%,up,fred:TCU
-2022-05,Operations,US,Capacity Utilization,78.9224,%,up,fred:TCU
-2022-06,Operations,US,Capacity Utilization,78.6259,%,up,fred:TCU
-2022-07,Operations,US,Capacity Utilization,78.7204,%,up,fred:TCU
-2022-08,Operations,US,Capacity Utilization,78.5438,%,up,fred:TCU
-2022-09,Operations,US,Capacity Utilization,78.6087,%,up,fred:TCU
-2022-10,Operations,US,Capacity Utilization,78.4843,%,up,fred:TCU
-2022-11,Operations,US,Capacity Utilization,78.1544,%,up,fred:TCU
-2022-12,Operations,US,Capacity Utilization,77.1334,%,up,fred:TCU
-2023-01,Operations,US,Capacity Utilization,77.601,%,up,fred:TCU
-2023-02,Operations,US,Capacity Utilization,77.6078,%,up,fred:TCU
-2023-03,Operations,US,Capacity Utilization,77.8036,%,up,fred:TCU
-2023-04,Operations,US,Capacity Utilization,77.888,%,up,fred:TCU
-2023-05,Operations,US,Capacity Utilization,77.5496,%,up,fred:TCU
-2023-06,Operations,US,Capacity Utilization,76.8467,%,up,fred:TCU
-2023-07,Operations,US,Capacity Utilization,77.3773,%,up,fred:TCU
-2023-08,Operations,US,Capacity Utilization,77.2588,%,up,fred:TCU
-2023-09,Operations,US,Capacity Utilization,77.3375,%,up,fred:TCU
-2023-10,Operations,US,Capacity Utilization,76.859,%,up,fred:TCU
-2023-11,Operations,US,Capacity Utilization,77.1081,%,up,fred:TCU
-2023-12,Operations,US,Capacity Utilization,76.858,%,up,fred:TCU
-2024-01,Operations,US,Capacity Utilization,75.7542,%,up,fred:TCU
-2024-02,Operations,US,Capacity Utilization,76.5157,%,up,fred:TCU
-2024-03,Operations,US,Capacity Utilization,76.5964,%,up,fred:TCU
-2024-04,Operations,US,Capacity Utilization,76.3803,%,up,fred:TCU
-2024-05,Operations,US,Capacity Utilization,76.7961,%,up,fred:TCU
-2024-06,Operations,US,Capacity Utilization,76.7586,%,up,fred:TCU
-2024-07,Operations,US,Capacity Utilization,75.9946,%,up,fred:TCU
-2024-08,Operations,US,Capacity Utilization,76.2697,%,up,fred:TCU
-2024-09,Operations,US,Capacity Utilization,75.7216,%,up,fred:TCU
-2024-10,Operations,US,Capacity Utilization,75.3852,%,up,fred:TCU
-2024-11,Operations,US,Capacity Utilization,75.1681,%,up,fred:TCU
-2024-12,Operations,US,Capacity Utilization,75.8651,%,up,fred:TCU
-2025-01,Operations,US,Capacity Utilization,75.5781,%,up,fred:TCU
-2025-02,Operations,US,Capacity Utilization,76.2685,%,up,fred:TCU
-2025-03,Operations,US,Capacity Utilization,76.1318,%,up,fred:TCU
-2025-04,Operations,US,Capacity Utilization,76.1048,%,up,fred:TCU
-2025-05,Operations,US,Capacity Utilization,75.8894,%,up,fred:TCU
-2025-06,Operations,US,Capacity Utilization,76.181,%,up,fred:TCU
-2025-07,Operations,US,Capacity Utilization,76.3997,%,up,fred:TCU
-2025-08,Operations,US,Capacity Utilization,76.1055,%,up,fred:TCU
-2025-09,Operations,US,Capacity Utilization,76.0461,%,up,fred:TCU
-2025-10,Operations,US,Capacity Utilization,75.6194,%,up,fred:TCU
-2025-11,Operations,US,Capacity Utilization,75.3901,%,up,fred:TCU
-2025-12,Operations,US,Capacity Utilization,75.6422,%,up,fred:TCU
-2026-01,Operations,US,Capacity Utilization,75.242,%,up,fred:TCU
-2026-02,Operations,US,Capacity Utilization,75.8299,%,up,fred:TCU
-2026-03,Operations,US,Capacity Utilization,75.5313,%,up,fred:TCU
-2026-04,Operations,US,Capacity Utilization,76.0625,%,up,fred:TCU
-2026-05,Operations,US,Capacity Utilization,76.1019,%,up,fred:TCU
-2026-06,Operations,US,Capacity Utilization,76.0937,%,up,fred:TCU
+2019-01,Operations,External — US Market Context,Industrial Production Index,103.4021,index,up,fred:INDPRO
+2019-02,Operations,External — US Market Context,Industrial Production Index,102.8371,index,up,fred:INDPRO
+2019-03,Operations,External — US Market Context,Industrial Production Index,102.8757,index,up,fred:INDPRO
+2019-04,Operations,External — US Market Context,Industrial Production Index,102.274,index,up,fred:INDPRO
+2019-05,Operations,External — US Market Context,Industrial Production Index,102.392,index,up,fred:INDPRO
+2019-06,Operations,External — US Market Context,Industrial Production Index,102.4375,index,up,fred:INDPRO
+2019-07,Operations,External — US Market Context,Industrial Production Index,101.9408,index,up,fred:INDPRO
+2019-08,Operations,External — US Market Context,Industrial Production Index,102.639,index,up,fred:INDPRO
+2019-09,Operations,External — US Market Context,Industrial Production Index,102.2917,index,up,fred:INDPRO
+2019-10,Operations,External — US Market Context,Industrial Production Index,101.4281,index,up,fred:INDPRO
+2019-11,Operations,External — US Market Context,Industrial Production Index,101.9372,index,up,fred:INDPRO
+2019-12,Operations,External — US Market Context,Industrial Production Index,101.7003,index,up,fred:INDPRO
+2020-01,Operations,External — US Market Context,Industrial Production Index,101.0338,index,up,fred:INDPRO
+2020-02,Operations,External — US Market Context,Industrial Production Index,101.3735,index,up,fred:INDPRO
+2020-03,Operations,External — US Market Context,Industrial Production Index,97.4078,index,up,fred:INDPRO
+2020-04,Operations,External — US Market Context,Industrial Production Index,84.5619,index,up,fred:INDPRO
+2020-05,Operations,External — US Market Context,Industrial Production Index,85.9604,index,up,fred:INDPRO
+2020-06,Operations,External — US Market Context,Industrial Production Index,91.5934,index,up,fred:INDPRO
+2020-07,Operations,External — US Market Context,Industrial Production Index,95.0256,index,up,fred:INDPRO
+2020-08,Operations,External — US Market Context,Industrial Production Index,95.9549,index,up,fred:INDPRO
+2020-09,Operations,External — US Market Context,Industrial Production Index,95.9669,index,up,fred:INDPRO
+2020-10,Operations,External — US Market Context,Industrial Production Index,96.7394,index,up,fred:INDPRO
+2020-11,Operations,External — US Market Context,Industrial Production Index,97.0816,index,up,fred:INDPRO
+2020-12,Operations,External — US Market Context,Industrial Production Index,98.363,index,up,fred:INDPRO
+2021-01,Operations,External — US Market Context,Industrial Production Index,98.8822,index,up,fred:INDPRO
+2021-02,Operations,External — US Market Context,Industrial Production Index,95.6149,index,up,fred:INDPRO
+2021-03,Operations,External — US Market Context,Industrial Production Index,98.3856,index,up,fred:INDPRO
+2021-04,Operations,External — US Market Context,Industrial Production Index,98.5587,index,up,fred:INDPRO
+2021-05,Operations,External — US Market Context,Industrial Production Index,99.4333,index,up,fred:INDPRO
+2021-06,Operations,External — US Market Context,Industrial Production Index,99.7987,index,up,fred:INDPRO
+2021-07,Operations,External — US Market Context,Industrial Production Index,100.2519,index,up,fred:INDPRO
+2021-08,Operations,External — US Market Context,Industrial Production Index,100.0437,index,up,fred:INDPRO
+2021-09,Operations,External — US Market Context,Industrial Production Index,98.8579,index,up,fred:INDPRO
+2021-10,Operations,External — US Market Context,Industrial Production Index,100.1861,index,up,fred:INDPRO
+2021-11,Operations,External — US Market Context,Industrial Production Index,100.8654,index,up,fred:INDPRO
+2021-12,Operations,External — US Market Context,Industrial Production Index,100.5726,index,up,fred:INDPRO
+2022-01,Operations,External — US Market Context,Industrial Production Index,100.1856,index,up,fred:INDPRO
+2022-02,Operations,External — US Market Context,Industrial Production Index,100.8064,index,up,fred:INDPRO
+2022-03,Operations,External — US Market Context,Industrial Production Index,101.3907,index,up,fred:INDPRO
+2022-04,Operations,External — US Market Context,Industrial Production Index,101.44,index,up,fred:INDPRO
+2022-05,Operations,External — US Market Context,Industrial Production Index,101.3335,index,up,fred:INDPRO
+2022-06,Operations,External — US Market Context,Industrial Production Index,101.018,index,up,fred:INDPRO
+2022-07,Operations,External — US Market Context,Industrial Production Index,101.223,index,up,fred:INDPRO
+2022-08,Operations,External — US Market Context,Industrial Production Index,101.0963,index,up,fred:INDPRO
+2022-09,Operations,External — US Market Context,Industrial Production Index,101.2918,index,up,fred:INDPRO
+2022-10,Operations,External — US Market Context,Industrial Production Index,101.2529,index,up,fred:INDPRO
+2022-11,Operations,External — US Market Context,Industrial Production Index,100.9552,index,up,fred:INDPRO
+2022-12,Operations,External — US Market Context,Industrial Production Index,99.7664,index,up,fred:INDPRO
+2023-01,Operations,External — US Market Context,Industrial Production Index,100.505,index,up,fred:INDPRO
+2023-02,Operations,External — US Market Context,Industrial Production Index,100.6416,index,up,fred:INDPRO
+2023-03,Operations,External — US Market Context,Industrial Production Index,101.0205,index,up,fred:INDPRO
+2023-04,Operations,External — US Market Context,Industrial Production Index,101.253,index,up,fred:INDPRO
+2023-05,Operations,External — US Market Context,Industrial Production Index,100.9286,index,up,fred:INDPRO
+2023-06,Operations,External — US Market Context,Industrial Production Index,100.1196,index,up,fred:INDPRO
+2023-07,Operations,External — US Market Context,Industrial Production Index,100.9067,index,up,fred:INDPRO
+2023-08,Operations,External — US Market Context,Industrial Production Index,100.8393,index,up,fred:INDPRO
+2023-09,Operations,External — US Market Context,Industrial Production Index,101.0211,index,up,fred:INDPRO
+2023-10,Operations,External — US Market Context,Industrial Production Index,100.4689,index,up,fred:INDPRO
+2023-11,Operations,External — US Market Context,Industrial Production Index,100.8639,index,up,fred:INDPRO
+2023-12,Operations,External — US Market Context,Industrial Production Index,100.6031,index,up,fred:INDPRO
+2024-01,Operations,External — US Market Context,Industrial Production Index,99.2223,index,up,fred:INDPRO
+2024-02,Operations,External — US Market Context,Industrial Production Index,100.285,index,up,fred:INDPRO
+2024-03,Operations,External — US Market Context,Industrial Production Index,100.4575,index,up,fred:INDPRO
+2024-04,Operations,External — US Market Context,Industrial Production Index,100.2434,index,up,fred:INDPRO
+2024-05,Operations,External — US Market Context,Industrial Production Index,100.863,index,up,fred:INDPRO
+2024-06,Operations,External — US Market Context,Industrial Production Index,100.894,index,up,fred:INDPRO
+2024-07,Operations,External — US Market Context,Industrial Production Index,99.9757,index,up,fred:INDPRO
+2024-08,Operations,External — US Market Context,Industrial Production Index,100.4309,index,up,fred:INDPRO
+2024-09,Operations,External — US Market Context,Industrial Production Index,99.8084,index,up,fred:INDPRO
+2024-10,Operations,External — US Market Context,Industrial Production Index,99.4695,index,up,fred:INDPRO
+2024-11,Operations,External — US Market Context,Industrial Production Index,99.2925,index,up,fred:INDPRO
+2024-12,Operations,External — US Market Context,Industrial Production Index,100.3273,index,up,fred:INDPRO
+2025-01,Operations,External — US Market Context,Industrial Production Index,100.0647,index,up,fred:INDPRO
+2025-02,Operations,External — US Market Context,Industrial Production Index,101.0993,index,up,fred:INDPRO
+2025-03,Operations,External — US Market Context,Industrial Production Index,101.0404,index,up,fred:INDPRO
+2025-04,Operations,External — US Market Context,Industrial Production Index,101.1279,index,up,fred:INDPRO
+2025-05,Operations,External — US Market Context,Industrial Production Index,100.9655,index,up,fred:INDPRO
+2025-06,Operations,External — US Market Context,Industrial Production Index,101.4785,index,up,fred:INDPRO
+2025-07,Operations,External — US Market Context,Industrial Production Index,101.894,index,up,fred:INDPRO
+2025-08,Operations,External — US Market Context,Industrial Production Index,101.6247,index,up,fred:INDPRO
+2025-09,Operations,External — US Market Context,Industrial Production Index,101.668,index,up,fred:INDPRO
+2025-10,Operations,External — US Market Context,Industrial Production Index,101.2195,index,up,fred:INDPRO
+2025-11,Operations,External — US Market Context,Industrial Production Index,101.0344,index,up,fred:INDPRO
+2025-12,Operations,External — US Market Context,Industrial Production Index,101.4941,index,up,fred:INDPRO
+2026-01,Operations,External — US Market Context,Industrial Production Index,101.0388,index,up,fred:INDPRO
+2026-02,Operations,External — US Market Context,Industrial Production Index,101.9263,index,up,fred:INDPRO
+2026-03,Operations,External — US Market Context,Industrial Production Index,101.6172,index,up,fred:INDPRO
+2026-04,Operations,External — US Market Context,Industrial Production Index,102.4196,index,up,fred:INDPRO
+2026-05,Operations,External — US Market Context,Industrial Production Index,102.5606,index,up,fred:INDPRO
+2026-06,Operations,External — US Market Context,Industrial Production Index,102.6395,index,up,fred:INDPRO
+2019-01,Operations,External — US Market Context,Capacity Utilization,79.1024,%,up,fred:TCU
+2019-02,Operations,External — US Market Context,Capacity Utilization,78.5877,%,up,fred:TCU
+2019-03,Operations,External — US Market Context,Capacity Utilization,78.5337,%,up,fred:TCU
+2019-04,Operations,External — US Market Context,Capacity Utilization,77.9898,%,up,fred:TCU
+2019-05,Operations,External — US Market Context,Capacity Utilization,77.9962,%,up,fred:TCU
+2019-06,Operations,External — US Market Context,Capacity Utilization,77.9493,%,up,fred:TCU
+2019-07,Operations,External — US Market Context,Capacity Utilization,77.4935,%,up,fred:TCU
+2019-08,Operations,External — US Market Context,Capacity Utilization,77.9497,%,up,fred:TCU
+2019-09,Operations,External — US Market Context,Capacity Utilization,77.6205,%,up,fred:TCU
+2019-10,Operations,External — US Market Context,Capacity Utilization,76.9099,%,up,fred:TCU
+2019-11,Operations,External — US Market Context,Capacity Utilization,77.252,%,up,fred:TCU
+2019-12,Operations,External — US Market Context,Capacity Utilization,77.0416,%,up,fred:TCU
+2020-01,Operations,External — US Market Context,Capacity Utilization,76.519,%,up,fred:TCU
+2020-02,Operations,External — US Market Context,Capacity Utilization,76.7764,%,up,fred:TCU
+2020-03,Operations,External — US Market Context,Capacity Utilization,73.7887,%,up,fred:TCU
+2020-04,Operations,External — US Market Context,Capacity Utilization,64.0847,%,up,fred:TCU
+2020-05,Operations,External — US Market Context,Capacity Utilization,65.1874,%,up,fred:TCU
+2020-06,Operations,External — US Market Context,Capacity Utilization,69.5218,%,up,fred:TCU
+2020-07,Operations,External — US Market Context,Capacity Utilization,72.2103,%,up,fred:TCU
+2020-08,Operations,External — US Market Context,Capacity Utilization,73.0192,%,up,fred:TCU
+2020-09,Operations,External — US Market Context,Capacity Utilization,73.1451,%,up,fred:TCU
+2020-10,Operations,External — US Market Context,Capacity Utilization,73.8636,%,up,fred:TCU
+2020-11,Operations,External — US Market Context,Capacity Utilization,74.2637,%,up,fred:TCU
+2020-12,Operations,External — US Market Context,Capacity Utilization,75.3903,%,up,fred:TCU
+2021-01,Operations,External — US Market Context,Capacity Utilization,75.9401,%,up,fred:TCU
+2021-02,Operations,External — US Market Context,Capacity Utilization,73.5725,%,up,fred:TCU
+2021-03,Operations,External — US Market Context,Capacity Utilization,75.8472,%,up,fred:TCU
+2021-04,Operations,External — US Market Context,Capacity Utilization,76.1216,%,up,fred:TCU
+2021-05,Operations,External — US Market Context,Capacity Utilization,76.931,%,up,fred:TCU
+2021-06,Operations,External — US Market Context,Capacity Utilization,77.3367,%,up,fred:TCU
+2021-07,Operations,External — US Market Context,Capacity Utilization,77.7972,%,up,fred:TCU
+2021-08,Operations,External — US Market Context,Capacity Utilization,77.7308,%,up,fred:TCU
+2021-09,Operations,External — US Market Context,Capacity Utilization,76.8871,%,up,fred:TCU
+2021-10,Operations,External — US Market Context,Capacity Utilization,77.9838,%,up,fred:TCU
+2021-11,Operations,External — US Market Context,Capacity Utilization,78.562,%,up,fred:TCU
+2021-12,Operations,External — US Market Context,Capacity Utilization,78.3687,%,up,fred:TCU
+2022-01,Operations,External — US Market Context,Capacity Utilization,78.088,%,up,fred:TCU
+2022-02,Operations,External — US Market Context,Capacity Utilization,78.5777,%,up,fred:TCU
+2022-03,Operations,External — US Market Context,Capacity Utilization,79.0253,%,up,fred:TCU
+2022-04,Operations,External — US Market Context,Capacity Utilization,79.0418,%,up,fred:TCU
+2022-05,Operations,External — US Market Context,Capacity Utilization,78.9224,%,up,fred:TCU
+2022-06,Operations,External — US Market Context,Capacity Utilization,78.6259,%,up,fred:TCU
+2022-07,Operations,External — US Market Context,Capacity Utilization,78.7204,%,up,fred:TCU
+2022-08,Operations,External — US Market Context,Capacity Utilization,78.5438,%,up,fred:TCU
+2022-09,Operations,External — US Market Context,Capacity Utilization,78.6087,%,up,fred:TCU
+2022-10,Operations,External — US Market Context,Capacity Utilization,78.4843,%,up,fred:TCU
+2022-11,Operations,External — US Market Context,Capacity Utilization,78.1544,%,up,fred:TCU
+2022-12,Operations,External — US Market Context,Capacity Utilization,77.1334,%,up,fred:TCU
+2023-01,Operations,External — US Market Context,Capacity Utilization,77.601,%,up,fred:TCU
+2023-02,Operations,External — US Market Context,Capacity Utilization,77.6078,%,up,fred:TCU
+2023-03,Operations,External — US Market Context,Capacity Utilization,77.8036,%,up,fred:TCU
+2023-04,Operations,External — US Market Context,Capacity Utilization,77.888,%,up,fred:TCU
+2023-05,Operations,External — US Market Context,Capacity Utilization,77.5496,%,up,fred:TCU
+2023-06,Operations,External — US Market Context,Capacity Utilization,76.8467,%,up,fred:TCU
+2023-07,Operations,External — US Market Context,Capacity Utilization,77.3773,%,up,fred:TCU
+2023-08,Operations,External — US Market Context,Capacity Utilization,77.2588,%,up,fred:TCU
+2023-09,Operations,External — US Market Context,Capacity Utilization,77.3375,%,up,fred:TCU
+2023-10,Operations,External — US Market Context,Capacity Utilization,76.859,%,up,fred:TCU
+2023-11,Operations,External — US Market Context,Capacity Utilization,77.1081,%,up,fred:TCU
+2023-12,Operations,External — US Market Context,Capacity Utilization,76.858,%,up,fred:TCU
+2024-01,Operations,External — US Market Context,Capacity Utilization,75.7542,%,up,fred:TCU
+2024-02,Operations,External — US Market Context,Capacity Utilization,76.5157,%,up,fred:TCU
+2024-03,Operations,External — US Market Context,Capacity Utilization,76.5964,%,up,fred:TCU
+2024-04,Operations,External — US Market Context,Capacity Utilization,76.3803,%,up,fred:TCU
+2024-05,Operations,External — US Market Context,Capacity Utilization,76.7961,%,up,fred:TCU
+2024-06,Operations,External — US Market Context,Capacity Utilization,76.7586,%,up,fred:TCU
+2024-07,Operations,External — US Market Context,Capacity Utilization,75.9946,%,up,fred:TCU
+2024-08,Operations,External — US Market Context,Capacity Utilization,76.2697,%,up,fred:TCU
+2024-09,Operations,External — US Market Context,Capacity Utilization,75.7216,%,up,fred:TCU
+2024-10,Operations,External — US Market Context,Capacity Utilization,75.3852,%,up,fred:TCU
+2024-11,Operations,External — US Market Context,Capacity Utilization,75.1681,%,up,fred:TCU
+2024-12,Operations,External — US Market Context,Capacity Utilization,75.8651,%,up,fred:TCU
+2025-01,Operations,External — US Market Context,Capacity Utilization,75.5781,%,up,fred:TCU
+2025-02,Operations,External — US Market Context,Capacity Utilization,76.2685,%,up,fred:TCU
+2025-03,Operations,External — US Market Context,Capacity Utilization,76.1318,%,up,fred:TCU
+2025-04,Operations,External — US Market Context,Capacity Utilization,76.1048,%,up,fred:TCU
+2025-05,Operations,External — US Market Context,Capacity Utilization,75.8894,%,up,fred:TCU
+2025-06,Operations,External — US Market Context,Capacity Utilization,76.181,%,up,fred:TCU
+2025-07,Operations,External — US Market Context,Capacity Utilization,76.3997,%,up,fred:TCU
+2025-08,Operations,External — US Market Context,Capacity Utilization,76.1055,%,up,fred:TCU
+2025-09,Operations,External — US Market Context,Capacity Utilization,76.0461,%,up,fred:TCU
+2025-10,Operations,External — US Market Context,Capacity Utilization,75.6194,%,up,fred:TCU
+2025-11,Operations,External — US Market Context,Capacity Utilization,75.3901,%,up,fred:TCU
+2025-12,Operations,External — US Market Context,Capacity Utilization,75.6422,%,up,fred:TCU
+2026-01,Operations,External — US Market Context,Capacity Utilization,75.242,%,up,fred:TCU
+2026-02,Operations,External — US Market Context,Capacity Utilization,75.8299,%,up,fred:TCU
+2026-03,Operations,External — US Market Context,Capacity Utilization,75.5313,%,up,fred:TCU
+2026-04,Operations,External — US Market Context,Capacity Utilization,76.0625,%,up,fred:TCU
+2026-05,Operations,External — US Market Context,Capacity Utilization,76.1019,%,up,fred:TCU
+2026-06,Operations,External — US Market Context,Capacity Utilization,76.0937,%,up,fred:TCU
