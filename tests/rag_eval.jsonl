@@ -1,6 +1,6 @@
 {"query": "Report the recorded value of CO2 Emissions (excl. LULUCF) for 2024-01.", "expected": "co2 emissions (excl. lulucf)", "persona": "esg", "domain": "ESG", "provenance": "worldbank:EN.GHG.CO2.MT.CE.AR5", "kind": "kpi"}
 {"query": "How did CO2 Emissions, Transport stand in 2021-01, and where does that figure come from?", "expected": "co2 emissions, transport", "persona": "esg", "domain": "ESG", "provenance": "fred:EMISSCO2TOTVTTTOUSA", "kind": "kpi"}
-{"query": "Report the recorded value of Energy Use per Capita for 2024-01.", "expected": "energy use per capita", "persona": "esg", "domain": "ESG", "provenance": "worldbank:EG.USE.PCAP.KG.OE", "kind": "kpi"}
+{"query": "Report the recorded value of Energy Use per Capita for 2023-01.", "expected": "energy use per capita", "persona": "esg", "domain": "ESG", "provenance": "worldbank:EG.USE.PCAP.KG.OE", "kind": "kpi"}
 {"query": "Donnez le chiffre enregistré pour CO2 Emissions (excl. LULUCF) au titre de 2024-01.", "expected": "co2 emissions (excl. lulucf)", "persona": "esg", "domain": "ESG", "provenance": "worldbank:EN.GHG.CO2.MT.CE.AR5", "kind": "kpi-fr"}
 {"query": "How did Chiffre d'affaires stand in 2025-09, and where does that figure come from?", "expected": "chiffre d'affaires", "persona": "cfo", "domain": "Finance", "provenance": "sonatel:9m-2025", "kind": "kpi"}
 {"query": "How did Consumer Price Index stand in 2026-06, and where does that figure come from?", "expected": "consumer price index", "persona": "cfo", "domain": "Finance", "provenance": "fred:CPIAUCSL", "kind": "kpi"}
