@@ -873,9 +873,13 @@ class AgentPersonaFactory:
                     cats.append(cat)
                 if lines:
                     kpi_block = "\n".join(lines)
+                    # snippet carries the real values, not just "X metrics for Y" — a
+                    # citation chip that only names the category+period gives a reader
+                    # (or an eval judge checking groundedness) nothing to actually verify
+                    # the cited number against.
                     raw_sources.append({
                         "title": f"Live KPI snapshot · {latest}", "type": "kpi", "relevance": 1.0,
-                        "snippet": f"{', '.join(cats)} metrics for {latest}", "source": f"kpi/{latest}",
+                        "snippet": kpi_block[:400], "source": f"kpi/{latest}",
                     })
 
                 asked_periods = set(re.findall(r"\b(?:19|20)\d{2}-(?:0[1-9]|1[0-2])\b", message))
@@ -899,7 +903,7 @@ class AgentPersonaFactory:
                         parts_period = ", ".join(sorted(asked_periods & set(hist["period"].unique())))
                         raw_sources.append({
                             "title": f"Historical KPI data · {parts_period}", "type": "kpi", "relevance": 1.0,
-                            "snippet": f"metrics for {parts_period}", "source": f"kpi/{parts_period}",
+                            "snippet": hist_block[:400], "source": f"kpi/{parts_period}",
                         })
                         kpi_block = (kpi_block + "\n\n" + hist_block) if kpi_block else hist_block
         except Exception as e:
