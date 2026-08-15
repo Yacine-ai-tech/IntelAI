@@ -158,6 +158,16 @@ class ChromaVectorStore:
     def count(self) -> int:
         return self.col.count()
 
+    def reset(self) -> None:
+        """Drop + recreate the collection — see QdrantVectorStore.reset()'s docstring
+        for why this matters: without it, reindex(force=True) silently no-ops here too,
+        and upsert()'s add/update-by-id never removes a point whose document was
+        deleted from Postgres."""
+        self.client.delete_collection(settings.CHROMA_COLLECTION)
+        self.col = self.client.get_or_create_collection(
+            settings.CHROMA_COLLECTION, metadata={"hnsw:space": "cosine"}
+        )
+
 
 class PgVectorStore:
     name = "pgvector"
@@ -287,6 +297,20 @@ class QdrantVectorStore:
 
     def count(self) -> int:
         return int(self.client.count(self.coll).count)
+
+    def reset(self) -> None:
+        """Drop + recreate the collection. Without this, reindex(force=True) silently
+        no-ops for Qdrant (reindex() only calls .reset() when hasattr(vs, "reset")) —
+        confirmed live: a force reindex left old points untouched, and since upsert()
+        only adds/updates by doc_id and never deletes, points for documents removed
+        from Postgres (e.g. a cleaned-up duplicate) stayed in Qdrant indefinitely,
+        still retrievable, alongside their replacements."""
+        from qdrant_client.models import Distance, VectorParams
+        if self.client.collection_exists(self.coll):
+            self.client.delete_collection(self.coll)
+        self.client.create_collection(
+            self.coll, vectors_config=VectorParams(size=self.dim, distance=Distance.COSINE)
+        )
 
 
 # ── Factory (cached) ──────────────────────────────────────────────────────────
