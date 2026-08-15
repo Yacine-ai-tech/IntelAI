@@ -1941,7 +1941,12 @@ async def reindex_vectors(force: bool = True, user: TokenData = Depends(require_
     from src.services.vector_store import reindex, get_vector_store
     if get_vector_store() is None:
         return {"status": "skipped", "reason": "VECTOR_STORE=memory (no persistent store)"}
-    n = reindex(force=force)
+    # reindex() does real, minutes-long blocking work (a DB read plus hundreds of
+    # synchronous remote embed calls) — calling it directly on this coroutine blocks
+    # the whole event loop for the entire duration, freezing every other request on
+    # this instance (WEB_CONCURRENCY=1). Confirmed live: /health and other simple
+    # endpoints went unresponsive for the full reindex.
+    n = await asyncio.to_thread(reindex, force=force)
     return {"status": "reindexed", "docs": n, "force": force}
 
 
