@@ -190,7 +190,10 @@ def llm_complete(
     msgs = _apply_cache_control(messages, resolved_model)
     kw = {"model": resolved_model, "messages": msgs, "temperature": temperature,
           "max_tokens": max_tokens, "timeout": timeout_s}
-    if top_p is not None:
+    # Anthropic rejects a request that sets both temperature and top_p ("cannot both be
+    # specified for this model") — every other provider here accepts both, so this is
+    # scoped to Anthropic specifically rather than dropping top_p for everyone.
+    if top_p is not None and not resolved_model.startswith("anthropic/"):
         kw["top_p"] = top_p
     r = completion(**kw)
     text = r.choices[0].message.content
