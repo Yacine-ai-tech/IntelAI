@@ -126,9 +126,8 @@ DB-dependent tests run automatically when `POSTGRES_URL` is reachable and skip c
 IntelAI provides seven seeded, deterministic, benchmark-calibrated environments (78 months
 × 7 domains × 146 metrics, formula-derived where a real formula applies — see
 [DATA_SEEDING.md](DATA_SEEDING.md)) for evaluating RAG retrieval accuracy and forecasting
-models under structural stress. Selectable via the `Admin → Scenarios` tab, API
-(`POST /api/v1/admin/scenario`), or `python scripts/seed_via_api.py <scenario>` for a run
-through the real ingestion pipeline instead of a direct DB write:
+models under structural stress. Selectable via the `Admin → Scenarios` tab or the API directly
+(`POST /api/v1/admin/scenario`):
 
 | Scenario | Research Application | Description |
 |---|---|---|

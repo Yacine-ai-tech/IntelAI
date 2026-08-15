@@ -1,210 +1,210 @@
 period,category,segment,metric_name,value,unit,direction,source
-2019-01,Growth,US,Retail Sales,430246.0,USD,up,fred:RSXFS
-2019-02,Growth,US,Retail Sales,431194.0,USD,up,fred:RSXFS
-2019-03,Growth,US,Retail Sales,438196.0,USD,up,fred:RSXFS
-2019-04,Growth,US,Retail Sales,437735.0,USD,up,fred:RSXFS
-2019-05,Growth,US,Retail Sales,442514.0,USD,up,fred:RSXFS
-2019-06,Growth,US,Retail Sales,442116.0,USD,up,fred:RSXFS
-2019-07,Growth,US,Retail Sales,445304.0,USD,up,fred:RSXFS
-2019-08,Growth,US,Retail Sales,448519.0,USD,up,fred:RSXFS
-2019-09,Growth,US,Retail Sales,444555.0,USD,up,fred:RSXFS
-2019-10,Growth,US,Retail Sales,445627.0,USD,up,fred:RSXFS
-2019-11,Growth,US,Retail Sales,449040.0,USD,up,fred:RSXFS
-2019-12,Growth,US,Retail Sales,449643.0,USD,up,fred:RSXFS
-2020-01,Growth,US,Retail Sales,447774.0,USD,up,fred:RSXFS
-2020-02,Growth,US,Retail Sales,447972.0,USD,up,fred:RSXFS
-2020-03,Growth,US,Retail Sales,420954.0,USD,up,fred:RSXFS
-2020-04,Growth,US,Retail Sales,370296.0,USD,up,fred:RSXFS
-2020-05,Growth,US,Retail Sales,437957.0,USD,up,fred:RSXFS
-2020-06,Growth,US,Retail Sales,465800.0,USD,up,fred:RSXFS
-2020-07,Growth,US,Retail Sales,471873.0,USD,up,fred:RSXFS
-2020-08,Growth,US,Retail Sales,473696.0,USD,up,fred:RSXFS
-2020-09,Growth,US,Retail Sales,482702.0,USD,up,fred:RSXFS
-2020-10,Growth,US,Retail Sales,480763.0,USD,up,fred:RSXFS
-2020-11,Growth,US,Retail Sales,478079.0,USD,up,fred:RSXFS
-2020-12,Growth,US,Retail Sales,485949.0,USD,up,fred:RSXFS
-2021-01,Growth,US,Retail Sales,501604.0,USD,up,fred:RSXFS
-2021-02,Growth,US,Retail Sales,488805.0,USD,up,fred:RSXFS
-2021-03,Growth,US,Retail Sales,539607.0,USD,up,fred:RSXFS
-2021-04,Growth,US,Retail Sales,542199.0,USD,up,fred:RSXFS
-2021-05,Growth,US,Retail Sales,536589.0,USD,up,fred:RSXFS
-2021-06,Growth,US,Retail Sales,540152.0,USD,up,fred:RSXFS
-2021-07,Growth,US,Retail Sales,528600.0,USD,up,fred:RSXFS
-2021-08,Growth,US,Retail Sales,532477.0,USD,up,fred:RSXFS
-2021-09,Growth,US,Retail Sales,536651.0,USD,up,fred:RSXFS
-2021-10,Growth,US,Retail Sales,545361.0,USD,up,fred:RSXFS
-2021-11,Growth,US,Retail Sales,551082.0,USD,up,fred:RSXFS
-2021-12,Growth,US,Retail Sales,547277.0,USD,up,fred:RSXFS
-2022-01,Growth,US,Retail Sales,560257.0,USD,up,fred:RSXFS
-2022-02,Growth,US,Retail Sales,563777.0,USD,up,fred:RSXFS
-2022-03,Growth,US,Retail Sales,574485.0,USD,up,fred:RSXFS
-2022-04,Growth,US,Retail Sales,580943.0,USD,up,fred:RSXFS
-2022-05,Growth,US,Retail Sales,579844.0,USD,up,fred:RSXFS
-2022-06,Growth,US,Retail Sales,585556.0,USD,up,fred:RSXFS
-2022-07,Growth,US,Retail Sales,579267.0,USD,up,fred:RSXFS
-2022-08,Growth,US,Retail Sales,581196.0,USD,up,fred:RSXFS
-2022-09,Growth,US,Retail Sales,579446.0,USD,up,fred:RSXFS
-2022-10,Growth,US,Retail Sales,585006.0,USD,up,fred:RSXFS
-2022-11,Growth,US,Retail Sales,576356.0,USD,up,fred:RSXFS
-2022-12,Growth,US,Retail Sales,569119.0,USD,up,fred:RSXFS
-2023-01,Growth,US,Retail Sales,591964.0,USD,up,fred:RSXFS
-2023-02,Growth,US,Retail Sales,586165.0,USD,up,fred:RSXFS
-2023-03,Growth,US,Retail Sales,578812.0,USD,up,fred:RSXFS
-2023-04,Growth,US,Retail Sales,583874.0,USD,up,fred:RSXFS
-2023-05,Growth,US,Retail Sales,586286.0,USD,up,fred:RSXFS
-2023-06,Growth,US,Retail Sales,588670.0,USD,up,fred:RSXFS
-2023-07,Growth,US,Retail Sales,589257.0,USD,up,fred:RSXFS
-2023-08,Growth,US,Retail Sales,595191.0,USD,up,fred:RSXFS
-2023-09,Growth,US,Retail Sales,598956.0,USD,up,fred:RSXFS
-2023-10,Growth,US,Retail Sales,595517.0,USD,up,fred:RSXFS
-2023-11,Growth,US,Retail Sales,593567.0,USD,up,fred:RSXFS
-2023-12,Growth,US,Retail Sales,594256.0,USD,up,fred:RSXFS
-2024-01,Growth,US,Retail Sales,588944.0,USD,up,fred:RSXFS
-2024-02,Growth,US,Retail Sales,593206.0,USD,up,fred:RSXFS
-2024-03,Growth,US,Retail Sales,595969.0,USD,up,fred:RSXFS
-2024-04,Growth,US,Retail Sales,595676.0,USD,up,fred:RSXFS
-2024-05,Growth,US,Retail Sales,600372.0,USD,up,fred:RSXFS
-2024-06,Growth,US,Retail Sales,599979.0,USD,up,fred:RSXFS
-2024-07,Growth,US,Retail Sales,605814.0,USD,up,fred:RSXFS
-2024-08,Growth,US,Retail Sales,603601.0,USD,up,fred:RSXFS
-2024-09,Growth,US,Retail Sales,608774.0,USD,up,fred:RSXFS
-2024-10,Growth,US,Retail Sales,612772.0,USD,up,fred:RSXFS
-2024-11,Growth,US,Retail Sales,616344.0,USD,up,fred:RSXFS
-2024-12,Growth,US,Retail Sales,621713.0,USD,up,fred:RSXFS
-2025-01,Growth,US,Retail Sales,615145.0,USD,up,fred:RSXFS
-2025-02,Growth,US,Retail Sales,616636.0,USD,up,fred:RSXFS
-2025-03,Growth,US,Retail Sales,625420.0,USD,up,fred:RSXFS
-2025-04,Growth,US,Retail Sales,624272.0,USD,up,fred:RSXFS
-2025-05,Growth,US,Retail Sales,616540.0,USD,up,fred:RSXFS
-2025-06,Growth,US,Retail Sales,621374.0,USD,up,fred:RSXFS
-2025-07,Growth,US,Retail Sales,628747.0,USD,up,fred:RSXFS
-2025-08,Growth,US,Retail Sales,632149.0,USD,up,fred:RSXFS
-2025-09,Growth,US,Retail Sales,632395.0,USD,up,fred:RSXFS
-2025-10,Growth,US,Retail Sales,631346.0,USD,up,fred:RSXFS
-2025-11,Growth,US,Retail Sales,634477.0,USD,up,fred:RSXFS
-2025-12,Growth,US,Retail Sales,634830.0,USD,up,fred:RSXFS
-2026-01,Growth,US,Retail Sales,634949.0,USD,up,fred:RSXFS
-2026-02,Growth,US,Retail Sales,641038.0,USD,up,fred:RSXFS
-2026-03,Growth,US,Retail Sales,653772.0,USD,up,fred:RSXFS
-2026-04,Growth,US,Retail Sales,657830.0,USD,up,fred:RSXFS
-2026-05,Growth,US,Retail Sales,664439.0,USD,up,fred:RSXFS
-2026-06,Growth,US,Retail Sales,666056.0,USD,up,fred:RSXFS
-2019-01,Growth,US,E-Commerce Retail Sales,130188.0,USD,up,fred:ECOMSA
-2019-04,Growth,US,E-Commerce Retail Sales,135548.0,USD,up,fred:ECOMSA
-2019-07,Growth,US,E-Commerce Retail Sales,144130.0,USD,up,fred:ECOMSA
-2019-10,Growth,US,E-Commerce Retail Sales,150245.0,USD,up,fred:ECOMSA
-2020-01,Growth,US,E-Commerce Retail Sales,156916.0,USD,up,fred:ECOMSA
-2020-04,Growth,US,E-Commerce Retail Sales,208112.0,USD,up,fred:ECOMSA
-2020-07,Growth,US,E-Commerce Retail Sales,212375.0,USD,up,fred:ECOMSA
-2020-10,Growth,US,E-Commerce Retail Sales,217160.0,USD,up,fred:ECOMSA
-2021-01,Growth,US,E-Commerce Retail Sales,227949.0,USD,up,fred:ECOMSA
-2021-04,Growth,US,E-Commerce Retail Sales,236010.0,USD,up,fred:ECOMSA
-2021-07,Growth,US,E-Commerce Retail Sales,232168.0,USD,up,fred:ECOMSA
-2021-10,Growth,US,E-Commerce Retail Sales,239825.0,USD,up,fred:ECOMSA
-2022-01,Growth,US,E-Commerce Retail Sales,243978.0,USD,up,fred:ECOMSA
-2022-04,Growth,US,E-Commerce Retail Sales,247967.0,USD,up,fred:ECOMSA
-2022-07,Growth,US,E-Commerce Retail Sales,251988.0,USD,up,fred:ECOMSA
-2022-10,Growth,US,E-Commerce Retail Sales,252656.0,USD,up,fred:ECOMSA
-2023-01,Growth,US,E-Commerce Retail Sales,262965.0,USD,up,fred:ECOMSA
-2023-04,Growth,US,E-Commerce Retail Sales,269738.0,USD,up,fred:ECOMSA
-2023-07,Growth,US,E-Commerce Retail Sales,275176.0,USD,up,fred:ECOMSA
-2023-10,Growth,US,E-Commerce Retail Sales,276781.0,USD,up,fred:ECOMSA
-2024-01,Growth,US,E-Commerce Retail Sales,283038.0,USD,up,fred:ECOMSA
-2024-04,Growth,US,E-Commerce Retail Sales,288822.0,USD,up,fred:ECOMSA
-2024-07,Growth,US,E-Commerce Retail Sales,295249.0,USD,up,fred:ECOMSA
-2024-10,Growth,US,E-Commerce Retail Sales,300329.0,USD,up,fred:ECOMSA
-2025-01,Growth,US,E-Commerce Retail Sales,297701.0,USD,up,fred:ECOMSA
-2025-04,Growth,US,E-Commerce Retail Sales,304464.0,USD,up,fred:ECOMSA
-2025-07,Growth,US,E-Commerce Retail Sales,310817.0,USD,up,fred:ECOMSA
-2025-10,Growth,US,E-Commerce Retail Sales,317999.0,USD,up,fred:ECOMSA
-2026-01,Growth,US,E-Commerce Retail Sales,326740.0,USD,up,fred:ECOMSA
-2019-01,Growth,US,Consumer Sentiment Index,91.2,index,up,fred:UMCSENT
-2019-02,Growth,US,Consumer Sentiment Index,93.8,index,up,fred:UMCSENT
-2019-03,Growth,US,Consumer Sentiment Index,98.4,index,up,fred:UMCSENT
-2019-04,Growth,US,Consumer Sentiment Index,97.2,index,up,fred:UMCSENT
-2019-05,Growth,US,Consumer Sentiment Index,100.0,index,up,fred:UMCSENT
-2019-06,Growth,US,Consumer Sentiment Index,98.2,index,up,fred:UMCSENT
-2019-07,Growth,US,Consumer Sentiment Index,98.4,index,up,fred:UMCSENT
-2019-08,Growth,US,Consumer Sentiment Index,89.8,index,up,fred:UMCSENT
-2019-09,Growth,US,Consumer Sentiment Index,93.2,index,up,fred:UMCSENT
-2019-10,Growth,US,Consumer Sentiment Index,95.5,index,up,fred:UMCSENT
-2019-11,Growth,US,Consumer Sentiment Index,96.8,index,up,fred:UMCSENT
-2019-12,Growth,US,Consumer Sentiment Index,99.3,index,up,fred:UMCSENT
-2020-01,Growth,US,Consumer Sentiment Index,99.8,index,up,fred:UMCSENT
-2020-02,Growth,US,Consumer Sentiment Index,101.0,index,up,fred:UMCSENT
-2020-03,Growth,US,Consumer Sentiment Index,89.1,index,up,fred:UMCSENT
-2020-04,Growth,US,Consumer Sentiment Index,71.8,index,up,fred:UMCSENT
-2020-05,Growth,US,Consumer Sentiment Index,72.3,index,up,fred:UMCSENT
-2020-06,Growth,US,Consumer Sentiment Index,78.1,index,up,fred:UMCSENT
-2020-07,Growth,US,Consumer Sentiment Index,72.5,index,up,fred:UMCSENT
-2020-08,Growth,US,Consumer Sentiment Index,74.1,index,up,fred:UMCSENT
-2020-09,Growth,US,Consumer Sentiment Index,80.4,index,up,fred:UMCSENT
-2020-10,Growth,US,Consumer Sentiment Index,81.8,index,up,fred:UMCSENT
-2020-11,Growth,US,Consumer Sentiment Index,76.9,index,up,fred:UMCSENT
-2020-12,Growth,US,Consumer Sentiment Index,80.7,index,up,fred:UMCSENT
-2021-01,Growth,US,Consumer Sentiment Index,79.0,index,up,fred:UMCSENT
-2021-02,Growth,US,Consumer Sentiment Index,76.8,index,up,fred:UMCSENT
-2021-03,Growth,US,Consumer Sentiment Index,84.9,index,up,fred:UMCSENT
-2021-04,Growth,US,Consumer Sentiment Index,88.3,index,up,fred:UMCSENT
-2021-05,Growth,US,Consumer Sentiment Index,82.9,index,up,fred:UMCSENT
-2021-06,Growth,US,Consumer Sentiment Index,85.5,index,up,fred:UMCSENT
-2021-07,Growth,US,Consumer Sentiment Index,81.2,index,up,fred:UMCSENT
-2021-08,Growth,US,Consumer Sentiment Index,70.3,index,up,fred:UMCSENT
-2021-09,Growth,US,Consumer Sentiment Index,72.8,index,up,fred:UMCSENT
-2021-10,Growth,US,Consumer Sentiment Index,71.7,index,up,fred:UMCSENT
-2021-11,Growth,US,Consumer Sentiment Index,67.4,index,up,fred:UMCSENT
-2021-12,Growth,US,Consumer Sentiment Index,70.6,index,up,fred:UMCSENT
-2022-01,Growth,US,Consumer Sentiment Index,67.2,index,up,fred:UMCSENT
-2022-02,Growth,US,Consumer Sentiment Index,62.8,index,up,fred:UMCSENT
-2022-03,Growth,US,Consumer Sentiment Index,59.4,index,up,fred:UMCSENT
-2022-04,Growth,US,Consumer Sentiment Index,65.2,index,up,fred:UMCSENT
-2022-05,Growth,US,Consumer Sentiment Index,58.4,index,up,fred:UMCSENT
-2022-06,Growth,US,Consumer Sentiment Index,50.0,index,up,fred:UMCSENT
-2022-07,Growth,US,Consumer Sentiment Index,51.5,index,up,fred:UMCSENT
-2022-08,Growth,US,Consumer Sentiment Index,58.2,index,up,fred:UMCSENT
-2022-09,Growth,US,Consumer Sentiment Index,58.6,index,up,fred:UMCSENT
-2022-10,Growth,US,Consumer Sentiment Index,59.9,index,up,fred:UMCSENT
-2022-11,Growth,US,Consumer Sentiment Index,56.7,index,up,fred:UMCSENT
-2022-12,Growth,US,Consumer Sentiment Index,59.8,index,up,fred:UMCSENT
-2023-01,Growth,US,Consumer Sentiment Index,64.9,index,up,fred:UMCSENT
-2023-02,Growth,US,Consumer Sentiment Index,66.9,index,up,fred:UMCSENT
-2023-03,Growth,US,Consumer Sentiment Index,62.0,index,up,fred:UMCSENT
-2023-04,Growth,US,Consumer Sentiment Index,63.7,index,up,fred:UMCSENT
-2023-05,Growth,US,Consumer Sentiment Index,59.0,index,up,fred:UMCSENT
-2023-06,Growth,US,Consumer Sentiment Index,64.2,index,up,fred:UMCSENT
-2023-07,Growth,US,Consumer Sentiment Index,71.5,index,up,fred:UMCSENT
-2023-08,Growth,US,Consumer Sentiment Index,69.4,index,up,fred:UMCSENT
-2023-09,Growth,US,Consumer Sentiment Index,67.8,index,up,fred:UMCSENT
-2023-10,Growth,US,Consumer Sentiment Index,63.8,index,up,fred:UMCSENT
-2023-11,Growth,US,Consumer Sentiment Index,61.3,index,up,fred:UMCSENT
-2023-12,Growth,US,Consumer Sentiment Index,69.7,index,up,fred:UMCSENT
-2024-01,Growth,US,Consumer Sentiment Index,79.0,index,up,fred:UMCSENT
-2024-02,Growth,US,Consumer Sentiment Index,76.9,index,up,fred:UMCSENT
-2024-03,Growth,US,Consumer Sentiment Index,79.4,index,up,fred:UMCSENT
-2024-04,Growth,US,Consumer Sentiment Index,77.2,index,up,fred:UMCSENT
-2024-05,Growth,US,Consumer Sentiment Index,69.1,index,up,fred:UMCSENT
-2024-06,Growth,US,Consumer Sentiment Index,68.2,index,up,fred:UMCSENT
-2024-07,Growth,US,Consumer Sentiment Index,66.4,index,up,fred:UMCSENT
-2024-08,Growth,US,Consumer Sentiment Index,67.9,index,up,fred:UMCSENT
-2024-09,Growth,US,Consumer Sentiment Index,70.1,index,up,fred:UMCSENT
-2024-10,Growth,US,Consumer Sentiment Index,70.5,index,up,fred:UMCSENT
-2024-11,Growth,US,Consumer Sentiment Index,71.8,index,up,fred:UMCSENT
-2024-12,Growth,US,Consumer Sentiment Index,74.0,index,up,fred:UMCSENT
-2025-01,Growth,US,Consumer Sentiment Index,71.7,index,up,fred:UMCSENT
-2025-02,Growth,US,Consumer Sentiment Index,64.7,index,up,fred:UMCSENT
-2025-03,Growth,US,Consumer Sentiment Index,57.0,index,up,fred:UMCSENT
-2025-04,Growth,US,Consumer Sentiment Index,52.2,index,up,fred:UMCSENT
-2025-05,Growth,US,Consumer Sentiment Index,52.2,index,up,fred:UMCSENT
-2025-06,Growth,US,Consumer Sentiment Index,60.7,index,up,fred:UMCSENT
-2025-07,Growth,US,Consumer Sentiment Index,61.7,index,up,fred:UMCSENT
-2025-08,Growth,US,Consumer Sentiment Index,58.2,index,up,fred:UMCSENT
-2025-09,Growth,US,Consumer Sentiment Index,55.1,index,up,fred:UMCSENT
-2025-10,Growth,US,Consumer Sentiment Index,53.6,index,up,fred:UMCSENT
-2025-11,Growth,US,Consumer Sentiment Index,51.0,index,up,fred:UMCSENT
-2025-12,Growth,US,Consumer Sentiment Index,52.9,index,up,fred:UMCSENT
-2026-01,Growth,US,Consumer Sentiment Index,56.4,index,up,fred:UMCSENT
-2026-02,Growth,US,Consumer Sentiment Index,56.6,index,up,fred:UMCSENT
-2026-03,Growth,US,Consumer Sentiment Index,53.3,index,up,fred:UMCSENT
-2026-04,Growth,US,Consumer Sentiment Index,49.8,index,up,fred:UMCSENT
-2026-05,Growth,US,Consumer Sentiment Index,44.8,index,up,fred:UMCSENT
-2026-06,Growth,US,Consumer Sentiment Index,49.5,index,up,fred:UMCSENT
+2019-01,Growth,External — US Market Context,Retail Sales,430246.0,USD,up,fred:RSXFS
+2019-02,Growth,External — US Market Context,Retail Sales,431194.0,USD,up,fred:RSXFS
+2019-03,Growth,External — US Market Context,Retail Sales,438196.0,USD,up,fred:RSXFS
+2019-04,Growth,External — US Market Context,Retail Sales,437735.0,USD,up,fred:RSXFS
+2019-05,Growth,External — US Market Context,Retail Sales,442514.0,USD,up,fred:RSXFS
+2019-06,Growth,External — US Market Context,Retail Sales,442116.0,USD,up,fred:RSXFS
+2019-07,Growth,External — US Market Context,Retail Sales,445304.0,USD,up,fred:RSXFS
+2019-08,Growth,External — US Market Context,Retail Sales,448519.0,USD,up,fred:RSXFS
+2019-09,Growth,External — US Market Context,Retail Sales,444555.0,USD,up,fred:RSXFS
+2019-10,Growth,External — US Market Context,Retail Sales,445627.0,USD,up,fred:RSXFS
+2019-11,Growth,External — US Market Context,Retail Sales,449040.0,USD,up,fred:RSXFS
+2019-12,Growth,External — US Market Context,Retail Sales,449643.0,USD,up,fred:RSXFS
+2020-01,Growth,External — US Market Context,Retail Sales,447774.0,USD,up,fred:RSXFS
+2020-02,Growth,External — US Market Context,Retail Sales,447972.0,USD,up,fred:RSXFS
+2020-03,Growth,External — US Market Context,Retail Sales,420954.0,USD,up,fred:RSXFS
+2020-04,Growth,External — US Market Context,Retail Sales,370296.0,USD,up,fred:RSXFS
+2020-05,Growth,External — US Market Context,Retail Sales,437957.0,USD,up,fred:RSXFS
+2020-06,Growth,External — US Market Context,Retail Sales,465800.0,USD,up,fred:RSXFS
+2020-07,Growth,External — US Market Context,Retail Sales,471873.0,USD,up,fred:RSXFS
+2020-08,Growth,External — US Market Context,Retail Sales,473696.0,USD,up,fred:RSXFS
+2020-09,Growth,External — US Market Context,Retail Sales,482702.0,USD,up,fred:RSXFS
+2020-10,Growth,External — US Market Context,Retail Sales,480763.0,USD,up,fred:RSXFS
+2020-11,Growth,External — US Market Context,Retail Sales,478079.0,USD,up,fred:RSXFS
+2020-12,Growth,External — US Market Context,Retail Sales,485949.0,USD,up,fred:RSXFS
+2021-01,Growth,External — US Market Context,Retail Sales,501604.0,USD,up,fred:RSXFS
+2021-02,Growth,External — US Market Context,Retail Sales,488805.0,USD,up,fred:RSXFS
+2021-03,Growth,External — US Market Context,Retail Sales,539607.0,USD,up,fred:RSXFS
+2021-04,Growth,External — US Market Context,Retail Sales,542199.0,USD,up,fred:RSXFS
+2021-05,Growth,External — US Market Context,Retail Sales,536589.0,USD,up,fred:RSXFS
+2021-06,Growth,External — US Market Context,Retail Sales,540152.0,USD,up,fred:RSXFS
+2021-07,Growth,External — US Market Context,Retail Sales,528600.0,USD,up,fred:RSXFS
+2021-08,Growth,External — US Market Context,Retail Sales,532477.0,USD,up,fred:RSXFS
+2021-09,Growth,External — US Market Context,Retail Sales,536651.0,USD,up,fred:RSXFS
+2021-10,Growth,External — US Market Context,Retail Sales,545361.0,USD,up,fred:RSXFS
+2021-11,Growth,External — US Market Context,Retail Sales,551082.0,USD,up,fred:RSXFS
+2021-12,Growth,External — US Market Context,Retail Sales,547277.0,USD,up,fred:RSXFS
+2022-01,Growth,External — US Market Context,Retail Sales,560257.0,USD,up,fred:RSXFS
+2022-02,Growth,External — US Market Context,Retail Sales,563777.0,USD,up,fred:RSXFS
+2022-03,Growth,External — US Market Context,Retail Sales,574485.0,USD,up,fred:RSXFS
+2022-04,Growth,External — US Market Context,Retail Sales,580943.0,USD,up,fred:RSXFS
+2022-05,Growth,External — US Market Context,Retail Sales,579844.0,USD,up,fred:RSXFS
+2022-06,Growth,External — US Market Context,Retail Sales,585556.0,USD,up,fred:RSXFS
+2022-07,Growth,External — US Market Context,Retail Sales,579267.0,USD,up,fred:RSXFS
+2022-08,Growth,External — US Market Context,Retail Sales,581196.0,USD,up,fred:RSXFS
+2022-09,Growth,External — US Market Context,Retail Sales,579446.0,USD,up,fred:RSXFS
+2022-10,Growth,External — US Market Context,Retail Sales,585006.0,USD,up,fred:RSXFS
+2022-11,Growth,External — US Market Context,Retail Sales,576356.0,USD,up,fred:RSXFS
+2022-12,Growth,External — US Market Context,Retail Sales,569119.0,USD,up,fred:RSXFS
+2023-01,Growth,External — US Market Context,Retail Sales,591964.0,USD,up,fred:RSXFS
+2023-02,Growth,External — US Market Context,Retail Sales,586165.0,USD,up,fred:RSXFS
+2023-03,Growth,External — US Market Context,Retail Sales,578812.0,USD,up,fred:RSXFS
+2023-04,Growth,External — US Market Context,Retail Sales,583874.0,USD,up,fred:RSXFS
+2023-05,Growth,External — US Market Context,Retail Sales,586286.0,USD,up,fred:RSXFS
+2023-06,Growth,External — US Market Context,Retail Sales,588670.0,USD,up,fred:RSXFS
+2023-07,Growth,External — US Market Context,Retail Sales,589257.0,USD,up,fred:RSXFS
+2023-08,Growth,External — US Market Context,Retail Sales,595191.0,USD,up,fred:RSXFS
+2023-09,Growth,External — US Market Context,Retail Sales,598956.0,USD,up,fred:RSXFS
+2023-10,Growth,External — US Market Context,Retail Sales,595517.0,USD,up,fred:RSXFS
+2023-11,Growth,External — US Market Context,Retail Sales,593567.0,USD,up,fred:RSXFS
+2023-12,Growth,External — US Market Context,Retail Sales,594256.0,USD,up,fred:RSXFS
+2024-01,Growth,External — US Market Context,Retail Sales,588944.0,USD,up,fred:RSXFS
+2024-02,Growth,External — US Market Context,Retail Sales,593206.0,USD,up,fred:RSXFS
+2024-03,Growth,External — US Market Context,Retail Sales,595969.0,USD,up,fred:RSXFS
+2024-04,Growth,External — US Market Context,Retail Sales,595676.0,USD,up,fred:RSXFS
+2024-05,Growth,External — US Market Context,Retail Sales,600372.0,USD,up,fred:RSXFS
+2024-06,Growth,External — US Market Context,Retail Sales,599979.0,USD,up,fred:RSXFS
+2024-07,Growth,External — US Market Context,Retail Sales,605814.0,USD,up,fred:RSXFS
+2024-08,Growth,External — US Market Context,Retail Sales,603601.0,USD,up,fred:RSXFS
+2024-09,Growth,External — US Market Context,Retail Sales,608774.0,USD,up,fred:RSXFS
+2024-10,Growth,External — US Market Context,Retail Sales,612772.0,USD,up,fred:RSXFS
+2024-11,Growth,External — US Market Context,Retail Sales,616344.0,USD,up,fred:RSXFS
+2024-12,Growth,External — US Market Context,Retail Sales,621713.0,USD,up,fred:RSXFS
+2025-01,Growth,External — US Market Context,Retail Sales,615145.0,USD,up,fred:RSXFS
+2025-02,Growth,External — US Market Context,Retail Sales,616636.0,USD,up,fred:RSXFS
+2025-03,Growth,External — US Market Context,Retail Sales,625420.0,USD,up,fred:RSXFS
+2025-04,Growth,External — US Market Context,Retail Sales,624272.0,USD,up,fred:RSXFS
+2025-05,Growth,External — US Market Context,Retail Sales,616540.0,USD,up,fred:RSXFS
+2025-06,Growth,External — US Market Context,Retail Sales,621374.0,USD,up,fred:RSXFS
+2025-07,Growth,External — US Market Context,Retail Sales,628747.0,USD,up,fred:RSXFS
+2025-08,Growth,External — US Market Context,Retail Sales,632149.0,USD,up,fred:RSXFS
+2025-09,Growth,External — US Market Context,Retail Sales,632395.0,USD,up,fred:RSXFS
+2025-10,Growth,External — US Market Context,Retail Sales,631346.0,USD,up,fred:RSXFS
+2025-11,Growth,External — US Market Context,Retail Sales,634477.0,USD,up,fred:RSXFS
+2025-12,Growth,External — US Market Context,Retail Sales,634830.0,USD,up,fred:RSXFS
+2026-01,Growth,External — US Market Context,Retail Sales,634949.0,USD,up,fred:RSXFS
+2026-02,Growth,External — US Market Context,Retail Sales,641038.0,USD,up,fred:RSXFS
+2026-03,Growth,External — US Market Context,Retail Sales,653772.0,USD,up,fred:RSXFS
+2026-04,Growth,External — US Market Context,Retail Sales,657830.0,USD,up,fred:RSXFS
+2026-05,Growth,External — US Market Context,Retail Sales,664439.0,USD,up,fred:RSXFS
+2026-06,Growth,External — US Market Context,Retail Sales,666056.0,USD,up,fred:RSXFS
+2019-01,Growth,External — US Market Context,E-Commerce Retail Sales,130188.0,USD,up,fred:ECOMSA
+2019-04,Growth,External — US Market Context,E-Commerce Retail Sales,135548.0,USD,up,fred:ECOMSA
+2019-07,Growth,External — US Market Context,E-Commerce Retail Sales,144130.0,USD,up,fred:ECOMSA
+2019-10,Growth,External — US Market Context,E-Commerce Retail Sales,150245.0,USD,up,fred:ECOMSA
+2020-01,Growth,External — US Market Context,E-Commerce Retail Sales,156916.0,USD,up,fred:ECOMSA
+2020-04,Growth,External — US Market Context,E-Commerce Retail Sales,208112.0,USD,up,fred:ECOMSA
+2020-07,Growth,External — US Market Context,E-Commerce Retail Sales,212375.0,USD,up,fred:ECOMSA
+2020-10,Growth,External — US Market Context,E-Commerce Retail Sales,217160.0,USD,up,fred:ECOMSA
+2021-01,Growth,External — US Market Context,E-Commerce Retail Sales,227949.0,USD,up,fred:ECOMSA
+2021-04,Growth,External — US Market Context,E-Commerce Retail Sales,236010.0,USD,up,fred:ECOMSA
+2021-07,Growth,External — US Market Context,E-Commerce Retail Sales,232168.0,USD,up,fred:ECOMSA
+2021-10,Growth,External — US Market Context,E-Commerce Retail Sales,239825.0,USD,up,fred:ECOMSA
+2022-01,Growth,External — US Market Context,E-Commerce Retail Sales,243978.0,USD,up,fred:ECOMSA
+2022-04,Growth,External — US Market Context,E-Commerce Retail Sales,247967.0,USD,up,fred:ECOMSA
+2022-07,Growth,External — US Market Context,E-Commerce Retail Sales,251988.0,USD,up,fred:ECOMSA
+2022-10,Growth,External — US Market Context,E-Commerce Retail Sales,252656.0,USD,up,fred:ECOMSA
+2023-01,Growth,External — US Market Context,E-Commerce Retail Sales,262965.0,USD,up,fred:ECOMSA
+2023-04,Growth,External — US Market Context,E-Commerce Retail Sales,269738.0,USD,up,fred:ECOMSA
+2023-07,Growth,External — US Market Context,E-Commerce Retail Sales,275176.0,USD,up,fred:ECOMSA
+2023-10,Growth,External — US Market Context,E-Commerce Retail Sales,276781.0,USD,up,fred:ECOMSA
+2024-01,Growth,External — US Market Context,E-Commerce Retail Sales,283038.0,USD,up,fred:ECOMSA
+2024-04,Growth,External — US Market Context,E-Commerce Retail Sales,288822.0,USD,up,fred:ECOMSA
+2024-07,Growth,External — US Market Context,E-Commerce Retail Sales,295249.0,USD,up,fred:ECOMSA
+2024-10,Growth,External — US Market Context,E-Commerce Retail Sales,300329.0,USD,up,fred:ECOMSA
+2025-01,Growth,External — US Market Context,E-Commerce Retail Sales,297701.0,USD,up,fred:ECOMSA
+2025-04,Growth,External — US Market Context,E-Commerce Retail Sales,304464.0,USD,up,fred:ECOMSA
+2025-07,Growth,External — US Market Context,E-Commerce Retail Sales,310817.0,USD,up,fred:ECOMSA
+2025-10,Growth,External — US Market Context,E-Commerce Retail Sales,317999.0,USD,up,fred:ECOMSA
+2026-01,Growth,External — US Market Context,E-Commerce Retail Sales,326740.0,USD,up,fred:ECOMSA
+2019-01,Growth,External — US Market Context,Consumer Sentiment Index,91.2,index,up,fred:UMCSENT
+2019-02,Growth,External — US Market Context,Consumer Sentiment Index,93.8,index,up,fred:UMCSENT
+2019-03,Growth,External — US Market Context,Consumer Sentiment Index,98.4,index,up,fred:UMCSENT
+2019-04,Growth,External — US Market Context,Consumer Sentiment Index,97.2,index,up,fred:UMCSENT
+2019-05,Growth,External — US Market Context,Consumer Sentiment Index,100.0,index,up,fred:UMCSENT
+2019-06,Growth,External — US Market Context,Consumer Sentiment Index,98.2,index,up,fred:UMCSENT
+2019-07,Growth,External — US Market Context,Consumer Sentiment Index,98.4,index,up,fred:UMCSENT
+2019-08,Growth,External — US Market Context,Consumer Sentiment Index,89.8,index,up,fred:UMCSENT
+2019-09,Growth,External — US Market Context,Consumer Sentiment Index,93.2,index,up,fred:UMCSENT
+2019-10,Growth,External — US Market Context,Consumer Sentiment Index,95.5,index,up,fred:UMCSENT
+2019-11,Growth,External — US Market Context,Consumer Sentiment Index,96.8,index,up,fred:UMCSENT
+2019-12,Growth,External — US Market Context,Consumer Sentiment Index,99.3,index,up,fred:UMCSENT
+2020-01,Growth,External — US Market Context,Consumer Sentiment Index,99.8,index,up,fred:UMCSENT
+2020-02,Growth,External — US Market Context,Consumer Sentiment Index,101.0,index,up,fred:UMCSENT
+2020-03,Growth,External — US Market Context,Consumer Sentiment Index,89.1,index,up,fred:UMCSENT
+2020-04,Growth,External — US Market Context,Consumer Sentiment Index,71.8,index,up,fred:UMCSENT
+2020-05,Growth,External — US Market Context,Consumer Sentiment Index,72.3,index,up,fred:UMCSENT
+2020-06,Growth,External — US Market Context,Consumer Sentiment Index,78.1,index,up,fred:UMCSENT
+2020-07,Growth,External — US Market Context,Consumer Sentiment Index,72.5,index,up,fred:UMCSENT
+2020-08,Growth,External — US Market Context,Consumer Sentiment Index,74.1,index,up,fred:UMCSENT
+2020-09,Growth,External — US Market Context,Consumer Sentiment Index,80.4,index,up,fred:UMCSENT
+2020-10,Growth,External — US Market Context,Consumer Sentiment Index,81.8,index,up,fred:UMCSENT
+2020-11,Growth,External — US Market Context,Consumer Sentiment Index,76.9,index,up,fred:UMCSENT
+2020-12,Growth,External — US Market Context,Consumer Sentiment Index,80.7,index,up,fred:UMCSENT
+2021-01,Growth,External — US Market Context,Consumer Sentiment Index,79.0,index,up,fred:UMCSENT
+2021-02,Growth,External — US Market Context,Consumer Sentiment Index,76.8,index,up,fred:UMCSENT
+2021-03,Growth,External — US Market Context,Consumer Sentiment Index,84.9,index,up,fred:UMCSENT
+2021-04,Growth,External — US Market Context,Consumer Sentiment Index,88.3,index,up,fred:UMCSENT
+2021-05,Growth,External — US Market Context,Consumer Sentiment Index,82.9,index,up,fred:UMCSENT
+2021-06,Growth,External — US Market Context,Consumer Sentiment Index,85.5,index,up,fred:UMCSENT
+2021-07,Growth,External — US Market Context,Consumer Sentiment Index,81.2,index,up,fred:UMCSENT
+2021-08,Growth,External — US Market Context,Consumer Sentiment Index,70.3,index,up,fred:UMCSENT
+2021-09,Growth,External — US Market Context,Consumer Sentiment Index,72.8,index,up,fred:UMCSENT
+2021-10,Growth,External — US Market Context,Consumer Sentiment Index,71.7,index,up,fred:UMCSENT
+2021-11,Growth,External — US Market Context,Consumer Sentiment Index,67.4,index,up,fred:UMCSENT
+2021-12,Growth,External — US Market Context,Consumer Sentiment Index,70.6,index,up,fred:UMCSENT
+2022-01,Growth,External — US Market Context,Consumer Sentiment Index,67.2,index,up,fred:UMCSENT
+2022-02,Growth,External — US Market Context,Consumer Sentiment Index,62.8,index,up,fred:UMCSENT
+2022-03,Growth,External — US Market Context,Consumer Sentiment Index,59.4,index,up,fred:UMCSENT
+2022-04,Growth,External — US Market Context,Consumer Sentiment Index,65.2,index,up,fred:UMCSENT
+2022-05,Growth,External — US Market Context,Consumer Sentiment Index,58.4,index,up,fred:UMCSENT
+2022-06,Growth,External — US Market Context,Consumer Sentiment Index,50.0,index,up,fred:UMCSENT
+2022-07,Growth,External — US Market Context,Consumer Sentiment Index,51.5,index,up,fred:UMCSENT
+2022-08,Growth,External — US Market Context,Consumer Sentiment Index,58.2,index,up,fred:UMCSENT
+2022-09,Growth,External — US Market Context,Consumer Sentiment Index,58.6,index,up,fred:UMCSENT
+2022-10,Growth,External — US Market Context,Consumer Sentiment Index,59.9,index,up,fred:UMCSENT
+2022-11,Growth,External — US Market Context,Consumer Sentiment Index,56.7,index,up,fred:UMCSENT
+2022-12,Growth,External — US Market Context,Consumer Sentiment Index,59.8,index,up,fred:UMCSENT
+2023-01,Growth,External — US Market Context,Consumer Sentiment Index,64.9,index,up,fred:UMCSENT
+2023-02,Growth,External — US Market Context,Consumer Sentiment Index,66.9,index,up,fred:UMCSENT
+2023-03,Growth,External — US Market Context,Consumer Sentiment Index,62.0,index,up,fred:UMCSENT
+2023-04,Growth,External — US Market Context,Consumer Sentiment Index,63.7,index,up,fred:UMCSENT
+2023-05,Growth,External — US Market Context,Consumer Sentiment Index,59.0,index,up,fred:UMCSENT
+2023-06,Growth,External — US Market Context,Consumer Sentiment Index,64.2,index,up,fred:UMCSENT
+2023-07,Growth,External — US Market Context,Consumer Sentiment Index,71.5,index,up,fred:UMCSENT
+2023-08,Growth,External — US Market Context,Consumer Sentiment Index,69.4,index,up,fred:UMCSENT
+2023-09,Growth,External — US Market Context,Consumer Sentiment Index,67.8,index,up,fred:UMCSENT
+2023-10,Growth,External — US Market Context,Consumer Sentiment Index,63.8,index,up,fred:UMCSENT
+2023-11,Growth,External — US Market Context,Consumer Sentiment Index,61.3,index,up,fred:UMCSENT
+2023-12,Growth,External — US Market Context,Consumer Sentiment Index,69.7,index,up,fred:UMCSENT
+2024-01,Growth,External — US Market Context,Consumer Sentiment Index,79.0,index,up,fred:UMCSENT
+2024-02,Growth,External — US Market Context,Consumer Sentiment Index,76.9,index,up,fred:UMCSENT
+2024-03,Growth,External — US Market Context,Consumer Sentiment Index,79.4,index,up,fred:UMCSENT
+2024-04,Growth,External — US Market Context,Consumer Sentiment Index,77.2,index,up,fred:UMCSENT
+2024-05,Growth,External — US Market Context,Consumer Sentiment Index,69.1,index,up,fred:UMCSENT
+2024-06,Growth,External — US Market Context,Consumer Sentiment Index,68.2,index,up,fred:UMCSENT
+2024-07,Growth,External — US Market Context,Consumer Sentiment Index,66.4,index,up,fred:UMCSENT
+2024-08,Growth,External — US Market Context,Consumer Sentiment Index,67.9,index,up,fred:UMCSENT
+2024-09,Growth,External — US Market Context,Consumer Sentiment Index,70.1,index,up,fred:UMCSENT
+2024-10,Growth,External — US Market Context,Consumer Sentiment Index,70.5,index,up,fred:UMCSENT
+2024-11,Growth,External — US Market Context,Consumer Sentiment Index,71.8,index,up,fred:UMCSENT
+2024-12,Growth,External — US Market Context,Consumer Sentiment Index,74.0,index,up,fred:UMCSENT
+2025-01,Growth,External — US Market Context,Consumer Sentiment Index,71.7,index,up,fred:UMCSENT
+2025-02,Growth,External — US Market Context,Consumer Sentiment Index,64.7,index,up,fred:UMCSENT
+2025-03,Growth,External — US Market Context,Consumer Sentiment Index,57.0,index,up,fred:UMCSENT
+2025-04,Growth,External — US Market Context,Consumer Sentiment Index,52.2,index,up,fred:UMCSENT
+2025-05,Growth,External — US Market Context,Consumer Sentiment Index,52.2,index,up,fred:UMCSENT
+2025-06,Growth,External — US Market Context,Consumer Sentiment Index,60.7,index,up,fred:UMCSENT
+2025-07,Growth,External — US Market Context,Consumer Sentiment Index,61.7,index,up,fred:UMCSENT
+2025-08,Growth,External — US Market Context,Consumer Sentiment Index,58.2,index,up,fred:UMCSENT
+2025-09,Growth,External — US Market Context,Consumer Sentiment Index,55.1,index,up,fred:UMCSENT
+2025-10,Growth,External — US Market Context,Consumer Sentiment Index,53.6,index,up,fred:UMCSENT
+2025-11,Growth,External — US Market Context,Consumer Sentiment Index,51.0,index,up,fred:UMCSENT
+2025-12,Growth,External — US Market Context,Consumer Sentiment Index,52.9,index,up,fred:UMCSENT
+2026-01,Growth,External — US Market Context,Consumer Sentiment Index,56.4,index,up,fred:UMCSENT
+2026-02,Growth,External — US Market Context,Consumer Sentiment Index,56.6,index,up,fred:UMCSENT
+2026-03,Growth,External — US Market Context,Consumer Sentiment Index,53.3,index,up,fred:UMCSENT
+2026-04,Growth,External — US Market Context,Consumer Sentiment Index,49.8,index,up,fred:UMCSENT
+2026-05,Growth,External — US Market Context,Consumer Sentiment Index,44.8,index,up,fred:UMCSENT
+2026-06,Growth,External — US Market Context,Consumer Sentiment Index,49.5,index,up,fred:UMCSENT
