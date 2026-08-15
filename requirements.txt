@@ -47,8 +47,13 @@ pgvector>=0.3.0
 qdrant-client>=1.12.0
 
 # ── ML — forecasting, anomaly detection, TF-IDF/cosine ─
-# scipy>=1.14.1
-# scikit-learn>=1.5.2
+# Small, pure-CPU numerical libraries (not the class of local-inference-model
+# dependency the remote-only embedding/rerank architecture removed) — commenting
+# these out broke src/services/forecasting.py's import entirely (ForecastEngine
+# uses scipy.stats + sklearn.linear_model.LinearRegression), 500ing every real
+# forecast request. Confirmed live.
+scipy>=1.14.1
+scikit-learn>=1.5.2
 
 # ── Document text extraction (PDF/DOCX text, no OCR) ─
 pypdf>=4.3.1
