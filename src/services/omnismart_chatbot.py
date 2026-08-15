@@ -865,7 +865,16 @@ class AgentPersonaFactory:
                 lines, cats = [], []
                 for cat in sorted(cur["category"].unique()):
                     cdf = cur[cur["category"] == cat]
+                    # Some metrics (World Bank-sourced ESG series especially) carry one row
+                    # per segment/country for the same metric name — e.g. 18 different
+                    # "CO2 Emissions (excl. LULUCF)=..." rows for one period, one per
+                    # country. Folding them together with no segment label produced an
+                    # undifferentiated wall of repeated metric names with no way to tell
+                    # which value belonged to which country, so the model (and anything
+                    # judging groundedness against it) couldn't reliably cite the right one.
                     metrics = "; ".join(
+                        f"{r.metric} ({r.segment})={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
+                        if getattr(r, "segment", "") else
                         f"{r.metric}={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
                         for r in cdf.itertuples()
                     )
@@ -894,6 +903,8 @@ class AgentPersonaFactory:
                         for cat in sorted(pdf["category"].unique()):
                             cdf = pdf[pdf["category"] == cat]
                             metrics = "; ".join(
+                                f"{r.metric} ({r.segment})={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
+                                if getattr(r, "segment", "") else
                                 f"{r.metric}={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
                                 for r in cdf.itertuples()
                             )
