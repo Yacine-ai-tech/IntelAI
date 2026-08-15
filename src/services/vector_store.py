@@ -353,7 +353,12 @@ def reindex(docs: Optional[List[Doc]] = None, force: bool = False) -> int:
         vs.reset()
     if docs is None:
         from src.services.pg_store import get_knowledge_docs
-        df = get_knowledge_docs()
+        # all_owners=True: the store is one shared collection embedding the whole
+        # corpus, including every visitor's private uploads — vector_store_retrieve()
+        # enforces owner scoping afterwards by post-filtering dense hits against the
+        # requester's own scoped get_knowledge_docs() call, not by narrowing what
+        # gets indexed here.
+        df = get_knowledge_docs(all_owners=True)
         # This store keeps one embedding per document (not per-chunk, unlike
         # hybrid_retrieval.py's proper chunking) — some real documents in this corpus
         # are 100K+ chars (a 56-page report), and embedding that whole string as one
@@ -380,13 +385,26 @@ def vector_store_retrieve(
     from src.services.hybrid_retrieval import _tokenize, rerank
 
     cand = max(top_k * 4, 20)
-    dense = vs.query(query, n=cand)
 
+    def _key(t: str, c: str) -> str:
+        return f"{t}{(c or '')[:80]}"
+
+    # get_knowledge_docs() is scoped to this requester (global + their own uploads) —
+    # the store itself is one shared collection indexed with every visitor's private
+    # docs (see reindex()'s all_owners=True), so dense hits are authorized here by
+    # checking each one against this scoped corpus, not by trusting the store's answer.
+    # Over-fetch since some raw hits get dropped by the filter below.
     docs = get_knowledge_docs()
     if language and not docs.empty and "language" in docs.columns:
         ld = docs[docs["language"] == language]
         if not ld.empty:
             docs = ld
+
+    allowed = {
+        _key(t, c) for t, c in zip(docs["title"].tolist(), docs["content"].fillna("").tolist())
+    } if not docs.empty else set()
+    raw_dense = vs.query(query, n=cand * 3)
+    dense = [d for d in raw_dense if _key(d["title"], d["content"]) in allowed][:cand]
 
     # BM25 over the same corpus (title weighted 2x, matching the in-process retriever).
     sparse: List[Tuple[str, str]] = []
@@ -406,9 +424,6 @@ def vector_store_retrieve(
     K = 60
     fused: Dict[str, float] = {}
     meta: Dict[str, Tuple[str, str]] = {}
-
-    def _key(t: str, c: str) -> str:
-        return f"{t}{(c or '')[:80]}"
 
     for rank, d in enumerate(dense):
         k = _key(d["title"], d["content"])

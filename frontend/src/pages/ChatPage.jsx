@@ -472,6 +472,7 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
 
 /* ── Right-side KPI rail (matches og-image thumbnail) ────────── */
 function ChatKPIRail({ showKPI, setShowKPI }) {
+  const { t } = useTranslation()
   const { data: kpis = [] } = useQuery({
     queryKey: ['kpis'], queryFn: () => api.getKPIs().then(r => r.data?.metrics || []),
     staleTime: 300_000, retry: 1,
@@ -480,7 +481,7 @@ function ChatKPIRail({ showKPI, setShowKPI }) {
   // Build per-metric history and pick 3 representative KPIs
   const hist = {}
   kpis.forEach(k => {
-    const name = k.metric_name || k.name || 'Unknown'
+    const name = k.metric || 'Unknown'
     ;(hist[name] = hist[name] || []).push({ period: k.period, value: k.value })
   })
   Object.keys(hist).forEach(n => {
@@ -490,15 +491,15 @@ function ChatKPIRail({ showKPI, setShowKPI }) {
 
   const seen = new Set()
   const unique = kpis.filter(k => {
-    const n = k.metric_name || k.name
+    const n = k.metric
     if (seen.has(n)) return false; seen.add(n); return true
   })
 
   // Pick representative KPIs for the rail
   const picks = [
-    unique.find(k => /revenue/i.test(k.metric_name || k.name)),
-    unique.find(k => /ebitda|margin/i.test(k.metric_name || k.name)),
-    unique.find(k => /cost|opex/i.test(k.metric_name || k.name)),
+    unique.find(k => /revenue/i.test(k.metric)),
+    unique.find(k => /ebitda|margin/i.test(k.metric)),
+    unique.find(k => /cost|opex/i.test(k.metric)),
   ].filter(Boolean).slice(0, 3)
   if (picks.length === 0) picks.push(...unique.slice(0, 3))
 
@@ -518,9 +519,12 @@ function ChatKPIRail({ showKPI, setShowKPI }) {
         <button className="btn btn-ghost btn-icon" onClick={() => setShowKPI(false)}><X size={14} /></button>
       </div>
       {picks.map((k, i) => {
-        const name = k.metric_name || k.name
+        const name = k.metric
         const data = hist[name] || []
-        const change = k.change_pct
+        // No change_pct field from the API — derive it from this metric's own history.
+        const change = data.length >= 2 && data[data.length - 2].value
+          ? ((data[data.length - 1].value - data[data.length - 2].value) / Math.abs(data[data.length - 2].value)) * 100
+          : undefined
         const up = (change ?? 0) >= 0
         return (
           <div key={i} className="rail-card">

@@ -297,6 +297,26 @@ def require_data_access(category: str):
     return data_checker
 
 
+def require_page(page: str):
+    """FastAPI dependency factory: restrict a domain data endpoint to roles whose
+    `pages` list includes it. Without this, App.jsx's ProtectedRoute was the ONLY
+    enforcement — hiding /hr, /it, /financial etc. from the nav for a role that
+    lacks that page, while the backend endpoints behind them (/api/v1/hr/summary,
+    /api/v1/it/overview, /api/v1/financial/statement, ...) accepted any
+    authenticated user regardless of role. Confirmed live: a role without "it" in
+    its pages list could still call /api/v1/it/overview directly and get full data."""
+    async def page_checker(user: TokenData = Depends(get_current_user)) -> TokenData:
+        role_def = ROLE_DEFINITIONS.get(user.role, {})
+        pages = role_def.get("pages", [])
+        if "*" in pages or page in pages:
+            return user
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"Page '{page}' not accessible for role '{user.role}'",
+        )
+    return page_checker
+
+
 def get_user_data_categories(role: str, all_categories: Optional[List[str]] = None) -> List[str]:
     """Get the data categories accessible to a given role.
 

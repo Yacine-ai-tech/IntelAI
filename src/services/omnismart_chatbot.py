@@ -669,10 +669,14 @@ def _kpi_domains() -> set:
 
 def _doc_domain(title: str) -> Optional[str]:
     """Return the business domain a *company* KPI doc belongs to, or None for
-    domain-agnostic docs (glossary definitions, untagged knowledge). Recognises the two
-    title shapes the KPI docs use — ``"Headcount (People) — 2026-12"`` and
-    ``"People KPI Summary — 2026-12"`` — so retrieval can be scoped to a persona's
-    ``data_access`` the same way the live KPI snapshot is."""
+    domain-agnostic docs (glossary definitions, untagged knowledge). Recognises three
+    title shapes: ``"Headcount (People) — 2026-12"``, ``"People KPI Summary — 2026-12"``,
+    and the ``{domain}_{period}_{lang}.md`` filename the digest-ingestion pipeline
+    uploads as ``file.filename`` (title is the raw filename, not the in-document H1) —
+    so retrieval can be scoped to a persona's ``data_access`` the same way the live KPI
+    snapshot is. Missing this third shape is exactly how the digest corpus regressed
+    into a fail-open cross-persona leak: every domain-scoped digest silently fell back
+    to "domain-agnostic" the moment its title stopped being a human-written sentence."""
     t = (title or "").lower()
     domains = _kpi_domains()
     m = re.search(r"\(([a-z& ]+)\)", t)  # "... (People)"
@@ -681,6 +685,13 @@ def _doc_domain(title: str) -> Optional[str]:
     for d in domains:  # "People KPI Summary ...", "Finance KPI Summary ..."
         if t.startswith(d + " kpi") or t.startswith(d + " summary"):
             return d
+    # "people_2025-04_en.md" / "esg_2025Q1_fr.md" — {domain}_{period}_{lang}.{ext}
+    stem = re.sub(r"\.[a-z0-9]{1,4}$", "", t)
+    parts = stem.split("_")
+    if len(parts) >= 3 and parts[-1] in ("en", "fr"):
+        period, domain = parts[-2], "_".join(parts[:-2])
+        if re.match(r"^\d{4}-\d{2}$|^\d{4}q[1-4]$", period) and domain in domains:
+            return domain
     return None
 
 
@@ -869,6 +880,7 @@ class AgentPersonaFactory:
         data_access) + relevant knowledge docs. Returns (context_text, sources)."""
         raw_sources: List[Dict[str, Any]] = []
         kpi_block: Optional[str] = None
+        hist_block: Optional[str] = None
         doc_blocks: List[Tuple[str, str]] = []
         scope = {c.lower() for c in (getattr(persona, "data_access", None) or [])}
 
@@ -939,7 +951,6 @@ class AgentPersonaFactory:
                             "title": f"Historical KPI data · {parts_period}", "type": "kpi", "relevance": 1.0,
                             "snippet": hist_block[:2000], "source": f"kpi/{parts_period}",
                         })
-                        kpi_block = (kpi_block + "\n\n" + hist_block) if kpi_block else hist_block
         except Exception as e:
             log.warning("KPI context retrieval failed: %s", e)
 
@@ -972,8 +983,14 @@ class AgentPersonaFactory:
         by_title = {s["title"].lower(): s for s in sources}
         parts: List[str] = []
         if kpi_block is not None:
-            sid = next((s["id"] for s in sources if s["type"] == "kpi"), None)
+            sid = next((s["id"] for s in sources if s["type"] == "kpi" and s["title"].startswith("Live KPI")), None)
             parts.append(f"[{sid}] LIVE KPI SNAPSHOT:\n{kpi_block}" if sid else f"LIVE KPI SNAPSHOT:\n{kpi_block}")
+        if hist_block is not None:
+            # Its own citation id — folding this into kpi_block's [sid] above mislabeled
+            # every historical fact under the LIVE snapshot's id, which names a different
+            # period and can carry a different value for the same metric (confirmed live).
+            hsid = next((s["id"] for s in sources if s["type"] == "kpi" and s["title"].startswith("Historical")), None)
+            parts.append(f"[{hsid}] HISTORICAL KPI DATA:\n{hist_block}" if hsid else f"HISTORICAL KPI DATA:\n{hist_block}")
         for title, text in doc_blocks:
             s = by_title.get(title.lower())
             if s:

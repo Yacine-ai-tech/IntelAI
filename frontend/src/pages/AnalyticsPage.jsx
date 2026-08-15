@@ -52,7 +52,7 @@ function AnalyticsInner() {
   const categories = useMemo(() => [...new Set(kpis.map(k => k.category).filter(Boolean))], [kpis])
   const selected = metric || metricNames[0] || ''
   const series = useMemo(() => kpis
-    .filter(k => (k.metric_name || k.name) === selected)
+    .filter(k => k.metric === selected)
     .map(k => ({ period: k.period, value: Math.round((k.value || 0) * 100) / 100 }))
     .sort((a, b) => (a.period || '').localeCompare(b.period || '')), [kpis, selected])
 
@@ -115,7 +115,7 @@ function AnalyticsInner() {
               <tbody>
                 {kpis.slice(0, 60).map((k, i) => (
                   <tr key={i}>
-                    <td>{k.metric_name || k.name}</td>
+                    <td>{k.metric}</td>
                     <td style={{ fontFamily: 'var(--font-mono)' }}>{typeof k.value === 'number' ? fmtNum(k.value) : k.value}</td>
                     <td><span className="badge">{k.category || '—'}</span></td>
                     <td>{k.period || '—'}</td>

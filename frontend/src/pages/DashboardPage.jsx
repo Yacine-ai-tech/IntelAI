@@ -144,21 +144,27 @@ export default function DashboardPage() {
   // Build per-metric history (last 6 periods), then take the latest reading per metric.
   const hist = {}
   kpis.forEach(k => {
-    const name = k.metric_name || k.name || 'Unknown'
+    const name = k.metric || 'Unknown'
     ;(hist[name] = hist[name] || []).push({ period: k.period, value: k.value })
   })
   Object.keys(hist).forEach(n => { hist[n].sort((a, b) => (a.period || '').localeCompare(b.period || '')); hist[n] = hist[n].slice(-6) })
 
   const seen = new Set()
   const topKPIs = kpis.filter(k => {
-    const n = k.metric_name || k.name
+    const n = k.metric
     if (seen.has(n)) return false; seen.add(n); return true
   }).slice(0, 8).map(k => {
-    const n = k.metric_name || k.name || 'Metric'
-    const isAnomaly = anomalies.some(a => (a.metric_name || a.name) === n)
+    const n = k.metric || 'Metric'
+    const isAnomaly = anomalies.some(a => a.metric === n)
+    // The API never returns a change_pct field — derive it from the metric's own
+    // history (last two periods) instead of reading a value that's always undefined.
+    const h = hist[n] || []
+    const change = h.length >= 2 && h[h.length - 2].value
+      ? ((h[h.length - 1].value - h[h.length - 2].value) / Math.abs(h[h.length - 2].value)) * 100
+      : undefined
     return {
       label: n, value: fmt(k.value),
-      change: k.change_pct, isAnomaly, category: k.category || 'default', history: hist[n] || [],
+      change, isAnomaly, category: k.category || 'default', history: h,
     }
   })
 
@@ -166,7 +172,7 @@ export default function DashboardPage() {
   const hScore = Math.round(health?.score ?? health?.health_index ?? 0)
   const hColor = hScore >= 80 ? 'var(--ok)' : hScore >= 60 ? 'var(--warn)' : 'var(--bad)'
   const rColor = riskScore >= 70 ? 'var(--ok)' : riskScore >= 50 ? 'var(--warn)' : 'var(--bad)'
-  const metricCount = new Set(kpis.map(k => k.metric_name || k.name)).size
+  const metricCount = new Set(kpis.map(k => k.metric)).size
   const askChips = ['What is our overall business health?', 'What risks should I watch right now?', 'Summarize this period’s key metrics']
 
   return (

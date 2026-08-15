@@ -108,7 +108,13 @@ async def llm_call(
         return {"choices": [{"message": {"content": "stub: litellm not installed"}}], "model": model}
 
     messages = _apply_cache_control(messages, model)
-    params: Dict[str, Any] = {"model": model, "messages": messages, "temperature": temperature, **kwargs}
+    # Same LLM_TIMEOUT contract as omnismart_chatbot.py's llm_complete() — without it an
+    # unbounded litellm call can hang indefinitely (confirmed elsewhere in this codebase
+    # as a 9-hour-hang bug in RAGeval's judge path before that one got this same fix).
+    params: Dict[str, Any] = {
+        "model": model, "messages": messages, "temperature": temperature,
+        "timeout": float(os.getenv("LLM_TIMEOUT", "30")), **kwargs,
+    }
     if max_tokens:
         params["max_tokens"] = max_tokens
     return await acompletion(**params)
@@ -132,7 +138,10 @@ def llm_call_sync(
         return {"choices": [{"message": {"content": "stub: litellm not installed"}}], "model": model}
 
     messages = _apply_cache_control(messages, model)
-    params: Dict[str, Any] = {"model": model, "messages": messages, "temperature": temperature, **kwargs}
+    params: Dict[str, Any] = {
+        "model": model, "messages": messages, "temperature": temperature,
+        "timeout": float(os.getenv("LLM_TIMEOUT", "30")), **kwargs,
+    }
     if max_tokens:
         params["max_tokens"] = max_tokens
     return completion(**params)
