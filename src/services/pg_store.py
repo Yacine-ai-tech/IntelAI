@@ -296,9 +296,17 @@ def init_pg_tables():
                 source      TEXT DEFAULT 'manual',
                 embedding   TEXT DEFAULT '',
                 language    TEXT DEFAULT 'en',
+                owner_user_id TEXT,
                 created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
             )
         """)
+        # Idempotent migration for tables created before owner_user_id existed — see the
+        # DEMO-VISITOR SCOPING block above. Without this column every uploaded document was
+        # permanently global (no way to even express "this visitor's own file"), directly
+        # contradicting demo_login()'s isolation promise ("can't see each other's ...
+        # uploaded files"). Confirmed live with a real cross-session document-content leak.
+        conn.execute("ALTER TABLE knowledge_base ADD COLUMN IF NOT EXISTS owner_user_id TEXT")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_knowledge_base_owner ON knowledge_base(owner_user_id)")
         conn.execute("""
             CREATE TABLE IF NOT EXISTS audit_trail (
                 id          SERIAL PRIMARY KEY,
@@ -814,11 +822,18 @@ def get_kpi_targets(metrics: Optional[List[str]] = None) -> "pd.DataFrame":
 # KNOWLEDGE BASE OPERATIONS
 # ═══════════════════════════════════════════════════════════
 
-def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] = None) -> None:
+def store_knowledge_docs(
+    docs_df: "pd.DataFrame",
+    replace_prefix: Optional[str] = None,
+    owner_user_id: Optional[str] = None,
+) -> None:
     """Upsert knowledge-base docs. ON CONFLICT updates ALL fields (title/content/source/
     embedding) — not just content — so a reused doc_id can never end up with a stale title
     paired to new content. ``replace_prefix`` first deletes docs whose doc_id starts with it
-    (e.g. ``"seed-"``) so a re-seed with a different doc set leaves no orphaned rows."""
+    (e.g. ``"seed-"``) so a re-seed with a different doc set leaves no orphaned rows.
+    ``owner_user_id=None`` writes global rows visible to every visitor (seeded digests,
+    glossary); passing the uploading user's id scopes these rows to them only — mirrors
+    store_kpi_metrics()'s owner_user_id contract (see get_knowledge_docs)."""
     if docs_df.empty:
         return
     # Postgres text columns reject embedded NUL (0x00) bytes — pypdf's extraction hits
@@ -835,6 +850,7 @@ def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] 
             _clean(row.get("source", "manual")),
             _clean(row.get("embedding", "")),
             _clean(row.get("language", "en")),
+            owner_user_id,
         )
         for _, row in docs_df.iterrows()
     ]
@@ -844,12 +860,12 @@ def store_knowledge_docs(docs_df: "pd.DataFrame", replace_prefix: Optional[str] 
             if replace_prefix:
                 cur.execute("DELETE FROM knowledge_base WHERE doc_id LIKE %s", [f"{replace_prefix}%"])
             cur.executemany(
-                """INSERT INTO knowledge_base (doc_id, title, content, source, embedding, language)
-                   VALUES (%s, %s, %s, %s, %s, %s)
+                """INSERT INTO knowledge_base (doc_id, title, content, source, embedding, language, owner_user_id)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s)
                    ON CONFLICT (doc_id) DO UPDATE
                    SET title = EXCLUDED.title, content = EXCLUDED.content,
                        source = EXCLUDED.source, embedding = EXCLUDED.embedding,
-                       language = EXCLUDED.language""",
+                       language = EXCLUDED.language, owner_user_id = EXCLUDED.owner_user_id""",
                 params,
             )
         conn.commit()
@@ -878,15 +894,23 @@ def seed_glossary_knowledge_docs() -> int:
         return 0
 
 
-def get_knowledge_docs(limit: int = 2000) -> "pd.DataFrame":
+def get_knowledge_docs(limit: int = 2000, all_owners: bool = False) -> "pd.DataFrame":
+    """Read knowledge-base docs. Demo-session scoping (default on, same as get_kpi_metrics):
+    a visitor sees the global/seeded corpus (owner_user_id IS NULL) plus anything they
+    personally uploaded, never another visitor's upload. ``all_owners=True`` bypasses this —
+    only for the full-corpus vector-store reindex, which must embed every document
+    (retrieval-time scoping then applies via vector_store_retrieve()'s post-filter)."""
     import pandas as pd
     conn = _get_conn()
     try:
-        rows = conn.execute(
-            "SELECT doc_id, title, content, source, embedding, language, created_at "
-            "FROM knowledge_base ORDER BY created_at ASC LIMIT %s",
-            [limit]
-        ).fetchall()
+        q = "SELECT doc_id, title, content, source, embedding, language, created_at FROM knowledge_base"
+        params: List[Any] = []
+        if not all_owners and _demo_session_scoping_enabled():
+            q += " WHERE (owner_user_id IS NULL OR owner_user_id = %s)"
+            params.append(get_request_scope_user())
+        q += " ORDER BY created_at ASC LIMIT %s"
+        params.append(limit)
+        rows = conn.execute(q, params).fetchall()
         return pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
     finally:
         conn.close()
@@ -1130,29 +1154,43 @@ def get_user_sessions(user_id: str, limit: int = 50) -> List[Dict[str, Any]]:
         conn.close()
 
 
-def update_session_title(session_id: str, title: str):
+def update_session_title(session_id: str, user_id: str, title: str) -> bool:
+    """Ownership enforced in the query itself, same as get_session_messages() — a
+    session_id belonging to a different user_id updates zero rows rather than
+    renaming that user's session. Returns whether a row was actually updated, so the
+    caller can tell "renamed" from "not yours" (confirmed live: previously any
+    authenticated user could rename or delete any other user's chat session)."""
     conn = _get_conn()
     try:
-        conn.execute("UPDATE chat_sessions SET title = %s, updated_at = NOW() WHERE id = %s", [title, session_id])
+        cur = conn.execute(
+            "UPDATE chat_sessions SET title = %s, updated_at = NOW() WHERE id = %s AND user_id = %s",
+            [title, session_id, user_id],
+        )
         conn.commit()
+        return cur.rowcount > 0
     finally:
         conn.close()
 
 
-def toggle_pin_session(session_id: str):
+def toggle_pin_session(session_id: str, user_id: str) -> bool:
     conn = _get_conn()
     try:
-        conn.execute("UPDATE chat_sessions SET is_pinned = NOT is_pinned, updated_at = NOW() WHERE id = %s", [session_id])
+        cur = conn.execute(
+            "UPDATE chat_sessions SET is_pinned = NOT is_pinned, updated_at = NOW() WHERE id = %s AND user_id = %s",
+            [session_id, user_id],
+        )
         conn.commit()
+        return cur.rowcount > 0
     finally:
         conn.close()
 
 
-def delete_session(session_id: str):
+def delete_session(session_id: str, user_id: str) -> bool:
     conn = _get_conn()
     try:
-        conn.execute("DELETE FROM chat_sessions WHERE id = %s", [session_id])
+        cur = conn.execute("DELETE FROM chat_sessions WHERE id = %s AND user_id = %s", [session_id, user_id])
         conn.commit()
+        return cur.rowcount > 0
     finally:
         conn.close()
 
