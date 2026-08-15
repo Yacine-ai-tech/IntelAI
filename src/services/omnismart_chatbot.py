@@ -1155,6 +1155,7 @@ class AgentPersonaFactory:
                 max_tokens=2048,
                 temperature=persona.temperature,
                 top_p=0.9,
+                persona_name=persona.name,
             )
             latency = int((time.time() - start) * 1000)
 
