@@ -1,179 +1,179 @@
 period,category,segment,metric_name,value,unit,direction,source
-2019-01,Logistics,US,Business Inventories,2010864.0,USD,down,fred:BUSINV
-2019-02,Logistics,US,Business Inventories,2017586.0,USD,down,fred:BUSINV
-2019-03,Logistics,US,Business Inventories,2019035.0,USD,down,fred:BUSINV
-2019-04,Logistics,US,Business Inventories,2028974.0,USD,down,fred:BUSINV
-2019-05,Logistics,US,Business Inventories,2033075.0,USD,down,fred:BUSINV
-2019-06,Logistics,US,Business Inventories,2034943.0,USD,down,fred:BUSINV
-2019-07,Logistics,US,Business Inventories,2041461.0,USD,down,fred:BUSINV
-2019-08,Logistics,US,Business Inventories,2041891.0,USD,down,fred:BUSINV
-2019-09,Logistics,US,Business Inventories,2040635.0,USD,down,fred:BUSINV
-2019-10,Logistics,US,Business Inventories,2041358.0,USD,down,fred:BUSINV
-2019-11,Logistics,US,Business Inventories,2041379.0,USD,down,fred:BUSINV
-2019-12,Logistics,US,Business Inventories,2040343.0,USD,down,fred:BUSINV
-2020-01,Logistics,US,Business Inventories,2033887.0,USD,down,fred:BUSINV
-2020-02,Logistics,US,Business Inventories,2022505.0,USD,down,fred:BUSINV
-2020-03,Logistics,US,Business Inventories,2015653.0,USD,down,fred:BUSINV
-2020-04,Logistics,US,Business Inventories,1987105.0,USD,down,fred:BUSINV
-2020-05,Logistics,US,Business Inventories,1940682.0,USD,down,fred:BUSINV
-2020-06,Logistics,US,Business Inventories,1917180.0,USD,down,fred:BUSINV
-2020-07,Logistics,US,Business Inventories,1921722.0,USD,down,fred:BUSINV
-2020-08,Logistics,US,Business Inventories,1932615.0,USD,down,fred:BUSINV
-2020-09,Logistics,US,Business Inventories,1945659.0,USD,down,fred:BUSINV
-2020-10,Logistics,US,Business Inventories,1965316.0,USD,down,fred:BUSINV
-2020-11,Logistics,US,Business Inventories,1979283.0,USD,down,fred:BUSINV
-2020-12,Logistics,US,Business Inventories,1992588.0,USD,down,fred:BUSINV
-2021-01,Logistics,US,Business Inventories,2010292.0,USD,down,fred:BUSINV
-2021-02,Logistics,US,Business Inventories,2026338.0,USD,down,fred:BUSINV
-2021-03,Logistics,US,Business Inventories,2030053.0,USD,down,fred:BUSINV
-2021-04,Logistics,US,Business Inventories,2033473.0,USD,down,fred:BUSINV
-2021-05,Logistics,US,Business Inventories,2050150.0,USD,down,fred:BUSINV
-2021-06,Logistics,US,Business Inventories,2067735.0,USD,down,fred:BUSINV
-2021-07,Logistics,US,Business Inventories,2094809.0,USD,down,fred:BUSINV
-2021-08,Logistics,US,Business Inventories,2114579.0,USD,down,fred:BUSINV
-2021-09,Logistics,US,Business Inventories,2139149.0,USD,down,fred:BUSINV
-2021-10,Logistics,US,Business Inventories,2172723.0,USD,down,fred:BUSINV
-2021-11,Logistics,US,Business Inventories,2209108.0,USD,down,fred:BUSINV
-2021-12,Logistics,US,Business Inventories,2265965.0,USD,down,fred:BUSINV
-2022-01,Logistics,US,Business Inventories,2306732.0,USD,down,fred:BUSINV
-2022-02,Logistics,US,Business Inventories,2349427.0,USD,down,fred:BUSINV
-2022-03,Logistics,US,Business Inventories,2405153.0,USD,down,fred:BUSINV
-2022-04,Logistics,US,Business Inventories,2435750.0,USD,down,fred:BUSINV
-2022-05,Logistics,US,Business Inventories,2478363.0,USD,down,fred:BUSINV
-2022-06,Logistics,US,Business Inventories,2514765.0,USD,down,fred:BUSINV
-2022-07,Logistics,US,Business Inventories,2532783.0,USD,down,fred:BUSINV
-2022-08,Logistics,US,Business Inventories,2552630.0,USD,down,fred:BUSINV
-2022-09,Logistics,US,Business Inventories,2558913.0,USD,down,fred:BUSINV
-2022-10,Logistics,US,Business Inventories,2571649.0,USD,down,fred:BUSINV
-2022-11,Logistics,US,Business Inventories,2580941.0,USD,down,fred:BUSINV
-2022-12,Logistics,US,Business Inventories,2593136.0,USD,down,fred:BUSINV
-2023-01,Logistics,US,Business Inventories,2591740.0,USD,down,fred:BUSINV
-2023-02,Logistics,US,Business Inventories,2588252.0,USD,down,fred:BUSINV
-2023-03,Logistics,US,Business Inventories,2585438.0,USD,down,fred:BUSINV
-2023-04,Logistics,US,Business Inventories,2585390.0,USD,down,fred:BUSINV
-2023-05,Logistics,US,Business Inventories,2580863.0,USD,down,fred:BUSINV
-2023-06,Logistics,US,Business Inventories,2577918.0,USD,down,fred:BUSINV
-2023-07,Logistics,US,Business Inventories,2573912.0,USD,down,fred:BUSINV
-2023-08,Logistics,US,Business Inventories,2580885.0,USD,down,fred:BUSINV
-2023-09,Logistics,US,Business Inventories,2587291.0,USD,down,fred:BUSINV
-2023-10,Logistics,US,Business Inventories,2583446.0,USD,down,fred:BUSINV
-2023-11,Logistics,US,Business Inventories,2577995.0,USD,down,fred:BUSINV
-2023-12,Logistics,US,Business Inventories,2591108.0,USD,down,fred:BUSINV
-2024-01,Logistics,US,Business Inventories,2585336.0,USD,down,fred:BUSINV
-2024-02,Logistics,US,Business Inventories,2594839.0,USD,down,fred:BUSINV
-2024-03,Logistics,US,Business Inventories,2590962.0,USD,down,fred:BUSINV
-2024-04,Logistics,US,Business Inventories,2599646.0,USD,down,fred:BUSINV
-2024-05,Logistics,US,Business Inventories,2611183.0,USD,down,fred:BUSINV
-2024-06,Logistics,US,Business Inventories,2618815.0,USD,down,fred:BUSINV
-2024-07,Logistics,US,Business Inventories,2628273.0,USD,down,fred:BUSINV
-2024-08,Logistics,US,Business Inventories,2635958.0,USD,down,fred:BUSINV
-2024-09,Logistics,US,Business Inventories,2637086.0,USD,down,fred:BUSINV
-2024-10,Logistics,US,Business Inventories,2640959.0,USD,down,fred:BUSINV
-2024-11,Logistics,US,Business Inventories,2646596.0,USD,down,fred:BUSINV
-2024-12,Logistics,US,Business Inventories,2638369.0,USD,down,fred:BUSINV
-2025-01,Logistics,US,Business Inventories,2649512.0,USD,down,fred:BUSINV
-2025-02,Logistics,US,Business Inventories,2653219.0,USD,down,fred:BUSINV
-2025-03,Logistics,US,Business Inventories,2656006.0,USD,down,fred:BUSINV
-2025-04,Logistics,US,Business Inventories,2654533.0,USD,down,fred:BUSINV
-2025-05,Logistics,US,Business Inventories,2654351.0,USD,down,fred:BUSINV
-2025-06,Logistics,US,Business Inventories,2660978.0,USD,down,fred:BUSINV
-2025-07,Logistics,US,Business Inventories,2664749.0,USD,down,fred:BUSINV
-2025-08,Logistics,US,Business Inventories,2663591.0,USD,down,fred:BUSINV
-2025-09,Logistics,US,Business Inventories,2670511.0,USD,down,fred:BUSINV
-2025-10,Logistics,US,Business Inventories,2676595.0,USD,down,fred:BUSINV
-2025-11,Logistics,US,Business Inventories,2677084.0,USD,down,fred:BUSINV
-2025-12,Logistics,US,Business Inventories,2676717.0,USD,down,fred:BUSINV
-2026-01,Logistics,US,Business Inventories,2676882.0,USD,down,fred:BUSINV
-2026-02,Logistics,US,Business Inventories,2686289.0,USD,down,fred:BUSINV
-2026-03,Logistics,US,Business Inventories,2712902.0,USD,down,fred:BUSINV
-2026-04,Logistics,US,Business Inventories,2728142.0,USD,down,fred:BUSINV
-2026-05,Logistics,US,Business Inventories,2736158.0,USD,down,fred:BUSINV
-2019-01,Logistics,US,Freight Transportation Index,0.2,index,up,fred:TSIFRGHTC
-2019-02,Logistics,US,Freight Transportation Index,-0.8,index,up,fred:TSIFRGHTC
-2019-03,Logistics,US,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
-2019-04,Logistics,US,Freight Transportation Index,0.9,index,up,fred:TSIFRGHTC
-2019-05,Logistics,US,Freight Transportation Index,-0.1,index,up,fred:TSIFRGHTC
-2019-06,Logistics,US,Freight Transportation Index,-0.6,index,up,fred:TSIFRGHTC
-2019-07,Logistics,US,Freight Transportation Index,1.5,index,up,fred:TSIFRGHTC
-2019-08,Logistics,US,Freight Transportation Index,1.4,index,up,fred:TSIFRGHTC
-2019-09,Logistics,US,Freight Transportation Index,-2.5,index,up,fred:TSIFRGHTC
-2019-10,Logistics,US,Freight Transportation Index,0.0,index,up,fred:TSIFRGHTC
-2019-11,Logistics,US,Freight Transportation Index,-0.3,index,up,fred:TSIFRGHTC
-2019-12,Logistics,US,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
-2020-01,Logistics,US,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
-2020-02,Logistics,US,Freight Transportation Index,-0.3,index,up,fred:TSIFRGHTC
-2020-03,Logistics,US,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
-2020-04,Logistics,US,Freight Transportation Index,-7.6,index,up,fred:TSIFRGHTC
-2020-05,Logistics,US,Freight Transportation Index,1.4,index,up,fred:TSIFRGHTC
-2020-06,Logistics,US,Freight Transportation Index,2.4,index,up,fred:TSIFRGHTC
-2020-07,Logistics,US,Freight Transportation Index,3.1,index,up,fred:TSIFRGHTC
-2020-08,Logistics,US,Freight Transportation Index,-1.3,index,up,fred:TSIFRGHTC
-2020-09,Logistics,US,Freight Transportation Index,0.3,index,up,fred:TSIFRGHTC
-2020-10,Logistics,US,Freight Transportation Index,0.7,index,up,fred:TSIFRGHTC
-2020-11,Logistics,US,Freight Transportation Index,0.2,index,up,fred:TSIFRGHTC
-2020-12,Logistics,US,Freight Transportation Index,1.2,index,up,fred:TSIFRGHTC
-2021-01,Logistics,US,Freight Transportation Index,1.6,index,up,fred:TSIFRGHTC
-2021-02,Logistics,US,Freight Transportation Index,-3.2,index,up,fred:TSIFRGHTC
-2021-03,Logistics,US,Freight Transportation Index,2.2,index,up,fred:TSIFRGHTC
-2021-04,Logistics,US,Freight Transportation Index,1.2,index,up,fred:TSIFRGHTC
-2021-05,Logistics,US,Freight Transportation Index,-0.7,index,up,fred:TSIFRGHTC
-2021-06,Logistics,US,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
-2021-07,Logistics,US,Freight Transportation Index,-0.8,index,up,fred:TSIFRGHTC
-2021-08,Logistics,US,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
-2021-09,Logistics,US,Freight Transportation Index,0.8,index,up,fred:TSIFRGHTC
-2021-10,Logistics,US,Freight Transportation Index,1.3,index,up,fred:TSIFRGHTC
-2021-11,Logistics,US,Freight Transportation Index,0.8,index,up,fred:TSIFRGHTC
-2021-12,Logistics,US,Freight Transportation Index,0.4,index,up,fred:TSIFRGHTC
-2022-01,Logistics,US,Freight Transportation Index,0.9,index,up,fred:TSIFRGHTC
-2022-02,Logistics,US,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
-2022-03,Logistics,US,Freight Transportation Index,1.3,index,up,fred:TSIFRGHTC
-2022-04,Logistics,US,Freight Transportation Index,-0.6,index,up,fred:TSIFRGHTC
-2022-05,Logistics,US,Freight Transportation Index,-0.2,index,up,fred:TSIFRGHTC
-2022-06,Logistics,US,Freight Transportation Index,0.2,index,up,fred:TSIFRGHTC
-2022-07,Logistics,US,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
-2022-08,Logistics,US,Freight Transportation Index,0.5,index,up,fred:TSIFRGHTC
-2022-09,Logistics,US,Freight Transportation Index,0.4,index,up,fred:TSIFRGHTC
-2022-10,Logistics,US,Freight Transportation Index,-1.0,index,up,fred:TSIFRGHTC
-2022-11,Logistics,US,Freight Transportation Index,-1.7,index,up,fred:TSIFRGHTC
-2022-12,Logistics,US,Freight Transportation Index,0.5,index,up,fred:TSIFRGHTC
-2023-01,Logistics,US,Freight Transportation Index,1.9,index,up,fred:TSIFRGHTC
-2023-02,Logistics,US,Freight Transportation Index,0.8,index,up,fred:TSIFRGHTC
-2023-03,Logistics,US,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
-2023-04,Logistics,US,Freight Transportation Index,-0.5,index,up,fred:TSIFRGHTC
-2023-05,Logistics,US,Freight Transportation Index,-0.1,index,up,fred:TSIFRGHTC
-2023-06,Logistics,US,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
-2023-07,Logistics,US,Freight Transportation Index,0.5,index,up,fred:TSIFRGHTC
-2023-08,Logistics,US,Freight Transportation Index,-0.5,index,up,fred:TSIFRGHTC
-2023-09,Logistics,US,Freight Transportation Index,0.3,index,up,fred:TSIFRGHTC
-2023-10,Logistics,US,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
-2023-11,Logistics,US,Freight Transportation Index,-0.2,index,up,fred:TSIFRGHTC
-2023-12,Logistics,US,Freight Transportation Index,0.8,index,up,fred:TSIFRGHTC
-2024-01,Logistics,US,Freight Transportation Index,-2.5,index,up,fred:TSIFRGHTC
-2024-02,Logistics,US,Freight Transportation Index,1.2,index,up,fred:TSIFRGHTC
-2024-03,Logistics,US,Freight Transportation Index,0.0,index,up,fred:TSIFRGHTC
-2024-04,Logistics,US,Freight Transportation Index,-1.0,index,up,fred:TSIFRGHTC
-2024-05,Logistics,US,Freight Transportation Index,2.4,index,up,fred:TSIFRGHTC
-2024-06,Logistics,US,Freight Transportation Index,-0.5,index,up,fred:TSIFRGHTC
-2024-07,Logistics,US,Freight Transportation Index,-0.4,index,up,fred:TSIFRGHTC
-2024-08,Logistics,US,Freight Transportation Index,1.0,index,up,fred:TSIFRGHTC
-2024-09,Logistics,US,Freight Transportation Index,-1.1,index,up,fred:TSIFRGHTC
-2024-10,Logistics,US,Freight Transportation Index,0.7,index,up,fred:TSIFRGHTC
-2024-11,Logistics,US,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
-2024-12,Logistics,US,Freight Transportation Index,0.2,index,up,fred:TSIFRGHTC
-2025-01,Logistics,US,Freight Transportation Index,0.2,index,up,fred:TSIFRGHTC
-2025-02,Logistics,US,Freight Transportation Index,-0.6,index,up,fred:TSIFRGHTC
-2025-03,Logistics,US,Freight Transportation Index,0.6,index,up,fred:TSIFRGHTC
-2025-04,Logistics,US,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
-2025-05,Logistics,US,Freight Transportation Index,-0.5,index,up,fred:TSIFRGHTC
-2025-06,Logistics,US,Freight Transportation Index,-0.1,index,up,fred:TSIFRGHTC
-2025-07,Logistics,US,Freight Transportation Index,1.3,index,up,fred:TSIFRGHTC
-2025-08,Logistics,US,Freight Transportation Index,0.3,index,up,fred:TSIFRGHTC
-2025-09,Logistics,US,Freight Transportation Index,-0.7,index,up,fred:TSIFRGHTC
-2025-10,Logistics,US,Freight Transportation Index,-1.0,index,up,fred:TSIFRGHTC
-2025-11,Logistics,US,Freight Transportation Index,0.4,index,up,fred:TSIFRGHTC
-2025-12,Logistics,US,Freight Transportation Index,-0.2,index,up,fred:TSIFRGHTC
-2026-01,Logistics,US,Freight Transportation Index,-0.6,index,up,fred:TSIFRGHTC
-2026-02,Logistics,US,Freight Transportation Index,1.6,index,up,fred:TSIFRGHTC
-2026-03,Logistics,US,Freight Transportation Index,0.7,index,up,fred:TSIFRGHTC
-2026-04,Logistics,US,Freight Transportation Index,-0.6,index,up,fred:TSIFRGHTC
-2026-05,Logistics,US,Freight Transportation Index,-1.3,index,up,fred:TSIFRGHTC
+2019-01,Logistics,External — US Market Context,Business Inventories,2010864.0,USD,down,fred:BUSINV
+2019-02,Logistics,External — US Market Context,Business Inventories,2017586.0,USD,down,fred:BUSINV
+2019-03,Logistics,External — US Market Context,Business Inventories,2019035.0,USD,down,fred:BUSINV
+2019-04,Logistics,External — US Market Context,Business Inventories,2028974.0,USD,down,fred:BUSINV
+2019-05,Logistics,External — US Market Context,Business Inventories,2033075.0,USD,down,fred:BUSINV
+2019-06,Logistics,External — US Market Context,Business Inventories,2034943.0,USD,down,fred:BUSINV
+2019-07,Logistics,External — US Market Context,Business Inventories,2041461.0,USD,down,fred:BUSINV
+2019-08,Logistics,External — US Market Context,Business Inventories,2041891.0,USD,down,fred:BUSINV
+2019-09,Logistics,External — US Market Context,Business Inventories,2040635.0,USD,down,fred:BUSINV
+2019-10,Logistics,External — US Market Context,Business Inventories,2041358.0,USD,down,fred:BUSINV
+2019-11,Logistics,External — US Market Context,Business Inventories,2041379.0,USD,down,fred:BUSINV
+2019-12,Logistics,External — US Market Context,Business Inventories,2040343.0,USD,down,fred:BUSINV
+2020-01,Logistics,External — US Market Context,Business Inventories,2033887.0,USD,down,fred:BUSINV
+2020-02,Logistics,External — US Market Context,Business Inventories,2022505.0,USD,down,fred:BUSINV
+2020-03,Logistics,External — US Market Context,Business Inventories,2015653.0,USD,down,fred:BUSINV
+2020-04,Logistics,External — US Market Context,Business Inventories,1987105.0,USD,down,fred:BUSINV
+2020-05,Logistics,External — US Market Context,Business Inventories,1940682.0,USD,down,fred:BUSINV
+2020-06,Logistics,External — US Market Context,Business Inventories,1917180.0,USD,down,fred:BUSINV
+2020-07,Logistics,External — US Market Context,Business Inventories,1921722.0,USD,down,fred:BUSINV
+2020-08,Logistics,External — US Market Context,Business Inventories,1932615.0,USD,down,fred:BUSINV
+2020-09,Logistics,External — US Market Context,Business Inventories,1945659.0,USD,down,fred:BUSINV
+2020-10,Logistics,External — US Market Context,Business Inventories,1965316.0,USD,down,fred:BUSINV
+2020-11,Logistics,External — US Market Context,Business Inventories,1979283.0,USD,down,fred:BUSINV
+2020-12,Logistics,External — US Market Context,Business Inventories,1992588.0,USD,down,fred:BUSINV
+2021-01,Logistics,External — US Market Context,Business Inventories,2010292.0,USD,down,fred:BUSINV
+2021-02,Logistics,External — US Market Context,Business Inventories,2026338.0,USD,down,fred:BUSINV
+2021-03,Logistics,External — US Market Context,Business Inventories,2030053.0,USD,down,fred:BUSINV
+2021-04,Logistics,External — US Market Context,Business Inventories,2033473.0,USD,down,fred:BUSINV
+2021-05,Logistics,External — US Market Context,Business Inventories,2050150.0,USD,down,fred:BUSINV
+2021-06,Logistics,External — US Market Context,Business Inventories,2067735.0,USD,down,fred:BUSINV
+2021-07,Logistics,External — US Market Context,Business Inventories,2094809.0,USD,down,fred:BUSINV
+2021-08,Logistics,External — US Market Context,Business Inventories,2114579.0,USD,down,fred:BUSINV
+2021-09,Logistics,External — US Market Context,Business Inventories,2139149.0,USD,down,fred:BUSINV
+2021-10,Logistics,External — US Market Context,Business Inventories,2172723.0,USD,down,fred:BUSINV
+2021-11,Logistics,External — US Market Context,Business Inventories,2209108.0,USD,down,fred:BUSINV
+2021-12,Logistics,External — US Market Context,Business Inventories,2265965.0,USD,down,fred:BUSINV
+2022-01,Logistics,External — US Market Context,Business Inventories,2306732.0,USD,down,fred:BUSINV
+2022-02,Logistics,External — US Market Context,Business Inventories,2349427.0,USD,down,fred:BUSINV
+2022-03,Logistics,External — US Market Context,Business Inventories,2405153.0,USD,down,fred:BUSINV
+2022-04,Logistics,External — US Market Context,Business Inventories,2435750.0,USD,down,fred:BUSINV
+2022-05,Logistics,External — US Market Context,Business Inventories,2478363.0,USD,down,fred:BUSINV
+2022-06,Logistics,External — US Market Context,Business Inventories,2514765.0,USD,down,fred:BUSINV
+2022-07,Logistics,External — US Market Context,Business Inventories,2532783.0,USD,down,fred:BUSINV
+2022-08,Logistics,External — US Market Context,Business Inventories,2552630.0,USD,down,fred:BUSINV
+2022-09,Logistics,External — US Market Context,Business Inventories,2558913.0,USD,down,fred:BUSINV
+2022-10,Logistics,External — US Market Context,Business Inventories,2571649.0,USD,down,fred:BUSINV
+2022-11,Logistics,External — US Market Context,Business Inventories,2580941.0,USD,down,fred:BUSINV
+2022-12,Logistics,External — US Market Context,Business Inventories,2593136.0,USD,down,fred:BUSINV
+2023-01,Logistics,External — US Market Context,Business Inventories,2591740.0,USD,down,fred:BUSINV
+2023-02,Logistics,External — US Market Context,Business Inventories,2588252.0,USD,down,fred:BUSINV
+2023-03,Logistics,External — US Market Context,Business Inventories,2585438.0,USD,down,fred:BUSINV
+2023-04,Logistics,External — US Market Context,Business Inventories,2585390.0,USD,down,fred:BUSINV
+2023-05,Logistics,External — US Market Context,Business Inventories,2580863.0,USD,down,fred:BUSINV
+2023-06,Logistics,External — US Market Context,Business Inventories,2577918.0,USD,down,fred:BUSINV
+2023-07,Logistics,External — US Market Context,Business Inventories,2573912.0,USD,down,fred:BUSINV
+2023-08,Logistics,External — US Market Context,Business Inventories,2580885.0,USD,down,fred:BUSINV
+2023-09,Logistics,External — US Market Context,Business Inventories,2587291.0,USD,down,fred:BUSINV
+2023-10,Logistics,External — US Market Context,Business Inventories,2583446.0,USD,down,fred:BUSINV
+2023-11,Logistics,External — US Market Context,Business Inventories,2577995.0,USD,down,fred:BUSINV
+2023-12,Logistics,External — US Market Context,Business Inventories,2591108.0,USD,down,fred:BUSINV
+2024-01,Logistics,External — US Market Context,Business Inventories,2585336.0,USD,down,fred:BUSINV
+2024-02,Logistics,External — US Market Context,Business Inventories,2594839.0,USD,down,fred:BUSINV
+2024-03,Logistics,External — US Market Context,Business Inventories,2590962.0,USD,down,fred:BUSINV
+2024-04,Logistics,External — US Market Context,Business Inventories,2599646.0,USD,down,fred:BUSINV
+2024-05,Logistics,External — US Market Context,Business Inventories,2611183.0,USD,down,fred:BUSINV
+2024-06,Logistics,External — US Market Context,Business Inventories,2618815.0,USD,down,fred:BUSINV
+2024-07,Logistics,External — US Market Context,Business Inventories,2628273.0,USD,down,fred:BUSINV
+2024-08,Logistics,External — US Market Context,Business Inventories,2635958.0,USD,down,fred:BUSINV
+2024-09,Logistics,External — US Market Context,Business Inventories,2637086.0,USD,down,fred:BUSINV
+2024-10,Logistics,External — US Market Context,Business Inventories,2640959.0,USD,down,fred:BUSINV
+2024-11,Logistics,External — US Market Context,Business Inventories,2646596.0,USD,down,fred:BUSINV
+2024-12,Logistics,External — US Market Context,Business Inventories,2638369.0,USD,down,fred:BUSINV
+2025-01,Logistics,External — US Market Context,Business Inventories,2649512.0,USD,down,fred:BUSINV
+2025-02,Logistics,External — US Market Context,Business Inventories,2653219.0,USD,down,fred:BUSINV
+2025-03,Logistics,External — US Market Context,Business Inventories,2656006.0,USD,down,fred:BUSINV
+2025-04,Logistics,External — US Market Context,Business Inventories,2654533.0,USD,down,fred:BUSINV
+2025-05,Logistics,External — US Market Context,Business Inventories,2654351.0,USD,down,fred:BUSINV
+2025-06,Logistics,External — US Market Context,Business Inventories,2660978.0,USD,down,fred:BUSINV
+2025-07,Logistics,External — US Market Context,Business Inventories,2664749.0,USD,down,fred:BUSINV
+2025-08,Logistics,External — US Market Context,Business Inventories,2663591.0,USD,down,fred:BUSINV
+2025-09,Logistics,External — US Market Context,Business Inventories,2670511.0,USD,down,fred:BUSINV
+2025-10,Logistics,External — US Market Context,Business Inventories,2676595.0,USD,down,fred:BUSINV
+2025-11,Logistics,External — US Market Context,Business Inventories,2677084.0,USD,down,fred:BUSINV
+2025-12,Logistics,External — US Market Context,Business Inventories,2676717.0,USD,down,fred:BUSINV
+2026-01,Logistics,External — US Market Context,Business Inventories,2676882.0,USD,down,fred:BUSINV
+2026-02,Logistics,External — US Market Context,Business Inventories,2686289.0,USD,down,fred:BUSINV
+2026-03,Logistics,External — US Market Context,Business Inventories,2712902.0,USD,down,fred:BUSINV
+2026-04,Logistics,External — US Market Context,Business Inventories,2728142.0,USD,down,fred:BUSINV
+2026-05,Logistics,External — US Market Context,Business Inventories,2736158.0,USD,down,fred:BUSINV
+2019-01,Logistics,External — US Market Context,Freight Transportation Index,0.2,index,up,fred:TSIFRGHTC
+2019-02,Logistics,External — US Market Context,Freight Transportation Index,-0.8,index,up,fred:TSIFRGHTC
+2019-03,Logistics,External — US Market Context,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
+2019-04,Logistics,External — US Market Context,Freight Transportation Index,0.9,index,up,fred:TSIFRGHTC
+2019-05,Logistics,External — US Market Context,Freight Transportation Index,-0.1,index,up,fred:TSIFRGHTC
+2019-06,Logistics,External — US Market Context,Freight Transportation Index,-0.6,index,up,fred:TSIFRGHTC
+2019-07,Logistics,External — US Market Context,Freight Transportation Index,1.5,index,up,fred:TSIFRGHTC
+2019-08,Logistics,External — US Market Context,Freight Transportation Index,1.4,index,up,fred:TSIFRGHTC
+2019-09,Logistics,External — US Market Context,Freight Transportation Index,-2.5,index,up,fred:TSIFRGHTC
+2019-10,Logistics,External — US Market Context,Freight Transportation Index,0.0,index,up,fred:TSIFRGHTC
+2019-11,Logistics,External — US Market Context,Freight Transportation Index,-0.3,index,up,fred:TSIFRGHTC
+2019-12,Logistics,External — US Market Context,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
+2020-01,Logistics,External — US Market Context,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
+2020-02,Logistics,External — US Market Context,Freight Transportation Index,-0.3,index,up,fred:TSIFRGHTC
+2020-03,Logistics,External — US Market Context,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
+2020-04,Logistics,External — US Market Context,Freight Transportation Index,-7.6,index,up,fred:TSIFRGHTC
+2020-05,Logistics,External — US Market Context,Freight Transportation Index,1.4,index,up,fred:TSIFRGHTC
+2020-06,Logistics,External — US Market Context,Freight Transportation Index,2.4,index,up,fred:TSIFRGHTC
+2020-07,Logistics,External — US Market Context,Freight Transportation Index,3.1,index,up,fred:TSIFRGHTC
+2020-08,Logistics,External — US Market Context,Freight Transportation Index,-1.3,index,up,fred:TSIFRGHTC
+2020-09,Logistics,External — US Market Context,Freight Transportation Index,0.3,index,up,fred:TSIFRGHTC
+2020-10,Logistics,External — US Market Context,Freight Transportation Index,0.7,index,up,fred:TSIFRGHTC
+2020-11,Logistics,External — US Market Context,Freight Transportation Index,0.2,index,up,fred:TSIFRGHTC
+2020-12,Logistics,External — US Market Context,Freight Transportation Index,1.2,index,up,fred:TSIFRGHTC
+2021-01,Logistics,External — US Market Context,Freight Transportation Index,1.6,index,up,fred:TSIFRGHTC
+2021-02,Logistics,External — US Market Context,Freight Transportation Index,-3.2,index,up,fred:TSIFRGHTC
+2021-03,Logistics,External — US Market Context,Freight Transportation Index,2.2,index,up,fred:TSIFRGHTC
+2021-04,Logistics,External — US Market Context,Freight Transportation Index,1.2,index,up,fred:TSIFRGHTC
+2021-05,Logistics,External — US Market Context,Freight Transportation Index,-0.7,index,up,fred:TSIFRGHTC
+2021-06,Logistics,External — US Market Context,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
+2021-07,Logistics,External — US Market Context,Freight Transportation Index,-0.8,index,up,fred:TSIFRGHTC
+2021-08,Logistics,External — US Market Context,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
+2021-09,Logistics,External — US Market Context,Freight Transportation Index,0.8,index,up,fred:TSIFRGHTC
+2021-10,Logistics,External — US Market Context,Freight Transportation Index,1.3,index,up,fred:TSIFRGHTC
+2021-11,Logistics,External — US Market Context,Freight Transportation Index,0.8,index,up,fred:TSIFRGHTC
+2021-12,Logistics,External — US Market Context,Freight Transportation Index,0.4,index,up,fred:TSIFRGHTC
+2022-01,Logistics,External — US Market Context,Freight Transportation Index,0.9,index,up,fred:TSIFRGHTC
+2022-02,Logistics,External — US Market Context,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
+2022-03,Logistics,External — US Market Context,Freight Transportation Index,1.3,index,up,fred:TSIFRGHTC
+2022-04,Logistics,External — US Market Context,Freight Transportation Index,-0.6,index,up,fred:TSIFRGHTC
+2022-05,Logistics,External — US Market Context,Freight Transportation Index,-0.2,index,up,fred:TSIFRGHTC
+2022-06,Logistics,External — US Market Context,Freight Transportation Index,0.2,index,up,fred:TSIFRGHTC
+2022-07,Logistics,External — US Market Context,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
+2022-08,Logistics,External — US Market Context,Freight Transportation Index,0.5,index,up,fred:TSIFRGHTC
+2022-09,Logistics,External — US Market Context,Freight Transportation Index,0.4,index,up,fred:TSIFRGHTC
+2022-10,Logistics,External — US Market Context,Freight Transportation Index,-1.0,index,up,fred:TSIFRGHTC
+2022-11,Logistics,External — US Market Context,Freight Transportation Index,-1.7,index,up,fred:TSIFRGHTC
+2022-12,Logistics,External — US Market Context,Freight Transportation Index,0.5,index,up,fred:TSIFRGHTC
+2023-01,Logistics,External — US Market Context,Freight Transportation Index,1.9,index,up,fred:TSIFRGHTC
+2023-02,Logistics,External — US Market Context,Freight Transportation Index,0.8,index,up,fred:TSIFRGHTC
+2023-03,Logistics,External — US Market Context,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
+2023-04,Logistics,External — US Market Context,Freight Transportation Index,-0.5,index,up,fred:TSIFRGHTC
+2023-05,Logistics,External — US Market Context,Freight Transportation Index,-0.1,index,up,fred:TSIFRGHTC
+2023-06,Logistics,External — US Market Context,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
+2023-07,Logistics,External — US Market Context,Freight Transportation Index,0.5,index,up,fred:TSIFRGHTC
+2023-08,Logistics,External — US Market Context,Freight Transportation Index,-0.5,index,up,fred:TSIFRGHTC
+2023-09,Logistics,External — US Market Context,Freight Transportation Index,0.3,index,up,fred:TSIFRGHTC
+2023-10,Logistics,External — US Market Context,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
+2023-11,Logistics,External — US Market Context,Freight Transportation Index,-0.2,index,up,fred:TSIFRGHTC
+2023-12,Logistics,External — US Market Context,Freight Transportation Index,0.8,index,up,fred:TSIFRGHTC
+2024-01,Logistics,External — US Market Context,Freight Transportation Index,-2.5,index,up,fred:TSIFRGHTC
+2024-02,Logistics,External — US Market Context,Freight Transportation Index,1.2,index,up,fred:TSIFRGHTC
+2024-03,Logistics,External — US Market Context,Freight Transportation Index,0.0,index,up,fred:TSIFRGHTC
+2024-04,Logistics,External — US Market Context,Freight Transportation Index,-1.0,index,up,fred:TSIFRGHTC
+2024-05,Logistics,External — US Market Context,Freight Transportation Index,2.4,index,up,fred:TSIFRGHTC
+2024-06,Logistics,External — US Market Context,Freight Transportation Index,-0.5,index,up,fred:TSIFRGHTC
+2024-07,Logistics,External — US Market Context,Freight Transportation Index,-0.4,index,up,fred:TSIFRGHTC
+2024-08,Logistics,External — US Market Context,Freight Transportation Index,1.0,index,up,fred:TSIFRGHTC
+2024-09,Logistics,External — US Market Context,Freight Transportation Index,-1.1,index,up,fred:TSIFRGHTC
+2024-10,Logistics,External — US Market Context,Freight Transportation Index,0.7,index,up,fred:TSIFRGHTC
+2024-11,Logistics,External — US Market Context,Freight Transportation Index,-0.9,index,up,fred:TSIFRGHTC
+2024-12,Logistics,External — US Market Context,Freight Transportation Index,0.2,index,up,fred:TSIFRGHTC
+2025-01,Logistics,External — US Market Context,Freight Transportation Index,0.2,index,up,fred:TSIFRGHTC
+2025-02,Logistics,External — US Market Context,Freight Transportation Index,-0.6,index,up,fred:TSIFRGHTC
+2025-03,Logistics,External — US Market Context,Freight Transportation Index,0.6,index,up,fred:TSIFRGHTC
+2025-04,Logistics,External — US Market Context,Freight Transportation Index,0.1,index,up,fred:TSIFRGHTC
+2025-05,Logistics,External — US Market Context,Freight Transportation Index,-0.5,index,up,fred:TSIFRGHTC
+2025-06,Logistics,External — US Market Context,Freight Transportation Index,-0.1,index,up,fred:TSIFRGHTC
+2025-07,Logistics,External — US Market Context,Freight Transportation Index,1.3,index,up,fred:TSIFRGHTC
+2025-08,Logistics,External — US Market Context,Freight Transportation Index,0.3,index,up,fred:TSIFRGHTC
+2025-09,Logistics,External — US Market Context,Freight Transportation Index,-0.7,index,up,fred:TSIFRGHTC
+2025-10,Logistics,External — US Market Context,Freight Transportation Index,-1.0,index,up,fred:TSIFRGHTC
+2025-11,Logistics,External — US Market Context,Freight Transportation Index,0.4,index,up,fred:TSIFRGHTC
+2025-12,Logistics,External — US Market Context,Freight Transportation Index,-0.2,index,up,fred:TSIFRGHTC
+2026-01,Logistics,External — US Market Context,Freight Transportation Index,-0.6,index,up,fred:TSIFRGHTC
+2026-02,Logistics,External — US Market Context,Freight Transportation Index,1.6,index,up,fred:TSIFRGHTC
+2026-03,Logistics,External — US Market Context,Freight Transportation Index,0.7,index,up,fred:TSIFRGHTC
+2026-04,Logistics,External — US Market Context,Freight Transportation Index,-0.6,index,up,fred:TSIFRGHTC
+2026-05,Logistics,External — US Market Context,Freight Transportation Index,-1.3,index,up,fred:TSIFRGHTC

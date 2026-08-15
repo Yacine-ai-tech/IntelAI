@@ -7,89 +7,108 @@ The short version: **the KPI baseline is real published data, not generated.** E
 row in `kpi_metrics` carries the identifier of the statistical series it came from, so
 any figure on a dashboard can be traced to a publisher and re-checked by a third party.
 
-## 1. Two data sources, kept clearly separate
+## The virtual company
 
-IntelAI ships with two ways to populate its database, and they answer different needs:
+IntelAI's seeded data describes one company: a **West African telecom group,
+headquartered in Senegal**, operating bilingually in **French and English** — matching
+Sonatel/Orange Group, whose own published result communiqués are the one genuinely
+real per-company data source used (Finance domain). Every domain's `segment` field
+says exactly what it represents:
 
-- **A real KPI + document pipeline** (this document, §2–5) — public economic series,
-  filings and reports, pulled from their original publishers with per-row provenance.
-  This is what production runs on.
-- **A synthetic scenario generator** (§6) — a modelled company with configurable health
-  scenarios (`healthy`, `declining_financial`, `high_churn_crisis`, ...), useful for
-  offline demos and for exercising the pipeline without network access.
+| Segment | Meaning |
+|---|---|
+| `Sonatel Group` | The company's own real, published figures (Finance) |
+| `Senegal`, `Africa Western and Central`, `World` | The company's real ESG/environmental footprint (Senegal + its region), plus a global benchmark |
+| `External — US Market Context` | Real published US macro statistics (FRED), kept as genuine external planning context — **not** the company's own measured output |
+| `Global` | NVD's worldwide published-CVE sample (IT) |
+| `IBM Sample` | The IBM HR attrition survey's own cross-section (People) |
 
-Every row from the generator is labelled `source='seed_*'` so the two can never be
-confused, and a single query separates them (see §6). Nothing generated is presented on
-a dashboard as a measurement.
+**Known limitation, stated rather than papered over:** FRED — the source for most of
+Finance/Growth/Operations/Logistics/IT's real monthly series — publishes only US
+national statistics; no West African equivalent exists at that frequency or coverage.
+Those series are kept as real, genuinely-published macro context (a real multinational
+operator's planning does track US/global rates, employment and demand indicators)
+rather than removed or relabeled as the company's own — see the `External — US Market
+Context` segment above, and the explicit note it triggers in every digest document (§4).
 
-## 2. The real KPI layer
+## One script, going through the real API
 
-`scripts/fetch_real_kpis.py` downloads the sources; `scripts/build_real_kpis.py` turns
-them into KPI rows; `scripts/seed_real_kpis_via_api.py` loads them through the public
-API. Nothing in that chain generates, interpolates, smooths or extends a value: where a
-publisher has no observation for a period, no row is written.
+**`scripts/seed_data.py`** is the only data-seeding script. Every stage that writes
+data does it through IntelAI's own public API — `POST /api/v1/ingest/csv`,
+`/api/v1/ingest/document`, `/api/v1/ingest/audio` — the same endpoints, auth,
+validation and audit trail a real user's UI upload hits. Nothing generates,
+interpolates, smooths or extends a value: where a publisher has no observation for a
+period, no row is written.
 
 ```bash
-python scripts/fetch_real_kpis.py          # download to data/<Domain>/
-python scripts/build_real_kpis.py          # -> data/real_kpis/<domain>_real.csv
-python scripts/seed_real_kpis_via_api.py   # -> POST /api/v1/ingest/csv (global scope)
+python scripts/seed_data.py                        # everything, using cached raw data
+python scripts/seed_data.py --refetch               # re-download from source first
+python scripts/seed_data.py --only build,seed-kpis  # rebuild + reseed KPIs only
+python scripts/seed_data.py --purge --only corpus   # wipe + re-ingest the document corpus
+python scripts/seed_data.py --dry-run               # describe every stage, write nothing
 ```
 
-**Measured result: 2,070 rows, 7 domains, 26 distinct sources, 0 rows without provenance.**
+Stages, in order:
+
+1. **`fetch`** — download raw sources to `data/<Domain>/` (skipped if already cached;
+   `--refetch` forces a re-download).
+2. **`build`** — turn the raw sources into per-domain CSVs in `data/real_kpis/`.
+3. **`seed-kpis`** — `POST` each CSV to `/api/v1/ingest/csv` with `global_scope=true`
+   (the shared baseline, NULL owner — restricted to admins).
+4. **`digests`** — write bilingual EN/FR knowledge-base text of the KPI series. The
+   retrieval index searches `knowledge_base`, not `kpi_metrics`, so without this text
+   the assistant cannot answer "what was X in period Y" from semantic search alone
+   (a separate, direct `kpi_metrics` lookup also covers exact period-in-message
+   questions — see `src/services/omnismart_chatbot.py::_retrieve_context`).
+5. **`corpus`** — `POST` every real document/image/audio file under `data/<Domain>/`,
+   plus the digests just written, through `/api/v1/ingest/{document,audio}`.
+
+Only one step is not API-mediated: `--purge` (corpus stage) directly deletes existing
+non-glossary `knowledge_base` rows before a full re-ingest — a deliberate maintenance
+operation with no public bulk-delete API equivalent, not part of the seeding path
+itself.
+
+**Measured result (current build): 1,532 KPI rows, 7 domains, 5 distinct sources, 0
+rows without provenance.**
 
 | Domain | Rows | Metrics | Sources |
 |---|---|---|---|
-| ESG | 644 | 5 | World Bank (4 indicators), FRED |
-| People | 366 | 9 | FRED (4 series), IBM HR survey |
-| IT | 251 | 8 | FRED (2 series), NVD |
-| Finance | 242 | 6 | FRED (4 series), Sonatel |
-| Growth | 209 | 3 | FRED (3 series) |
-| Operations | 180 | 2 | FRED (INDPRO, TCU) |
-| Logistics | 178 | 2 | FRED (BUSINV, TSIFRGHTC) |
+| People | 366 | 9 | FRED (4 series, external context), IBM HR survey |
+| IT | 251 | 8 | FRED (2 series, external context), NVD |
+| Finance | 242 | 6 | FRED (4 series, external context), **Sonatel (real, own)** |
+| Growth | 209 | 3 | FRED (3 series, external context) |
+| Operations | 180 | 2 | FRED (INDPRO, TCU — external context) |
+| Logistics | 178 | 2 | FRED (BUSINV, TSIFRGHTC — external context) |
+| ESG | 106 | 4 | World Bank (Senegal, Africa Western and Central, World) |
 
 Provenance strings are `fred:<SERIES_ID>`, `worldbank:<INDICATOR>`, `nvd:cve-2.0`,
-`ibm-hr:attrition-survey`, `sonatel:<period>` — each resolves to a public URL, which
-the digests in §4 print next to the figures.
+`ibm-hr:attrition-survey`, `sonatel:<period>` — each resolves to a public URL, printed
+next to every figure in the digests (§ digests stage) and by `_source_url()` in
+`seed_data.py`.
 
 ### What each source is, and its real limitations
 
 | Source | Used for | Frequency | Honest limitation |
 |---|---|---|---|
-| FRED (St. Louis Fed) | 18 series across all 7 domains | monthly, some quarterly | US-only macro indicators; they describe an economy, not one company |
-| World Bank Open Data | 4 ESG indicators | **annual** | latest year is 2022–2024 depending on indicator; no monthly ESG data exists free |
-| NVD 2.0 API | published CVE counts by severity | monthly | a **400-per-window sample**, not the full population — comparable between months because every window is sampled identically, and the metric is named "Published CVEs (sampled)" for that reason |
-| IBM HR attrition survey | 5 workforce aggregates | **single period** | a cross-section of individual employees with no date column. It yields point-in-time aggregates under one period; a monthly history is not derivable from it |
-| Sonatel communiqués | 3 published FCFA figures | half-year / 9-month | transcribed from the official release text, in FCFA (XOF) |
+| FRED (St. Louis Fed) | 18 series across Finance/Growth/People/IT/Operations/Logistics | monthly, some quarterly | US-only; external market context, not this company's own numbers (see above) |
+| World Bank Open Data | 4 ESG indicators, Senegal + region + world | **annual** | latest year is 2022–2024 depending on indicator; no monthly ESG data exists free |
+| NVD 2.0 API | published CVE counts by severity | monthly | a **400-per-window sample**, not the full population — comparable between months because every window is sampled identically |
+| IBM HR attrition survey | 5 workforce aggregates | **single period** | a cross-section with no date column — a monthly history is not derivable from it |
+| Sonatel communiqués | 3 published FCFA figures | half-year / 9-month | transcribed from the official release text, in FCFA (XOF) — the company's own real numbers |
 
-Two consequences worth stating plainly rather than hiding behind a filled-in grid:
+There are no "scenarios" in this real data. Published statistics do not come with a
+healthy/declining switch, and none is invented for them — see §5 for the separate
+generator that does model scenarios, deliberately kept out of this pipeline.
 
-- **The domains are not equally deep.** Real monthly series are abundant for Finance,
-  People, Operations and Logistics, and scarce-to-nonexistent for ESG. ESG gets breadth
-  of indicator instead of frequency, because that is the frequency at which the data
-  exists.
-- **There are no "scenarios" in real data.** The seven health scenarios (§6) are a
-  property of the generator. Published statistics do not come with a healthy/declining
-  switch, and none was invented for them.
+## The document, image and audio corpus
 
-World Bank data is filtered to a relevant set of countries and aggregates (world total,
-the FCFA zone matching the Sonatel/Orange material, and the largest emitters) — see
-`WORLDBANK_SEGMENTS` in `build_real_kpis.py`. That is a relevance filter on *which*
-published rows are loaded; the values themselves are exactly as published.
+The `corpus` stage walks `data/<Domain>/` and posts each file to the endpoint for its
+type. IntelAI performs **no** extraction itself: documents and images go to the
+configured document processor, audio to the audio processor — each tool in this
+project family stays standalone. The directory name becomes the row's category.
 
-## 3. The document, image and audio corpus
-
-`scripts/ingest_real_corpus.py` walks `data/<Domain>/` and posts each file to the
-endpoint for its type — documents and images to `POST /api/v1/ingest/document`, audio to
-`POST /api/v1/ingest/audio`. IntelAI performs **no** extraction itself: documents and
-images go to the configured document processor, audio to the audio processor —
-each tool in this project family stays standalone. The directory name becomes the row's category.
-
-```bash
-python scripts/ingest_real_corpus.py --purge     # re-ingest everything
-python scripts/ingest_real_corpus.py --only sonatel --dry-run
-```
-
-Measured: **15 of 17 files ingested, 434,548 characters.**
+Measured: **15 of 17 files ingestible, ~434,548 characters** (real documents; digest
+counts are separate, see below).
 
 | Domain | File | Source | Result |
 |---|---|---|---|
@@ -97,92 +116,49 @@ Measured: **15 of 17 files ingested, 434,548 characters.**
 | Finance | Salesforce 10-Q ×2 | SEC EDGAR | 31,874 + 27,929 chars |
 | Finance | Sonatel results (FCFA, French) | sonatel.sn communiqués | 1,341 chars |
 | Growth | Salesforce Q1 FY27 earnings release | SEC EDGAR 8-K exhibit | 20,293 chars |
-| Growth | Richmond Fed podcast episode (MP3, 5.4MB) | Richmond Fed official RSS | **13,186 chars transcript** via the audio processor |
-| People | IBM HR attrition | IBM employee-attrition repo | 128,965 chars (**832 records**) |
-| People | HR employee churn | public mirror | 154,025 chars (**4,093 records**) |
+| Growth | Richmond Fed podcast episode (MP3) | Richmond Fed official RSS | 13,186 chars transcript, via the audio processor |
+| People | IBM HR attrition | IBM employee-attrition repo | 128,965 chars (832 records) |
+| People | HR employee churn | public mirror | 154,025 chars (4,093 records) |
 | IT | DORA 2024 findings | dora.dev | 1,638 chars |
-| Finance/Ops/Logistics/People | 5 FRED chart PNGs | FRED published charts | 211–286 chars each, via OCR |
-| ESG | Salesforce FY25 Stakeholder Impact Report | salesforce.com | **32 chars — see below** |
+| Finance/Ops/Logistics/People | FRED chart PNGs | FRED published charts | 211–286 chars each, via OCR |
+| ESG | Salesforce FY26 Stakeholder Impact Report | salesforce.com | real, current version |
 
-The IBM dataset (832 rows) and the churn dataset (4,093 rows) are both partial relative
-to the full published datasets. The aggregates in §2 are computed from what is actually
-on disk, so they describe the sample held here, not the full source dataset.
-
-**Images are real, and deliberately so.** The six PNGs are FRED's own published charts
-of series that are already in `kpi_metrics` — so a vision/OCR result can be checked
-against the stored numbers, which a decorative stock image would not allow.
+**Images are real, and deliberately so.** The FRED PNGs are FRED's own published
+charts of series already in `kpi_metrics`, so a vision/OCR result can be checked
+against the stored numbers.
 
 **Raw series are not knowledge-base documents.** `fred_*.csv`, `worldbank_*.json`,
-`nvd_*.json` and `.log` files are the *input* to the KPI layer and are skipped by the
-corpus ingester. A CSV of 90 numbers retrieves badly and only restates data the KPI
-tables already hold exactly; 10,000 lines of access logs would chunk into thousands of
-near-identical passages that crowd out real answers.
+`nvd_*.json` are the *input* to the KPI layer and are skipped by the corpus stage. A
+CSV of 90 numbers retrieves badly and only restates what the KPI tables already hold
+exactly.
 
-### Known gaps
-
-- **Orange S.A. H1-2025 report (890KB, 82pp, French): not ingested.** The document
-  processor's origin returns a Cloudflare 502 on this file specifically, on every route,
-  while `/health` and smaller files succeed. It extracted 276,265 characters in earlier
-  testing, so this looks like a processor-side regression rather than a missing capability.
-- **`fred_chart_RSXFS.png`: not ingested.** Consistent 502 from the same processor,
-  while the other five charts of near-identical size succeed.
-- **Salesforce ESG PDF: 32 characters.** The file appears malformed at source. It
-  previously yielded 31,729 characters, so the processor could read it before; it cannot now.
-
-These three are external to IntelAI (document-processor-side) and are recorded here
-rather than papered over.
-
-## 4. KPI digests — how numbers become retrievable text
-
-The retrieval index searches `knowledge_base`, not `kpi_metrics`, so without a text
-representation the assistant cannot answer "what was unemployment in June 2026" even
-though the number is in the database. `scripts/build_kpi_digest_docs.py` writes that
-text, in **English and French**, for the most recent 18 periods per domain.
-
-Every line is a restatement of a stored value plus the series it came from. There is no
-commentary, no target, no explanation of why a number moved, and no claim of audit —
-grounded numbers only.
-
-```bash
-python scripts/build_kpi_digest_docs.py --months 18   # -> data/kpi_digests/<Domain>/
-python scripts/ingest_real_corpus.py --only _en.md
-```
-
-## 5. Glossary
+## Glossary
 
 202 rows, 101 terms × EN/FR, seeded from `src/data/glossary.py` +
-`src/data/glossary_fr.py` on startup (idempotent — the count is stable across restarts).
-French names are only assigned where a genuine standard French term exists, rather than
+`src/data/glossary_fr.py` on startup (idempotent — the count is stable across
+restarts). French names are only assigned where a genuine standard French term
+exists, matching this company's own bilingual operating reality, rather than
 machine-translating every entry.
 
-## 6. The generator, and what it is for
+## The synthetic scenario generator — a different, separate feature
 
-`src/data/seed.py` builds a modelled 7-domain catalog with driver metrics, formula-
-derived metrics, decayed drift, seven health scenarios with cross-domain cascades, and
-three verticals (`saas`, `healthcare`, `esg`). It is the right tool for an offline
-demo, for the Admin scenario switcher, and for testing the pipeline without network
-access.
-
-It is **not** what the live database is seeded with, and its output must never be
-presented as measurement. Anything it writes is labelled `seed_*` so it is separable
-from sourced rows by a single query:
+`src/data/seed.py` is **application code**, not a seeding script — it's what
+`POST /api/v1/admin/scenario` and the `Admin → Scenarios` UI tab call at runtime to
+switch between seven modeled health scenarios (`healthy`, `declining_financial`,
+`high_churn_crisis`, ...) and three verticals, for offline demos and pipeline testing
+without network access. It writes directly to Postgres (fast, in-process — the same
+path the server uses on first boot) and every row it writes is labelled `source =
+'seed_*'`, so it is always separable from the real dataset above by one query:
 
 ```sql
 SELECT source, COUNT(*) FROM kpi_metrics GROUP BY 1;   -- generated vs sourced
 ```
 
-```bash
-python -m src.data.seed healthy healthcare           # DB-direct, generated data
-python -m src.data.seed declining_financial saas     # scenario + vertical compose
-```
+It is not run by `scripts/seed_data.py` and does not write anything presented as a
+real measurement — see the module docstring in `src/data/seed.py` for the scenario
+catalog and how to invoke it.
 
-Verticals rescale the same catalog and add the metrics that vertical is judged on
-(SaaS: trial conversion, expansion MRR, logo retention; healthcare: bed occupancy,
-readmission, HCAHPS; ESG: CSRD readiness, Scope 3 coverage). Measured output, seed=42:
-generic 11,376 rows / 146 metrics; saas 11,922 / 153; healthcare 12,156 / 156; esg
-11,844 / 152.
-
-## 7. Bringing your own data
+## Bringing your own data
 
 `POST /api/v1/ingest/csv` takes:
 
@@ -191,19 +167,20 @@ period,category,segment,metric_name,value,unit,direction,source
 2026-01,Finance,Global,Revenue,2500000,USD,up,my_export
 ```
 
-Only `metric_name` and `value` are required. Two behaviours worth knowing:
+Only `metric_name` and `value` are required.
 
 - **A per-row `source` column is preserved** as that row's provenance; `source_name`
   labels rows that don't carry one.
-- **Rows are scoped to the uploader by default**, so one visitor's upload never appears
-  on another's dashboard. `global_scope=true` writes the shared baseline with a NULL
-  owner and is restricted to admins — this is what the seeding scripts use.
+- **Rows are scoped to the uploader by default**, so one visitor's upload never
+  appears on another's dashboard. `global_scope=true` writes the shared baseline with
+  a NULL owner and is restricted to admins — this is what `seed_data.py` uses.
 
-## 8. Evaluation set
+## Evaluation set
 
-`tests/rag_eval.jsonl` is generated by `scripts/build_rag_eval_set.py` from the database,
-not written by hand. Each case names a metric that exists for a period that exists, or a
-document that is present in `knowledge_base`; cases that cannot be verified against the
-live data are dropped rather than shipped. That keeps the eval set honest about what the
-system can actually answer, rather than testing against questions the corpus has no
-answer for.
+`tests/rag_eval.jsonl` is generated by `scripts/build_rag_eval_set.py` from whatever
+is actually in the database — not written by hand. Each case names a metric that
+exists for a period that exists, or a document that is present in `knowledge_base`;
+cases that cannot be verified against the live data are dropped rather than shipped.
+Run it after any real re-seed (`python scripts/build_rag_eval_set.py`) so the eval set
+tracks the current dataset rather than testing against questions the corpus can no
+longer answer.

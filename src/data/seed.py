@@ -29,9 +29,8 @@ category/RBAC).
 
 Idempotent: writes directly to Postgres via ``pg_store`` (replace=True). This is the fast,
 in-process path the server itself uses on first boot and for instant Admin/API scenario
-switching. For a true end-to-end exercise of the real ingestion pipeline (the same data,
-delivered through POST /api/v1/ingest/csv instead of a direct DB write), see
-``scripts/seed_via_api.py`` — see DATA_SEEDING.md for when to use which.
+switching (``POST /api/v1/admin/scenario``) — see DATA_SEEDING.md for how this differs
+from the real KPI/document dataset ``scripts/seed_data.py`` builds and seeds.
 
 Run standalone:  python -m src.data.seed         (uses POSTGRES_URL from env/.env)
 Or from code:    from src.data.seed import seed_database; seed_database()
