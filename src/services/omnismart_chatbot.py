@@ -976,7 +976,13 @@ class AgentPersonaFactory:
         for title, text in doc_blocks:
             s = by_title.get(title.lower())
             if s:
-                parts.append(f"[{s['id']}] {title}: {text[:500]}")
+                # Same 2000-char budget as the KPI citations above — 500 was truncating
+                # EVERY digest document (every real one is 688+ chars) before reaching
+                # most of its content, not just an edge case. Confirmed live: a real
+                # "Security Score" line sitting at char 747 of an IT digest never
+                # reached the model's own prompt, so a genuinely-answerable question
+                # got "no such metric" instead of the real number.
+                parts.append(f"[{s['id']}] {title}: {text[:2000]}")
 
         return ("\n\n".join(parts), sources)
 
