@@ -5,10 +5,12 @@ Valeurs enregistrées pour les indicateurs Logistics en 2025-12. Chaque chiffre 
 ## Séries couvertes
 - Stocks des entreprises [External — US Market Context]: 2,676,717 USD  (source: fred:BUSINV)
 - Indice du transport de marchandises [External — US Market Context]: -0.20 index  (source: fred:TSIFRGHTC)
+- Inventory Turnover [External — Supply Chain Benchmark]: 3.90 x/year  (source: netstock:2025-supply-chain-planning-report)
 
 ## Sources
 - fred:BUSINV — https://fred.stlouisfed.org/series/BUSINV
 - fred:TSIFRGHTC — https://fred.stlouisfed.org/series/TSIFRGHTC
+- netstock:2025-supply-chain-planning-report — https://www.netstock.com/research/supply-chain-planning-report/
 
 Les lignes marquées contexte externe / marché sont des statistiques publiées que cet opérateur ouest-africain suit à titre de contexte de planification (taux américains/mondiaux, emploi, demande) — elles ne représentent pas la performance propre de l'entreprise.
 
