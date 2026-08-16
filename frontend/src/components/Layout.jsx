@@ -66,7 +66,7 @@ export default function Layout() {
       <Sidebar mobileOpen={mobileMenu} onClose={() => setMobileMenu(false)} collapsed={collapsed} onToggleCollapse={toggleCollapse} />
       <main className="main-content">
         <header className="topbar">
-          <button className="mobile-nav-btn" onClick={() => setMobileMenu(true)}><Menu size={18} /></button>
+          <button className="mobile-nav-btn" onClick={() => setMobileMenu(true)} aria-label={t('openNavigation') || 'Open navigation'}><Menu size={18} /></button>
           <span className="topbar-title">{title}</span>
           <div className="topbar-spacer" />
           {seg !== 'admin' && seg !== 'settings' && (
@@ -123,10 +123,10 @@ export default function Layout() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', background: 'var(--surface-2)', borderBottom: '1px solid var(--border)' }}>
             <span style={{ fontWeight: 600, fontSize: '.95rem' }}>{t('navAssistant') || 'Copilot'}</span>
             <div style={{ display: 'flex', gap: 6 }}>
-              <button className="btn btn-ghost btn-sm btn-icon" title={t('expandToFull') || 'Expand to full page'} onClick={() => { setCopilotOpen(false); navigate(`/chat?q=${encodeURIComponent(copilotQuery)}`) }}>
+              <button className="btn btn-ghost btn-sm btn-icon" title={t('expandToFull') || 'Expand to full page'} aria-label={t('expandToFull') || 'Expand to full page'} onClick={() => { setCopilotOpen(false); navigate(`/chat?q=${encodeURIComponent(copilotQuery)}`) }}>
                 <Maximize2 size={14} />
               </button>
-              <button className="btn btn-ghost btn-sm btn-icon" onClick={() => setCopilotOpen(false)}>
+              <button className="btn btn-ghost btn-sm btn-icon" aria-label={t('close') || 'Close'} onClick={() => setCopilotOpen(false)}>
                 <X size={14} />
               </button>
             </div>

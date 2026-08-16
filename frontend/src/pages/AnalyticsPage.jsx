@@ -4,7 +4,7 @@ import * as api from '../api'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
 import { BarChart3, Hash, Calendar, Layers, FolderKanban, TrendingUp, AlertTriangle } from 'lucide-react'
-import { PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, AreaTrend, Panel } from '../components/ui'
+import { PageHeader, Stat, StatGrid, fmtNum, Loading, ErrorState, Grid, AskCopilot, AreaTrend, Panel } from '../components/ui'
 
 class AnalyticsErrorBoundary extends Component {
   constructor(props) { super(props); this.state = { hasError: false, error: null } }
@@ -43,7 +43,7 @@ function AnalyticsInner() {
   const [metric, setMetric] = useState('')
   const [fcMetric, setFcMetric] = useState('')
 
-  const { data: kpis = [], isLoading } = useQuery({ queryKey: ['kpis'], queryFn: () => api.getKPIs().then(r => r.data?.metrics || []), staleTime: 300_000 })
+  const { data: kpis = [], isLoading, isError } = useQuery({ queryKey: ['kpis'], queryFn: () => api.getKPIs().then(r => r.data?.metrics || []), staleTime: 300_000 })
   const { data: periods = [] } = useQuery({ queryKey: ['periods'], queryFn: () => api.getPeriods().then(r => r.data?.periods || []), staleTime: 600_000 })
   const { data: metricNames = [] } = useQuery({ queryKey: ['metrics'], queryFn: () => api.getMetrics().then(r => r.data?.metrics || []), staleTime: 600_000 })
 
@@ -57,7 +57,9 @@ function AnalyticsInner() {
     .sort((a, b) => (a.period || '').localeCompare(b.period || '')), [kpis, selected])
 
   if (isLoading && kpis.length === 0) return <Loading />
-  // Render gracefully even if data fails
+  // A real fetch failure (401/500/timeout) previously looked identical to "this
+  // domain genuinely has no data yet" below — both just showed a generic empty state.
+  if (isError) return <ErrorState />
   if (!isLoading && kpis.length === 0 && metricNames.length === 0) return <div className='empty-state-fallback' style={{padding: '50px', textAlign: 'center', color: '#fff'}}><h2>No Analytics Data Available</h2><p>The backend may be offline or returned no data.</p></div>
   const fc = forecast.data
 

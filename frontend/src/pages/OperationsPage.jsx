@@ -5,7 +5,7 @@ import {
   Settings2, Gauge, CheckCircle2, AlertOctagon, Boxes, Timer, Power, DollarSign,
   Factory, HardHat, ShieldCheck,
 } from 'lucide-react'
-import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, ErrorState, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
 
 const ACCENT = 'var(--p-coo)'
 
@@ -18,6 +18,7 @@ export default function OperationsPage() {
   const hlt = useQuery({ queryKey: ['ops-health'], queryFn: () => api.getOpsHealth().then(r => r.data), retry: 1 })
 
   if (sum.isLoading) return <Loading />
+  if (sum.isError) return <ErrorState />
   const s = sum.data || {}, q = qual.data || {}, p = prod.data || {}, sf = safe.data || {}
 
   return (
