@@ -179,3 +179,13 @@ period,category,segment,metric_name,value,unit,direction,source
 2026-04,Operations,External — US Market Context,Capacity Utilization,76.0625,%,up,fred:TCU
 2026-05,Operations,External — US Market Context,Capacity Utilization,76.1019,%,up,fred:TCU
 2026-06,Operations,External — US Market Context,Capacity Utilization,76.0937,%,up,fred:TCU
+2020-12,Operations,External — US Safety Benchmark,Total Recordable Safety Incident Rate,2.7,per 100 FTE,down,bls-osha:osh-annual-survey
+2020-12,Operations,External — US Safety Benchmark,Total Safety Incidents Rate,2.7,per 100 FTE,down,bls-osha:osh-annual-survey
+2021-12,Operations,External — US Safety Benchmark,Total Recordable Safety Incident Rate,2.7,per 100 FTE,down,bls-osha:osh-annual-survey
+2021-12,Operations,External — US Safety Benchmark,Total Safety Incidents Rate,2.7,per 100 FTE,down,bls-osha:osh-annual-survey
+2022-12,Operations,External — US Safety Benchmark,Total Recordable Safety Incident Rate,2.7,per 100 FTE,down,bls-osha:osh-annual-survey
+2022-12,Operations,External — US Safety Benchmark,Total Safety Incidents Rate,2.7,per 100 FTE,down,bls-osha:osh-annual-survey
+2023-12,Operations,External — US Safety Benchmark,Total Recordable Safety Incident Rate,2.4,per 100 FTE,down,bls-osha:osh-annual-survey
+2023-12,Operations,External — US Safety Benchmark,Total Safety Incidents Rate,2.4,per 100 FTE,down,bls-osha:osh-annual-survey
+2024-12,Operations,External — US Safety Benchmark,Total Recordable Safety Incident Rate,2.3,per 100 FTE,down,bls-osha:osh-annual-survey
+2024-12,Operations,External — US Safety Benchmark,Total Safety Incidents Rate,2.3,per 100 FTE,down,bls-osha:osh-annual-survey

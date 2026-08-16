@@ -250,3 +250,24 @@ period,category,segment,metric_name,value,unit,direction,source
 2026-06,IT,Global,Published CVEs (sampled) — Low Severity,19.0,count,down,nvd:cve-2.0
 2026-06,IT,Global,Published CVEs (sampled) — Medium Severity,171.0,count,down,nvd:cve-2.0
 2026-06,IT,Global,Published CVEs (sampled) — None Severity,1.0,count,down,nvd:cve-2.0
+1999-03,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+1999-12,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+2000-04,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+2000-12,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+2001-05,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+2001-06,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+2001-07,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+2001-08,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+2001-10,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+2001-12,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+2002-03,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+2002-07,IT,Global,Security Score,2.0,/100,up,nvd:cve-2.0
+2025-01,IT,Global,Security Score,41.4,/100,up,nvd:cve-2.0
+2025-04,IT,Global,Security Score,35.42,/100,up,nvd:cve-2.0
+2025-06,IT,Global,Security Score,30.6,/100,up,nvd:cve-2.0
+2025-07,IT,Global,Security Score,31.14,/100,up,nvd:cve-2.0
+2025-09,IT,Global,Security Score,32.16,/100,up,nvd:cve-2.0
+2025-10,IT,Global,Security Score,37.14,/100,up,nvd:cve-2.0
+2025-12,IT,Global,Security Score,36.48,/100,up,nvd:cve-2.0
+2026-03,IT,Global,Security Score,28.63,/100,up,nvd:cve-2.0
+2026-06,IT,Global,Security Score,31.43,/100,up,nvd:cve-2.0
