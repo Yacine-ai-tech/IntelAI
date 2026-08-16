@@ -271,3 +271,687 @@ period,category,segment,metric_name,value,unit,direction,source
 2025-12,IT,Global,Security Score,36.48,/100,up,nvd:cve-2.0
 2026-03,IT,Global,Security Score,28.63,/100,up,nvd:cve-2.0
 2026-06,IT,Global,Security Score,31.43,/100,up,nvd:cve-2.0
+2025-02,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2025-02,IT,Company Model,Mean Time To Resolution,5.85,hours,down,generated:virtual-company-model
+2025-02,IT,Company Model,Open Tickets,17.29,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,In Progress Tickets,6.05,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,Resolved Tickets Today,12.74,count,up,generated:virtual-company-model
+2025-02,IT,Company Model,Total Incidents,9.88,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,Critical Incidents,1.23,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,Critical Tickets,1.23,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,High Tickets,4.32,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,Medium Tickets,6.92,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,Low Tickets,6.05,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,First Response Time,1.03,hours,down,generated:virtual-company-model
+2025-02,IT,Company Model,Escalation Rate,9.67,%,down,generated:virtual-company-model
+2025-02,IT,Company Model,Ticket Satisfaction,70.12,%,up,generated:virtual-company-model
+2025-02,IT,Company Model,System Uptime,99.49,%,up,generated:virtual-company-model
+2025-02,IT,Company Model,Server Count,88.51,count,up,generated:virtual-company-model
+2025-02,IT,Company Model,Cloud Spend,29936.28,USD,down,generated:virtual-company-model
+2025-02,IT,Company Model,Deployment Frequency,3.31,per week,up,generated:virtual-company-model
+2025-02,IT,Company Model,Change Failure Rate,6.79,%,down,generated:virtual-company-model
+2025-02,IT,Company Model,Lead Time For Changes,13.57,hours,down,generated:virtual-company-model
+2025-02,IT,Company Model,Code Coverage,61.82,%,up,generated:virtual-company-model
+2025-02,IT,Company Model,Build Success Rate,90.79,%,up,generated:virtual-company-model
+2025-02,IT,Company Model,Monthly Releases,4.03,count,up,generated:virtual-company-model
+2025-02,IT,Company Model,Open Vulnerabilities,5.58,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,Critical Vulnerabilities,1.23,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,Patches Pending,6.22,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,Blocked Attacks,351.33,count,up,generated:virtual-company-model
+2025-02,IT,Company Model,Failed Logins,221.47,count,down,generated:virtual-company-model
+2025-02,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2025-02,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2025-02,IT,Company Model,Backup Success Rate,99.09,%,up,generated:virtual-company-model
+2025-02,IT,Company Model,CPU Utilization,59.51,%,down,generated:virtual-company-model
+2025-02,IT,Company Model,Memory Utilization,69.55,%,down,generated:virtual-company-model
+2025-02,IT,Company Model,Disk Utilization,51.83,%,down,generated:virtual-company-model
+2025-02,IT,Company Model,Network Throughput,1031.89,Mbps,up,generated:virtual-company-model
+2025-02,IT,Company Model,Active Users,673.26,count,up,generated:virtual-company-model
+2025-02,IT,Company Model,API Latency,78.92,ms,down,generated:virtual-company-model
+2025-02,IT,Company Model,Error Rate,0.7,%,down,generated:virtual-company-model
+2025-03,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2025-03,IT,Company Model,Mean Time To Resolution,5.95,hours,down,generated:virtual-company-model
+2025-03,IT,Company Model,Open Tickets,17.23,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,In Progress Tickets,6.03,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,Resolved Tickets Today,10.53,count,up,generated:virtual-company-model
+2025-03,IT,Company Model,Total Incidents,8.72,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,Critical Incidents,2.45,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,Critical Tickets,2.45,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,High Tickets,4.31,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,Medium Tickets,6.89,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,Low Tickets,6.03,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,First Response Time,0.94,hours,down,generated:virtual-company-model
+2025-03,IT,Company Model,Escalation Rate,7.27,%,down,generated:virtual-company-model
+2025-03,IT,Company Model,Ticket Satisfaction,73.89,%,up,generated:virtual-company-model
+2025-03,IT,Company Model,System Uptime,99.5,%,up,generated:virtual-company-model
+2025-03,IT,Company Model,Server Count,86.92,count,up,generated:virtual-company-model
+2025-03,IT,Company Model,Cloud Spend,29723.52,USD,down,generated:virtual-company-model
+2025-03,IT,Company Model,Deployment Frequency,3.73,per week,up,generated:virtual-company-model
+2025-03,IT,Company Model,Change Failure Rate,7.03,%,down,generated:virtual-company-model
+2025-03,IT,Company Model,Lead Time For Changes,12.65,hours,down,generated:virtual-company-model
+2025-03,IT,Company Model,Code Coverage,61.22,%,up,generated:virtual-company-model
+2025-03,IT,Company Model,Build Success Rate,90.97,%,up,generated:virtual-company-model
+2025-03,IT,Company Model,Monthly Releases,4.58,count,up,generated:virtual-company-model
+2025-03,IT,Company Model,Open Vulnerabilities,8.17,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,Critical Vulnerabilities,2.45,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,Patches Pending,5.99,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,Blocked Attacks,355.96,count,up,generated:virtual-company-model
+2025-03,IT,Company Model,Failed Logins,214.35,count,down,generated:virtual-company-model
+2025-03,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2025-03,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2025-03,IT,Company Model,Backup Success Rate,99.02,%,up,generated:virtual-company-model
+2025-03,IT,Company Model,CPU Utilization,66.07,%,down,generated:virtual-company-model
+2025-03,IT,Company Model,Memory Utilization,61.1,%,down,generated:virtual-company-model
+2025-03,IT,Company Model,Disk Utilization,54.69,%,down,generated:virtual-company-model
+2025-03,IT,Company Model,Network Throughput,971.9,Mbps,up,generated:virtual-company-model
+2025-03,IT,Company Model,Active Users,696.39,count,up,generated:virtual-company-model
+2025-03,IT,Company Model,API Latency,69.57,ms,down,generated:virtual-company-model
+2025-03,IT,Company Model,Error Rate,0.52,%,down,generated:virtual-company-model
+2025-04,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2025-04,IT,Company Model,Mean Time To Resolution,8.78,hours,down,generated:virtual-company-model
+2025-04,IT,Company Model,Open Tickets,23.78,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,In Progress Tickets,8.32,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,Resolved Tickets Today,12.78,count,up,generated:virtual-company-model
+2025-04,IT,Company Model,Total Incidents,14.37,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,Critical Incidents,2.77,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,Critical Tickets,2.77,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,High Tickets,5.95,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,Medium Tickets,9.51,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,Low Tickets,8.32,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,First Response Time,1.31,hours,down,generated:virtual-company-model
+2025-04,IT,Company Model,Escalation Rate,9.37,%,down,generated:virtual-company-model
+2025-04,IT,Company Model,Ticket Satisfaction,66.51,%,up,generated:virtual-company-model
+2025-04,IT,Company Model,System Uptime,99.35,%,up,generated:virtual-company-model
+2025-04,IT,Company Model,Server Count,86.62,count,up,generated:virtual-company-model
+2025-04,IT,Company Model,Cloud Spend,29813.64,USD,down,generated:virtual-company-model
+2025-04,IT,Company Model,Deployment Frequency,3.61,per week,up,generated:virtual-company-model
+2025-04,IT,Company Model,Change Failure Rate,10.14,%,down,generated:virtual-company-model
+2025-04,IT,Company Model,Lead Time For Changes,12.01,hours,down,generated:virtual-company-model
+2025-04,IT,Company Model,Code Coverage,55.16,%,up,generated:virtual-company-model
+2025-04,IT,Company Model,Build Success Rate,87.66,%,up,generated:virtual-company-model
+2025-04,IT,Company Model,Monthly Releases,4.68,count,up,generated:virtual-company-model
+2025-04,IT,Company Model,Open Vulnerabilities,16.2,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,Critical Vulnerabilities,2.77,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,Patches Pending,9.0,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,Blocked Attacks,374.01,count,up,generated:virtual-company-model
+2025-04,IT,Company Model,Failed Logins,198.18,count,down,generated:virtual-company-model
+2025-04,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2025-04,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2025-04,IT,Company Model,Backup Success Rate,98.91,%,up,generated:virtual-company-model
+2025-04,IT,Company Model,CPU Utilization,66.41,%,down,generated:virtual-company-model
+2025-04,IT,Company Model,Memory Utilization,65.05,%,down,generated:virtual-company-model
+2025-04,IT,Company Model,Disk Utilization,53.37,%,down,generated:virtual-company-model
+2025-04,IT,Company Model,Network Throughput,957.88,Mbps,up,generated:virtual-company-model
+2025-04,IT,Company Model,Active Users,671.03,count,up,generated:virtual-company-model
+2025-04,IT,Company Model,API Latency,91.35,ms,down,generated:virtual-company-model
+2025-04,IT,Company Model,Error Rate,0.57,%,down,generated:virtual-company-model
+2025-05,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2025-05,IT,Company Model,Mean Time To Resolution,7.21,hours,down,generated:virtual-company-model
+2025-05,IT,Company Model,Open Tickets,13.63,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,In Progress Tickets,4.77,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,Resolved Tickets Today,11.51,count,up,generated:virtual-company-model
+2025-05,IT,Company Model,Total Incidents,7.8,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,Critical Incidents,1.14,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,Critical Tickets,1.14,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,High Tickets,3.41,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,Medium Tickets,5.45,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,Low Tickets,4.77,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,First Response Time,0.89,hours,down,generated:virtual-company-model
+2025-05,IT,Company Model,Escalation Rate,8.69,%,down,generated:virtual-company-model
+2025-05,IT,Company Model,Ticket Satisfaction,72.32,%,up,generated:virtual-company-model
+2025-05,IT,Company Model,System Uptime,99.47,%,up,generated:virtual-company-model
+2025-05,IT,Company Model,Server Count,89.65,count,up,generated:virtual-company-model
+2025-05,IT,Company Model,Cloud Spend,30279.28,USD,down,generated:virtual-company-model
+2025-05,IT,Company Model,Deployment Frequency,3.1,per week,up,generated:virtual-company-model
+2025-05,IT,Company Model,Change Failure Rate,5.95,%,down,generated:virtual-company-model
+2025-05,IT,Company Model,Lead Time For Changes,10.89,hours,down,generated:virtual-company-model
+2025-05,IT,Company Model,Code Coverage,62.62,%,up,generated:virtual-company-model
+2025-05,IT,Company Model,Build Success Rate,88.76,%,up,generated:virtual-company-model
+2025-05,IT,Company Model,Monthly Releases,5.21,count,up,generated:virtual-company-model
+2025-05,IT,Company Model,Open Vulnerabilities,5.53,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,Critical Vulnerabilities,1.14,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,Patches Pending,4.95,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,Blocked Attacks,337.54,count,up,generated:virtual-company-model
+2025-05,IT,Company Model,Failed Logins,208.67,count,down,generated:virtual-company-model
+2025-05,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2025-05,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2025-05,IT,Company Model,Backup Success Rate,99.53,%,up,generated:virtual-company-model
+2025-05,IT,Company Model,CPU Utilization,64.14,%,down,generated:virtual-company-model
+2025-05,IT,Company Model,Memory Utilization,61.13,%,down,generated:virtual-company-model
+2025-05,IT,Company Model,Disk Utilization,53.99,%,down,generated:virtual-company-model
+2025-05,IT,Company Model,Network Throughput,1040.54,Mbps,up,generated:virtual-company-model
+2025-05,IT,Company Model,Active Users,670.34,count,up,generated:virtual-company-model
+2025-05,IT,Company Model,API Latency,80.49,ms,down,generated:virtual-company-model
+2025-05,IT,Company Model,Error Rate,0.48,%,down,generated:virtual-company-model
+2025-06,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2025-06,IT,Company Model,Mean Time To Resolution,8.66,hours,down,generated:virtual-company-model
+2025-06,IT,Company Model,Open Tickets,21.12,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,In Progress Tickets,7.39,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,Resolved Tickets Today,12.58,count,up,generated:virtual-company-model
+2025-06,IT,Company Model,Total Incidents,11.75,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,Critical Incidents,0.61,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,Critical Tickets,0.61,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,High Tickets,5.28,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,Medium Tickets,8.45,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,Low Tickets,7.39,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,First Response Time,1.46,hours,down,generated:virtual-company-model
+2025-06,IT,Company Model,Escalation Rate,9.95,%,down,generated:virtual-company-model
+2025-06,IT,Company Model,Ticket Satisfaction,66.36,%,up,generated:virtual-company-model
+2025-06,IT,Company Model,System Uptime,99.35,%,up,generated:virtual-company-model
+2025-06,IT,Company Model,Server Count,89.0,count,up,generated:virtual-company-model
+2025-06,IT,Company Model,Cloud Spend,29552.7,USD,down,generated:virtual-company-model
+2025-06,IT,Company Model,Deployment Frequency,3.45,per week,up,generated:virtual-company-model
+2025-06,IT,Company Model,Change Failure Rate,8.77,%,down,generated:virtual-company-model
+2025-06,IT,Company Model,Lead Time For Changes,15.15,hours,down,generated:virtual-company-model
+2025-06,IT,Company Model,Code Coverage,55.0,%,up,generated:virtual-company-model
+2025-06,IT,Company Model,Build Success Rate,88.22,%,up,generated:virtual-company-model
+2025-06,IT,Company Model,Monthly Releases,3.94,count,up,generated:virtual-company-model
+2025-06,IT,Company Model,Open Vulnerabilities,5.23,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,Critical Vulnerabilities,0.61,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,Patches Pending,4.86,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,Blocked Attacks,344.7,count,up,generated:virtual-company-model
+2025-06,IT,Company Model,Failed Logins,206.78,count,down,generated:virtual-company-model
+2025-06,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2025-06,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2025-06,IT,Company Model,Backup Success Rate,99.21,%,up,generated:virtual-company-model
+2025-06,IT,Company Model,CPU Utilization,65.13,%,down,generated:virtual-company-model
+2025-06,IT,Company Model,Memory Utilization,64.78,%,down,generated:virtual-company-model
+2025-06,IT,Company Model,Disk Utilization,46.11,%,down,generated:virtual-company-model
+2025-06,IT,Company Model,Network Throughput,984.92,Mbps,up,generated:virtual-company-model
+2025-06,IT,Company Model,Active Users,697.5,count,up,generated:virtual-company-model
+2025-06,IT,Company Model,API Latency,77.39,ms,down,generated:virtual-company-model
+2025-06,IT,Company Model,Error Rate,0.51,%,down,generated:virtual-company-model
+2025-07,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2025-07,IT,Company Model,Mean Time To Resolution,10.57,hours,down,generated:virtual-company-model
+2025-07,IT,Company Model,Open Tickets,32.85,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,In Progress Tickets,11.5,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,Resolved Tickets Today,11.06,count,up,generated:virtual-company-model
+2025-07,IT,Company Model,Total Incidents,21.67,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,Critical Incidents,6.73,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,Critical Tickets,6.73,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,High Tickets,8.21,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,Medium Tickets,13.14,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,Low Tickets,11.5,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,First Response Time,1.34,hours,down,generated:virtual-company-model
+2025-07,IT,Company Model,Escalation Rate,14.08,%,down,generated:virtual-company-model
+2025-07,IT,Company Model,Ticket Satisfaction,65.48,%,up,generated:virtual-company-model
+2025-07,IT,Company Model,System Uptime,99.2,%,up,generated:virtual-company-model
+2025-07,IT,Company Model,Server Count,88.9,count,up,generated:virtual-company-model
+2025-07,IT,Company Model,Cloud Spend,29529.86,USD,down,generated:virtual-company-model
+2025-07,IT,Company Model,Deployment Frequency,3.09,per week,up,generated:virtual-company-model
+2025-07,IT,Company Model,Change Failure Rate,13.07,%,down,generated:virtual-company-model
+2025-07,IT,Company Model,Lead Time For Changes,14.48,hours,down,generated:virtual-company-model
+2025-07,IT,Company Model,Code Coverage,55.0,%,up,generated:virtual-company-model
+2025-07,IT,Company Model,Build Success Rate,85.1,%,up,generated:virtual-company-model
+2025-07,IT,Company Model,Monthly Releases,4.96,count,up,generated:virtual-company-model
+2025-07,IT,Company Model,Open Vulnerabilities,28.87,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,Critical Vulnerabilities,6.73,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,Patches Pending,16.48,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,Blocked Attacks,394.28,count,up,generated:virtual-company-model
+2025-07,IT,Company Model,Failed Logins,201.07,count,down,generated:virtual-company-model
+2025-07,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2025-07,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2025-07,IT,Company Model,Backup Success Rate,99.69,%,up,generated:virtual-company-model
+2025-07,IT,Company Model,CPU Utilization,69.66,%,down,generated:virtual-company-model
+2025-07,IT,Company Model,Memory Utilization,73.03,%,down,generated:virtual-company-model
+2025-07,IT,Company Model,Disk Utilization,55.42,%,down,generated:virtual-company-model
+2025-07,IT,Company Model,Network Throughput,1055.69,Mbps,up,generated:virtual-company-model
+2025-07,IT,Company Model,Active Users,695.01,count,up,generated:virtual-company-model
+2025-07,IT,Company Model,API Latency,82.49,ms,down,generated:virtual-company-model
+2025-07,IT,Company Model,Error Rate,1.05,%,down,generated:virtual-company-model
+2025-08,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2025-08,IT,Company Model,Mean Time To Resolution,6.93,hours,down,generated:virtual-company-model
+2025-08,IT,Company Model,Open Tickets,20.27,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,In Progress Tickets,7.1,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,Resolved Tickets Today,11.1,count,up,generated:virtual-company-model
+2025-08,IT,Company Model,Total Incidents,13.51,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,Critical Incidents,0.63,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,Critical Tickets,0.63,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,High Tickets,5.07,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,Medium Tickets,8.11,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,Low Tickets,7.1,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,First Response Time,1.2,hours,down,generated:virtual-company-model
+2025-08,IT,Company Model,Escalation Rate,6.8,%,down,generated:virtual-company-model
+2025-08,IT,Company Model,Ticket Satisfaction,70.48,%,up,generated:virtual-company-model
+2025-08,IT,Company Model,System Uptime,99.54,%,up,generated:virtual-company-model
+2025-08,IT,Company Model,Server Count,88.14,count,up,generated:virtual-company-model
+2025-08,IT,Company Model,Cloud Spend,29596.19,USD,down,generated:virtual-company-model
+2025-08,IT,Company Model,Deployment Frequency,3.09,per week,up,generated:virtual-company-model
+2025-08,IT,Company Model,Change Failure Rate,5.93,%,down,generated:virtual-company-model
+2025-08,IT,Company Model,Lead Time For Changes,10.87,hours,down,generated:virtual-company-model
+2025-08,IT,Company Model,Code Coverage,60.06,%,up,generated:virtual-company-model
+2025-08,IT,Company Model,Build Success Rate,88.45,%,up,generated:virtual-company-model
+2025-08,IT,Company Model,Monthly Releases,4.78,count,up,generated:virtual-company-model
+2025-08,IT,Company Model,Open Vulnerabilities,9.67,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,Critical Vulnerabilities,0.63,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,Patches Pending,3.71,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,Blocked Attacks,333.98,count,up,generated:virtual-company-model
+2025-08,IT,Company Model,Failed Logins,203.73,count,down,generated:virtual-company-model
+2025-08,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2025-08,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2025-08,IT,Company Model,Backup Success Rate,99.06,%,up,generated:virtual-company-model
+2025-08,IT,Company Model,CPU Utilization,62.72,%,down,generated:virtual-company-model
+2025-08,IT,Company Model,Memory Utilization,67.73,%,down,generated:virtual-company-model
+2025-08,IT,Company Model,Disk Utilization,50.35,%,down,generated:virtual-company-model
+2025-08,IT,Company Model,Network Throughput,1038.54,Mbps,up,generated:virtual-company-model
+2025-08,IT,Company Model,Active Users,690.31,count,up,generated:virtual-company-model
+2025-08,IT,Company Model,API Latency,70.92,ms,down,generated:virtual-company-model
+2025-08,IT,Company Model,Error Rate,0.57,%,down,generated:virtual-company-model
+2025-09,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2025-09,IT,Company Model,Mean Time To Resolution,10.77,hours,down,generated:virtual-company-model
+2025-09,IT,Company Model,Open Tickets,32.51,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,In Progress Tickets,11.38,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,Resolved Tickets Today,12.21,count,up,generated:virtual-company-model
+2025-09,IT,Company Model,Total Incidents,18.04,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,Critical Incidents,5.79,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,Critical Tickets,5.79,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,High Tickets,8.13,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,Medium Tickets,13.01,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,Low Tickets,11.38,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,First Response Time,1.09,hours,down,generated:virtual-company-model
+2025-09,IT,Company Model,Escalation Rate,16.13,%,down,generated:virtual-company-model
+2025-09,IT,Company Model,Ticket Satisfaction,67.07,%,up,generated:virtual-company-model
+2025-09,IT,Company Model,System Uptime,99.23,%,up,generated:virtual-company-model
+2025-09,IT,Company Model,Server Count,86.92,count,up,generated:virtual-company-model
+2025-09,IT,Company Model,Cloud Spend,30071.65,USD,down,generated:virtual-company-model
+2025-09,IT,Company Model,Deployment Frequency,2.05,per week,up,generated:virtual-company-model
+2025-09,IT,Company Model,Change Failure Rate,13.5,%,down,generated:virtual-company-model
+2025-09,IT,Company Model,Lead Time For Changes,15.79,hours,down,generated:virtual-company-model
+2025-09,IT,Company Model,Code Coverage,56.4,%,up,generated:virtual-company-model
+2025-09,IT,Company Model,Build Success Rate,85.37,%,up,generated:virtual-company-model
+2025-09,IT,Company Model,Monthly Releases,4.18,count,up,generated:virtual-company-model
+2025-09,IT,Company Model,Open Vulnerabilities,26.04,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,Critical Vulnerabilities,5.79,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,Patches Pending,17.54,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,Blocked Attacks,392.18,count,up,generated:virtual-company-model
+2025-09,IT,Company Model,Failed Logins,217.7,count,down,generated:virtual-company-model
+2025-09,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2025-09,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2025-09,IT,Company Model,Backup Success Rate,98.91,%,up,generated:virtual-company-model
+2025-09,IT,Company Model,CPU Utilization,65.87,%,down,generated:virtual-company-model
+2025-09,IT,Company Model,Memory Utilization,73.33,%,down,generated:virtual-company-model
+2025-09,IT,Company Model,Disk Utilization,53.22,%,down,generated:virtual-company-model
+2025-09,IT,Company Model,Network Throughput,948.63,Mbps,up,generated:virtual-company-model
+2025-09,IT,Company Model,Active Users,690.79,count,up,generated:virtual-company-model
+2025-09,IT,Company Model,API Latency,75.72,ms,down,generated:virtual-company-model
+2025-09,IT,Company Model,Error Rate,0.89,%,down,generated:virtual-company-model
+2025-10,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2025-10,IT,Company Model,Mean Time To Resolution,6.37,hours,down,generated:virtual-company-model
+2025-10,IT,Company Model,Open Tickets,19.04,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,In Progress Tickets,6.66,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,Resolved Tickets Today,12.84,count,up,generated:virtual-company-model
+2025-10,IT,Company Model,Total Incidents,10.34,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,Critical Incidents,0.0,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,Critical Tickets,0.0,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,High Tickets,4.76,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,Medium Tickets,7.62,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,Low Tickets,6.66,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,First Response Time,0.84,hours,down,generated:virtual-company-model
+2025-10,IT,Company Model,Escalation Rate,8.4,%,down,generated:virtual-company-model
+2025-10,IT,Company Model,Ticket Satisfaction,65.9,%,up,generated:virtual-company-model
+2025-10,IT,Company Model,System Uptime,99.57,%,up,generated:virtual-company-model
+2025-10,IT,Company Model,Server Count,86.74,count,up,generated:virtual-company-model
+2025-10,IT,Company Model,Cloud Spend,29742.39,USD,down,generated:virtual-company-model
+2025-10,IT,Company Model,Deployment Frequency,3.06,per week,up,generated:virtual-company-model
+2025-10,IT,Company Model,Change Failure Rate,6.65,%,down,generated:virtual-company-model
+2025-10,IT,Company Model,Lead Time For Changes,13.66,hours,down,generated:virtual-company-model
+2025-10,IT,Company Model,Code Coverage,58.53,%,up,generated:virtual-company-model
+2025-10,IT,Company Model,Build Success Rate,86.05,%,up,generated:virtual-company-model
+2025-10,IT,Company Model,Monthly Releases,4.18,count,up,generated:virtual-company-model
+2025-10,IT,Company Model,Open Vulnerabilities,0.0,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,Critical Vulnerabilities,0.0,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,Patches Pending,2.95,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,Blocked Attacks,325.71,count,up,generated:virtual-company-model
+2025-10,IT,Company Model,Failed Logins,201.23,count,down,generated:virtual-company-model
+2025-10,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2025-10,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2025-10,IT,Company Model,Backup Success Rate,98.96,%,up,generated:virtual-company-model
+2025-10,IT,Company Model,CPU Utilization,56.63,%,down,generated:virtual-company-model
+2025-10,IT,Company Model,Memory Utilization,62.2,%,down,generated:virtual-company-model
+2025-10,IT,Company Model,Disk Utilization,50.16,%,down,generated:virtual-company-model
+2025-10,IT,Company Model,Network Throughput,973.88,Mbps,up,generated:virtual-company-model
+2025-10,IT,Company Model,Active Users,670.19,count,up,generated:virtual-company-model
+2025-10,IT,Company Model,API Latency,67.38,ms,down,generated:virtual-company-model
+2025-10,IT,Company Model,Error Rate,0.68,%,down,generated:virtual-company-model
+2025-11,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2025-11,IT,Company Model,Mean Time To Resolution,5.86,hours,down,generated:virtual-company-model
+2025-11,IT,Company Model,Open Tickets,14.63,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,In Progress Tickets,5.12,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,Resolved Tickets Today,14.39,count,up,generated:virtual-company-model
+2025-11,IT,Company Model,Total Incidents,8.76,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,Critical Incidents,0.21,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,Critical Tickets,0.21,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,High Tickets,3.66,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,Medium Tickets,5.85,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,Low Tickets,5.12,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,First Response Time,1.21,hours,down,generated:virtual-company-model
+2025-11,IT,Company Model,Escalation Rate,6.21,%,down,generated:virtual-company-model
+2025-11,IT,Company Model,Ticket Satisfaction,70.38,%,up,generated:virtual-company-model
+2025-11,IT,Company Model,System Uptime,99.56,%,up,generated:virtual-company-model
+2025-11,IT,Company Model,Server Count,86.08,count,up,generated:virtual-company-model
+2025-11,IT,Company Model,Cloud Spend,30273.22,USD,down,generated:virtual-company-model
+2025-11,IT,Company Model,Deployment Frequency,3.53,per week,up,generated:virtual-company-model
+2025-11,IT,Company Model,Change Failure Rate,7.97,%,down,generated:virtual-company-model
+2025-11,IT,Company Model,Lead Time For Changes,11.57,hours,down,generated:virtual-company-model
+2025-11,IT,Company Model,Code Coverage,61.61,%,up,generated:virtual-company-model
+2025-11,IT,Company Model,Build Success Rate,87.75,%,up,generated:virtual-company-model
+2025-11,IT,Company Model,Monthly Releases,5.35,count,up,generated:virtual-company-model
+2025-11,IT,Company Model,Open Vulnerabilities,8.1,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,Critical Vulnerabilities,0.21,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,Patches Pending,6.44,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,Blocked Attacks,361.97,count,up,generated:virtual-company-model
+2025-11,IT,Company Model,Failed Logins,219.63,count,down,generated:virtual-company-model
+2025-11,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2025-11,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2025-11,IT,Company Model,Backup Success Rate,99.49,%,up,generated:virtual-company-model
+2025-11,IT,Company Model,CPU Utilization,66.14,%,down,generated:virtual-company-model
+2025-11,IT,Company Model,Memory Utilization,69.42,%,down,generated:virtual-company-model
+2025-11,IT,Company Model,Disk Utilization,55.5,%,down,generated:virtual-company-model
+2025-11,IT,Company Model,Network Throughput,992.05,Mbps,up,generated:virtual-company-model
+2025-11,IT,Company Model,Active Users,687.21,count,up,generated:virtual-company-model
+2025-11,IT,Company Model,API Latency,76.55,ms,down,generated:virtual-company-model
+2025-11,IT,Company Model,Error Rate,0.68,%,down,generated:virtual-company-model
+2025-12,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2025-12,IT,Company Model,Mean Time To Resolution,8.2,hours,down,generated:virtual-company-model
+2025-12,IT,Company Model,Open Tickets,27.61,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,In Progress Tickets,9.66,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,Resolved Tickets Today,11.21,count,up,generated:virtual-company-model
+2025-12,IT,Company Model,Total Incidents,17.07,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,Critical Incidents,3.64,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,Critical Tickets,3.64,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,High Tickets,6.9,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,Medium Tickets,11.04,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,Low Tickets,9.66,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,First Response Time,1.4,hours,down,generated:virtual-company-model
+2025-12,IT,Company Model,Escalation Rate,10.24,%,down,generated:virtual-company-model
+2025-12,IT,Company Model,Ticket Satisfaction,65.3,%,up,generated:virtual-company-model
+2025-12,IT,Company Model,System Uptime,99.3,%,up,generated:virtual-company-model
+2025-12,IT,Company Model,Server Count,86.07,count,up,generated:virtual-company-model
+2025-12,IT,Company Model,Cloud Spend,29812.22,USD,down,generated:virtual-company-model
+2025-12,IT,Company Model,Deployment Frequency,3.52,per week,up,generated:virtual-company-model
+2025-12,IT,Company Model,Change Failure Rate,10.63,%,down,generated:virtual-company-model
+2025-12,IT,Company Model,Lead Time For Changes,14.72,hours,down,generated:virtual-company-model
+2025-12,IT,Company Model,Code Coverage,55.0,%,up,generated:virtual-company-model
+2025-12,IT,Company Model,Build Success Rate,85.71,%,up,generated:virtual-company-model
+2025-12,IT,Company Model,Monthly Releases,4.79,count,up,generated:virtual-company-model
+2025-12,IT,Company Model,Open Vulnerabilities,15.9,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,Critical Vulnerabilities,3.64,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,Patches Pending,11.49,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,Blocked Attacks,366.85,count,up,generated:virtual-company-model
+2025-12,IT,Company Model,Failed Logins,200.33,count,down,generated:virtual-company-model
+2025-12,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2025-12,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2025-12,IT,Company Model,Backup Success Rate,98.63,%,up,generated:virtual-company-model
+2025-12,IT,Company Model,CPU Utilization,64.96,%,down,generated:virtual-company-model
+2025-12,IT,Company Model,Memory Utilization,68.43,%,down,generated:virtual-company-model
+2025-12,IT,Company Model,Disk Utilization,54.16,%,down,generated:virtual-company-model
+2025-12,IT,Company Model,Network Throughput,1053.34,Mbps,up,generated:virtual-company-model
+2025-12,IT,Company Model,Active Users,671.57,count,up,generated:virtual-company-model
+2025-12,IT,Company Model,API Latency,84.54,ms,down,generated:virtual-company-model
+2025-12,IT,Company Model,Error Rate,0.89,%,down,generated:virtual-company-model
+2026-01,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2026-01,IT,Company Model,Mean Time To Resolution,8.16,hours,down,generated:virtual-company-model
+2026-01,IT,Company Model,Open Tickets,20.26,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,In Progress Tickets,7.09,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,Resolved Tickets Today,12.03,count,up,generated:virtual-company-model
+2026-01,IT,Company Model,Total Incidents,11.52,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,Critical Incidents,0.45,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,Critical Tickets,0.45,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,High Tickets,5.06,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,Medium Tickets,8.1,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,Low Tickets,7.09,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,First Response Time,1.13,hours,down,generated:virtual-company-model
+2026-01,IT,Company Model,Escalation Rate,7.26,%,down,generated:virtual-company-model
+2026-01,IT,Company Model,Ticket Satisfaction,71.14,%,up,generated:virtual-company-model
+2026-01,IT,Company Model,System Uptime,99.5,%,up,generated:virtual-company-model
+2026-01,IT,Company Model,Server Count,89.08,count,up,generated:virtual-company-model
+2026-01,IT,Company Model,Cloud Spend,29580.17,USD,down,generated:virtual-company-model
+2026-01,IT,Company Model,Deployment Frequency,3.8,per week,up,generated:virtual-company-model
+2026-01,IT,Company Model,Change Failure Rate,7.14,%,down,generated:virtual-company-model
+2026-01,IT,Company Model,Lead Time For Changes,10.31,hours,down,generated:virtual-company-model
+2026-01,IT,Company Model,Code Coverage,60.57,%,up,generated:virtual-company-model
+2026-01,IT,Company Model,Build Success Rate,90.11,%,up,generated:virtual-company-model
+2026-01,IT,Company Model,Monthly Releases,4.82,count,up,generated:virtual-company-model
+2026-01,IT,Company Model,Open Vulnerabilities,6.26,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,Critical Vulnerabilities,0.45,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,Patches Pending,6.11,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,Blocked Attacks,344.48,count,up,generated:virtual-company-model
+2026-01,IT,Company Model,Failed Logins,206.83,count,down,generated:virtual-company-model
+2026-01,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2026-01,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2026-01,IT,Company Model,Backup Success Rate,99.21,%,up,generated:virtual-company-model
+2026-01,IT,Company Model,CPU Utilization,57.11,%,down,generated:virtual-company-model
+2026-01,IT,Company Model,Memory Utilization,63.5,%,down,generated:virtual-company-model
+2026-01,IT,Company Model,Disk Utilization,55.6,%,down,generated:virtual-company-model
+2026-01,IT,Company Model,Network Throughput,949.76,Mbps,up,generated:virtual-company-model
+2026-01,IT,Company Model,Active Users,675.24,count,up,generated:virtual-company-model
+2026-01,IT,Company Model,API Latency,71.26,ms,down,generated:virtual-company-model
+2026-01,IT,Company Model,Error Rate,0.37,%,down,generated:virtual-company-model
+2026-02,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2026-02,IT,Company Model,Mean Time To Resolution,6.84,hours,down,generated:virtual-company-model
+2026-02,IT,Company Model,Open Tickets,12.95,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,In Progress Tickets,4.53,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,Resolved Tickets Today,11.54,count,up,generated:virtual-company-model
+2026-02,IT,Company Model,Total Incidents,9.5,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,Critical Incidents,0.87,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,Critical Tickets,0.87,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,High Tickets,3.24,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,Medium Tickets,5.18,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,Low Tickets,4.53,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,First Response Time,0.91,hours,down,generated:virtual-company-model
+2026-02,IT,Company Model,Escalation Rate,9.76,%,down,generated:virtual-company-model
+2026-02,IT,Company Model,Ticket Satisfaction,70.74,%,up,generated:virtual-company-model
+2026-02,IT,Company Model,System Uptime,99.51,%,up,generated:virtual-company-model
+2026-02,IT,Company Model,Server Count,87.44,count,up,generated:virtual-company-model
+2026-02,IT,Company Model,Cloud Spend,29928.83,USD,down,generated:virtual-company-model
+2026-02,IT,Company Model,Deployment Frequency,3.49,per week,up,generated:virtual-company-model
+2026-02,IT,Company Model,Change Failure Rate,7.71,%,down,generated:virtual-company-model
+2026-02,IT,Company Model,Lead Time For Changes,13.91,hours,down,generated:virtual-company-model
+2026-02,IT,Company Model,Code Coverage,65.12,%,up,generated:virtual-company-model
+2026-02,IT,Company Model,Build Success Rate,90.89,%,up,generated:virtual-company-model
+2026-02,IT,Company Model,Monthly Releases,4.33,count,up,generated:virtual-company-model
+2026-02,IT,Company Model,Open Vulnerabilities,8.9,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,Critical Vulnerabilities,0.87,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,Patches Pending,7.32,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,Blocked Attacks,364.4,count,up,generated:virtual-company-model
+2026-02,IT,Company Model,Failed Logins,202.19,count,down,generated:virtual-company-model
+2026-02,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2026-02,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2026-02,IT,Company Model,Backup Success Rate,99.36,%,up,generated:virtual-company-model
+2026-02,IT,Company Model,CPU Utilization,66.49,%,down,generated:virtual-company-model
+2026-02,IT,Company Model,Memory Utilization,69.03,%,down,generated:virtual-company-model
+2026-02,IT,Company Model,Disk Utilization,53.91,%,down,generated:virtual-company-model
+2026-02,IT,Company Model,Network Throughput,968.69,Mbps,up,generated:virtual-company-model
+2026-02,IT,Company Model,Active Users,680.56,count,up,generated:virtual-company-model
+2026-02,IT,Company Model,API Latency,73.3,ms,down,generated:virtual-company-model
+2026-02,IT,Company Model,Error Rate,0.66,%,down,generated:virtual-company-model
+2026-03,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2026-03,IT,Company Model,Mean Time To Resolution,11.73,hours,down,generated:virtual-company-model
+2026-03,IT,Company Model,Open Tickets,40.79,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,In Progress Tickets,14.28,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,Resolved Tickets Today,12.64,count,up,generated:virtual-company-model
+2026-03,IT,Company Model,Total Incidents,26.36,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,Critical Incidents,7.48,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,Critical Tickets,7.48,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,High Tickets,10.2,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,Medium Tickets,16.32,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,Low Tickets,14.28,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,First Response Time,1.36,hours,down,generated:virtual-company-model
+2026-03,IT,Company Model,Escalation Rate,18.36,%,down,generated:virtual-company-model
+2026-03,IT,Company Model,Ticket Satisfaction,64.99,%,up,generated:virtual-company-model
+2026-03,IT,Company Model,System Uptime,98.84,%,up,generated:virtual-company-model
+2026-03,IT,Company Model,Server Count,87.86,count,up,generated:virtual-company-model
+2026-03,IT,Company Model,Cloud Spend,29989.89,USD,down,generated:virtual-company-model
+2026-03,IT,Company Model,Deployment Frequency,2.37,per week,up,generated:virtual-company-model
+2026-03,IT,Company Model,Change Failure Rate,15.8,%,down,generated:virtual-company-model
+2026-03,IT,Company Model,Lead Time For Changes,13.87,hours,down,generated:virtual-company-model
+2026-03,IT,Company Model,Code Coverage,55.0,%,up,generated:virtual-company-model
+2026-03,IT,Company Model,Build Success Rate,85.16,%,up,generated:virtual-company-model
+2026-03,IT,Company Model,Monthly Releases,2.78,count,up,generated:virtual-company-model
+2026-03,IT,Company Model,Open Vulnerabilities,43.42,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,Critical Vulnerabilities,7.48,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,Patches Pending,29.62,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,Blocked Attacks,427.56,count,up,generated:virtual-company-model
+2026-03,IT,Company Model,Failed Logins,208.57,count,down,generated:virtual-company-model
+2026-03,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2026-03,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2026-03,IT,Company Model,Backup Success Rate,99.47,%,up,generated:virtual-company-model
+2026-03,IT,Company Model,CPU Utilization,70.66,%,down,generated:virtual-company-model
+2026-03,IT,Company Model,Memory Utilization,72.12,%,down,generated:virtual-company-model
+2026-03,IT,Company Model,Disk Utilization,55.65,%,down,generated:virtual-company-model
+2026-03,IT,Company Model,Network Throughput,1032.65,Mbps,up,generated:virtual-company-model
+2026-03,IT,Company Model,Active Users,669.42,count,up,generated:virtual-company-model
+2026-03,IT,Company Model,API Latency,89.12,ms,down,generated:virtual-company-model
+2026-03,IT,Company Model,Error Rate,1.38,%,down,generated:virtual-company-model
+2026-04,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2026-04,IT,Company Model,Mean Time To Resolution,6.03,hours,down,generated:virtual-company-model
+2026-04,IT,Company Model,Open Tickets,14.4,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,In Progress Tickets,5.04,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,Resolved Tickets Today,13.48,count,up,generated:virtual-company-model
+2026-04,IT,Company Model,Total Incidents,7.98,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,Critical Incidents,2.37,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,Critical Tickets,2.37,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,High Tickets,3.6,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,Medium Tickets,5.76,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,Low Tickets,5.04,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,First Response Time,1.29,hours,down,generated:virtual-company-model
+2026-04,IT,Company Model,Escalation Rate,7.18,%,down,generated:virtual-company-model
+2026-04,IT,Company Model,Ticket Satisfaction,74.33,%,up,generated:virtual-company-model
+2026-04,IT,Company Model,System Uptime,99.53,%,up,generated:virtual-company-model
+2026-04,IT,Company Model,Server Count,86.48,count,up,generated:virtual-company-model
+2026-04,IT,Company Model,Cloud Spend,30027.24,USD,down,generated:virtual-company-model
+2026-04,IT,Company Model,Deployment Frequency,2.95,per week,up,generated:virtual-company-model
+2026-04,IT,Company Model,Change Failure Rate,5.7,%,down,generated:virtual-company-model
+2026-04,IT,Company Model,Lead Time For Changes,13.59,hours,down,generated:virtual-company-model
+2026-04,IT,Company Model,Code Coverage,61.08,%,up,generated:virtual-company-model
+2026-04,IT,Company Model,Build Success Rate,88.31,%,up,generated:virtual-company-model
+2026-04,IT,Company Model,Monthly Releases,4.71,count,up,generated:virtual-company-model
+2026-04,IT,Company Model,Open Vulnerabilities,6.52,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,Critical Vulnerabilities,2.37,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,Patches Pending,5.47,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,Blocked Attacks,367.52,count,up,generated:virtual-company-model
+2026-04,IT,Company Model,Failed Logins,221.89,count,down,generated:virtual-company-model
+2026-04,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2026-04,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2026-04,IT,Company Model,Backup Success Rate,99.75,%,up,generated:virtual-company-model
+2026-04,IT,Company Model,CPU Utilization,61.17,%,down,generated:virtual-company-model
+2026-04,IT,Company Model,Memory Utilization,68.5,%,down,generated:virtual-company-model
+2026-04,IT,Company Model,Disk Utilization,54.68,%,down,generated:virtual-company-model
+2026-04,IT,Company Model,Network Throughput,1037.54,Mbps,up,generated:virtual-company-model
+2026-04,IT,Company Model,Active Users,681.47,count,up,generated:virtual-company-model
+2026-04,IT,Company Model,API Latency,76.57,ms,down,generated:virtual-company-model
+2026-04,IT,Company Model,Error Rate,0.61,%,down,generated:virtual-company-model
+2026-05,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2026-05,IT,Company Model,Mean Time To Resolution,6.93,hours,down,generated:virtual-company-model
+2026-05,IT,Company Model,Open Tickets,14.58,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,In Progress Tickets,5.1,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,Resolved Tickets Today,10.82,count,up,generated:virtual-company-model
+2026-05,IT,Company Model,Total Incidents,10.32,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,Critical Incidents,0.34,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,Critical Tickets,0.34,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,High Tickets,3.65,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,Medium Tickets,5.83,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,Low Tickets,5.1,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,First Response Time,0.99,hours,down,generated:virtual-company-model
+2026-05,IT,Company Model,Escalation Rate,8.74,%,down,generated:virtual-company-model
+2026-05,IT,Company Model,Ticket Satisfaction,71.35,%,up,generated:virtual-company-model
+2026-05,IT,Company Model,System Uptime,99.57,%,up,generated:virtual-company-model
+2026-05,IT,Company Model,Server Count,87.45,count,up,generated:virtual-company-model
+2026-05,IT,Company Model,Cloud Spend,29785.37,USD,down,generated:virtual-company-model
+2026-05,IT,Company Model,Deployment Frequency,3.39,per week,up,generated:virtual-company-model
+2026-05,IT,Company Model,Change Failure Rate,7.11,%,down,generated:virtual-company-model
+2026-05,IT,Company Model,Lead Time For Changes,11.55,hours,down,generated:virtual-company-model
+2026-05,IT,Company Model,Code Coverage,61.96,%,up,generated:virtual-company-model
+2026-05,IT,Company Model,Build Success Rate,88.7,%,up,generated:virtual-company-model
+2026-05,IT,Company Model,Monthly Releases,4.21,count,up,generated:virtual-company-model
+2026-05,IT,Company Model,Open Vulnerabilities,8.95,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,Critical Vulnerabilities,0.34,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,Patches Pending,7.28,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,Blocked Attacks,335.43,count,up,generated:virtual-company-model
+2026-05,IT,Company Model,Failed Logins,201.09,count,down,generated:virtual-company-model
+2026-05,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2026-05,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2026-05,IT,Company Model,Backup Success Rate,99.1,%,up,generated:virtual-company-model
+2026-05,IT,Company Model,CPU Utilization,64.48,%,down,generated:virtual-company-model
+2026-05,IT,Company Model,Memory Utilization,70.02,%,down,generated:virtual-company-model
+2026-05,IT,Company Model,Disk Utilization,52.37,%,down,generated:virtual-company-model
+2026-05,IT,Company Model,Network Throughput,1020.24,Mbps,up,generated:virtual-company-model
+2026-05,IT,Company Model,Active Users,681.09,count,up,generated:virtual-company-model
+2026-05,IT,Company Model,API Latency,80.69,ms,down,generated:virtual-company-model
+2026-05,IT,Company Model,Error Rate,0.54,%,down,generated:virtual-company-model
+2026-06,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2026-06,IT,Company Model,Mean Time To Resolution,10.38,hours,down,generated:virtual-company-model
+2026-06,IT,Company Model,Open Tickets,32.94,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,In Progress Tickets,11.53,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,Resolved Tickets Today,12.55,count,up,generated:virtual-company-model
+2026-06,IT,Company Model,Total Incidents,21.25,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,Critical Incidents,4.71,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,Critical Tickets,4.71,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,High Tickets,8.23,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,Medium Tickets,13.18,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,Low Tickets,11.53,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,First Response Time,1.46,hours,down,generated:virtual-company-model
+2026-06,IT,Company Model,Escalation Rate,15.32,%,down,generated:virtual-company-model
+2026-06,IT,Company Model,Ticket Satisfaction,63.6,%,up,generated:virtual-company-model
+2026-06,IT,Company Model,System Uptime,99.26,%,up,generated:virtual-company-model
+2026-06,IT,Company Model,Server Count,89.36,count,up,generated:virtual-company-model
+2026-06,IT,Company Model,Cloud Spend,29668.87,USD,down,generated:virtual-company-model
+2026-06,IT,Company Model,Deployment Frequency,2.46,per week,up,generated:virtual-company-model
+2026-06,IT,Company Model,Change Failure Rate,12.63,%,down,generated:virtual-company-model
+2026-06,IT,Company Model,Lead Time For Changes,15.49,hours,down,generated:virtual-company-model
+2026-06,IT,Company Model,Code Coverage,55.0,%,up,generated:virtual-company-model
+2026-06,IT,Company Model,Build Success Rate,87.36,%,up,generated:virtual-company-model
+2026-06,IT,Company Model,Monthly Releases,4.21,count,up,generated:virtual-company-model
+2026-06,IT,Company Model,Open Vulnerabilities,25.43,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,Critical Vulnerabilities,4.71,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,Patches Pending,17.4,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,Blocked Attacks,388.06,count,up,generated:virtual-company-model
+2026-06,IT,Company Model,Failed Logins,210.68,count,down,generated:virtual-company-model
+2026-06,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2026-06,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2026-06,IT,Company Model,Backup Success Rate,99.03,%,up,generated:virtual-company-model
+2026-06,IT,Company Model,CPU Utilization,62.57,%,down,generated:virtual-company-model
+2026-06,IT,Company Model,Memory Utilization,67.25,%,down,generated:virtual-company-model
+2026-06,IT,Company Model,Disk Utilization,44.34,%,down,generated:virtual-company-model
+2026-06,IT,Company Model,Network Throughput,1020.3,Mbps,up,generated:virtual-company-model
+2026-06,IT,Company Model,Active Users,688.75,count,up,generated:virtual-company-model
+2026-06,IT,Company Model,API Latency,87.82,ms,down,generated:virtual-company-model
+2026-06,IT,Company Model,Error Rate,1.01,%,down,generated:virtual-company-model
+2026-07,IT,Company Model,SLA Compliance,80.0,%,up,generated:virtual-company-model
+2026-07,IT,Company Model,Mean Time To Resolution,7.18,hours,down,generated:virtual-company-model
+2026-07,IT,Company Model,Open Tickets,15.37,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,In Progress Tickets,5.38,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,Resolved Tickets Today,11.73,count,up,generated:virtual-company-model
+2026-07,IT,Company Model,Total Incidents,7.9,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,Critical Incidents,0.39,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,Critical Tickets,0.39,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,High Tickets,3.84,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,Medium Tickets,6.15,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,Low Tickets,5.38,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,First Response Time,0.99,hours,down,generated:virtual-company-model
+2026-07,IT,Company Model,Escalation Rate,8.28,%,down,generated:virtual-company-model
+2026-07,IT,Company Model,Ticket Satisfaction,70.06,%,up,generated:virtual-company-model
+2026-07,IT,Company Model,System Uptime,99.48,%,up,generated:virtual-company-model
+2026-07,IT,Company Model,Server Count,89.15,count,up,generated:virtual-company-model
+2026-07,IT,Company Model,Cloud Spend,29762.61,USD,down,generated:virtual-company-model
+2026-07,IT,Company Model,Deployment Frequency,3.14,per week,up,generated:virtual-company-model
+2026-07,IT,Company Model,Change Failure Rate,6.83,%,down,generated:virtual-company-model
+2026-07,IT,Company Model,Lead Time For Changes,13.12,hours,down,generated:virtual-company-model
+2026-07,IT,Company Model,Code Coverage,61.41,%,up,generated:virtual-company-model
+2026-07,IT,Company Model,Build Success Rate,87.73,%,up,generated:virtual-company-model
+2026-07,IT,Company Model,Monthly Releases,5.15,count,up,generated:virtual-company-model
+2026-07,IT,Company Model,Open Vulnerabilities,9.42,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,Critical Vulnerabilities,0.39,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,Patches Pending,6.91,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,Blocked Attacks,342.5,count,up,generated:virtual-company-model
+2026-07,IT,Company Model,Failed Logins,201.89,count,down,generated:virtual-company-model
+2026-07,IT,Company Model,Compliance Score,60.0,%,up,generated:virtual-company-model
+2026-07,IT,Company Model,Penetration Test Score,50.0,%,up,generated:virtual-company-model
+2026-07,IT,Company Model,Backup Success Rate,99.21,%,up,generated:virtual-company-model
+2026-07,IT,Company Model,CPU Utilization,61.81,%,down,generated:virtual-company-model
+2026-07,IT,Company Model,Memory Utilization,68.9,%,down,generated:virtual-company-model
+2026-07,IT,Company Model,Disk Utilization,55.56,%,down,generated:virtual-company-model
+2026-07,IT,Company Model,Network Throughput,959.63,Mbps,up,generated:virtual-company-model
+2026-07,IT,Company Model,Active Users,675.84,count,up,generated:virtual-company-model
+2026-07,IT,Company Model,API Latency,76.2,ms,down,generated:virtual-company-model
+2026-07,IT,Company Model,Error Rate,0.38,%,down,generated:virtual-company-model
