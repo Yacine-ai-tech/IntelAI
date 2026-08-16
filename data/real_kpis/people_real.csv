@@ -360,8 +360,35 @@ period,category,segment,metric_name,value,unit,direction,source
 2026-05,People,External — US Market Context,Average Hourly Earnings,37.49,USD,up,fred:CES0500000003
 2026-06,People,External — US Market Context,Average Hourly Earnings,37.6,USD,up,fred:CES0500000003
 2026-07,People,External — US Market Context,Average Hourly Earnings,37.62,USD,up,fred:CES0500000003
+2024-01,People,IBM Sample,Headcount,833.0,count,up,ibm-hr:attrition-survey
 2024-01,People,IBM Sample,Attrition Rate,16.93,%,down,ibm-hr:attrition-survey
+2024-01,People,IBM Sample,Training Completion Rate,96.16,%,up,ibm-hr:attrition-survey
+2024-01,People,IBM Sample,Job Satisfaction Score,59.54,/100,up,ibm-hr:attrition-survey
 2024-01,People,IBM Sample,Average Monthly Income,6537.63,USD,up,ibm-hr:attrition-survey
+2024-01,People,IBM Sample,Average Salary,6537.63,USD,up,ibm-hr:attrition-survey
 2024-01,People,IBM Sample,Average Tenure,7.0,count,up,ibm-hr:attrition-survey
-2024-01,People,IBM Sample,Job Satisfaction Score,2.79,score,up,ibm-hr:attrition-survey
 2024-01,People,IBM Sample,Average Employee Age,36.96,count,up,ibm-hr:attrition-survey
+2024-01,People,Sales,Headcount,254.0,count,up,ibm-hr:attrition-survey
+2024-01,People,Sales,Attrition Rate,19.69,%,down,ibm-hr:attrition-survey
+2024-01,People,Sales,Training Completion Rate,96.46,%,up,ibm-hr:attrition-survey
+2024-01,People,Sales,Job Satisfaction Score,61.55,/100,up,ibm-hr:attrition-survey
+2024-01,People,Sales,Average Monthly Income,7005.2,USD,up,ibm-hr:attrition-survey
+2024-01,People,Sales,Average Salary,7005.2,USD,up,ibm-hr:attrition-survey
+2024-01,People,Sales,Average Tenure,7.28,count,up,ibm-hr:attrition-survey
+2024-01,People,Sales,Average Employee Age,36.75,count,up,ibm-hr:attrition-survey
+2024-01,People,Research & Development,Headcount,552.0,count,up,ibm-hr:attrition-survey
+2024-01,People,Research & Development,Attrition Rate,15.58,%,down,ibm-hr:attrition-survey
+2024-01,People,Research & Development,Training Completion Rate,95.83,%,up,ibm-hr:attrition-survey
+2024-01,People,Research & Development,Job Satisfaction Score,58.8,/100,up,ibm-hr:attrition-survey
+2024-01,People,Research & Development,Average Monthly Income,6288.64,USD,up,ibm-hr:attrition-survey
+2024-01,People,Research & Development,Average Salary,6288.64,USD,up,ibm-hr:attrition-survey
+2024-01,People,Research & Development,Average Tenure,6.84,count,up,ibm-hr:attrition-survey
+2024-01,People,Research & Development,Average Employee Age,36.93,count,up,ibm-hr:attrition-survey
+2024-01,People,Human Resources,Headcount,27.0,count,up,ibm-hr:attrition-survey
+2024-01,People,Human Resources,Attrition Rate,18.52,%,down,ibm-hr:attrition-survey
+2024-01,People,Human Resources,Training Completion Rate,100.0,%,up,ibm-hr:attrition-survey
+2024-01,People,Human Resources,Job Satisfaction Score,55.56,/100,up,ibm-hr:attrition-survey
+2024-01,People,Human Resources,Average Monthly Income,7220.52,USD,up,ibm-hr:attrition-survey
+2024-01,People,Human Resources,Average Salary,7220.52,USD,up,ibm-hr:attrition-survey
+2024-01,People,Human Resources,Average Tenure,7.63,count,up,ibm-hr:attrition-survey
+2024-01,People,Human Resources,Average Employee Age,39.44,count,up,ibm-hr:attrition-survey

@@ -208,3 +208,5 @@ period,category,segment,metric_name,value,unit,direction,source
 2026-04,Growth,External — US Market Context,Consumer Sentiment Index,49.8,index,up,fred:UMCSENT
 2026-05,Growth,External — US Market Context,Consumer Sentiment Index,44.8,index,up,fred:UMCSENT
 2026-06,Growth,External — US Market Context,Consumer Sentiment Index,49.5,index,up,fred:UMCSENT
+2024-12,Growth,External — SaaS Industry Benchmark,Churn Rate,11.34,%,down,benchmarkit:2025-saas-performance-metrics
+2025-12,Growth,External — SaaS Industry Benchmark,Churn Rate,12.5,%,down,benchmarkit:2025-saas-performance-metrics

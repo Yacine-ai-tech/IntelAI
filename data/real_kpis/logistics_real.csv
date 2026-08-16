@@ -177,3 +177,4 @@ period,category,segment,metric_name,value,unit,direction,source
 2026-03,Logistics,External — US Market Context,Freight Transportation Index,0.7,index,up,fred:TSIFRGHTC
 2026-04,Logistics,External — US Market Context,Freight Transportation Index,-0.6,index,up,fred:TSIFRGHTC
 2026-05,Logistics,External — US Market Context,Freight Transportation Index,-1.3,index,up,fred:TSIFRGHTC
+2025-12,Logistics,External — Supply Chain Benchmark,Inventory Turnover,3.9,x/year,up,netstock:2025-supply-chain-planning-report
