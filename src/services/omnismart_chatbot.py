@@ -976,13 +976,18 @@ class AgentPersonaFactory:
         for title, text in doc_blocks:
             s = by_title.get(title.lower())
             if s:
-                # Same 2000-char budget as the KPI citations above — 500 was truncating
-                # EVERY digest document (every real one is 688+ chars) before reaching
-                # most of its content, not just an edge case. Confirmed live: a real
-                # "Security Score" line sitting at char 747 of an IT digest never
-                # reached the model's own prompt, so a genuinely-answerable question
-                # got "no such metric" instead of the real number.
-                parts.append(f"[{s['id']}] {title}: {text[:2000]}")
+                # 500 was truncating EVERY digest document (every real one is 688+ chars)
+                # before reaching most of its content — confirmed live: a real "Security
+                # Score" line at char 747 of an IT digest never reached the model's
+                # prompt. Raised to 2000, which was still short for a digest covering
+                # several segments in one category+period (People's company-wide +
+                # per-department breakdown runs 3800+ chars) — confirmed live again:
+                # "Training Completion Rate" at char 2763 also never reached the prompt.
+                # 4000 matches vector_store.py's VECTOR_STORE_CONTENT_CHARS default (the
+                # same "how much of one document is enough" budget already established
+                # elsewhere in this codebase) and covers all but 1 of 250 current digests
+                # in full.
+                parts.append(f"[{s['id']}] {title}: {text[:4000]}")
 
         return ("\n\n".join(parts), sources)
 
