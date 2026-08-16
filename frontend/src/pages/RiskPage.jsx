@@ -4,7 +4,7 @@ import { useTranslation } from '../i18n/I18nContext'
 import { ShieldAlert, Search, Activity, CheckCircle2, HeartPulse } from 'lucide-react'
 import * as Recharts from "recharts";
 const { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Tooltip } = Recharts;
-import { PageHeader, fmtNum, Loading, Grid, AskCopilot, Panel } from '../components/ui'
+import { PageHeader, fmtNum, Loading, ErrorState, Grid, AskCopilot, Panel } from '../components/ui'
 
 const ACCENT = 'var(--p-risk)'
 
@@ -35,6 +35,7 @@ export default function RiskPage() {
   const health = useQuery({ queryKey: ['health'], queryFn: () => api.getHealth().then(r => r.data), retry: 1 })
 
   if (risk.isLoading) return <Loading />
+  if (risk.isError) return <ErrorState />
   const r = risk.data || {}
   const radar = [
     { subject: 'Liquidity', value: r.liquidity_score ?? 0 },

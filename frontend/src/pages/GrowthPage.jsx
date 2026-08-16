@@ -2,15 +2,16 @@ import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { Rocket, TrendingUp, Users, DollarSign, Activity, Percent, ArrowUpRight } from 'lucide-react'
-import { fmtPct, PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, AreaTrend, Panel, fmtMoney } from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, fmtNum, Loading, ErrorState, Grid, AskCopilot, AreaTrend, Panel, fmtMoney } from '../components/ui'
 
 const ACCENT = 'var(--p-cro)'
 
 export default function GrowthPage() {
   const { t } = useTranslation()
-  const { data: s, isLoading } = useQuery({ queryKey: ['growth-summary'], queryFn: () => api.getGrowthSummary().then(r => r.data), retry: 1 })
+  const { data: s, isLoading, isError } = useQuery({ queryKey: ['growth-summary'], queryFn: () => api.getGrowthSummary().then(r => r.data), retry: 1 })
 
   if (isLoading) return <Loading />
+  if (isError) return <ErrorState />
   const d = s || {}
 
   return (

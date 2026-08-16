@@ -647,10 +647,27 @@ def get_kpi_entities() -> "pd.DataFrame":
         conn.close()
 
 
+def _owner_scope_clause(params: List[Any]) -> str:
+    """Same demo-session scoping as get_kpi_metrics() — without it, one visitor's
+    private/test upload contaminates the GLOBAL periods/categories/metrics/segments
+    list for every other visitor. Confirmed live: a leftover privilege-leak test row
+    (category "ZZTESTCAT_PRIVLEAK_...", period "2099-01", owner_user_id set to one
+    throwaway demo user) was visible to every role via get_available_categories(),
+    and get_latest_period() picked that same private row's period as the GLOBAL
+    "latest" for every caller of /api/v1/financial/statement, producing an all-zero
+    statement dated 2099 for anyone who didn't pass an explicit period."""
+    if not _demo_session_scoping_enabled():
+        return ""
+    params.append(get_request_scope_user())
+    return " WHERE (owner_user_id IS NULL OR owner_user_id = %s)"
+
+
 def get_available_periods() -> List[str]:
     conn = _get_conn()
     try:
-        rows = conn.execute("SELECT DISTINCT period FROM kpi_metrics ORDER BY period DESC").fetchall()
+        params: List[Any] = []
+        q = "SELECT DISTINCT period FROM kpi_metrics" + _owner_scope_clause(params) + " ORDER BY period DESC"
+        rows = conn.execute(q, params).fetchall()
         return [r["period"] for r in rows]
     finally:
         conn.close()
@@ -659,7 +676,9 @@ def get_available_periods() -> List[str]:
 def get_available_metrics() -> List[str]:
     conn = _get_conn()
     try:
-        rows = conn.execute("SELECT DISTINCT metric FROM kpi_metrics ORDER BY metric").fetchall()
+        params: List[Any] = []
+        q = "SELECT DISTINCT metric FROM kpi_metrics" + _owner_scope_clause(params) + " ORDER BY metric"
+        rows = conn.execute(q, params).fetchall()
         return [r["metric"] for r in rows]
     finally:
         conn.close()
@@ -668,7 +687,9 @@ def get_available_metrics() -> List[str]:
 def get_available_categories() -> List[str]:
     conn = _get_conn()
     try:
-        rows = conn.execute("SELECT DISTINCT category FROM kpi_metrics ORDER BY category").fetchall()
+        params: List[Any] = []
+        q = "SELECT DISTINCT category FROM kpi_metrics" + _owner_scope_clause(params) + " ORDER BY category"
+        rows = conn.execute(q, params).fetchall()
         return [r["category"] for r in rows]
     finally:
         conn.close()
@@ -677,7 +698,9 @@ def get_available_categories() -> List[str]:
 def get_available_segments() -> List[str]:
     conn = _get_conn()
     try:
-        rows = conn.execute("SELECT DISTINCT segment FROM kpi_metrics ORDER BY segment").fetchall()
+        params: List[Any] = []
+        q = "SELECT DISTINCT segment FROM kpi_metrics" + _owner_scope_clause(params) + " ORDER BY segment"
+        rows = conn.execute(q, params).fetchall()
         return [r["segment"] for r in rows]
     finally:
         conn.close()

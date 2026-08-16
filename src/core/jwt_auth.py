@@ -153,13 +153,13 @@ ROLE_DEFINITIONS = {
         "description": "Full system access",
     },
     "ceo": {
-        "pages": ["dashboard", "analytics", "assistant", "forecasting", "esg", "risk", "hr", "logistics", "it", "operations", "settings"],
+        "pages": ["dashboard", "analytics", "assistant", "forecasting", "financial", "esg", "risk", "hr", "logistics", "it", "operations", "settings"],
         "actions": ["read", "analyze", "forecast", "report"],
         "data_access": ["Finance", "Growth", "Operations", "People", "ESG", "IT"],
         "description": "Strategic overview, all domains",
     },
     "cfo": {
-        "pages": ["dashboard", "analytics", "assistant", "forecasting", "data_hub", "settings"],
+        "pages": ["dashboard", "analytics", "assistant", "forecasting", "financial", "data_hub", "settings"],
         "actions": ["read", "analyze", "forecast", "report", "financial_write", "ingest"],
         "data_access": ["Finance", "Growth"],
         "description": "Financial analysis and reporting",
@@ -201,7 +201,7 @@ ROLE_DEFINITIONS = {
         "description": "Risk and compliance",
     },
     "analyst": {
-        "pages": ["dashboard", "analytics", "assistant", "forecasting", "data_hub", "hr", "logistics", "it", "operations", "esg", "risk", "settings"],
+        "pages": ["dashboard", "analytics", "assistant", "forecasting", "financial", "data_hub", "hr", "logistics", "it", "operations", "esg", "risk", "settings"],
         "actions": ["read", "analyze", "forecast", "ingest"],
         "data_access": ["Finance", "Growth", "Operations", "People", "ESG", "IT"],
         "description": "Data analysis and insights",

@@ -4,7 +4,7 @@ import { useTranslation } from '../i18n/I18nContext'
 import { TrendingUp, Play, BarChart3, Brain, Target, Sparkles } from 'lucide-react'
 import * as Recharts from "recharts";
 const { ComposedChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } = Recharts;
-import { PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, Empty, Panel } from '../components/ui'
+import { PageHeader, Stat, StatGrid, fmtNum, Loading, ErrorState, Grid, AskCopilot, Empty, Panel } from '../components/ui'
 
 const TIP = { background: 'var(--surface-2)', border: '1px solid var(--border-2)', borderRadius: 8, fontSize: '.78rem', color: 'var(--text)' }
 const AXIS = { fontSize: 11, fill: 'var(--text-3)' }
@@ -65,10 +65,14 @@ export default function ForecastingPage() {
   const [forecast, setForecast] = useState(null)
   const [loading, setLoading] = useState(false)
   const [init, setInit] = useState(true)
+  const [initError, setInitError] = useState(false)
 
   useEffect(() => {
+    // Was previously a swallowed .catch(() => {}) — a failed fetch left `metrics`
+    // empty with nothing telling the user this was a real error, not "no metrics
+    // exist yet" (the exact same silent-failure pattern flagged on the other pages).
     api.getMetrics().then(r => { const l = r.data?.metrics || []; setMetrics(l); if (l[0]) setMetric(l[0]) })
-      .catch(() => {}).finally(() => setInit(false))
+      .catch(() => setInitError(true)).finally(() => setInit(false))
   }, [])
 
   const run = useCallback(async () => {
@@ -80,6 +84,7 @@ export default function ForecastingPage() {
   }, [metric, periods])
 
   if (init) return <Loading label={t('loadingMetrics') || 'Loading metrics…'} />
+  if (initError) return <ErrorState />
 
   return (
     <div>
