@@ -790,6 +790,9 @@ SOURCE_URLS = {
     "nvd": "https://nvd.nist.gov/vuln/search",
     "ibm-hr": "IBM HR Analytics Employee Attrition dataset",
     "sonatel": "https://sonatel.sn (communiqués de résultats)",
+    "bls-osha": "https://www.bls.gov/iif/ (Survey of Occupational Injuries and Illnesses)",
+    "benchmarkit": "https://www.benchmarkit.ai/2025benchmarks",
+    "netstock": "https://www.netstock.com/research/supply-chain-planning-report/",
 }
 
 LABELS = {
@@ -891,6 +894,21 @@ def stage_digests(months: int, dry_run: bool) -> int:
     for domain, period in grouped:
         per_domain[domain].append(period)
     keep = {(d, p) for d, ps in per_domain.items() for p in sorted(ps)[-months:]}
+
+    # A sparse source (a handful of real published data points — a survey cross-section,
+    # a one-off benchmark report) contributes to only a few periods total. Mixed into a
+    # domain that also carries a long continuous monthly series (FRED runs 90+ months),
+    # the windowing above silently squeezes its one real period out — no digest document
+    # ever gets written for it, so the data is correctly seeded and API-queryable but
+    # unreachable through chat/RAG. Confirmed live: the IBM HR survey's real
+    # per-department breakdown existed in kpi_metrics but had no digest at all, so a
+    # natural-language question about it retrieved raw, unaggregated CSV rows instead
+    # and produced a materially wrong answer. Any source contributing to <=6 distinct
+    # periods anywhere is treated as sparse and kept in full, regardless of recency.
+    by_source_periods: dict[str, set[str]] = defaultdict(set)
+    for r in rows:
+        by_source_periods[r["source"]].add(r["period"])
+    keep |= {(r["category"], r["period"]) for r in rows if len(by_source_periods[r["source"]]) <= 6}
 
     out = DATA / "kpi_digests"
     if dry_run:
