@@ -5,7 +5,7 @@ import { useTranslation } from '../i18n/I18nContext'
 import * as Recharts from "recharts";
 const { AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer, Cell, } = Recharts;
-import { Sparkles, ArrowUpRight, ArrowDownRight, FileText, X, Globe } from 'lucide-react'
+import { Sparkles, ArrowUpRight, ArrowDownRight, FileText, X, Globe, AlertTriangle } from 'lucide-react'
 
 // ── formatters ───────────────────────────────────────────────
 export const fmtNum = (v) => {
@@ -176,6 +176,19 @@ export function Loading({ label = 'Loading…' }) {
 }
 export function Empty({ text = 'No data available.' }) {
   return <div className="card" style={{ color: 'var(--text-3)', textAlign: 'center', padding: 30 }}>{text}</div>
+}
+// A request that actually failed (401/500/timeout) was previously visually
+// indistinguishable from "this domain has no data yet" — every page destructured
+// `data` with a `{}`/`[]` default and rendered straight through with isLoading as the
+// only gate, so a confident-looking all-zero dashboard was the same UI as a genuine
+// backend error. Confirmed live on several domain pages.
+export function ErrorState({ text = 'Could not load this data.' }) {
+  return (
+    <div className="card" style={{ color: 'var(--bad)', textAlign: 'center', padding: 30, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+      <AlertTriangle size={22} />
+      <span>{text}</span>
+    </div>
+  )
 }
 
 // ── charts ───────────────────────────────────────────────────

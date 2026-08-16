@@ -1542,6 +1542,8 @@ async def generate_financial_statement(
             return {"line_items": line_items, "period": period, "statement_type": req.statement_type}
         else:
             raise HTTPException(status_code=400, detail=f"Unknown statement type: {req.statement_type}")
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -1549,6 +1551,24 @@ async def generate_financial_statement(
 # ════════════════════════════════════════════════════════════
 # FORECASTING
 # ════════════════════════════════════════════════════════════
+
+async def _scope_kpi_df(df: "pd.DataFrame", user: TokenData) -> "pd.DataFrame":
+    """Same role-scoping GET /api/v1/kpis already applies, factored out for the
+    forecast/insights endpoints below — they called get_kpi_metrics() with no category
+    filter at all, so any authenticated user got every domain's real values regardless
+    of their data_access. Confirmed live: an hr-role token (data_access=[People])
+    retrieved Finance anomalies (real revenue/EBITDA figures) and a composite risk
+    score built from every domain via /api/v1/insights/anomalies and /insights/risk."""
+    from src.services.pg_store import get_available_categories
+    if df.empty or "category" not in df.columns:
+        return df
+    all_categories = await asyncio.to_thread(get_available_categories)
+    user_categories = get_user_data_categories(user.role, all_categories)
+    if "*" in user_categories:
+        return df
+    user_cat_lower = [c.lower() for c in user_categories]
+    return df[df["category"].str.lower().isin(user_cat_lower)]
+
 
 @app.post("/api/v1/forecast")
 async def run_forecast(
@@ -1560,6 +1580,7 @@ async def run_forecast(
     from src.services.forecasting import ForecastEngine
 
     df = await asyncio.to_thread(get_kpi_metrics, metrics=[metric])
+    df = await _scope_kpi_df(df, user)
     if df.empty:
         return {"error": f"No data found for metric: {metric}", "forecast": []}
 
@@ -1608,6 +1629,7 @@ async def get_health_index(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_health_index
     df = await asyncio.to_thread(get_kpi_metrics)
+    df = await _scope_kpi_df(df, user)
     return _json_safe(compute_health_index(df))
 
 
@@ -1616,6 +1638,7 @@ async def get_risk_score(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_risk_score
     df = await asyncio.to_thread(get_kpi_metrics)
+    df = await _scope_kpi_df(df, user)
     return _json_safe(compute_risk_score(df))
 
 
@@ -1624,6 +1647,7 @@ async def get_executive_summary(user: TokenData = Depends(get_current_user)):
     from src.services.pg_store import get_kpi_metrics
     from src.services.insights import compute_health_index, compute_risk_score, extract_key_metrics, build_executive_summary
     df = await asyncio.to_thread(get_kpi_metrics)
+    df = await _scope_kpi_df(df, user)
     health = compute_health_index(df)
     risk = compute_risk_score(df)
     key_metrics = extract_key_metrics(df)
@@ -1645,6 +1669,7 @@ async def get_anomalies(
     from src.services.insights import detect_anomalies
     metrics_filter = [metric] if metric else None
     df = await asyncio.to_thread(get_kpi_metrics, metrics=metrics_filter)
+    df = await _scope_kpi_df(df, user)
     anomalies = detect_anomalies(df)
     if anomalies.empty:
         return {"anomalies": [], "count": 0}
@@ -1961,6 +1986,15 @@ async def update_user(
         _users_db[target]["is_active"] = req.is_active
     if req.preferred_language:
         _users_db[target]["preferred_language"] = req.preferred_language
+    # Persist to Postgres too — without this, an admin's change (e.g. deactivating a
+    # compromised account) only lived in this one process's in-memory _users_db and
+    # silently reverted on the next restart (routine on Render's free tier: idle sleep
+    # + cold start), with no indication to the admin that it had been undone.
+    from src.services.pg_store import update_user as _pg_update_user
+    await asyncio.to_thread(
+        _pg_update_user, user_id,
+        role=req.role, is_active=req.is_active, preferred_language=req.preferred_language,
+    )
     return {"status": "updated"}
 
 
@@ -1998,6 +2032,8 @@ async def switch_scenario(req: ScenarioRequest, user: TokenData = Depends(requir
         # Seed with new scenario
         counts = seed_database(replace=True, scenario=req.scenario)
         return {"status": "success", "scenario": req.scenario, "counts": counts}
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

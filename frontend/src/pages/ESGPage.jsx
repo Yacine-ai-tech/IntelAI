@@ -2,14 +2,15 @@ import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { Leaf, Cloud, Zap, Droplet, Recycle, Users, Scale, Landmark, ShieldCheck } from 'lucide-react'
-import { fmtPct, PageHeader, Stat, StatGrid, fmtNum, Loading, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, fmtNum, Loading, ErrorState, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
 
 const ACCENT = 'var(--p-esg)'
 
 export default function ESGPage() {
   const { t } = useTranslation()
-  const { data, isLoading } = useQuery({ queryKey: ['esg'], queryFn: () => api.getESGSummary().then(r => r.data), retry: 1 })
+  const { data, isLoading, isError } = useQuery({ queryKey: ['esg'], queryFn: () => api.getESGSummary().then(r => r.data), retry: 1 })
   if (isLoading) return <Loading />
+  if (isError) return <ErrorState />
   const d = data || {}
   const env = d.environment || {}, soc = d.social || {}, gov = d.governance || {}
   const score = Math.round(d.score ?? 0)
