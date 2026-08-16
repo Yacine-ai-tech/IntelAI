@@ -29,7 +29,7 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   
   // Bypass SW for API routes, websockets, and extensions
-  if (url.pathname.startsWith('/api') || url.pathname.startsWith('/health') || url.pathname.startsWith('/socket.io')) return;
+  if (url.pathname.includes('/api') || url.pathname.includes('/health') || url.pathname.includes('/analytics') || url.pathname.startsWith('/socket.io') || url.pathname.startsWith('/intelai')) return;
 
   // 1. HTML Navigation: Network-First
   // Always get fresh HTML to ensure new JS bundles are referenced.
