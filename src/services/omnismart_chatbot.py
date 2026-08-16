@@ -1071,7 +1071,8 @@ class AgentPersonaFactory:
             "macro", "inflation", "interest rate", "industry standard", "industry average",
             "external", "compare to other", "how do other", "current events", "what's happening",
             "actualité", "marché", "concurrent", "réglementation", "secteur", "meilleures pratiques",
-            "tendance du marché", "moyenne du secteur",
+            "tendance du marché", "moyenne du secteur", "web search", "search the web", "online",
+            "live search", "tavily", "internet"
         )
         return any(x in t for x in triggers)
 
