@@ -184,7 +184,7 @@ def _get_conn():
         class ConnWrapper:
             def __init__(self, p):
                 self._p = p
-                self._c = p.getconn(timeout=10)
+                self._c = p.getconn(timeout=30)
             def __getattr__(self, item):
                 return getattr(self._c, item)
             def close(self):

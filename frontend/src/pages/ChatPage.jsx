@@ -8,7 +8,7 @@ import { Citations } from '../components/ui'
 import {
   Send, Sparkles, User, Plus, History, MessageSquare,
   Crown, DollarSign, Cpu, Settings2, Users, Leaf, ShieldAlert, BarChart3, Bot,
-  Info, MoreHorizontal, ArrowUpRight, ArrowDownRight, PanelLeftClose, PanelRightClose, PanelLeft, PanelRight, X, Network
+  Info, MoreHorizontal, ArrowUpRight, ArrowDownRight, PanelLeftClose, PanelRightClose, PanelLeft, PanelRight, X, Network, StopCircle
 } from 'lucide-react'
 import * as Recharts from "recharts";
 const { AreaChart, Area, YAxis, ResponsiveContainer } = Recharts;
@@ -222,6 +222,7 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
   const [showKPI, setShowKPI] = useState(false)
   const endRef = useRef(null)
   const wsRef = useRef(null)
+  const abortControllerRef = useRef(null)
   const reconnectRef = useRef(null)
 
   const { data: personas = [] } = useQuery({
@@ -302,11 +303,14 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
     if (!q || loading) return
     setMessages(p => [...p, { role: 'user', content: q, query: q }])
     setInput(''); setLoading(true)
+
+    abortControllerRef.current = new AbortController()
+    
     const ws = wsRef.current
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ message: q, persona: persona || undefined, session_id: activeSession || undefined, language: lang }))
     } else {
-      api.sendChat(q, persona || null, activeSession, '', lang)
+      api.sendChat(q, persona || null, activeSession, '', lang, abortControllerRef.current.signal)
         .then(r => setMessages(p => [...p, {
           role: 'assistant',
           content: r.data.response || 'No response.',
@@ -314,8 +318,22 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
           blocks: r.data.blocks || [],
           query: q,
         }]))
-        .catch(e => setMessages(p => [...p, { role: 'assistant', content: `Error: ${e.response?.data?.detail || 'request failed'}` }]))
-        .finally(() => setLoading(false))
+        .catch(e => {
+          if (e.name === 'CanceledError' || e.message === 'canceled') {
+            setMessages(p => [...p, { role: 'assistant', content: 'Message canceled.' }])
+          } else {
+            setMessages(p => [...p, { role: 'assistant', content: `Error: ${e.response?.data?.detail || 'request failed'}` }])
+          }
+        })
+        .finally(() => { setLoading(false); abortControllerRef.current = null })
+    }
+  }
+
+  const cancelRequest = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+      abortControllerRef.current = null
+      setLoading(false)
     }
   }
 
@@ -446,7 +464,6 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
               <div className="chat-avatar"><Sparkles size={15} /></div>
               <div className="chat-bubble">
                 <span className="typing-dot" /> <span className="typing-dot" style={{ animationDelay: '.2s' }} /> <span className="typing-dot" style={{ animationDelay: '.4s' }} />
-                {slowHint && <div style={{ marginTop: 8, fontSize: '.78rem', color: 'var(--text-3)' }}>{t('warmingHint') || 'Warming up the copilot — the first reply can take ~30s, then it’s fast.'}</div>}
               </div>
             </div>
           )}
@@ -460,7 +477,15 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
               placeholder={status === 'connected' ? (t('chatPlaceholder') || 'Ask about your KPIs, risks, forecasts…') : 'Connecting…'}
               onChange={e => setInput(e.target.value)} onKeyDown={onKey}
             />
-            <button type="submit" className="chat-send-btn" disabled={loading || !input.trim()}><Send size={18} /></button>
+            {loading ? (
+              <button type="button" className="chat-send-btn cancel-btn" onClick={cancelRequest} title="Cancel message" style={{ backgroundColor: 'var(--bg-3)' }}>
+                <StopCircle size={18} />
+              </button>
+            ) : (
+              <button type="submit" className="chat-send-btn" disabled={!input.trim()}>
+                <Send size={18} />
+              </button>
+            )}
           </div>
         </form>
       </section>

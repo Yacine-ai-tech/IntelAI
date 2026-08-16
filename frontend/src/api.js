@@ -70,8 +70,8 @@ export const register = (username, password, role = 'viewer') =>
 export const getMe = () => api.get('/auth/me')
 
 // ── Chat ────────────────────────────────────────────────
-export const sendChat = (message, persona = null, sessionId = null, context = '', lang = 'en') =>
-  api.post('/chat', { message, persona, session_id: sessionId, context, language: lang })
+export const sendChat = (message, persona = null, sessionId = null, context = '', lang = 'en', signal = null) =>
+  api.post('/chat', { message, persona, session_id: sessionId, context, language: lang }, { signal })
 
 export const listPersonas = () => api.get('/personas')
 
