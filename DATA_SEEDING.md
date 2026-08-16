@@ -21,7 +21,11 @@ says exactly what it represents:
 | `Senegal`, `Africa Western and Central`, `World` | The company's real ESG/environmental footprint (Senegal + its region), plus a global benchmark |
 | `External — US Market Context` | Real published US macro statistics (FRED), kept as genuine external planning context — **not** the company's own measured output |
 | `Global` | NVD's worldwide published-CVE sample (IT) |
-| `IBM Sample` | The IBM HR attrition survey's own cross-section (People) |
+| `IBM Sample` | The IBM HR attrition survey's own cross-section, company-wide (People) |
+| `Sales`, `Research & Development`, `Human Resources` | The same IBM HR survey, broken out by its real `Department` column — real per-department headcount/attrition/salary/satisfaction, not invented (People) |
+| `External — US Safety Benchmark` | Real BLS/OSHA annual workplace-safety survey rate, external industry context, not this company's own measured incident rate (Operations) |
+| `External — SaaS Industry Benchmark` | Real published median SaaS churn rate (Benchmarkit 2025), external context (Growth) |
+| `External — Supply Chain Benchmark` | Real published median inventory turnover (Netstock 2025), external context (Logistics) |
 
 **Known limitation, stated rather than papered over:** FRED — the source for most of
 Finance/Growth/Operations/Logistics/IT's real monthly series — publishes only US
@@ -68,23 +72,24 @@ non-glossary `knowledge_base` rows before a full re-ingest — a deliberate main
 operation with no public bulk-delete API equivalent, not part of the seeding path
 itself.
 
-**Measured result (current build): 1,532 KPI rows, 7 domains, 5 distinct sources, 0
+**Measured result (current build): 1,596 KPI rows, 7 domains, 8 distinct sources, 0
 rows without provenance.**
 
 | Domain | Rows | Metrics | Sources |
 |---|---|---|---|
-| People | 366 | 9 | FRED (4 series, external context), IBM HR survey |
-| IT | 251 | 8 | FRED (2 series, external context), NVD |
+| People | 393 | 12 | FRED (4 series, external context), IBM HR survey (company-wide + 3 real departments) |
+| IT | 272 | 9 | FRED (2 series, external context), NVD (CVE counts + a real-CVSS-derived Security Score) |
 | Finance | 242 | 6 | FRED (4 series, external context), **Sonatel (real, own)** |
-| Growth | 209 | 3 | FRED (3 series, external context) |
-| Operations | 180 | 2 | FRED (INDPRO, TCU — external context) |
-| Logistics | 178 | 2 | FRED (BUSINV, TSIFRGHTC — external context) |
-| ESG | 106 | 4 | World Bank (Senegal, Africa Western and Central, World) |
+| Growth | 211 | 4 | FRED (3 series, external context), Benchmarkit SaaS churn benchmark |
+| Operations | 190 | 4 | FRED (INDPRO, TCU — external context), BLS/OSHA safety benchmark |
+| Logistics | 179 | 3 | FRED (BUSINV, TSIFRGHTC — external context), Netstock inventory-turnover benchmark |
+| ESG | 109 | 5 | World Bank (Senegal, Africa Western and Central, World), FRED (transport emissions) |
 
 Provenance strings are `fred:<SERIES_ID>`, `worldbank:<INDICATOR>`, `nvd:cve-2.0`,
-`ibm-hr:attrition-survey`, `sonatel:<period>` — each resolves to a public URL, printed
-next to every figure in the digests (§ digests stage) and by `_source_url()` in
-`seed_data.py`.
+`ibm-hr:attrition-survey`, `sonatel:<period>`, `bls-osha:osh-annual-survey`,
+`benchmarkit:2025-saas-performance-metrics`, `netstock:2025-supply-chain-planning-report`
+— each resolves to a public URL, printed next to every figure in the digests (§ digests
+stage) and by `_source_url()` in `seed_data.py`.
 
 ### What each source is, and its real limitations
 
@@ -92,9 +97,22 @@ next to every figure in the digests (§ digests stage) and by `_source_url()` in
 |---|---|---|---|
 | FRED (St. Louis Fed) | 18 series across Finance/Growth/People/IT/Operations/Logistics | monthly, some quarterly | US-only; external market context, not this company's own numbers (see above) |
 | World Bank Open Data | 4 ESG indicators, Senegal + region + world | **annual** | latest year is 2022–2024 depending on indicator; no monthly ESG data exists free |
-| NVD 2.0 API | published CVE counts by severity | monthly | a **400-per-window sample**, not the full population — comparable between months because every window is sampled identically |
-| IBM HR attrition survey | 5 workforce aggregates | **single period** | a cross-section with no date column — a monthly history is not derivable from it |
+| NVD 2.0 API | published CVE counts by severity, plus a real-CVSS-derived Security Score | monthly | a **400-per-window sample**, not the full population — comparable between months because every window is sampled identically |
+| IBM HR attrition survey | Headcount, attrition, salary, tenure, age, satisfaction, training completion — company-wide and per real department (Sales, R&D, HR) | **single period** | a cross-section with no date column — a monthly history is not derivable from it. Job Satisfaction is the survey's real 1-4 scale, linearly rescaled to 0-100 (documented transform, not a different number) |
 | Sonatel communiqués | 3 published FCFA figures | half-year / 9-month | transcribed from the official release text, in FCFA (XOF) — the company's own real numbers |
+| BLS/OSHA annual safety survey | Operations' safety incident rate | annual, 2020-2024 | a real national private-industry rate, not this company's own measured incident rate — external benchmark |
+| Benchmarkit 2025 SaaS Performance Metrics | Growth's churn rate | annual, 2024-2025 | a real cross-industry median (2,000+ companies), not this company's own measured churn — external benchmark. MRR/ARR/CAC/LTV are deliberately left unfilled: no real external source can honestly stand in for a specific company's own absolute revenue/cost figures the way a rate can |
+| Netstock 2025 Supply Chain Planning Report | Logistics' inventory turnover | single point, 2025 | a real global median, not this company's own measured turnover — external benchmark |
+
+**A wider, still-honest gap:** several dashboard fields this app's service layer already
+looks for — IT's SLA compliance/MTTR/ticket volume/CPU-memory-utilization/deployment
+frequency, Operations' near-misses/safety-training-completion/OEE, Logistics' warehouse
+utilization/SKU counts, HR's recruiting funnel/cost-per-hire — have **no real, public,
+per-company-specific data source**, because they describe a specific company's private
+internal systems (its own ITSM tool, ERP, ticketing system), not something any publisher
+reports externally for an arbitrary company. Where no honest real-data mapping exists,
+these fields are left at their natural zero/empty state rather than filled with an
+invented number.
 
 There are no "scenarios" in this real data. Published statistics do not come with a
 healthy/declining switch, and none is invented for them — see §5 for the separate
