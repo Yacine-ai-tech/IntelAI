@@ -72,24 +72,27 @@ non-glossary `knowledge_base` rows before a full re-ingest — a deliberate main
 operation with no public bulk-delete API equivalent, not part of the seeding path
 itself.
 
-**Measured result (current build): 1,596 KPI rows, 7 domains, 8 distinct sources, 0
-rows without provenance.**
+**Measured result (current build): 2,514 KPI rows, 7 domains, 9 distinct sources (8 real
++ 1 generated), 0 rows without provenance.** 918 of the 2,514 rows are the internally
+generated company-operating-model layer (see § below) — every one tagged
+`source = "generated:virtual-company-model"`, never mixed into a row that looks real.
 
 | Domain | Rows | Metrics | Sources |
 |---|---|---|---|
-| People | 393 | 12 | FRED (4 series, external context), IBM HR survey (company-wide + 3 real departments) |
-| IT | 272 | 9 | FRED (2 series, external context), NVD (CVE counts + a real-CVSS-derived Security Score) |
+| People | 555 | 21 | FRED (4 series, external context), IBM HR survey (company-wide + 3 real departments), generated (recruiting funnel, cost-per-hire) |
+| IT | 956 | 47 | FRED (2 series, external context), NVD (CVE counts + a real-CVSS-derived Security Score), generated (tickets, SLA/MTTR, infra, security posture) |
 | Finance | 242 | 6 | FRED (4 series, external context), **Sonatel (real, own)** |
-| Growth | 211 | 4 | FRED (3 series, external context), Benchmarkit SaaS churn benchmark |
+| Growth | 283 | 8 | FRED (3 series, external context), Benchmarkit SaaS churn benchmark, generated (MRR/ARR/CAC/LTV) |
 | Operations | 190 | 4 | FRED (INDPRO, TCU — external context), BLS/OSHA safety benchmark |
 | Logistics | 179 | 3 | FRED (BUSINV, TSIFRGHTC — external context), Netstock inventory-turnover benchmark |
 | ESG | 109 | 5 | World Bank (Senegal, Africa Western and Central, World), FRED (transport emissions) |
 
 Provenance strings are `fred:<SERIES_ID>`, `worldbank:<INDICATOR>`, `nvd:cve-2.0`,
 `ibm-hr:attrition-survey`, `sonatel:<period>`, `bls-osha:osh-annual-survey`,
-`benchmarkit:2025-saas-performance-metrics`, `netstock:2025-supply-chain-planning-report`
-— each resolves to a public URL, printed next to every figure in the digests (§ digests
-stage) and by `_source_url()` in `seed_data.py`.
+`benchmarkit:2025-saas-performance-metrics`, `netstock:2025-supply-chain-planning-report`,
+`generated:virtual-company-model` — the real ones each resolve to a public URL, printed
+next to every figure in the digests (§ digests stage) and by `_source_url()` in
+`seed_data.py`; the generated one resolves to an explicit "not published" note instead.
 
 ### What each source is, and its real limitations
 
@@ -104,15 +107,52 @@ stage) and by `_source_url()` in `seed_data.py`.
 | Benchmarkit 2025 SaaS Performance Metrics | Growth's churn rate | annual, 2024-2025 | a real cross-industry median (2,000+ companies), not this company's own measured churn — external benchmark. MRR/ARR/CAC/LTV are deliberately left unfilled: no real external source can honestly stand in for a specific company's own absolute revenue/cost figures the way a rate can |
 | Netstock 2025 Supply Chain Planning Report | Logistics' inventory turnover | single point, 2025 | a real global median, not this company's own measured turnover — external benchmark |
 
-**A wider, still-honest gap:** several dashboard fields this app's service layer already
-looks for — IT's SLA compliance/MTTR/ticket volume/CPU-memory-utilization/deployment
-frequency, Operations' near-misses/safety-training-completion/OEE, Logistics' warehouse
-utilization/SKU counts, HR's recruiting funnel/cost-per-hire — have **no real, public,
-per-company-specific data source**, because they describe a specific company's private
-internal systems (its own ITSM tool, ERP, ticketing system), not something any publisher
-reports externally for an arbitrary company. Where no honest real-data mapping exists,
-these fields are left at their natural zero/empty state rather than filled with an
-invented number.
+### The generated layer — internal-systems metrics no real publisher discloses
+
+Several dashboard fields this app's service layer already looks for — IT's SLA
+compliance/MTTR/ticket volume/security posture/CPU-memory-utilization/deployment
+frequency, Growth's MRR/ARR/CAC/LTV, HR's recruiting funnel/cost-per-hire — describe a
+specific company's private internal systems or absolute revenue/cost scale. No real
+publisher discloses another company's ITSM ticket queue or ERP infrastructure spend;
+this is different in kind from Finance/People/ESG/Growth's *external market context*
+above, which is real published data used as honest planning context.
+
+`_generate_company_model()` in `scripts/seed_data.py` fills these with a **deterministic,
+formula-derived model anchored to the real data already in this pipeline** — not
+independent random noise:
+
+- IT: ticket/incident volume, SLA compliance, security posture and infrastructure
+  utilization all move with the real NVD-derived Security Score and real critical-CVE
+  count for that same month (a worse real security score → more incidents, lower SLA
+  compliance, higher CPU/memory pressure, in the same month).
+- Growth: ARR/MRR sized off Sonatel's real disclosed revenue (a small, explicitly-stated
+  fraction, framed as a distinct digital-services arm) with a modest, explicitly-assumed
+  growth rate (not derived from Sonatel's two cumulative-period figures — comparing a
+  6-month and a 9-month cumulative total directly as sequential periods was tried and
+  produces a nonsensical ~9.5x-in-18-months trajectory; fixed to a stated 1.2%/month
+  assumption). CAC/LTV are formulas from that ARR and the real Benchmarkit churn rate.
+- HR: the recruiting funnel and cost-per-hire scale off this company's own real
+  headcount (833), real attrition rate (16.93%) and real average salary — not
+  independently guessed numbers.
+
+Every row carries `source = "generated:virtual-company-model"` and `segment = "Company
+Model"`, kept honestly distinct from real published statistics at any audit:
+
+```sql
+SELECT source, COUNT(*) FROM kpi_metrics GROUP BY 1;
+```
+
+The digest text itself carries the same disclosure — any `[Company Model]` row is
+flagged with an explicit "NOT published anywhere" note, so the assistant never
+represents a generated figure as a real disclosed one. Deterministic across reseeds:
+the same (metric, period) always produces the same value, so re-running the pipeline
+doesn't silently rewrite the model into a different-looking one.
+
+**Left genuinely unfilled, even in the generated layer:** anything that would require
+inventing a real-world fact this company hasn't disclosed and no formula can honestly
+derive — e.g., the literal wording of an internal policy, a named individual, a specific
+contract value. The generated layer only covers *metrics*, computed from real anchors,
+never invented qualitative claims.
 
 There are no "scenarios" in this real data. Published statistics do not come with a
 healthy/declining switch, and none is invented for them — see §5 for the separate

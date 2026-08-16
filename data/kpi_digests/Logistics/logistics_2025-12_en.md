@@ -5,10 +5,12 @@ Recorded values for Logistics metrics in 2025-12. Each figure is reproduced exac
 ## Series covered
 - Business Inventories [External — US Market Context]: 2,676,717 USD  (source: fred:BUSINV)
 - Freight Transportation Index [External — US Market Context]: -0.20 index  (source: fred:TSIFRGHTC)
+- Inventory Turnover [External — Supply Chain Benchmark]: 3.90 x/year  (source: netstock:2025-supply-chain-planning-report)
 
 ## Sources
 - fred:BUSINV — https://fred.stlouisfed.org/series/BUSINV
 - fred:TSIFRGHTC — https://fred.stlouisfed.org/series/TSIFRGHTC
+- netstock:2025-supply-chain-planning-report — https://www.netstock.com/research/supply-chain-planning-report/
 
 Rows marked external / market-context are published statistics this West African operator tracks as planning context (US/global rates, employment, demand) — they are not this company's own measured output.
 

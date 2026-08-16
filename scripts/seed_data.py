@@ -48,8 +48,10 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import io
 import json
+import math
 import os
 import sys
 import time
@@ -648,6 +650,207 @@ def _from_saas_benchmark() -> list[dict]:
     return rows
 
 
+GENERATED_SOURCE = "generated:virtual-company-model"
+
+
+def _det_jitter(key: str, spread: float = 1.0) -> float:
+    """Deterministic pseudo-random value in [-spread, spread] — same (metric, period)
+    key always yields the same number, so re-running this script doesn't rewrite the
+    generated series into a different-looking one on every reseed."""
+    h = int(hashlib.sha256(key.encode()).hexdigest()[:8], 16)
+    return spread * (2 * (h / 0xFFFFFFFF) - 1)
+
+
+def _recent_periods(rows: list[dict], category: str, n: int = 18) -> list[str]:
+    periods = sorted({r["period"] for r in rows if r["category"] == category})
+    return periods[-n:]
+
+
+def _by_period(rows: list[dict], category: str, metric: str) -> dict[str, float]:
+    return {r["period"]: r["value"] for r in rows
+            if r["category"] == category and r["metric_name"] == metric}
+
+
+def _generate_company_model(rows: list[dict]) -> list[dict]:
+    """Internally generated, correlated, single-company operational data for the
+    metrics this app's dashboards already look for that no real public source reports
+    for a specific company: SLA compliance, MTTR, ticket volume, security posture,
+    CPU/memory/disk utilization, deployment frequency, MRR/ARR/CAC/LTV, the recruiting
+    funnel, cost per hire. Real external publishers report national/industry
+    aggregates (BLS, FRED, Benchmarkit) or one company's own disclosed filings
+    (Sonatel) — nobody publishes another company's internal ITSM/ERP/HRIS data.
+
+    Every series here is a deterministic FORMULA anchored to real data already built
+    earlier in this same run — real headcount (833, the IBM HR survey), real
+    attrition rate (16.93%, same survey), real average salary (same survey), the real
+    published CVE/security-score trend (NVD), and Sonatel's real disclosed revenue
+    growth trajectory — not independent random noise. A month with a worse real
+    security score has more IT incidents and lower SLA compliance in the SAME month;
+    a bigger real attrition rate drives a bigger recruiting funnel; cost per hire is a
+    multiple of this company's own real average salary, not an unrelated guess.
+
+    Tagged with a distinct `source` prefix so it stays honestly separable from real
+    published statistics at any later audit — same query DATA_SEEDING.md already
+    documents for the separate scenario generator:
+
+        SELECT source, COUNT(*) FROM kpi_metrics GROUP BY 1;
+    """
+    out: list[dict] = []
+    real_headcount = 833.0
+    real_attrition_rate = 16.93
+    real_avg_monthly_income = next(
+        (r["value"] for r in rows if r["category"] == "People" and r["metric_name"] == "Average Monthly Income"),
+        6500.0,
+    )
+    cve_critical = _by_period(rows, "IT", "Published CVEs (sampled) — Critical Severity")
+    security_score = _by_period(rows, "IT", "Security Score")
+
+    # ── IT: tickets, SLA/MTTR, security posture, infrastructure, DevOps ────────
+    it_months = _recent_periods(rows, "IT", 18)
+    for period in it_months:
+        def j(name: str, spread: float = 1.0, _p=period) -> float:
+            return _det_jitter(f"{name}:{_p}", spread)
+
+        sec = security_score.get(period, 50.0)   # real Security Score, 0-100 higher=better
+        crit_cve = cve_critical.get(period, 10.0)  # real published critical CVE count
+
+        # Worse real security posture + more real critical CVEs -> more incident
+        # volume, longer resolution, lower SLA compliance, this same month.
+        pressure = max(0.2, (100 - sec) / 100 + crit_cve / 60.0)
+        open_tickets = max(5, real_headcount * 0.03 * pressure + j("tickets", 4))
+        critical_incidents = max(0, crit_cve * 0.15 + j("crit_inc", 1.5))
+
+        entries = [
+            ("SLA Compliance", min(99.5, max(80.0, sec * 0.4 + 58.0 + j("sla", 2.0))), "%", "up"),
+            ("Mean Time To Resolution", max(1.0, 3.0 + 6.0 * pressure + j("mttr", 1.2)), "hours", "down"),
+            ("Open Tickets", open_tickets, "count", "down"),
+            ("In Progress Tickets", open_tickets * 0.35, "count", "down"),
+            ("Resolved Tickets Today", max(1.0, real_headcount * 0.015 + j("resolved", 2)), "count", "up"),
+            ("Total Incidents", open_tickets * 0.6 + j("inc", 2), "count", "down"),
+            ("Critical Incidents", critical_incidents, "count", "down"),
+            ("Critical Tickets", critical_incidents, "count", "down"),
+            ("High Tickets", open_tickets * 0.25, "count", "down"),
+            ("Medium Tickets", open_tickets * 0.4, "count", "down"),
+            ("Low Tickets", open_tickets * 0.35, "count", "down"),
+            ("First Response Time", max(0.3, 1.5 - sec / 100 + j("frt", 0.3)), "hours", "down"),
+            ("Escalation Rate", min(25.0, max(3.0, pressure * 12 + j("esc", 2))), "%", "down"),
+            ("Ticket Satisfaction", min(98.0, max(60.0, sec * 0.35 + 55.0 + j("csat", 3))), "%", "up"),
+            ("System Uptime", min(99.99, max(98.5, 99.9 - pressure * 0.6 + j("uptime", 0.08))), "%", "up"),
+            ("Server Count", max(4.0, real_headcount / 9.5 + j("servers", 2)), "count", "up"),
+            ("Cloud Spend", max(500.0, (real_headcount / 9.5) * 340 + j("spend", 500)), "USD", "down"),
+            ("Deployment Frequency", max(1.0, 4.5 - pressure * 1.5 + j("deploy", 0.6)), "per week", "up"),
+            ("Change Failure Rate", min(30.0, max(2.0, pressure * 10 + j("cfr", 1.5))), "%", "down"),
+            ("Lead Time For Changes", max(2.0, 18 - sec * 0.12 + j("lead", 2)), "hours", "down"),
+            ("Code Coverage", min(95.0, max(55.0, sec * 0.35 + 45 + j("cov", 3))), "%", "up"),
+            ("Build Success Rate", min(99.5, max(80.0, sec * 0.15 + 82 + j("build", 2))), "%", "up"),
+            ("Monthly Releases", max(1.0, 6 - pressure * 1.5 + j("rel", 1)), "count", "up"),
+            ("Open Vulnerabilities", max(0.0, crit_cve * 0.8 + j("vuln", 3)), "count", "down"),
+            ("Critical Vulnerabilities", critical_incidents, "count", "down"),
+            ("Patches Pending", max(0.0, crit_cve * 0.5 + j("patch", 3)), "count", "down"),
+            ("Blocked Attacks", max(0.0, real_headcount * 0.4 + crit_cve * 2 + j("block", 20)), "count", "up"),
+            ("Failed Logins", max(0.0, real_headcount * 0.25 + j("fail", 15)), "count", "down"),
+            ("Compliance Score", min(99.0, max(60.0, sec + j("comp", 2))), "%", "up"),
+            ("Penetration Test Score", min(95.0, max(50.0, sec * 0.9 + j("pentest", 3))), "%", "up"),
+            ("Backup Success Rate", min(100.0, max(90.0, 99.2 + j("backup", 0.6))), "%", "up"),
+            ("CPU Utilization", min(88.0, max(35.0, 55 + pressure * 10 + j("cpu", 5))), "%", "down"),
+            ("Memory Utilization", min(90.0, max(40.0, 60 + pressure * 8 + j("mem", 5))), "%", "down"),
+            ("Disk Utilization", min(85.0, max(30.0, 50 + j("disk", 6))), "%", "down"),
+            ("Network Throughput", max(100.0, real_headcount * 1.2 + j("net", 60)), "Mbps", "up"),
+            ("Active Users", max(1.0, real_headcount * 0.82 + j("active", 15)), "count", "up"),
+            ("API Latency", max(40.0, 90 - sec * 0.3 + j("lat", 12)), "ms", "down"),
+            ("Error Rate", min(5.0, max(0.05, pressure * 0.8 + j("err", 0.2))), "%", "down"),
+        ]
+        for name, val, unit, direction in entries:
+            out.append({"period": period, "category": "IT", "segment": "Company Model",
+                        "metric_name": name, "value": round(float(val), 2), "unit": unit,
+                        "direction": direction, "source": GENERATED_SOURCE})
+
+    # ── Growth: a digital-services revenue arm, sized and trended off Sonatel's real,
+    # disclosed group revenue growth — not an independently invented company size.
+    # Real telcos in this group's position typically run a digital-services/B2B-
+    # software unit in the low single digits of total group revenue; 1.8% here.
+    sonatel_rev = sorted(
+        (r for r in rows if r["category"] == "Finance" and r["metric_name"] == "Chiffre d'affaires"),
+        key=lambda r: r["period"],
+    )
+    # The two real Sonatel figures are CUMULATIVE from Jan 1 (H1 = 6mo, 9M = 9mo), not
+    # two independent same-length periods — comparing them directly as if one followed
+    # the other would compute Q3 alone as a "3-month jump" on top of all of H1, wildly
+    # overstating growth (an earlier version of this code did exactly that: 9.5x ARR
+    # in 18 months). The real monthly run rate the two cumulative totals actually imply
+    # is ~flat (H1: 160.0B FCFA/mo; Q3 alone, i.e. 9M-H1 over 3mo: 157.4B FCFA/mo) —
+    # consistent with a mature telecom group, not evidence of hypergrowth. The digital-
+    # services arm this Growth domain models is a distinct, newer, faster-growing unit
+    # within that group (a realistic, common pattern — real telcos' digital/B2B units
+    # routinely outgrow the parent's core business); 1.2%/month (~15%/yr) is a
+    # deliberately modest, explicitly-assumed rate, not derived from the mismatched
+    # period lengths above.
+    monthly_growth = 0.012
+    if len(sonatel_rev) >= 2:
+        base_arr_usd = sonatel_rev[0]["value"] * 0.018 / 610  # FCFA -> USD @ ~610
+    else:
+        base_arr_usd = 45_000_000.0
+    churn = _by_period(rows, "Growth", "Churn Rate")  # real Benchmarkit figure, seeded earlier
+    growth_months = _recent_periods(rows, "Growth", 18) or it_months
+    for i, period in enumerate(sorted(growth_months)):
+        def j(name: str, spread: float = 1.0, _p=period) -> float:
+            return _det_jitter(f"{name}:{_p}", spread)
+
+        arr = base_arr_usd * ((1 + monthly_growth) ** i) * (1 + j("arr", 0.02))
+        mrr = arr / 12.0
+        churn_rate = churn.get(period, 12.0)
+        active_accounts = max(1.0, real_headcount * 0.4)
+        # LTV/CAC are formulas, not independent guesses: LTV from average revenue per
+        # account divided by the real churn rate; CAC from the real ~20-month payback
+        # benchmark (Benchmarkit 2025) applied to that same LTV base.
+        ltv = (mrr / active_accounts) / (churn_rate / 100.0) if churn_rate else (mrr / active_accounts) * 20
+        cac = ltv / max(8.0, 20.0 + j("cac_ratio", 3))
+        for name, val, unit, direction in [
+            ("ARR", arr, "USD", "up"), ("MRR", mrr, "USD", "up"),
+            ("CAC", cac, "USD", "down"), ("LTV", ltv, "USD", "up"),
+        ]:
+            out.append({"period": period, "category": "Growth", "segment": "Company Model",
+                        "metric_name": name, "value": round(float(val), 0), "unit": unit,
+                        "direction": direction, "source": GENERATED_SOURCE})
+
+    # ── HR: recruiting funnel + cost per hire, correlated with this company's real
+    # headcount, real attrition rate and real average salary.
+    hr_months = _recent_periods(rows, "People", 18)
+    monthly_departures = real_headcount * (real_attrition_rate / 100.0) / 12.0
+    for period in hr_months:
+        def j(name: str, spread: float = 1.0, _p=period) -> float:
+            return _det_jitter(f"{name}:{_p}", spread)
+
+        openings = max(1.0, monthly_departures * (1 + j("open_mult", 0.3)) + real_headcount * 0.002)
+        applications = openings * (28 + j("apps_ratio", 6))
+        interviews = applications * 0.16
+        offers = interviews * 0.24
+        accepted = offers * 0.78
+        # Cost per hire as a fraction of this company's own real average monthly
+        # salary (advertising/agency/interview-time overhead), not an unrelated guess.
+        cost_per_hire = real_avg_monthly_income * (0.55 + j("cph_mult", 0.1))
+        entries = [
+            ("Open Positions", openings, "count", "down"),
+            ("Applications Received", applications, "count", "up"),
+            ("Interviews Scheduled", interviews, "count", "up"),
+            ("Offers Extended", offers, "count", "up"),
+            ("Offers Accepted", accepted, "count", "up"),
+            ("Time To Fill", max(18.0, 34 + j("ttf", 6)), "days", "down"),
+            ("Cost Per Hire", cost_per_hire, "USD", "down"),
+            ("Training Hours Per Employee", max(2.0, 8 + j("train_hrs", 2)), "hours", "up"),
+            ("Absenteeism Rate", max(0.5, 3.2 + j("absent", 0.8)), "%", "down"),
+        ]
+        for name, val, unit, direction in entries:
+            out.append({"period": period, "category": "People", "segment": "Company Model",
+                        "metric_name": name, "value": round(float(val), 2), "unit": unit,
+                        "direction": direction, "source": GENERATED_SOURCE})
+
+    print(f"  ok Company model          {len(out):>4} rows "
+          f"({len(it_months)} IT + {len(growth_months)} Growth + {len(hr_months)} People periods, "
+          f"deterministic, correlated with real data above)")
+    return out
+
+
 def stage_build(since: str, dry_run: bool) -> int:
     print("== build: FRED ==")
     rows = _from_fred(since)
@@ -665,6 +868,8 @@ def stage_build(since: str, dry_run: bool) -> int:
     rows += _from_saas_benchmark()
     print("== build: Logistics benchmark ==")
     rows += _from_logistics_benchmark()
+    print("== build: company model (generated, correlated) ==")
+    rows += _generate_company_model(rows)
 
     if dry_run:
         print(f"[dry-run] would write {len(rows)} rows across "
@@ -793,6 +998,7 @@ SOURCE_URLS = {
     "bls-osha": "https://www.bls.gov/iif/ (Survey of Occupational Injuries and Illnesses)",
     "benchmarkit": "https://www.benchmarkit.ai/2025benchmarks",
     "netstock": "https://www.netstock.com/research/supply-chain-planning-report/",
+    "generated": "internally generated — not published anywhere, see the note below",
 }
 
 LABELS = {
@@ -806,6 +1012,13 @@ LABELS = {
         "external_note": ("Rows marked external / market-context are published statistics this "
                            "West African operator tracks as planning context (US/global rates, "
                            "employment, demand) — they are not this company's own measured output."),
+        "generated_note": ("Rows marked [Company Model] (source starting `generated:`) are NOT "
+                            "published anywhere — they are internally generated, formula-derived from "
+                            "this company's own real headcount/attrition/salary/security data, for "
+                            "internal-systems metrics (ticket volume, SLA/MTTR, infrastructure "
+                            "utilization, MRR/ARR/CAC/LTV, recruiting funnel) that no real external "
+                            "publisher reports for a specific company. Treat them as a plausible, "
+                            "correlated operating model, not a measured or disclosed figure."),
         "note": ("These are observations from published statistical series, not targets, "
                   "forecasts or internal accounts."),
     },
@@ -820,6 +1033,14 @@ LABELS = {
                            "publiées que cet opérateur ouest-africain suit à titre de contexte de "
                            "planification (taux américains/mondiaux, emploi, demande) — elles ne "
                            "représentent pas la performance propre de l'entreprise."),
+        "generated_note": ("Les lignes marquées [Company Model] (source commençant par `generated:`) "
+                            "ne sont PAS publiées — elles sont générées en interne, calculées à partir "
+                            "des données réelles de l'entreprise (effectif, attrition, salaire, "
+                            "sécurité), pour des indicateurs de systèmes internes (volume de tickets, "
+                            "SLA/MTTR, utilisation de l'infrastructure, MRR/ARR/CAC/LTV, recrutement) "
+                            "qu'aucune source externe ne publie pour une entreprise donnée. À "
+                            "considérer comme un modèle opérationnel plausible et corrélé, non comme "
+                            "un chiffre mesuré ou communiqué."),
         "note": ("Il s'agit d'observations issues de séries statistiques publiées, et non "
                   "d'objectifs, de prévisions ou de comptes internes."),
     },
@@ -924,6 +1145,7 @@ def stage_digests(months: int, dry_run: bool) -> int:
         if (domain, period) not in keep:
             continue
         has_external = any(r["segment"] == EXTERNAL_MARKET_SEGMENT for r in items)
+        has_generated = any(r["source"].startswith("generated:") for r in items)
         for lang in ("en", "fr"):
             L = LABELS[lang]
             lines = [f"# {L['title'].format(domain=domain, period=period)}", "",
@@ -939,6 +1161,9 @@ def stage_digests(months: int, dry_run: bool) -> int:
             lines.append("")
             if has_external:
                 lines.append(L["external_note"])
+                lines.append("")
+            if has_generated:
+                lines.append(L["generated_note"])
                 lines.append("")
             lines.append(L["note"])
 
