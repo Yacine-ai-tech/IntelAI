@@ -9,7 +9,7 @@ import {
 } from 'lucide-react'
 import * as Recharts from "recharts";
 const { LineChart, Line, YAxis, Tooltip, ResponsiveContainer } = Recharts;
-import { Stat, Loading } from '../components/ui'
+import { Stat, Loading, ErrorState } from '../components/ui'
 
 // category → { icon, accent, route } so a KPI card both reads its domain and links to it.
 const CAT = {
@@ -111,15 +111,15 @@ export default function DashboardPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  const { data: kpis = [], isLoading: kpisLoading } = useQuery({
+  const { data: kpis = [], isLoading: kpisLoading, isError: kpisError } = useQuery({
     queryKey: ['kpis'], queryFn: () => api.getKPIs().then(r => r.data?.metrics || []),
     staleTime: 300_000, retry: 1,
   })
-  const { data: health, isLoading: healthLoading } = useQuery({
+  const { data: health, isLoading: healthLoading, isError: healthError } = useQuery({
     queryKey: ['health'], queryFn: () => api.getHealth().then(r => r.data),
     staleTime: 120_000, retry: 1,
   })
-  const { data: summary, isLoading: summaryLoading } = useQuery({
+  const { data: summary, isLoading: summaryLoading, isError: summaryError } = useQuery({
     queryKey: ['summary'], queryFn: () => api.getSummary().then(r => r.data),
     staleTime: 600_000, retry: 1,
   })
@@ -133,6 +133,8 @@ export default function DashboardPage() {
   })
 
   const loading = kpisLoading || healthLoading || summaryLoading
+  const dashboardError = kpisError || healthError || summaryError
+  if (dashboardError) return <ErrorState />
 
   const fmt = (val) => {
     if (typeof val !== 'number') return val || '—'

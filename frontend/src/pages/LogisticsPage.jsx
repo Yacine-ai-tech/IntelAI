@@ -4,7 +4,7 @@ import { useTranslation } from '../i18n/I18nContext'
 import {
   Package, Truck, Clock, RefreshCw, Boxes, DollarSign, Warehouse, RotateCcw, PackageCheck, Ban,
 } from 'lucide-react'
-import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, ErrorState, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
 
 const ACCENT = 'var(--p-coo)'
 
@@ -16,6 +16,7 @@ export default function LogisticsPage() {
   const hlt = useQuery({ queryKey: ['log-health'], queryFn: () => api.getLogisticsHealth().then(r => r.data), retry: 1 })
 
   if (sum.isLoading) return <Loading />
+  if (sum.isError) return <ErrorState />
   const s = sum.data || {}, iv = inv.data || {}, sh = ship.data || {}
 
   return (

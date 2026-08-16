@@ -65,7 +65,7 @@ export default function Sidebar({ mobileOpen, onClose, collapsed = false, onTogg
     <>
       {mobileOpen && <div className="sidebar-overlay" onClick={onClose} />}
       <aside className={`sidebar ${mobileOpen ? 'mobile-open' : ''}${collapsed ? ' collapsed' : ''}`}>
-        {mobileOpen && <button className="btn btn-ghost btn-icon mobile-close-btn" onClick={onClose} style={{ position: 'absolute', top: 12, right: 12, zIndex: 10 }}><X size={18} /></button>}
+        {mobileOpen && <button className="btn btn-ghost btn-icon mobile-close-btn" onClick={onClose} aria-label={t('close') || 'Close'} style={{ position: 'absolute', top: 12, right: 12, zIndex: 10 }}><X size={18} /></button>}
         <div className="sidebar-header">
           <div className="sidebar-brand">
             <CubeMark size={38} />
@@ -122,6 +122,31 @@ export default function Sidebar({ mobileOpen, onClose, collapsed = false, onTogg
           {collapsed ? <ChevronsRight size={16} /> : <ChevronsLeft size={16} />}
           <span className="sidebar-label">{t('collapse') || 'Collapse'}</span>
         </button>
+      </div>
+      
+      {/* AGPL-3.0 §13 network-use source offer */}
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-line px-5 py-3 text-[11px] leading-tight text-muted" style={{ padding: '12px 20px', borderTop: '1px solid var(--border)', fontSize: '11px', color: 'var(--text-muted)', display: 'flex', flexWrap: 'wrap', gap: '4px 8px' }}>
+        <span>AGPL-3.0</span>
+        <span aria-hidden="true">·</span>
+        <a
+          href="https://github.com/Yacine-ai-tech/IntelAI"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'none' }}
+          className="hover:underline"
+        >
+          Source Code
+        </a>
+        <span aria-hidden="true">·</span>
+        <a
+          href="https://github.com/Yacine-ai-tech/IntelAI/blob/master/COMMERCIAL.md"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'none' }}
+          className="hover:underline"
+        >
+          Commercial License
+        </a>
       </div>
     </aside>
     </>

@@ -4,7 +4,7 @@ import { useTranslation } from '../i18n/I18nContext'
 import {
   Users, UserMinus, Smile, Briefcase, Clock, GraduationCap, DollarSign, CalendarX, UserPlus,
 } from 'lucide-react'
-import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, ErrorState, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
 
 const ACCENT = 'var(--p-chro)'
 
@@ -16,6 +16,7 @@ export default function HRPage() {
   const hlt = useQuery({ queryKey: ['hr-health'], queryFn: () => api.getHRHealth().then(r => r.data), retry: 1 })
 
   if (summary.isLoading) return <Loading />
+  if (summary.isError) return <ErrorState />
   const s = summary.data || {}
   const r = recruit.data || {}
 

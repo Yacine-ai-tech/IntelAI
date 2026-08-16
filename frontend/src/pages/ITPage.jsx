@@ -5,7 +5,7 @@ import {
   Monitor, Activity, Ticket, Timer, ShieldCheck, Server, DollarSign, Rocket,
   AlertTriangle, Bug, Lock, GitBranch,
 } from 'lucide-react'
-import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, Grid, AskCopilot, DomainHero, Panel, fmtMoney } from '../components/ui'
+import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, ErrorState, Grid, AskCopilot, DomainHero, Panel, fmtMoney } from '../components/ui'
 
 const ACCENT = 'var(--p-cto)'
 
@@ -17,6 +17,7 @@ export default function ITPage() {
   const hlt = useQuery({ queryKey: ['it-health'], queryFn: () => api.getITHealth().then(r => r.data), retry: 1 })
 
   if (ov.isLoading) return <Loading />
+  if (ov.isError) return <ErrorState />
   const o = ov.data || {}, s = sec.data || {}, d = dev.data || {}
 
   return (
