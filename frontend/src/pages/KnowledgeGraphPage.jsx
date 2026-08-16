@@ -97,7 +97,7 @@ function useForceSimulation(nodes, links, width, height) {
 
 export default function KnowledgeGraphPage() {
   const { t } = useTranslation()
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState('Overview')
   const [busy, setBusy] = useState(false)
   const [graphData, setGraphData] = useState(null)
   const [hover, setHover] = useState(null)
@@ -165,6 +165,11 @@ export default function KnowledgeGraphPage() {
       setBusy(false)
     }
   }
+
+  useEffect(() => {
+    run()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const positions = useForceSimulation(graphData?.nodes || [], graphData?.links || [], width, height)
 
