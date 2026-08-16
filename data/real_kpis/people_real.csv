@@ -392,3 +392,165 @@ period,category,segment,metric_name,value,unit,direction,source
 2024-01,People,Human Resources,Average Salary,7220.52,USD,up,ibm-hr:attrition-survey
 2024-01,People,Human Resources,Average Tenure,7.63,count,up,ibm-hr:attrition-survey
 2024-01,People,Human Resources,Average Employee Age,39.44,count,up,ibm-hr:attrition-survey
+2025-02,People,Company Model,Open Positions,15.32,count,down,generated:virtual-company-model
+2025-02,People,Company Model,Applications Received,363.57,count,up,generated:virtual-company-model
+2025-02,People,Company Model,Interviews Scheduled,58.17,count,up,generated:virtual-company-model
+2025-02,People,Company Model,Offers Extended,13.96,count,up,generated:virtual-company-model
+2025-02,People,Company Model,Offers Accepted,10.89,count,up,generated:virtual-company-model
+2025-02,People,Company Model,Time To Fill,33.12,days,down,generated:virtual-company-model
+2025-02,People,Company Model,Cost Per Hire,3611.32,USD,down,generated:virtual-company-model
+2025-02,People,Company Model,Training Hours Per Employee,8.04,hours,up,generated:virtual-company-model
+2025-02,People,Company Model,Absenteeism Rate,3.16,%,down,generated:virtual-company-model
+2025-03,People,Company Model,Open Positions,12.18,count,down,generated:virtual-company-model
+2025-03,People,Company Model,Applications Received,302.22,count,up,generated:virtual-company-model
+2025-03,People,Company Model,Interviews Scheduled,48.35,count,up,generated:virtual-company-model
+2025-03,People,Company Model,Offers Extended,11.61,count,up,generated:virtual-company-model
+2025-03,People,Company Model,Offers Accepted,9.05,count,up,generated:virtual-company-model
+2025-03,People,Company Model,Time To Fill,28.01,days,down,generated:virtual-company-model
+2025-03,People,Company Model,Cost Per Hire,2967.99,USD,down,generated:virtual-company-model
+2025-03,People,Company Model,Training Hours Per Employee,8.87,hours,up,generated:virtual-company-model
+2025-03,People,Company Model,Absenteeism Rate,2.48,%,down,generated:virtual-company-model
+2025-04,People,Company Model,Open Positions,12.71,count,down,generated:virtual-company-model
+2025-04,People,Company Model,Applications Received,311.62,count,up,generated:virtual-company-model
+2025-04,People,Company Model,Interviews Scheduled,49.86,count,up,generated:virtual-company-model
+2025-04,People,Company Model,Offers Extended,11.97,count,up,generated:virtual-company-model
+2025-04,People,Company Model,Offers Accepted,9.33,count,up,generated:virtual-company-model
+2025-04,People,Company Model,Time To Fill,30.04,days,down,generated:virtual-company-model
+2025-04,People,Company Model,Cost Per Hire,3118.05,USD,down,generated:virtual-company-model
+2025-04,People,Company Model,Training Hours Per Employee,8.31,hours,up,generated:virtual-company-model
+2025-04,People,Company Model,Absenteeism Rate,2.58,%,down,generated:virtual-company-model
+2025-05,People,Company Model,Open Positions,13.85,count,down,generated:virtual-company-model
+2025-05,People,Company Model,Applications Received,304.86,count,up,generated:virtual-company-model
+2025-05,People,Company Model,Interviews Scheduled,48.78,count,up,generated:virtual-company-model
+2025-05,People,Company Model,Offers Extended,11.71,count,up,generated:virtual-company-model
+2025-05,People,Company Model,Offers Accepted,9.13,count,up,generated:virtual-company-model
+2025-05,People,Company Model,Time To Fill,39.05,days,down,generated:virtual-company-model
+2025-05,People,Company Model,Cost Per Hire,2970.56,USD,down,generated:virtual-company-model
+2025-05,People,Company Model,Training Hours Per Employee,7.93,hours,up,generated:virtual-company-model
+2025-05,People,Company Model,Absenteeism Rate,2.43,%,down,generated:virtual-company-model
+2025-06,People,Company Model,Open Positions,11.38,count,down,generated:virtual-company-model
+2025-06,People,Company Model,Applications Received,335.89,count,up,generated:virtual-company-model
+2025-06,People,Company Model,Interviews Scheduled,53.74,count,up,generated:virtual-company-model
+2025-06,People,Company Model,Offers Extended,12.9,count,up,generated:virtual-company-model
+2025-06,People,Company Model,Offers Accepted,10.06,count,up,generated:virtual-company-model
+2025-06,People,Company Model,Time To Fill,38.3,days,down,generated:virtual-company-model
+2025-06,People,Company Model,Cost Per Hire,3626.49,USD,down,generated:virtual-company-model
+2025-06,People,Company Model,Training Hours Per Employee,9.99,hours,up,generated:virtual-company-model
+2025-06,People,Company Model,Absenteeism Rate,3.66,%,down,generated:virtual-company-model
+2025-07,People,Company Model,Open Positions,13.43,count,down,generated:virtual-company-model
+2025-07,People,Company Model,Applications Received,392.33,count,up,generated:virtual-company-model
+2025-07,People,Company Model,Interviews Scheduled,62.77,count,up,generated:virtual-company-model
+2025-07,People,Company Model,Offers Extended,15.07,count,up,generated:virtual-company-model
+2025-07,People,Company Model,Offers Accepted,11.75,count,up,generated:virtual-company-model
+2025-07,People,Company Model,Time To Fill,36.86,days,down,generated:virtual-company-model
+2025-07,People,Company Model,Cost Per Hire,4219.64,USD,down,generated:virtual-company-model
+2025-07,People,Company Model,Training Hours Per Employee,8.21,hours,up,generated:virtual-company-model
+2025-07,People,Company Model,Absenteeism Rate,3.42,%,down,generated:virtual-company-model
+2025-08,People,Company Model,Open Positions,16.62,count,down,generated:virtual-company-model
+2025-08,People,Company Model,Applications Received,472.82,count,up,generated:virtual-company-model
+2025-08,People,Company Model,Interviews Scheduled,75.65,count,up,generated:virtual-company-model
+2025-08,People,Company Model,Offers Extended,18.16,count,up,generated:virtual-company-model
+2025-08,People,Company Model,Offers Accepted,14.16,count,up,generated:virtual-company-model
+2025-08,People,Company Model,Time To Fill,31.26,days,down,generated:virtual-company-model
+2025-08,People,Company Model,Cost Per Hire,3834.36,USD,down,generated:virtual-company-model
+2025-08,People,Company Model,Training Hours Per Employee,9.84,hours,up,generated:virtual-company-model
+2025-08,People,Company Model,Absenteeism Rate,3.77,%,down,generated:virtual-company-model
+2025-09,People,Company Model,Open Positions,14.01,count,down,generated:virtual-company-model
+2025-09,People,Company Model,Applications Received,336.24,count,up,generated:virtual-company-model
+2025-09,People,Company Model,Interviews Scheduled,53.8,count,up,generated:virtual-company-model
+2025-09,People,Company Model,Offers Extended,12.91,count,up,generated:virtual-company-model
+2025-09,People,Company Model,Offers Accepted,10.07,count,up,generated:virtual-company-model
+2025-09,People,Company Model,Time To Fill,33.85,days,down,generated:virtual-company-model
+2025-09,People,Company Model,Cost Per Hire,3257.48,USD,down,generated:virtual-company-model
+2025-09,People,Company Model,Training Hours Per Employee,9.49,hours,up,generated:virtual-company-model
+2025-09,People,Company Model,Absenteeism Rate,3.16,%,down,generated:virtual-company-model
+2025-10,People,Company Model,Open Positions,12.17,count,down,generated:virtual-company-model
+2025-10,People,Company Model,Applications Received,314.98,count,up,generated:virtual-company-model
+2025-10,People,Company Model,Interviews Scheduled,50.4,count,up,generated:virtual-company-model
+2025-10,People,Company Model,Offers Extended,12.1,count,up,generated:virtual-company-model
+2025-10,People,Company Model,Offers Accepted,9.43,count,up,generated:virtual-company-model
+2025-10,People,Company Model,Time To Fill,29.28,days,down,generated:virtual-company-model
+2025-10,People,Company Model,Cost Per Hire,3138.13,USD,down,generated:virtual-company-model
+2025-10,People,Company Model,Training Hours Per Employee,6.65,hours,up,generated:virtual-company-model
+2025-10,People,Company Model,Absenteeism Rate,2.63,%,down,generated:virtual-company-model
+2025-11,People,Company Model,Open Positions,10.18,count,down,generated:virtual-company-model
+2025-11,People,Company Model,Applications Received,290.24,count,up,generated:virtual-company-model
+2025-11,People,Company Model,Interviews Scheduled,46.44,count,up,generated:virtual-company-model
+2025-11,People,Company Model,Offers Extended,11.15,count,up,generated:virtual-company-model
+2025-11,People,Company Model,Offers Accepted,8.69,count,up,generated:virtual-company-model
+2025-11,People,Company Model,Time To Fill,33.0,days,down,generated:virtual-company-model
+2025-11,People,Company Model,Cost Per Hire,3567.82,USD,down,generated:virtual-company-model
+2025-11,People,Company Model,Training Hours Per Employee,6.55,hours,up,generated:virtual-company-model
+2025-11,People,Company Model,Absenteeism Rate,2.57,%,down,generated:virtual-company-model
+2025-12,People,Company Model,Open Positions,14.6,count,down,generated:virtual-company-model
+2025-12,People,Company Model,Applications Received,397.14,count,up,generated:virtual-company-model
+2025-12,People,Company Model,Interviews Scheduled,63.54,count,up,generated:virtual-company-model
+2025-12,People,Company Model,Offers Extended,15.25,count,up,generated:virtual-company-model
+2025-12,People,Company Model,Offers Accepted,11.9,count,up,generated:virtual-company-model
+2025-12,People,Company Model,Time To Fill,28.88,days,down,generated:virtual-company-model
+2025-12,People,Company Model,Cost Per Hire,3045.45,USD,down,generated:virtual-company-model
+2025-12,People,Company Model,Training Hours Per Employee,8.97,hours,up,generated:virtual-company-model
+2025-12,People,Company Model,Absenteeism Rate,2.46,%,down,generated:virtual-company-model
+2026-01,People,Company Model,Open Positions,10.26,count,down,generated:virtual-company-model
+2026-01,People,Company Model,Applications Received,289.47,count,up,generated:virtual-company-model
+2026-01,People,Company Model,Interviews Scheduled,46.32,count,up,generated:virtual-company-model
+2026-01,People,Company Model,Offers Extended,11.12,count,up,generated:virtual-company-model
+2026-01,People,Company Model,Offers Accepted,8.67,count,up,generated:virtual-company-model
+2026-01,People,Company Model,Time To Fill,36.63,days,down,generated:virtual-company-model
+2026-01,People,Company Model,Cost Per Hire,3892.08,USD,down,generated:virtual-company-model
+2026-01,People,Company Model,Training Hours Per Employee,8.42,hours,up,generated:virtual-company-model
+2026-01,People,Company Model,Absenteeism Rate,2.45,%,down,generated:virtual-company-model
+2026-02,People,Company Model,Open Positions,12.06,count,down,generated:virtual-company-model
+2026-02,People,Company Model,Applications Received,392.24,count,up,generated:virtual-company-model
+2026-02,People,Company Model,Interviews Scheduled,62.76,count,up,generated:virtual-company-model
+2026-02,People,Company Model,Offers Extended,15.06,count,up,generated:virtual-company-model
+2026-02,People,Company Model,Offers Accepted,11.75,count,up,generated:virtual-company-model
+2026-02,People,Company Model,Time To Fill,37.34,days,down,generated:virtual-company-model
+2026-02,People,Company Model,Cost Per Hire,3987.7,USD,down,generated:virtual-company-model
+2026-02,People,Company Model,Training Hours Per Employee,6.17,hours,up,generated:virtual-company-model
+2026-02,People,Company Model,Absenteeism Rate,2.57,%,down,generated:virtual-company-model
+2026-03,People,Company Model,Open Positions,16.7,count,down,generated:virtual-company-model
+2026-03,People,Company Model,Applications Received,413.17,count,up,generated:virtual-company-model
+2026-03,People,Company Model,Interviews Scheduled,66.11,count,up,generated:virtual-company-model
+2026-03,People,Company Model,Offers Extended,15.87,count,up,generated:virtual-company-model
+2026-03,People,Company Model,Offers Accepted,12.38,count,up,generated:virtual-company-model
+2026-03,People,Company Model,Time To Fill,30.49,days,down,generated:virtual-company-model
+2026-03,People,Company Model,Cost Per Hire,3384.55,USD,down,generated:virtual-company-model
+2026-03,People,Company Model,Training Hours Per Employee,6.17,hours,up,generated:virtual-company-model
+2026-03,People,Company Model,Absenteeism Rate,2.72,%,down,generated:virtual-company-model
+2026-04,People,Company Model,Open Positions,15.71,count,down,generated:virtual-company-model
+2026-04,People,Company Model,Applications Received,430.2,count,up,generated:virtual-company-model
+2026-04,People,Company Model,Interviews Scheduled,68.83,count,up,generated:virtual-company-model
+2026-04,People,Company Model,Offers Extended,16.52,count,up,generated:virtual-company-model
+2026-04,People,Company Model,Offers Accepted,12.89,count,up,generated:virtual-company-model
+2026-04,People,Company Model,Time To Fill,29.04,days,down,generated:virtual-company-model
+2026-04,People,Company Model,Cost Per Hire,2951.85,USD,down,generated:virtual-company-model
+2026-04,People,Company Model,Training Hours Per Employee,9.99,hours,up,generated:virtual-company-model
+2026-04,People,Company Model,Absenteeism Rate,3.24,%,down,generated:virtual-company-model
+2026-05,People,Company Model,Open Positions,14.69,count,down,generated:virtual-company-model
+2026-05,People,Company Model,Applications Received,476.44,count,up,generated:virtual-company-model
+2026-05,People,Company Model,Interviews Scheduled,76.23,count,up,generated:virtual-company-model
+2026-05,People,Company Model,Offers Extended,18.3,count,up,generated:virtual-company-model
+2026-05,People,Company Model,Offers Accepted,14.27,count,up,generated:virtual-company-model
+2026-05,People,Company Model,Time To Fill,28.77,days,down,generated:virtual-company-model
+2026-05,People,Company Model,Cost Per Hire,3035.55,USD,down,generated:virtual-company-model
+2026-05,People,Company Model,Training Hours Per Employee,7.22,hours,up,generated:virtual-company-model
+2026-05,People,Company Model,Absenteeism Rate,3.11,%,down,generated:virtual-company-model
+2026-06,People,Company Model,Open Positions,16.22,count,down,generated:virtual-company-model
+2026-06,People,Company Model,Applications Received,537.89,count,up,generated:virtual-company-model
+2026-06,People,Company Model,Interviews Scheduled,86.06,count,up,generated:virtual-company-model
+2026-06,People,Company Model,Offers Extended,20.66,count,up,generated:virtual-company-model
+2026-06,People,Company Model,Offers Accepted,16.11,count,up,generated:virtual-company-model
+2026-06,People,Company Model,Time To Fill,29.19,days,down,generated:virtual-company-model
+2026-06,People,Company Model,Cost Per Hire,4097.77,USD,down,generated:virtual-company-model
+2026-06,People,Company Model,Training Hours Per Employee,8.05,hours,up,generated:virtual-company-model
+2026-06,People,Company Model,Absenteeism Rate,2.4,%,down,generated:virtual-company-model
+2026-07,People,Company Model,Open Positions,15.87,count,down,generated:virtual-company-model
+2026-07,People,Company Model,Applications Received,440.35,count,up,generated:virtual-company-model
+2026-07,People,Company Model,Interviews Scheduled,70.46,count,up,generated:virtual-company-model
+2026-07,People,Company Model,Offers Extended,16.91,count,up,generated:virtual-company-model
+2026-07,People,Company Model,Offers Accepted,13.19,count,up,generated:virtual-company-model
+2026-07,People,Company Model,Time To Fill,32.68,days,down,generated:virtual-company-model
+2026-07,People,Company Model,Cost Per Hire,3245.12,USD,down,generated:virtual-company-model
+2026-07,People,Company Model,Training Hours Per Employee,6.85,hours,up,generated:virtual-company-model
+2026-07,People,Company Model,Absenteeism Rate,3.4,%,down,generated:virtual-company-model
