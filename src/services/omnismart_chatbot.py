@@ -879,77 +879,58 @@ class AgentPersonaFactory:
         """Persona-routed RAG: gather a live KPI snapshot (scoped to the persona's
         data_access) + relevant knowledge docs. Returns (context_text, sources)."""
         raw_sources: List[Dict[str, Any]] = []
-        kpi_block: Optional[str] = None
-        hist_block: Optional[str] = None
+        kpi_entries: List[Tuple[str, str]] = []  # (citation title, full text) — one per (category, period)
         doc_blocks: List[Tuple[str, str]] = []
         scope = {c.lower() for c in (getattr(persona, "data_access", None) or [])}
 
-        # 1) Live KPI snapshot (latest period), scoped to the persona's domains (RBAC).
-        # PLUS: a question naming a specific past period ("... in 2024-01?", "for 2021-01")
-        # asks about a period that is, by definition, almost never the latest one — the
-        # snapshot alone can never ground those, no matter how good retrieval otherwise
-        # is. Detect a YYYY-MM in the message and fetch that period's rows too.
+        # 1) Live KPI snapshot (latest period) + any specifically-named past period
+        # ("... in 2024-01?"), scoped to the persona's domains (RBAC). One citation PER
+        # (category, period) — NOT one combined multi-category block. A persona scoped
+        # to 2+ categories (e.g. CHRO: People + ESG) used to get every category's data
+        # folded into a single snippet capped at 2000 chars; a verbose category (World
+        # Bank ESG series carry one row per country) could by itself fill that cap and
+        # push every OTHER category's data out of what the citation actually shows —
+        # even though the model's own (uncapped) prompt saw everything. Confirmed live:
+        # a CHRO asking about Attrition Rate got the numerically correct answer, cited
+        # against a source whose displayed snippet was 100% ESG content with no mention
+        # of Attrition Rate at all, scoring 0.0 groundedness on production eval despite
+        # the number being right. Per-category citations mean each one's own ~2000-char
+        # budget is never shared with an unrelated category.
         try:
             from src.services.pg_store import get_kpi_metrics
             df = get_kpi_metrics()
             if df is not None and not df.empty:
                 latest = sorted(df["period"].unique())[-1]
-                cur = df[df["period"] == latest]
-                if scope:
-                    cur = cur[cur["category"].str.lower().isin(scope)]
-                lines, cats = [], []
-                for cat in sorted(cur["category"].unique()):
-                    cdf = cur[cur["category"] == cat]
-                    # Some metrics (World Bank-sourced ESG series especially) carry one row
-                    # per segment/country for the same metric name — e.g. 18 different
-                    # "CO2 Emissions (excl. LULUCF)=..." rows for one period, one per
-                    # country. Folding them together with no segment label produced an
-                    # undifferentiated wall of repeated metric names with no way to tell
-                    # which value belonged to which country, so the model (and anything
-                    # judging groundedness against it) couldn't reliably cite the right one.
-                    metrics = "; ".join(
-                        f"{r.metric} ({r.segment})={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
-                        if getattr(r, "segment", "") else
-                        f"{r.metric}={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
-                        for r in cdf.itertuples()
-                    )
-                    lines.append(f"- {cat} ({latest}): {metrics}")
-                    cats.append(cat)
-                if lines:
-                    kpi_block = "\n".join(lines)
-                    # snippet carries the real values, not just "X metrics for Y" — a
-                    # citation chip that only names the category+period gives a reader
-                    # (or an eval judge checking groundedness) nothing to actually verify
-                    # the cited number against.
-                    raw_sources.append({
-                        "title": f"Live KPI snapshot · {latest}", "type": "kpi", "relevance": 1.0,
-                        "snippet": kpi_block[:2000], "source": f"kpi/{latest}",
-                    })
-
                 asked_periods = set(re.findall(r"\b(?:19|20)\d{2}-(?:0[1-9]|1[0-2])\b", message))
-                asked_periods.discard(latest)
-                if asked_periods:
-                    hist = df[df["period"].isin(asked_periods)]
-                    if scope:
-                        hist = hist[hist["category"].str.lower().isin(scope)]
-                    hist_lines = []
-                    for period in sorted(asked_periods & set(hist["period"].unique())):
-                        pdf = hist[hist["period"] == period]
-                        for cat in sorted(pdf["category"].unique()):
-                            cdf = pdf[pdf["category"] == cat]
-                            metrics = "; ".join(
-                                f"{r.metric} ({r.segment})={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
-                                if getattr(r, "segment", "") else
-                                f"{r.metric}={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
-                                for r in cdf.itertuples()
-                            )
-                            hist_lines.append(f"- {cat} ({period}): {metrics}")
-                    if hist_lines:
-                        hist_block = "\n".join(hist_lines)
-                        parts_period = ", ".join(sorted(asked_periods & set(hist["period"].unique())))
+                periods = {latest} | asked_periods
+                pdf_all = df[df["period"].isin(periods)]
+                if scope:
+                    pdf_all = pdf_all[pdf_all["category"].str.lower().isin(scope)]
+
+                for period in sorted(periods & set(pdf_all["period"].unique())):
+                    pdf = pdf_all[pdf_all["period"] == period]
+                    label = "Live KPI snapshot" if period == latest else "Historical KPI data"
+                    for cat in sorted(pdf["category"].unique()):
+                        cdf = pdf[pdf["category"] == cat]
+                        # Some metrics (World Bank-sourced ESG series especially) carry one row
+                        # per segment/country for the same metric name — e.g. 18 different
+                        # "CO2 Emissions (excl. LULUCF)=..." rows for one period, one per
+                        # country. Folding them together with no segment label produced an
+                        # undifferentiated wall of repeated metric names with no way to tell
+                        # which value belonged to which country, so the model (and anything
+                        # judging groundedness against it) couldn't reliably cite the right one.
+                        metrics = "; ".join(
+                            f"{r.metric} ({r.segment})={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
+                            if getattr(r, "segment", "") else
+                            f"{r.metric}={r.value}{(' ' + r.unit) if getattr(r, 'unit', '') else ''}"
+                            for r in cdf.itertuples()
+                        )
+                        text = f"{cat} ({period}): {metrics}"
+                        title = f"{label} — {cat} · {period}"
+                        kpi_entries.append((title, text))
                         raw_sources.append({
-                            "title": f"Historical KPI data · {parts_period}", "type": "kpi", "relevance": 1.0,
-                            "snippet": hist_block[:2000], "source": f"kpi/{parts_period}",
+                            "title": title, "type": "kpi", "relevance": 1.0,
+                            "snippet": text[:2000], "source": f"kpi/{cat.lower()}/{period}",
                         })
         except Exception as e:
             log.warning("KPI context retrieval failed: %s", e)
@@ -976,21 +957,22 @@ class AgentPersonaFactory:
         except Exception as e:
             log.warning("Doc context retrieval failed: %s", e)
 
-        sources = normalize_sources(raw_sources)
+        # Wide-access personas (ceo/analyst/admin-style, scoped to most or all 7
+        # domains) can now generate up to ~14 KPI citations (2 periods × 7 categories)
+        # before any doc/glossary citation — the default cap=8 would silently drop
+        # every non-KPI source for exactly those personas. normalize_sources() pins
+        # kpi-type sources first regardless of cap, so a low cap here means a wide
+        # persona's doc citations get pushed out entirely, not just truncated evenly.
+        sources = normalize_sources(raw_sources, cap=16)
 
         # Build the context with [n] markers aligned to the citation ids, so the model
         # can cite inline as [1], [2] … and the chips match exactly.
         by_title = {s["title"].lower(): s for s in sources}
         parts: List[str] = []
-        if kpi_block is not None:
-            sid = next((s["id"] for s in sources if s["type"] == "kpi" and s["title"].startswith("Live KPI")), None)
-            parts.append(f"[{sid}] LIVE KPI SNAPSHOT:\n{kpi_block}" if sid else f"LIVE KPI SNAPSHOT:\n{kpi_block}")
-        if hist_block is not None:
-            # Its own citation id — folding this into kpi_block's [sid] above mislabeled
-            # every historical fact under the LIVE snapshot's id, which names a different
-            # period and can carry a different value for the same metric (confirmed live).
-            hsid = next((s["id"] for s in sources if s["type"] == "kpi" and s["title"].startswith("Historical")), None)
-            parts.append(f"[{hsid}] HISTORICAL KPI DATA:\n{hist_block}" if hsid else f"HISTORICAL KPI DATA:\n{hist_block}")
+        for title, text in kpi_entries:
+            s = by_title.get(title.lower())
+            if s:
+                parts.append(f"[{s['id']}] {text}")
         for title, text in doc_blocks:
             s = by_title.get(title.lower())
             if s:
