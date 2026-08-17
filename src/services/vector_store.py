@@ -112,7 +112,7 @@ def _embed_batch(texts: List[str]):
 def _dim() -> int:
     provider = os.environ.get("EMBEDDING_PROVIDER", "hf").lower()
     if provider in ("cohere", "hf", "remote"):
-        return 1024 # embed-english-v3.0 / bge-m3 dense dim — also the orchestrator's default embed model
+        return 1024 # embed-english-v3.0 / bge-m3 dense dim — the portfolio's default embed model
     emb = _embedder()
     getter = getattr(emb, "get_embedding_dimension", None) or emb.get_sentence_embedding_dimension
     return int(getter())

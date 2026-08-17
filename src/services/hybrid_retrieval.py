@@ -50,12 +50,11 @@ except ImportError:
 def _is_still_waking(result: Any) -> bool:
     """True when a remote inference host answered 'not ready yet, I'm starting'.
 
-    An on-demand GPU host (the shared orchestrator routing to a sleeping Lightning
-    Studio) does NOT hold the connection open while it boots — it answers in ~2s with
-    HTTP 200 and an error body, having *triggered* the wake:
+    An on-demand GPU host does NOT hold the connection open while it boots — it
+    answers in ~2s with HTTP 200 and an error body, having *triggered* the wake:
         {"error": "HTTP Error 530: <none>", "studio": 1, "_woke": true, ...}
     So a longer socket timeout is useless here; the client has to come back later.
-    Sleeping is the normal, expected state of a free-tier studio, not a fault.
+    Sleeping is the normal, expected state of a free-tier on-demand host, not a fault.
     """
     if not isinstance(result, dict):
         return False
@@ -74,10 +73,10 @@ def _post_json_awaiting_wake(url: str, payload: Dict[str, Any], headers: Dict[st
     This is a retry against the SAME configured provider — not the silent
     provider-chaining that _encode/rerank deliberately refuse to do. The provider never
     changes; we simply wait for the one that was chosen to finish booting, which is the
-    documented behaviour of an on-demand GPU host and is the orchestrator's own wake
-    logic doing its job (we never poke its wake endpoint ourselves).
+    documented behaviour of an on-demand GPU host doing its own wake logic (we never
+    poke its wake endpoint ourselves).
 
-    Budget: INFERENCE_WAKE_TIMEOUT seconds total (default 420 — a cold Lightning Studio
+    Budget: INFERENCE_WAKE_TIMEOUT seconds total (default 420 — a cold on-demand host
     plus tunnel typically needs a couple of minutes), polled with backoff.
     """
     import json as _json, urllib.request
@@ -224,8 +223,8 @@ class HybridRetriever:
         h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
         timeout = float(os.getenv("EMBED_TIMEOUT", "30"))
         # INFERENCE_TOKEN is the credential for whatever EMBED_URL/EMBEDDING_ENDPOINT
-        # currently points at — HF, the orchestrator, or any other compliant host. Set
-        # its value to match whichever endpoint is configured; the code stays agnostic.
+        # currently points at — HF, or any other compliant host. Set its value to
+        # match whichever endpoint is configured; the code stays agnostic.
         tk = os.getenv("INFERENCE_TOKEN", "").strip()
         if tk:
             h["Authorization"] = "Bearer " + tk
@@ -242,7 +241,7 @@ class HybridRetriever:
             if arr.ndim == 3:
                 arr = arr.mean(axis=1)
             return arr
-        # Generic contract (a Studio/orchestrator host) — same shape
+        # Generic contract (any self-hosted inference host) — same shape
         # AUDIO_PROCESSOR_URL/DOC_PROCESSOR_URL use elsewhere in this codebase.
         # Waits through an on-demand host's cold start (see _post_json_awaiting_wake).
         result = _post_json_awaiting_wake(
@@ -523,8 +522,8 @@ def _rerank_remote(query: str, texts: List[str]) -> List[float]:
     """RERANK_URL + INFERENCE_TOKEN, provider-agnostic — same split as _remote_embed_batch:
     dispatches on the URL's own shape, not a named-vendor config flag. A huggingface.co
     URL is called in HF's native cross-encoder shape; anything else via the generic
-    POST {url}/rerank contract ({"query","texts":[...]} -> {"scores":[...]}) that a
-    Studio, the shared orchestrator, or any other compliant host can implement."""
+    POST {url}/rerank contract ({"query","texts":[...]} -> {"scores":[...]}) that
+    any compliant host can implement."""
     remote = os.getenv("RERANK_URL", "").strip()
     if not remote:
         raise RuntimeError("RERANK_PROVIDER=remote but RERANK_URL is not set")
@@ -619,7 +618,7 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
     """Rerank using EXACTLY the configured RERANK_PROVIDER — no fallback chain.
 
     local  cross-encoder loaded in-process on this host (needs sentence-transformers)
-    remote self-hosted rerank endpoint (RERANK_URL, e.g. the orchestrator)
+    remote self-hosted rerank endpoint (RERANK_URL)
     hf     Hugging Face Inference API (HF_TOKEN)
     cohere Cohere /v2/rerank (COHERE_API_KEY)
     jina   Jina /v1/rerank (JINA_API_KEY)
