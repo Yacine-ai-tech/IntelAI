@@ -1279,13 +1279,24 @@ def get_or_create_demo_user(user_id: str, username: str, role: str, full_name: s
     a no-op since user_id is deterministic (see server.py's demo_login)."""
     conn = _get_conn()
     try:
-        conn.execute(
+        # ON CONFLICT (id) alone is not enough: users.username carries its OWN unique
+        # constraint. A caller that supplies a fresh id but a stable username (the
+        # no-session-header demo-login path does exactly that) slips past the id
+        # conflict and then violates users_username_key, 500ing every call after the
+        # first. Confirmed live in production logs. Resolve on username too, and
+        # return whichever id actually owns the row so the caller mints a JWT whose
+        # user_id has a real users row behind it — chat_sessions and uploaded_files
+        # both carry a foreign key to it.
+        row = conn.execute(
             """INSERT INTO users (id, username, password_hash, role, full_name)
                VALUES (%s, %s, %s, %s, %s)
-               ON CONFLICT (id) DO NOTHING""",
+               ON CONFLICT (username) DO UPDATE SET role = EXCLUDED.role
+               RETURNING id, username, role""",
             [user_id, username, "demo-no-password-login", role, full_name],
-        )
+        ).fetchone()
         conn.commit()
+        if row:
+            return {"id": str(row["id"]), "username": row["username"], "role": row["role"]}
         return {"id": user_id, "username": username, "role": role}
     finally:
         conn.close()

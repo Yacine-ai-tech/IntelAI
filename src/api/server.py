@@ -700,10 +700,17 @@ async def demo_login(role: str, request: Request):
         user_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f"intelai-demo:{role}:{demo_session_id}"))
         username = f"{role}-{user_id[:8]}"
     else:
-        ud = _users_db.get(role) or {"id": str(uuid.uuid4()), "username": role}
-        user_id = ud["id"]
+        # Deterministic per role, NOT a fresh uuid4 each call. When no bootstrap
+        # users are configured _users_db is empty, so the old fallback minted a new
+        # random id on every request while keeping username == role, which collided
+        # on users_username_key from the second call onward.
+        ud = _users_db.get(role)
+        user_id = ud["id"] if ud else str(uuid.uuid5(uuid.NAMESPACE_URL, f"intelai-demo-role:{role}"))
         username = role
-    await asyncio.to_thread(get_or_create_demo_user, user_id, username, role, role.upper())
+    # Use the id the database actually settled on — if a row already owned this
+    # username, that row's id is the one the foreign keys point at.
+    created = await asyncio.to_thread(get_or_create_demo_user, user_id, username, role, role.upper())
+    user_id = created.get("id", user_id)
 
     token = create_access_token(TokenData(user_id=user_id, username=username, role=role, language="en"))
     from src.services.pg_store import get_available_categories
