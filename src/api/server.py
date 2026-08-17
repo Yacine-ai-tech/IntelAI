@@ -695,15 +695,15 @@ async def demo_login(role: str, request: Request):
         raise HTTPException(status_code=404, detail=f"Unknown role: {role}")
 
     demo_session_id = request.headers.get("X-Demo-Session-Id")
+    from src.services.pg_store import get_or_create_demo_user
     if _os.getenv("DEMO_SESSION_SCOPING", "true").lower() == "true" and demo_session_id:
-        from src.services.pg_store import get_or_create_demo_user
         user_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f"intelai-demo:{role}:{demo_session_id}"))
         username = f"{role}-{user_id[:8]}"
-        await asyncio.to_thread(get_or_create_demo_user, user_id, username, role, role.upper())
     else:
         ud = _users_db.get(role) or {"id": str(uuid.uuid4()), "username": role}
         user_id = ud["id"]
         username = role
+    await asyncio.to_thread(get_or_create_demo_user, user_id, username, role, role.upper())
 
     token = create_access_token(TokenData(user_id=user_id, username=username, role=role, language="en"))
     from src.services.pg_store import get_available_categories
