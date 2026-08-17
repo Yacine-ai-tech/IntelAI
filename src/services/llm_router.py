@@ -5,7 +5,7 @@ Routes calls across Groq / Anthropic / OpenAI / Ollama based on a `tier`
 argument. Used by omnismart_chatbot and any service needing LLM calls.
 
 Tiers:
-  - default:    LLM_DEFAULT     (Groq Llama 3.3 70B by default — fast + cheap)
+  - default:    LLM_DEFAULT     (Groq (openai/gpt-oss-120b) by default — fast + cheap)
   - reasoning:  LLM_REASONING   (Claude Sonnet 4.6 — deep analysis)
   - judge:      LLM_JUDGE       (Claude Haiku 4.5 — eval/grading)
   - local:      LLM_LOCAL       (Ollama Llama 3.3 — offline fallback)
@@ -27,7 +27,7 @@ except ImportError:
     log.warning("litellm not installed — llm_router stub mode")
 
 
-DEFAULT_MODEL = os.getenv("LLM_DEFAULT", "groq/llama-3.3-70b-versatile")
+DEFAULT_MODEL = os.getenv("LLM_DEFAULT", "groq/openai/gpt-oss-120b")
 REASONING_MODEL = os.getenv("LLM_REASONING", "anthropic/claude-sonnet-4-6")
 JUDGE_MODEL = os.getenv("LLM_JUDGE", "anthropic/claude-haiku-4-5")
 LOCAL_MODEL = os.getenv("LLM_LOCAL", "ollama/llama3.3")
