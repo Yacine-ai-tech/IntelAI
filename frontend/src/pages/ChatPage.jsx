@@ -308,9 +308,9 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
     
     const ws = wsRef.current
     if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ message: q, persona: persona || undefined, session_id: activeSession || undefined, language: lang }))
+      ws.send(JSON.stringify({ message: q, persona: persona || 'general', session_id: activeSession || undefined, language: lang }))
     } else {
-      api.sendChat(q, persona || null, activeSession, '', lang, abortControllerRef.current.signal)
+      api.sendChat(q, persona || 'general', activeSession, '', lang, abortControllerRef.current.signal)
         .then(r => setMessages(p => [...p, {
           role: 'assistant',
           content: r.data.response || 'No response.',
@@ -333,8 +333,12 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort()
       abortControllerRef.current = null
-      setLoading(false)
     }
+    if (useWs && wsRef.current) {
+      wsRef.current.close()
+      setMessages(p => [...p, { role: 'assistant', content: 'Message canceled.' }])
+    }
+    setLoading(false)
   }
 
   const onSubmit = (e) => { e.preventDefault(); send() }

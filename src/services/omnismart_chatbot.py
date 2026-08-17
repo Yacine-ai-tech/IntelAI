@@ -226,13 +226,8 @@ class UltraFastRAG:
         self.embedding_model = None
         self.vectorstore = None
         
-        if _SBERT:
-            try:
-                self.embedding_model = SentenceTransformer(
-                    settings.EMBEDDING_MODEL or "all-MiniLM-L6-v2"
-                )
-            except Exception as e:
-                log.warning("Failed to load embedding model: %s", e)
+        if _SBERT and os.getenv("INFERENCE_MODE", "local").lower() != "remote":
+            pass # Loaded lazily only if needed
         
         default_instruction = (
             "You are a knowledgeable analyst with access to company knowledge base. "
@@ -281,9 +276,14 @@ class UltraFastRAG:
                 log.warning("Hybrid retrieval skipped: %s", e)
 
             # Semantic search with embeddings
-            if _SBERT and self.embedding_model and "embedding" in docs.columns:
+            if _SBERT and "embedding" in docs.columns:
                 try:
-                    query_embedding = self.embedding_model.encode([query])[0]
+                    if self.embedding_model is None and os.getenv("INFERENCE_MODE", "local").lower() != "remote":
+                        self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL or "all-MiniLM-L6-v2")
+                    if self.embedding_model:
+                        query_embedding = self.embedding_model.encode([query])[0]
+                    else:
+                        raise ValueError("No embedding model available")
                     doc_embeddings = []
                     
                     for emb_str in docs["embedding"]:
@@ -1033,7 +1033,7 @@ class AgentPersonaFactory:
         return False
 
     @staticmethod
-    def _needs_web(text: str, context: str = "") -> bool:
+    def _needs_web(text: str) -> bool:
         """True when a question calls for external / real-time / benchmark information that the
         internal KPI snapshot + knowledge base cannot answer on their own. Uses LLM for intelligent judgment."""
         t = (text or "").lower()
@@ -1043,18 +1043,17 @@ class AgentPersonaFactory:
         from src.core.config import settings
         prompt = (
             "You are a routing agent for a corporate AI copilot. The user asked: {query}\n"
-            "The internal knowledge base returned the following data:\n---\n{context}\n---\n"
-            "Does the query ask for external market data, news, competitor intel, or current events that are NOT adequately answered by the internal data above? "
-            "Consider the lack of data if the query asks about real-time events. "
+            "Does the query ask for external market data, news, competitor intel, or current events? "
             "Reply with exactly one word: YES or NO."
-        ).format(query=t, context=(context or "No internal data found.")[:2000])
+        ).format(query=t)
         
         try:
+            from src.services.llm_router import _resolve
             reply, _, _ = llm_complete(
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=10,
                 temperature=0.0,
-                model=getattr(settings, "LLM_JUDGE", getattr(settings, "LLM_MODEL", "groq/llama-3.3-70b-versatile"))
+                model=_resolve("judge")
             )
             if "yes" in reply.lower():
                 return True
@@ -1132,11 +1131,18 @@ class AgentPersonaFactory:
         # instead of dumping a KPI analysis at someone who just said "hi".
         if self._is_smalltalk(message):
             retrieved_ctx, sources = "", []
+            needs_web = False
         else:
-            retrieved_ctx, sources = self._retrieve_context(message, persona, language)
+            from concurrent.futures import ThreadPoolExecutor
+            with ThreadPoolExecutor(max_workers=2) as executor:
+                rag_future = executor.submit(self._retrieve_context, message, persona, language)
+                judge_future = executor.submit(self._needs_web, message)
+                retrieved_ctx, sources = rag_future.result()
+                needs_web = judge_future.result()
+            
             # Augment with real-time web search (Tavily) when the question needs external,
             # current or benchmark data — web results are cited by [n] like any other source.
-            if self._needs_web(message, retrieved_ctx):
+            if needs_web:
                 max_id = max((s.get("id", 0) for s in sources), default=0)
                 web_ctx, web_sources = self._web_context(message, settings.WEB_SEARCH_MAX_RESULTS, max_id)
                 if web_ctx:
@@ -1158,9 +1164,7 @@ class AgentPersonaFactory:
             "4. When using LIVE DATA, quote metric values exactly as shown (e.g., '$3.6M') and cite sources inline using bracketed numbers (e.g., [1]).\n"
             "5. Stay strictly within your persona's data-access scope. If asked about out-of-scope metrics, briefly point the user to the correct persona.\n"
             "6. Use standard, well-structured Markdown (bullets, bold text) without stray symbols.\n\n"
-            f"LANGUAGE (critical): the user's current message is written in "
-            f"{'FRENCH' if language == 'fr' else 'ENGLISH'}. Write your ENTIRE reply in "
-            f"{'FRENCH' if language == 'fr' else 'ENGLISH'}."
+            "LANGUAGE (critical): Always detect the language of the user's question and write your ENTIRE reply in that exact same language."
         )
         messages: List[Dict[str, str]] = [{"role": "system", "content": system_prompt}]
 
