@@ -1,222 +1,280 @@
-# IntelAI Data: what is in the database, and where every number came from
+# IntelAI Data: OmniIntelOS, and why every number in it can be checked
 
-This describes the dataset IntelAI runs on, how to rebuild it, and what is known to be
+This describes the dataset IntelAI runs on, how to rebuild it, and what is deliberately
 missing. It documents the current implementation, not an intended one.
 
-The short version: **the KPI baseline is real published data, not generated.** Every
-row in `kpi_metrics` carries the identifier of the statistical series it came from, so
-any figure on a dashboard can be traced to a publisher and re-checked by a third party.
+**The dataset is a generated virtual company: OmniIntelOS S.A.** It is fictional. No
+figure here is any real company's disclosed result, and nothing in this repository should
+be read as one. What makes it trustworthy is not a claim of realness — it is that the
+data is *internally verifiable*, *causally coherent*, and *honestly labelled* at every
+layer, right down to the disclosure line printed inside each generated PDF.
 
-## The virtual company
+---
 
-IntelAI's seeded data describes one company: a **West African telecom group,
-headquartered in Senegal**, operating bilingually in **French and English** — matching
-Sonatel/Orange Group, whose own published result communiqués are the one genuinely
-real per-company data source used (Finance domain). Every domain's `segment` field
-says exactly what it represents:
+## 1. The company
 
-| Segment | Meaning |
+|  |  |
 |---|---|
-| `Sonatel Group` | The company's own real, published figures (Finance) |
-| `Senegal`, `Africa Western and Central`, `World` | The company's real ESG/environmental footprint (Senegal + its region), plus a global benchmark |
-| `External — US Market Context` | Real published US macro statistics (FRED), kept as genuine external planning context — **not** the company's own measured output |
-| `Global` | NVD's worldwide published-CVE sample (IT) |
-| `IBM Sample` | The IBM HR attrition survey's own cross-section, company-wide (People) |
-| `Sales`, `Research & Development`, `Human Resources` | The same IBM HR survey, broken out by its real `Department` column — real per-department headcount/attrition/salary/satisfaction, not invented (People) |
-| `External — US Safety Benchmark` | Real BLS/OSHA annual workplace-safety survey rate, external industry context, not this company's own measured incident rate (Operations) |
-| `External — SaaS Industry Benchmark` | Real published median SaaS churn rate (Benchmarkit 2025), external context (Growth) |
-| `External — Supply Chain Benchmark` | Real published median inventory turnover (Netstock 2025), external context (Logistics) |
+| Legal name | OmniIntelOS S.A. (Société Anonyme, OHADA) |
+| Headquarters | Niamey, Niger |
+| Founded | March 2019 |
+| Industry | Applied AI / enterprise SaaS |
+| Functional currency | XOF (BCEAO franc, fixed peg 655.957 = 1 EUR); reports in USD |
+| Languages | French (HQ, Sahel operations) and English (international) |
+| Scale at Jun 2026 | ~USD 52M annualised revenue, ARR ~USD 33M, 411 employees, ~USD 128k revenue per employee |
 
-**Known limitation, stated rather than papered over:** FRED — the source for most of
-Finance/Growth/Operations/Logistics/IT's real monthly series — publishes only US
-national statistics; no West African equivalent exists at that frequency or coverage.
-Those series are kept as real, genuinely-published macro context (a real multinational
-operator's planning does track US/global rates, employment and demand indicators)
-rather than removed or relabeled as the company's own — see the `External — US Market
-Context` segment above, and the explicit note it triggers in every digest document (§4).
+**Service lines** — data science & analytics platform (SaaS), computer vision (industrial
+inspection, agri-monitoring), NLP & bilingual FR/EN document intelligence, IoT & edge
+telemetry, blockchain provenance, custom software engineering, managed data centres.
 
-## One script, going through the real API
+**Footprint** — Sahel (Niger HQ, Mali, Burkina Faso, Chad); West Africa (Senegal, Côte
+d'Ivoire, Ghana, Nigeria); North & East Africa (Morocco, Kenya); Europe (France,
+Belgium); Americas (US, Canada).
 
-**`scripts/seed_data.py`** is the only data-seeding script. Every stage that writes
-data does it through IntelAI's own public API — `POST /api/v1/ingest/csv`,
-`/api/v1/ingest/document`, `/api/v1/ingest/audio` — the same endpoints, auth,
-validation and audit trail a real user's UI upload hits. Nothing generates,
-interpolates, smooths or extends a value: where a publisher has no observation for a
-period, no row is written.
+**Partners** — universities (Abdou Moumouni, Cheikh Anta Diop), engineering and
+manufacturing integrators, regional banks and microfinance institutions, public-sector
+agencies, telcos.
 
-```bash
-python scripts/seed_data.py                        # everything, using cached raw data
-python scripts/seed_data.py --refetch               # re-download from source first
-python scripts/seed_data.py --only build,seed-kpis  # rebuild + reseed KPIs only
-python scripts/seed_data.py --purge --only corpus   # wipe + re-ingest the document corpus
-python scripts/seed_data.py --dry-run               # describe every stage, write nothing
+---
+
+## 2. Why generated rather than assembled from public sources
+
+An earlier version of this dataset was built from real public series — FRED, World Bank,
+NVD, an IBM HR survey, Sonatel's published communiqués. That approach failed for a
+specific, measurable reason:
+
+- The metrics enterprise dashboards actually need — SLA compliance, MTTR, ticket volume,
+  MRR/ARR/CAC/LTV, recruiting funnel, OEE — describe **one company's private internal
+  systems**. No publisher reports them for an arbitrary company.
+- So the corpus filled up with external macro context instead. **53% of all rows were US
+  national statistics**, each correctly carrying a "not this company's own measured
+  output" disclaimer. Ask the copilot about the company and it hedged, because the honest
+  answer was that the data was about the US economy.
+- Coverage was also uneven: company-specific data existed for **18 of 78 months**. Any
+  question about 2020–2024 had nothing behind it.
+
+Generating a coherent company fixes both. The cost is that the company is fictional — so
+the rest of this document is about making that cost safe.
+
+---
+
+## 3. What makes the numbers trustworthy
+
+### 3.1 Only primitives are modelled; every ratio is computed
+
+`scripts/omniintelos.py` models primitives — revenue, COGS, headcount, incidents, kWh,
+customers, cash. Every ratio a dashboard displays is then **computed from those
+primitives using the standard formula**, so it can be re-derived from other rows in the
+same period:
+
+```
+Gross Margin   == (Revenue - COGS) / Revenue          exact, all 78 months
+EBITDA Margin  == EBITDA / Revenue
+Net Margin     == Net Income / Revenue
+Debt to Equity == Total Debt / Shareholders Equity
+OEE            == Availability x Performance x Quality
+Rule of 40     == YoY revenue growth % + EBITDA margin %
+NRR            == (Start ARR + Expansion - Contraction - Churn) / Start ARR
+Turnover %     == Separations x 12 / Headcount
 ```
 
-Stages, in order:
+If a stored value and its formula disagree, that is a real bug, not modelling noise. This
+is the single most important property of the dataset: **it is checkable.**
 
-1. **`fetch`** — download raw sources to `data/<Domain>/` (skipped if already cached;
-   `--refetch` forces a re-download).
-2. **`build`** — turn the raw sources into per-domain CSVs in `data/real_kpis/`.
-3. **`seed-kpis`** — `POST` each CSV to `/api/v1/ingest/csv` with `global_scope=true`
-   (the shared baseline, NULL owner — restricted to admins).
-4. **`digests`** — write bilingual EN/FR knowledge-base text of the KPI series. The
-   retrieval index searches `knowledge_base`, not `kpi_metrics`, so without this text
-   the assistant cannot answer "what was X in period Y" from semantic search alone
-   (a separate, direct `kpi_metrics` lookup also covers exact period-in-message
-   questions — see `src/services/omnismart_chatbot.py::_retrieve_context`).
-5. **`corpus`** — `POST` every real document/image/audio file under `data/<Domain>/`,
-   plus the digests just written, through `/api/v1/ingest/{document,audio}`.
+### 3.2 The frameworks are real, even though the company is not
 
-Only one step is not API-mediated: `--purge` (corpus stage) directly deletes existing
-non-glossary `knowledge_base` rows before a full re-ingest — a deliberate maintenance
-operation with no public bulk-delete API equivalent, not part of the seeding path
-itself.
+| Framework | Used for | Real? |
+|---|---|---|
+| GHG Protocol Corporate Standard | Scope 1/2/3 boundary and accounting | Yes |
+| Google DORA | Deployment frequency, lead time, change failure rate, MTTR | Yes |
+| CVSS v3.1 | Critical = base score ≥ 9.0 | Yes |
+| OEE (Nakajima) | Availability × Performance × Quality | Yes |
+| SaaS standards | Rule of 40, NRR, LTV:CAC, CAC payback | Yes |
+| OHADA / SYSCOHADA | Statutory accounting basis for a Niger S.A. | Yes |
+| BCEAO XOF/EUR peg | 655.957, fixed | Yes — verifiable constant |
+| Niger corporate income tax | 30% | Yes |
 
-**Measured result (current build): 2,514 KPI rows, 7 domains, 9 distinct sources (8 real
-+ 1 generated), 0 rows without provenance.** 918 of the 2,514 rows are the internally
-generated company-operating-model layer (see § below) — every one tagged
-`source = "generated:virtual-company-model"`, never mixed into a row that looks real.
+The healthy/risk thresholds every generated document judges itself against are
+transcribed from IntelAI's own published domain specification, so a statement like
+"below target" is checkable against both the stored value and the published band.
 
-| Domain | Rows | Metrics | Sources |
-|---|---|---|---|
-| People | 555 | 21 | FRED (4 series, external context), IBM HR survey (company-wide + 3 real departments), generated (recruiting funnel, cost-per-hire) |
-| IT | 956 | 47 | FRED (2 series, external context), NVD (CVE counts + a real-CVSS-derived Security Score), generated (tickets, SLA/MTTR, infra, security posture) |
-| Finance | 242 | 6 | FRED (4 series, external context), **Sonatel (real, own)** |
-| Growth | 283 | 8 | FRED (3 series, external context), Benchmarkit SaaS churn benchmark, generated (MRR/ARR/CAC/LTV) |
-| Operations | 190 | 4 | FRED (INDPRO, TCU — external context), BLS/OSHA safety benchmark |
-| Logistics | 179 | 3 | FRED (BUSINV, TSIFRGHTC — external context), Netstock inventory-turnover benchmark |
-| ESG | 109 | 5 | World Bank (Senegal, Africa Western and Central, World), FRED (transport emissions) |
+### 3.3 The history is one causal narrative, not seven random walks
 
-Provenance strings are `fred:<SERIES_ID>`, `worldbank:<INDICATOR>`, `nvd:cve-2.0`,
-`ibm-hr:attrition-survey`, `sonatel:<period>`, `bls-osha:osh-annual-survey`,
-`benchmarkit:2025-saas-performance-metrics`, `netstock:2025-supply-chain-planning-report`,
-`generated:virtual-company-model` — the real ones each resolve to a public URL, printed
-next to every figure in the digests (§ digests stage) and by `_source_url()` in
-`seed_data.py`; the generated one resolves to an explicit "not published" note instead.
+Domains are correlated because they are **generated from shared drivers with realistic
+lags**, not decorated after the fact. The clearest case is the February 2023 breach:
 
-### What each source is, and its real limitations
+| Month | Uptime % | SLA % | Security score | Logo churn % | Revenue USD | Health |
+|---|---|---|---|---|---|---|
+| 2022-12 | 99.63 | 96.2 | 81.8 | 1.42 | 658,935 | Stable |
+| 2023-01 | 99.83 | 98.8 | **51.6** | 2.47 | 676,785 | ← posture degrades first |
+| 2023-02 | **96.42** | **68.0** | 54.6 | 2.78 | 656,747 | **Critical** |
+| 2023-03 | 98.15 | 78.4 | 49.9 | 2.28 | 655,399 | recovering |
+| 2023-04 | 99.65 | 96.3 | 52.6 | **2.80** | 652,146 | ← churn peaks *after* uptime recovers |
+| 2023-05 | 99.67 | 96.3 | 51.2 | 2.20 | 654,978 | revenue still depressed |
+| 2023-06 | 99.84 | 98.8 | **92.2** | 1.56 | 662,438 | post-remediation |
 
-| Source | Used for | Frequency | Honest limitation |
-|---|---|---|---|
-| FRED (St. Louis Fed) | 18 series across Finance/Growth/People/IT/Operations/Logistics | monthly, some quarterly | US-only; external market context, not this company's own numbers (see above) |
-| World Bank Open Data | 4 ESG indicators, Senegal + region + world | **annual** | latest year is 2022–2024 depending on indicator; no monthly ESG data exists free |
-| NVD 2.0 API | published CVE counts by severity, plus a real-CVSS-derived Security Score | monthly | a **400-per-window sample**, not the full population — comparable between months because every window is sampled identically |
-| IBM HR attrition survey | Headcount, attrition, salary, tenure, age, satisfaction, training completion — company-wide and per real department (Sales, R&D, HR) | **single period** | a cross-section with no date column — a monthly history is not derivable from it. Job Satisfaction is the survey's real 1-4 scale, linearly rescaled to 0-100 (documented transform, not a different number) |
-| Sonatel communiqués | 3 published FCFA figures | half-year / 9-month | transcribed from the official release text, in FCFA (XOF) — the company's own real numbers |
-| BLS/OSHA annual safety survey | Operations' safety incident rate | annual, 2020-2024 | a real national private-industry rate, not this company's own measured incident rate — external benchmark |
-| Benchmarkit 2025 SaaS Performance Metrics | Growth's churn rate | annual, 2024-2025 | a real cross-industry median (2,000+ companies), not this company's own measured churn — external benchmark. MRR/ARR/CAC/LTV are deliberately left unfilled: no real external source can honestly stand in for a specific company's own absolute revenue/cost figures the way a rate can |
-| Netstock 2025 Supply Chain Planning Report | Logistics' inventory turnover | single point, 2025 | a real global median, not this company's own measured turnover — external benchmark |
+Security posture degrades **before** the incident (the latent MFA gap and stale
+contractor credential the post-mortem describes). Availability collapses during
+containment. SLA follows availability, because SLA compliance is derived from it. Churn
+and revenue stay depressed into April and May — **after** uptime has recovered — which is
+the lagged customer consequence, and the cascade IntelAI's own domain spec describes.
 
-### The generated layer — internal-systems metrics no real publisher discloses
+### 3.4 It is deterministic
 
-Several dashboard fields this app's service layer already looks for — IT's SLA
-compliance/MTTR/ticket volume/security posture/CPU-memory-utilization/deployment
-frequency, Growth's MRR/ARR/CAC/LTV, HR's recruiting funnel/cost-per-hire — describe a
-specific company's private internal systems or absolute revenue/cost scale. No real
-publisher discloses another company's ITSM ticket queue or ERP infrastructure spend;
-this is different in kind from Finance/People/ESG/Growth's *external market context*
-above, which is real published data used as honest planning context.
+All variation comes from a SHA-256 hash of `(metric, period)`. The same period always
+produces the same value, so re-seeding never silently rewrites history.
 
-`_generate_company_model()` in `scripts/seed_data.py` fills these with a **deterministic,
-formula-derived model anchored to the real data already in this pipeline** — not
-independent random noise:
+---
 
-- IT: ticket/incident volume, SLA compliance, security posture and infrastructure
-  utilization all move with the real NVD-derived Security Score and real critical-CVE
-  count for that same month (a worse real security score → more incidents, lower SLA
-  compliance, higher CPU/memory pressure, in the same month).
-- Growth: ARR/MRR sized off Sonatel's real disclosed revenue (a small, explicitly-stated
-  fraction, framed as a distinct digital-services arm) with a modest, explicitly-assumed
-  growth rate (not derived from Sonatel's two cumulative-period figures — comparing a
-  6-month and a 9-month cumulative total directly as sequential periods was tried and
-  produces a nonsensical ~9.5x-in-18-months trajectory; fixed to a stated 1.2%/month
-  assumption). CAC/LTV are formulas from that ARR and the real Benchmarkit churn rate.
-- HR: the recruiting funnel and cost-per-hire scale off this company's own real
-  headcount (833), real attrition rate (16.93%) and real average salary — not
-  independently guessed numbers.
+## 4. The 78-month timeline: 12 health regimes
 
-Every row carries `source = "generated:virtual-company-model"` and `segment = "Company
-Model"`, kept honestly distinct from real published statistics at any audit:
+Jan 2020 → Jun 2026, every month populated for all 7 domains. The composite health index
+spans **26.2 to 94.9** and visits all four bands, because each phase is a distinct
+operating regime with an explicit cause.
+
+| # | Period | Months | Regime | Health |
+|---|---|---|---|---|
+| 1 | 2020-01 → 2020-03 | 3 | Early traction | Stable |
+| 2 | 2020-04 → 2020-09 | 6 | COVID-19 shock and pivot | At Risk |
+| 3 | 2020-10 → 2021-06 | 9 | Digital-transformation tailwind | Stable |
+| 4 | 2021-07 → 2022-03 | 9 | Series A and hypergrowth | Strong |
+| 5 | 2022-04 → 2022-12 | 9 | Growing pains and talent crisis | At Risk |
+| 6 | 2023-01 → 2023-05 | 5 | **Cybersecurity breach (INC-2023-0214)** | **Critical** |
+| 7 | 2023-06 → 2023-12 | 7 | Remediation and hardening | At Risk → Stable |
+| 8 | 2024-01 → 2024-08 | 8 | Niamey DC1 build-out | Stable |
+| 9 | 2024-09 → 2025-02 | 6 | Efficiency drive (Rule of 40) | Strong |
+| 10 | 2025-03 → 2025-08 | 6 | Sahel expansion under supply disruption | At Risk |
+| 11 | 2025-09 → 2026-02 | 6 | Generative-AI demand surge | Strong |
+| 12 | 2026-03 → 2026-06 | 4 | Scaled operations and ESG maturity | Strong |
+
+Health-band distribution across the 78 months: **Stable 43, Strong 18, At Risk 12,
+Critical 5.**
+
+---
+
+## 5. One script, going through the real API
+
+**`scripts/seed_data.py` is the only script you run.** `scripts/omniintelos.py` (the KPI
+model) and `scripts/omniintelos_corpus.py` (the document estate) are libraries it
+imports, not separate entry points.
+
+Every stage that writes data does it through IntelAI's own public API — `POST
+/api/v1/ingest/csv`, `/api/v1/ingest/document`, `/api/v1/ingest/audio` — the same
+endpoints, auth, validation and audit trail a real user's UI upload hits.
+
+```bash
+python scripts/seed_data.py                        # everything
+python scripts/seed_data.py --only build           # regenerate KPIs + documents, write nothing remote
+python scripts/seed_data.py --only build,seed-kpis # rebuild and reseed KPIs only
+python scripts/seed_data.py --purge                # wipe existing global rows first
+python scripts/seed_data.py --dry-run              # describe every stage, write nothing
+```
+
+| Stage | What it does |
+|---|---|
+| `build` | Generate the KPI series → `data/omniintelos_kpis/*.csv`, and the document estate → `data/omniintelos/` |
+| `seed-kpis` | `POST` each CSV to `/api/v1/ingest/csv` with `global_scope=true` (admin-only) |
+| `digests` | Write bilingual EN/FR annual knowledge-base digests of the KPI series |
+| `corpus` | `POST` every generated document through `/api/v1/ingest/{document,audio}` |
+
+The only steps that are not API-mediated are the `--purge` cleanups, which delete
+existing global rows before a full re-seed. There is no public bulk-delete endpoint, and
+adding one would be a genuinely dangerous thing to expose.
+
+**Environment variables** (no hardcoded secrets or URLs): `INTELAI_API_URL`,
+`SEED_ADMIN_USERNAME`, `SEED_ADMIN_PASSWORD`, `OMNIINTEL_INTERNAL_TOKEN`.
+
+---
+
+## 6. Measured output
+
+**7,878 KPI rows · 7 domains · 78 months · 101 distinct metrics · 0 rows without provenance.**
+
+| Domain | Rows | Metrics | Periods | Representative KPIs |
+|---|---|---|---|---|
+| Finance | 1,872 | 24 | 78 | Revenue, COGS, EBITDA, Gross/EBITDA/Net margin, Cash runway, D/E, XOF statutory revenue |
+| Growth | 1,248 | 16 | 78 | ARR, MRR, NRR, churn, CAC, LTV, LTV:CAC, CAC payback, Rule of 40 |
+| People | 1,092 | 14 | 78 | Headcount, turnover, time to hire, eNPS, revenue/employee, offer acceptance |
+| IT | 1,092 | 14 | 78 | Uptime, MTTR, deployment frequency, change failure rate, critical vulns, P99, SLA |
+| Operations | 936 | 12 | 78 | OEE, availability, performance, quality, defect rate, FPY, cycle-time efficiency, MTBF |
+| ESG | 936 | 12 | 78 | Scope 1/2/3, total tCO2e, energy, renewable %, board diversity, audit score, privacy incidents |
+| Logistics | 702 | 9 | 78 | On-time delivery, fulfilment cycle time, inventory turnover, supplier defect rate, carrying cost |
+
+Every row carries `source = "omniintelos:model-v1"` and `segment = "OmniIntelOS"`, so
+generated data is separable from anything else by one query:
 
 ```sql
 SELECT source, COUNT(*) FROM kpi_metrics GROUP BY 1;
 ```
 
-The digest text itself carries the same disclosure — any `[Company Model]` row is
-flagged with an explicit "NOT published anywhere" note, so the assistant never
-represents a generated figure as a real disclosed one. Deterministic across reseeds:
-the same (metric, period) always produces the same value, so re-running the pipeline
-doesn't silently rewrite the model into a different-looking one.
+---
 
-**Left genuinely unfilled, even in the generated layer:** anything that would require
-inventing a real-world fact this company hasn't disclosed and no formula can honestly
-derive — e.g., the literal wording of an internal policy, a named individual, a specific
-contract value. The generated layer only covers *metrics*, computed from real anchors,
-never invented qualitative claims.
+## 7. The document estate
 
-There are no "scenarios" in this real data. Published statistics do not come with a
-healthy/declining switch, and none is invented for them — see §5 for the separate
-generator that does model scenarios, deliberately kept out of this pipeline.
+Generated by `scripts/omniintelos_corpus.py`, grounded in the same model — **a figure
+quoted in a board pack matches `kpi_metrics` for that period exactly.** That agreement is
+what lets the copilot be checked rather than merely believed.
 
-## The document, image and audio corpus
+**49 documents · 203 PDF pages · ~1.06 MB**, plus 98 annual KPI digests.
 
-The `corpus` stage walks `data/<Domain>/` and posts each file to the endpoint for its
-type. IntelAI performs **no** extraction itself: documents and images go to the
-configured document processor, audio to the audio processor — each tool in this
-project family stays standalone. The directory name becomes the row's category.
+| Format | Count | Contents |
+|---|---|---|
+| PDF | 24 | Annual reports 2020–2025 (EN) + 2023/2025 (FR); quarterly board packs ×10; incident post-mortem INC-2023-0214; employee handbook (EN+FR); DC1 technical whitepaper; ESG reports 2024–2025 |
+| Markdown | 14 | Meeting minutes ×10 (EN/FR, spanning 2020–2026); information-security policy; French data-protection policy; SEV-1 runbook; architecture decision records |
+| XLSX | 3 | Full KPI workbook (7 sheets, all 78 months); financial model with assumptions sheet; headcount plan |
+| PNG | 6 | ARR, gross margin, uptime, headcount, health index, emissions — each annotated with the INC-2023-0214 marker |
+| PPTX | 2 | Board decks (2023 Q1 crisis quarter, 2025 Q4 strong quarter) |
+| Digests | 98 | Annual per (domain, year, language), each containing the full month-by-month table |
 
-Measured: **15 of 17 files ingestible, ~434,548 characters** (real documents; digest
-counts are separate, see below).
+Annual reports contain a letter from the CEO, key figures, a consolidated statement of
+operations, segment reporting by region and service line, computed MD&A per domain, a
+domain review, risk factors, notes to the financial statements, governance, outlook, and
+a full monthly data appendix.
 
-| Domain | File | Source | Result |
-|---|---|---|---|
-| Finance | Salesforce 10-K FY2026 | SEC EDGAR | 53,981 chars |
-| Finance | Salesforce 10-Q ×2 | SEC EDGAR | 31,874 + 27,929 chars |
-| Finance | Sonatel results (FCFA, French) | sonatel.sn communiqués | 1,341 chars |
-| Growth | Salesforce Q1 FY27 earnings release | SEC EDGAR 8-K exhibit | 20,293 chars |
-| Growth | Richmond Fed podcast episode (MP3) | Richmond Fed official RSS | 13,186 chars transcript, via the audio processor |
-| People | IBM HR attrition | IBM employee-attrition repo | 128,965 chars (832 records) |
-| People | HR employee churn | public mirror | 154,025 chars (4,093 records) |
-| IT | DORA 2024 findings | dora.dev | 1,638 chars |
-| Finance/Ops/Logistics/People | FRED chart PNGs | FRED published charts | 211–286 chars each, via OCR |
-| ESG | Salesforce FY26 Stakeholder Impact Report | salesforce.com | real, current version |
+**Digests are annual, not monthly, on purpose.** 78 months × 7 domains × 2 languages
+would be 1,092 near-identical documents; hybrid retrieval would then return six adjacent
+months of the same domain for almost any query, crowding out the narrative documents that
+let the copilot actually reason. Annual rollups keep every monthly figure retrievable as
+text while cutting the corpus to 98 — and exact period lookups are served directly from
+`kpi_metrics` by `_retrieve_context()`'s period detection, which does not depend on these
+files at all.
 
-**Images are real, and deliberately so.** The FRED PNGs are FRED's own published
-charts of series already in `kpi_metrics`, so a vision/OCR result can be checked
-against the stored numbers.
+---
 
-**Raw series are not knowledge-base documents.** `fred_*.csv`, `worldbank_*.json`,
-`nvd_*.json` are the *input* to the KPI layer and are skipped by the corpus stage. A
-CSV of 90 numbers retrieves badly and only restates what the KPI tables already hold
-exactly.
+## 8. What is deliberately NOT here
 
-## Glossary
+**Audio files are not generated.** The corpus stage supports audio ingestion, and the
+company's meeting recordings would be a natural fit — but no text-to-speech engine is
+available in this environment (no espeak, gTTS or pyttsx3). A silent or tone-only WAV
+would be a toy file: the audio processor would transcribe nothing from it and the
+knowledge base would gain an empty document. Meeting **transcripts** are generated
+instead as Markdown minutes, which is what the retrieval layer consumes anyway. If you
+want real audio, install a TTS engine and extend `omniintelos_corpus.py`; the ingestion
+path already exists and needs no changes.
 
-202 rows, 101 terms × EN/FR, seeded from `src/data/glossary.py` +
-`src/data/glossary_fr.py` on startup (idempotent — the count is stable across
-restarts). French names are only assigned where a genuine standard French term
-exists, matching this company's own bilingual operating reality, rather than
-machine-translating every entry.
+**No invented qualitative facts.** The generator produces *metrics* computed from real
+anchors. It does not invent the wording of a signed contract, a named individual, a
+customer's identity, or a specific legal outcome — things a reader could mistake for
+verifiable external fact.
 
-## The synthetic scenario generator — a different, separate feature
+**No claim of realness anywhere.** Every generated PDF cover, every digest header and
+footer, and the model's own module docstring state that OmniIntelOS is fictional. The
+copilot repeats this when asked: prompted "is this a real disclosed figure?", it answers
+that the values are internally generated and not audited.
 
-`src/data/seed.py` is **application code**, not a seeding script — it's what
-`POST /api/v1/admin/scenario` and the `Admin → Scenarios` UI tab call at runtime to
-switch between seven modeled health scenarios (`healthy`, `declining_financial`,
-`high_churn_crisis`, ...) and three verticals, for offline demos and pipeline testing
-without network access. It writes directly to Postgres (fast, in-process — the same
-path the server uses on first boot) and every row it writes is labelled `source =
-'seed_*'`, so it is always separable from the real dataset above by one query:
+---
 
-```sql
-SELECT source, COUNT(*) FROM kpi_metrics GROUP BY 1;   -- generated vs sourced
-```
+## 9. The synthetic scenario generator — a separate feature
 
-It is not run by `scripts/seed_data.py` and does not write anything presented as a
-real measurement — see the module docstring in `src/data/seed.py` for the scenario
-catalog and how to invoke it.
+`src/data/seed.py` is **application code**, not a seeding script. It is what
+`POST /api/v1/admin/scenario` and the `Admin → Scenarios` UI tab call at runtime to switch
+between modelled health scenarios for offline demos. It writes directly to Postgres and
+labels every row `source = 'seed_*'`, so it is always separable from the OmniIntelOS
+dataset above. It is not run by `scripts/seed_data.py`.
 
-## Bringing your own data
+---
+
+## 10. Bringing your own data
 
 `POST /api/v1/ingest/csv` takes:
 
@@ -227,18 +285,24 @@ period,category,segment,metric_name,value,unit,direction,source
 
 Only `metric_name` and `value` are required.
 
-- **A per-row `source` column is preserved** as that row's provenance; `source_name`
-  labels rows that don't carry one.
-- **Rows are scoped to the uploader by default**, so one visitor's upload never
-  appears on another's dashboard. `global_scope=true` writes the shared baseline with
-  a NULL owner and is restricted to admins — this is what `seed_data.py` uses.
+- A per-row `source` column is preserved as that row's provenance; `source_name` labels
+  rows that don't carry one.
+- **Rows are scoped to the uploader by default**, so one visitor's upload never appears on
+  another's dashboard. `global_scope=true` writes the shared baseline with a NULL owner
+  and is restricted to admins — this is what `seed_data.py` uses.
 
-## Evaluation set
+IntelAI is data-agnostic: nothing in the application hardcodes OmniIntelOS's domain names,
+metric names or periods. Ship it against a completely different dataset and the
+dashboards, RBAC scoping and retrieval all work from whatever categories exist in
+`kpi_metrics`.
 
-`tests/rag_eval.jsonl` is generated by `scripts/build_rag_eval_set.py` from whatever
-is actually in the database — not written by hand. Each case names a metric that
-exists for a period that exists, or a document that is present in `knowledge_base`;
-cases that cannot be verified against the live data are dropped rather than shipped.
-Run it after any real re-seed (`python scripts/build_rag_eval_set.py`) so the eval set
-tracks the current dataset rather than testing against questions the corpus can no
-longer answer.
+---
+
+## 11. Evaluation set
+
+`tests/rag_eval.jsonl` is generated by `scripts/build_rag_eval_set.py` from whatever is
+actually in the database — not written by hand. Each case names a metric that exists for a
+period that exists, or a document present in `knowledge_base`; cases that cannot be
+verified against live data are dropped rather than shipped. Regenerate it after any
+re-seed so the eval tracks the current dataset rather than testing questions the corpus
+can no longer answer.

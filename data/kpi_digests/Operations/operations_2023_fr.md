@@ -1,0 +1,195 @@
+# Operations — Synthèse annuelle 2023 — OmniIntelOS S.A.
+
+Valeurs enregistrées pour les indicateurs Operations en 2023 pour OmniIntelOS S.A., entreprise FICTIVE d'intelligence artificielle appliquée basée à Niamey, Niger. Ces chiffres sont produits par un modèle interne cohérent et ne sont pas publiés par une entreprise réelle : chaque ratio est calculé à partir des primitives de la même période, la marge brute valant exactement (Chiffre d'affaires - Coût des ventes) / Chiffre d'affaires. L'identifiant de la source suit chaque ligne.
+
+## Résumé de l'année
+
+| Indicateur | Début (2023-01) | Fin (2023-12) | Unité |
+|---|---|---|---|
+| Availability | 77.27 % | 94.47 % | % |
+| Taux d'utilisation des capacités | 65.52 % | 82.13 % | % |
+| Cycle Time Efficiency | 77.90 % | 95.78 % | % |
+| Defect Rate | 8.89 % | 3.63 % | % |
+| Downtime Hours | 43.98 hours | 9.99 hours | hours |
+| First Pass Yield | 86.16 % | 93.07 % | % |
+| Mean Time Between Failures | 300.27 hours | 1,176.26 hours | hours |
+| Overall Equipment Effectiveness | 52.19 % | 84.36 % | % |
+| Performance | 75.75 % | 93.44 % | % |
+| Quality Rate | 89.16 % | 95.57 % | % |
+| Safety Incidents | 3.00 count | 2.00 count | count |
+| Throughput | 243.20 count | 459.98 count | count |
+
+## Détail mensuel
+
+### 2023-01
+- Availability [OmniIntelOS]: 77.27 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 65.52 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 77.90 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 8.89 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 43.98 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 86.16 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 300.27 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 52.19 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 75.75 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 89.16 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 3.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 243.20 count  (source: omniintelos:model-v1)
+
+### 2023-02
+- Availability [OmniIntelOS]: 75.26 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 64.35 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 76.55 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 9.90 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 47.43 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 84.80 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 288.36 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 50.03 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 75.60 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 87.92 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 2.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 260.85 count  (source: omniintelos:model-v1)
+
+### 2023-03
+- Availability [OmniIntelOS]: 77.17 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 62.10 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 74.66 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 8.97 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 42.88 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 86.71 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 250.80 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 50.91 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 74.08 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 89.06 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 1.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 261.38 count  (source: omniintelos:model-v1)
+
+### 2023-04
+- Availability [OmniIntelOS]: 77.30 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 65.69 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 77.66 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 9.23 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 43.14 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 85.67 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 263.35 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 51.90 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 75.66 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 88.75 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 2.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 257.85 count  (source: omniintelos:model-v1)
+
+### 2023-05
+- Availability [OmniIntelOS]: 75.64 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 61.50 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 75.54 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 9.31 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 46.14 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 86.48 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 269.66 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 49.49 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 73.81 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 88.65 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 2.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 283.07 count  (source: omniintelos:model-v1)
+
+### 2023-06
+- Availability [OmniIntelOS]: 77.36 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 67.44 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 77.20 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 9.20 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 42.64 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 86.60 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 937.13 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 51.70 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 75.28 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 88.78 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 1.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 283.33 count  (source: omniintelos:model-v1)
+
+### 2023-07
+- Availability [OmniIntelOS]: 94.14 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 80.28 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 94.92 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 4.05 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 11.30 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 92.23 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 1,235.28 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 82.80 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 92.53 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 95.06 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 3.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 385.58 count  (source: omniintelos:model-v1)
+
+### 2023-08
+- Availability [OmniIntelOS]: 93.33 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 81.93 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 92.21 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 3.16 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 12.72 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 94.02 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 982.61 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 81.74 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 91.10 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 96.15 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 3.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 392.71 count  (source: omniintelos:model-v1)
+
+### 2023-09
+- Availability [OmniIntelOS]: 92.75 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 81.23 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 93.57 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 3.09 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 13.96 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 94.01 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 1,090.85 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 82.35 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 92.26 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 96.23 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 2.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 406.26 count  (source: omniintelos:model-v1)
+
+### 2023-10
+- Availability [OmniIntelOS]: 93.56 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 79.17 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 96.08 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 3.74 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 13.31 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 92.55 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 1,072.19 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 83.49 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 93.50 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 95.44 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 2.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 414.36 count  (source: omniintelos:model-v1)
+
+### 2023-11
+- Availability [OmniIntelOS]: 94.83 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 82.30 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 95.63 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 3.69 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 9.76 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 93.27 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 1,086.56 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 84.26 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 93.04 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 95.50 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 1.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 437.73 count  (source: omniintelos:model-v1)
+
+### 2023-12
+- Availability [OmniIntelOS]: 94.47 %  (source: omniintelos:model-v1)
+- Taux d'utilisation des capacités [OmniIntelOS]: 82.13 %  (source: omniintelos:model-v1)
+- Cycle Time Efficiency [OmniIntelOS]: 95.78 %  (source: omniintelos:model-v1)
+- Defect Rate [OmniIntelOS]: 3.63 %  (source: omniintelos:model-v1)
+- Downtime Hours [OmniIntelOS]: 9.99 hours  (source: omniintelos:model-v1)
+- First Pass Yield [OmniIntelOS]: 93.07 %  (source: omniintelos:model-v1)
+- Mean Time Between Failures [OmniIntelOS]: 1,176.26 hours  (source: omniintelos:model-v1)
+- Overall Equipment Effectiveness [OmniIntelOS]: 84.36 %  (source: omniintelos:model-v1)
+- Performance [OmniIntelOS]: 93.44 %  (source: omniintelos:model-v1)
+- Quality Rate [OmniIntelOS]: 95.57 %  (source: omniintelos:model-v1)
+- Safety Incidents [OmniIntelOS]: 2.00 count  (source: omniintelos:model-v1)
+- Throughput [OmniIntelOS]: 459.98 count  (source: omniintelos:model-v1)
+
+## Sources
+- omniintelos:model-v1 — generated by scripts/omniintelos.py - fictional company, internally consistent model
+
+OmniIntelOS S.A. est une entreprise fictive. Ces valeurs constituent un modèle opérationnel généré et cohérent, destiné à la démonstration et à l'évaluation d'IntelAI - ni objectifs, ni prévisions, ni comptes réels.

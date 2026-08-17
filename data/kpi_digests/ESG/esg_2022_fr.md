@@ -1,0 +1,195 @@
+# ESG — Synthèse annuelle 2022 — OmniIntelOS S.A.
+
+Valeurs enregistrées pour les indicateurs ESG en 2022 pour OmniIntelOS S.A., entreprise FICTIVE d'intelligence artificielle appliquée basée à Niamey, Niger. Ces chiffres sont produits par un modèle interne cohérent et ne sont pas publiés par une entreprise réelle : chaque ratio est calculé à partir des primitives de la même période, la marge brute valant exactement (Chiffre d'affaires - Coût des ventes) / Chiffre d'affaires. L'identifiant de la source suit chaque ligne.
+
+## Résumé de l'année
+
+| Indicateur | Début (2022-01) | Fin (2022-12) | Unité |
+|---|---|---|---|
+| Audit Compliance Score | 90.20 % | 86.55 % | % |
+| Board Diversity Ratio | 25.94 % | 31.17 % | % |
+| Carbon Intensity per Revenue | 102.25 tCO2e/USDm | 95.27 tCO2e/USDm | tCO2e/USDm |
+| Energy Consumption | 19,432.18 kWh | 27,880.19 kWh | kWh |
+| Privacy Incident Count | 0.00 count | 0.00 count | count |
+| Renewable Energy Ratio | 22.90 % | 30.93 % | % |
+| Scope 1 Emissions | 1.32 tCO2e | 1.89 tCO2e | tCO2e |
+| Scope 2 Emissions | 9.29 tCO2e | 11.94 tCO2e | tCO2e |
+| Scope 3 Emissions | 30.67 tCO2e | 48.95 tCO2e | tCO2e |
+| Total Carbon Footprint | 41.28 tCO2e | 62.78 tCO2e | tCO2e |
+| Waste Diverted from Landfill | 44.39 % | 48.51 % | % |
+| Water Consumption | 119.10 m3 | 170.88 m3 | m3 |
+
+## Détail mensuel
+
+### 2022-01
+- Audit Compliance Score [OmniIntelOS]: 90.20 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 25.94 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 102.25 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 19,432.18 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 22.90 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.32 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 9.29 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 30.67 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 41.28 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 44.39 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 119.10 m3  (source: omniintelos:model-v1)
+
+### 2022-02
+- Audit Compliance Score [OmniIntelOS]: 89.43 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 25.25 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 100.34 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 19,981.57 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 25.70 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.35 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 9.20 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 32.26 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 42.82 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 44.11 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 122.47 m3  (source: omniintelos:model-v1)
+
+### 2022-03
+- Audit Compliance Score [OmniIntelOS]: 88.38 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 27.35 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 99.52 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 20,956.82 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 25.29 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.42 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 9.71 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 34.53 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 45.65 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 46.88 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 128.44 m3  (source: omniintelos:model-v1)
+
+### 2022-04
+- Audit Compliance Score [OmniIntelOS]: 85.24 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 24.91 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 97.00 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 21,197.17 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 24.87 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.44 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 9.87 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 37.09 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 48.40 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 45.01 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 129.92 m3  (source: omniintelos:model-v1)
+
+### 2022-05
+- Audit Compliance Score [OmniIntelOS]: 84.76 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 26.02 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 95.90 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 21,852.90 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 27.96 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.48 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 9.76 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 38.51 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 49.75 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 45.53 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 133.94 m3  (source: omniintelos:model-v1)
+
+### 2022-06
+- Audit Compliance Score [OmniIntelOS]: 85.62 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 27.69 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 96.56 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 22,438.59 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 27.13 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.52 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 10.14 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 39.11 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 50.77 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 47.09 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 137.53 m3  (source: omniintelos:model-v1)
+
+### 2022-07
+- Audit Compliance Score [OmniIntelOS]: 84.97 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 27.06 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 95.48 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 23,287.59 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 27.25 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.58 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 10.50 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 41.65 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 53.73 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 45.91 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 142.73 m3  (source: omniintelos:model-v1)
+
+### 2022-08
+- Audit Compliance Score [OmniIntelOS]: 85.68 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 26.86 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 95.89 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 24,167.35 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 26.95 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.64 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 10.95 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 42.87 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 55.45 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 46.37 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 148.12 m3  (source: omniintelos:model-v1)
+
+### 2022-09
+- Audit Compliance Score [OmniIntelOS]: 84.88 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 27.25 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 96.73 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 25,131.35 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 28.79 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.70 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 11.10 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 43.17 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 55.97 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 49.79 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 154.03 m3  (source: omniintelos:model-v1)
+
+### 2022-10
+- Audit Compliance Score [OmniIntelOS]: 86.19 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 27.96 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 95.05 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 25,850.37 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 31.25 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.75 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 11.02 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 45.54 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 58.31 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 48.34 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 158.44 m3  (source: omniintelos:model-v1)
+
+### 2022-11
+- Audit Compliance Score [OmniIntelOS]: 86.99 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 29.73 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 97.20 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 27,146.08 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 30.74 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.84 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 11.66 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 45.54 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 59.03 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 48.62 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 166.38 m3  (source: omniintelos:model-v1)
+
+### 2022-12
+- Audit Compliance Score [OmniIntelOS]: 86.55 %  (source: omniintelos:model-v1)
+- Board Diversity Ratio [OmniIntelOS]: 31.17 %  (source: omniintelos:model-v1)
+- Carbon Intensity per Revenue [OmniIntelOS]: 95.27 tCO2e/USDm  (source: omniintelos:model-v1)
+- Energy Consumption [OmniIntelOS]: 27,880.19 kWh  (source: omniintelos:model-v1)
+- Privacy Incident Count [OmniIntelOS]: 0.00 count  (source: omniintelos:model-v1)
+- Renewable Energy Ratio [OmniIntelOS]: 30.93 %  (source: omniintelos:model-v1)
+- Scope 1 Emissions [OmniIntelOS]: 1.89 tCO2e  (source: omniintelos:model-v1)
+- Scope 2 Emissions [OmniIntelOS]: 11.94 tCO2e  (source: omniintelos:model-v1)
+- Scope 3 Emissions [OmniIntelOS]: 48.95 tCO2e  (source: omniintelos:model-v1)
+- Total Carbon Footprint [OmniIntelOS]: 62.78 tCO2e  (source: omniintelos:model-v1)
+- Waste Diverted from Landfill [OmniIntelOS]: 48.51 %  (source: omniintelos:model-v1)
+- Water Consumption [OmniIntelOS]: 170.88 m3  (source: omniintelos:model-v1)
+
+## Sources
+- omniintelos:model-v1 — generated by scripts/omniintelos.py - fictional company, internally consistent model
+
+OmniIntelOS S.A. est une entreprise fictive. Ces valeurs constituent un modèle opérationnel généré et cohérent, destiné à la démonstration et à l'évaluation d'IntelAI - ni objectifs, ni prévisions, ni comptes réels.

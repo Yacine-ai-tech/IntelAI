@@ -1,0 +1,1093 @@
+period,category,segment,metric_name,value,unit,direction,source
+2020-01,IT,OmniIntelOS,System Uptime,99.9392,%,up,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,Mean Time To Resolution,1.2834,hours,down,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,Deployment Frequency,2.6475,per week,up,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,Change Failure Rate,7.1059,%,down,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,API P99 Latency,300.5434,ms,down,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,Total Incidents,13.1961,count,down,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,Open Tickets,6.3697,count,down,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,Security Score,82.5983,/100,up,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,Cloud Spend,8495.9516,USD,down,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,Active Users,1301.1857,count,up,omniintelos:model-v1
+2020-01,IT,OmniIntelOS,Lead Time For Changes,27.8294,hours,down,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,System Uptime,99.9482,%,up,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,Mean Time To Resolution,1.1133,hours,down,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,Deployment Frequency,3.1542,per week,up,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,Change Failure Rate,6.4231,%,down,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,API P99 Latency,322.8829,ms,down,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,Total Incidents,11.5359,count,down,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,Open Tickets,4.2065,count,down,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,Security Score,86.3259,/100,up,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,Cloud Spend,8435.6825,USD,down,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,Active Users,1144.4959,count,up,omniintelos:model-v1
+2020-02,IT,OmniIntelOS,Lead Time For Changes,29.0797,hours,down,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,System Uptime,99.9155,%,up,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,Mean Time To Resolution,0.9918,hours,down,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,Deployment Frequency,2.8521,per week,up,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,Change Failure Rate,5.8347,%,down,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,API P99 Latency,328.5327,ms,down,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,Total Incidents,15.1741,count,down,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,Open Tickets,12.244,count,down,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,SLA Compliance,99.2214,%,up,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,Security Score,84.6184,/100,up,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,Cloud Spend,9013.4309,USD,down,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,Active Users,1211.8168,count,up,omniintelos:model-v1
+2020-03,IT,OmniIntelOS,Lead Time For Changes,25.634,hours,down,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,System Uptime,99.7146,%,up,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,Mean Time To Resolution,0.9331,hours,down,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,Deployment Frequency,3.0012,per week,up,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,Change Failure Rate,6.2882,%,down,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,API P99 Latency,311.444,ms,down,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,Total Incidents,12.7737,count,down,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,Open Tickets,4.2334,count,down,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,SLA Compliance,97.2112,%,up,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,Security Score,81.5193,/100,up,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,Cloud Spend,9499.0659,USD,down,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,Active Users,1255.7012,count,up,omniintelos:model-v1
+2020-04,IT,OmniIntelOS,Lead Time For Changes,27.6518,hours,down,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,System Uptime,99.7184,%,up,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,Mean Time To Resolution,1.1944,hours,down,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,Deployment Frequency,3.4407,per week,up,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,Change Failure Rate,6.7379,%,down,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,API P99 Latency,309.7791,ms,down,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,Total Incidents,14.1957,count,down,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,Open Tickets,9.027,count,down,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,SLA Compliance,96.8577,%,up,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,Security Score,81.7986,/100,up,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,Cloud Spend,9047.2698,USD,down,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,Active Users,1281.9322,count,up,omniintelos:model-v1
+2020-05,IT,OmniIntelOS,Lead Time For Changes,24.72,hours,down,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,System Uptime,99.7363,%,up,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,Mean Time To Resolution,1.1893,hours,down,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,Deployment Frequency,2.9263,per week,up,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,Change Failure Rate,5.7108,%,down,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,API P99 Latency,344.8604,ms,down,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,Total Incidents,12.6613,count,down,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,Open Tickets,5.4732,count,down,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,SLA Compliance,97.5461,%,up,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,Security Score,85.1192,/100,up,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,Cloud Spend,9636.9968,USD,down,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,Active Users,1303.5101,count,up,omniintelos:model-v1
+2020-06,IT,OmniIntelOS,Lead Time For Changes,23.6351,hours,down,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,System Uptime,99.7445,%,up,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,Mean Time To Resolution,1.2418,hours,down,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,Deployment Frequency,3.1524,per week,up,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,Change Failure Rate,5.3174,%,down,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,Critical Vulnerabilities,3.0,count,down,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,API P99 Latency,302.4736,ms,down,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,Total Incidents,12.1776,count,down,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,Open Tickets,12.7363,count,down,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,SLA Compliance,97.1419,%,up,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,Security Score,82.6696,/100,up,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,Cloud Spend,9615.7374,USD,down,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,Active Users,1370.801,count,up,omniintelos:model-v1
+2020-07,IT,OmniIntelOS,Lead Time For Changes,29.4386,hours,down,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,System Uptime,99.7487,%,up,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,Mean Time To Resolution,1.2396,hours,down,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,Deployment Frequency,3.6991,per week,up,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,Change Failure Rate,6.415,%,down,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,Critical Vulnerabilities,3.0,count,down,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,API P99 Latency,296.5575,ms,down,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,Total Incidents,15.2404,count,down,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,Open Tickets,8.4784,count,down,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,SLA Compliance,97.6557,%,up,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,Security Score,84.7971,/100,up,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,Cloud Spend,9165.5835,USD,down,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,Active Users,1299.9432,count,up,omniintelos:model-v1
+2020-08,IT,OmniIntelOS,Lead Time For Changes,25.336,hours,down,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,System Uptime,99.7128,%,up,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,Mean Time To Resolution,1.0108,hours,down,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,Deployment Frequency,3.055,per week,up,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,Change Failure Rate,7.078,%,down,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,API P99 Latency,308.884,ms,down,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,Total Incidents,11.7343,count,down,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,Open Tickets,9.9584,count,down,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,SLA Compliance,97.043,%,up,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,Security Score,81.8427,/100,up,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,Cloud Spend,9503.9651,USD,down,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,Active Users,1229.7257,count,up,omniintelos:model-v1
+2020-09,IT,OmniIntelOS,Lead Time For Changes,23.4278,hours,down,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,Mean Time To Resolution,1.0607,hours,down,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,Deployment Frequency,3.4754,per week,up,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,Change Failure Rate,5.6363,%,down,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,API P99 Latency,293.3724,ms,down,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,Total Incidents,13.7483,count,down,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,Open Tickets,10.7291,count,down,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,Security Score,83.8427,/100,up,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,Cloud Spend,10118.0608,USD,down,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,Active Users,1253.911,count,up,omniintelos:model-v1
+2020-10,IT,OmniIntelOS,Lead Time For Changes,26.3991,hours,down,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,Mean Time To Resolution,1.3121,hours,down,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,Deployment Frequency,3.8179,per week,up,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,Change Failure Rate,7.4706,%,down,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,API P99 Latency,283.7785,ms,down,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,Total Incidents,12.0865,count,down,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,Open Tickets,15.2952,count,down,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,Security Score,84.0237,/100,up,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,Cloud Spend,10119.8005,USD,down,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,Active Users,1378.4283,count,up,omniintelos:model-v1
+2020-11,IT,OmniIntelOS,Lead Time For Changes,28.9754,hours,down,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,Mean Time To Resolution,0.9638,hours,down,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,Deployment Frequency,4.0711,per week,up,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,Change Failure Rate,7.5283,%,down,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,API P99 Latency,333.8213,ms,down,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,Total Incidents,15.998,count,down,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,Open Tickets,12.8747,count,down,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,Security Score,84.1467,/100,up,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,Cloud Spend,11226.6121,USD,down,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,Active Users,1553.4139,count,up,omniintelos:model-v1
+2020-12,IT,OmniIntelOS,Lead Time For Changes,25.8256,hours,down,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,Mean Time To Resolution,1.2118,hours,down,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,Deployment Frequency,4.1833,per week,up,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,Change Failure Rate,7.4923,%,down,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,Critical Vulnerabilities,3.0,count,down,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,API P99 Latency,324.4047,ms,down,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,Total Incidents,15.1013,count,down,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,Open Tickets,15.3512,count,down,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,Security Score,84.7626,/100,up,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,Cloud Spend,11007.5905,USD,down,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,Active Users,1468.0498,count,up,omniintelos:model-v1
+2021-01,IT,OmniIntelOS,Lead Time For Changes,23.342,hours,down,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,Mean Time To Resolution,1.2513,hours,down,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,Deployment Frequency,3.6495,per week,up,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,Change Failure Rate,5.9578,%,down,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,API P99 Latency,326.6571,ms,down,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,Total Incidents,12.0472,count,down,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,Open Tickets,7.0978,count,down,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,Security Score,83.2275,/100,up,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,Cloud Spend,12348.4395,USD,down,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,Active Users,1472.8854,count,up,omniintelos:model-v1
+2021-02,IT,OmniIntelOS,Lead Time For Changes,29.1022,hours,down,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,Mean Time To Resolution,1.0643,hours,down,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,Deployment Frequency,4.3479,per week,up,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,Change Failure Rate,7.1605,%,down,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,Critical Vulnerabilities,3.0,count,down,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,API P99 Latency,312.5273,ms,down,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,Total Incidents,11.2468,count,down,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,Open Tickets,14.8055,count,down,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,Security Score,83.3445,/100,up,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,Cloud Spend,13105.2687,USD,down,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,Active Users,1684.3495,count,up,omniintelos:model-v1
+2021-03,IT,OmniIntelOS,Lead Time For Changes,24.0019,hours,down,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,Mean Time To Resolution,1.1695,hours,down,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,Deployment Frequency,4.2885,per week,up,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,Change Failure Rate,5.456,%,down,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,Critical Vulnerabilities,3.0,count,down,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,API P99 Latency,287.998,ms,down,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,Total Incidents,14.9756,count,down,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,Open Tickets,12.0329,count,down,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,Security Score,85.8205,/100,up,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,Cloud Spend,13524.6317,USD,down,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,Active Users,1757.0997,count,up,omniintelos:model-v1
+2021-04,IT,OmniIntelOS,Lead Time For Changes,27.2033,hours,down,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,Mean Time To Resolution,1.1354,hours,down,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,Deployment Frequency,4.3546,per week,up,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,Change Failure Rate,6.0137,%,down,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,API P99 Latency,314.0842,ms,down,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,Total Incidents,11.6556,count,down,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,Open Tickets,13.3485,count,down,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,Security Score,84.3872,/100,up,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,Cloud Spend,14205.5636,USD,down,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,Active Users,1776.9465,count,up,omniintelos:model-v1
+2021-05,IT,OmniIntelOS,Lead Time For Changes,27.211,hours,down,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,Mean Time To Resolution,0.964,hours,down,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,Deployment Frequency,3.9047,per week,up,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,Change Failure Rate,6.5541,%,down,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,API P99 Latency,286.8048,ms,down,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,Total Incidents,15.3141,count,down,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,Open Tickets,17.7739,count,down,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,Security Score,83.1273,/100,up,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,Cloud Spend,14792.8364,USD,down,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,Active Users,1826.9648,count,up,omniintelos:model-v1
+2021-06,IT,OmniIntelOS,Lead Time For Changes,26.9638,hours,down,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,System Uptime,99.9343,%,up,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,Mean Time To Resolution,1.0094,hours,down,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,Deployment Frequency,4.4597,per week,up,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,Change Failure Rate,6.5068,%,down,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,Critical Vulnerabilities,3.0,count,down,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,API P99 Latency,312.4087,ms,down,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,Total Incidents,14.3884,count,down,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,Open Tickets,12.733,count,down,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,Security Score,85.731,/100,up,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,Cloud Spend,15503.8069,USD,down,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,Active Users,1955.8076,count,up,omniintelos:model-v1
+2021-07,IT,OmniIntelOS,Lead Time For Changes,24.9588,hours,down,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,System Uptime,99.9491,%,up,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,Mean Time To Resolution,1.1196,hours,down,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,Deployment Frequency,4.2806,per week,up,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,Change Failure Rate,5.3294,%,down,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,Critical Vulnerabilities,3.0,count,down,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,API P99 Latency,302.5223,ms,down,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,Total Incidents,11.9098,count,down,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,Open Tickets,12.1116,count,down,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,Security Score,82.9589,/100,up,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,Cloud Spend,17734.3294,USD,down,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,Active Users,1978.9095,count,up,omniintelos:model-v1
+2021-08,IT,OmniIntelOS,Lead Time For Changes,25.5106,hours,down,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,System Uptime,99.9282,%,up,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,Mean Time To Resolution,1.264,hours,down,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,Deployment Frequency,4.1726,per week,up,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,Change Failure Rate,5.7119,%,down,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,API P99 Latency,298.5706,ms,down,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,Total Incidents,12.74,count,down,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,Open Tickets,11.1834,count,down,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,Security Score,82.3175,/100,up,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,Cloud Spend,18164.2337,USD,down,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,Active Users,2212.2714,count,up,omniintelos:model-v1
+2021-09,IT,OmniIntelOS,Lead Time For Changes,22.892,hours,down,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,System Uptime,99.9192,%,up,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,Mean Time To Resolution,1.1421,hours,down,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,Deployment Frequency,4.4289,per week,up,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,Change Failure Rate,7.5337,%,down,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,Critical Vulnerabilities,3.0,count,down,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,API P99 Latency,275.2115,ms,down,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,Total Incidents,16.452,count,down,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,Open Tickets,14.6169,count,down,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,Security Score,84.4784,/100,up,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,Cloud Spend,20335.6759,USD,down,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,Active Users,2228.8973,count,up,omniintelos:model-v1
+2021-10,IT,OmniIntelOS,Lead Time For Changes,26.3259,hours,down,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,System Uptime,99.9156,%,up,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,Mean Time To Resolution,1.2467,hours,down,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,Deployment Frequency,5.1969,per week,up,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,Change Failure Rate,6.8114,%,down,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,API P99 Latency,287.5496,ms,down,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,Total Incidents,13.2845,count,down,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,Open Tickets,16.2642,count,down,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,Security Score,82.9719,/100,up,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,Cloud Spend,20967.9821,USD,down,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,Active Users,2263.689,count,up,omniintelos:model-v1
+2021-11,IT,OmniIntelOS,Lead Time For Changes,24.3125,hours,down,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,System Uptime,99.9437,%,up,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,Mean Time To Resolution,0.922,hours,down,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,Deployment Frequency,4.2653,per week,up,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,Change Failure Rate,6.9173,%,down,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,API P99 Latency,300.5088,ms,down,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,Total Incidents,11.5967,count,down,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,Open Tickets,17.7205,count,down,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,Security Score,85.8529,/100,up,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,Cloud Spend,22611.4621,USD,down,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,Active Users,2389.81,count,up,omniintelos:model-v1
+2021-12,IT,OmniIntelOS,Lead Time For Changes,23.124,hours,down,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,System Uptime,99.9149,%,up,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,Mean Time To Resolution,1.014,hours,down,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,Deployment Frequency,4.9976,per week,up,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,Change Failure Rate,6.2896,%,down,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,API P99 Latency,300.42,ms,down,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,Total Incidents,13.2485,count,down,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,Open Tickets,17.3998,count,down,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,SLA Compliance,99.4067,%,up,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,Security Score,82.5816,/100,up,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,Cloud Spend,20991.9806,USD,down,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,Active Users,2646.9721,count,up,omniintelos:model-v1
+2022-01,IT,OmniIntelOS,Lead Time For Changes,26.3208,hours,down,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,System Uptime,99.9321,%,up,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,Mean Time To Resolution,1.0976,hours,down,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,Deployment Frequency,5.1584,per week,up,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,Change Failure Rate,6.9411,%,down,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,API P99 Latency,298.6997,ms,down,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,Total Incidents,14.2579,count,down,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,Open Tickets,19.1037,count,down,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,Security Score,86.2714,/100,up,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,Cloud Spend,22188.5847,USD,down,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,Active Users,2853.0256,count,up,omniintelos:model-v1
+2022-02,IT,OmniIntelOS,Lead Time For Changes,22.8248,hours,down,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,System Uptime,99.9444,%,up,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,Mean Time To Resolution,1.2539,hours,down,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,Deployment Frequency,4.1473,per week,up,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,Change Failure Rate,5.3392,%,down,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,API P99 Latency,253.139,ms,down,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,Total Incidents,12.1853,count,down,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,Open Tickets,21.6449,count,down,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,Security Score,85.0864,/100,up,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,Cloud Spend,23854.9672,USD,down,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,Active Users,2975.756,count,up,omniintelos:model-v1
+2022-03,IT,OmniIntelOS,Lead Time For Changes,24.0448,hours,down,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,System Uptime,99.6137,%,up,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,Mean Time To Resolution,1.201,hours,down,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,Deployment Frequency,4.519,per week,up,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,Change Failure Rate,6.5636,%,down,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,Critical Vulnerabilities,3.0,count,down,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,API P99 Latency,282.0069,ms,down,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,Total Incidents,13.7038,count,down,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,Open Tickets,16.7083,count,down,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,SLA Compliance,96.1557,%,up,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,Security Score,81.7857,/100,up,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,Cloud Spend,25947.5118,USD,down,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,Active Users,2910.0877,count,up,omniintelos:model-v1
+2022-04,IT,OmniIntelOS,Lead Time For Changes,30.9027,hours,down,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,System Uptime,99.6238,%,up,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,Mean Time To Resolution,1.3949,hours,down,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,Deployment Frequency,4.6999,per week,up,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,Change Failure Rate,7.3319,%,down,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,Critical Vulnerabilities,4.0,count,down,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,API P99 Latency,288.4199,ms,down,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,Total Incidents,15.5135,count,down,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,Open Tickets,18.7749,count,down,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,SLA Compliance,96.2619,%,up,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,Security Score,81.0321,/100,up,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,Cloud Spend,26974.7088,USD,down,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,Active Users,2958.8449,count,up,omniintelos:model-v1
+2022-05,IT,OmniIntelOS,Lead Time For Changes,26.5888,hours,down,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,System Uptime,99.6223,%,up,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,Mean Time To Resolution,1.0196,hours,down,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,Deployment Frequency,4.1957,per week,up,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,Change Failure Rate,6.6286,%,down,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,API P99 Latency,284.4204,ms,down,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,Total Incidents,16.4921,count,down,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,Open Tickets,16.5985,count,down,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,SLA Compliance,95.8153,%,up,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,Security Score,82.1978,/100,up,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,Cloud Spend,27338.6805,USD,down,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,Active Users,3010.8715,count,up,omniintelos:model-v1
+2022-06,IT,OmniIntelOS,Lead Time For Changes,29.4452,hours,down,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,System Uptime,99.6397,%,up,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,Mean Time To Resolution,1.3696,hours,down,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,Deployment Frequency,4.4379,per week,up,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,Change Failure Rate,7.8474,%,down,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,API P99 Latency,295.995,ms,down,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,Total Incidents,14.0162,count,down,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,Open Tickets,26.4021,count,down,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,SLA Compliance,96.5399,%,up,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,Security Score,83.1154,/100,up,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,Cloud Spend,29264.8273,USD,down,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,Active Users,3115.198,count,up,omniintelos:model-v1
+2022-07,IT,OmniIntelOS,Lead Time For Changes,24.2807,hours,down,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,System Uptime,99.6469,%,up,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,Mean Time To Resolution,1.2717,hours,down,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,Deployment Frequency,4.9454,per week,up,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,Change Failure Rate,7.2488,%,down,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,API P99 Latency,264.7837,ms,down,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,Total Incidents,17.8644,count,down,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,Open Tickets,22.6264,count,down,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,SLA Compliance,95.9664,%,up,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,Security Score,81.3785,/100,up,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,Cloud Spend,30071.5643,USD,down,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,Active Users,3280.4251,count,up,omniintelos:model-v1
+2022-08,IT,OmniIntelOS,Lead Time For Changes,30.3312,hours,down,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,System Uptime,99.6145,%,up,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,Mean Time To Resolution,1.3067,hours,down,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,Deployment Frequency,4.4574,per week,up,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,Change Failure Rate,6.5917,%,down,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,API P99 Latency,263.7024,ms,down,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,Total Incidents,12.2272,count,down,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,Open Tickets,23.0499,count,down,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,SLA Compliance,96.2643,%,up,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,Security Score,84.015,/100,up,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,Cloud Spend,30086.3055,USD,down,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,Active Users,3377.75,count,up,omniintelos:model-v1
+2022-09,IT,OmniIntelOS,Lead Time For Changes,23.4266,hours,down,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,System Uptime,99.6439,%,up,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,Mean Time To Resolution,1.3413,hours,down,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,Deployment Frequency,4.6647,per week,up,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,Change Failure Rate,7.8945,%,down,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,API P99 Latency,275.3177,ms,down,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,Total Incidents,14.7486,count,down,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,Open Tickets,27.9032,count,down,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,SLA Compliance,96.6767,%,up,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,Security Score,81.9396,/100,up,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,Cloud Spend,31898.7514,USD,down,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,Active Users,3394.6527,count,up,omniintelos:model-v1
+2022-10,IT,OmniIntelOS,Lead Time For Changes,28.3562,hours,down,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,System Uptime,99.6137,%,up,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,Mean Time To Resolution,0.9791,hours,down,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,Deployment Frequency,5.5115,per week,up,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,Change Failure Rate,6.0804,%,down,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,Critical Vulnerabilities,3.0,count,down,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,API P99 Latency,247.8479,ms,down,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,Total Incidents,15.5076,count,down,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,Open Tickets,27.0166,count,down,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,SLA Compliance,95.6373,%,up,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,Security Score,83.6895,/100,up,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,Cloud Spend,31582.7172,USD,down,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,Active Users,3478.9237,count,up,omniintelos:model-v1
+2022-11,IT,OmniIntelOS,Lead Time For Changes,24.2611,hours,down,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,System Uptime,99.6262,%,up,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,Mean Time To Resolution,1.2024,hours,down,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,Deployment Frequency,5.6774,per week,up,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,Change Failure Rate,6.068,%,down,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,Critical Vulnerabilities,3.0,count,down,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,API P99 Latency,293.3061,ms,down,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,Total Incidents,17.5767,count,down,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,Open Tickets,24.8514,count,down,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,SLA Compliance,96.2085,%,up,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,Security Score,81.7614,/100,up,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,Cloud Spend,34264.6028,USD,down,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,Active Users,3636.7071,count,up,omniintelos:model-v1
+2022-12,IT,OmniIntelOS,Lead Time For Changes,28.6703,hours,down,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,System Uptime,99.8262,%,up,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,Mean Time To Resolution,3.9103,hours,down,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,Deployment Frequency,2.2003,per week,up,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,Change Failure Rate,20.9504,%,down,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,Critical Vulnerabilities,31.0,count,down,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,API P99 Latency,685.7786,ms,down,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,Total Incidents,40.8446,count,down,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,Critical Incidents,11.0,count,down,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,Open Tickets,39.1944,count,down,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,SLA Compliance,98.8177,%,up,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,Security Score,51.573,/100,up,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,Cloud Spend,35192.8266,USD,down,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,Active Users,3598.049,count,up,omniintelos:model-v1
+2023-01,IT,OmniIntelOS,Lead Time For Changes,44.0536,hours,down,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,System Uptime,96.42,%,up,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,Mean Time To Resolution,3.7846,hours,down,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,Deployment Frequency,2.0879,per week,up,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,Change Failure Rate,15.497,%,down,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,Critical Vulnerabilities,31.0,count,down,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,API P99 Latency,720.8737,ms,down,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,Total Incidents,47.5659,count,down,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,Critical Incidents,12.0,count,down,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,Open Tickets,40.6354,count,down,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,SLA Compliance,68.0,%,up,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,Security Score,54.613,/100,up,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,Cloud Spend,34150.8323,USD,down,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,Active Users,3478.2463,count,up,omniintelos:model-v1
+2023-02,IT,OmniIntelOS,Lead Time For Changes,38.1103,hours,down,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,System Uptime,98.15,%,up,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,Mean Time To Resolution,3.6566,hours,down,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,Deployment Frequency,2.0311,per week,up,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,Change Failure Rate,20.378,%,down,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,Critical Vulnerabilities,30.0,count,down,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,API P99 Latency,718.1583,ms,down,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,Total Incidents,33.5173,count,down,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,Critical Incidents,10.0,count,down,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,Open Tickets,43.615,count,down,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,SLA Compliance,78.3549,%,up,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,Security Score,49.8506,/100,up,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,Cloud Spend,34080.7633,USD,down,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,Active Users,3561.2638,count,up,omniintelos:model-v1
+2023-03,IT,OmniIntelOS,Lead Time For Changes,44.9352,hours,down,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,System Uptime,99.6528,%,up,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,Mean Time To Resolution,2.6308,hours,down,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,Deployment Frequency,2.0152,per week,up,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,Change Failure Rate,20.8845,%,down,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,Critical Vulnerabilities,30.0,count,down,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,API P99 Latency,763.7308,ms,down,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,Total Incidents,48.0434,count,down,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,Critical Incidents,12.0,count,down,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,Open Tickets,45.6026,count,down,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,SLA Compliance,96.3108,%,up,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,Security Score,52.6344,/100,up,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,Cloud Spend,33911.5782,USD,down,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,Active Users,3574.3548,count,up,omniintelos:model-v1
+2023-04,IT,OmniIntelOS,Lead Time For Changes,42.7938,hours,down,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,System Uptime,99.6674,%,up,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,Mean Time To Resolution,2.796,hours,down,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,Deployment Frequency,2.1544,per week,up,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,Change Failure Rate,18.9618,%,down,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,Critical Vulnerabilities,31.0,count,down,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,API P99 Latency,754.0555,ms,down,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,Total Incidents,39.2084,count,down,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,Critical Incidents,11.0,count,down,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,Open Tickets,46.2842,count,down,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,SLA Compliance,96.2727,%,up,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,Security Score,51.2089,/100,up,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,Cloud Spend,34058.8758,USD,down,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,Active Users,3492.4072,count,up,omniintelos:model-v1
+2023-05,IT,OmniIntelOS,Lead Time For Changes,40.958,hours,down,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,System Uptime,99.8403,%,up,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,Mean Time To Resolution,1.1216,hours,down,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,Deployment Frequency,5.9517,per week,up,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,Change Failure Rate,6.0878,%,down,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,API P99 Latency,229.0151,ms,down,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,Total Incidents,14.2763,count,down,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,Open Tickets,28.4645,count,down,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,SLA Compliance,98.7568,%,up,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,Security Score,92.2061,/100,up,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,Cloud Spend,34446.7747,USD,down,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,Active Users,3706.1638,count,up,omniintelos:model-v1
+2023-06,IT,OmniIntelOS,Lead Time For Changes,20.5014,hours,down,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,System Uptime,99.8692,%,up,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,Mean Time To Resolution,1.0177,hours,down,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,Deployment Frequency,6.537,per week,up,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,Change Failure Rate,6.5025,%,down,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,API P99 Latency,197.135,ms,down,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,Total Incidents,9.4987,count,down,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,Open Tickets,28.5252,count,down,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,SLA Compliance,99.4475,%,up,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,Security Score,90.3849,/100,up,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,Cloud Spend,34923.9139,USD,down,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,Active Users,3767.874,count,up,omniintelos:model-v1
+2023-07,IT,OmniIntelOS,Lead Time For Changes,25.8435,hours,down,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,System Uptime,99.8776,%,up,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,Mean Time To Resolution,0.854,hours,down,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,Deployment Frequency,7.8857,per week,up,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,Change Failure Rate,4.6414,%,down,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,API P99 Latency,218.021,ms,down,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,Total Incidents,13.716,count,down,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,Open Tickets,28.1784,count,down,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,SLA Compliance,99.3625,%,up,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,Security Score,88.0848,/100,up,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,Cloud Spend,37614.4752,USD,down,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,Active Users,3776.0497,count,up,omniintelos:model-v1
+2023-08,IT,OmniIntelOS,Lead Time For Changes,23.252,hours,down,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,System Uptime,99.8789,%,up,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,Mean Time To Resolution,1.1256,hours,down,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,Deployment Frequency,7.0095,per week,up,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,Change Failure Rate,5.054,%,down,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,API P99 Latency,212.7764,ms,down,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,Total Incidents,9.9295,count,down,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,Open Tickets,26.6732,count,down,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,SLA Compliance,98.8759,%,up,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,Security Score,88.976,/100,up,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,Cloud Spend,37186.5788,USD,down,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,Active Users,3702.7643,count,up,omniintelos:model-v1
+2023-09,IT,OmniIntelOS,Lead Time For Changes,19.5535,hours,down,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,System Uptime,99.8744,%,up,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,Mean Time To Resolution,1.1634,hours,down,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,Deployment Frequency,6.0715,per week,up,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,Change Failure Rate,5.5607,%,down,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,API P99 Latency,208.6096,ms,down,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,Total Incidents,14.3658,count,down,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,Open Tickets,31.689,count,down,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,SLA Compliance,98.9718,%,up,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,Security Score,90.04,/100,up,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,Cloud Spend,39047.8204,USD,down,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,Active Users,3800.3572,count,up,omniintelos:model-v1
+2023-10,IT,OmniIntelOS,Lead Time For Changes,25.6167,hours,down,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,System Uptime,99.8692,%,up,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,Mean Time To Resolution,0.8855,hours,down,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,Deployment Frequency,6.1459,per week,up,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,Change Failure Rate,5.2638,%,down,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,API P99 Latency,207.2157,ms,down,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,Total Incidents,12.983,count,down,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,Open Tickets,31.6921,count,down,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,SLA Compliance,99.16,%,up,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,Security Score,91.476,/100,up,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,Cloud Spend,40612.5457,USD,down,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,Active Users,3849.9788,count,up,omniintelos:model-v1
+2023-11,IT,OmniIntelOS,Lead Time For Changes,20.8359,hours,down,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,System Uptime,99.8682,%,up,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,Mean Time To Resolution,1.1937,hours,down,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,Deployment Frequency,7.6985,per week,up,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,Change Failure Rate,4.5788,%,down,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,API P99 Latency,217.6589,ms,down,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,Total Incidents,14.2643,count,down,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,Open Tickets,30.523,count,down,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,SLA Compliance,99.3677,%,up,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,Security Score,89.3654,/100,up,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,Cloud Spend,40944.0565,USD,down,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,Active Users,3982.3979,count,up,omniintelos:model-v1
+2023-12,IT,OmniIntelOS,Lead Time For Changes,22.6925,hours,down,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,Mean Time To Resolution,1.1194,hours,down,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,Deployment Frequency,6.3044,per week,up,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,Change Failure Rate,5.7646,%,down,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,API P99 Latency,202.8188,ms,down,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,Total Incidents,13.6676,count,down,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,Open Tickets,42.3259,count,down,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,Security Score,90.9771,/100,up,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,Cloud Spend,88867.1112,USD,down,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,Active Users,4110.5109,count,up,omniintelos:model-v1
+2024-01,IT,OmniIntelOS,Lead Time For Changes,27.0799,hours,down,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,Mean Time To Resolution,0.8375,hours,down,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,Deployment Frequency,6.3745,per week,up,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,Change Failure Rate,5.962,%,down,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,API P99 Latency,209.0344,ms,down,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,Total Incidents,15.0678,count,down,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,Open Tickets,41.3332,count,down,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,Security Score,90.0954,/100,up,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,Cloud Spend,90945.2028,USD,down,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,Active Users,4316.2556,count,up,omniintelos:model-v1
+2024-02,IT,OmniIntelOS,Lead Time For Changes,22.4657,hours,down,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,Mean Time To Resolution,0.8404,hours,down,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,Deployment Frequency,6.6066,per week,up,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,Change Failure Rate,6.864,%,down,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,API P99 Latency,186.2232,ms,down,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,Total Incidents,12.8117,count,down,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,Open Tickets,41.7959,count,down,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,Security Score,86.4463,/100,up,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,Cloud Spend,92534.4992,USD,down,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,Active Users,4343.3898,count,up,omniintelos:model-v1
+2024-03,IT,OmniIntelOS,Lead Time For Changes,22.2602,hours,down,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,Mean Time To Resolution,0.8488,hours,down,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,Deployment Frequency,7.5135,per week,up,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,Change Failure Rate,4.7937,%,down,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,API P99 Latency,185.2862,ms,down,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,Total Incidents,12.0904,count,down,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,Open Tickets,40.2454,count,down,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,Security Score,86.4292,/100,up,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,Cloud Spend,95106.8408,USD,down,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,Active Users,4672.545,count,up,omniintelos:model-v1
+2024-04,IT,OmniIntelOS,Lead Time For Changes,24.3903,hours,down,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,Mean Time To Resolution,0.8686,hours,down,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,Deployment Frequency,6.3461,per week,up,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,Change Failure Rate,4.9643,%,down,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,API P99 Latency,191.0795,ms,down,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,Total Incidents,10.1082,count,down,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,Open Tickets,44.348,count,down,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,Security Score,87.2748,/100,up,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,Cloud Spend,95642.3952,USD,down,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,Active Users,4809.4894,count,up,omniintelos:model-v1
+2024-05,IT,OmniIntelOS,Lead Time For Changes,21.3544,hours,down,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,Mean Time To Resolution,1.1921,hours,down,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,Deployment Frequency,6.5779,per week,up,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,Change Failure Rate,6.1838,%,down,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,API P99 Latency,209.9369,ms,down,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,Total Incidents,13.6027,count,down,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,Open Tickets,41.9957,count,down,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,Security Score,87.4898,/100,up,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,Cloud Spend,99095.7118,USD,down,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,Active Users,4833.3507,count,up,omniintelos:model-v1
+2024-06,IT,OmniIntelOS,Lead Time For Changes,25.1802,hours,down,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,Mean Time To Resolution,1.2293,hours,down,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,Deployment Frequency,7.026,per week,up,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,Change Failure Rate,4.8203,%,down,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,API P99 Latency,192.9751,ms,down,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,Total Incidents,11.9707,count,down,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,Open Tickets,44.7068,count,down,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,Security Score,90.8851,/100,up,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,Cloud Spend,104294.0842,USD,down,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,Active Users,5017.3133,count,up,omniintelos:model-v1
+2024-07,IT,OmniIntelOS,Lead Time For Changes,23.5244,hours,down,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,Mean Time To Resolution,0.6242,hours,down,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,Deployment Frequency,6.9203,per week,up,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,Change Failure Rate,4.9015,%,down,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,API P99 Latency,206.5523,ms,down,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,Total Incidents,14.7613,count,down,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,Open Tickets,46.367,count,down,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,Security Score,87.7515,/100,up,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,Cloud Spend,106715.4444,USD,down,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,Active Users,5125.5175,count,up,omniintelos:model-v1
+2024-08,IT,OmniIntelOS,Lead Time For Changes,22.2532,hours,down,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,Mean Time To Resolution,0.544,hours,down,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,Deployment Frequency,8.3285,per week,up,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,Change Failure Rate,5.1587,%,down,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,API P99 Latency,210.0575,ms,down,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,Total Incidents,11.7051,count,down,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,Open Tickets,46.0168,count,down,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,Security Score,88.6884,/100,up,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,Cloud Spend,111447.0587,USD,down,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,Active Users,5502.1179,count,up,omniintelos:model-v1
+2024-09,IT,OmniIntelOS,Lead Time For Changes,22.2874,hours,down,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,Mean Time To Resolution,0.4772,hours,down,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,Deployment Frequency,7.1279,per week,up,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,Change Failure Rate,4.99,%,down,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,API P99 Latency,186.4238,ms,down,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,Total Incidents,11.3978,count,down,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,Open Tickets,53.8846,count,down,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,Security Score,87.2986,/100,up,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,Cloud Spend,112835.1447,USD,down,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,Active Users,5563.5847,count,up,omniintelos:model-v1
+2024-10,IT,OmniIntelOS,Lead Time For Changes,22.2164,hours,down,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,Mean Time To Resolution,0.5148,hours,down,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,Deployment Frequency,8.0986,per week,up,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,Change Failure Rate,5.7024,%,down,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,API P99 Latency,200.4384,ms,down,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,Total Incidents,14.6841,count,down,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,Open Tickets,52.4744,count,down,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,Security Score,88.1317,/100,up,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,Cloud Spend,118751.6404,USD,down,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,Active Users,5790.874,count,up,omniintelos:model-v1
+2024-11,IT,OmniIntelOS,Lead Time For Changes,22.9454,hours,down,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,Mean Time To Resolution,0.6712,hours,down,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,Deployment Frequency,8.7336,per week,up,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,Change Failure Rate,6.285,%,down,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,API P99 Latency,202.821,ms,down,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,Total Incidents,10.4996,count,down,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,Open Tickets,52.8037,count,down,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,Security Score,89.794,/100,up,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,Cloud Spend,120506.8912,USD,down,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,Active Users,6173.02,count,up,omniintelos:model-v1
+2024-12,IT,OmniIntelOS,Lead Time For Changes,23.7208,hours,down,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,Mean Time To Resolution,0.4755,hours,down,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,Deployment Frequency,7.9081,per week,up,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,Change Failure Rate,5.0667,%,down,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,API P99 Latency,196.432,ms,down,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,Total Incidents,10.9276,count,down,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,Open Tickets,57.7889,count,down,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,Security Score,90.7487,/100,up,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,Cloud Spend,126046.0927,USD,down,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,Active Users,6272.7372,count,up,omniintelos:model-v1
+2025-01,IT,OmniIntelOS,Lead Time For Changes,26.0175,hours,down,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,Mean Time To Resolution,0.5032,hours,down,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,Deployment Frequency,7.0127,per week,up,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,Change Failure Rate,6.3386,%,down,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,API P99 Latency,201.4152,ms,down,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,Total Incidents,12.5428,count,down,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,Open Tickets,58.3042,count,down,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,Security Score,90.8302,/100,up,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,Cloud Spend,131780.8227,USD,down,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,Active Users,6483.2322,count,up,omniintelos:model-v1
+2025-02,IT,OmniIntelOS,Lead Time For Changes,23.173,hours,down,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,System Uptime,99.762,%,up,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,Mean Time To Resolution,0.5252,hours,down,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,Deployment Frequency,8.3381,per week,up,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,Change Failure Rate,6.6099,%,down,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,API P99 Latency,203.1556,ms,down,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,Total Incidents,12.2054,count,down,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,Open Tickets,66.2976,count,down,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,SLA Compliance,98.1703,%,up,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,Security Score,84.083,/100,up,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,Cloud Spend,137949.4897,USD,down,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,Active Users,6793.9551,count,up,omniintelos:model-v1
+2025-03,IT,OmniIntelOS,Lead Time For Changes,24.4251,hours,down,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,System Uptime,99.7862,%,up,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,Mean Time To Resolution,0.6864,hours,down,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,Deployment Frequency,8.5296,per week,up,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,Change Failure Rate,6.0946,%,down,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,API P99 Latency,191.251,ms,down,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,Total Incidents,12.7257,count,down,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,Open Tickets,69.3938,count,down,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,SLA Compliance,98.2358,%,up,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,Security Score,87.3528,/100,up,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,Cloud Spend,141607.2631,USD,down,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,Active Users,6866.249,count,up,omniintelos:model-v1
+2025-04,IT,OmniIntelOS,Lead Time For Changes,21.396,hours,down,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,System Uptime,99.7765,%,up,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,Mean Time To Resolution,0.6029,hours,down,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,Deployment Frequency,8.0975,per week,up,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,Change Failure Rate,6.6229,%,down,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,API P99 Latency,184.2365,ms,down,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,Total Incidents,16.2184,count,down,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,Open Tickets,73.0756,count,down,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,SLA Compliance,97.7384,%,up,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,Security Score,84.0852,/100,up,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,Cloud Spend,144784.5089,USD,down,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,Active Users,7027.3263,count,up,omniintelos:model-v1
+2025-05,IT,OmniIntelOS,Lead Time For Changes,21.7407,hours,down,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,System Uptime,99.796,%,up,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,Mean Time To Resolution,0.561,hours,down,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,Deployment Frequency,7.9144,per week,up,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,Change Failure Rate,5.9305,%,down,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,API P99 Latency,177.0503,ms,down,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,Total Incidents,13.4212,count,down,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,Open Tickets,75.3063,count,down,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,SLA Compliance,97.7479,%,up,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,Security Score,88.7379,/100,up,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,Cloud Spend,149487.8421,USD,down,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,Active Users,7173.2172,count,up,omniintelos:model-v1
+2025-06,IT,OmniIntelOS,Lead Time For Changes,24.0319,hours,down,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,System Uptime,99.7936,%,up,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,Mean Time To Resolution,0.6501,hours,down,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,Deployment Frequency,8.5534,per week,up,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,Change Failure Rate,5.8129,%,down,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,API P99 Latency,201.1577,ms,down,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,Total Incidents,10.7846,count,down,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,Open Tickets,73.4039,count,down,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,SLA Compliance,98.3383,%,up,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,Security Score,87.974,/100,up,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,Cloud Spend,155849.9904,USD,down,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,Active Users,7392.6553,count,up,omniintelos:model-v1
+2025-07,IT,OmniIntelOS,Lead Time For Changes,23.3953,hours,down,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,System Uptime,99.7666,%,up,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,Mean Time To Resolution,0.6344,hours,down,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,Deployment Frequency,6.8271,per week,up,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,Change Failure Rate,6.6555,%,down,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,API P99 Latency,178.2061,ms,down,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,Total Incidents,12.8655,count,down,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,Open Tickets,81.1553,count,down,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,SLA Compliance,97.3499,%,up,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,Security Score,84.4782,/100,up,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,Cloud Spend,160568.3802,USD,down,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,Active Users,7698.9172,count,up,omniintelos:model-v1
+2025-08,IT,OmniIntelOS,Lead Time For Changes,21.8965,hours,down,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,Mean Time To Resolution,0.664,hours,down,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,Deployment Frequency,6.938,per week,up,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,Change Failure Rate,5.1136,%,down,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,API P99 Latency,189.6043,ms,down,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,Total Incidents,13.5336,count,down,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,Open Tickets,77.937,count,down,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,Security Score,90.549,/100,up,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,Cloud Spend,167055.9499,USD,down,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,Active Users,7933.6863,count,up,omniintelos:model-v1
+2025-09,IT,OmniIntelOS,Lead Time For Changes,23.25,hours,down,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,Mean Time To Resolution,0.533,hours,down,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,Deployment Frequency,7.5047,per week,up,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,Change Failure Rate,5.7496,%,down,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,API P99 Latency,190.4019,ms,down,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,Total Incidents,10.0965,count,down,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,Open Tickets,78.9232,count,down,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,Security Score,90.431,/100,up,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,Cloud Spend,176288.9225,USD,down,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,Active Users,8573.8977,count,up,omniintelos:model-v1
+2025-10,IT,OmniIntelOS,Lead Time For Changes,23.5624,hours,down,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,Mean Time To Resolution,0.6523,hours,down,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,Deployment Frequency,8.5721,per week,up,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,Change Failure Rate,5.1951,%,down,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,API P99 Latency,194.369,ms,down,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,Total Incidents,13.8264,count,down,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,Open Tickets,76.0507,count,down,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,Security Score,91.8603,/100,up,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,Cloud Spend,185022.6779,USD,down,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,Active Users,8959.5606,count,up,omniintelos:model-v1
+2025-11,IT,OmniIntelOS,Lead Time For Changes,25.6605,hours,down,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,Mean Time To Resolution,0.6483,hours,down,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,Deployment Frequency,7.3556,per week,up,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,Change Failure Rate,5.8345,%,down,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,Critical Vulnerabilities,2.0,count,down,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,API P99 Latency,191.584,ms,down,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,Total Incidents,11.2177,count,down,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,Open Tickets,84.0561,count,down,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,Security Score,89.7538,/100,up,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,Cloud Spend,195818.2484,USD,down,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,Active Users,9298.2484,count,up,omniintelos:model-v1
+2025-12,IT,OmniIntelOS,Lead Time For Changes,23.4855,hours,down,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,Mean Time To Resolution,0.4643,hours,down,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,Deployment Frequency,7.3489,per week,up,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,Change Failure Rate,6.5535,%,down,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,API P99 Latency,181.3172,ms,down,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,Total Incidents,11.3249,count,down,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,Open Tickets,89.4426,count,down,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,Security Score,91.9758,/100,up,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,Cloud Spend,205173.132,USD,down,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,Active Users,9695.2166,count,up,omniintelos:model-v1
+2026-01,IT,OmniIntelOS,Lead Time For Changes,24.3925,hours,down,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,Mean Time To Resolution,0.4522,hours,down,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,Deployment Frequency,7.4863,per week,up,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,Change Failure Rate,5.3334,%,down,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,API P99 Latency,189.2186,ms,down,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,Total Incidents,14.4677,count,down,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,Open Tickets,84.6598,count,down,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,Security Score,91.1584,/100,up,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,Cloud Spend,220639.4242,USD,down,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,Active Users,10300.7764,count,up,omniintelos:model-v1
+2026-02,IT,OmniIntelOS,Lead Time For Changes,23.5425,hours,down,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,Mean Time To Resolution,0.4692,hours,down,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,Deployment Frequency,7.6971,per week,up,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,Change Failure Rate,4.6995,%,down,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,API P99 Latency,176.5818,ms,down,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,Total Incidents,11.3912,count,down,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,Open Tickets,86.4866,count,down,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,Security Score,87.948,/100,up,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,Cloud Spend,235627.8753,USD,down,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,Active Users,10702.442,count,up,omniintelos:model-v1
+2026-03,IT,OmniIntelOS,Lead Time For Changes,21.4553,hours,down,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,Mean Time To Resolution,0.5006,hours,down,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,Deployment Frequency,9.728,per week,up,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,Change Failure Rate,6.136,%,down,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,Critical Vulnerabilities,0.0,count,down,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,API P99 Latency,179.4538,ms,down,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,Total Incidents,11.8991,count,down,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,Critical Incidents,1.0,count,down,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,Open Tickets,91.6074,count,down,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,Security Score,88.7746,/100,up,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,Cloud Spend,246655.0223,USD,down,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,Active Users,11189.6223,count,up,omniintelos:model-v1
+2026-04,IT,OmniIntelOS,Lead Time For Changes,22.0845,hours,down,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,Mean Time To Resolution,0.4222,hours,down,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,Deployment Frequency,8.6187,per week,up,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,Change Failure Rate,6.3352,%,down,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,API P99 Latency,178.1226,ms,down,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,Total Incidents,13.774,count,down,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,Open Tickets,95.2881,count,down,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,Security Score,90.3784,/100,up,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,Cloud Spend,257862.5789,USD,down,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,Active Users,11588.4533,count,up,omniintelos:model-v1
+2026-05,IT,OmniIntelOS,Lead Time For Changes,19.9886,hours,down,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,System Uptime,99.995,%,up,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,Mean Time To Resolution,0.4608,hours,down,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,Deployment Frequency,8.994,per week,up,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,Change Failure Rate,5.0663,%,down,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,Critical Vulnerabilities,1.0,count,down,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,API P99 Latency,166.8719,ms,down,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,Total Incidents,13.2857,count,down,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,Critical Incidents,2.0,count,down,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,Open Tickets,99.4214,count,down,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,SLA Compliance,99.6,%,up,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,Security Score,92.2809,/100,up,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,Cloud Spend,275656.188,USD,down,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,Active Users,11887.176,count,up,omniintelos:model-v1
+2026-06,IT,OmniIntelOS,Lead Time For Changes,24.0372,hours,down,omniintelos:model-v1
