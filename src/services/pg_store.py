@@ -597,12 +597,23 @@ def get_kpi_metrics(
             params.append(get_request_scope_user())
         if filters:
             q += " WHERE " + " AND ".join(filters)
-        q += " ORDER BY period, metric"
+        # When a row cap applies, keep the NEWEST rows, not the oldest. Ordering
+        # ascending and then truncating silently returns the START of history: with
+        # 7,878 rows and the 2,000 default, callers got 2020-01..2021-08 and every
+        # "latest period" derived from this frame pointed at 2021-08 instead of
+        # 2026-06 — wrong live KPI snapshot in chat, wrong dashboard, wrong insights.
+        # The old dataset was small enough that the cap never bit, so this only
+        # surfaced once the history got long. Fetch newest-first, then restore
+        # chronological order for callers that assume it.
+        q += " ORDER BY period DESC, metric" if limit else " ORDER BY period, metric"
         if limit:
             q += " LIMIT %s"
             params.append(limit)
         rows = conn.execute(q, params).fetchall()
-        return pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
+        if not rows:
+            return pd.DataFrame()
+        df = pd.DataFrame([dict(r) for r in rows])
+        return df.sort_values(["period", "metric"]).reset_index(drop=True)
     finally:
         conn.close()
 
