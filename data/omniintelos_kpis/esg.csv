@@ -1,0 +1,937 @@
+period,category,segment,metric_name,value,unit,direction,source
+2020-01,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-01,ESG,OmniIntelOS,Scope 2 Emissions,4.6631,tCO2e,down,omniintelos:model-v1
+2020-01,ESG,OmniIntelOS,Scope 3 Emissions,12.6468,tCO2e,down,omniintelos:model-v1
+2020-01,ESG,OmniIntelOS,Total Carbon Footprint,18.5099,tCO2e,down,omniintelos:model-v1
+2020-01,ESG,OmniIntelOS,Energy Consumption,8669.6777,kWh,down,omniintelos:model-v1
+2020-01,ESG,OmniIntelOS,Renewable Energy Ratio,13.2473,%,up,omniintelos:model-v1
+2020-01,ESG,OmniIntelOS,Board Diversity Ratio,12.7715,%,up,omniintelos:model-v1
+2020-01,ESG,OmniIntelOS,Audit Compliance Score,87.0992,%,up,omniintelos:model-v1
+2020-01,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-01,ESG,OmniIntelOS,Water Consumption,53.1367,m3,down,omniintelos:model-v1
+2020-01,ESG,OmniIntelOS,Waste Diverted from Landfill,32.0315,%,up,omniintelos:model-v1
+2020-01,ESG,OmniIntelOS,Carbon Intensity per Revenue,113.2911,tCO2e/USDm,down,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Scope 2 Emissions,4.7354,tCO2e,down,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Scope 3 Emissions,12.6029,tCO2e,down,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Total Carbon Footprint,18.5383,tCO2e,down,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Energy Consumption,8766.0999,kWh,down,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Renewable Energy Ratio,12.8717,%,up,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Board Diversity Ratio,13.2081,%,up,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Audit Compliance Score,85.049,%,up,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Water Consumption,53.7277,m3,down,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Waste Diverted from Landfill,33.1564,%,up,omniintelos:model-v1
+2020-02,ESG,OmniIntelOS,Carbon Intensity per Revenue,114.2757,tCO2e/USDm,down,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Scope 2 Emissions,4.7723,tCO2e,down,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Scope 3 Emissions,13.342,tCO2e,down,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Total Carbon Footprint,19.3144,tCO2e,down,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Energy Consumption,8939.1674,kWh,down,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Renewable Energy Ratio,13.892,%,up,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Board Diversity Ratio,14.871,%,up,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Audit Compliance Score,85.8456,%,up,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Water Consumption,54.7884,m3,down,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Waste Diverted from Landfill,31.852,%,up,omniintelos:model-v1
+2020-03,ESG,OmniIntelOS,Carbon Intensity per Revenue,111.4279,tCO2e/USDm,down,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Scope 2 Emissions,4.9687,tCO2e,down,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Scope 3 Emissions,14.0392,tCO2e,down,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Total Carbon Footprint,20.2079,tCO2e,down,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Energy Consumption,9346.0406,kWh,down,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Renewable Energy Ratio,14.2523,%,up,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Board Diversity Ratio,16.5239,%,up,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Audit Compliance Score,85.7649,%,up,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Water Consumption,57.2822,m3,down,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Waste Diverted from Landfill,32.9456,%,up,omniintelos:model-v1
+2020-04,ESG,OmniIntelOS,Carbon Intensity per Revenue,110.6223,tCO2e/USDm,down,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Scope 2 Emissions,5.0558,tCO2e,down,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Scope 3 Emissions,13.5831,tCO2e,down,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Total Carbon Footprint,19.8389,tCO2e,down,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Energy Consumption,9630.4803,kWh,down,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Renewable Energy Ratio,15.3259,%,up,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Board Diversity Ratio,15.6326,%,up,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Audit Compliance Score,87.7923,%,up,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Water Consumption,59.0255,m3,down,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Waste Diverted from Landfill,32.7034,%,up,omniintelos:model-v1
+2020-05,ESG,OmniIntelOS,Carbon Intensity per Revenue,114.0258,tCO2e/USDm,down,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Scope 2 Emissions,5.1061,tCO2e,down,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Scope 3 Emissions,14.2928,tCO2e,down,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Total Carbon Footprint,20.5989,tCO2e,down,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Energy Consumption,9653.1923,kWh,down,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Renewable Energy Ratio,14.6843,%,up,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Board Diversity Ratio,17.0961,%,up,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Audit Compliance Score,85.9709,%,up,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Water Consumption,59.1647,m3,down,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Waste Diverted from Landfill,34.8785,%,up,omniintelos:model-v1
+2020-06,ESG,OmniIntelOS,Carbon Intensity per Revenue,111.1492,tCO2e/USDm,down,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Scope 2 Emissions,5.3642,tCO2e,down,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Scope 3 Emissions,14.398,tCO2e,down,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Total Carbon Footprint,20.9622,tCO2e,down,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Energy Consumption,10102.8402,kWh,down,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Renewable Energy Ratio,14.3613,%,up,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Board Diversity Ratio,16.6071,%,up,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Audit Compliance Score,87.5248,%,up,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Water Consumption,61.9206,m3,down,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Waste Diverted from Landfill,32.8211,%,up,omniintelos:model-v1
+2020-07,ESG,OmniIntelOS,Carbon Intensity per Revenue,113.3594,tCO2e/USDm,down,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Scope 2 Emissions,5.3457,tCO2e,down,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Scope 3 Emissions,13.8999,tCO2e,down,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Total Carbon Footprint,20.4456,tCO2e,down,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Energy Consumption,10235.7138,kWh,down,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Renewable Energy Ratio,15.7645,%,up,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Board Diversity Ratio,17.7099,%,up,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Audit Compliance Score,88.0634,%,up,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Water Consumption,62.735,m3,down,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Waste Diverted from Landfill,33.6701,%,up,omniintelos:model-v1
+2020-08,ESG,OmniIntelOS,Carbon Intensity per Revenue,115.9958,tCO2e/USDm,down,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Scope 2 Emissions,5.4975,tCO2e,down,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Scope 3 Emissions,14.4282,tCO2e,down,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Total Carbon Footprint,21.1257,tCO2e,down,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Energy Consumption,10665.8598,kWh,down,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Renewable Energy Ratio,16.8657,%,up,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Board Diversity Ratio,16.6636,%,up,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Audit Compliance Score,88.0875,%,up,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Water Consumption,65.3714,m3,down,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Waste Diverted from Landfill,34.9361,%,up,omniintelos:model-v1
+2020-09,ESG,OmniIntelOS,Carbon Intensity per Revenue,115.5873,tCO2e/USDm,down,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Scope 2 Emissions,5.7101,tCO2e,down,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Scope 3 Emissions,15.2546,tCO2e,down,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Total Carbon Footprint,22.1647,tCO2e,down,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Energy Consumption,10990.3414,kWh,down,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Renewable Energy Ratio,16.2007,%,up,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Board Diversity Ratio,18.8432,%,up,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Audit Compliance Score,86.0182,%,up,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Water Consumption,67.3602,m3,down,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Waste Diverted from Landfill,36.9273,%,up,omniintelos:model-v1
+2020-10,ESG,OmniIntelOS,Carbon Intensity per Revenue,113.9115,tCO2e/USDm,down,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Scope 2 Emissions,5.9366,tCO2e,down,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Scope 3 Emissions,15.3877,tCO2e,down,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Total Carbon Footprint,22.5243,tCO2e,down,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Energy Consumption,11441.8431,kWh,down,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Renewable Energy Ratio,16.3144,%,up,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Board Diversity Ratio,18.6886,%,up,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Audit Compliance Score,86.5944,%,up,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Water Consumption,70.1274,m3,down,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Waste Diverted from Landfill,36.2117,%,up,omniintelos:model-v1
+2020-11,ESG,OmniIntelOS,Carbon Intensity per Revenue,115.74,tCO2e/USDm,down,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Scope 2 Emissions,5.9514,tCO2e,down,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Scope 3 Emissions,16.8145,tCO2e,down,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Total Carbon Footprint,23.9659,tCO2e,down,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Energy Consumption,11810.6448,kWh,down,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Renewable Energy Ratio,18.7252,%,up,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Board Diversity Ratio,19.1898,%,up,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Audit Compliance Score,86.7544,%,up,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Water Consumption,72.3878,m3,down,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Waste Diverted from Landfill,37.0455,%,up,omniintelos:model-v1
+2020-12,ESG,OmniIntelOS,Carbon Intensity per Revenue,111.0065,tCO2e/USDm,down,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Scope 2 Emissions,6.1473,tCO2e,down,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Scope 3 Emissions,16.7044,tCO2e,down,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Total Carbon Footprint,24.0517,tCO2e,down,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Energy Consumption,12331.1483,kWh,down,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Renewable Energy Ratio,19.5944,%,up,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Board Diversity Ratio,19.4342,%,up,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Audit Compliance Score,88.561,%,up,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Water Consumption,75.578,m3,down,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Waste Diverted from Landfill,38.441,%,up,omniintelos:model-v1
+2021-01,ESG,OmniIntelOS,Carbon Intensity per Revenue,113.6206,tCO2e/USDm,down,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Scope 2 Emissions,6.5372,tCO2e,down,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Scope 3 Emissions,18.4121,tCO2e,down,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Total Carbon Footprint,26.1493,tCO2e,down,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Energy Consumption,12706.4397,kWh,down,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Renewable Energy Ratio,17.0199,%,up,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Board Diversity Ratio,19.6099,%,up,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Audit Compliance Score,88.3627,%,up,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Water Consumption,77.8782,m3,down,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Waste Diverted from Landfill,36.2338,%,up,omniintelos:model-v1
+2021-02,ESG,OmniIntelOS,Carbon Intensity per Revenue,110.1161,tCO2e/USDm,down,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Scope 2 Emissions,6.5474,tCO2e,down,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Scope 3 Emissions,19.5121,tCO2e,down,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Total Carbon Footprint,27.2595,tCO2e,down,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Energy Consumption,13387.0348,kWh,down,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Renewable Energy Ratio,21.1154,%,up,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Board Diversity Ratio,19.6902,%,up,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Audit Compliance Score,87.946,%,up,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Water Consumption,82.0496,m3,down,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Waste Diverted from Landfill,39.1025,%,up,omniintelos:model-v1
+2021-03,ESG,OmniIntelOS,Carbon Intensity per Revenue,108.162,tCO2e/USDm,down,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Scope 2 Emissions,6.9395,tCO2e,down,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Scope 3 Emissions,20.0947,tCO2e,down,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Total Carbon Footprint,28.2342,tCO2e,down,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Energy Consumption,13671.5409,kWh,down,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Renewable Energy Ratio,18.1308,%,up,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Board Diversity Ratio,20.6193,%,up,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Audit Compliance Score,87.0399,%,up,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Water Consumption,83.7933,m3,down,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Waste Diverted from Landfill,37.5539,%,up,omniintelos:model-v1
+2021-04,ESG,OmniIntelOS,Carbon Intensity per Revenue,108.5559,tCO2e/USDm,down,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Scope 2 Emissions,6.9142,tCO2e,down,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Scope 3 Emissions,21.0732,tCO2e,down,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Total Carbon Footprint,29.1874,tCO2e,down,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Energy Consumption,14245.4882,kWh,down,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Renewable Energy Ratio,21.7157,%,up,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Board Diversity Ratio,22.1776,%,up,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Audit Compliance Score,87.0615,%,up,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Water Consumption,87.3111,m3,down,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Waste Diverted from Landfill,38.3222,%,up,omniintelos:model-v1
+2021-05,ESG,OmniIntelOS,Carbon Intensity per Revenue,106.8416,tCO2e/USDm,down,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Scope 2 Emissions,7.2054,tCO2e,down,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Scope 3 Emissions,21.9983,tCO2e,down,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Total Carbon Footprint,30.4037,tCO2e,down,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Energy Consumption,15020.0177,kWh,down,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Renewable Energy Ratio,22.6254,%,up,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Board Diversity Ratio,23.2347,%,up,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Audit Compliance Score,88.3173,%,up,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Water Consumption,92.0582,m3,down,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Waste Diverted from Landfill,38.6228,%,up,omniintelos:model-v1
+2021-06,ESG,OmniIntelOS,Carbon Intensity per Revenue,106.8756,tCO2e/USDm,down,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Scope 2 Emissions,7.7039,tCO2e,down,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Scope 3 Emissions,23.0211,tCO2e,down,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Total Carbon Footprint,31.925,tCO2e,down,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Energy Consumption,15623.1539,kWh,down,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Renewable Energy Ratio,20.4666,%,up,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Board Diversity Ratio,21.4849,%,up,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Audit Compliance Score,87.7664,%,up,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Water Consumption,95.7548,m3,down,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Waste Diverted from Landfill,42.8776,%,up,omniintelos:model-v1
+2021-07,ESG,OmniIntelOS,Carbon Intensity per Revenue,107.0768,tCO2e/USDm,down,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Scope 2 Emissions,7.963,tCO2e,down,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Scope 3 Emissions,25.8956,tCO2e,down,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Total Carbon Footprint,35.0586,tCO2e,down,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Energy Consumption,16363.9008,kWh,down,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Renewable Energy Ratio,21.5132,%,up,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Board Diversity Ratio,21.8887,%,up,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Audit Compliance Score,88.4441,%,up,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Water Consumption,100.2949,m3,down,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Waste Diverted from Landfill,43.3374,%,up,omniintelos:model-v1
+2021-08,ESG,OmniIntelOS,Carbon Intensity per Revenue,102.7975,tCO2e/USDm,down,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Scope 2 Emissions,7.9426,tCO2e,down,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Scope 3 Emissions,26.5859,tCO2e,down,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Total Carbon Footprint,35.7285,tCO2e,down,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Energy Consumption,16975.9672,kWh,down,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Renewable Energy Ratio,24.5363,%,up,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Board Diversity Ratio,22.2624,%,up,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Audit Compliance Score,87.5093,%,up,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Water Consumption,104.0463,m3,down,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Waste Diverted from Landfill,41.6488,%,up,omniintelos:model-v1
+2021-09,ESG,OmniIntelOS,Carbon Intensity per Revenue,102.2824,tCO2e/USDm,down,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Scope 1 Emissions,1.2,tCO2e,down,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Scope 2 Emissions,8.2891,tCO2e,down,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Scope 3 Emissions,29.3228,tCO2e,down,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Total Carbon Footprint,38.8119,tCO2e,down,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Energy Consumption,17485.5246,kWh,down,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Renewable Energy Ratio,23.5396,%,up,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Board Diversity Ratio,23.8867,%,up,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Audit Compliance Score,89.2333,%,up,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Water Consumption,107.1693,m3,down,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Waste Diverted from Landfill,43.5953,%,up,omniintelos:model-v1
+2021-10,ESG,OmniIntelOS,Carbon Intensity per Revenue,99.2453,tCO2e/USDm,down,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Scope 1 Emissions,1.2206,tCO2e,down,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Scope 2 Emissions,8.5011,tCO2e,down,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Scope 3 Emissions,30.2313,tCO2e,down,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Total Carbon Footprint,39.953,tCO2e,down,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Energy Consumption,18018.0344,kWh,down,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Renewable Energy Ratio,23.9017,%,up,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Board Diversity Ratio,23.2658,%,up,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Audit Compliance Score,89.4838,%,up,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Water Consumption,110.4331,m3,down,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Waste Diverted from Landfill,41.2306,%,up,omniintelos:model-v1
+2021-11,ESG,OmniIntelOS,Carbon Intensity per Revenue,99.0823,tCO2e/USDm,down,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Scope 1 Emissions,1.2621,tCO2e,down,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Scope 2 Emissions,8.936,tCO2e,down,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Scope 3 Emissions,32.3687,tCO2e,down,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Total Carbon Footprint,42.5667,tCO2e,down,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Energy Consumption,18630.4254,kWh,down,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Renewable Energy Ratio,22.6379,%,up,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Board Diversity Ratio,26.0188,%,up,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Audit Compliance Score,90.2019,%,up,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Water Consumption,114.1865,m3,down,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Waste Diverted from Landfill,45.4227,%,up,omniintelos:model-v1
+2021-12,ESG,OmniIntelOS,Carbon Intensity per Revenue,97.8914,tCO2e/USDm,down,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Scope 1 Emissions,1.3164,tCO2e,down,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Scope 2 Emissions,9.2889,tCO2e,down,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Scope 3 Emissions,30.6705,tCO2e,down,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Total Carbon Footprint,41.2758,tCO2e,down,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Energy Consumption,19432.1817,kWh,down,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Renewable Energy Ratio,22.9005,%,up,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Board Diversity Ratio,25.9415,%,up,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Audit Compliance Score,90.2036,%,up,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Water Consumption,119.1005,m3,down,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Waste Diverted from Landfill,44.3926,%,up,omniintelos:model-v1
+2022-01,ESG,OmniIntelOS,Carbon Intensity per Revenue,102.2457,tCO2e/USDm,down,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Scope 1 Emissions,1.3536,tCO2e,down,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Scope 2 Emissions,9.2048,tCO2e,down,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Scope 3 Emissions,32.2567,tCO2e,down,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Total Carbon Footprint,42.8151,tCO2e,down,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Energy Consumption,19981.5729,kWh,down,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Renewable Energy Ratio,25.6994,%,up,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Board Diversity Ratio,25.2504,%,up,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Audit Compliance Score,89.4308,%,up,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Water Consumption,122.4677,m3,down,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Waste Diverted from Landfill,44.1109,%,up,omniintelos:model-v1
+2022-02,ESG,OmniIntelOS,Carbon Intensity per Revenue,100.3392,tCO2e/USDm,down,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Scope 1 Emissions,1.4197,tCO2e,down,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Scope 2 Emissions,9.7067,tCO2e,down,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Scope 3 Emissions,34.5267,tCO2e,down,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Total Carbon Footprint,45.653,tCO2e,down,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Energy Consumption,20956.8169,kWh,down,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Renewable Energy Ratio,25.2944,%,up,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Board Diversity Ratio,27.3519,%,up,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Audit Compliance Score,88.3764,%,up,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Water Consumption,128.445,m3,down,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Waste Diverted from Landfill,46.8846,%,up,omniintelos:model-v1
+2022-03,ESG,OmniIntelOS,Carbon Intensity per Revenue,99.5163,tCO2e/USDm,down,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Scope 1 Emissions,1.4359,tCO2e,down,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Scope 2 Emissions,9.8742,tCO2e,down,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Scope 3 Emissions,37.0914,tCO2e,down,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Total Carbon Footprint,48.4015,tCO2e,down,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Energy Consumption,21197.1696,kWh,down,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Renewable Energy Ratio,24.867,%,up,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Board Diversity Ratio,24.9143,%,up,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Audit Compliance Score,85.2407,%,up,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Water Consumption,129.9181,m3,down,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Waste Diverted from Landfill,45.0137,%,up,omniintelos:model-v1
+2022-04,ESG,OmniIntelOS,Carbon Intensity per Revenue,96.9989,tCO2e/USDm,down,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Scope 1 Emissions,1.4804,tCO2e,down,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Scope 2 Emissions,9.7608,tCO2e,down,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Scope 3 Emissions,38.5065,tCO2e,down,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Total Carbon Footprint,49.7477,tCO2e,down,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Energy Consumption,21852.9037,kWh,down,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Renewable Energy Ratio,27.9583,%,up,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Board Diversity Ratio,26.0157,%,up,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Audit Compliance Score,84.7594,%,up,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Water Consumption,133.9372,m3,down,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Waste Diverted from Landfill,45.5294,%,up,omniintelos:model-v1
+2022-05,ESG,OmniIntelOS,Carbon Intensity per Revenue,95.9002,tCO2e/USDm,down,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Scope 1 Emissions,1.52,tCO2e,down,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Scope 2 Emissions,10.1373,tCO2e,down,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Scope 3 Emissions,39.1105,tCO2e,down,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Total Carbon Footprint,50.7679,tCO2e,down,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Energy Consumption,22438.5887,kWh,down,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Renewable Energy Ratio,27.1321,%,up,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Board Diversity Ratio,27.6888,%,up,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Audit Compliance Score,85.6198,%,up,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Water Consumption,137.5268,m3,down,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Waste Diverted from Landfill,47.0923,%,up,omniintelos:model-v1
+2022-06,ESG,OmniIntelOS,Carbon Intensity per Revenue,96.564,tCO2e/USDm,down,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Scope 1 Emissions,1.5775,tCO2e,down,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Scope 2 Emissions,10.5038,tCO2e,down,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Scope 3 Emissions,41.6536,tCO2e,down,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Total Carbon Footprint,53.7349,tCO2e,down,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Energy Consumption,23287.5895,kWh,down,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Renewable Energy Ratio,27.2505,%,up,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Board Diversity Ratio,27.0603,%,up,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Audit Compliance Score,84.9693,%,up,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Water Consumption,142.7304,m3,down,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Waste Diverted from Landfill,45.908,%,up,omniintelos:model-v1
+2022-07,ESG,OmniIntelOS,Carbon Intensity per Revenue,95.4804,tCO2e/USDm,down,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Scope 1 Emissions,1.6371,tCO2e,down,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Scope 2 Emissions,10.9452,tCO2e,down,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Scope 3 Emissions,42.8709,tCO2e,down,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Total Carbon Footprint,55.4532,tCO2e,down,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Energy Consumption,24167.3461,kWh,down,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Renewable Energy Ratio,26.953,%,up,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Board Diversity Ratio,26.8556,%,up,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Audit Compliance Score,85.6759,%,up,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Water Consumption,148.1224,m3,down,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Waste Diverted from Landfill,46.3726,%,up,omniintelos:model-v1
+2022-08,ESG,OmniIntelOS,Carbon Intensity per Revenue,95.8902,tCO2e/USDm,down,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Scope 1 Emissions,1.7024,tCO2e,down,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Scope 2 Emissions,11.0957,tCO2e,down,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Scope 3 Emissions,43.1683,tCO2e,down,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Total Carbon Footprint,55.9665,tCO2e,down,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Energy Consumption,25131.346,kWh,down,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Renewable Energy Ratio,28.7887,%,up,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Board Diversity Ratio,27.2522,%,up,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Audit Compliance Score,84.8823,%,up,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Water Consumption,154.0308,m3,down,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Waste Diverted from Landfill,49.7906,%,up,omniintelos:model-v1
+2022-09,ESG,OmniIntelOS,Carbon Intensity per Revenue,96.7303,tCO2e/USDm,down,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Scope 1 Emissions,1.7512,tCO2e,down,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Scope 2 Emissions,11.0188,tCO2e,down,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Scope 3 Emissions,45.5381,tCO2e,down,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Total Carbon Footprint,58.308,tCO2e,down,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Energy Consumption,25850.3733,kWh,down,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Renewable Energy Ratio,31.2498,%,up,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Board Diversity Ratio,27.9624,%,up,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Audit Compliance Score,86.1924,%,up,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Water Consumption,158.4378,m3,down,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Waste Diverted from Landfill,48.3363,%,up,omniintelos:model-v1
+2022-10,ESG,OmniIntelOS,Carbon Intensity per Revenue,95.0512,tCO2e/USDm,down,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Scope 1 Emissions,1.8389,tCO2e,down,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Scope 2 Emissions,11.6576,tCO2e,down,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Scope 3 Emissions,45.5374,tCO2e,down,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Total Carbon Footprint,59.0339,tCO2e,down,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Energy Consumption,27146.0821,kWh,down,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Renewable Energy Ratio,30.7357,%,up,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Board Diversity Ratio,29.7305,%,up,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Audit Compliance Score,86.9894,%,up,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Water Consumption,166.3792,m3,down,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Waste Diverted from Landfill,48.6151,%,up,omniintelos:model-v1
+2022-11,ESG,OmniIntelOS,Carbon Intensity per Revenue,97.1976,tCO2e/USDm,down,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Scope 1 Emissions,1.8887,tCO2e,down,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Scope 2 Emissions,11.9391,tCO2e,down,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Scope 3 Emissions,48.9482,tCO2e,down,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Total Carbon Footprint,62.776,tCO2e,down,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Energy Consumption,27880.1892,kWh,down,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Renewable Energy Ratio,30.9309,%,up,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Board Diversity Ratio,31.1739,%,up,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Audit Compliance Score,86.5525,%,up,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Water Consumption,170.8786,m3,down,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Waste Diverted from Landfill,48.5148,%,up,omniintelos:model-v1
+2022-12,ESG,OmniIntelOS,Carbon Intensity per Revenue,95.2689,tCO2e/USDm,down,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Scope 1 Emissions,1.9651,tCO2e,down,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Scope 2 Emissions,12.2464,tCO2e,down,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Scope 3 Emissions,50.3825,tCO2e,down,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Total Carbon Footprint,64.594,tCO2e,down,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Energy Consumption,29008.4859,kWh,down,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Renewable Energy Ratio,31.9087,%,up,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Board Diversity Ratio,31.7408,%,up,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Audit Compliance Score,72.0,%,up,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Privacy Incident Count,1.0,count,down,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Water Consumption,177.7939,m3,down,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Waste Diverted from Landfill,49.4711,%,up,omniintelos:model-v1
+2023-01,ESG,OmniIntelOS,Carbon Intensity per Revenue,95.4424,tCO2e/USDm,down,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Scope 1 Emissions,2.04,tCO2e,down,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Scope 2 Emissions,12.4981,tCO2e,down,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Scope 3 Emissions,49.4612,tCO2e,down,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Total Carbon Footprint,63.9994,tCO2e,down,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Energy Consumption,30114.588,kWh,down,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Renewable Energy Ratio,33.0615,%,up,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Board Diversity Ratio,29.9429,%,up,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Audit Compliance Score,72.0,%,up,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Privacy Incident Count,3.0,count,down,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Water Consumption,184.5733,m3,down,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Waste Diverted from Landfill,49.9133,%,up,omniintelos:model-v1
+2023-02,ESG,OmniIntelOS,Carbon Intensity per Revenue,97.4491,tCO2e/USDm,down,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Scope 1 Emissions,2.117,tCO2e,down,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Scope 2 Emissions,13.4286,tCO2e,down,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Scope 3 Emissions,49.7078,tCO2e,down,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Total Carbon Footprint,65.2535,tCO2e,down,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Energy Consumption,31251.6751,kWh,down,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Renewable Energy Ratio,30.6946,%,up,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Board Diversity Ratio,32.808,%,up,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Audit Compliance Score,72.0,%,up,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Privacy Incident Count,1.0,count,down,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Water Consumption,191.5425,m3,down,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Waste Diverted from Landfill,50.1853,%,up,omniintelos:model-v1
+2023-03,ESG,OmniIntelOS,Carbon Intensity per Revenue,99.563,tCO2e/USDm,down,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Scope 1 Emissions,2.1974,tCO2e,down,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Scope 2 Emissions,13.8243,tCO2e,down,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Scope 3 Emissions,49.8507,tCO2e,down,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Total Carbon Footprint,65.8724,tCO2e,down,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Energy Consumption,32438.458,kWh,down,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Renewable Energy Ratio,31.2631,%,up,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Board Diversity Ratio,32.8692,%,up,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Audit Compliance Score,72.0,%,up,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Privacy Incident Count,1.0,count,down,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Water Consumption,198.8164,m3,down,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Waste Diverted from Landfill,50.4706,%,up,omniintelos:model-v1
+2023-04,ESG,OmniIntelOS,Carbon Intensity per Revenue,101.0086,tCO2e/USDm,down,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Scope 1 Emissions,2.2917,tCO2e,down,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Scope 2 Emissions,14.2797,tCO2e,down,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Scope 3 Emissions,50.43,tCO2e,down,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Total Carbon Footprint,67.0015,tCO2e,down,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Energy Consumption,33829.2263,kWh,down,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Renewable Energy Ratio,31.9173,%,up,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Board Diversity Ratio,30.9024,%,up,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Audit Compliance Score,72.0,%,up,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Privacy Incident Count,1.0,count,down,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Water Consumption,207.3404,m3,down,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Waste Diverted from Landfill,51.3257,%,up,omniintelos:model-v1
+2023-05,ESG,OmniIntelOS,Carbon Intensity per Revenue,102.2957,tCO2e/USDm,down,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Scope 1 Emissions,2.4027,tCO2e,down,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Scope 2 Emissions,14.7479,tCO2e,down,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Scope 3 Emissions,51.3686,tCO2e,down,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Total Carbon Footprint,68.5192,tCO2e,down,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Energy Consumption,35468.9306,kWh,down,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Renewable Energy Ratio,32.936,%,up,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Board Diversity Ratio,33.9468,%,up,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Water Consumption,217.3902,m3,down,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Waste Diverted from Landfill,51.9249,%,up,omniintelos:model-v1
+2023-06,ESG,OmniIntelOS,Carbon Intensity per Revenue,103.4349,tCO2e/USDm,down,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Scope 1 Emissions,2.5168,tCO2e,down,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Scope 2 Emissions,14.7453,tCO2e,down,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Scope 3 Emissions,52.4261,tCO2e,down,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Total Carbon Footprint,69.6882,tCO2e,down,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Energy Consumption,37152.0572,kWh,down,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Renewable Energy Ratio,35.9853,%,up,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Board Diversity Ratio,32.9782,%,up,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Water Consumption,227.7062,m3,down,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Waste Diverted from Landfill,53.5108,%,up,omniintelos:model-v1
+2023-07,ESG,OmniIntelOS,Carbon Intensity per Revenue,103.7623,tCO2e/USDm,down,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Scope 1 Emissions,2.5924,tCO2e,down,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Scope 2 Emissions,15.1023,tCO2e,down,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Scope 3 Emissions,55.9584,tCO2e,down,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Total Carbon Footprint,73.6531,tCO2e,down,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Energy Consumption,38268.9245,kWh,down,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Renewable Energy Ratio,36.349,%,up,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Board Diversity Ratio,32.6847,%,up,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Water Consumption,234.5515,m3,down,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Waste Diverted from Landfill,54.8884,%,up,omniintelos:model-v1
+2023-08,ESG,OmniIntelOS,Carbon Intensity per Revenue,101.8214,tCO2e/USDm,down,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Scope 1 Emissions,2.6807,tCO2e,down,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Scope 2 Emissions,16.2139,tCO2e,down,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Scope 3 Emissions,55.8264,tCO2e,down,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Total Carbon Footprint,74.7209,tCO2e,down,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Energy Consumption,39571.7226,kWh,down,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Renewable Energy Ratio,33.9139,%,up,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Board Diversity Ratio,33.9625,%,up,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Water Consumption,242.5364,m3,down,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Waste Diverted from Landfill,55.2407,%,up,omniintelos:model-v1
+2023-09,ESG,OmniIntelOS,Carbon Intensity per Revenue,104.4863,tCO2e/USDm,down,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Scope 1 Emissions,2.7957,tCO2e,down,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Scope 2 Emissions,16.9324,tCO2e,down,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Scope 3 Emissions,58.5385,tCO2e,down,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Total Carbon Footprint,78.2666,tCO2e,down,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Energy Consumption,41269.5962,kWh,down,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Renewable Energy Ratio,33.8245,%,up,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Board Diversity Ratio,33.8107,%,up,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Water Consumption,252.9427,m3,down,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Waste Diverted from Landfill,54.8048,%,up,omniintelos:model-v1
+2023-10,ESG,OmniIntelOS,Carbon Intensity per Revenue,104.2277,tCO2e/USDm,down,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Scope 1 Emissions,2.8919,tCO2e,down,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Scope 2 Emissions,17.1596,tCO2e,down,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Scope 3 Emissions,60.8166,tCO2e,down,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Total Carbon Footprint,80.868,tCO2e,down,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Energy Consumption,42690.1952,kWh,down,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Renewable Energy Ratio,35.1685,%,up,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Board Diversity Ratio,33.7801,%,up,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Water Consumption,261.6496,m3,down,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Waste Diverted from Landfill,57.9277,%,up,omniintelos:model-v1
+2023-11,ESG,OmniIntelOS,Carbon Intensity per Revenue,103.5428,tCO2e/USDm,down,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Scope 1 Emissions,2.9787,tCO2e,down,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Scope 2 Emissions,17.2841,tCO2e,down,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Scope 3 Emissions,61.5837,tCO2e,down,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Total Carbon Footprint,81.8464,tCO2e,down,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Energy Consumption,43970.8731,kWh,down,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Renewable Energy Ratio,36.6001,%,up,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Board Diversity Ratio,34.7862,%,up,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Water Consumption,269.4989,m3,down,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Waste Diverted from Landfill,55.9453,%,up,omniintelos:model-v1
+2023-12,ESG,OmniIntelOS,Carbon Intensity per Revenue,103.947,tCO2e/USDm,down,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Scope 1 Emissions,31.1064,tCO2e,down,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Scope 2 Emissions,17.8455,tCO2e,down,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Scope 3 Emissions,62.0394,tCO2e,down,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Total Carbon Footprint,110.9913,tCO2e,down,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Energy Consumption,45856.7353,kWh,down,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Renewable Energy Ratio,37.2327,%,up,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Board Diversity Ratio,34.5714,%,up,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Water Consumption,2381.0574,m3,down,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Waste Diverted from Landfill,56.0418,%,up,omniintelos:model-v1
+2024-01,ESG,OmniIntelOS,Carbon Intensity per Revenue,141.2272,tCO2e/USDm,down,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Scope 1 Emissions,31.2072,tCO2e,down,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Scope 2 Emissions,24.0088,tCO2e,down,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Scope 3 Emissions,64.9491,tCO2e,down,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Total Carbon Footprint,120.1652,tCO2e,down,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Energy Consumption,63844.6982,kWh,down,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Renewable Energy Ratio,39.3468,%,up,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Board Diversity Ratio,35.1663,%,up,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Water Consumption,2390.1772,m3,down,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Waste Diverted from Landfill,59.0888,%,up,omniintelos:model-v1
+2024-02,ESG,OmniIntelOS,Carbon Intensity per Revenue,145.5014,tCO2e/USDm,down,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Scope 1 Emissions,31.344,tCO2e,down,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Scope 2 Emissions,32.3677,tCO2e,down,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Scope 3 Emissions,67.4304,tCO2e,down,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Total Carbon Footprint,131.1421,tCO2e,down,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Energy Consumption,82364.471,kWh,down,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Renewable Energy Ratio,36.616,%,up,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Board Diversity Ratio,36.8342,%,up,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Water Consumption,2402.5564,m3,down,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Waste Diverted from Landfill,58.652,%,up,omniintelos:model-v1
+2024-03,ESG,OmniIntelOS,Carbon Intensity per Revenue,153.126,tCO2e/USDm,down,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Scope 1 Emissions,31.4763,tCO2e,down,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Scope 2 Emissions,38.8855,tCO2e,down,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Scope 3 Emissions,71.0644,tCO2e,down,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Total Carbon Footprint,141.4263,tCO2e,down,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Energy Consumption,100817.2921,kWh,down,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Renewable Energy Ratio,37.7898,%,up,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Board Diversity Ratio,38.9478,%,up,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Water Consumption,2414.5253,m3,down,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Waste Diverted from Landfill,59.7627,%,up,omniintelos:model-v1
+2024-04,ESG,OmniIntelOS,Carbon Intensity per Revenue,156.1168,tCO2e/USDm,down,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Scope 1 Emissions,31.5942,tCO2e,down,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Scope 2 Emissions,44.5358,tCO2e,down,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Scope 3 Emissions,72.2081,tCO2e,down,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Total Carbon Footprint,148.3382,tCO2e,down,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Energy Consumption,119057.336,kWh,down,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Renewable Energy Ratio,39.666,%,up,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Board Diversity Ratio,37.1532,%,up,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Water Consumption,2425.1901,m3,down,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Waste Diverted from Landfill,57.9774,%,up,omniintelos:model-v1
+2024-05,ESG,OmniIntelOS,Carbon Intensity per Revenue,161.9059,tCO2e/USDm,down,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Scope 1 Emissions,31.7409,tCO2e,down,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Scope 2 Emissions,50.9081,tCO2e,down,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Scope 3 Emissions,76.9542,tCO2e,down,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Total Carbon Footprint,159.6032,tCO2e,down,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Energy Consumption,137722.7563,kWh,down,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Renewable Energy Ratio,40.3803,%,up,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Board Diversity Ratio,37.8985,%,up,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Water Consumption,2438.4621,m3,down,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Waste Diverted from Landfill,61.7236,%,up,omniintelos:model-v1
+2024-06,ESG,OmniIntelOS,Carbon Intensity per Revenue,162.4279,tCO2e/USDm,down,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Scope 1 Emissions,31.8787,tCO2e,down,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Scope 2 Emissions,56.8891,tCO2e,down,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Scope 3 Emissions,83.7428,tCO2e,down,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Total Carbon Footprint,172.5106,tCO2e,down,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Energy Consumption,156256.855,kWh,down,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Renewable Energy Ratio,41.2783,%,up,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Board Diversity Ratio,39.6747,%,up,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Water Consumption,2450.9291,m3,down,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Waste Diverted from Landfill,62.4321,%,up,omniintelos:model-v1
+2024-07,ESG,OmniIntelOS,Carbon Intensity per Revenue,159.3516,tCO2e/USDm,down,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Scope 1 Emissions,31.9966,tCO2e,down,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Scope 2 Emissions,65.0902,tCO2e,down,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Scope 3 Emissions,87.135,tCO2e,down,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Total Carbon Footprint,184.2218,tCO2e,down,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Energy Consumption,174496.9025,kWh,down,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Renewable Energy Ratio,39.8361,%,up,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Board Diversity Ratio,39.6672,%,up,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Water Consumption,2461.5939,m3,down,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Waste Diverted from Landfill,63.1673,%,up,omniintelos:model-v1
+2024-08,ESG,OmniIntelOS,Carbon Intensity per Revenue,163.1518,tCO2e/USDm,down,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Scope 1 Emissions,32.125,tCO2e,down,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Scope 2 Emissions,69.6142,tCO2e,down,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Scope 3 Emissions,93.3268,tCO2e,down,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Total Carbon Footprint,195.066,tCO2e,down,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Energy Consumption,192892.1983,kWh,down,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Renewable Energy Ratio,41.7908,%,up,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Board Diversity Ratio,40.1495,%,up,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Water Consumption,2473.2102,m3,down,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Waste Diverted from Landfill,63.6133,%,up,omniintelos:model-v1
+2024-09,ESG,OmniIntelOS,Carbon Intensity per Revenue,159.8723,tCO2e/USDm,down,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Scope 1 Emissions,32.2779,tCO2e,down,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Scope 2 Emissions,74.1894,tCO2e,down,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Scope 3 Emissions,95.6371,tCO2e,down,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Total Carbon Footprint,202.1043,tCO2e,down,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Energy Consumption,211649.2512,kWh,down,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Renewable Energy Ratio,43.4629,%,up,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Board Diversity Ratio,41.3717,%,up,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Water Consumption,2487.0438,m3,down,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Waste Diverted from Landfill,63.8936,%,up,omniintelos:model-v1
+2024-10,ESG,OmniIntelOS,Carbon Intensity per Revenue,162.0946,tCO2e/USDm,down,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Scope 1 Emissions,32.4352,tCO2e,down,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Scope 2 Emissions,80.9287,tCO2e,down,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Scope 3 Emissions,103.3659,tCO2e,down,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Total Carbon Footprint,216.7298,tCO2e,down,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Energy Consumption,230472.6949,kWh,down,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Renewable Energy Ratio,43.3642,%,up,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Board Diversity Ratio,40.2949,%,up,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Water Consumption,2501.2843,m3,down,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Waste Diverted from Landfill,61.2591,%,up,omniintelos:model-v1
+2024-11,ESG,OmniIntelOS,Carbon Intensity per Revenue,159.2889,tCO2e/USDm,down,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Scope 1 Emissions,32.5916,tCO2e,down,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Scope 2 Emissions,80.5648,tCO2e,down,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Scope 3 Emissions,106.129,tCO2e,down,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Total Carbon Footprint,219.2854,tCO2e,down,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Energy Consumption,232781.272,kWh,down,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Renewable Energy Ratio,44.178,%,up,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Board Diversity Ratio,40.1868,%,up,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Water Consumption,2515.4336,m3,down,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Waste Diverted from Landfill,65.0743,%,up,omniintelos:model-v1
+2024-12,ESG,OmniIntelOS,Carbon Intensity per Revenue,157.2656,tCO2e/USDm,down,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Scope 1 Emissions,32.7548,tCO2e,down,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Scope 2 Emissions,84.5457,tCO2e,down,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Scope 3 Emissions,113.4327,tCO2e,down,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Total Carbon Footprint,230.7332,tCO2e,down,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Energy Consumption,235190.1765,kWh,down,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Renewable Energy Ratio,42.0197,%,up,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Board Diversity Ratio,40.3497,%,up,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Water Consumption,2530.1979,m3,down,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Waste Diverted from Landfill,65.2328,%,up,omniintelos:model-v1
+2025-01,ESG,OmniIntelOS,Carbon Intensity per Revenue,153.7313,tCO2e/USDm,down,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Scope 1 Emissions,32.9425,tCO2e,down,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Scope 2 Emissions,84.9414,tCO2e,down,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Scope 3 Emissions,121.0748,tCO2e,down,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Total Carbon Footprint,238.9588,tCO2e,down,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Energy Consumption,237961.2326,kWh,down,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Renewable Energy Ratio,42.4266,%,up,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Board Diversity Ratio,43.2579,%,up,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Water Consumption,2547.1817,m3,down,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Waste Diverted from Landfill,65.3507,%,up,omniintelos:model-v1
+2025-02,ESG,OmniIntelOS,Carbon Intensity per Revenue,148.3138,tCO2e/USDm,down,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Scope 1 Emissions,33.0883,tCO2e,down,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Scope 2 Emissions,80.5915,tCO2e,down,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Scope 3 Emissions,129.0546,tCO2e,down,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Total Carbon Footprint,242.7345,tCO2e,down,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Energy Consumption,240113.5184,kWh,down,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Renewable Energy Ratio,45.8647,%,up,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Board Diversity Ratio,42.7983,%,up,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Water Consumption,2560.3732,m3,down,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Waste Diverted from Landfill,63.2017,%,up,omniintelos:model-v1
+2025-03,ESG,OmniIntelOS,Carbon Intensity per Revenue,140.3253,tCO2e/USDm,down,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Scope 1 Emissions,33.2534,tCO2e,down,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Scope 2 Emissions,81.4045,tCO2e,down,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Scope 3 Emissions,134.1233,tCO2e,down,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Total Carbon Footprint,248.7811,tCO2e,down,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Energy Consumption,242550.2731,kWh,down,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Renewable Energy Ratio,45.8679,%,up,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Board Diversity Ratio,41.6542,%,up,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Audit Compliance Score,98.1461,%,up,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Water Consumption,2575.3081,m3,down,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Waste Diverted from Landfill,64.2112,%,up,omniintelos:model-v1
+2025-04,ESG,OmniIntelOS,Carbon Intensity per Revenue,138.201,tCO2e/USDm,down,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Scope 1 Emissions,33.4316,tCO2e,down,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Scope 2 Emissions,83.2339,tCO2e,down,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Scope 3 Emissions,138.6752,tCO2e,down,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Total Carbon Footprint,255.3407,tCO2e,down,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Energy Consumption,245180.9023,kWh,down,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Renewable Energy Ratio,45.2453,%,up,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Board Diversity Ratio,43.7411,%,up,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Audit Compliance Score,99.0514,%,up,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Water Consumption,2591.4313,m3,down,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Waste Diverted from Landfill,66.5578,%,up,omniintelos:model-v1
+2025-05,ESG,OmniIntelOS,Carbon Intensity per Revenue,137.1885,tCO2e/USDm,down,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Scope 1 Emissions,33.62,tCO2e,down,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Scope 2 Emissions,86.0243,tCO2e,down,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Scope 3 Emissions,145.0904,tCO2e,down,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Total Carbon Footprint,264.7347,tCO2e,down,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Energy Consumption,247961.6588,kWh,down,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Renewable Energy Ratio,44.0442,%,up,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Board Diversity Ratio,43.5846,%,up,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Audit Compliance Score,99.4106,%,up,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Water Consumption,2608.4747,m3,down,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Waste Diverted from Landfill,66.5433,%,up,omniintelos:model-v1
+2025-06,ESG,OmniIntelOS,Carbon Intensity per Revenue,135.6439,tCO2e/USDm,down,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Scope 1 Emissions,33.832,tCO2e,down,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Scope 2 Emissions,81.3245,tCO2e,down,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Scope 3 Emissions,153.5848,tCO2e,down,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Total Carbon Footprint,268.7413,tCO2e,down,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Energy Consumption,251091.8551,kWh,down,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Renewable Energy Ratio,47.7607,%,up,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Board Diversity Ratio,45.0455,%,up,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Audit Compliance Score,98.9296,%,up,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Water Consumption,2627.6598,m3,down,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Waste Diverted from Landfill,69.1111,%,up,omniintelos:model-v1
+2025-07,ESG,OmniIntelOS,Carbon Intensity per Revenue,129.5739,tCO2e/USDm,down,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Scope 1 Emissions,34.036,tCO2e,down,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Scope 2 Emissions,84.8679,tCO2e,down,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Scope 3 Emissions,160.0846,tCO2e,down,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Total Carbon Footprint,278.9885,tCO2e,down,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Energy Consumption,254102.4072,kWh,down,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Renewable Energy Ratio,46.1305,%,up,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Board Diversity Ratio,44.9102,%,up,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Water Consumption,2646.1115,m3,down,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Waste Diverted from Landfill,69.4676,%,up,omniintelos:model-v1
+2025-08,ESG,OmniIntelOS,Carbon Intensity per Revenue,128.8763,tCO2e/USDm,down,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Scope 1 Emissions,34.2637,tCO2e,down,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Scope 2 Emissions,63.0961,tCO2e,down,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Scope 3 Emissions,168.7957,tCO2e,down,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Total Carbon Footprint,266.1555,tCO2e,down,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Energy Consumption,257463.9618,kWh,down,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Renewable Energy Ratio,60.473,%,up,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Board Diversity Ratio,44.8131,%,up,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Water Consumption,2666.7146,m3,down,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Waste Diverted from Landfill,68.1279,%,up,omniintelos:model-v1
+2025-09,ESG,OmniIntelOS,Carbon Intensity per Revenue,116.2486,tCO2e/USDm,down,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Scope 1 Emissions,34.5139,tCO2e,down,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Scope 2 Emissions,59.267,tCO2e,down,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Scope 3 Emissions,180.8765,tCO2e,down,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Total Carbon Footprint,274.6574,tCO2e,down,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Energy Consumption,261157.4171,kWh,down,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Renewable Energy Ratio,63.3968,%,up,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Board Diversity Ratio,46.2705,%,up,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Water Consumption,2689.3519,m3,down,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Waste Diverted from Landfill,69.2619,%,up,omniintelos:model-v1
+2025-10,ESG,OmniIntelOS,Carbon Intensity per Revenue,111.3283,tCO2e/USDm,down,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Scope 1 Emissions,34.761,tCO2e,down,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Scope 2 Emissions,61.7094,tCO2e,down,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Scope 3 Emissions,192.3491,tCO2e,down,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Total Carbon Footprint,288.8195,tCO2e,down,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Energy Consumption,264805.8152,kWh,down,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Renewable Energy Ratio,62.4135,%,up,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Board Diversity Ratio,46.1569,%,up,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Water Consumption,2711.7131,m3,down,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Waste Diverted from Landfill,68.9428,%,up,omniintelos:model-v1
+2025-11,ESG,OmniIntelOS,Carbon Intensity per Revenue,109.6068,tCO2e/USDm,down,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Scope 1 Emissions,35.007,tCO2e,down,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Scope 2 Emissions,64.8046,tCO2e,down,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Scope 3 Emissions,206.275,tCO2e,down,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Total Carbon Footprint,306.0866,tCO2e,down,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Energy Consumption,268437.1471,kWh,down,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Renewable Energy Ratio,61.0622,%,up,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Board Diversity Ratio,45.5676,%,up,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Water Consumption,2733.9696,m3,down,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Waste Diverted from Landfill,70.4101,%,up,omniintelos:model-v1
+2025-12,ESG,OmniIntelOS,Carbon Intensity per Revenue,107.6762,tCO2e/USDm,down,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Scope 1 Emissions,35.2529,tCO2e,down,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Scope 2 Emissions,63.7098,tCO2e,down,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Scope 3 Emissions,218.4825,tCO2e,down,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Total Carbon Footprint,317.4451,tCO2e,down,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Energy Consumption,272066.2242,kWh,down,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Renewable Energy Ratio,62.2306,%,up,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Board Diversity Ratio,45.6064,%,up,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Water Consumption,2756.2123,m3,down,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Waste Diverted from Landfill,71.3963,%,up,omniintelos:model-v1
+2026-01,ESG,OmniIntelOS,Carbon Intensity per Revenue,105.0253,tCO2e/USDm,down,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Scope 1 Emissions,35.5243,tCO2e,down,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Scope 2 Emissions,63.459,tCO2e,down,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Scope 3 Emissions,238.0863,tCO2e,down,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Total Carbon Footprint,337.0697,tCO2e,down,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Energy Consumption,276073.0379,kWh,down,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Renewable Energy Ratio,62.9253,%,up,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Board Diversity Ratio,48.9744,%,up,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Water Consumption,2780.7702,m3,down,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Waste Diverted from Landfill,71.3888,%,up,omniintelos:model-v1
+2026-02,ESG,OmniIntelOS,Carbon Intensity per Revenue,101.5273,tCO2e/USDm,down,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Scope 1 Emissions,35.7933,tCO2e,down,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Scope 2 Emissions,58.0405,tCO2e,down,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Scope 3 Emissions,257.11,tCO2e,down,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Total Carbon Footprint,350.9438,tCO2e,down,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Energy Consumption,280043.878,kWh,down,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Renewable Energy Ratio,66.5718,%,up,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Board Diversity Ratio,47.0403,%,up,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Water Consumption,2805.1076,m3,down,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Waste Diverted from Landfill,70.7305,%,up,omniintelos:model-v1
+2026-03,ESG,OmniIntelOS,Carbon Intensity per Revenue,97.2621,tCO2e/USDm,down,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Scope 1 Emissions,36.0532,tCO2e,down,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Scope 2 Emissions,61.0826,tCO2e,down,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Scope 3 Emissions,271.3716,tCO2e,down,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Total Carbon Footprint,368.5074,tCO2e,down,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Energy Consumption,283880.4616,kWh,down,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Renewable Energy Ratio,65.2951,%,up,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Board Diversity Ratio,48.1394,%,up,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Water Consumption,2828.6222,m3,down,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Waste Diverted from Landfill,73.6772,%,up,omniintelos:model-v1
+2026-04,ESG,OmniIntelOS,Carbon Intensity per Revenue,96.4606,tCO2e/USDm,down,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Scope 1 Emissions,36.3515,tCO2e,down,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Scope 2 Emissions,62.1921,tCO2e,down,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Scope 3 Emissions,286.0131,tCO2e,down,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Total Carbon Footprint,384.5567,tCO2e,down,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Energy Consumption,288284.6671,kWh,down,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Renewable Energy Ratio,65.2046,%,up,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Board Diversity Ratio,47.832,%,up,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Water Consumption,2855.6157,m3,down,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Waste Diverted from Landfill,73.1637,%,up,omniintelos:model-v1
+2026-05,ESG,OmniIntelOS,Carbon Intensity per Revenue,95.2859,tCO2e/USDm,down,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Scope 1 Emissions,36.6319,tCO2e,down,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Scope 2 Emissions,64.8172,tCO2e,down,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Scope 3 Emissions,308.4299,tCO2e,down,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Total Carbon Footprint,409.879,tCO2e,down,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Energy Consumption,292422.7366,kWh,down,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Renewable Energy Ratio,64.249,%,up,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Board Diversity Ratio,47.9339,%,up,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Audit Compliance Score,99.6,%,up,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Privacy Incident Count,0.0,count,down,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Water Consumption,2880.9781,m3,down,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Waste Diverted from Landfill,73.0069,%,up,omniintelos:model-v1
+2026-06,ESG,OmniIntelOS,Carbon Intensity per Revenue,93.6224,tCO2e/USDm,down,omniintelos:model-v1

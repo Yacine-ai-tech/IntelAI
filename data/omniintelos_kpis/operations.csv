@@ -1,0 +1,937 @@
+period,category,segment,metric_name,value,unit,direction,source
+2020-01,Operations,OmniIntelOS,Availability,94.716,%,up,omniintelos:model-v1
+2020-01,Operations,OmniIntelOS,Performance,93.5522,%,up,omniintelos:model-v1
+2020-01,Operations,OmniIntelOS,Quality Rate,96.2592,%,up,omniintelos:model-v1
+2020-01,Operations,OmniIntelOS,Overall Equipment Effectiveness,85.2943,%,up,omniintelos:model-v1
+2020-01,Operations,OmniIntelOS,Defect Rate,3.0674,%,down,omniintelos:model-v1
+2020-01,Operations,OmniIntelOS,First Pass Yield,93.0574,%,up,omniintelos:model-v1
+2020-01,Operations,OmniIntelOS,Cycle Time Efficiency,94.2723,%,up,omniintelos:model-v1
+2020-01,Operations,OmniIntelOS,Mean Time Between Failures,863.6153,hours,up,omniintelos:model-v1
+2020-01,Operations,OmniIntelOS,Throughput,83.4358,count,up,omniintelos:model-v1
+2020-01,Operations,OmniIntelOS,Capacity Utilization,78.8912,%,up,omniintelos:model-v1
+2020-01,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2020-01,Operations,OmniIntelOS,Downtime Hours,9.511,hours,down,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,Availability,95.5326,%,up,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,Performance,92.7773,%,up,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,Quality Rate,95.9997,%,up,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,Overall Equipment Effectiveness,85.0869,%,up,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,Defect Rate,3.2803,%,down,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,First Pass Yield,94.4071,%,up,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,Cycle Time Efficiency,94.9466,%,up,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,Mean Time Between Failures,917.5501,hours,up,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,Throughput,95.2895,count,up,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,Capacity Utilization,82.4109,%,up,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2020-02,Operations,OmniIntelOS,Downtime Hours,9.2736,hours,down,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,Availability,95.9963,%,up,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,Performance,94.1911,%,up,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,Quality Rate,96.3406,%,up,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,Overall Equipment Effectiveness,87.1112,%,up,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,Defect Rate,3.0007,%,down,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,First Pass Yield,94.7188,%,up,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,Cycle Time Efficiency,96.4773,%,up,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,Mean Time Between Failures,969.5953,hours,up,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,Throughput,96.9024,count,up,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,Capacity Utilization,81.4891,%,up,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2020-03,Operations,OmniIntelOS,Downtime Hours,8.2504,hours,down,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,Availability,85.1312,%,up,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,Performance,82.6708,%,up,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,Quality Rate,91.4713,%,up,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,Overall Equipment Effectiveness,64.3763,%,up,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,Defect Rate,6.9935,%,down,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,First Pass Yield,89.5567,%,up,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,Cycle Time Efficiency,84.8711,%,up,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,Mean Time Between Failures,900.1431,hours,up,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,Throughput,80.0271,count,up,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,Capacity Utilization,74.5385,%,up,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,Safety Incidents,3.0,count,down,omniintelos:model-v1
+2020-04,Operations,OmniIntelOS,Downtime Hours,27.8779,hours,down,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,Availability,83.3545,%,up,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,Performance,83.9977,%,up,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,Quality Rate,91.7788,%,up,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,Overall Equipment Effectiveness,64.2597,%,up,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,Defect Rate,6.7413,%,down,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,First Pass Yield,89.3999,%,up,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,Cycle Time Efficiency,85.614,%,up,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,Mean Time Between Failures,774.2218,hours,up,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,Throughput,82.6277,count,up,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,Capacity Utilization,76.1544,%,up,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2020-05,Operations,OmniIntelOS,Downtime Hours,32.0589,hours,down,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,Availability,82.897,%,up,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,Performance,81.3345,%,up,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,Quality Rate,92.1048,%,up,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,Overall Equipment Effectiveness,62.1006,%,up,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,Defect Rate,6.4741,%,down,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,First Pass Yield,89.1251,%,up,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,Cycle Time Efficiency,82.4701,%,up,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,Mean Time Between Failures,806.2028,hours,up,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,Throughput,81.6036,count,up,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,Capacity Utilization,71.485,%,up,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2020-06,Operations,OmniIntelOS,Downtime Hours,33.3641,hours,down,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,Availability,82.8576,%,up,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,Performance,81.7415,%,up,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,Quality Rate,90.8735,%,up,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,Overall Equipment Effectiveness,61.5477,%,up,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,Defect Rate,7.4837,%,down,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,First Pass Yield,87.8855,%,up,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,Cycle Time Efficiency,83.0811,%,up,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,Mean Time Between Failures,871.502,hours,up,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,Throughput,100.1057,count,up,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,Capacity Utilization,72.1431,%,up,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,Safety Incidents,3.0,count,down,omniintelos:model-v1
+2020-07,Operations,OmniIntelOS,Downtime Hours,32.0593,hours,down,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,Availability,83.8495,%,up,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,Performance,82.0253,%,up,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,Quality Rate,90.9367,%,up,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,Overall Equipment Effectiveness,62.5443,%,up,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,Defect Rate,7.4319,%,down,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,First Pass Yield,88.3774,%,up,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,Cycle Time Efficiency,83.5979,%,up,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,Mean Time Between Failures,769.5824,hours,up,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,Throughput,86.7658,count,up,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,Capacity Utilization,69.5366,%,up,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2020-08,Operations,OmniIntelOS,Downtime Hours,31.3328,hours,down,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,Availability,84.927,%,up,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,Performance,83.5023,%,up,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,Quality Rate,91.2059,%,up,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,Overall Equipment Effectiveness,64.6796,%,up,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,Defect Rate,7.2111,%,down,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,First Pass Yield,88.1502,%,up,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,Cycle Time Efficiency,84.0236,%,up,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,Mean Time Between Failures,792.9606,hours,up,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,Throughput,109.4433,count,up,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,Capacity Utilization,70.6558,%,up,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2020-09,Operations,OmniIntelOS,Downtime Hours,28.198,hours,down,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,Availability,97.2203,%,up,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,Performance,95.4202,%,up,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,Quality Rate,97.6166,%,up,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,Overall Equipment Effectiveness,90.5567,%,up,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,Defect Rate,1.9544,%,down,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,First Pass Yield,95.5677,%,up,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,Cycle Time Efficiency,96.8654,%,up,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,Mean Time Between Failures,1102.3974,hours,up,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,Throughput,103.4507,count,up,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,Capacity Utilization,84.6432,%,up,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2020-10,Operations,OmniIntelOS,Downtime Hours,4.8927,hours,down,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,Availability,96.972,%,up,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,Performance,96.3845,%,up,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,Quality Rate,96.2831,%,up,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,Overall Equipment Effectiveness,89.9919,%,up,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,Defect Rate,3.0479,%,down,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,First Pass Yield,93.9822,%,up,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,Cycle Time Efficiency,97.3361,%,up,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,Mean Time Between Failures,953.9499,hours,up,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,Throughput,121.5259,count,up,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,Capacity Utilization,81.4589,%,up,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2020-11,Operations,OmniIntelOS,Downtime Hours,6.0037,hours,down,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,Availability,97.4595,%,up,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,Performance,95.1947,%,up,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,Quality Rate,97.419,%,up,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,Overall Equipment Effectiveness,90.3817,%,up,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,Defect Rate,2.1164,%,down,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,First Pass Yield,94.3336,%,up,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,Cycle Time Efficiency,96.7172,%,up,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,Mean Time Between Failures,1087.1486,hours,up,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,Throughput,123.5341,count,up,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,Capacity Utilization,84.9547,%,up,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2020-12,Operations,OmniIntelOS,Downtime Hours,5.5688,hours,down,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,Availability,97.7642,%,up,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,Performance,95.5063,%,up,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,Quality Rate,97.5701,%,up,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,Overall Equipment Effectiveness,91.1021,%,up,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,Defect Rate,1.9925,%,down,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,First Pass Yield,95.6541,%,up,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,Cycle Time Efficiency,96.9826,%,up,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,Mean Time Between Failures,946.8585,hours,up,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,Throughput,136.9962,count,up,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,Capacity Utilization,81.6526,%,up,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2021-01,Operations,OmniIntelOS,Downtime Hours,4.9259,hours,down,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,Availability,96.7191,%,up,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,Performance,96.4951,%,up,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,Quality Rate,96.8873,%,up,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,Overall Equipment Effectiveness,90.4242,%,up,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,Defect Rate,2.5524,%,down,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,First Pass Yield,94.8682,%,up,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,Cycle Time Efficiency,97.8318,%,up,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,Mean Time Between Failures,1048.0526,hours,up,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,Throughput,125.998,count,up,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,Capacity Utilization,86.6772,%,up,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2021-02,Operations,OmniIntelOS,Downtime Hours,5.3223,hours,down,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,Availability,96.824,%,up,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,Performance,95.2301,%,up,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,Quality Rate,96.5818,%,up,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,Overall Equipment Effectiveness,89.0538,%,up,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,Defect Rate,2.8029,%,down,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,First Pass Yield,94.8,%,up,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,Cycle Time Efficiency,97.7107,%,up,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,Mean Time Between Failures,1019.1599,hours,up,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,Throughput,131.0497,count,up,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,Capacity Utilization,83.7432,%,up,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2021-03,Operations,OmniIntelOS,Downtime Hours,6.255,hours,down,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,Availability,96.7915,%,up,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,Performance,95.7344,%,up,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,Quality Rate,96.0089,%,up,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,Overall Equipment Effectiveness,88.9645,%,up,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,Defect Rate,3.2727,%,down,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,First Pass Yield,93.1716,%,up,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,Cycle Time Efficiency,96.7665,%,up,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,Mean Time Between Failures,1021.216,hours,up,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,Throughput,131.9525,count,up,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,Capacity Utilization,86.3858,%,up,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2021-04,Operations,OmniIntelOS,Downtime Hours,6.1027,hours,down,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,Availability,98.3428,%,up,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,Performance,95.4262,%,up,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,Quality Rate,97.1756,%,up,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,Overall Equipment Effectiveness,91.1942,%,up,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,Defect Rate,2.316,%,down,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,First Pass Yield,95.6441,%,up,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,Cycle Time Efficiency,96.4622,%,up,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,Mean Time Between Failures,988.4245,hours,up,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,Throughput,146.1226,count,up,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,Capacity Utilization,84.1294,%,up,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2021-05,Operations,OmniIntelOS,Downtime Hours,3.3596,hours,down,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,Availability,97.5225,%,up,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,Performance,95.5866,%,up,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,Quality Rate,97.1423,%,up,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,Overall Equipment Effectiveness,90.5545,%,up,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,Defect Rate,2.3433,%,down,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,First Pass Yield,94.6659,%,up,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,Cycle Time Efficiency,97.0589,%,up,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,Mean Time Between Failures,970.3652,hours,up,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,Throughput,149.1206,count,up,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,Capacity Utilization,83.4184,%,up,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2021-06,Operations,OmniIntelOS,Downtime Hours,3.6105,hours,down,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,Availability,93.5984,%,up,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,Performance,91.0177,%,up,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,Quality Rate,95.2283,%,up,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,Overall Equipment Effectiveness,81.126,%,up,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,Defect Rate,3.9128,%,down,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,First Pass Yield,93.3272,%,up,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,Cycle Time Efficiency,93.3284,%,up,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,Mean Time Between Failures,869.0207,hours,up,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,Throughput,157.5132,count,up,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,Capacity Utilization,81.8392,%,up,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2021-07,Operations,OmniIntelOS,Downtime Hours,11.0976,hours,down,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,Availability,93.553,%,up,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,Performance,90.9017,%,up,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,Quality Rate,95.9449,%,up,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,Overall Equipment Effectiveness,81.5927,%,up,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,Defect Rate,3.3252,%,down,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,First Pass Yield,93.3401,%,up,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,Cycle Time Efficiency,91.6669,%,up,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,Mean Time Between Failures,1061.3489,hours,up,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,Throughput,163.7817,count,up,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,Capacity Utilization,77.3488,%,up,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2021-08,Operations,OmniIntelOS,Downtime Hours,11.8636,hours,down,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,Availability,93.2976,%,up,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,Performance,90.2957,%,up,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,Quality Rate,96.0087,%,up,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,Overall Equipment Effectiveness,80.8813,%,up,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,Defect Rate,3.2729,%,down,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,First Pass Yield,94.2059,%,up,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,Cycle Time Efficiency,90.9011,%,up,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,Mean Time Between Failures,940.099,hours,up,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,Throughput,156.3088,count,up,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,Capacity Utilization,77.3058,%,up,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2021-09,Operations,OmniIntelOS,Downtime Hours,12.0719,hours,down,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,Availability,92.823,%,up,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,Performance,92.1695,%,up,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,Quality Rate,95.7399,%,up,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,Overall Equipment Effectiveness,81.9098,%,up,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,Defect Rate,3.4933,%,down,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,First Pass Yield,93.2747,%,up,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,Cycle Time Efficiency,93.4498,%,up,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,Mean Time Between Failures,960.5425,hours,up,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,Throughput,184.0207,count,up,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,Capacity Utilization,78.3803,%,up,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2021-10,Operations,OmniIntelOS,Downtime Hours,13.5751,hours,down,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,Availability,92.2522,%,up,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,Performance,90.5624,%,up,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,Quality Rate,94.9803,%,up,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,Overall Equipment Effectiveness,79.352,%,up,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,Defect Rate,4.1162,%,down,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,First Pass Yield,92.4101,%,up,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,Cycle Time Efficiency,92.4552,%,up,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,Mean Time Between Failures,971.3675,hours,up,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,Throughput,175.7989,count,up,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,Capacity Utilization,80.7993,%,up,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2021-11,Operations,OmniIntelOS,Downtime Hours,14.771,hours,down,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,Availability,93.6162,%,up,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,Performance,91.1524,%,up,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,Quality Rate,95.6813,%,up,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,Overall Equipment Effectiveness,81.6481,%,up,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,Defect Rate,3.5413,%,down,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,First Pass Yield,92.4339,%,up,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,Cycle Time Efficiency,92.4383,%,up,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,Mean Time Between Failures,882.6757,hours,up,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,Throughput,190.3892,count,up,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,Capacity Utilization,82.152,%,up,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2021-12,Operations,OmniIntelOS,Downtime Hours,12.7744,hours,down,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,Availability,92.1439,%,up,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,Performance,92.4882,%,up,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,Quality Rate,94.3429,%,up,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,Overall Equipment Effectiveness,80.4012,%,up,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,Defect Rate,4.6388,%,down,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,First Pass Yield,91.9324,%,up,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,Cycle Time Efficiency,93.3281,%,up,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,Mean Time Between Failures,1008.87,hours,up,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,Throughput,198.757,count,up,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,Capacity Utilization,78.4205,%,up,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2022-01,Operations,OmniIntelOS,Downtime Hours,14.358,hours,down,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,Availability,93.3584,%,up,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,Performance,91.0951,%,up,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,Quality Rate,94.9056,%,up,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,Overall Equipment Effectiveness,80.7124,%,up,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,Defect Rate,4.1774,%,down,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,First Pass Yield,93.0572,%,up,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,Cycle Time Efficiency,91.6243,%,up,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,Mean Time Between Failures,916.8796,hours,up,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,Throughput,202.2571,count,up,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,Capacity Utilization,81.159,%,up,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2022-02,Operations,OmniIntelOS,Downtime Hours,13.3481,hours,down,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,Availability,93.7268,%,up,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,Performance,90.9396,%,up,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,Quality Rate,95.7773,%,up,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,Overall Equipment Effectiveness,81.6355,%,up,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,Defect Rate,3.4626,%,down,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,First Pass Yield,92.8026,%,up,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,Cycle Time Efficiency,92.9912,%,up,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,Mean Time Between Failures,931.8458,hours,up,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,Throughput,205.3579,count,up,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,Capacity Utilization,79.3308,%,up,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2022-03,Operations,OmniIntelOS,Downtime Hours,11.8078,hours,down,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,Availability,80.7526,%,up,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,Performance,77.9721,%,up,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,Quality Rate,90.7449,%,up,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,Overall Equipment Effectiveness,57.1371,%,up,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,Defect Rate,7.5892,%,down,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,First Pass Yield,87.7,%,up,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,Cycle Time Efficiency,78.4758,%,up,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,Mean Time Between Failures,854.1023,hours,up,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,Throughput,190.2751,count,up,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,Capacity Utilization,70.3181,%,up,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2022-04,Operations,OmniIntelOS,Downtime Hours,36.0651,hours,down,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,Availability,78.9652,%,up,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,Performance,76.8795,%,up,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,Quality Rate,90.3943,%,up,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,Overall Equipment Effectiveness,54.8767,%,up,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,Defect Rate,7.8767,%,down,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,First Pass Yield,87.835,%,up,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,Cycle Time Efficiency,78.5604,%,up,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,Mean Time Between Failures,815.7776,hours,up,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,Throughput,175.2862,count,up,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,Capacity Utilization,65.2791,%,up,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2022-05,Operations,OmniIntelOS,Downtime Hours,40.9641,hours,down,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,Availability,78.2719,%,up,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,Performance,77.3936,%,up,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,Quality Rate,90.0184,%,up,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,Overall Equipment Effectiveness,54.5309,%,up,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,Defect Rate,8.1849,%,down,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,First Pass Yield,88.4234,%,up,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,Cycle Time Efficiency,78.9884,%,up,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,Mean Time Between Failures,821.5945,hours,up,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,Throughput,194.6304,count,up,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,Capacity Utilization,70.5658,%,up,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2022-06,Operations,OmniIntelOS,Downtime Hours,41.271,hours,down,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,Availability,77.6853,%,up,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,Performance,76.4383,%,up,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,Quality Rate,90.278,%,up,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,Overall Equipment Effectiveness,53.6083,%,up,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,Defect Rate,7.972,%,down,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,First Pass Yield,87.1905,%,up,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,Cycle Time Efficiency,77.2483,%,up,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,Mean Time Between Failures,695.047,hours,up,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,Throughput,206.1475,count,up,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,Capacity Utilization,65.6225,%,up,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,Safety Incidents,3.0,count,down,omniintelos:model-v1
+2022-07,Operations,OmniIntelOS,Downtime Hours,42.2261,hours,down,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,Availability,79.3497,%,up,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,Performance,77.5691,%,up,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,Quality Rate,88.6798,%,up,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,Overall Equipment Effectiveness,54.5832,%,up,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,Defect Rate,9.2825,%,down,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,First Pass Yield,85.7612,%,up,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,Cycle Time Efficiency,79.2141,%,up,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,Mean Time Between Failures,766.4192,hours,up,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,Throughput,194.1746,count,up,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,Capacity Utilization,67.5882,%,up,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2022-08,Operations,OmniIntelOS,Downtime Hours,39.7169,hours,down,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,Availability,79.5428,%,up,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,Performance,76.0862,%,up,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,Quality Rate,90.1556,%,up,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,Overall Equipment Effectiveness,54.5632,%,up,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,Defect Rate,8.0724,%,down,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,First Pass Yield,87.1387,%,up,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,Cycle Time Efficiency,78.4098,%,up,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,Mean Time Between Failures,740.4849,hours,up,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,Throughput,206.3875,count,up,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,Capacity Utilization,66.4246,%,up,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2022-09,Operations,OmniIntelOS,Downtime Hours,38.0514,hours,down,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,Availability,79.3238,%,up,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,Performance,78.4854,%,up,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,Quality Rate,89.2599,%,up,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,Overall Equipment Effectiveness,55.5711,%,up,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,Defect Rate,8.8069,%,down,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,First Pass Yield,86.6774,%,up,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,Cycle Time Efficiency,80.3764,%,up,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,Mean Time Between Failures,821.4209,hours,up,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,Throughput,234.1512,count,up,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,Capacity Utilization,68.2633,%,up,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2022-10,Operations,OmniIntelOS,Downtime Hours,38.8382,hours,down,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,Availability,77.5386,%,up,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,Performance,78.0408,%,up,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,Quality Rate,90.3465,%,up,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,Overall Equipment Effectiveness,54.6703,%,up,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,Defect Rate,7.9159,%,down,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,First Pass Yield,87.7243,%,up,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,Cycle Time Efficiency,78.824,%,up,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,Mean Time Between Failures,743.6406,hours,up,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,Throughput,234.7918,count,up,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,Capacity Utilization,65.8436,%,up,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2022-11,Operations,OmniIntelOS,Downtime Hours,42.0976,hours,down,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,Availability,79.2351,%,up,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,Performance,78.6572,%,up,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,Quality Rate,90.0097,%,up,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,Overall Equipment Effectiveness,56.0978,%,up,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,Defect Rate,8.192,%,down,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,First Pass Yield,87.5696,%,up,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,Cycle Time Efficiency,79.5198,%,up,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,Mean Time Between Failures,852.2056,hours,up,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,Throughput,246.9818,count,up,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,Capacity Utilization,65.8503,%,up,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2022-12,Operations,OmniIntelOS,Downtime Hours,39.8941,hours,down,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,Availability,77.2675,%,up,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,Performance,75.7505,%,up,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,Quality Rate,89.1609,%,up,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,Overall Equipment Effectiveness,52.1864,%,up,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,Defect Rate,8.888,%,down,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,First Pass Yield,86.1619,%,up,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,Cycle Time Efficiency,77.9003,%,up,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,Mean Time Between Failures,300.2654,hours,up,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,Throughput,243.1963,count,up,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,Capacity Utilization,65.5173,%,up,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,Safety Incidents,3.0,count,down,omniintelos:model-v1
+2023-01,Operations,OmniIntelOS,Downtime Hours,43.9793,hours,down,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,Availability,75.2645,%,up,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,Performance,75.6043,%,up,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,Quality Rate,87.9211,%,up,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,Overall Equipment Effectiveness,50.0299,%,up,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,Defect Rate,9.9047,%,down,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,First Pass Yield,84.7961,%,up,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,Cycle Time Efficiency,76.5463,%,up,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,Mean Time Between Failures,288.364,hours,up,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,Throughput,260.8469,count,up,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,Capacity Utilization,64.3453,%,up,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2023-02,Operations,OmniIntelOS,Downtime Hours,47.4284,hours,down,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,Availability,77.1678,%,up,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,Performance,74.075,%,up,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,Quality Rate,89.0567,%,up,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,Overall Equipment Effectiveness,50.9066,%,up,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,Defect Rate,8.9735,%,down,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,First Pass Yield,86.7104,%,up,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,Cycle Time Efficiency,74.6621,%,up,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,Mean Time Between Failures,250.7969,hours,up,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,Throughput,261.3773,count,up,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,Capacity Utilization,62.098,%,up,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2023-03,Operations,OmniIntelOS,Downtime Hours,42.8833,hours,down,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,Availability,77.2982,%,up,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,Performance,75.6606,%,up,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,Quality Rate,88.7455,%,up,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,Overall Equipment Effectiveness,51.9022,%,up,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,Defect Rate,9.2287,%,down,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,First Pass Yield,85.6728,%,up,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,Cycle Time Efficiency,77.6626,%,up,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,Mean Time Between Failures,263.3482,hours,up,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,Throughput,257.8486,count,up,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,Capacity Utilization,65.6861,%,up,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2023-04,Operations,OmniIntelOS,Downtime Hours,43.1389,hours,down,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,Availability,75.6388,%,up,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,Performance,73.811,%,up,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,Quality Rate,88.6451,%,up,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,Overall Equipment Effectiveness,49.4903,%,up,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,Defect Rate,9.311,%,down,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,First Pass Yield,86.477,%,up,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,Cycle Time Efficiency,75.5437,%,up,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,Mean Time Between Failures,269.6625,hours,up,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,Throughput,283.0681,count,up,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,Capacity Utilization,61.4984,%,up,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2023-05,Operations,OmniIntelOS,Downtime Hours,46.1413,hours,down,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,Availability,77.3583,%,up,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,Performance,75.2839,%,up,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,Quality Rate,88.7812,%,up,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,Overall Equipment Effectiveness,51.7047,%,up,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,Defect Rate,9.1994,%,down,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,First Pass Yield,86.6026,%,up,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,Cycle Time Efficiency,77.1986,%,up,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,Mean Time Between Failures,937.1286,hours,up,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,Throughput,283.333,count,up,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,Capacity Utilization,67.4435,%,up,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2023-06,Operations,OmniIntelOS,Downtime Hours,42.6351,hours,down,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,Availability,94.138,%,up,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,Performance,92.5291,%,up,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,Quality Rate,95.0573,%,up,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,Overall Equipment Effectiveness,82.7996,%,up,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,Defect Rate,4.053,%,down,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,First Pass Yield,92.2289,%,up,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,Cycle Time Efficiency,94.9205,%,up,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,Mean Time Between Failures,1235.2843,hours,up,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,Throughput,385.5759,count,up,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,Capacity Utilization,80.2837,%,up,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,Safety Incidents,3.0,count,down,omniintelos:model-v1
+2023-07,Operations,OmniIntelOS,Downtime Hours,11.2968,hours,down,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,Availability,93.3283,%,up,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,Performance,91.0977,%,up,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,Quality Rate,96.1472,%,up,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,Overall Equipment Effectiveness,81.7443,%,up,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,Defect Rate,3.1593,%,down,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,First Pass Yield,94.0152,%,up,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,Cycle Time Efficiency,92.2074,%,up,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,Mean Time Between Failures,982.6073,hours,up,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,Throughput,392.7113,count,up,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,Capacity Utilization,81.9266,%,up,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,Safety Incidents,3.0,count,down,omniintelos:model-v1
+2023-08,Operations,OmniIntelOS,Downtime Hours,12.7202,hours,down,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,Availability,92.7481,%,up,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,Performance,92.2621,%,up,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,Quality Rate,96.2347,%,up,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,Overall Equipment Effectiveness,82.3493,%,up,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,Defect Rate,3.0875,%,down,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,First Pass Yield,94.0054,%,up,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,Cycle Time Efficiency,93.5666,%,up,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,Mean Time Between Failures,1090.8504,hours,up,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,Throughput,406.2556,count,up,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,Capacity Utilization,81.2342,%,up,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2023-09,Operations,OmniIntelOS,Downtime Hours,13.9601,hours,down,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,Availability,93.5613,%,up,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,Performance,93.5004,%,up,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,Quality Rate,95.44,%,up,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,Overall Equipment Effectiveness,83.491,%,up,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,Defect Rate,3.7392,%,down,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,First Pass Yield,92.5506,%,up,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,Cycle Time Efficiency,96.0776,%,up,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,Mean Time Between Failures,1072.1911,hours,up,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,Throughput,414.3575,count,up,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,Capacity Utilization,79.1705,%,up,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2023-10,Operations,OmniIntelOS,Downtime Hours,13.3148,hours,down,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,Availability,94.8293,%,up,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,Performance,93.0436,%,up,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,Quality Rate,95.5005,%,up,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,Overall Equipment Effectiveness,84.2625,%,up,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,Defect Rate,3.6896,%,down,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,First Pass Yield,93.2702,%,up,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,Cycle Time Efficiency,95.6314,%,up,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,Mean Time Between Failures,1086.5572,hours,up,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,Throughput,437.7273,count,up,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,Capacity Utilization,82.302,%,up,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2023-11,Operations,OmniIntelOS,Downtime Hours,9.7628,hours,down,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,Availability,94.4674,%,up,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,Performance,93.4379,%,up,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,Quality Rate,95.571,%,up,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,Overall Equipment Effectiveness,84.359,%,up,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,Defect Rate,3.6318,%,down,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,First Pass Yield,93.0703,%,up,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,Cycle Time Efficiency,95.7798,%,up,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,Mean Time Between Failures,1176.2626,hours,up,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,Throughput,459.98,count,up,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,Capacity Utilization,82.1328,%,up,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2023-12,Operations,OmniIntelOS,Downtime Hours,9.9874,hours,down,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,Availability,97.0207,%,up,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,Performance,94.95,%,up,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,Quality Rate,95.9286,%,up,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,Overall Equipment Effectiveness,88.3706,%,up,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,Defect Rate,3.3385,%,down,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,First Pass Yield,93.9986,%,up,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,Cycle Time Efficiency,97.5253,%,up,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,Mean Time Between Failures,1082.8176,hours,up,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,Throughput,488.6413,count,up,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,Capacity Utilization,81.5158,%,up,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2024-01,Operations,OmniIntelOS,Downtime Hours,5.5254,hours,down,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,Availability,93.9709,%,up,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,Performance,93.8767,%,up,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,Quality Rate,96.0587,%,up,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,Overall Equipment Effectiveness,84.7399,%,up,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,Defect Rate,3.2319,%,down,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,First Pass Yield,92.8627,%,up,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,Cycle Time Efficiency,95.5033,%,up,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,Mean Time Between Failures,962.9101,hours,up,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,Throughput,485.1506,count,up,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,Capacity Utilization,80.5859,%,up,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,Safety Incidents,3.0,count,down,omniintelos:model-v1
+2024-02,Operations,OmniIntelOS,Downtime Hours,10.4191,hours,down,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,Availability,94.5111,%,up,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,Performance,92.8294,%,up,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,Quality Rate,96.8168,%,up,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,Overall Equipment Effectiveness,84.9414,%,up,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,Defect Rate,2.6102,%,down,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,First Pass Yield,94.4972,%,up,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,Cycle Time Efficiency,95.0139,%,up,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,Mean Time Between Failures,1012.9692,hours,up,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,Throughput,502.5714,count,up,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,Capacity Utilization,83.4996,%,up,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2024-03,Operations,OmniIntelOS,Downtime Hours,11.0602,hours,down,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,Availability,94.6488,%,up,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,Performance,93.9294,%,up,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,Quality Rate,95.1575,%,up,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,Overall Equipment Effectiveness,84.5979,%,up,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,Defect Rate,3.9708,%,down,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,First Pass Yield,92.7019,%,up,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,Cycle Time Efficiency,94.6727,%,up,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,Mean Time Between Failures,1033.7923,hours,up,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,Throughput,539.1331,count,up,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,Capacity Utilization,79.9467,%,up,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2024-04,Operations,OmniIntelOS,Downtime Hours,9.1478,hours,down,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,Availability,95.966,%,up,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,Performance,94.5533,%,up,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,Quality Rate,96.3437,%,up,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,Overall Equipment Effectiveness,87.4213,%,up,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,Defect Rate,2.9982,%,down,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,First Pass Yield,94.3626,%,up,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,Cycle Time Efficiency,95.1833,%,up,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,Mean Time Between Failures,1116.048,hours,up,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,Throughput,561.5493,count,up,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,Capacity Utilization,81.1065,%,up,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2024-05,Operations,OmniIntelOS,Downtime Hours,8.2348,hours,down,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,Availability,96.3593,%,up,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,Performance,93.0822,%,up,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,Quality Rate,95.1132,%,up,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,Overall Equipment Effectiveness,85.3102,%,up,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,Defect Rate,4.0072,%,down,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,First Pass Yield,92.3045,%,up,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,Cycle Time Efficiency,94.7246,%,up,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,Mean Time Between Failures,993.9989,hours,up,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,Throughput,559.8188,count,up,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,Capacity Utilization,79.0012,%,up,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2024-06,Operations,OmniIntelOS,Downtime Hours,5.8945,hours,down,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,Availability,96.2509,%,up,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,Performance,94.9183,%,up,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,Quality Rate,96.3389,%,up,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,Overall Equipment Effectiveness,88.0149,%,up,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,Defect Rate,3.0021,%,down,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,First Pass Yield,94.4162,%,up,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,Cycle Time Efficiency,95.869,%,up,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,Mean Time Between Failures,1143.3976,hours,up,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,Throughput,589.2226,count,up,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,Capacity Utilization,80.5895,%,up,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2024-07,Operations,OmniIntelOS,Downtime Hours,6.1987,hours,down,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,Availability,94.301,%,up,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,Performance,95.0054,%,up,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,Quality Rate,96.5251,%,up,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,Overall Equipment Effectiveness,86.4779,%,up,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,Defect Rate,2.8495,%,down,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,First Pass Yield,94.8879,%,up,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,Cycle Time Efficiency,95.8919,%,up,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,Mean Time Between Failures,946.7844,hours,up,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,Throughput,626.1968,count,up,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,Capacity Utilization,83.8715,%,up,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2024-08,Operations,OmniIntelOS,Downtime Hours,11.0319,hours,down,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,Quality Rate,99.5,%,up,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.5374,%,up,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,Defect Rate,0.41,%,down,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,First Pass Yield,96.2618,%,up,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,Mean Time Between Failures,1284.889,hours,up,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,Throughput,657.8733,count,up,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,Capacity Utilization,86.1613,%,up,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2024-09,Operations,OmniIntelOS,Downtime Hours,2.5971,hours,down,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,Quality Rate,99.5,%,up,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.5374,%,up,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,Defect Rate,0.41,%,down,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,First Pass Yield,96.4255,%,up,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,Mean Time Between Failures,1113.5074,hours,up,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,Throughput,692.7308,count,up,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,Capacity Utilization,87.3712,%,up,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2024-10,Operations,OmniIntelOS,Downtime Hours,3.425,hours,down,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,Quality Rate,99.5,%,up,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.5374,%,up,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,Defect Rate,0.41,%,down,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,First Pass Yield,97.3754,%,up,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,Mean Time Between Failures,1222.2408,hours,up,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,Throughput,717.9542,count,up,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,Capacity Utilization,88.6867,%,up,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2024-11,Operations,OmniIntelOS,Downtime Hours,2.6484,hours,down,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,Quality Rate,99.5,%,up,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.5374,%,up,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,Defect Rate,0.41,%,down,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,First Pass Yield,97.5,%,up,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,Mean Time Between Failures,1155.5483,hours,up,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,Throughput,726.1195,count,up,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,Capacity Utilization,88.9664,%,up,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2024-12,Operations,OmniIntelOS,Downtime Hours,1.9638,hours,down,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,Quality Rate,99.1365,%,up,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.1847,%,up,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,Defect Rate,0.7081,%,down,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,First Pass Yield,97.1165,%,up,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,Mean Time Between Failures,1087.0783,hours,up,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,Throughput,768.9427,count,up,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,Capacity Utilization,86.0605,%,up,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2025-01,Operations,OmniIntelOS,Downtime Hours,2.4672,hours,down,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,Quality Rate,99.3461,%,up,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.3881,%,up,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,Defect Rate,0.5362,%,down,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,First Pass Yield,97.0802,%,up,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,Mean Time Between Failures,1086.5013,hours,up,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,Throughput,779.1059,count,up,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,Capacity Utilization,83.3656,%,up,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2025-02,Operations,OmniIntelOS,Downtime Hours,2.6496,hours,down,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,Availability,76.0862,%,up,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,Performance,74.0327,%,up,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,Quality Rate,88.5297,%,up,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,Overall Equipment Effectiveness,49.8676,%,up,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,Defect Rate,9.4057,%,down,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,First Pass Yield,86.2713,%,up,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,Cycle Time Efficiency,75.2093,%,up,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,Mean Time Between Failures,907.5972,hours,up,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,Throughput,617.3905,count,up,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,Capacity Utilization,65.042,%,up,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2025-03,Operations,OmniIntelOS,Downtime Hours,45.7524,hours,down,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,Availability,76.8118,%,up,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,Performance,74.6752,%,up,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,Quality Rate,87.6409,%,up,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,Overall Equipment Effectiveness,50.2703,%,up,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,Defect Rate,10.1345,%,down,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,First Pass Yield,85.1667,%,up,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,Cycle Time Efficiency,77.2616,%,up,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,Mean Time Between Failures,914.9769,hours,up,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,Throughput,630.7957,count,up,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,Capacity Utilization,66.1965,%,up,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2025-04,Operations,OmniIntelOS,Downtime Hours,43.3022,hours,down,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,Availability,75.9144,%,up,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,Performance,75.6681,%,up,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,Quality Rate,89.0536,%,up,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,Overall Equipment Effectiveness,51.155,%,up,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,Defect Rate,8.976,%,down,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,First Pass Yield,87.4947,%,up,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,Cycle Time Efficiency,76.5123,%,up,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,Mean Time Between Failures,891.1367,hours,up,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,Throughput,657.6779,count,up,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,Capacity Utilization,67.1971,%,up,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2025-05,Operations,OmniIntelOS,Downtime Hours,45.515,hours,down,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,Availability,76.0512,%,up,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,Performance,75.8048,%,up,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,Quality Rate,88.2545,%,up,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,Overall Equipment Effectiveness,50.8791,%,up,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,Defect Rate,9.6313,%,down,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,First Pass Yield,85.2344,%,up,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,Cycle Time Efficiency,78.2603,%,up,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,Mean Time Between Failures,771.2769,hours,up,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,Throughput,682.1227,count,up,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,Capacity Utilization,63.5788,%,up,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2025-06,Operations,OmniIntelOS,Downtime Hours,44.8582,hours,down,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,Availability,75.5264,%,up,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,Performance,73.8136,%,up,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,Quality Rate,88.4536,%,up,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,Overall Equipment Effectiveness,49.3118,%,up,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,Defect Rate,9.4681,%,down,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,First Pass Yield,86.0621,%,up,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,Cycle Time Efficiency,74.7648,%,up,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,Mean Time Between Failures,778.7343,hours,up,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,Throughput,693.6131,count,up,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,Capacity Utilization,63.7216,%,up,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2025-07,Operations,OmniIntelOS,Downtime Hours,46.6303,hours,down,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,Availability,77.4369,%,up,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,Performance,76.5553,%,up,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,Quality Rate,87.8486,%,up,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,Overall Equipment Effectiveness,52.0785,%,up,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,Defect Rate,9.9641,%,down,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,First Pass Yield,86.1231,%,up,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,Cycle Time Efficiency,77.2454,%,up,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,Mean Time Between Failures,752.7254,hours,up,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,Throughput,739.3644,count,up,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,Capacity Utilization,68.8635,%,up,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2025-08,Operations,OmniIntelOS,Downtime Hours,42.228,hours,down,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,Quality Rate,98.8234,%,up,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,Overall Equipment Effectiveness,95.8809,%,up,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,Defect Rate,0.9648,%,down,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,First Pass Yield,96.372,%,up,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,Mean Time Between Failures,1297.4876,hours,up,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,Throughput,1004.5797,count,up,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,Capacity Utilization,87.7341,%,up,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2025-09,Operations,OmniIntelOS,Downtime Hours,2.2335,hours,down,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,Quality Rate,99.5,%,up,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.5374,%,up,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,Defect Rate,0.41,%,down,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,First Pass Yield,97.5,%,up,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,Mean Time Between Failures,1330.3435,hours,up,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,Throughput,1050.6136,count,up,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,Capacity Utilization,86.0302,%,up,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2025-10,Operations,OmniIntelOS,Downtime Hours,2.33,hours,down,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,Quality Rate,99.2083,%,up,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.2544,%,up,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,Defect Rate,0.6492,%,down,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,First Pass Yield,96.4401,%,up,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,Mean Time Between Failures,1216.8576,hours,up,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,Throughput,1069.3088,count,up,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,Capacity Utilization,85.2665,%,up,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2025-11,Operations,OmniIntelOS,Downtime Hours,1.8299,hours,down,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,Quality Rate,99.0247,%,up,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.0762,%,up,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,Defect Rate,0.7997,%,down,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,First Pass Yield,96.4086,%,up,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,Mean Time Between Failures,1316.5378,hours,up,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,Throughput,1122.5984,count,up,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,Capacity Utilization,86.9786,%,up,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2025-12,Operations,OmniIntelOS,Downtime Hours,3.1248,hours,down,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,Quality Rate,99.3567,%,up,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.3984,%,up,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,Defect Rate,0.5275,%,down,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,First Pass Yield,97.0649,%,up,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,Mean Time Between Failures,1100.5938,hours,up,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,Throughput,1157.6831,count,up,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,Capacity Utilization,87.738,%,up,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2026-01,Operations,OmniIntelOS,Downtime Hours,3.4011,hours,down,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,Quality Rate,98.6294,%,up,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,Overall Equipment Effectiveness,95.6927,%,up,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,Defect Rate,1.1239,%,down,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,First Pass Yield,95.6389,%,up,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,Mean Time Between Failures,1103.7597,hours,up,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,Throughput,1198.1737,count,up,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,Capacity Utilization,87.348,%,up,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2026-02,Operations,OmniIntelOS,Downtime Hours,1.8273,hours,down,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,Quality Rate,99.5,%,up,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.5374,%,up,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,Defect Rate,0.41,%,down,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,First Pass Yield,96.6031,%,up,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,Mean Time Between Failures,1349.1882,hours,up,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,Throughput,1247.9918,count,up,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,Capacity Utilization,84.0607,%,up,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2026-03,Operations,OmniIntelOS,Downtime Hours,3.7053,hours,down,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,Quality Rate,99.5,%,up,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.5374,%,up,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,Defect Rate,0.41,%,down,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,First Pass Yield,96.6543,%,up,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,Mean Time Between Failures,1302.0258,hours,up,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,Throughput,1290.4427,count,up,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,Capacity Utilization,84.9562,%,up,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2026-04,Operations,OmniIntelOS,Downtime Hours,2.7416,hours,down,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,Quality Rate,99.5,%,up,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.5374,%,up,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,Defect Rate,0.41,%,down,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,First Pass Yield,96.519,%,up,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,Mean Time Between Failures,1202.7529,hours,up,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,Throughput,1339.289,count,up,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,Capacity Utilization,84.6239,%,up,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,Safety Incidents,2.0,count,down,omniintelos:model-v1
+2026-05,Operations,OmniIntelOS,Downtime Hours,3.0249,hours,down,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,Availability,98.5,%,up,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,Performance,98.5,%,up,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,Quality Rate,99.5,%,up,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,Overall Equipment Effectiveness,96.5374,%,up,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,Defect Rate,0.41,%,down,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,First Pass Yield,97.5,%,up,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,Cycle Time Efficiency,99.0,%,up,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,Mean Time Between Failures,1229.4711,hours,up,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,Throughput,1370.6511,count,up,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,Capacity Utilization,88.9576,%,up,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,Safety Incidents,1.0,count,down,omniintelos:model-v1
+2026-06,Operations,OmniIntelOS,Downtime Hours,2.1317,hours,down,omniintelos:model-v1

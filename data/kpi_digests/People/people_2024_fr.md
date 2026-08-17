@@ -1,0 +1,221 @@
+# People — Synthèse annuelle 2024 — OmniIntelOS S.A.
+
+Valeurs enregistrées pour les indicateurs People en 2024 pour OmniIntelOS S.A., entreprise FICTIVE d'intelligence artificielle appliquée basée à Niamey, Niger. Ces chiffres sont produits par un modèle interne cohérent et ne sont pas publiés par une entreprise réelle : chaque ratio est calculé à partir des primitives de la même période, la marge brute valant exactement (Chiffre d'affaires - Coût des ventes) / Chiffre d'affaires. L'identifiant de la source suit chaque ligne.
+
+## Résumé de l'année
+
+| Indicateur | Début (2024-01) | Fin (2024-12) | Unité |
+|---|---|---|---|
+| Absenteeism Rate | 2.71 % | 2.97 % | % |
+| Annual Employee Turnover | 13.09 % | 10.27 % | % |
+| Cost Per Hire | 3,200 USD | 2,724 USD | USD |
+| Employee Net Promoter Score | 28.03 score | 37.17 score | score |
+| Headcount | 147.93 count | 218.65 count | count |
+| New Hires | 7.70 count | 9.32 count | count |
+| Offer Acceptance Rate | 95.28 % | 96.00 % | % |
+| Offers Accepted | 9.17 count | 11.18 count | count |
+| Offers Extended | 9.62 count | 11.65 count | count |
+| Open Positions | 11.63 count | 15.57 count | count |
+| Revenue per Employee | 63,754 USD | 76,526 USD | USD |
+| Separations | 1.61 count | 1.87 count | count |
+| Time to Hire | 30.14 days | 30.15 days | days |
+| Training Hours per Employee | 9.86 hours | 11.08 hours | hours |
+
+## Détail mensuel
+
+### 2024-01
+- Absenteeism Rate [OmniIntelOS]: 2.71 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 13.09 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 3,200 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 28.03 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 147.93 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 7.70 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 95.28 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 9.17 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 9.62 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 11.63 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 63,754 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.61 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 30.14 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 9.86 hours  (source: omniintelos:model-v1)
+
+### 2024-02
+- Absenteeism Rate [OmniIntelOS]: 2.97 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 12.39 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 3,185 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 31.64 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 152.72 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 6.38 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 95.99 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 7.65 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 7.97 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 10.74 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 64,891 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.58 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 35.28 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 10.24 hours  (source: omniintelos:model-v1)
+
+### 2024-03
+- Absenteeism Rate [OmniIntelOS]: 2.77 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 9.76 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 3,199 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 30.64 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 159.24 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 7.81 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 92.88 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 9.07 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 9.76 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 13.94 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 64,539 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.30 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 29.18 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 9.90 hours  (source: omniintelos:model-v1)
+
+### 2024-04
+- Absenteeism Rate [OmniIntelOS]: 2.73 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 11.61 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 3,220 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 28.95 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 165.54 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 7.90 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 93.21 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 9.21 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 9.88 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 12.04 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 65,669 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.60 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 29.06 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 8.98 hours  (source: omniintelos:model-v1)
+
+### 2024-05
+- Absenteeism Rate [OmniIntelOS]: 3.16 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 12.22 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 2,829 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 27.19 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 171.15 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 7.36 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 93.22 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 8.57 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 9.19 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 12.38 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 64,237 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.74 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 32.88 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 9.38 hours  (source: omniintelos:model-v1)
+
+### 2024-06
+- Absenteeism Rate [OmniIntelOS]: 2.60 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 9.85 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 3,236 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 26.81 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 178.14 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 8.45 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 96.00 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 10.14 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 10.56 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 13.59 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 66,192 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.46 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 29.30 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 11.05 hours  (source: omniintelos:model-v1)
+
+### 2024-07
+- Absenteeism Rate [OmniIntelOS]: 2.58 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 11.84 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 3,137 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 30.27 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 184.70 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 8.38 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 92.43 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 9.69 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 10.48 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 13.58 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 70,336 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.82 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 34.57 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 10.73 hours  (source: omniintelos:model-v1)
+
+### 2024-08
+- Absenteeism Rate [OmniIntelOS]: 2.66 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 11.60 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 2,965 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 32.79 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 190.31 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 7.45 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 90.05 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 8.39 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 9.32 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 12.18 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 71,197 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.84 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 28.93 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 9.59 hours  (source: omniintelos:model-v1)
+
+### 2024-09
+- Absenteeism Rate [OmniIntelOS]: 2.52 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 10.89 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 3,094 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 32.95 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 196.43 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 7.90 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 96.00 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 9.48 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 9.87 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 12.35 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 74,540 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.78 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 31.42 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 10.99 hours  (source: omniintelos:model-v1)
+
+### 2024-10
+- Absenteeism Rate [OmniIntelOS]: 2.96 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 10.86 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 2,804 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 30.53 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 203.71 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 9.12 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 96.00 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 10.95 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 11.41 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 15.58 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 73,448 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.84 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 28.41 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 11.31 hours  (source: omniintelos:model-v1)
+
+### 2024-11
+- Absenteeism Rate [OmniIntelOS]: 3.02 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 8.31 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 2,918 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 37.28 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 211.20 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 8.96 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 96.00 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 10.75 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 11.20 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 13.71 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 77,306 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.46 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 30.16 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 10.73 hours  (source: omniintelos:model-v1)
+
+### 2024-12
+- Absenteeism Rate [OmniIntelOS]: 2.97 %  (source: omniintelos:model-v1)
+- Annual Employee Turnover [OmniIntelOS]: 10.27 %  (source: omniintelos:model-v1)
+- Cost Per Hire [OmniIntelOS]: 2,724 USD  (source: omniintelos:model-v1)
+- Employee Net Promoter Score [OmniIntelOS]: 37.17 score  (source: omniintelos:model-v1)
+- Headcount [OmniIntelOS]: 218.65 count  (source: omniintelos:model-v1)
+- New Hires [OmniIntelOS]: 9.32 count  (source: omniintelos:model-v1)
+- Offer Acceptance Rate [OmniIntelOS]: 96.00 %  (source: omniintelos:model-v1)
+- Offers Accepted [OmniIntelOS]: 11.18 count  (source: omniintelos:model-v1)
+- Offers Extended [OmniIntelOS]: 11.65 count  (source: omniintelos:model-v1)
+- Open Positions [OmniIntelOS]: 15.57 count  (source: omniintelos:model-v1)
+- Revenue per Employee [OmniIntelOS]: 76,526 USD  (source: omniintelos:model-v1)
+- Separations [OmniIntelOS]: 1.87 count  (source: omniintelos:model-v1)
+- Time to Hire [OmniIntelOS]: 30.15 days  (source: omniintelos:model-v1)
+- Training Hours per Employee [OmniIntelOS]: 11.08 hours  (source: omniintelos:model-v1)
+
+## Sources
+- omniintelos:model-v1 — generated by scripts/omniintelos.py - fictional company, internally consistent model
+
+OmniIntelOS S.A. est une entreprise fictive. Ces valeurs constituent un modèle opérationnel généré et cohérent, destiné à la démonstration et à l'évaluation d'IntelAI - ni objectifs, ni prévisions, ni comptes réels.

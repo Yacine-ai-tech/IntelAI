@@ -1,0 +1,703 @@
+period,category,segment,metric_name,value,unit,direction,source
+2020-01,Logistics,OmniIntelOS,On-Time Delivery Rate,96.9918,%,up,omniintelos:model-v1
+2020-01,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,46.682,hours,down,omniintelos:model-v1
+2020-01,Logistics,OmniIntelOS,Inventory Turnover,5.2112,x,up,omniintelos:model-v1
+2020-01,Logistics,OmniIntelOS,Supplier Defect Rate,0.7105,%,down,omniintelos:model-v1
+2020-01,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.2374,%,down,omniintelos:model-v1
+2020-01,Logistics,OmniIntelOS,Total Orders,19.9652,count,up,omniintelos:model-v1
+2020-01,Logistics,OmniIntelOS,Stockout Rate,2.1592,%,down,omniintelos:model-v1
+2020-01,Logistics,OmniIntelOS,Warehouse Utilization,65.418,%,up,omniintelos:model-v1
+2020-01,Logistics,OmniIntelOS,Average Lead Time,19.5153,days,down,omniintelos:model-v1
+2020-02,Logistics,OmniIntelOS,On-Time Delivery Rate,94.6489,%,up,omniintelos:model-v1
+2020-02,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,44.4486,hours,down,omniintelos:model-v1
+2020-02,Logistics,OmniIntelOS,Inventory Turnover,5.2844,x,up,omniintelos:model-v1
+2020-02,Logistics,OmniIntelOS,Supplier Defect Rate,0.5817,%,down,omniintelos:model-v1
+2020-02,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.7919,%,down,omniintelos:model-v1
+2020-02,Logistics,OmniIntelOS,Total Orders,13.7408,count,up,omniintelos:model-v1
+2020-02,Logistics,OmniIntelOS,Stockout Rate,2.7045,%,down,omniintelos:model-v1
+2020-02,Logistics,OmniIntelOS,Warehouse Utilization,62.6397,%,up,omniintelos:model-v1
+2020-02,Logistics,OmniIntelOS,Average Lead Time,22.7219,days,down,omniintelos:model-v1
+2020-03,Logistics,OmniIntelOS,On-Time Delivery Rate,97.1512,%,up,omniintelos:model-v1
+2020-03,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,46.9253,hours,down,omniintelos:model-v1
+2020-03,Logistics,OmniIntelOS,Inventory Turnover,5.5595,x,up,omniintelos:model-v1
+2020-03,Logistics,OmniIntelOS,Supplier Defect Rate,0.5367,%,down,omniintelos:model-v1
+2020-03,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.8668,%,down,omniintelos:model-v1
+2020-03,Logistics,OmniIntelOS,Total Orders,18.1886,count,up,omniintelos:model-v1
+2020-03,Logistics,OmniIntelOS,Stockout Rate,2.0121,%,down,omniintelos:model-v1
+2020-03,Logistics,OmniIntelOS,Warehouse Utilization,59.9968,%,up,omniintelos:model-v1
+2020-03,Logistics,OmniIntelOS,Average Lead Time,19.0407,days,down,omniintelos:model-v1
+2020-04,Logistics,OmniIntelOS,On-Time Delivery Rate,84.7521,%,up,omniintelos:model-v1
+2020-04,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,46.4615,hours,down,omniintelos:model-v1
+2020-04,Logistics,OmniIntelOS,Inventory Turnover,4.3418,x,up,omniintelos:model-v1
+2020-04,Logistics,OmniIntelOS,Supplier Defect Rate,0.6413,%,down,omniintelos:model-v1
+2020-04,Logistics,OmniIntelOS,Carrying Cost of Inventory,21.0932,%,down,omniintelos:model-v1
+2020-04,Logistics,OmniIntelOS,Total Orders,19.5617,count,up,omniintelos:model-v1
+2020-04,Logistics,OmniIntelOS,Stockout Rate,2.8453,%,down,omniintelos:model-v1
+2020-04,Logistics,OmniIntelOS,Warehouse Utilization,60.8498,%,up,omniintelos:model-v1
+2020-04,Logistics,OmniIntelOS,Average Lead Time,24.3209,days,down,omniintelos:model-v1
+2020-05,Logistics,OmniIntelOS,On-Time Delivery Rate,83.2849,%,up,omniintelos:model-v1
+2020-05,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,51.0631,hours,down,omniintelos:model-v1
+2020-05,Logistics,OmniIntelOS,Inventory Turnover,4.4888,x,up,omniintelos:model-v1
+2020-05,Logistics,OmniIntelOS,Supplier Defect Rate,0.6728,%,down,omniintelos:model-v1
+2020-05,Logistics,OmniIntelOS,Carrying Cost of Inventory,22.9213,%,down,omniintelos:model-v1
+2020-05,Logistics,OmniIntelOS,Total Orders,14.0813,count,up,omniintelos:model-v1
+2020-05,Logistics,OmniIntelOS,Stockout Rate,2.9058,%,down,omniintelos:model-v1
+2020-05,Logistics,OmniIntelOS,Warehouse Utilization,60.1307,%,up,omniintelos:model-v1
+2020-05,Logistics,OmniIntelOS,Average Lead Time,24.9805,days,down,omniintelos:model-v1
+2020-06,Logistics,OmniIntelOS,On-Time Delivery Rate,83.6559,%,up,omniintelos:model-v1
+2020-06,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,51.8683,hours,down,omniintelos:model-v1
+2020-06,Logistics,OmniIntelOS,Inventory Turnover,4.7941,x,up,omniintelos:model-v1
+2020-06,Logistics,OmniIntelOS,Supplier Defect Rate,0.7094,%,down,omniintelos:model-v1
+2020-06,Logistics,OmniIntelOS,Carrying Cost of Inventory,21.0625,%,down,omniintelos:model-v1
+2020-06,Logistics,OmniIntelOS,Total Orders,15.2824,count,up,omniintelos:model-v1
+2020-06,Logistics,OmniIntelOS,Stockout Rate,3.1642,%,down,omniintelos:model-v1
+2020-06,Logistics,OmniIntelOS,Warehouse Utilization,66.4429,%,up,omniintelos:model-v1
+2020-06,Logistics,OmniIntelOS,Average Lead Time,22.4173,days,down,omniintelos:model-v1
+2020-07,Logistics,OmniIntelOS,On-Time Delivery Rate,85.7747,%,up,omniintelos:model-v1
+2020-07,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,52.9516,hours,down,omniintelos:model-v1
+2020-07,Logistics,OmniIntelOS,Inventory Turnover,5.0116,x,up,omniintelos:model-v1
+2020-07,Logistics,OmniIntelOS,Supplier Defect Rate,0.6017,%,down,omniintelos:model-v1
+2020-07,Logistics,OmniIntelOS,Carrying Cost of Inventory,20.7646,%,down,omniintelos:model-v1
+2020-07,Logistics,OmniIntelOS,Total Orders,21.1967,count,up,omniintelos:model-v1
+2020-07,Logistics,OmniIntelOS,Stockout Rate,2.8434,%,down,omniintelos:model-v1
+2020-07,Logistics,OmniIntelOS,Warehouse Utilization,61.6274,%,up,omniintelos:model-v1
+2020-07,Logistics,OmniIntelOS,Average Lead Time,23.7366,days,down,omniintelos:model-v1
+2020-08,Logistics,OmniIntelOS,On-Time Delivery Rate,84.4835,%,up,omniintelos:model-v1
+2020-08,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,46.3488,hours,down,omniintelos:model-v1
+2020-08,Logistics,OmniIntelOS,Inventory Turnover,4.8106,x,up,omniintelos:model-v1
+2020-08,Logistics,OmniIntelOS,Supplier Defect Rate,0.6115,%,down,omniintelos:model-v1
+2020-08,Logistics,OmniIntelOS,Carrying Cost of Inventory,22.7897,%,down,omniintelos:model-v1
+2020-08,Logistics,OmniIntelOS,Total Orders,18.5287,count,up,omniintelos:model-v1
+2020-08,Logistics,OmniIntelOS,Stockout Rate,2.5586,%,down,omniintelos:model-v1
+2020-08,Logistics,OmniIntelOS,Warehouse Utilization,63.8541,%,up,omniintelos:model-v1
+2020-08,Logistics,OmniIntelOS,Average Lead Time,24.865,days,down,omniintelos:model-v1
+2020-09,Logistics,OmniIntelOS,On-Time Delivery Rate,85.0272,%,up,omniintelos:model-v1
+2020-09,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,52.8295,hours,down,omniintelos:model-v1
+2020-09,Logistics,OmniIntelOS,Inventory Turnover,4.3079,x,up,omniintelos:model-v1
+2020-09,Logistics,OmniIntelOS,Supplier Defect Rate,0.672,%,down,omniintelos:model-v1
+2020-09,Logistics,OmniIntelOS,Carrying Cost of Inventory,22.2124,%,down,omniintelos:model-v1
+2020-09,Logistics,OmniIntelOS,Total Orders,19.8548,count,up,omniintelos:model-v1
+2020-09,Logistics,OmniIntelOS,Stockout Rate,3.2011,%,down,omniintelos:model-v1
+2020-09,Logistics,OmniIntelOS,Warehouse Utilization,61.7458,%,up,omniintelos:model-v1
+2020-09,Logistics,OmniIntelOS,Average Lead Time,23.0543,days,down,omniintelos:model-v1
+2020-10,Logistics,OmniIntelOS,On-Time Delivery Rate,98.6934,%,up,omniintelos:model-v1
+2020-10,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,39.8757,hours,down,omniintelos:model-v1
+2020-10,Logistics,OmniIntelOS,Inventory Turnover,5.2619,x,up,omniintelos:model-v1
+2020-10,Logistics,OmniIntelOS,Supplier Defect Rate,0.7173,%,down,omniintelos:model-v1
+2020-10,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.6914,%,down,omniintelos:model-v1
+2020-10,Logistics,OmniIntelOS,Total Orders,19.7173,count,up,omniintelos:model-v1
+2020-10,Logistics,OmniIntelOS,Stockout Rate,2.466,%,down,omniintelos:model-v1
+2020-10,Logistics,OmniIntelOS,Warehouse Utilization,65.4331,%,up,omniintelos:model-v1
+2020-10,Logistics,OmniIntelOS,Average Lead Time,18.573,days,down,omniintelos:model-v1
+2020-11,Logistics,OmniIntelOS,On-Time Delivery Rate,98.7948,%,up,omniintelos:model-v1
+2020-11,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,40.4212,hours,down,omniintelos:model-v1
+2020-11,Logistics,OmniIntelOS,Inventory Turnover,5.4003,x,up,omniintelos:model-v1
+2020-11,Logistics,OmniIntelOS,Supplier Defect Rate,0.4884,%,down,omniintelos:model-v1
+2020-11,Logistics,OmniIntelOS,Carrying Cost of Inventory,18.2382,%,down,omniintelos:model-v1
+2020-11,Logistics,OmniIntelOS,Total Orders,18.4087,count,up,omniintelos:model-v1
+2020-11,Logistics,OmniIntelOS,Stockout Rate,1.9947,%,down,omniintelos:model-v1
+2020-11,Logistics,OmniIntelOS,Warehouse Utilization,64.1207,%,up,omniintelos:model-v1
+2020-11,Logistics,OmniIntelOS,Average Lead Time,19.2106,days,down,omniintelos:model-v1
+2020-12,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2020-12,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,40.7984,hours,down,omniintelos:model-v1
+2020-12,Logistics,OmniIntelOS,Inventory Turnover,5.0104,x,up,omniintelos:model-v1
+2020-12,Logistics,OmniIntelOS,Supplier Defect Rate,0.5776,%,down,omniintelos:model-v1
+2020-12,Logistics,OmniIntelOS,Carrying Cost of Inventory,17.8683,%,down,omniintelos:model-v1
+2020-12,Logistics,OmniIntelOS,Total Orders,20.5937,count,up,omniintelos:model-v1
+2020-12,Logistics,OmniIntelOS,Stockout Rate,2.1674,%,down,omniintelos:model-v1
+2020-12,Logistics,OmniIntelOS,Warehouse Utilization,63.6922,%,up,omniintelos:model-v1
+2020-12,Logistics,OmniIntelOS,Average Lead Time,19.9834,days,down,omniintelos:model-v1
+2021-01,Logistics,OmniIntelOS,On-Time Delivery Rate,97.718,%,up,omniintelos:model-v1
+2021-01,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,40.3546,hours,down,omniintelos:model-v1
+2021-01,Logistics,OmniIntelOS,Inventory Turnover,5.4517,x,up,omniintelos:model-v1
+2021-01,Logistics,OmniIntelOS,Supplier Defect Rate,0.5948,%,down,omniintelos:model-v1
+2021-01,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.8649,%,down,omniintelos:model-v1
+2021-01,Logistics,OmniIntelOS,Total Orders,22.2848,count,up,omniintelos:model-v1
+2021-01,Logistics,OmniIntelOS,Stockout Rate,2.166,%,down,omniintelos:model-v1
+2021-01,Logistics,OmniIntelOS,Warehouse Utilization,67.4335,%,up,omniintelos:model-v1
+2021-01,Logistics,OmniIntelOS,Average Lead Time,22.0438,days,down,omniintelos:model-v1
+2021-02,Logistics,OmniIntelOS,On-Time Delivery Rate,97.5308,%,up,omniintelos:model-v1
+2021-02,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,43.9457,hours,down,omniintelos:model-v1
+2021-02,Logistics,OmniIntelOS,Inventory Turnover,5.7425,x,up,omniintelos:model-v1
+2021-02,Logistics,OmniIntelOS,Supplier Defect Rate,0.6784,%,down,omniintelos:model-v1
+2021-02,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.9533,%,down,omniintelos:model-v1
+2021-02,Logistics,OmniIntelOS,Total Orders,16.2987,count,up,omniintelos:model-v1
+2021-02,Logistics,OmniIntelOS,Stockout Rate,2.1201,%,down,omniintelos:model-v1
+2021-02,Logistics,OmniIntelOS,Warehouse Utilization,62.397,%,up,omniintelos:model-v1
+2021-02,Logistics,OmniIntelOS,Average Lead Time,18.4448,days,down,omniintelos:model-v1
+2021-03,Logistics,OmniIntelOS,On-Time Delivery Rate,98.3172,%,up,omniintelos:model-v1
+2021-03,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,46.3795,hours,down,omniintelos:model-v1
+2021-03,Logistics,OmniIntelOS,Inventory Turnover,4.8589,x,up,omniintelos:model-v1
+2021-03,Logistics,OmniIntelOS,Supplier Defect Rate,0.6044,%,down,omniintelos:model-v1
+2021-03,Logistics,OmniIntelOS,Carrying Cost of Inventory,18.9396,%,down,omniintelos:model-v1
+2021-03,Logistics,OmniIntelOS,Total Orders,22.8863,count,up,omniintelos:model-v1
+2021-03,Logistics,OmniIntelOS,Stockout Rate,2.1934,%,down,omniintelos:model-v1
+2021-03,Logistics,OmniIntelOS,Warehouse Utilization,67.1855,%,up,omniintelos:model-v1
+2021-03,Logistics,OmniIntelOS,Average Lead Time,20.1355,days,down,omniintelos:model-v1
+2021-04,Logistics,OmniIntelOS,On-Time Delivery Rate,97.0368,%,up,omniintelos:model-v1
+2021-04,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,39.1382,hours,down,omniintelos:model-v1
+2021-04,Logistics,OmniIntelOS,Inventory Turnover,5.3995,x,up,omniintelos:model-v1
+2021-04,Logistics,OmniIntelOS,Supplier Defect Rate,0.7251,%,down,omniintelos:model-v1
+2021-04,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.7663,%,down,omniintelos:model-v1
+2021-04,Logistics,OmniIntelOS,Total Orders,18.8032,count,up,omniintelos:model-v1
+2021-04,Logistics,OmniIntelOS,Stockout Rate,2.1786,%,down,omniintelos:model-v1
+2021-04,Logistics,OmniIntelOS,Warehouse Utilization,67.0038,%,up,omniintelos:model-v1
+2021-04,Logistics,OmniIntelOS,Average Lead Time,19.764,days,down,omniintelos:model-v1
+2021-05,Logistics,OmniIntelOS,On-Time Delivery Rate,98.0172,%,up,omniintelos:model-v1
+2021-05,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,45.6967,hours,down,omniintelos:model-v1
+2021-05,Logistics,OmniIntelOS,Inventory Turnover,4.9517,x,up,omniintelos:model-v1
+2021-05,Logistics,OmniIntelOS,Supplier Defect Rate,0.6407,%,down,omniintelos:model-v1
+2021-05,Logistics,OmniIntelOS,Carrying Cost of Inventory,18.7534,%,down,omniintelos:model-v1
+2021-05,Logistics,OmniIntelOS,Total Orders,21.7796,count,up,omniintelos:model-v1
+2021-05,Logistics,OmniIntelOS,Stockout Rate,2.691,%,down,omniintelos:model-v1
+2021-05,Logistics,OmniIntelOS,Warehouse Utilization,69.0535,%,up,omniintelos:model-v1
+2021-05,Logistics,OmniIntelOS,Average Lead Time,18.2595,days,down,omniintelos:model-v1
+2021-06,Logistics,OmniIntelOS,On-Time Delivery Rate,98.8961,%,up,omniintelos:model-v1
+2021-06,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,45.7057,hours,down,omniintelos:model-v1
+2021-06,Logistics,OmniIntelOS,Inventory Turnover,5.1724,x,up,omniintelos:model-v1
+2021-06,Logistics,OmniIntelOS,Supplier Defect Rate,0.5141,%,down,omniintelos:model-v1
+2021-06,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.4599,%,down,omniintelos:model-v1
+2021-06,Logistics,OmniIntelOS,Total Orders,28.0077,count,up,omniintelos:model-v1
+2021-06,Logistics,OmniIntelOS,Stockout Rate,2.7473,%,down,omniintelos:model-v1
+2021-06,Logistics,OmniIntelOS,Warehouse Utilization,63.8134,%,up,omniintelos:model-v1
+2021-06,Logistics,OmniIntelOS,Average Lead Time,18.354,days,down,omniintelos:model-v1
+2021-07,Logistics,OmniIntelOS,On-Time Delivery Rate,91.7445,%,up,omniintelos:model-v1
+2021-07,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,41.4343,hours,down,omniintelos:model-v1
+2021-07,Logistics,OmniIntelOS,Inventory Turnover,4.9386,x,up,omniintelos:model-v1
+2021-07,Logistics,OmniIntelOS,Supplier Defect Rate,0.6577,%,down,omniintelos:model-v1
+2021-07,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.4039,%,down,omniintelos:model-v1
+2021-07,Logistics,OmniIntelOS,Total Orders,18.6678,count,up,omniintelos:model-v1
+2021-07,Logistics,OmniIntelOS,Stockout Rate,2.4382,%,down,omniintelos:model-v1
+2021-07,Logistics,OmniIntelOS,Warehouse Utilization,69.3582,%,up,omniintelos:model-v1
+2021-07,Logistics,OmniIntelOS,Average Lead Time,21.7118,days,down,omniintelos:model-v1
+2021-08,Logistics,OmniIntelOS,On-Time Delivery Rate,93.3905,%,up,omniintelos:model-v1
+2021-08,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,46.7164,hours,down,omniintelos:model-v1
+2021-08,Logistics,OmniIntelOS,Inventory Turnover,5.0037,x,up,omniintelos:model-v1
+2021-08,Logistics,OmniIntelOS,Supplier Defect Rate,0.5464,%,down,omniintelos:model-v1
+2021-08,Logistics,OmniIntelOS,Carrying Cost of Inventory,18.6384,%,down,omniintelos:model-v1
+2021-08,Logistics,OmniIntelOS,Total Orders,27.1726,count,up,omniintelos:model-v1
+2021-08,Logistics,OmniIntelOS,Stockout Rate,2.9341,%,down,omniintelos:model-v1
+2021-08,Logistics,OmniIntelOS,Warehouse Utilization,70.409,%,up,omniintelos:model-v1
+2021-08,Logistics,OmniIntelOS,Average Lead Time,20.1494,days,down,omniintelos:model-v1
+2021-09,Logistics,OmniIntelOS,On-Time Delivery Rate,93.5038,%,up,omniintelos:model-v1
+2021-09,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,47.7207,hours,down,omniintelos:model-v1
+2021-09,Logistics,OmniIntelOS,Inventory Turnover,5.291,x,up,omniintelos:model-v1
+2021-09,Logistics,OmniIntelOS,Supplier Defect Rate,0.5995,%,down,omniintelos:model-v1
+2021-09,Logistics,OmniIntelOS,Carrying Cost of Inventory,20.4165,%,down,omniintelos:model-v1
+2021-09,Logistics,OmniIntelOS,Total Orders,31.6966,count,up,omniintelos:model-v1
+2021-09,Logistics,OmniIntelOS,Stockout Rate,2.702,%,down,omniintelos:model-v1
+2021-09,Logistics,OmniIntelOS,Warehouse Utilization,71.5051,%,up,omniintelos:model-v1
+2021-09,Logistics,OmniIntelOS,Average Lead Time,24.0865,days,down,omniintelos:model-v1
+2021-10,Logistics,OmniIntelOS,On-Time Delivery Rate,93.7227,%,up,omniintelos:model-v1
+2021-10,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,45.1531,hours,down,omniintelos:model-v1
+2021-10,Logistics,OmniIntelOS,Inventory Turnover,5.2172,x,up,omniintelos:model-v1
+2021-10,Logistics,OmniIntelOS,Supplier Defect Rate,0.5661,%,down,omniintelos:model-v1
+2021-10,Logistics,OmniIntelOS,Carrying Cost of Inventory,21.2998,%,down,omniintelos:model-v1
+2021-10,Logistics,OmniIntelOS,Total Orders,28.0419,count,up,omniintelos:model-v1
+2021-10,Logistics,OmniIntelOS,Stockout Rate,2.2555,%,down,omniintelos:model-v1
+2021-10,Logistics,OmniIntelOS,Warehouse Utilization,69.9257,%,up,omniintelos:model-v1
+2021-10,Logistics,OmniIntelOS,Average Lead Time,21.7,days,down,omniintelos:model-v1
+2021-11,Logistics,OmniIntelOS,On-Time Delivery Rate,94.0954,%,up,omniintelos:model-v1
+2021-11,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,44.8304,hours,down,omniintelos:model-v1
+2021-11,Logistics,OmniIntelOS,Inventory Turnover,5.3391,x,up,omniintelos:model-v1
+2021-11,Logistics,OmniIntelOS,Supplier Defect Rate,0.6164,%,down,omniintelos:model-v1
+2021-11,Logistics,OmniIntelOS,Carrying Cost of Inventory,21.3471,%,down,omniintelos:model-v1
+2021-11,Logistics,OmniIntelOS,Total Orders,23.0987,count,up,omniintelos:model-v1
+2021-11,Logistics,OmniIntelOS,Stockout Rate,2.4614,%,down,omniintelos:model-v1
+2021-11,Logistics,OmniIntelOS,Warehouse Utilization,69.5612,%,up,omniintelos:model-v1
+2021-11,Logistics,OmniIntelOS,Average Lead Time,20.6659,days,down,omniintelos:model-v1
+2021-12,Logistics,OmniIntelOS,On-Time Delivery Rate,92.1508,%,up,omniintelos:model-v1
+2021-12,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,45.1212,hours,down,omniintelos:model-v1
+2021-12,Logistics,OmniIntelOS,Inventory Turnover,4.9199,x,up,omniintelos:model-v1
+2021-12,Logistics,OmniIntelOS,Supplier Defect Rate,0.6721,%,down,omniintelos:model-v1
+2021-12,Logistics,OmniIntelOS,Carrying Cost of Inventory,20.089,%,down,omniintelos:model-v1
+2021-12,Logistics,OmniIntelOS,Total Orders,29.0201,count,up,omniintelos:model-v1
+2021-12,Logistics,OmniIntelOS,Stockout Rate,2.7863,%,down,omniintelos:model-v1
+2021-12,Logistics,OmniIntelOS,Warehouse Utilization,66.539,%,up,omniintelos:model-v1
+2021-12,Logistics,OmniIntelOS,Average Lead Time,21.9352,days,down,omniintelos:model-v1
+2022-01,Logistics,OmniIntelOS,On-Time Delivery Rate,93.1508,%,up,omniintelos:model-v1
+2022-01,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,44.2252,hours,down,omniintelos:model-v1
+2022-01,Logistics,OmniIntelOS,Inventory Turnover,5.1081,x,up,omniintelos:model-v1
+2022-01,Logistics,OmniIntelOS,Supplier Defect Rate,0.5386,%,down,omniintelos:model-v1
+2022-01,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.3643,%,down,omniintelos:model-v1
+2022-01,Logistics,OmniIntelOS,Total Orders,31.3391,count,up,omniintelos:model-v1
+2022-01,Logistics,OmniIntelOS,Stockout Rate,2.851,%,down,omniintelos:model-v1
+2022-01,Logistics,OmniIntelOS,Warehouse Utilization,70.7439,%,up,omniintelos:model-v1
+2022-01,Logistics,OmniIntelOS,Average Lead Time,22.5338,days,down,omniintelos:model-v1
+2022-02,Logistics,OmniIntelOS,On-Time Delivery Rate,93.9428,%,up,omniintelos:model-v1
+2022-02,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,46.4167,hours,down,omniintelos:model-v1
+2022-02,Logistics,OmniIntelOS,Inventory Turnover,5.3533,x,up,omniintelos:model-v1
+2022-02,Logistics,OmniIntelOS,Supplier Defect Rate,0.6655,%,down,omniintelos:model-v1
+2022-02,Logistics,OmniIntelOS,Carrying Cost of Inventory,21.266,%,down,omniintelos:model-v1
+2022-02,Logistics,OmniIntelOS,Total Orders,39.5699,count,up,omniintelos:model-v1
+2022-02,Logistics,OmniIntelOS,Stockout Rate,2.5627,%,down,omniintelos:model-v1
+2022-02,Logistics,OmniIntelOS,Warehouse Utilization,65.4534,%,up,omniintelos:model-v1
+2022-02,Logistics,OmniIntelOS,Average Lead Time,23.1923,days,down,omniintelos:model-v1
+2022-03,Logistics,OmniIntelOS,On-Time Delivery Rate,93.3529,%,up,omniintelos:model-v1
+2022-03,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,43.568,hours,down,omniintelos:model-v1
+2022-03,Logistics,OmniIntelOS,Inventory Turnover,5.2422,x,up,omniintelos:model-v1
+2022-03,Logistics,OmniIntelOS,Supplier Defect Rate,0.7077,%,down,omniintelos:model-v1
+2022-03,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.447,%,down,omniintelos:model-v1
+2022-03,Logistics,OmniIntelOS,Total Orders,36.7923,count,up,omniintelos:model-v1
+2022-03,Logistics,OmniIntelOS,Stockout Rate,2.0953,%,down,omniintelos:model-v1
+2022-03,Logistics,OmniIntelOS,Warehouse Utilization,65.5928,%,up,omniintelos:model-v1
+2022-03,Logistics,OmniIntelOS,Average Lead Time,23.4139,days,down,omniintelos:model-v1
+2022-04,Logistics,OmniIntelOS,On-Time Delivery Rate,81.7149,%,up,omniintelos:model-v1
+2022-04,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,54.3781,hours,down,omniintelos:model-v1
+2022-04,Logistics,OmniIntelOS,Inventory Turnover,4.4805,x,up,omniintelos:model-v1
+2022-04,Logistics,OmniIntelOS,Supplier Defect Rate,0.7596,%,down,omniintelos:model-v1
+2022-04,Logistics,OmniIntelOS,Carrying Cost of Inventory,23.203,%,down,omniintelos:model-v1
+2022-04,Logistics,OmniIntelOS,Total Orders,36.1003,count,up,omniintelos:model-v1
+2022-04,Logistics,OmniIntelOS,Stockout Rate,3.244,%,down,omniintelos:model-v1
+2022-04,Logistics,OmniIntelOS,Warehouse Utilization,69.4247,%,up,omniintelos:model-v1
+2022-04,Logistics,OmniIntelOS,Average Lead Time,25.8746,days,down,omniintelos:model-v1
+2022-05,Logistics,OmniIntelOS,On-Time Delivery Rate,81.7077,%,up,omniintelos:model-v1
+2022-05,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,48.9533,hours,down,omniintelos:model-v1
+2022-05,Logistics,OmniIntelOS,Inventory Turnover,4.2526,x,up,omniintelos:model-v1
+2022-05,Logistics,OmniIntelOS,Supplier Defect Rate,0.7622,%,down,omniintelos:model-v1
+2022-05,Logistics,OmniIntelOS,Carrying Cost of Inventory,23.3259,%,down,omniintelos:model-v1
+2022-05,Logistics,OmniIntelOS,Total Orders,39.3119,count,up,omniintelos:model-v1
+2022-05,Logistics,OmniIntelOS,Stockout Rate,2.9867,%,down,omniintelos:model-v1
+2022-05,Logistics,OmniIntelOS,Warehouse Utilization,71.1065,%,up,omniintelos:model-v1
+2022-05,Logistics,OmniIntelOS,Average Lead Time,27.3048,days,down,omniintelos:model-v1
+2022-06,Logistics,OmniIntelOS,On-Time Delivery Rate,81.8636,%,up,omniintelos:model-v1
+2022-06,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,52.1217,hours,down,omniintelos:model-v1
+2022-06,Logistics,OmniIntelOS,Inventory Turnover,3.9061,x,up,omniintelos:model-v1
+2022-06,Logistics,OmniIntelOS,Supplier Defect Rate,0.6957,%,down,omniintelos:model-v1
+2022-06,Logistics,OmniIntelOS,Carrying Cost of Inventory,23.0172,%,down,omniintelos:model-v1
+2022-06,Logistics,OmniIntelOS,Total Orders,35.5449,count,up,omniintelos:model-v1
+2022-06,Logistics,OmniIntelOS,Stockout Rate,2.7974,%,down,omniintelos:model-v1
+2022-06,Logistics,OmniIntelOS,Warehouse Utilization,68.6908,%,up,omniintelos:model-v1
+2022-06,Logistics,OmniIntelOS,Average Lead Time,26.6576,days,down,omniintelos:model-v1
+2022-07,Logistics,OmniIntelOS,On-Time Delivery Rate,80.1324,%,up,omniintelos:model-v1
+2022-07,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,54.3721,hours,down,omniintelos:model-v1
+2022-07,Logistics,OmniIntelOS,Inventory Turnover,4.2748,x,up,omniintelos:model-v1
+2022-07,Logistics,OmniIntelOS,Supplier Defect Rate,0.6486,%,down,omniintelos:model-v1
+2022-07,Logistics,OmniIntelOS,Carrying Cost of Inventory,22.6692,%,down,omniintelos:model-v1
+2022-07,Logistics,OmniIntelOS,Total Orders,35.5473,count,up,omniintelos:model-v1
+2022-07,Logistics,OmniIntelOS,Stockout Rate,3.345,%,down,omniintelos:model-v1
+2022-07,Logistics,OmniIntelOS,Warehouse Utilization,74.4947,%,up,omniintelos:model-v1
+2022-07,Logistics,OmniIntelOS,Average Lead Time,25.1415,days,down,omniintelos:model-v1
+2022-08,Logistics,OmniIntelOS,On-Time Delivery Rate,81.6647,%,up,omniintelos:model-v1
+2022-08,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,54.1623,hours,down,omniintelos:model-v1
+2022-08,Logistics,OmniIntelOS,Inventory Turnover,4.1382,x,up,omniintelos:model-v1
+2022-08,Logistics,OmniIntelOS,Supplier Defect Rate,0.6332,%,down,omniintelos:model-v1
+2022-08,Logistics,OmniIntelOS,Carrying Cost of Inventory,22.8962,%,down,omniintelos:model-v1
+2022-08,Logistics,OmniIntelOS,Total Orders,37.6086,count,up,omniintelos:model-v1
+2022-08,Logistics,OmniIntelOS,Stockout Rate,2.5681,%,down,omniintelos:model-v1
+2022-08,Logistics,OmniIntelOS,Warehouse Utilization,71.623,%,up,omniintelos:model-v1
+2022-08,Logistics,OmniIntelOS,Average Lead Time,24.0022,days,down,omniintelos:model-v1
+2022-09,Logistics,OmniIntelOS,On-Time Delivery Rate,81.3905,%,up,omniintelos:model-v1
+2022-09,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,51.3314,hours,down,omniintelos:model-v1
+2022-09,Logistics,OmniIntelOS,Inventory Turnover,3.8804,x,up,omniintelos:model-v1
+2022-09,Logistics,OmniIntelOS,Supplier Defect Rate,0.7912,%,down,omniintelos:model-v1
+2022-09,Logistics,OmniIntelOS,Carrying Cost of Inventory,22.5293,%,down,omniintelos:model-v1
+2022-09,Logistics,OmniIntelOS,Total Orders,42.1526,count,up,omniintelos:model-v1
+2022-09,Logistics,OmniIntelOS,Stockout Rate,2.45,%,down,omniintelos:model-v1
+2022-09,Logistics,OmniIntelOS,Warehouse Utilization,74.0459,%,up,omniintelos:model-v1
+2022-09,Logistics,OmniIntelOS,Average Lead Time,22.7191,days,down,omniintelos:model-v1
+2022-10,Logistics,OmniIntelOS,On-Time Delivery Rate,81.3094,%,up,omniintelos:model-v1
+2022-10,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,50.064,hours,down,omniintelos:model-v1
+2022-10,Logistics,OmniIntelOS,Inventory Turnover,4.381,x,up,omniintelos:model-v1
+2022-10,Logistics,OmniIntelOS,Supplier Defect Rate,0.6265,%,down,omniintelos:model-v1
+2022-10,Logistics,OmniIntelOS,Carrying Cost of Inventory,24.5424,%,down,omniintelos:model-v1
+2022-10,Logistics,OmniIntelOS,Total Orders,41.3192,count,up,omniintelos:model-v1
+2022-10,Logistics,OmniIntelOS,Stockout Rate,3.2039,%,down,omniintelos:model-v1
+2022-10,Logistics,OmniIntelOS,Warehouse Utilization,72.3758,%,up,omniintelos:model-v1
+2022-10,Logistics,OmniIntelOS,Average Lead Time,23.8397,days,down,omniintelos:model-v1
+2022-11,Logistics,OmniIntelOS,On-Time Delivery Rate,79.623,%,up,omniintelos:model-v1
+2022-11,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,54.3446,hours,down,omniintelos:model-v1
+2022-11,Logistics,OmniIntelOS,Inventory Turnover,4.2039,x,up,omniintelos:model-v1
+2022-11,Logistics,OmniIntelOS,Supplier Defect Rate,0.6995,%,down,omniintelos:model-v1
+2022-11,Logistics,OmniIntelOS,Carrying Cost of Inventory,22.5526,%,down,omniintelos:model-v1
+2022-11,Logistics,OmniIntelOS,Total Orders,44.7629,count,up,omniintelos:model-v1
+2022-11,Logistics,OmniIntelOS,Stockout Rate,2.6887,%,down,omniintelos:model-v1
+2022-11,Logistics,OmniIntelOS,Warehouse Utilization,70.5663,%,up,omniintelos:model-v1
+2022-11,Logistics,OmniIntelOS,Average Lead Time,26.9331,days,down,omniintelos:model-v1
+2022-12,Logistics,OmniIntelOS,On-Time Delivery Rate,81.2026,%,up,omniintelos:model-v1
+2022-12,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,54.0321,hours,down,omniintelos:model-v1
+2022-12,Logistics,OmniIntelOS,Inventory Turnover,4.2963,x,up,omniintelos:model-v1
+2022-12,Logistics,OmniIntelOS,Supplier Defect Rate,0.8481,%,down,omniintelos:model-v1
+2022-12,Logistics,OmniIntelOS,Carrying Cost of Inventory,24.4262,%,down,omniintelos:model-v1
+2022-12,Logistics,OmniIntelOS,Total Orders,38.4986,count,up,omniintelos:model-v1
+2022-12,Logistics,OmniIntelOS,Stockout Rate,2.8602,%,down,omniintelos:model-v1
+2022-12,Logistics,OmniIntelOS,Warehouse Utilization,72.2659,%,up,omniintelos:model-v1
+2022-12,Logistics,OmniIntelOS,Average Lead Time,24.1998,days,down,omniintelos:model-v1
+2023-01,Logistics,OmniIntelOS,On-Time Delivery Rate,70.5257,%,up,omniintelos:model-v1
+2023-01,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,59.0345,hours,down,omniintelos:model-v1
+2023-01,Logistics,OmniIntelOS,Inventory Turnover,3.6338,x,up,omniintelos:model-v1
+2023-01,Logistics,OmniIntelOS,Supplier Defect Rate,0.8018,%,down,omniintelos:model-v1
+2023-01,Logistics,OmniIntelOS,Carrying Cost of Inventory,26.3688,%,down,omniintelos:model-v1
+2023-01,Logistics,OmniIntelOS,Total Orders,41.0327,count,up,omniintelos:model-v1
+2023-01,Logistics,OmniIntelOS,Stockout Rate,3.149,%,down,omniintelos:model-v1
+2023-01,Logistics,OmniIntelOS,Warehouse Utilization,73.3509,%,up,omniintelos:model-v1
+2023-01,Logistics,OmniIntelOS,Average Lead Time,30.1142,days,down,omniintelos:model-v1
+2023-02,Logistics,OmniIntelOS,On-Time Delivery Rate,72.2169,%,up,omniintelos:model-v1
+2023-02,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,57.4187,hours,down,omniintelos:model-v1
+2023-02,Logistics,OmniIntelOS,Inventory Turnover,3.9334,x,up,omniintelos:model-v1
+2023-02,Logistics,OmniIntelOS,Supplier Defect Rate,0.8302,%,down,omniintelos:model-v1
+2023-02,Logistics,OmniIntelOS,Carrying Cost of Inventory,26.7159,%,down,omniintelos:model-v1
+2023-02,Logistics,OmniIntelOS,Total Orders,40.9696,count,up,omniintelos:model-v1
+2023-02,Logistics,OmniIntelOS,Stockout Rate,2.9183,%,down,omniintelos:model-v1
+2023-02,Logistics,OmniIntelOS,Warehouse Utilization,75.5414,%,up,omniintelos:model-v1
+2023-02,Logistics,OmniIntelOS,Average Lead Time,29.4921,days,down,omniintelos:model-v1
+2023-03,Logistics,OmniIntelOS,On-Time Delivery Rate,70.3869,%,up,omniintelos:model-v1
+2023-03,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,62.8576,hours,down,omniintelos:model-v1
+2023-03,Logistics,OmniIntelOS,Inventory Turnover,3.4884,x,up,omniintelos:model-v1
+2023-03,Logistics,OmniIntelOS,Supplier Defect Rate,0.8135,%,down,omniintelos:model-v1
+2023-03,Logistics,OmniIntelOS,Carrying Cost of Inventory,25.3636,%,down,omniintelos:model-v1
+2023-03,Logistics,OmniIntelOS,Total Orders,43.6332,count,up,omniintelos:model-v1
+2023-03,Logistics,OmniIntelOS,Stockout Rate,3.4761,%,down,omniintelos:model-v1
+2023-03,Logistics,OmniIntelOS,Warehouse Utilization,75.4131,%,up,omniintelos:model-v1
+2023-03,Logistics,OmniIntelOS,Average Lead Time,26.7793,days,down,omniintelos:model-v1
+2023-04,Logistics,OmniIntelOS,On-Time Delivery Rate,70.4575,%,up,omniintelos:model-v1
+2023-04,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,59.6323,hours,down,omniintelos:model-v1
+2023-04,Logistics,OmniIntelOS,Inventory Turnover,3.7488,x,up,omniintelos:model-v1
+2023-04,Logistics,OmniIntelOS,Supplier Defect Rate,0.834,%,down,omniintelos:model-v1
+2023-04,Logistics,OmniIntelOS,Carrying Cost of Inventory,26.9974,%,down,omniintelos:model-v1
+2023-04,Logistics,OmniIntelOS,Total Orders,41.2961,count,up,omniintelos:model-v1
+2023-04,Logistics,OmniIntelOS,Stockout Rate,2.9706,%,down,omniintelos:model-v1
+2023-04,Logistics,OmniIntelOS,Warehouse Utilization,75.107,%,up,omniintelos:model-v1
+2023-04,Logistics,OmniIntelOS,Average Lead Time,29.8156,days,down,omniintelos:model-v1
+2023-05,Logistics,OmniIntelOS,On-Time Delivery Rate,70.754,%,up,omniintelos:model-v1
+2023-05,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,60.7481,hours,down,omniintelos:model-v1
+2023-05,Logistics,OmniIntelOS,Inventory Turnover,3.798,x,up,omniintelos:model-v1
+2023-05,Logistics,OmniIntelOS,Supplier Defect Rate,0.8571,%,down,omniintelos:model-v1
+2023-05,Logistics,OmniIntelOS,Carrying Cost of Inventory,27.0075,%,down,omniintelos:model-v1
+2023-05,Logistics,OmniIntelOS,Total Orders,41.1774,count,up,omniintelos:model-v1
+2023-05,Logistics,OmniIntelOS,Stockout Rate,3.5296,%,down,omniintelos:model-v1
+2023-05,Logistics,OmniIntelOS,Warehouse Utilization,75.1657,%,up,omniintelos:model-v1
+2023-05,Logistics,OmniIntelOS,Average Lead Time,27.8715,days,down,omniintelos:model-v1
+2023-06,Logistics,OmniIntelOS,On-Time Delivery Rate,90.0138,%,up,omniintelos:model-v1
+2023-06,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,49.9045,hours,down,omniintelos:model-v1
+2023-06,Logistics,OmniIntelOS,Inventory Turnover,5.2469,x,up,omniintelos:model-v1
+2023-06,Logistics,OmniIntelOS,Supplier Defect Rate,0.5751,%,down,omniintelos:model-v1
+2023-06,Logistics,OmniIntelOS,Carrying Cost of Inventory,22.0851,%,down,omniintelos:model-v1
+2023-06,Logistics,OmniIntelOS,Total Orders,45.336,count,up,omniintelos:model-v1
+2023-06,Logistics,OmniIntelOS,Stockout Rate,2.5324,%,down,omniintelos:model-v1
+2023-06,Logistics,OmniIntelOS,Warehouse Utilization,76.933,%,up,omniintelos:model-v1
+2023-06,Logistics,OmniIntelOS,Average Lead Time,22.6903,days,down,omniintelos:model-v1
+2023-07,Logistics,OmniIntelOS,On-Time Delivery Rate,90.2076,%,up,omniintelos:model-v1
+2023-07,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,46.3912,hours,down,omniintelos:model-v1
+2023-07,Logistics,OmniIntelOS,Inventory Turnover,4.5163,x,up,omniintelos:model-v1
+2023-07,Logistics,OmniIntelOS,Supplier Defect Rate,0.745,%,down,omniintelos:model-v1
+2023-07,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.5919,%,down,omniintelos:model-v1
+2023-07,Logistics,OmniIntelOS,Total Orders,48.1499,count,up,omniintelos:model-v1
+2023-07,Logistics,OmniIntelOS,Stockout Rate,2.9832,%,down,omniintelos:model-v1
+2023-07,Logistics,OmniIntelOS,Warehouse Utilization,77.9101,%,up,omniintelos:model-v1
+2023-07,Logistics,OmniIntelOS,Average Lead Time,23.4133,days,down,omniintelos:model-v1
+2023-08,Logistics,OmniIntelOS,On-Time Delivery Rate,89.7636,%,up,omniintelos:model-v1
+2023-08,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,47.4398,hours,down,omniintelos:model-v1
+2023-08,Logistics,OmniIntelOS,Inventory Turnover,4.9938,x,up,omniintelos:model-v1
+2023-08,Logistics,OmniIntelOS,Supplier Defect Rate,0.577,%,down,omniintelos:model-v1
+2023-08,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.8297,%,down,omniintelos:model-v1
+2023-08,Logistics,OmniIntelOS,Total Orders,44.8562,count,up,omniintelos:model-v1
+2023-08,Logistics,OmniIntelOS,Stockout Rate,2.1627,%,down,omniintelos:model-v1
+2023-08,Logistics,OmniIntelOS,Warehouse Utilization,73.4705,%,up,omniintelos:model-v1
+2023-08,Logistics,OmniIntelOS,Average Lead Time,22.8042,days,down,omniintelos:model-v1
+2023-09,Logistics,OmniIntelOS,On-Time Delivery Rate,88.8965,%,up,omniintelos:model-v1
+2023-09,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,49.8406,hours,down,omniintelos:model-v1
+2023-09,Logistics,OmniIntelOS,Inventory Turnover,4.6584,x,up,omniintelos:model-v1
+2023-09,Logistics,OmniIntelOS,Supplier Defect Rate,0.6549,%,down,omniintelos:model-v1
+2023-09,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.8968,%,down,omniintelos:model-v1
+2023-09,Logistics,OmniIntelOS,Total Orders,51.1922,count,up,omniintelos:model-v1
+2023-09,Logistics,OmniIntelOS,Stockout Rate,2.409,%,down,omniintelos:model-v1
+2023-09,Logistics,OmniIntelOS,Warehouse Utilization,78.3597,%,up,omniintelos:model-v1
+2023-09,Logistics,OmniIntelOS,Average Lead Time,24.5677,days,down,omniintelos:model-v1
+2023-10,Logistics,OmniIntelOS,On-Time Delivery Rate,89.6805,%,up,omniintelos:model-v1
+2023-10,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,50.1039,hours,down,omniintelos:model-v1
+2023-10,Logistics,OmniIntelOS,Inventory Turnover,4.9769,x,up,omniintelos:model-v1
+2023-10,Logistics,OmniIntelOS,Supplier Defect Rate,0.6358,%,down,omniintelos:model-v1
+2023-10,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.6621,%,down,omniintelos:model-v1
+2023-10,Logistics,OmniIntelOS,Total Orders,51.591,count,up,omniintelos:model-v1
+2023-10,Logistics,OmniIntelOS,Stockout Rate,2.6421,%,down,omniintelos:model-v1
+2023-10,Logistics,OmniIntelOS,Warehouse Utilization,71.6235,%,up,omniintelos:model-v1
+2023-10,Logistics,OmniIntelOS,Average Lead Time,22.0698,days,down,omniintelos:model-v1
+2023-11,Logistics,OmniIntelOS,On-Time Delivery Rate,88.4059,%,up,omniintelos:model-v1
+2023-11,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,44.0777,hours,down,omniintelos:model-v1
+2023-11,Logistics,OmniIntelOS,Inventory Turnover,4.5639,x,up,omniintelos:model-v1
+2023-11,Logistics,OmniIntelOS,Supplier Defect Rate,0.7749,%,down,omniintelos:model-v1
+2023-11,Logistics,OmniIntelOS,Carrying Cost of Inventory,22.008,%,down,omniintelos:model-v1
+2023-11,Logistics,OmniIntelOS,Total Orders,49.3513,count,up,omniintelos:model-v1
+2023-11,Logistics,OmniIntelOS,Stockout Rate,2.9463,%,down,omniintelos:model-v1
+2023-11,Logistics,OmniIntelOS,Warehouse Utilization,77.0485,%,up,omniintelos:model-v1
+2023-11,Logistics,OmniIntelOS,Average Lead Time,22.2525,days,down,omniintelos:model-v1
+2023-12,Logistics,OmniIntelOS,On-Time Delivery Rate,90.5382,%,up,omniintelos:model-v1
+2023-12,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,47.779,hours,down,omniintelos:model-v1
+2023-12,Logistics,OmniIntelOS,Inventory Turnover,4.92,x,up,omniintelos:model-v1
+2023-12,Logistics,OmniIntelOS,Supplier Defect Rate,0.682,%,down,omniintelos:model-v1
+2023-12,Logistics,OmniIntelOS,Carrying Cost of Inventory,22.2785,%,down,omniintelos:model-v1
+2023-12,Logistics,OmniIntelOS,Total Orders,44.7507,count,up,omniintelos:model-v1
+2023-12,Logistics,OmniIntelOS,Stockout Rate,2.7246,%,down,omniintelos:model-v1
+2023-12,Logistics,OmniIntelOS,Warehouse Utilization,78.2249,%,up,omniintelos:model-v1
+2023-12,Logistics,OmniIntelOS,Average Lead Time,22.6481,days,down,omniintelos:model-v1
+2024-01,Logistics,OmniIntelOS,On-Time Delivery Rate,92.3104,%,up,omniintelos:model-v1
+2024-01,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,47.3471,hours,down,omniintelos:model-v1
+2024-01,Logistics,OmniIntelOS,Inventory Turnover,4.5452,x,up,omniintelos:model-v1
+2024-01,Logistics,OmniIntelOS,Supplier Defect Rate,0.567,%,down,omniintelos:model-v1
+2024-01,Logistics,OmniIntelOS,Carrying Cost of Inventory,20.0008,%,down,omniintelos:model-v1
+2024-01,Logistics,OmniIntelOS,Total Orders,53.2121,count,up,omniintelos:model-v1
+2024-01,Logistics,OmniIntelOS,Stockout Rate,2.4123,%,down,omniintelos:model-v1
+2024-01,Logistics,OmniIntelOS,Warehouse Utilization,72.841,%,up,omniintelos:model-v1
+2024-01,Logistics,OmniIntelOS,Average Lead Time,22.713,days,down,omniintelos:model-v1
+2024-02,Logistics,OmniIntelOS,On-Time Delivery Rate,93.0815,%,up,omniintelos:model-v1
+2024-02,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,48.6672,hours,down,omniintelos:model-v1
+2024-02,Logistics,OmniIntelOS,Inventory Turnover,7.4609,x,up,omniintelos:model-v1
+2024-02,Logistics,OmniIntelOS,Supplier Defect Rate,0.7361,%,down,omniintelos:model-v1
+2024-02,Logistics,OmniIntelOS,Carrying Cost of Inventory,21.5127,%,down,omniintelos:model-v1
+2024-02,Logistics,OmniIntelOS,Total Orders,53.7542,count,up,omniintelos:model-v1
+2024-02,Logistics,OmniIntelOS,Stockout Rate,2.1417,%,down,omniintelos:model-v1
+2024-02,Logistics,OmniIntelOS,Warehouse Utilization,73.1902,%,up,omniintelos:model-v1
+2024-02,Logistics,OmniIntelOS,Average Lead Time,21.2842,days,down,omniintelos:model-v1
+2024-03,Logistics,OmniIntelOS,On-Time Delivery Rate,92.949,%,up,omniintelos:model-v1
+2024-03,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,46.0553,hours,down,omniintelos:model-v1
+2024-03,Logistics,OmniIntelOS,Inventory Turnover,7.3219,x,up,omniintelos:model-v1
+2024-03,Logistics,OmniIntelOS,Supplier Defect Rate,0.5531,%,down,omniintelos:model-v1
+2024-03,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.1248,%,down,omniintelos:model-v1
+2024-03,Logistics,OmniIntelOS,Total Orders,52.1345,count,up,omniintelos:model-v1
+2024-03,Logistics,OmniIntelOS,Stockout Rate,2.6324,%,down,omniintelos:model-v1
+2024-03,Logistics,OmniIntelOS,Warehouse Utilization,75.3059,%,up,omniintelos:model-v1
+2024-03,Logistics,OmniIntelOS,Average Lead Time,24.1912,days,down,omniintelos:model-v1
+2024-04,Logistics,OmniIntelOS,On-Time Delivery Rate,92.1093,%,up,omniintelos:model-v1
+2024-04,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,49.0419,hours,down,omniintelos:model-v1
+2024-04,Logistics,OmniIntelOS,Inventory Turnover,6.9459,x,up,omniintelos:model-v1
+2024-04,Logistics,OmniIntelOS,Supplier Defect Rate,0.6607,%,down,omniintelos:model-v1
+2024-04,Logistics,OmniIntelOS,Carrying Cost of Inventory,20.7056,%,down,omniintelos:model-v1
+2024-04,Logistics,OmniIntelOS,Total Orders,51.2213,count,up,omniintelos:model-v1
+2024-04,Logistics,OmniIntelOS,Stockout Rate,2.6781,%,down,omniintelos:model-v1
+2024-04,Logistics,OmniIntelOS,Warehouse Utilization,74.8256,%,up,omniintelos:model-v1
+2024-04,Logistics,OmniIntelOS,Average Lead Time,20.6577,days,down,omniintelos:model-v1
+2024-05,Logistics,OmniIntelOS,On-Time Delivery Rate,92.3679,%,up,omniintelos:model-v1
+2024-05,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,44.8472,hours,down,omniintelos:model-v1
+2024-05,Logistics,OmniIntelOS,Inventory Turnover,7.3299,x,up,omniintelos:model-v1
+2024-05,Logistics,OmniIntelOS,Supplier Defect Rate,0.6865,%,down,omniintelos:model-v1
+2024-05,Logistics,OmniIntelOS,Carrying Cost of Inventory,21.2511,%,down,omniintelos:model-v1
+2024-05,Logistics,OmniIntelOS,Total Orders,63.4155,count,up,omniintelos:model-v1
+2024-05,Logistics,OmniIntelOS,Stockout Rate,2.845,%,down,omniintelos:model-v1
+2024-05,Logistics,OmniIntelOS,Warehouse Utilization,80.5726,%,up,omniintelos:model-v1
+2024-05,Logistics,OmniIntelOS,Average Lead Time,23.6089,days,down,omniintelos:model-v1
+2024-06,Logistics,OmniIntelOS,On-Time Delivery Rate,91.2461,%,up,omniintelos:model-v1
+2024-06,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,42.3962,hours,down,omniintelos:model-v1
+2024-06,Logistics,OmniIntelOS,Inventory Turnover,7.0718,x,up,omniintelos:model-v1
+2024-06,Logistics,OmniIntelOS,Supplier Defect Rate,0.7286,%,down,omniintelos:model-v1
+2024-06,Logistics,OmniIntelOS,Carrying Cost of Inventory,20.0691,%,down,omniintelos:model-v1
+2024-06,Logistics,OmniIntelOS,Total Orders,55.1859,count,up,omniintelos:model-v1
+2024-06,Logistics,OmniIntelOS,Stockout Rate,2.8065,%,down,omniintelos:model-v1
+2024-06,Logistics,OmniIntelOS,Warehouse Utilization,74.6305,%,up,omniintelos:model-v1
+2024-06,Logistics,OmniIntelOS,Average Lead Time,22.7034,days,down,omniintelos:model-v1
+2024-07,Logistics,OmniIntelOS,On-Time Delivery Rate,92.2235,%,up,omniintelos:model-v1
+2024-07,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,45.8477,hours,down,omniintelos:model-v1
+2024-07,Logistics,OmniIntelOS,Inventory Turnover,6.8074,x,up,omniintelos:model-v1
+2024-07,Logistics,OmniIntelOS,Supplier Defect Rate,0.6331,%,down,omniintelos:model-v1
+2024-07,Logistics,OmniIntelOS,Carrying Cost of Inventory,21.434,%,down,omniintelos:model-v1
+2024-07,Logistics,OmniIntelOS,Total Orders,66.8422,count,up,omniintelos:model-v1
+2024-07,Logistics,OmniIntelOS,Stockout Rate,2.052,%,down,omniintelos:model-v1
+2024-07,Logistics,OmniIntelOS,Warehouse Utilization,79.9575,%,up,omniintelos:model-v1
+2024-07,Logistics,OmniIntelOS,Average Lead Time,22.7426,days,down,omniintelos:model-v1
+2024-08,Logistics,OmniIntelOS,On-Time Delivery Rate,91.2678,%,up,omniintelos:model-v1
+2024-08,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,43.749,hours,down,omniintelos:model-v1
+2024-08,Logistics,OmniIntelOS,Inventory Turnover,7.4588,x,up,omniintelos:model-v1
+2024-08,Logistics,OmniIntelOS,Supplier Defect Rate,0.7405,%,down,omniintelos:model-v1
+2024-08,Logistics,OmniIntelOS,Carrying Cost of Inventory,21.6212,%,down,omniintelos:model-v1
+2024-08,Logistics,OmniIntelOS,Total Orders,60.6623,count,up,omniintelos:model-v1
+2024-08,Logistics,OmniIntelOS,Stockout Rate,2.8325,%,down,omniintelos:model-v1
+2024-08,Logistics,OmniIntelOS,Warehouse Utilization,76.5343,%,up,omniintelos:model-v1
+2024-08,Logistics,OmniIntelOS,Average Lead Time,23.1326,days,down,omniintelos:model-v1
+2024-09,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2024-09,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,37.8495,hours,down,omniintelos:model-v1
+2024-09,Logistics,OmniIntelOS,Inventory Turnover,7.8652,x,up,omniintelos:model-v1
+2024-09,Logistics,OmniIntelOS,Supplier Defect Rate,0.6179,%,down,omniintelos:model-v1
+2024-09,Logistics,OmniIntelOS,Carrying Cost of Inventory,18.9279,%,down,omniintelos:model-v1
+2024-09,Logistics,OmniIntelOS,Total Orders,73.0194,count,up,omniintelos:model-v1
+2024-09,Logistics,OmniIntelOS,Stockout Rate,2.1221,%,down,omniintelos:model-v1
+2024-09,Logistics,OmniIntelOS,Warehouse Utilization,75.7372,%,up,omniintelos:model-v1
+2024-09,Logistics,OmniIntelOS,Average Lead Time,21.9296,days,down,omniintelos:model-v1
+2024-10,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2024-10,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,39.3011,hours,down,omniintelos:model-v1
+2024-10,Logistics,OmniIntelOS,Inventory Turnover,7.8486,x,up,omniintelos:model-v1
+2024-10,Logistics,OmniIntelOS,Supplier Defect Rate,0.6727,%,down,omniintelos:model-v1
+2024-10,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.4475,%,down,omniintelos:model-v1
+2024-10,Logistics,OmniIntelOS,Total Orders,63.9071,count,up,omniintelos:model-v1
+2024-10,Logistics,OmniIntelOS,Stockout Rate,2.5025,%,down,omniintelos:model-v1
+2024-10,Logistics,OmniIntelOS,Warehouse Utilization,80.1043,%,up,omniintelos:model-v1
+2024-10,Logistics,OmniIntelOS,Average Lead Time,20.9937,days,down,omniintelos:model-v1
+2024-11,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2024-11,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,45.2679,hours,down,omniintelos:model-v1
+2024-11,Logistics,OmniIntelOS,Inventory Turnover,7.5374,x,up,omniintelos:model-v1
+2024-11,Logistics,OmniIntelOS,Supplier Defect Rate,0.7035,%,down,omniintelos:model-v1
+2024-11,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.1426,%,down,omniintelos:model-v1
+2024-11,Logistics,OmniIntelOS,Total Orders,66.2006,count,up,omniintelos:model-v1
+2024-11,Logistics,OmniIntelOS,Stockout Rate,1.8537,%,down,omniintelos:model-v1
+2024-11,Logistics,OmniIntelOS,Warehouse Utilization,75.1292,%,up,omniintelos:model-v1
+2024-11,Logistics,OmniIntelOS,Average Lead Time,22.3107,days,down,omniintelos:model-v1
+2024-12,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2024-12,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,41.4509,hours,down,omniintelos:model-v1
+2024-12,Logistics,OmniIntelOS,Inventory Turnover,7.9204,x,up,omniintelos:model-v1
+2024-12,Logistics,OmniIntelOS,Supplier Defect Rate,0.5776,%,down,omniintelos:model-v1
+2024-12,Logistics,OmniIntelOS,Carrying Cost of Inventory,19.3492,%,down,omniintelos:model-v1
+2024-12,Logistics,OmniIntelOS,Total Orders,78.8987,count,up,omniintelos:model-v1
+2024-12,Logistics,OmniIntelOS,Stockout Rate,2.392,%,down,omniintelos:model-v1
+2024-12,Logistics,OmniIntelOS,Warehouse Utilization,78.8143,%,up,omniintelos:model-v1
+2024-12,Logistics,OmniIntelOS,Average Lead Time,21.586,days,down,omniintelos:model-v1
+2025-01,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2025-01,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,38.1768,hours,down,omniintelos:model-v1
+2025-01,Logistics,OmniIntelOS,Inventory Turnover,7.4653,x,up,omniintelos:model-v1
+2025-01,Logistics,OmniIntelOS,Supplier Defect Rate,0.5959,%,down,omniintelos:model-v1
+2025-01,Logistics,OmniIntelOS,Carrying Cost of Inventory,17.6792,%,down,omniintelos:model-v1
+2025-01,Logistics,OmniIntelOS,Total Orders,80.8123,count,up,omniintelos:model-v1
+2025-01,Logistics,OmniIntelOS,Stockout Rate,1.9911,%,down,omniintelos:model-v1
+2025-01,Logistics,OmniIntelOS,Warehouse Utilization,76.4346,%,up,omniintelos:model-v1
+2025-01,Logistics,OmniIntelOS,Average Lead Time,20.7228,days,down,omniintelos:model-v1
+2025-02,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2025-02,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,38.8568,hours,down,omniintelos:model-v1
+2025-02,Logistics,OmniIntelOS,Inventory Turnover,7.3496,x,up,omniintelos:model-v1
+2025-02,Logistics,OmniIntelOS,Supplier Defect Rate,0.6881,%,down,omniintelos:model-v1
+2025-02,Logistics,OmniIntelOS,Carrying Cost of Inventory,16.9285,%,down,omniintelos:model-v1
+2025-02,Logistics,OmniIntelOS,Total Orders,76.139,count,up,omniintelos:model-v1
+2025-02,Logistics,OmniIntelOS,Stockout Rate,1.9362,%,down,omniintelos:model-v1
+2025-02,Logistics,OmniIntelOS,Warehouse Utilization,79.2948,%,up,omniintelos:model-v1
+2025-02,Logistics,OmniIntelOS,Average Lead Time,18.2302,days,down,omniintelos:model-v1
+2025-03,Logistics,OmniIntelOS,On-Time Delivery Rate,69.033,%,up,omniintelos:model-v1
+2025-03,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,59.3268,hours,down,omniintelos:model-v1
+2025-03,Logistics,OmniIntelOS,Inventory Turnover,5.6211,x,up,omniintelos:model-v1
+2025-03,Logistics,OmniIntelOS,Supplier Defect Rate,0.9685,%,down,omniintelos:model-v1
+2025-03,Logistics,OmniIntelOS,Carrying Cost of Inventory,26.1673,%,down,omniintelos:model-v1
+2025-03,Logistics,OmniIntelOS,Total Orders,79.0319,count,up,omniintelos:model-v1
+2025-03,Logistics,OmniIntelOS,Stockout Rate,2.9024,%,down,omniintelos:model-v1
+2025-03,Logistics,OmniIntelOS,Warehouse Utilization,81.5839,%,up,omniintelos:model-v1
+2025-03,Logistics,OmniIntelOS,Average Lead Time,29.8025,days,down,omniintelos:model-v1
+2025-04,Logistics,OmniIntelOS,On-Time Delivery Rate,67.2412,%,up,omniintelos:model-v1
+2025-04,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,62.1524,hours,down,omniintelos:model-v1
+2025-04,Logistics,OmniIntelOS,Inventory Turnover,5.1061,x,up,omniintelos:model-v1
+2025-04,Logistics,OmniIntelOS,Supplier Defect Rate,0.8471,%,down,omniintelos:model-v1
+2025-04,Logistics,OmniIntelOS,Carrying Cost of Inventory,27.451,%,down,omniintelos:model-v1
+2025-04,Logistics,OmniIntelOS,Total Orders,81.1628,count,up,omniintelos:model-v1
+2025-04,Logistics,OmniIntelOS,Stockout Rate,3.4401,%,down,omniintelos:model-v1
+2025-04,Logistics,OmniIntelOS,Warehouse Utilization,77.3711,%,up,omniintelos:model-v1
+2025-04,Logistics,OmniIntelOS,Average Lead Time,28.7592,days,down,omniintelos:model-v1
+2025-05,Logistics,OmniIntelOS,On-Time Delivery Rate,68.9635,%,up,omniintelos:model-v1
+2025-05,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,63.4778,hours,down,omniintelos:model-v1
+2025-05,Logistics,OmniIntelOS,Inventory Turnover,5.7007,x,up,omniintelos:model-v1
+2025-05,Logistics,OmniIntelOS,Supplier Defect Rate,0.7667,%,down,omniintelos:model-v1
+2025-05,Logistics,OmniIntelOS,Carrying Cost of Inventory,27.8674,%,down,omniintelos:model-v1
+2025-05,Logistics,OmniIntelOS,Total Orders,85.0284,count,up,omniintelos:model-v1
+2025-05,Logistics,OmniIntelOS,Stockout Rate,3.3108,%,down,omniintelos:model-v1
+2025-05,Logistics,OmniIntelOS,Warehouse Utilization,76.5776,%,up,omniintelos:model-v1
+2025-05,Logistics,OmniIntelOS,Average Lead Time,30.5198,days,down,omniintelos:model-v1
+2025-06,Logistics,OmniIntelOS,On-Time Delivery Rate,68.7443,%,up,omniintelos:model-v1
+2025-06,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,58.9851,hours,down,omniintelos:model-v1
+2025-06,Logistics,OmniIntelOS,Inventory Turnover,5.3056,x,up,omniintelos:model-v1
+2025-06,Logistics,OmniIntelOS,Supplier Defect Rate,0.9407,%,down,omniintelos:model-v1
+2025-06,Logistics,OmniIntelOS,Carrying Cost of Inventory,26.0399,%,down,omniintelos:model-v1
+2025-06,Logistics,OmniIntelOS,Total Orders,93.9115,count,up,omniintelos:model-v1
+2025-06,Logistics,OmniIntelOS,Stockout Rate,3.4311,%,down,omniintelos:model-v1
+2025-06,Logistics,OmniIntelOS,Warehouse Utilization,79.7928,%,up,omniintelos:model-v1
+2025-06,Logistics,OmniIntelOS,Average Lead Time,30.1235,days,down,omniintelos:model-v1
+2025-07,Logistics,OmniIntelOS,On-Time Delivery Rate,67.5186,%,up,omniintelos:model-v1
+2025-07,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,60.2074,hours,down,omniintelos:model-v1
+2025-07,Logistics,OmniIntelOS,Inventory Turnover,5.1472,x,up,omniintelos:model-v1
+2025-07,Logistics,OmniIntelOS,Supplier Defect Rate,0.8835,%,down,omniintelos:model-v1
+2025-07,Logistics,OmniIntelOS,Carrying Cost of Inventory,27.3845,%,down,omniintelos:model-v1
+2025-07,Logistics,OmniIntelOS,Total Orders,97.0524,count,up,omniintelos:model-v1
+2025-07,Logistics,OmniIntelOS,Stockout Rate,3.6073,%,down,omniintelos:model-v1
+2025-07,Logistics,OmniIntelOS,Warehouse Utilization,80.0616,%,up,omniintelos:model-v1
+2025-07,Logistics,OmniIntelOS,Average Lead Time,30.7881,days,down,omniintelos:model-v1
+2025-08,Logistics,OmniIntelOS,On-Time Delivery Rate,68.4255,%,up,omniintelos:model-v1
+2025-08,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,62.4689,hours,down,omniintelos:model-v1
+2025-08,Logistics,OmniIntelOS,Inventory Turnover,5.4908,x,up,omniintelos:model-v1
+2025-08,Logistics,OmniIntelOS,Supplier Defect Rate,0.8221,%,down,omniintelos:model-v1
+2025-08,Logistics,OmniIntelOS,Carrying Cost of Inventory,28.9274,%,down,omniintelos:model-v1
+2025-08,Logistics,OmniIntelOS,Total Orders,90.3754,count,up,omniintelos:model-v1
+2025-08,Logistics,OmniIntelOS,Stockout Rate,3.5736,%,down,omniintelos:model-v1
+2025-08,Logistics,OmniIntelOS,Warehouse Utilization,84.3584,%,up,omniintelos:model-v1
+2025-08,Logistics,OmniIntelOS,Average Lead Time,29.2223,days,down,omniintelos:model-v1
+2025-09,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2025-09,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,44.5162,hours,down,omniintelos:model-v1
+2025-09,Logistics,OmniIntelOS,Inventory Turnover,7.6198,x,up,omniintelos:model-v1
+2025-09,Logistics,OmniIntelOS,Supplier Defect Rate,0.709,%,down,omniintelos:model-v1
+2025-09,Logistics,OmniIntelOS,Carrying Cost of Inventory,18.1221,%,down,omniintelos:model-v1
+2025-09,Logistics,OmniIntelOS,Total Orders,102.0353,count,up,omniintelos:model-v1
+2025-09,Logistics,OmniIntelOS,Stockout Rate,2.2968,%,down,omniintelos:model-v1
+2025-09,Logistics,OmniIntelOS,Warehouse Utilization,82.1442,%,up,omniintelos:model-v1
+2025-09,Logistics,OmniIntelOS,Average Lead Time,20.8465,days,down,omniintelos:model-v1
+2025-10,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2025-10,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,40.4813,hours,down,omniintelos:model-v1
+2025-10,Logistics,OmniIntelOS,Inventory Turnover,8.05,x,up,omniintelos:model-v1
+2025-10,Logistics,OmniIntelOS,Supplier Defect Rate,0.5748,%,down,omniintelos:model-v1
+2025-10,Logistics,OmniIntelOS,Carrying Cost of Inventory,18.4754,%,down,omniintelos:model-v1
+2025-10,Logistics,OmniIntelOS,Total Orders,104.1875,count,up,omniintelos:model-v1
+2025-10,Logistics,OmniIntelOS,Stockout Rate,2.1644,%,down,omniintelos:model-v1
+2025-10,Logistics,OmniIntelOS,Warehouse Utilization,81.9422,%,up,omniintelos:model-v1
+2025-10,Logistics,OmniIntelOS,Average Lead Time,21.1501,days,down,omniintelos:model-v1
+2025-11,Logistics,OmniIntelOS,On-Time Delivery Rate,98.4978,%,up,omniintelos:model-v1
+2025-11,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,42.9259,hours,down,omniintelos:model-v1
+2025-11,Logistics,OmniIntelOS,Inventory Turnover,7.7321,x,up,omniintelos:model-v1
+2025-11,Logistics,OmniIntelOS,Supplier Defect Rate,0.5775,%,down,omniintelos:model-v1
+2025-11,Logistics,OmniIntelOS,Carrying Cost of Inventory,18.7852,%,down,omniintelos:model-v1
+2025-11,Logistics,OmniIntelOS,Total Orders,108.1446,count,up,omniintelos:model-v1
+2025-11,Logistics,OmniIntelOS,Stockout Rate,2.7406,%,down,omniintelos:model-v1
+2025-11,Logistics,OmniIntelOS,Warehouse Utilization,83.236,%,up,omniintelos:model-v1
+2025-11,Logistics,OmniIntelOS,Average Lead Time,18.336,days,down,omniintelos:model-v1
+2025-12,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2025-12,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,39.92,hours,down,omniintelos:model-v1
+2025-12,Logistics,OmniIntelOS,Inventory Turnover,7.4524,x,up,omniintelos:model-v1
+2025-12,Logistics,OmniIntelOS,Supplier Defect Rate,0.6024,%,down,omniintelos:model-v1
+2025-12,Logistics,OmniIntelOS,Carrying Cost of Inventory,18.1163,%,down,omniintelos:model-v1
+2025-12,Logistics,OmniIntelOS,Total Orders,110.7878,count,up,omniintelos:model-v1
+2025-12,Logistics,OmniIntelOS,Stockout Rate,2.0706,%,down,omniintelos:model-v1
+2025-12,Logistics,OmniIntelOS,Warehouse Utilization,78.612,%,up,omniintelos:model-v1
+2025-12,Logistics,OmniIntelOS,Average Lead Time,20.8034,days,down,omniintelos:model-v1
+2026-01,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2026-01,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,39.9258,hours,down,omniintelos:model-v1
+2026-01,Logistics,OmniIntelOS,Inventory Turnover,7.525,x,up,omniintelos:model-v1
+2026-01,Logistics,OmniIntelOS,Supplier Defect Rate,0.4806,%,down,omniintelos:model-v1
+2026-01,Logistics,OmniIntelOS,Carrying Cost of Inventory,17.6362,%,down,omniintelos:model-v1
+2026-01,Logistics,OmniIntelOS,Total Orders,119.0361,count,up,omniintelos:model-v1
+2026-01,Logistics,OmniIntelOS,Stockout Rate,1.9383,%,down,omniintelos:model-v1
+2026-01,Logistics,OmniIntelOS,Warehouse Utilization,82.171,%,up,omniintelos:model-v1
+2026-01,Logistics,OmniIntelOS,Average Lead Time,18.8073,days,down,omniintelos:model-v1
+2026-02,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2026-02,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,45.5115,hours,down,omniintelos:model-v1
+2026-02,Logistics,OmniIntelOS,Inventory Turnover,7.8536,x,up,omniintelos:model-v1
+2026-02,Logistics,OmniIntelOS,Supplier Defect Rate,0.6115,%,down,omniintelos:model-v1
+2026-02,Logistics,OmniIntelOS,Carrying Cost of Inventory,18.2968,%,down,omniintelos:model-v1
+2026-02,Logistics,OmniIntelOS,Total Orders,130.6615,count,up,omniintelos:model-v1
+2026-02,Logistics,OmniIntelOS,Stockout Rate,2.2841,%,down,omniintelos:model-v1
+2026-02,Logistics,OmniIntelOS,Warehouse Utilization,83.2136,%,up,omniintelos:model-v1
+2026-02,Logistics,OmniIntelOS,Average Lead Time,19.082,days,down,omniintelos:model-v1
+2026-03,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2026-03,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,40.8272,hours,down,omniintelos:model-v1
+2026-03,Logistics,OmniIntelOS,Inventory Turnover,7.5583,x,up,omniintelos:model-v1
+2026-03,Logistics,OmniIntelOS,Supplier Defect Rate,0.678,%,down,omniintelos:model-v1
+2026-03,Logistics,OmniIntelOS,Carrying Cost of Inventory,18.5018,%,down,omniintelos:model-v1
+2026-03,Logistics,OmniIntelOS,Total Orders,128.9602,count,up,omniintelos:model-v1
+2026-03,Logistics,OmniIntelOS,Stockout Rate,2.1119,%,down,omniintelos:model-v1
+2026-03,Logistics,OmniIntelOS,Warehouse Utilization,84.1848,%,up,omniintelos:model-v1
+2026-03,Logistics,OmniIntelOS,Average Lead Time,17.9554,days,down,omniintelos:model-v1
+2026-04,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2026-04,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,40.2189,hours,down,omniintelos:model-v1
+2026-04,Logistics,OmniIntelOS,Inventory Turnover,8.1398,x,up,omniintelos:model-v1
+2026-04,Logistics,OmniIntelOS,Supplier Defect Rate,0.5153,%,down,omniintelos:model-v1
+2026-04,Logistics,OmniIntelOS,Carrying Cost of Inventory,20.021,%,down,omniintelos:model-v1
+2026-04,Logistics,OmniIntelOS,Total Orders,132.3653,count,up,omniintelos:model-v1
+2026-04,Logistics,OmniIntelOS,Stockout Rate,2.28,%,down,omniintelos:model-v1
+2026-04,Logistics,OmniIntelOS,Warehouse Utilization,80.0624,%,up,omniintelos:model-v1
+2026-04,Logistics,OmniIntelOS,Average Lead Time,18.3664,days,down,omniintelos:model-v1
+2026-05,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2026-05,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,40.513,hours,down,omniintelos:model-v1
+2026-05,Logistics,OmniIntelOS,Inventory Turnover,8.0493,x,up,omniintelos:model-v1
+2026-05,Logistics,OmniIntelOS,Supplier Defect Rate,0.4893,%,down,omniintelos:model-v1
+2026-05,Logistics,OmniIntelOS,Carrying Cost of Inventory,17.507,%,down,omniintelos:model-v1
+2026-05,Logistics,OmniIntelOS,Total Orders,137.9392,count,up,omniintelos:model-v1
+2026-05,Logistics,OmniIntelOS,Stockout Rate,2.1342,%,down,omniintelos:model-v1
+2026-05,Logistics,OmniIntelOS,Warehouse Utilization,87.6965,%,up,omniintelos:model-v1
+2026-05,Logistics,OmniIntelOS,Average Lead Time,19.3987,days,down,omniintelos:model-v1
+2026-06,Logistics,OmniIntelOS,On-Time Delivery Rate,99.0,%,up,omniintelos:model-v1
+2026-06,Logistics,OmniIntelOS,Order Fulfillment Cycle Time,45.3104,hours,down,omniintelos:model-v1
+2026-06,Logistics,OmniIntelOS,Inventory Turnover,8.1224,x,up,omniintelos:model-v1
+2026-06,Logistics,OmniIntelOS,Supplier Defect Rate,0.5391,%,down,omniintelos:model-v1
+2026-06,Logistics,OmniIntelOS,Carrying Cost of Inventory,17.9857,%,down,omniintelos:model-v1
+2026-06,Logistics,OmniIntelOS,Total Orders,147.1202,count,up,omniintelos:model-v1
+2026-06,Logistics,OmniIntelOS,Stockout Rate,1.8132,%,down,omniintelos:model-v1
+2026-06,Logistics,OmniIntelOS,Warehouse Utilization,83.8086,%,up,omniintelos:model-v1
+2026-06,Logistics,OmniIntelOS,Average Lead Time,19.5518,days,down,omniintelos:model-v1

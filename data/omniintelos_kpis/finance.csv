@@ -1,0 +1,1873 @@
+period,category,segment,metric_name,value,unit,direction,source
+2020-01,Finance,OmniIntelOS,Revenue,163383.6842,USD,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Subscription Revenue,99916.3456,USD,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Professional Services Revenue,63467.3386,USD,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,COGS,82084.4862,USD,down,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Gross Profit,81299.198,USD,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Operating Expenses,98673.0077,USD,down,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Sales & Marketing Spend,39143.1356,USD,down,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,R&D Spend,39744.5179,USD,down,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,EBITDA,-17373.8097,USD,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Depreciation & Amortisation,6000.0,USD,down,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Interest Expense,1685.256,USD,down,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Net Income,-25059.0657,USD,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Capital Expenditure,4901.5105,USD,down,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Cash Balance,756039.4238,USD,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Total Debt,237360.0,USD,down,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Shareholders Equity,1374940.9343,USD,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Gross Margin,49.7597,%,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,EBITDA Margin,-10.6337,%,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Net Profit Margin,-15.3376,%,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Debt to Equity,0.1726,x,down,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Chiffre d'affaires (XOF),99233954.9216,XOF,up,omniintelos:model-v1
+2020-01,Finance,OmniIntelOS,Cash Runway,30.1703,months,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Revenue,162224.6641,USD,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Subscription Revenue,101959.0565,USD,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Professional Services Revenue,60265.6076,USD,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,COGS,78710.6584,USD,down,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Gross Profit,83514.0057,USD,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Operating Expenses,94840.2993,USD,down,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Sales & Marketing Spend,36636.7981,USD,down,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,R&D Spend,39670.0732,USD,down,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,EBITDA,-11326.2937,USD,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Depreciation & Amortisation,6000.0,USD,down,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Interest Expense,1666.7182,USD,down,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Net Income,-18993.0118,USD,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Capital Expenditure,4866.7399,USD,down,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Cash Balance,738179.672,USD,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Total Debt,234749.04,USD,down,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Shareholders Equity,1355947.9225,USD,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Gross Margin,51.4805,%,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,EBITDA Margin,-6.9819,%,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Net Profit Margin,-11.7078,%,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Debt to Equity,0.1731,x,down,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Chiffre d'affaires (XOF),98530003.6745,XOF,up,omniintelos:model-v1
+2020-02,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Revenue,173335.2087,USD,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Subscription Revenue,105853.5395,USD,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Professional Services Revenue,67481.6692,USD,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,COGS,85077.2841,USD,down,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Gross Profit,88257.9246,USD,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Operating Expenses,106636.7866,USD,down,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Sales & Marketing Spend,41599.8319,USD,down,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,R&D Spend,45366.2266,USD,down,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,EBITDA,-18378.862,USD,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Depreciation & Amortisation,6066.7323,USD,down,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Interest Expense,1648.3843,USD,down,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Net Income,-26093.9786,USD,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Capital Expenditure,5200.0563,USD,down,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Cash Balance,712952.3695,USD,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Total Debt,232166.8006,USD,down,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Shareholders Equity,1329853.9439,USD,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Gross Margin,50.9175,%,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,EBITDA Margin,-10.6031,%,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Net Profit Margin,-15.0541,%,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Debt to Equity,0.1746,x,down,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Chiffre d'affaires (XOF),105278188.4364,XOF,up,omniintelos:model-v1
+2020-03,Finance,OmniIntelOS,Cash Runway,27.3225,months,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Revenue,182674.3451,USD,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Subscription Revenue,108078.8638,USD,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Professional Services Revenue,74595.4813,USD,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,COGS,103340.6543,USD,down,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Gross Profit,79333.6907,USD,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Operating Expenses,109317.0148,USD,down,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Sales & Marketing Spend,40444.0609,USD,down,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,R&D Spend,47756.3678,USD,down,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,EBITDA,-29983.3241,USD,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Depreciation & Amortisation,6393.6021,USD,down,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Interest Expense,1630.2521,USD,down,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Net Income,-38007.1782,USD,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Capital Expenditure,2283.4293,USD,down,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Cash Balance,679055.364,USD,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Total Debt,229612.9658,USD,down,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Shareholders Equity,1291846.7657,USD,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Gross Margin,43.429,%,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,EBITDA Margin,-16.4135,%,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Net Profit Margin,-20.806,%,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Debt to Equity,0.1777,x,down,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Chiffre d'affaires (XOF),110950477.2079,XOF,up,omniintelos:model-v1
+2020-04,Finance,OmniIntelOS,Cash Runway,17.8665,months,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Revenue,173985.9568,USD,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Subscription Revenue,108769.8843,USD,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Professional Services Revenue,65216.0724,USD,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,COGS,95420.6176,USD,down,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Gross Profit,78565.3391,USD,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Operating Expenses,102677.6011,USD,down,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Sales & Marketing Spend,38202.176,USD,down,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,R&D Spend,43928.6931,USD,down,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,EBITDA,-24112.2619,USD,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Depreciation & Amortisation,6089.5085,USD,down,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Interest Expense,1612.3193,USD,down,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Net Income,-31814.0897,USD,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Capital Expenditure,2174.8245,USD,down,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Cash Balance,651155.9584,USD,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Total Debt,227087.2231,USD,down,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Shareholders Equity,1260032.676,USD,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Gross Margin,45.1561,%,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,EBITDA Margin,-13.8587,%,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Net Profit Margin,-18.2854,%,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Debt to Equity,0.1802,x,down,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Chiffre d'affaires (XOF),105673431.705,XOF,up,omniintelos:model-v1
+2020-05,Finance,OmniIntelOS,Cash Runway,20.4675,months,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Revenue,185326.8609,USD,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Subscription Revenue,109704.6662,USD,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Professional Services Revenue,75622.1946,USD,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,COGS,100773.3034,USD,down,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Gross Profit,84553.5575,USD,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Operating Expenses,110504.0695,USD,down,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Sales & Marketing Spend,41231.5491,USD,down,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,R&D Spend,49655.4317,USD,down,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,EBITDA,-25950.512,USD,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Depreciation & Amortisation,6486.4401,USD,down,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Interest Expense,1594.5838,USD,down,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Net Income,-34031.5359,USD,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Capital Expenditure,2316.5858,USD,down,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Cash Balance,621294.2768,USD,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Total Debt,224589.2637,USD,down,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Shareholders Equity,1226001.1401,USD,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Gross Margin,45.624,%,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,EBITDA Margin,-14.0026,%,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Net Profit Margin,-18.363,%,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Debt to Equity,0.1832,x,down,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Chiffre d'affaires (XOF),112561529.3386,XOF,up,omniintelos:model-v1
+2020-06,Finance,OmniIntelOS,Cash Runway,18.2564,months,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Revenue,184918.0268,USD,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Subscription Revenue,110629.9984,USD,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Professional Services Revenue,74288.0285,USD,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,COGS,100200.742,USD,down,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Gross Profit,84717.2848,USD,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Operating Expenses,109170.0055,USD,down,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Sales & Marketing Spend,38894.9551,USD,down,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,R&D Spend,50449.2736,USD,down,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,EBITDA,-24452.7207,USD,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Depreciation & Amortisation,6472.1309,USD,down,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Interest Expense,1577.0434,USD,down,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Net Income,-32501.895,USD,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Capital Expenditure,2311.4753,USD,down,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Cash Balance,592953.0375,USD,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Total Debt,222118.7818,USD,down,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Shareholders Equity,1193499.2451,USD,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Gross Margin,45.8134,%,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,EBITDA Margin,-13.2235,%,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Net Profit Margin,-17.5764,%,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Debt to Equity,0.1861,x,down,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Chiffre d'affaires (XOF),112313216.7836,XOF,up,omniintelos:model-v1
+2020-07,Finance,OmniIntelOS,Cash Runway,18.2436,months,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Revenue,176261.2213,USD,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Subscription Revenue,111081.4658,USD,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Professional Services Revenue,65179.7555,USD,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,COGS,99100.9635,USD,down,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Gross Profit,77160.2578,USD,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Operating Expenses,104132.9375,USD,down,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Sales & Marketing Spend,38694.6498,USD,down,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,R&D Spend,44505.0001,USD,down,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,EBITDA,-26972.6797,USD,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Depreciation & Amortisation,6169.1427,USD,down,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Interest Expense,1559.6959,USD,down,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Net Income,-34701.5183,USD,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Capital Expenditure,2203.2653,USD,down,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Cash Balance,562217.3966,USD,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Total Debt,219675.4752,USD,down,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Shareholders Equity,1158797.7268,USD,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Gross Margin,43.7761,%,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,EBITDA Margin,-15.3027,%,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Net Profit Margin,-19.6876,%,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Debt to Equity,0.1896,x,down,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Chiffre d'affaires (XOF),107055353.6652,XOF,up,omniintelos:model-v1
+2020-08,Finance,OmniIntelOS,Cash Runway,16.2015,months,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Revenue,182768.5604,USD,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Subscription Revenue,111696.1988,USD,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Professional Services Revenue,71072.3616,USD,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,COGS,98100.0308,USD,down,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Gross Profit,84668.5296,USD,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Operating Expenses,107800.152,USD,down,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Sales & Marketing Spend,38519.2204,USD,down,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,R&D Spend,48333.9923,USD,down,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,EBITDA,-23131.6224,USD,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Depreciation & Amortisation,6396.8996,USD,down,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Interest Expense,1542.5392,USD,down,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Net Income,-31071.0612,USD,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Capital Expenditure,2284.607,USD,down,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Cash Balance,535258.628,USD,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Total Debt,217259.0449,USD,down,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Shareholders Equity,1127726.6655,USD,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Gross Margin,46.3255,%,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,EBITDA Margin,-12.6562,%,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Net Profit Margin,-17.0002,%,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Debt to Equity,0.1927,x,down,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Chiffre d'affaires (XOF),111007700.5023,XOF,up,omniintelos:model-v1
+2020-09,Finance,OmniIntelOS,Cash Runway,17.2269,months,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Revenue,194578.0929,USD,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Subscription Revenue,115745.8071,USD,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Professional Services Revenue,78832.2857,USD,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,COGS,86399.3997,USD,down,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Gross Profit,108178.6932,USD,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Operating Expenses,126880.319,USD,down,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Sales & Marketing Spend,56494.5965,USD,down,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,R&D Spend,49505.1968,USD,down,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,EBITDA,-18701.6258,USD,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Depreciation & Amortisation,6810.2333,USD,down,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Interest Expense,1525.5713,USD,down,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Net Income,-27037.4303,USD,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Capital Expenditure,7783.1237,USD,down,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Cash Balance,507248.3072,USD,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Total Debt,214869.1955,USD,down,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Shareholders Equity,1100689.2352,USD,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Gross Margin,55.5965,%,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,EBITDA Margin,-9.6114,%,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Net Profit Margin,-13.8954,%,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Debt to Equity,0.1952,x,down,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Chiffre d'affaires (XOF),118180427.8303,XOF,up,omniintelos:model-v1
+2020-10,Finance,OmniIntelOS,Cash Runway,18.761,months,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Revenue,194611.5487,USD,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Subscription Revenue,122225.8322,USD,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Professional Services Revenue,72385.7165,USD,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,COGS,85704.9789,USD,down,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Gross Profit,108906.5698,USD,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Operating Expenses,128460.9789,USD,down,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Sales & Marketing Spend,57737.0386,USD,down,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,R&D Spend,49412.7716,USD,down,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,EBITDA,-19554.4091,USD,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Depreciation & Amortisation,6811.4042,USD,down,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Interest Expense,1508.79,USD,down,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Net Income,-27874.6033,USD,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Capital Expenditure,7784.4619,USD,down,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Cash Balance,478400.6461,USD,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Total Debt,212505.6343,USD,down,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Shareholders Equity,1072814.6319,USD,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Gross Margin,55.961,%,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,EBITDA Margin,-10.0479,%,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Net Profit Margin,-14.3232,%,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Debt to Equity,0.1981,x,down,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Chiffre d'affaires (XOF),118200747.8287,XOF,up,omniintelos:model-v1
+2020-11,Finance,OmniIntelOS,Cash Runway,17.1626,months,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Revenue,215896.3864,USD,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Subscription Revenue,128620.1034,USD,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Professional Services Revenue,87276.283,USD,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,COGS,98372.6667,USD,down,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Gross Profit,117523.7197,USD,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Operating Expenses,136173.6306,USD,down,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Sales & Marketing Spend,59439.4318,USD,down,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,R&D Spend,53621.5735,USD,down,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,EBITDA,-18649.9109,USD,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Depreciation & Amortisation,7556.3735,USD,down,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Interest Expense,1492.1933,USD,down,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Net Income,-27698.4777,USD,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Capital Expenditure,8635.8555,USD,down,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Cash Balance,449622.6865,USD,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Total Debt,210168.0723,USD,down,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Shareholders Equity,1045116.1541,USD,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Gross Margin,54.4352,%,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,EBITDA Margin,-8.6384,%,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Net Profit Margin,-12.8295,%,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Debt to Equity,0.2011,x,down,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Chiffre d'affaires (XOF),131128468.4486,XOF,up,omniintelos:model-v1
+2020-12,Finance,OmniIntelOS,Cash Runway,16.2328,months,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Revenue,211684.432,USD,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Subscription Revenue,135778.7183,USD,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Professional Services Revenue,75905.7137,USD,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,COGS,92414.4887,USD,down,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Gross Profit,119269.9432,USD,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Operating Expenses,138832.4924,USD,down,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Sales & Marketing Spend,61236.8193,USD,down,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,R&D Spend,51649.0019,USD,down,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,EBITDA,-19562.5491,USD,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Depreciation & Amortisation,7408.9551,USD,down,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Interest Expense,1475.7792,USD,down,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Net Income,-28447.2834,USD,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Capital Expenditure,8467.3773,USD,down,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Cash Balance,420116.9809,USD,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Total Debt,207856.2235,USD,down,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Shareholders Equity,1016668.8707,USD,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Gross Margin,56.3433,%,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,EBITDA Margin,-9.2414,%,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Net Profit Margin,-13.4385,%,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Debt to Equity,0.2044,x,down,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Chiffre d'affaires (XOF),128570263.85,XOF,up,omniintelos:model-v1
+2021-01,Finance,OmniIntelOS,Cash Runway,14.7683,months,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Revenue,237469.9905,USD,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Subscription Revenue,143619.6901,USD,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Professional Services Revenue,93850.3004,USD,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,COGS,102729.7673,USD,down,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Gross Profit,134740.2231,USD,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Operating Expenses,153502.0663,USD,down,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Sales & Marketing Spend,65337.9408,USD,down,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,R&D Spend,61007.1094,USD,down,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,EBITDA,-18761.8432,USD,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Depreciation & Amortisation,8311.4497,USD,down,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Interest Expense,1459.5456,USD,down,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Net Income,-28532.8385,USD,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Capital Expenditure,9498.7996,USD,down,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Cash Balance,390396.7924,USD,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Total Debt,205569.8051,USD,down,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Shareholders Equity,988136.0322,USD,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Gross Margin,56.7399,%,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,EBITDA Margin,-7.9007,%,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Net Profit Margin,-12.0153,%,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Debt to Equity,0.208,x,down,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Chiffre d'affaires (XOF),144231576.4155,XOF,up,omniintelos:model-v1
+2021-02,Finance,OmniIntelOS,Cash Runway,13.6824,months,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Revenue,252024.3983,USD,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Subscription Revenue,151860.776,USD,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Professional Services Revenue,100163.6224,USD,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,COGS,108861.1598,USD,down,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Gross Profit,143163.2386,USD,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Operating Expenses,168789.9539,USD,down,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Sales & Marketing Spend,72813.5845,USD,down,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,R&D Spend,66982.0129,USD,down,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,EBITDA,-25626.7153,USD,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Depreciation & Amortisation,8820.8539,USD,down,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Interest Expense,1443.4906,USD,down,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Net Income,-35891.0599,USD,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Capital Expenditure,10080.9759,USD,down,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Cash Balance,353245.6105,USD,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Total Debt,203308.5372,USD,down,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Shareholders Equity,952244.9723,USD,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Gross Margin,56.8053,%,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,EBITDA Margin,-10.1683,%,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Net Profit Margin,-14.2411,%,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Debt to Equity,0.2135,x,down,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Chiffre d'affaires (XOF),153071452.0897,XOF,up,omniintelos:model-v1
+2021-03,Finance,OmniIntelOS,Cash Runway,9.8422,months,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Revenue,260089.0707,USD,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Subscription Revenue,161208.0116,USD,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Professional Services Revenue,98881.0591,USD,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,COGS,113932.3938,USD,down,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Gross Profit,146156.6769,USD,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Operating Expenses,174242.6075,USD,down,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Sales & Marketing Spend,76312.5732,USD,down,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,R&D Spend,67170.8194,USD,down,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,EBITDA,-28085.9305,USD,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Depreciation & Amortisation,9103.1175,USD,down,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Interest Expense,1427.6122,USD,down,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Net Income,-38616.6602,USD,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Capital Expenditure,10403.5628,USD,down,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Cash Balance,313328.5049,USD,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Total Debt,201072.1433,USD,down,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Shareholders Equity,913628.3121,USD,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Gross Margin,56.1949,%,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,EBITDA Margin,-10.7986,%,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Net Profit Margin,-14.8475,%,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Debt to Equity,0.2201,x,down,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Chiffre d'affaires (XOF),157969672.7585,XOF,up,omniintelos:model-v1
+2021-04,Finance,OmniIntelOS,Cash Runway,8.1138,months,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Revenue,273183.916,USD,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Subscription Revenue,171573.0808,USD,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Professional Services Revenue,101610.8352,USD,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,COGS,115749.4901,USD,down,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Gross Profit,157434.4258,USD,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Operating Expenses,185365.1105,USD,down,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Sales & Marketing Spend,82592.8157,USD,down,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,R&D Spend,72273.039,USD,down,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,EBITDA,-27930.6846,USD,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Depreciation & Amortisation,9561.4371,USD,down,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Interest Expense,1411.9085,USD,down,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Net Income,-38904.0302,USD,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Capital Expenditure,10927.3566,USD,down,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Cash Balance,273058.5552,USD,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Total Debt,198860.3497,USD,down,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Shareholders Equity,874724.2819,USD,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Gross Margin,57.6295,%,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,EBITDA Margin,-10.2241,%,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Net Profit Margin,-14.241,%,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Debt to Equity,0.2273,x,down,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Chiffre d'affaires (XOF),165923057.393,XOF,up,omniintelos:model-v1
+2021-05,Finance,OmniIntelOS,Cash Runway,7.0188,months,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Revenue,284477.6239,USD,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Subscription Revenue,180857.2512,USD,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Professional Services Revenue,103620.3727,USD,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,COGS,125241.2074,USD,down,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Gross Profit,159236.4165,USD,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Operating Expenses,188614.6641,USD,down,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Sales & Marketing Spend,81570.9084,USD,down,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,R&D Spend,76413.3198,USD,down,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,EBITDA,-29378.2476,USD,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Depreciation & Amortisation,9956.7168,USD,down,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Interest Expense,1396.3775,USD,down,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Net Income,-40731.342,USD,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Capital Expenditure,11379.105,USD,down,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Cash Balance,230904.8251,USD,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Total Debt,196672.8859,USD,down,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Shareholders Equity,833992.94,USD,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Gross Margin,55.975,%,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,EBITDA Margin,-10.3271,%,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Net Profit Margin,-14.3179,%,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Debt to Equity,0.2358,x,down,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Chiffre d'affaires (XOF),172782489.5791,XOF,up,omniintelos:model-v1
+2021-06,Finance,OmniIntelOS,Cash Runway,5.669,months,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Revenue,298150.1318,USD,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Subscription Revenue,192277.8223,USD,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Professional Services Revenue,105872.3096,USD,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,COGS,143980.9846,USD,down,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Gross Profit,154169.1473,USD,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Operating Expenses,192490.9398,USD,down,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Sales & Marketing Spend,81671.6379,USD,down,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,R&D Spend,78600.0083,USD,down,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,EBITDA,-38321.7925,USD,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Depreciation & Amortisation,10435.2546,USD,down,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Interest Expense,3553.6173,USD,down,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Net Income,-52310.6645,USD,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Capital Expenditure,25342.7612,USD,down,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Cash Balance,163686.6541,USD,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Total Debt,500509.4841,USD,down,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Shareholders Equity,781682.2755,USD,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Gross Margin,51.7086,%,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,EBITDA Margin,-12.8532,%,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Net Profit Margin,-17.5451,%,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Debt to Equity,0.6403,x,down,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Chiffre d'affaires (XOF),181086727.8042,XOF,up,omniintelos:model-v1
+2021-07,Finance,OmniIntelOS,Cash Runway,3.1291,months,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Revenue,341044.7962,USD,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Subscription Revenue,206216.432,USD,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Professional Services Revenue,134828.3643,USD,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,COGS,164550.3902,USD,down,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Gross Profit,176494.406,USD,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Operating Expenses,229340.9381,USD,down,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Sales & Marketing Spend,104901.7438,USD,down,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,R&D Spend,83914.0109,USD,down,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,EBITDA,-52846.5321,USD,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Depreciation & Amortisation,11936.5679,USD,down,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Interest Expense,5687.1275,USD,down,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Net Income,-70470.2275,USD,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Capital Expenditure,28988.8077,USD,down,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Cash Balance,12076164.1868,USD,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Total Debt,801003.8798,USD,down,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Shareholders Equity,12711212.048,USD,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Gross Margin,51.7511,%,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,EBITDA Margin,-15.4955,%,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Net Profit Margin,-20.663,%,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Debt to Equity,0.063,x,down,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Chiffre d'affaires (XOF),207139556.8447,XOF,up,omniintelos:model-v1
+2021-08,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Revenue,349312.1866,USD,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Subscription Revenue,220999.7697,USD,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Professional Services Revenue,128312.4169,USD,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,COGS,174706.3489,USD,down,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Gross Profit,174605.8377,USD,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Operating Expenses,221577.5393,USD,down,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Sales & Marketing Spend,94753.7728,USD,down,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,R&D Spend,87604.2807,USD,down,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,EBITDA,-46971.7016,USD,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Depreciation & Amortisation,12225.9265,USD,down,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Interest Expense,7797.1691,USD,down,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Net Income,-66994.7973,USD,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Capital Expenditure,29691.5359,USD,down,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Cash Balance,11991703.7801,USD,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Total Debt,1098192.8371,USD,down,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Shareholders Equity,12644217.2507,USD,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Gross Margin,49.9856,%,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,EBITDA Margin,-13.4469,%,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Net Profit Margin,-19.1791,%,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Debt to Equity,0.0869,x,down,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Chiffre d'affaires (XOF),212160901.8404,XOF,up,omniintelos:model-v1
+2021-09,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Revenue,391070.6909,USD,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Subscription Revenue,238264.8317,USD,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Professional Services Revenue,152805.8592,USD,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,COGS,193962.0225,USD,down,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Gross Profit,197108.6684,USD,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Operating Expenses,256447.7759,USD,down,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Sales & Marketing Spend,109966.9869,USD,down,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,R&D Spend,101765.1294,USD,down,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,EBITDA,-59339.1075,USD,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Depreciation & Amortisation,13687.4742,USD,down,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Interest Expense,9884.0003,USD,down,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Net Income,-82910.582,USD,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Capital Expenditure,33241.0087,USD,down,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Cash Balance,11889239.6636,USD,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Total Debt,1392112.7159,USD,down,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Shareholders Equity,12561306.6688,USD,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Gross Margin,50.4023,%,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,EBITDA Margin,-15.1735,%,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Net Profit Margin,-21.2009,%,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Debt to Equity,0.1108,x,down,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Chiffre d'affaires (XOF),237523664.0615,XOF,up,omniintelos:model-v1
+2021-10,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Revenue,403230.4257,USD,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Subscription Revenue,257603.6034,USD,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Professional Services Revenue,145626.8223,USD,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,COGS,195143.4535,USD,down,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Gross Profit,208086.9721,USD,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Operating Expenses,272759.0088,USD,down,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Sales & Marketing Spend,124613.9417,USD,down,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,R&D Spend,103071.2965,USD,down,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,EBITDA,-64672.0367,USD,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Depreciation & Amortisation,14113.0649,USD,down,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Interest Expense,11947.8763,USD,down,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Net Income,-90732.9779,USD,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Capital Expenditure,34274.5862,USD,down,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Cash Balance,11778345.1645,USD,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Total Debt,1682799.4761,USD,down,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Shareholders Equity,12470573.6909,USD,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Gross Margin,51.605,%,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,EBITDA Margin,-16.0385,%,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Net Profit Margin,-22.5015,%,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Debt to Equity,0.1349,x,down,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Chiffre d'affaires (XOF),244909092.9029,XOF,up,omniintelos:model-v1
+2021-11,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Revenue,434835.8098,USD,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Subscription Revenue,278739.1041,USD,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Professional Services Revenue,156096.7057,USD,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,COGS,214418.3881,USD,down,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Gross Profit,220417.4216,USD,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Operating Expenses,277341.0533,USD,down,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Sales & Marketing Spend,117058.8358,USD,down,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,R&D Spend,113317.5916,USD,down,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,EBITDA,-56923.6316,USD,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Depreciation & Amortisation,15219.2533,USD,down,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Interest Expense,13989.0496,USD,down,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Net Income,-86131.9346,USD,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Capital Expenditure,36961.0438,USD,down,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Cash Balance,11670471.4394,USD,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Total Debt,1970288.6818,USD,down,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Shareholders Equity,12384441.7563,USD,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Gross Margin,50.6898,%,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,EBITDA Margin,-13.0908,%,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Net Profit Margin,-19.8079,%,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Debt to Equity,0.1591,x,down,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Chiffre d'affaires (XOF),264105178.9572,XOF,up,omniintelos:model-v1
+2021-12,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Revenue,403691.935,USD,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Subscription Revenue,301129.0397,USD,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Professional Services Revenue,102562.8953,USD,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,COGS,191290.1611,USD,down,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Gross Profit,212401.7739,USD,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Operating Expenses,260394.2919,USD,down,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Sales & Marketing Spend,111380.1226,USD,down,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,R&D Spend,106014.1834,USD,down,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,EBITDA,-47992.518,USD,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Depreciation & Amortisation,14129.2177,USD,down,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Interest Expense,16007.7701,USD,down,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Net Income,-78129.5058,USD,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Capital Expenditure,34313.8145,USD,down,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Cash Balance,11572157.3368,USD,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Total Debt,2254615.5063,USD,down,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Shareholders Equity,12306312.2504,USD,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Gross Margin,52.6148,%,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,EBITDA Margin,-11.8884,%,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Net Profit Margin,-19.3537,%,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Debt to Equity,0.1832,x,down,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Chiffre d'affaires (XOF),245189398.7128,XOF,up,omniintelos:model-v1
+2022-01,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Revenue,426703.552,USD,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Subscription Revenue,326454.3269,USD,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Professional Services Revenue,100249.2251,USD,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,COGS,203615.4719,USD,down,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Gross Profit,223088.0801,USD,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Operating Expenses,270950.0564,USD,down,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Sales & Marketing Spend,115133.0667,USD,down,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,R&D Spend,107611.7538,USD,down,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,EBITDA,-47861.9763,USD,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Depreciation & Amortisation,14934.6243,USD,down,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Interest Expense,18004.2846,USD,down,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Net Income,-80800.8853,USD,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Capital Expenditure,36269.8019,USD,down,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Cash Balance,11470021.2739,USD,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Total Debt,2535814.7357,USD,down,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Shareholders Equity,12225511.3652,USD,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Gross Margin,52.2817,%,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,EBITDA Margin,-11.2167,%,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Net Profit Margin,-18.9361,%,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Debt to Equity,0.2074,x,down,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Chiffre d'affaires (XOF),259165909.1439,XOF,up,omniintelos:model-v1
+2022-02,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Revenue,458749.3683,USD,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Subscription Revenue,353092.2044,USD,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Professional Services Revenue,105657.1639,USD,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,COGS,222777.4564,USD,down,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Gross Profit,235971.9119,USD,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Operating Expenses,301780.878,USD,down,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Sales & Marketing Spend,129868.4795,USD,down,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,R&D Spend,119724.8225,USD,down,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,EBITDA,-65808.9661,USD,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Depreciation & Amortisation,16056.2279,USD,down,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Interest Expense,19978.8375,USD,down,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Net Income,-101844.0315,USD,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Capital Expenditure,38993.6963,USD,down,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Cash Balance,11345239.774,USD,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Total Debt,2813920.7737,USD,down,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Shareholders Equity,12123667.3337,USD,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Gross Margin,51.4381,%,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,EBITDA Margin,-14.3453,%,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Net Profit Margin,-22.2004,%,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Debt to Equity,0.2321,x,down,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Chiffre d'affaires (XOF),278629499.4299,XOF,up,omniintelos:model-v1
+2022-03,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Revenue,498990.6117,USD,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Subscription Revenue,372280.4667,USD,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Professional Services Revenue,126710.1451,USD,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,COGS,228262.0647,USD,down,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Gross Profit,270728.547,USD,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Operating Expenses,305476.7023,USD,down,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Sales & Marketing Spend,115198.9281,USD,down,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,R&D Spend,134098.4747,USD,down,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,EBITDA,-34748.1553,USD,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Depreciation & Amortisation,17464.6714,USD,down,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Interest Expense,19759.0703,USD,down,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Net Income,-71971.897,USD,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Capital Expenditure,27444.4836,USD,down,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Cash Balance,11263288.0648,USD,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Total Debt,2782967.6451,USD,down,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Shareholders Equity,12051695.4367,USD,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Gross Margin,54.2552,%,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,EBITDA Margin,-6.9637,%,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Net Profit Margin,-14.4235,%,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Debt to Equity,0.2309,x,down,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Chiffre d'affaires (XOF),303070726.5798,XOF,up,omniintelos:model-v1
+2022-04,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Revenue,518744.3993,USD,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Subscription Revenue,384191.5284,USD,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Professional Services Revenue,134552.8709,USD,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,COGS,241980.7298,USD,down,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Gross Profit,276763.6696,USD,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Operating Expenses,326441.6268,USD,down,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Sales & Marketing Spend,125318.585,USD,down,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,R&D Spend,137183.2107,USD,down,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,EBITDA,-49677.9573,USD,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Depreciation & Amortisation,18156.054,USD,down,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Interest Expense,19541.7205,USD,down,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Net Income,-87375.7318,USD,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Capital Expenditure,28530.942,USD,down,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Cash Balance,11165537.4451,USD,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Total Debt,2752355.001,USD,down,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Shareholders Equity,11964319.705,USD,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Gross Margin,53.3526,%,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,EBITDA Margin,-9.5766,%,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Net Profit Margin,-16.8437,%,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Debt to Equity,0.23,x,down,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Chiffre d'affaires (XOF),315068536.9832,XOF,up,omniintelos:model-v1
+2022-05,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Revenue,525743.8552,USD,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Subscription Revenue,396756.5578,USD,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Professional Services Revenue,128987.2974,USD,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,COGS,245778.8821,USD,down,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Gross Profit,279964.9731,USD,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Operating Expenses,313440.7023,USD,down,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Sales & Marketing Spend,112602.9061,USD,down,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,R&D Spend,140264.2568,USD,down,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,EBITDA,-33475.7292,USD,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Depreciation & Amortisation,18401.0349,USD,down,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Interest Expense,19326.7616,USD,down,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Net Income,-71203.5258,USD,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Capital Expenditure,28915.912,USD,down,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Cash Balance,11083819.0422,USD,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Total Debt,2722079.096,USD,down,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Shareholders Equity,11893116.1792,USD,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Gross Margin,53.2512,%,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,EBITDA Margin,-6.3673,%,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Net Profit Margin,-13.5434,%,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Debt to Equity,0.2289,x,down,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Chiffre d'affaires (XOF),319319779.6281,XOF,up,omniintelos:model-v1
+2022-06,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Revenue,562785.1402,USD,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Subscription Revenue,410157.0486,USD,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Professional Services Revenue,152628.0915,USD,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,COGS,254680.004,USD,down,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Gross Profit,308105.1361,USD,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Operating Expenses,339400.3391,USD,down,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Sales & Marketing Spend,128949.3184,USD,down,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,R&D Spend,147342.3907,USD,down,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,EBITDA,-31295.203,USD,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Depreciation & Amortisation,19697.4799,USD,down,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Interest Expense,19114.1672,USD,down,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Net Income,-70106.8501,USD,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Capital Expenditure,30953.1827,USD,down,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Cash Balance,11002456.4893,USD,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Total Debt,2692136.226,USD,down,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Shareholders Equity,11823009.3291,USD,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Gross Margin,54.7465,%,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,EBITDA Margin,-5.5608,%,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Net Profit Margin,-12.4571,%,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Debt to Equity,0.2277,x,down,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Chiffre d'affaires (XOF),341817455.7203,XOF,up,omniintelos:model-v1
+2022-07,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Revenue,578299.3129,USD,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Subscription Revenue,421852.3614,USD,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Professional Services Revenue,156446.9516,USD,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,COGS,261090.3868,USD,down,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Gross Profit,317208.9261,USD,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Operating Expenses,340597.7791,USD,down,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Sales & Marketing Spend,122672.5885,USD,down,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,R&D Spend,147201.3107,USD,down,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,EBITDA,-23388.8531,USD,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Depreciation & Amortisation,20240.476,USD,down,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Interest Expense,18903.9114,USD,down,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Net Income,-62533.2404,USD,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Capital Expenditure,31806.4622,USD,down,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Cash Balance,10928357.2627,USD,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Total Debt,2662522.7275,USD,down,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Shareholders Equity,11760476.0887,USD,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Gross Margin,54.852,%,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,EBITDA Margin,-4.0444,%,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Net Profit Margin,-10.8133,%,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Debt to Equity,0.2264,x,down,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Chiffre d'affaires (XOF),351240261.4846,XOF,up,omniintelos:model-v1
+2022-08,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Revenue,578582.7983,USD,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Subscription Revenue,434529.9688,USD,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Professional Services Revenue,144052.8295,USD,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,COGS,258523.0664,USD,down,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Gross Profit,320059.732,USD,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Operating Expenses,355942.0709,USD,down,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Sales & Marketing Spend,132423.7048,USD,down,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,R&D Spend,155549.2408,USD,down,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,EBITDA,-35882.339,USD,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Depreciation & Amortisation,20250.3979,USD,down,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Interest Expense,18695.9683,USD,down,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Net Income,-74828.7052,USD,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Capital Expenditure,31822.0539,USD,down,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Cash Balance,10841956.9014,USD,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Total Debt,2633234.9775,USD,down,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Shareholders Equity,11685647.3835,USD,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Gross Margin,55.3179,%,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,EBITDA Margin,-6.2018,%,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Net Profit Margin,-12.9331,%,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Debt to Equity,0.2253,x,down,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Chiffre d'affaires (XOF),351412441.3414,XOF,up,omniintelos:model-v1
+2022-09,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Revenue,613437.5273,USD,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Subscription Revenue,449123.2806,USD,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Professional Services Revenue,164314.2467,USD,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,COGS,276774.8854,USD,down,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Gross Profit,336662.6419,USD,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Operating Expenses,352539.7544,USD,down,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Sales & Marketing Spend,128500.3441,USD,down,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,R&D Spend,149193.9526,USD,down,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,EBITDA,-15877.1125,USD,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Depreciation & Amortisation,21470.3135,USD,down,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Interest Expense,18490.3127,USD,down,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Net Income,-55837.7386,USD,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Capital Expenditure,33739.064,USD,down,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Cash Balance,10773850.4123,USD,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Total Debt,2604269.3927,USD,down,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Shareholders Equity,11629809.6448,USD,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Gross Margin,54.8813,%,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,EBITDA Margin,-2.5882,%,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Net Profit Margin,-9.1024,%,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Debt to Equity,0.2239,x,down,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Chiffre d'affaires (XOF),372582074.1861,XOF,up,omniintelos:model-v1
+2022-10,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Revenue,607359.9463,USD,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Subscription Revenue,465298.5753,USD,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Professional Services Revenue,142061.371,USD,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,COGS,277214.5937,USD,down,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Gross Profit,330145.3525,USD,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Operating Expenses,363386.0845,USD,down,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Sales & Marketing Spend,126167.9954,USD,down,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,R&D Spend,167834.2577,USD,down,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,EBITDA,-33240.7319,USD,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Depreciation & Amortisation,21257.5981,USD,down,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Interest Expense,18286.9192,USD,down,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Net Income,-72785.2493,USD,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Capital Expenditure,33404.797,USD,down,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Cash Balance,10688917.9641,USD,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Total Debt,2575622.4294,USD,down,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Shareholders Equity,11557024.3956,USD,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Gross Margin,54.3574,%,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,EBITDA Margin,-5.473,%,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Net Profit Margin,-11.9839,%,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Debt to Equity,0.2229,x,down,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Chiffre d'affaires (XOF),368890748.4054,XOF,up,omniintelos:model-v1
+2022-11,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Revenue,658934.669,USD,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Subscription Revenue,481595.0493,USD,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Professional Services Revenue,177339.6197,USD,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,COGS,286821.8426,USD,down,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Gross Profit,372112.8264,USD,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Operating Expenses,387332.5766,USD,down,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Sales & Marketing Spend,144112.5744,USD,down,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,R&D Spend,163974.0321,USD,down,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,EBITDA,-15219.7502,USD,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Depreciation & Amortisation,23062.7134,USD,down,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Interest Expense,18085.7631,USD,down,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Net Income,-56368.2267,USD,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Capital Expenditure,36241.4068,USD,down,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Cash Balance,10619371.044,USD,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Total Debt,2547290.5827,USD,down,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Shareholders Equity,11500656.1689,USD,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Gross Margin,56.4719,%,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,EBITDA Margin,-2.3098,%,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Net Profit Margin,-8.5544,%,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Debt to Equity,0.2215,x,down,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Chiffre d'affaires (XOF),400215563.5926,XOF,up,omniintelos:model-v1
+2022-12,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Revenue,676785.1271,USD,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Subscription Revenue,490160.3445,USD,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Professional Services Revenue,186624.7826,USD,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,COGS,332698.5624,USD,down,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Gross Profit,344086.5647,USD,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Operating Expenses,376623.0874,USD,down,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Sales & Marketing Spend,146331.6411,USD,down,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,R&D Spend,153762.9339,USD,down,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,EBITDA,-32536.5227,USD,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Depreciation & Amortisation,23687.4794,USD,down,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Interest Expense,17886.8197,USD,down,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Net Income,-74110.8219,USD,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Capital Expenditure,30455.3307,USD,down,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Cash Balance,10538492.3709,USD,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Total Debt,2519270.3863,USD,down,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Shareholders Equity,11426545.347,USD,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Gross Margin,50.8413,%,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,EBITDA Margin,-4.8075,%,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Net Profit Margin,-10.9504,%,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Debt to Equity,0.2205,x,down,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Chiffre d'affaires (XOF),411057353.3672,XOF,up,omniintelos:model-v1
+2023-01,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Revenue,656746.7749,USD,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Subscription Revenue,490796.3853,USD,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Professional Services Revenue,165950.3896,USD,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,COGS,325270.9292,USD,down,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Gross Profit,331475.8457,USD,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Operating Expenses,351390.3843,USD,down,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Sales & Marketing Spend,136016.5462,USD,down,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,R&D Spend,141533.701,USD,down,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,EBITDA,-19914.5386,USD,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Depreciation & Amortisation,22986.1371,USD,down,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Interest Expense,17690.0647,USD,down,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Net Income,-60590.7405,USD,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Capital Expenditure,29553.6049,USD,down,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Cash Balance,10471334.1626,USD,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Total Debt,2491558.412,USD,down,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Shareholders Equity,11365954.6065,USD,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Gross Margin,50.4724,%,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,EBITDA Margin,-3.0323,%,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Net Profit Margin,-9.2259,%,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Debt to Equity,0.2192,x,down,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Chiffre d'affaires (XOF),398886707.5995,XOF,up,omniintelos:model-v1
+2023-02,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Revenue,655399.2952,USD,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Subscription Revenue,491061.2533,USD,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Professional Services Revenue,164338.0419,USD,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,COGS,325146.5328,USD,down,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Gross Profit,330252.7623,USD,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Operating Expenses,376439.3528,USD,down,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Sales & Marketing Spend,149171.9391,USD,down,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,R&D Spend,146486.8508,USD,down,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,EBITDA,-46186.5905,USD,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Depreciation & Amortisation,22938.9753,USD,down,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Interest Expense,17495.474,USD,down,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Net Income,-86621.0398,USD,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Capital Expenditure,29492.9683,USD,down,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Cash Balance,10378159.1298,USD,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Total Debt,2464151.2695,USD,down,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Shareholders Equity,11279333.5667,USD,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Gross Margin,50.3896,%,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,EBITDA Margin,-7.0471,%,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Net Profit Margin,-13.2165,%,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Debt to Equity,0.2185,x,down,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Chiffre d'affaires (XOF),398068292.0964,XOF,up,omniintelos:model-v1
+2023-03,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Revenue,652145.734,USD,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Subscription Revenue,492198.0714,USD,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Professional Services Revenue,159947.6626,USD,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,COGS,317902.2737,USD,down,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Gross Profit,334243.4603,USD,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Operating Expenses,349844.2008,USD,down,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Sales & Marketing Spend,141058.9038,USD,down,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,R&D Spend,135580.0838,USD,down,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,EBITDA,-15600.7405,USD,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Depreciation & Amortisation,22825.1007,USD,down,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Interest Expense,17303.0238,USD,down,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Net Income,-55728.865,USD,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Capital Expenditure,29346.558,USD,down,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Cash Balance,10315908.8076,USD,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Total Debt,2437045.6055,USD,down,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Shareholders Equity,11223604.7017,USD,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Gross Margin,51.2529,%,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,EBITDA Margin,-2.3922,%,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Net Profit Margin,-8.5455,%,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Debt to Equity,0.2171,x,down,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Chiffre d'affaires (XOF),396092184.4812,XOF,up,omniintelos:model-v1
+2023-04,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Revenue,654978.381,USD,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Subscription Revenue,494749.9376,USD,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Professional Services Revenue,160228.4434,USD,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,COGS,319036.4348,USD,down,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Gross Profit,335941.9462,USD,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Operating Expenses,361660.0831,USD,down,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Sales & Marketing Spend,138491.061,USD,down,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,R&D Spend,147250.4539,USD,down,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,EBITDA,-25718.1369,USD,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Depreciation & Amortisation,22924.2433,USD,down,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Interest Expense,17112.6905,USD,down,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Net Income,-65755.0708,USD,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Capital Expenditure,29474.0271,USD,down,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Cash Balance,10243603.953,USD,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Total Debt,2410238.1039,USD,down,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Shareholders Equity,11157849.631,USD,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Gross Margin,51.2905,%,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,EBITDA Margin,-3.9266,%,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Net Profit Margin,-10.0393,%,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Debt to Equity,0.216,x,down,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Chiffre d'affaires (XOF),397812642.4681,XOF,up,omniintelos:model-v1
+2023-05,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Revenue,662437.9747,USD,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Subscription Revenue,503353.0674,USD,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Professional Services Revenue,159084.9073,USD,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,COGS,301026.7872,USD,down,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Gross Profit,361411.1875,USD,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Operating Expenses,371588.7891,USD,down,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Sales & Marketing Spend,156134.7078,USD,down,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,R&D Spend,133425.8806,USD,down,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,EBITDA,-10177.6016,USD,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Depreciation & Amortisation,23185.3291,USD,down,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Interest Expense,16924.4509,USD,down,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Net Income,-50287.3817,USD,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Capital Expenditure,39746.2785,USD,down,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Cash Balance,10176755.622,USD,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Total Debt,2383725.4847,USD,down,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Shareholders Equity,11107562.2493,USD,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Gross Margin,54.5577,%,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,EBITDA Margin,-1.5364,%,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Net Profit Margin,-7.5913,%,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Debt to Equity,0.2146,x,down,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Chiffre d'affaires (XOF),402343357.9461,XOF,up,omniintelos:model-v1
+2023-06,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Revenue,671613.7283,USD,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Subscription Revenue,516930.4117,USD,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Professional Services Revenue,154683.3166,USD,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,COGS,307540.7422,USD,down,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Gross Profit,364072.986,USD,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Operating Expenses,367044.6961,USD,down,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Sales & Marketing Spend,142668.1064,USD,down,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,R&D Spend,153247.3283,USD,down,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,EBITDA,-2971.7101,USD,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Depreciation & Amortisation,23506.4805,USD,down,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Interest Expense,16738.282,USD,down,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Net Income,-43216.4726,USD,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Capital Expenditure,40296.8237,USD,down,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Cash Balance,10116748.8062,USD,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Total Debt,2357504.5044,USD,down,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Shareholders Equity,11064345.7768,USD,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Gross Margin,54.2087,%,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,EBITDA Margin,-0.4425,%,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Net Profit Margin,-6.4347,%,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Debt to Equity,0.2131,x,down,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Chiffre d'affaires (XOF),407916413.2951,XOF,up,omniintelos:model-v1
+2023-07,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Revenue,723355.2926,USD,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Subscription Revenue,531555.182,USD,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Professional Services Revenue,191800.1106,USD,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,COGS,321805.2344,USD,down,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Gross Profit,401550.0582,USD,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Operating Expenses,398852.4862,USD,down,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Sales & Marketing Spend,149943.7601,USD,down,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,R&D Spend,163664.402,USD,down,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,EBITDA,2697.572,USD,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Depreciation & Amortisation,25317.4352,USD,down,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Interest Expense,16554.1609,USD,down,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Net Income,-39174.0241,USD,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Capital Expenditure,43401.3176,USD,down,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Cash Balance,10059490.8998,USD,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Total Debt,2331571.9549,USD,down,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Shareholders Equity,11025171.7527,USD,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Gross Margin,55.5121,%,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,EBITDA Margin,0.3729,%,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Net Profit Margin,-5.4156,%,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Debt to Equity,0.2115,x,down,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Chiffre d'affaires (XOF),439342562.663,XOF,up,omniintelos:model-v1
+2023-08,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Revenue,715126.5162,USD,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Subscription Revenue,545759.585,USD,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Professional Services Revenue,169366.9312,USD,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,COGS,329473.935,USD,down,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Gross Profit,385652.5812,USD,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Operating Expenses,387276.6183,USD,down,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Sales & Marketing Spend,156521.3254,USD,down,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,R&D Spend,144700.7555,USD,down,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,EBITDA,-1624.0371,USD,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Depreciation & Amortisation,25029.4281,USD,down,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Interest Expense,16372.0651,USD,down,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Net Income,-43025.5303,USD,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Capital Expenditure,42907.591,USD,down,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Cash Balance,9998587.2066,USD,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Total Debt,2305924.6634,USD,down,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Shareholders Equity,10982146.2224,USD,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Gross Margin,53.9279,%,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,EBITDA Margin,-0.2271,%,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Net Profit Margin,-6.0165,%,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Debt to Equity,0.21,x,down,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Chiffre d'affaires (XOF),434344670.55,XOF,up,omniintelos:model-v1
+2023-09,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Revenue,750919.6229,USD,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Subscription Revenue,559791.258,USD,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Professional Services Revenue,191128.3649,USD,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,COGS,330859.735,USD,down,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Gross Profit,420059.8879,USD,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Operating Expenses,408166.1737,USD,down,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Sales & Marketing Spend,156835.4464,USD,down,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,R&D Spend,162743.1908,USD,down,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,EBITDA,11893.7142,USD,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Depreciation & Amortisation,26282.1868,USD,down,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Interest Expense,16191.9724,USD,down,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Net Income,-30580.445,USD,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Capital Expenditure,45055.1774,USD,down,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Cash Balance,9949233.771,USD,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Total Debt,2280559.4921,USD,down,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Shareholders Equity,10951565.7773,USD,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Gross Margin,55.9394,%,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,EBITDA Margin,1.5839,%,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Net Profit Margin,-4.0724,%,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Debt to Equity,0.2082,x,down,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Chiffre d'affaires (XOF),456084243.5811,XOF,up,omniintelos:model-v1
+2023-10,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Revenue,781010.4938,USD,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Subscription Revenue,576569.0926,USD,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Professional Services Revenue,204441.4012,USD,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,COGS,358314.5025,USD,down,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Gross Profit,422695.9912,USD,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Operating Expenses,445932.7174,USD,down,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Sales & Marketing Spend,176774.5252,USD,down,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,R&D Spend,173674.5564,USD,down,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,EBITDA,-23236.7262,USD,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Depreciation & Amortisation,27335.3673,USD,down,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Interest Expense,16013.8607,USD,down,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Net Income,-66585.9541,USD,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Capital Expenditure,46860.6296,USD,down,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Cash Balance,9863122.5545,USD,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Total Debt,2255473.3376,USD,down,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Shareholders Equity,10884979.8232,USD,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Gross Margin,54.1217,%,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,EBITDA Margin,-2.9752,%,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Net Profit Margin,-8.5256,%,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Debt to Equity,0.2072,x,down,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Chiffre d'affaires (XOF),474360463.3806,XOF,up,omniintelos:model-v1
+2023-11,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Revenue,787385.7018,USD,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Subscription Revenue,596001.7633,USD,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Professional Services Revenue,191383.9385,USD,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,COGS,349441.7395,USD,down,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Gross Profit,437943.9623,USD,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Operating Expenses,423850.9815,USD,down,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Sales & Marketing Spend,163734.4907,USD,down,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,R&D Spend,171944.0955,USD,down,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,EBITDA,14092.9808,USD,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Depreciation & Amortisation,27558.4996,USD,down,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Interest Expense,15837.7082,USD,down,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Net Income,-29303.227,USD,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Capital Expenditure,47243.1421,USD,down,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Cash Balance,9814134.6849,USD,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Total Debt,2230663.1309,USD,down,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Shareholders Equity,10855676.5962,USD,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Gross Margin,55.62,%,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,EBITDA Margin,1.7898,%,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Net Profit Margin,-3.7216,%,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Debt to Equity,0.2055,x,down,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Chiffre d'affaires (XOF),478232558.1582,XOF,up,omniintelos:model-v1
+2023-12,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Revenue,785905.9841,USD,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Subscription Revenue,619254.5659,USD,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Professional Services Revenue,166651.4181,USD,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,COGS,329589.8117,USD,down,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Gross Profit,456316.1723,USD,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Operating Expenses,431140.3129,USD,down,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Sales & Marketing Spend,168497.9283,USD,down,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,R&D Spend,172193.6831,USD,down,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,EBITDA,25175.8595,USD,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Depreciation & Amortisation,172506.7094,USD,down,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Interest Expense,23118.4934,USD,down,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Net Income,-170449.3434,USD,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Capital Expenditure,722167.7779,USD,down,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Cash Balance,9094024.273,USD,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Total Debt,3256125.8365,USD,down,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Shareholders Equity,10685227.2528,USD,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Gross Margin,58.0624,%,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,EBITDA Margin,3.2034,%,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Net Profit Margin,-21.6883,%,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Debt to Equity,0.3047,x,down,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Chiffre d'affaires (XOF),477333825.5477,XOF,up,omniintelos:model-v1
+2024-01,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Revenue,825869.2852,USD,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Subscription Revenue,646581.5061,USD,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Professional Services Revenue,179287.7791,USD,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,COGS,349988.0473,USD,down,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Gross Profit,475881.2379,USD,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Operating Expenses,444027.2096,USD,down,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Sales & Marketing Spend,180562.3865,USD,down,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,R&D Spend,166704.8949,USD,down,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,EBITDA,31854.0283,USD,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Depreciation & Amortisation,173905.425,USD,down,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Interest Expense,30319.19,USD,down,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Net Income,-172370.5867,USD,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Capital Expenditure,727363.0071,USD,down,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Cash Balance,14868196.1042,USD,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Total Debt,4270308.4523,USD,down,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Shareholders Equity,17012856.6661,USD,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Gross Margin,57.6219,%,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,EBITDA Margin,3.857,%,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Net Profit Margin,-20.8714,%,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Debt to Equity,0.251,x,down,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Chiffre d'affaires (XOF),501606239.5728,XOF,up,omniintelos:model-v1
+2024-02,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Revenue,856432.6778,USD,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Subscription Revenue,677631.7056,USD,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Professional Services Revenue,178800.9722,USD,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,COGS,361917.1679,USD,down,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Gross Profit,494515.51,USD,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Operating Expenses,487814.025,USD,down,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Sales & Marketing Spend,192580.8132,USD,down,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,R&D Spend,189537.6099,USD,down,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,EBITDA,6701.485,USD,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Depreciation & Amortisation,174975.1437,USD,down,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Interest Expense,37440.6789,USD,down,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Net Income,-205714.3377,USD,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Capital Expenditure,731336.2481,USD,down,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Cash Balance,14106120.6622,USD,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Total Debt,5273335.0593,USD,down,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Shareholders Equity,16807142.3284,USD,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Gross Margin,57.7413,%,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,EBITDA Margin,0.7825,%,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Net Profit Margin,-24.0199,%,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Debt to Equity,0.3138,x,down,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Chiffre d'affaires (XOF),520169453.7408,XOF,up,omniintelos:model-v1
+2024-03,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Revenue,905900.785,USD,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Subscription Revenue,709339.9791,USD,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Professional Services Revenue,196560.8059,USD,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,COGS,369729.956,USD,down,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Gross Profit,536170.829,USD,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Operating Expenses,531757.6344,USD,down,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Sales & Marketing Spend,214114.9663,USD,down,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,R&D Spend,206438.0218,USD,down,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,EBITDA,4413.1946,USD,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Depreciation & Amortisation,176706.5275,USD,down,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Interest Expense,44483.8315,USD,down,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Net Income,-216777.1644,USD,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Capital Expenditure,737767.1021,USD,down,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Cash Balance,13328282.9232,USD,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Total Debt,6265328.3737,USD,down,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Shareholders Equity,16590365.164,USD,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Gross Margin,59.1865,%,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,EBITDA Margin,0.4872,%,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Net Profit Margin,-23.9295,%,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Debt to Equity,0.3776,x,down,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Chiffre d'affaires (XOF),550214778.9185,XOF,up,omniintelos:model-v1
+2024-04,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Revenue,916199.9081,USD,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Subscription Revenue,742291.0552,USD,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Professional Services Revenue,173908.8529,USD,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,COGS,372329.0175,USD,down,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Gross Profit,543870.8905,USD,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Operating Expenses,515110.8424,USD,down,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Sales & Marketing Spend,209774.3145,USD,down,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,R&D Spend,194823.9073,USD,down,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,EBITDA,28760.0481,USD,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Depreciation & Amortisation,177066.9968,USD,down,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Interest Expense,51449.5093,USD,down,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Net Income,-199756.4579,USD,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Capital Expenditure,739105.988,USD,down,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Cash Balance,12566487.474,USD,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Total Debt,7246409.7615,USD,down,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Shareholders Equity,16390608.7061,USD,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Gross Margin,59.3616,%,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,EBITDA Margin,3.1391,%,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Net Profit Margin,-21.8027,%,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Debt to Equity,0.4421,x,down,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Chiffre d'affaires (XOF),556470132.493,XOF,up,omniintelos:model-v1
+2024-05,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Revenue,982609.8425,USD,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Subscription Revenue,781608.2427,USD,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Professional Services Revenue,201001.5998,USD,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Data Centre Revenue,0.0,USD,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,COGS,397800.6373,USD,down,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Gross Profit,584809.2052,USD,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Operating Expenses,536231.5058,USD,down,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Sales & Marketing Spend,205644.4208,USD,down,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,R&D Spend,212178.8144,USD,down,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,EBITDA,48577.6994,USD,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Depreciation & Amortisation,179391.3445,USD,down,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Interest Expense,58338.5647,USD,down,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Net Income,-189152.2098,USD,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Capital Expenditure,747739.2795,USD,down,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Cash Balance,11808987.3292,USD,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Total Debt,8216699.2542,USD,down,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Shareholders Equity,16201456.4963,USD,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Gross Margin,59.5159,%,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,EBITDA Margin,4.9437,%,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Net Profit Margin,-19.25,%,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Debt to Equity,0.5072,x,down,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Chiffre d'affaires (XOF),596805374.5103,XOF,up,omniintelos:model-v1
+2024-06,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Revenue,1082578.5427,USD,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Subscription Revenue,820639.9538,USD,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Professional Services Revenue,223605.4431,USD,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Data Centre Revenue,38333.1458,USD,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,COGS,451317.4404,USD,down,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Gross Profit,631261.1023,USD,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Operating Expenses,607955.5814,USD,down,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Sales & Marketing Spend,252889.4279,USD,down,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,R&D Spend,225558.9958,USD,down,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,EBITDA,23305.5209,USD,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Depreciation & Amortisation,182890.249,USD,down,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Interest Expense,65151.8405,USD,down,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Net Income,-224736.5686,USD,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Capital Expenditure,760735.2105,USD,down,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Cash Balance,11006405.799,USD,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Total Debt,9176315.5624,USD,down,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Shareholders Equity,15976719.9277,USD,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Gross Margin,58.3109,%,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,EBITDA Margin,2.1528,%,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Net Profit Margin,-20.7594,%,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Debt to Equity,0.5744,x,down,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Chiffre d'affaires (XOF),657523123.2648,XOF,up,omniintelos:model-v1
+2024-07,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Revenue,1129143.1621,USD,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Subscription Revenue,860583.0321,USD,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Professional Services Revenue,212430.8012,USD,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Data Centre Revenue,56129.3288,USD,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,COGS,458984.441,USD,down,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Gross Profit,670158.7211,USD,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Operating Expenses,636528.0829,USD,down,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Sales & Marketing Spend,247054.7623,USD,down,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,R&D Spend,257567.457,USD,down,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,EBITDA,33630.6382,USD,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Depreciation & Amortisation,184520.0107,USD,down,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Interest Expense,71890.1702,USD,down,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Net Income,-222779.5427,USD,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Capital Expenditure,766788.6111,USD,down,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Cash Balance,10201357.6559,USD,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Total Debt,10125376.0912,USD,down,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Shareholders Equity,15753940.3849,USD,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Gross Margin,59.3511,%,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,EBITDA Margin,2.9784,%,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Net Profit Margin,-19.73,%,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Debt to Equity,0.6427,x,down,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Chiffre d'affaires (XOF),685804964.0472,XOF,up,omniintelos:model-v1
+2024-08,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Revenue,1220135.7438,USD,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Subscription Revenue,905227.3203,USD,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Professional Services Revenue,249600.244,USD,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Data Centre Revenue,65308.1796,USD,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,COGS,301463.1456,USD,down,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Gross Profit,918672.5982,USD,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Operating Expenses,682592.0107,USD,down,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Sales & Marketing Spend,287695.7707,USD,down,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,R&D Spend,255168.287,USD,down,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,EBITDA,236080.5875,USD,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Depreciation & Amortisation,187704.751,USD,down,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Interest Expense,71099.3784,USD,down,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Net Income,-22723.542,USD,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Capital Expenditure,42704.751,USD,down,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Cash Balance,10323634.1139,USD,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Total Debt,10013996.9542,USD,down,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Shareholders Equity,15731216.843,USD,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Gross Margin,75.2927,%,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,EBITDA Margin,19.3487,%,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Net Profit Margin,-1.8624,%,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Debt to Equity,0.6366,x,down,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Chiffre d'affaires (XOF),741070909.3656,XOF,up,omniintelos:model-v1
+2024-09,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Revenue,1246829.7067,USD,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Subscription Revenue,948386.7797,USD,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Professional Services Revenue,222312.6045,USD,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Data Centre Revenue,76130.3225,USD,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,COGS,325691.0589,USD,down,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Gross Profit,921138.6478,USD,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Operating Expenses,675578.4106,USD,down,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Sales & Marketing Spend,283331.9221,USD,down,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,R&D Spend,258305.715,USD,down,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,EBITDA,245560.2372,USD,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Depreciation & Amortisation,188639.0397,USD,down,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Interest Expense,70317.2852,USD,down,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Net Income,-13396.0878,USD,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Capital Expenditure,43639.0397,USD,down,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Cash Balance,10455238.0262,USD,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Total Debt,9903842.9877,USD,down,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Shareholders Equity,15717820.7552,USD,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Gross Margin,73.8785,%,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,EBITDA Margin,19.6948,%,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Net Profit Margin,-1.0744,%,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Debt to Equity,0.6301,x,down,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Chiffre d'affaires (XOF),757283957.3452,XOF,up,omniintelos:model-v1
+2024-10,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Revenue,1360608.4692,USD,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Subscription Revenue,994981.5012,USD,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Professional Services Revenue,265475.796,USD,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Data Centre Revenue,100151.172,USD,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,COGS,348585.5286,USD,down,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Gross Profit,1012022.9406,USD,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Operating Expenses,724863.4061,USD,down,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Sales & Marketing Spend,281851.6011,USD,down,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,R&D Spend,275852.1537,USD,down,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,EBITDA,287159.5345,USD,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Depreciation & Amortisation,192621.2964,USD,down,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Interest Expense,69543.7951,USD,down,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Taxes,7498.3329,USD,down,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Net Income,17496.1101,USD,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Capital Expenditure,47621.2964,USD,down,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Cash Balance,10617734.1362,USD,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Total Debt,9794900.7148,USD,down,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Shareholders Equity,15735316.8653,USD,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Gross Margin,74.3802,%,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,EBITDA Margin,21.1052,%,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Net Profit Margin,1.2859,%,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Debt to Equity,0.6225,x,down,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Chiffre d'affaires (XOF),826389490.3929,XOF,up,omniintelos:model-v1
+2024-11,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Revenue,1394363.2929,USD,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Subscription Revenue,1048834.7796,USD,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Professional Services Revenue,244751.0472,USD,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Data Centre Revenue,100777.4661,USD,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,COGS,342189.2934,USD,down,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Gross Profit,1052173.9995,USD,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Operating Expenses,791266.4025,USD,down,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Sales & Marketing Spend,312688.0157,USD,down,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,R&D Spend,311875.7955,USD,down,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,EBITDA,260907.597,USD,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Depreciation & Amortisation,193802.7153,USD,down,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Interest Expense,68778.8133,USD,down,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Net Income,-1673.9316,USD,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Capital Expenditure,48802.7153,USD,down,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Cash Balance,10761060.2046,USD,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Total Debt,9687156.807,USD,down,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Shareholders Equity,15733642.9337,USD,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Gross Margin,75.4591,%,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,EBITDA Margin,18.7116,%,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Net Profit Margin,-0.12,%,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Debt to Equity,0.6157,x,down,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Chiffre d'affaires (XOF),846891076.4095,XOF,up,omniintelos:model-v1
+2024-12,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Revenue,1500886.3977,USD,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Subscription Revenue,1108954.5245,USD,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Professional Services Revenue,275570.7767,USD,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Data Centre Revenue,116361.0965,USD,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,COGS,386415.6968,USD,down,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Gross Profit,1114470.701,USD,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Operating Expenses,842628.8049,USD,down,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Sales & Marketing Spend,351361.2105,USD,down,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,R&D Spend,310822.5736,USD,down,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,EBITDA,271841.896,USD,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Depreciation & Amortisation,197531.0239,USD,down,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Interest Expense,68022.2464,USD,down,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Taxes,1886.5877,USD,down,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Net Income,4402.038,USD,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Capital Expenditure,52531.0239,USD,down,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Cash Balance,10910462.2426,USD,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Total Debt,9580598.0821,USD,down,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Shareholders Equity,15738044.9717,USD,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Gross Margin,74.2542,%,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,EBITDA Margin,18.1121,%,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Net Profit Margin,0.2933,%,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Debt to Equity,0.6088,x,down,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Chiffre d'affaires (XOF),911589758.1458,XOF,up,omniintelos:model-v1
+2025-01,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Revenue,1611169.6675,USD,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Subscription Revenue,1170103.2132,USD,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Professional Services Revenue,295653.3721,USD,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Data Centre Revenue,145413.0823,USD,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,COGS,389972.3625,USD,down,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Gross Profit,1221197.305,USD,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Operating Expenses,896012.9852,USD,down,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Sales & Marketing Spend,337992.2606,USD,down,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,R&D Spend,366478.9678,USD,down,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,EBITDA,325184.3198,USD,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Depreciation & Amortisation,201390.9384,USD,down,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Interest Expense,67274.0017,USD,down,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Taxes,16955.8139,USD,down,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Net Income,39563.5658,USD,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Capital Expenditure,56390.9384,USD,down,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Cash Balance,11095025.8085,USD,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Total Debt,9475211.5032,USD,down,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Shareholders Equity,15777608.5375,USD,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Gross Margin,75.7957,%,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,EBITDA Margin,20.1831,%,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Net Profit Margin,2.4556,%,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Debt to Equity,0.6005,x,down,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Chiffre d'affaires (XOF),978572242.2192,XOF,up,omniintelos:model-v1
+2025-02,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Revenue,1729797.8792,USD,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Subscription Revenue,1223045.7692,USD,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Professional Services Revenue,342936.4648,USD,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Data Centre Revenue,163815.6452,USD,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,COGS,629514.7301,USD,down,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Gross Profit,1100283.149,USD,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Operating Expenses,940433.2785,USD,down,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Sales & Marketing Spend,379560.7029,USD,down,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,R&D Spend,349270.0557,USD,down,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,EBITDA,159849.8705,USD,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Depreciation & Amortisation,205542.9258,USD,down,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Interest Expense,68195.3877,USD,down,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Net Income,-113888.4429,USD,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Capital Expenditure,112436.8621,USD,down,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Cash Balance,11074243.4292,USD,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Total Debt,9604984.1766,USD,down,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Shareholders Equity,15663720.0946,USD,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Gross Margin,63.6076,%,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,EBITDA Margin,9.241,%,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Net Profit Margin,-6.5839,%,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Debt to Equity,0.6132,x,down,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Chiffre d'affaires (XOF),1050623173.5427,XOF,up,omniintelos:model-v1
+2025-03,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Revenue,1800139.6749,USD,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Subscription Revenue,1269441.7862,USD,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Professional Services Revenue,351300.8777,USD,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Data Centre Revenue,179397.0111,USD,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,COGS,656935.2596,USD,down,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Gross Profit,1143204.4154,USD,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Operating Expenses,1031704.5681,USD,down,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Sales & Marketing Spend,419160.9469,USD,down,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,R&D Spend,402239.4134,USD,down,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,EBITDA,111499.8472,USD,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Depreciation & Amortisation,208004.8886,USD,down,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Interest Expense,69106.6384,USD,down,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Net Income,-165611.6798,USD,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Capital Expenditure,117009.0789,USD,down,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Cash Balance,10999627.5592,USD,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Total Debt,9733329.3507,USD,down,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Shareholders Equity,15498108.4149,USD,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Gross Margin,63.5064,%,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,EBITDA Margin,6.194,%,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Net Profit Margin,-9.1999,%,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Debt to Equity,0.628,x,down,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Chiffre d'affaires (XOF),1093346500.6811,XOF,up,omniintelos:model-v1
+2025-04,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Revenue,1861240.5549,USD,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Subscription Revenue,1315318.2139,USD,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Professional Services Revenue,346713.1976,USD,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Data Centre Revenue,199209.1433,USD,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,COGS,674165.4393,USD,down,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Gross Profit,1187075.1155,USD,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Operating Expenses,1031351.5702,USD,down,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Sales & Marketing Spend,442885.5535,USD,down,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,R&D Spend,391111.6052,USD,down,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,EBITDA,155723.5453,USD,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Depreciation & Amortisation,210143.4194,USD,down,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Interest Expense,70007.8654,USD,down,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Net Income,-124427.7395,USD,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Capital Expenditure,120980.6361,USD,down,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Cash Balance,10964362.6031,USD,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Total Debt,9860262.7278,USD,down,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Shareholders Equity,15373680.6754,USD,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Gross Margin,63.7787,%,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,EBITDA Margin,8.3667,%,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Net Profit Margin,-6.6852,%,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Debt to Equity,0.6414,x,down,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Chiffre d'affaires (XOF),1130457195.0635,XOF,up,omniintelos:model-v1
+2025-05,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Revenue,1951689.2703,USD,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Subscription Revenue,1364387.4688,USD,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Professional Services Revenue,365294.6637,USD,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Data Centre Revenue,222007.1378,USD,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,COGS,727578.2694,USD,down,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Gross Profit,1224111.0009,USD,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Operating Expenses,1098881.594,USD,down,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Sales & Marketing Spend,451334.7388,USD,down,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,R&D Spend,408237.7916,USD,down,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,EBITDA,125229.4069,USD,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Depreciation & Amortisation,213309.1245,USD,down,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Interest Expense,70899.1788,USD,down,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Net Income,-158978.8964,USD,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Capital Expenditure,126859.8026,USD,down,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Cash Balance,10891833.0286,USD,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Total Debt,9985799.8378,USD,down,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Shareholders Equity,15214701.779,USD,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Gross Margin,62.7206,%,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,EBITDA Margin,6.4165,%,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Net Profit Margin,-8.1457,%,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Debt to Equity,0.6563,x,down,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Chiffre d'affaires (XOF),1185392813.6144,XOF,up,omniintelos:model-v1
+2025-06,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Revenue,2074038.2773,USD,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Subscription Revenue,1420185.5916,USD,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Professional Services Revenue,380865.9783,USD,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Data Centre Revenue,272986.7075,USD,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,COGS,777255.2916,USD,down,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Gross Profit,1296782.9857,USD,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Operating Expenses,1190522.0464,USD,down,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Sales & Marketing Spend,490229.4994,USD,down,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,R&D Spend,448012.4765,USD,down,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,EBITDA,106260.9393,USD,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Depreciation & Amortisation,217591.3397,USD,down,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Interest Expense,71780.6879,USD,down,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Net Income,-183111.0882,USD,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Capital Expenditure,134812.488,USD,down,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Cash Balance,10791500.792,USD,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Total Debt,10109956.0396,USD,down,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Shareholders Equity,15031590.6908,USD,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Gross Margin,62.5245,%,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,EBITDA Margin,5.1234,%,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Net Profit Margin,-8.8287,%,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Debt to Equity,0.6726,x,down,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Chiffre d'affaires (XOF),1259703635.4472,XOF,up,omniintelos:model-v1
+2025-07,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Revenue,2164776.5419,USD,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Subscription Revenue,1481084.7076,USD,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Professional Services Revenue,416596.2424,USD,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Data Centre Revenue,267095.5919,USD,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,COGS,793429.0451,USD,down,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Gross Profit,1371347.4968,USD,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Operating Expenses,1169456.0063,USD,down,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Sales & Marketing Spend,449492.2708,USD,down,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,R&D Spend,484503.6362,USD,down,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,EBITDA,201891.4905,USD,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Depreciation & Amortisation,220767.179,USD,down,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Interest Expense,72652.5003,USD,down,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Net Income,-91528.1888,USD,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Capital Expenditure,140710.4752,USD,down,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Cash Balance,10780029.307,USD,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Total Debt,10232746.5232,USD,down,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Shareholders Equity,14940062.502,USD,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Gross Margin,63.3482,%,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,EBITDA Margin,9.3262,%,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Net Profit Margin,-4.2281,%,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Debt to Equity,0.6849,x,down,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Chiffre d'affaires (XOF),1314815116.7416,XOF,up,omniintelos:model-v1
+2025-08,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Revenue,2289537.4981,USD,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Subscription Revenue,1562764.9491,USD,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Professional Services Revenue,382499.8092,USD,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Data Centre Revenue,344272.7398,USD,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,COGS,633169.1022,USD,down,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Gross Profit,1656368.3959,USD,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Operating Expenses,1410053.4026,USD,down,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Sales & Marketing Spend,614962.8187,USD,down,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,R&D Spend,526158.0963,USD,down,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,EBITDA,246314.9934,USD,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Depreciation & Amortisation,225133.8124,USD,down,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Interest Expense,73770.3228,USD,down,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Net Income,-52589.1419,USD,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Capital Expenditure,171715.3124,USD,down,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Cash Balance,10780858.6652,USD,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Total Debt,10390186.3114,USD,down,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Shareholders Equity,14887473.3601,USD,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Gross Margin,72.3451,%,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,EBITDA Margin,10.7583,%,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Net Profit Margin,-2.2969,%,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Debt to Equity,0.6979,x,down,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Chiffre d'affaires (XOF),1390590878.3898,XOF,up,omniintelos:model-v1
+2025-09,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Revenue,2467094.6636,USD,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Subscription Revenue,1673066.3924,USD,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Professional Services Revenue,458435.2652,USD,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Data Centre Revenue,335593.006,USD,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,COGS,684372.181,USD,down,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Gross Profit,1782722.4826,USD,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Operating Expenses,1519583.9322,USD,down,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Sales & Marketing Spend,739492.6447,USD,down,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,R&D Spend,495902.0094,USD,down,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,EBITDA,263138.5505,USD,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Depreciation & Amortisation,231348.3132,USD,down,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Interest Expense,74875.8493,USD,down,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Net Income,-43085.612,USD,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Capital Expenditure,185032.0998,USD,down,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Cash Balance,10784089.2666,USD,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Total Debt,10545894.262,USD,down,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Shareholders Equity,14844387.7481,USD,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Gross Margin,72.26,%,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,EBITDA Margin,10.6659,%,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Net Profit Margin,-1.7464,%,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Debt to Equity,0.7104,x,down,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Chiffre d'affaires (XOF),1498433346.5299,XOF,up,omniintelos:model-v1
+2025-10,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Revenue,2635051.4988,USD,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Subscription Revenue,1792710.8643,USD,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Professional Services Revenue,436175.63,USD,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Data Centre Revenue,406165.0046,USD,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,COGS,732726.1171,USD,down,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Gross Profit,1902325.3818,USD,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Operating Expenses,1670362.1014,USD,down,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Sales & Marketing Spend,794595.0433,USD,down,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,R&D Spend,592694.8343,USD,down,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,EBITDA,231963.2803,USD,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Depreciation & Amortisation,237226.8025,USD,down,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Interest Expense,75969.2149,USD,down,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Net Income,-81232.737,USD,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Capital Expenditure,197628.8624,USD,down,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Cash Balance,10742454.4696,USD,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Total Debt,10699889.4251,USD,down,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Shareholders Equity,14763155.011,USD,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Gross Margin,72.1931,%,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,EBITDA Margin,8.803,%,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Net Profit Margin,-3.0828,%,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Debt to Equity,0.7248,x,down,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Chiffre d'affaires (XOF),1600444885.1965,XOF,up,omniintelos:model-v1
+2025-11,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Revenue,2842658.6236,USD,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Subscription Revenue,1919071.4968,USD,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Professional Services Revenue,498967.3259,USD,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Data Centre Revenue,424619.8008,USD,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,COGS,735066.3507,USD,down,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Gross Profit,2107592.2729,USD,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Operating Expenses,1830867.193,USD,down,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Sales & Marketing Spend,876715.0052,USD,down,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,R&D Spend,613784.774,USD,down,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,EBITDA,276725.0799,USD,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Depreciation & Amortisation,244493.0518,USD,down,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Interest Expense,77050.5536,USD,down,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Net Income,-44818.5255,USD,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Capital Expenditure,213199.3968,USD,down,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Cash Balance,10728929.5992,USD,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Total Debt,10852190.6414,USD,down,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Shareholders Equity,14718336.4856,USD,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Gross Margin,74.1416,%,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,EBITDA Margin,9.7347,%,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Net Profit Margin,-1.5766,%,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Debt to Equity,0.7373,x,down,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Chiffre d'affaires (XOF),1726538724.7593,XOF,up,omniintelos:model-v1
+2025-12,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Revenue,3022560.2312,USD,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Subscription Revenue,2048185.0935,USD,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Professional Services Revenue,484962.5636,USD,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Data Centre Revenue,489412.5741,USD,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,COGS,810747.0974,USD,down,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Gross Profit,2211813.1337,USD,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Operating Expenses,1880249.0605,USD,down,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Sales & Marketing Spend,903703.4451,USD,down,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,R&D Spend,635543.2957,USD,down,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,EBITDA,331564.0732,USD,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Depreciation & Amortisation,250789.6081,USD,down,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Interest Expense,78119.9975,USD,down,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Taxes,796.3403,USD,down,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Net Income,1858.1274,USD,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Capital Expenditure,226692.0173,USD,down,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Cash Balance,10754885.3173,USD,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Total Debt,11002816.5444,USD,down,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Shareholders Equity,14720194.6129,USD,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Gross Margin,73.1768,%,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,EBITDA Margin,10.9696,%,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Net Profit Margin,0.0615,%,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Debt to Equity,0.7475,x,down,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Chiffre d'affaires (XOF),1835805131.0726,XOF,up,omniintelos:model-v1
+2026-01,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Revenue,3319988.9263,USD,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Subscription Revenue,2194498.0903,USD,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Professional Services Revenue,603719.6878,USD,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Data Centre Revenue,521771.1482,USD,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,COGS,884855.5166,USD,down,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Gross Profit,2435133.4097,USD,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Operating Expenses,2144206.2971,USD,down,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Sales & Marketing Spend,985471.5862,USD,down,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,R&D Spend,756779.673,USD,down,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,EBITDA,290927.1126,USD,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Depreciation & Amortisation,261199.6124,USD,down,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Interest Expense,79177.6775,USD,down,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Taxes,0.0,USD,down,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Net Income,-49450.1773,USD,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Capital Expenditure,248999.1695,USD,down,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Cash Balance,10717635.5829,USD,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Total Debt,11151785.5624,USD,down,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Shareholders Equity,14670744.4356,USD,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Gross Margin,73.3476,%,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,EBITDA Margin,8.7629,%,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Net Profit Margin,-1.4895,%,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Debt to Equity,0.7601,x,down,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Chiffre d'affaires (XOF),2016453681.5855,XOF,up,omniintelos:model-v1
+2026-02,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Revenue,3608228.3708,USD,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Subscription Revenue,2344695.1584,USD,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Professional Services Revenue,659938.8689,USD,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Data Centre Revenue,603594.3435,USD,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,COGS,891276.9305,USD,down,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Gross Profit,2716951.4403,USD,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Operating Expenses,2027038.8539,USD,down,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Sales & Marketing Spend,837676.3509,USD,down,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,R&D Spend,767347.2413,USD,down,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,EBITDA,689912.5864,USD,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Depreciation & Amortisation,271287.993,USD,down,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Interest Expense,78306.723,USD,down,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Taxes,102095.3611,USD,down,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Net Income,238222.5093,USD,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Capital Expenditure,180411.4185,USD,down,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Cash Balance,11046734.6667,USD,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Total Debt,11029115.9212,USD,down,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Shareholders Equity,14908966.9449,USD,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Gross Margin,75.2988,%,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,EBITDA Margin,19.1205,%,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Net Profit Margin,6.6022,%,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Debt to Equity,0.7398,x,down,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Chiffre d'affaires (XOF),2191520979.1142,XOF,up,omniintelos:model-v1
+2026-03,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Revenue,3820288.8898,USD,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Subscription Revenue,2474173.1112,USD,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Professional Services Revenue,708511.1645,USD,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Data Centre Revenue,637604.6141,USD,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,COGS,952060.5528,USD,down,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Gross Profit,2868228.337,USD,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Operating Expenses,2166358.6254,USD,down,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Sales & Marketing Spend,824984.5517,USD,down,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,R&D Spend,875952.0775,USD,down,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,EBITDA,701869.7117,USD,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Depreciation & Amortisation,278710.1111,USD,down,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Interest Expense,77445.3491,USD,down,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Taxes,103714.2754,USD,down,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Net Income,241999.976,USD,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Capital Expenditure,191014.4445,USD,down,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Cash Balance,11376430.3093,USD,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Total Debt,10907795.6461,USD,down,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Shareholders Equity,15150966.9209,USD,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Gross Margin,75.0788,%,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,EBITDA Margin,18.3722,%,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Net Profit Margin,6.3346,%,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Debt to Equity,0.7199,x,down,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Chiffre d'affaires (XOF),2320319666.0205,XOF,up,omniintelos:model-v1
+2026-04,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Revenue,4035818.8253,USD,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Subscription Revenue,2619687.4441,USD,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Professional Services Revenue,701074.2242,USD,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Data Centre Revenue,715057.1569,USD,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,COGS,1011592.9832,USD,down,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Gross Profit,3024225.842,USD,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Operating Expenses,2213847.112,USD,down,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Sales & Marketing Spend,919093.6253,USD,down,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,R&D Spend,853525.1971,USD,down,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,EBITDA,810378.73,USD,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Depreciation & Amortisation,286253.6589,USD,down,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Interest Expense,76593.4502,USD,down,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Taxes,134259.4863,USD,down,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Net Income,313272.1346,USD,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Capital Expenditure,201790.9413,USD,down,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Cash Balance,11774165.1616,USD,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Total Debt,10787809.894,USD,down,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Shareholders Equity,15464239.0555,USD,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Gross Margin,74.9346,%,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,EBITDA Margin,20.0797,%,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Net Profit Margin,7.7623,%,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Debt to Equity,0.6976,x,down,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Chiffre d'affaires (XOF),2451225564.0321,XOF,up,omniintelos:model-v1
+2026-05,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Revenue,4378003.6163,USD,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Subscription Revenue,2774247.7156,USD,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Professional Services Revenue,795545.588,USD,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Data Centre Revenue,808210.3127,USD,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,COGS,1032485.3409,USD,down,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Gross Profit,3345518.2754,USD,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Operating Expenses,2378361.2333,USD,down,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Sales & Marketing Spend,920915.0747,USD,down,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,R&D Spend,913792.0547,USD,down,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,EBITDA,967157.0421,USD,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Depreciation & Amortisation,298230.1266,USD,down,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Interest Expense,75750.9223,USD,down,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Taxes,177952.798,USD,down,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Net Income,415223.1953,USD,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Capital Expenditure,218900.1808,USD,down,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Cash Balance,12268718.3026,USD,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Total Debt,10669143.9851,USD,down,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Shareholders Equity,15879462.2508,USD,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Gross Margin,76.4165,%,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,EBITDA Margin,22.0913,%,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Net Profit Margin,9.4843,%,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Debt to Equity,0.6719,x,down,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Chiffre d'affaires (XOF),2659057516.8191,XOF,up,omniintelos:model-v1
+2026-06,Finance,OmniIntelOS,Cash Runway,36.0,months,up,omniintelos:model-v1
