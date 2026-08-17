@@ -1,0 +1,247 @@
+# Growth — Synthèse annuelle 2020 — OmniIntelOS S.A.
+
+Valeurs enregistrées pour les indicateurs Growth en 2020 pour OmniIntelOS S.A., entreprise FICTIVE d'intelligence artificielle appliquée basée à Niamey, Niger. Ces chiffres sont produits par un modèle interne cohérent et ne sont pas publiés par une entreprise réelle : chaque ratio est calculé à partir des primitives de la même période, la marge brute valant exactement (Chiffre d'affaires - Coût des ventes) / Chiffre d'affaires. L'identifiant de la source suit chaque ligne.
+
+## Résumé de l'année
+
+| Indicateur | Début (2020-01) | Fin (2020-12) | Unité |
+|---|---|---|---|
+| ARPU | 2,848 USD | 3,011 USD | USD |
+| ARR | 1,198,996 USD | 1,543,441 USD | USD |
+| CAC | 28,655 USD | 34,527 USD | USD |
+| CAC Payback Period | 20.22 months | 21.06 months | months |
+| Churned Customers | 0.28 count | 0.37 count | count |
+| Contraction Revenue | 4,723 USD | 3,813 USD | USD |
+| Customers | 35.09 count | 42.71 count | count |
+| Expansion Revenue | 18,125 USD | 39,981 USD | USD |
+| LTV | 177,542 USD | 191,276 USD | USD |
+| LTV to CAC Ratio | 6.20 x | 5.54 x | x |
+| MRR | 99,916 USD | 128,620 USD | USD |
+| Monthly Churn Rate | 0.79 % | 0.85 % | % |
+| Net Revenue Retention | 100.35 % | 101.59 % | % |
+| New Customers | 1.37 count | 1.72 count | count |
+| Rule of 40 | 27.37 % | 67.19 % | % |
+| YoY Revenue Growth | 38.00 % | 75.83 % | % |
+
+## Détail mensuel
+
+### 2020-01
+- ARPU [OmniIntelOS]: 2,848 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,198,996 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 28,655 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 20.22 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.28 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 4,723 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 35.09 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 18,125 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 177,542 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 6.20 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 99,916 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 0.79 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 100.35 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 1.37 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: 27.37 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 38.00 %  (source: omniintelos:model-v1)
+
+### 2020-02
+- ARPU [OmniIntelOS]: 2,829 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,223,509 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 27,711 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 19.03 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.37 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 4,918 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 36.04 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 22,234 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 142,253 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 5.13 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 101,959 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 1.01 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 100.42 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 1.32 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: 20.51 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 27.49 %  (source: omniintelos:model-v1)
+
+### 2020-03
+- ARPU [OmniIntelOS]: 2,868 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,270,242 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 32,299 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 22.12 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.41 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 5,152 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 36.91 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 19,992 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 130,700 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 4.05 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 105,854 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 1.10 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 100.07 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 1.29 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: 30.79 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 41.39 %  (source: omniintelos:model-v1)
+
+### 2020-04
+- ARPU [OmniIntelOS]: 2,915 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,296,946 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 45,579 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 36.00 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.73 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 6,385 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 37.08 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 9,714 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 64,684 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 1.42 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 108,079 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 1.92 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 98.27 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 0.89 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: 20.49 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 36.90 %  (source: omniintelos:model-v1)
+
+### 2020-05
+- ARPU [OmniIntelOS]: 2,919 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,305,239 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 46,970 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 35.64 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.62 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 8,091 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 37.27 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 9,118 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 78,639 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 1.67 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 108,770 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 1.65 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 98.40 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 0.81 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: 15.66 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 29.52 %  (source: omniintelos:model-v1)
+
+### 2020-06
+- ARPU [OmniIntelOS]: 2,911 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,316,456 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 43,722 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 32.91 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.53 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 10,004 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 37.68 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 10,407 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 94,756 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 2.17 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 109,705 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 1.38 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 98.62 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 0.94 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: 1.36 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 15.37 %  (source: omniintelos:model-v1)
+
+### 2020-07
+- ARPU [OmniIntelOS]: 2,927 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,327,560 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 43,364 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 32.34 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.78 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 7,954 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 37.80 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 11,251 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 64,976 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 1.50 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 110,630 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 2.02 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 98.18 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 0.90 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: -3.44 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 9.78 %  (source: omniintelos:model-v1)
+
+### 2020-08
+- ARPU [OmniIntelOS]: 2,925 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,332,978 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 43,262 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 33.79 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.71 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 10,442 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 37.98 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 7,372 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 68,624 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 1.59 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 111,081 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 1.83 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 97.90 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 0.89 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: -6.53 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 8.78 %  (source: omniintelos:model-v1)
+
+### 2020-09
+- ARPU [OmniIntelOS]: 2,925 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,340,354 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 41,324 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 30.50 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.73 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 7,692 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 38.19 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 11,822 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 71,207 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 1.72 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 111,696 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 1.87 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 98.40 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 0.93 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: -5.19 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 7.46 %  (source: omniintelos:model-v1)
+
+### 2020-10
+- ARPU [OmniIntelOS]: 2,893 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,388,950 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 27,232 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 16.93 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.26 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 4,587 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 40.01 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 29,321 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 250,218 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 9.19 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 115,746 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 0.64 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 101.20 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 2.07 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: 10.21 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 19.82 %  (source: omniintelos:model-v1)
+
+### 2020-11
+- ARPU [OmniIntelOS]: 2,955 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,466,710 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 33,923 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 20.51 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.35 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 3,741 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 41.36 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 26,623 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 194,568 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 5.74 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 122,226 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 0.84 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 100.77 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 1.70 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: 36.54 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 46.58 %  (source: omniintelos:model-v1)
+
+### 2020-12
+- ARPU [OmniIntelOS]: 3,011 USD  (source: omniintelos:model-v1)
+- ARR [OmniIntelOS]: 1,543,441 USD  (source: omniintelos:model-v1)
+- CAC [OmniIntelOS]: 34,527 USD  (source: omniintelos:model-v1)
+- CAC Payback Period [OmniIntelOS]: 21.06 months  (source: omniintelos:model-v1)
+- Churned Customers [OmniIntelOS]: 0.37 count  (source: omniintelos:model-v1)
+- Contraction Revenue [OmniIntelOS]: 3,813 USD  (source: omniintelos:model-v1)
+- Customers [OmniIntelOS]: 42.71 count  (source: omniintelos:model-v1)
+- Expansion Revenue [OmniIntelOS]: 39,981 USD  (source: omniintelos:model-v1)
+- LTV [OmniIntelOS]: 191,276 USD  (source: omniintelos:model-v1)
+- LTV to CAC Ratio [OmniIntelOS]: 5.54 x  (source: omniintelos:model-v1)
+- MRR [OmniIntelOS]: 128,620 USD  (source: omniintelos:model-v1)
+- Monthly Churn Rate [OmniIntelOS]: 0.85 %  (source: omniintelos:model-v1)
+- Net Revenue Retention [OmniIntelOS]: 101.59 %  (source: omniintelos:model-v1)
+- New Customers [OmniIntelOS]: 1.72 count  (source: omniintelos:model-v1)
+- Rule of 40 [OmniIntelOS]: 67.19 %  (source: omniintelos:model-v1)
+- YoY Revenue Growth [OmniIntelOS]: 75.83 %  (source: omniintelos:model-v1)
+
+## Sources
+- omniintelos:model-v1 — generated by scripts/omniintelos.py - fictional company, internally consistent model
+
+OmniIntelOS S.A. est une entreprise fictive. Ces valeurs constituent un modèle opérationnel généré et cohérent, destiné à la démonstration et à l'évaluation d'IntelAI - ni objectifs, ni prévisions, ni comptes réels.

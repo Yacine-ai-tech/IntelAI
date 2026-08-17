@@ -1,0 +1,1249 @@
+period,category,segment,metric_name,value,unit,direction,source
+2020-01,Growth,OmniIntelOS,ARR,1198996.1467,USD,up,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,MRR,99916.3456,USD,up,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,Customers,35.086,count,up,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,New Customers,1.366,count,up,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,Churned Customers,0.28,count,down,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,Expansion Revenue,18125.3454,USD,up,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,Contraction Revenue,4723.4813,USD,down,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,Net Revenue Retention,100.3522,%,up,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,Monthly Churn Rate,0.7918,%,down,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,ARPU,2847.7582,USD,up,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,CAC,28655.2839,USD,down,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,LTV,177541.8906,USD,up,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,LTV to CAC Ratio,6.1958,x,up,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,CAC Payback Period,20.222,months,down,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,YoY Revenue Growth,38.0,%,up,omniintelos:model-v1
+2020-01,Growth,OmniIntelOS,Rule of 40,27.3663,%,up,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,ARR,1223508.678,USD,up,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,MRR,101959.0565,USD,up,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,Customers,36.0391,count,up,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,New Customers,1.3221,count,up,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,Churned Customers,0.369,count,down,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,Expansion Revenue,22233.9366,USD,up,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,Contraction Revenue,4918.4296,USD,down,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,Net Revenue Retention,100.4203,%,up,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,Monthly Churn Rate,1.0135,%,down,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,ARPU,2829.1247,USD,up,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,CAC,27711.0412,USD,down,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,LTV,142252.6114,USD,up,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,LTV to CAC Ratio,5.1334,x,up,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,CAC Payback Period,19.0265,months,down,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,YoY Revenue Growth,27.4886,%,up,omniintelos:model-v1
+2020-02,Growth,OmniIntelOS,Rule of 40,20.5067,%,up,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,ARR,1270242.4738,USD,up,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,MRR,105853.5395,USD,up,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,Customers,36.9147,count,up,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,New Customers,1.288,count,up,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,Churned Customers,0.4124,count,down,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,Expansion Revenue,19992.1038,USD,up,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,Contraction Revenue,5152.0481,USD,down,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,Net Revenue Retention,100.0734,%,up,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,Monthly Churn Rate,1.1048,%,down,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,ARPU,2867.5188,USD,up,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,CAC,32298.5462,USD,down,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,LTV,130699.8353,USD,up,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,LTV to CAC Ratio,4.0466,x,up,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,CAC Payback Period,22.1213,months,down,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,YoY Revenue Growth,41.3882,%,up,omniintelos:model-v1
+2020-03,Growth,OmniIntelOS,Rule of 40,30.7851,%,up,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,ARR,1296946.3657,USD,up,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,MRR,108078.8638,USD,up,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,Customers,37.0764,count,up,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,New Customers,0.8873,count,up,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,Churned Customers,0.7256,count,down,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,Expansion Revenue,9714.1251,USD,up,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,Contraction Revenue,6385.2835,USD,down,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,Net Revenue Retention,98.2707,%,up,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,Monthly Churn Rate,1.9196,%,down,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,ARPU,2915.0336,USD,up,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,CAC,45579.0547,USD,down,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,LTV,64683.5873,USD,up,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,LTV to CAC Ratio,1.4192,x,up,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,CAC Payback Period,36.0032,months,down,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,YoY Revenue Growth,36.9042,%,up,omniintelos:model-v1
+2020-04,Growth,OmniIntelOS,Rule of 40,20.4907,%,up,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,ARR,1305238.6121,USD,up,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,MRR,108769.8843,USD,up,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,Customers,37.2651,count,up,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,New Customers,0.8133,count,up,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,Churned Customers,0.6246,count,down,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,Expansion Revenue,9118.0933,USD,up,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,Contraction Revenue,8090.7625,USD,down,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,Net Revenue Retention,98.3974,%,up,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,Monthly Churn Rate,1.6484,%,down,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,ARPU,2918.8119,USD,up,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,CAC,46969.8311,USD,down,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,LTV,78638.6852,USD,up,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,LTV to CAC Ratio,1.6742,x,up,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,CAC Payback Period,35.6366,months,down,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,YoY Revenue Growth,29.5184,%,up,omniintelos:model-v1
+2020-05,Growth,OmniIntelOS,Rule of 40,15.6596,%,up,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,ARR,1316455.995,USD,up,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,MRR,109704.6662,USD,up,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,Customers,37.68,count,up,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,New Customers,0.943,count,up,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,Churned Customers,0.5282,count,down,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,Expansion Revenue,10407.3468,USD,up,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,Contraction Revenue,10003.5964,USD,down,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,Net Revenue Retention,98.625,%,up,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,Monthly Churn Rate,1.3825,%,down,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,ARPU,2911.4862,USD,up,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,CAC,43721.5629,USD,down,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,LTV,94756.0125,USD,up,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,LTV to CAC Ratio,2.1673,x,up,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,CAC Payback Period,32.9145,months,down,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,YoY Revenue Growth,15.3663,%,up,omniintelos:model-v1
+2020-06,Growth,OmniIntelOS,Rule of 40,1.3637,%,up,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,ARR,1327559.9804,USD,up,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,MRR,110629.9984,USD,up,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,Customers,37.7969,count,up,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,New Customers,0.8969,count,up,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,Churned Customers,0.78,count,down,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,Expansion Revenue,11251.4461,USD,up,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,Contraction Revenue,7954.1441,USD,down,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,Net Revenue Retention,98.1751,%,up,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,Monthly Churn Rate,2.022,%,down,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,ARPU,2926.9617,USD,up,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,CAC,43363.6183,USD,down,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,LTV,64976.1251,USD,up,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,LTV to CAC Ratio,1.4984,x,up,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,CAC Payback Period,32.3382,months,down,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,YoY Revenue Growth,9.7813,%,up,omniintelos:model-v1
+2020-07,Growth,OmniIntelOS,Rule of 40,-3.4422,%,up,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,ARR,1332977.5896,USD,up,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,MRR,111081.4658,USD,up,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,Customers,37.9827,count,up,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,New Customers,0.8944,count,up,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,Churned Customers,0.7086,count,down,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,Expansion Revenue,7371.5463,USD,up,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,Contraction Revenue,10441.6937,USD,down,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,Net Revenue Retention,97.898,%,up,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,Monthly Churn Rate,1.8314,%,down,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,ARPU,2924.5282,USD,up,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,CAC,43262.2581,USD,down,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,LTV,68624.4785,USD,up,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,LTV to CAC Ratio,1.5862,x,up,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,CAC Payback Period,33.7922,months,down,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,YoY Revenue Growth,8.7757,%,up,omniintelos:model-v1
+2020-08,Growth,OmniIntelOS,Rule of 40,-6.527,%,up,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,ARR,1340354.3854,USD,up,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,MRR,111696.1988,USD,up,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,Customers,38.1882,count,up,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,New Customers,0.9321,count,up,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,Churned Customers,0.7267,count,down,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,Expansion Revenue,11821.5246,USD,up,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,Contraction Revenue,7691.5951,USD,down,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,Net Revenue Retention,98.4045,%,up,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,Monthly Churn Rate,1.8673,%,down,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,ARPU,2924.8913,USD,up,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,CAC,41323.8256,USD,down,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,LTV,71206.5538,USD,up,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,LTV to CAC Ratio,1.7231,x,up,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,CAC Payback Period,30.4979,months,down,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,YoY Revenue Growth,7.4616,%,up,omniintelos:model-v1
+2020-09,Growth,OmniIntelOS,Rule of 40,-5.1947,%,up,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,ARR,1388949.6856,USD,up,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,MRR,115745.8071,USD,up,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,Customers,40.0055,count,up,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,New Customers,2.0745,count,up,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,Churned Customers,0.2572,count,down,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,Expansion Revenue,29320.5642,USD,up,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,Contraction Revenue,4586.8147,USD,down,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,Net Revenue Retention,101.1997,%,up,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,Monthly Churn Rate,0.6388,%,down,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,ARPU,2893.2467,USD,up,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,CAC,27232.4242,USD,down,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,LTV,250217.6782,USD,up,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,LTV to CAC Ratio,9.1882,x,up,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,CAC Payback Period,16.9298,months,down,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,YoY Revenue Growth,19.82,%,up,omniintelos:model-v1
+2020-10,Growth,OmniIntelOS,Rule of 40,10.2087,%,up,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,ARR,1466709.9863,USD,up,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,MRR,122225.8322,USD,up,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,Customers,41.356,count,up,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,New Customers,1.702,count,up,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,Churned Customers,0.3515,count,down,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,Expansion Revenue,26623.2999,USD,up,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,Contraction Revenue,3740.7949,USD,down,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,Net Revenue Retention,100.7711,%,up,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,Monthly Churn Rate,0.8429,%,down,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,ARPU,2955.4567,USD,up,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,CAC,33922.6425,USD,down,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,LTV,194567.8711,USD,up,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,LTV to CAC Ratio,5.7356,x,up,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,CAC Payback Period,20.5107,months,down,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,YoY Revenue Growth,46.5837,%,up,omniintelos:model-v1
+2020-11,Growth,OmniIntelOS,Rule of 40,36.5358,%,up,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,ARR,1543441.2411,USD,up,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,MRR,128620.1034,USD,up,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,Customers,42.7115,count,up,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,New Customers,1.7216,count,up,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,Churned Customers,0.366,count,down,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,Expansion Revenue,39981.0692,USD,up,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,Contraction Revenue,3812.7687,USD,down,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,Net Revenue Retention,101.5886,%,up,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,Monthly Churn Rate,0.8497,%,down,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,ARPU,3011.3691,USD,up,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,CAC,34526.5782,USD,down,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,LTV,191275.9349,USD,up,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,LTV to CAC Ratio,5.54,x,up,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,CAC Payback Period,21.0625,months,down,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,YoY Revenue Growth,75.8255,%,up,omniintelos:model-v1
+2020-12,Growth,OmniIntelOS,Rule of 40,67.1871,%,up,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,ARR,1629344.6196,USD,up,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,MRR,135778.7183,USD,up,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,Customers,44.1589,count,up,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,New Customers,1.8494,count,up,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,Churned Customers,0.402,count,down,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,Expansion Revenue,41440.2801,USD,up,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,Contraction Revenue,5416.9169,USD,down,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,Net Revenue Retention,101.3988,%,up,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,Monthly Churn Rate,0.9022,%,down,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,ARPU,3074.7786,USD,up,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,CAC,33111.7479,USD,down,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,LTV,190283.9666,USD,up,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,LTV to CAC Ratio,5.7467,x,up,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,CAC Payback Period,19.1129,months,down,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,YoY Revenue Growth,35.8924,%,up,omniintelos:model-v1
+2021-01,Growth,OmniIntelOS,Rule of 40,26.651,%,up,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,ARR,1723436.2806,USD,up,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,MRR,143619.6901,USD,up,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,Customers,45.8567,count,up,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,New Customers,2.0265,count,up,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,Churned Customers,0.3287,count,down,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,Expansion Revenue,42821.6947,USD,up,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,Contraction Revenue,4578.7434,USD,down,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,Net Revenue Retention,101.611,%,up,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,Monthly Churn Rate,0.7116,%,down,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,ARPU,3131.9235,USD,up,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,CAC,32241.4782,USD,down,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,LTV,247934.83,USD,up,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,LTV to CAC Ratio,7.6899,x,up,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,CAC Payback Period,18.1433,months,down,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,YoY Revenue Growth,40.8602,%,up,omniintelos:model-v1
+2021-02,Growth,OmniIntelOS,Rule of 40,32.9594,%,up,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,ARR,1822329.3115,USD,up,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,MRR,151860.776,USD,up,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,Customers,47.5648,count,up,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,New Customers,2.0227,count,up,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,Churned Customers,0.3146,count,down,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,Expansion Revenue,38962.3669,USD,up,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,Contraction Revenue,5065.4141,USD,down,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,Net Revenue Retention,101.2862,%,up,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,Monthly Churn Rate,0.657,%,down,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,ARPU,3192.7105,USD,up,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,CAC,35997.7886,USD,down,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,LTV,274218.7226,USD,up,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,LTV to CAC Ratio,7.6177,x,up,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,CAC Payback Period,19.8485,months,down,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,YoY Revenue Growth,43.4631,%,up,omniintelos:model-v1
+2021-03,Growth,OmniIntelOS,Rule of 40,33.2948,%,up,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,ARR,1934496.1393,USD,up,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,MRR,161208.0116,USD,up,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,Customers,49.7804,count,up,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,New Customers,2.6243,count,up,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,Churned Customers,0.4087,count,down,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,Expansion Revenue,48173.957,USD,up,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,Contraction Revenue,4706.5536,USD,down,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,Net Revenue Retention,101.5422,%,up,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,Monthly Churn Rate,0.8144,%,down,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,ARPU,3238.3812,USD,up,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,CAC,29079.1095,USD,down,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,LTV,221643.7285,USD,up,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,LTV to CAC Ratio,7.6221,x,up,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,CAC Payback Period,15.9793,months,down,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,YoY Revenue Growth,49.1578,%,up,omniintelos:model-v1
+2021-04,Growth,OmniIntelOS,Rule of 40,38.3592,%,up,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,ARR,2058876.9696,USD,up,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,MRR,171573.0808,USD,up,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,Customers,51.709,count,up,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,New Customers,2.3674,count,up,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,Churned Customers,0.4388,count,down,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,Expansion Revenue,53073.4736,USD,up,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,Contraction Revenue,5570.5568,USD,down,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,Net Revenue Retention,101.5791,%,up,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,Monthly Churn Rate,0.8415,%,down,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,ARPU,3318.052,USD,up,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,CAC,34887.8251,USD,down,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,LTV,225316.4413,USD,up,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,LTV to CAC Ratio,6.4583,x,up,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,CAC Payback Period,18.2451,months,down,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,YoY Revenue Growth,57.7395,%,up,omniintelos:model-v1
+2021-05,Growth,OmniIntelOS,Rule of 40,47.5154,%,up,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,ARR,2170287.0146,USD,up,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,MRR,180857.2512,USD,up,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,Customers,53.3517,count,up,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,New Customers,2.1028,count,up,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,Churned Customers,0.4601,count,down,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,Expansion Revenue,40755.6061,USD,up,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,Contraction Revenue,5223.177,USD,down,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,Net Revenue Retention,100.8378,%,up,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,Monthly Churn Rate,0.8551,%,down,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,ARPU,3389.9065,USD,up,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,CAC,38790.8097,USD,down,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,LTV,220014.8742,USD,up,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,LTV to CAC Ratio,5.6718,x,up,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,CAC Payback Period,20.4431,months,down,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,YoY Revenue Growth,64.8583,%,up,omniintelos:model-v1
+2021-06,Growth,OmniIntelOS,Rule of 40,54.5312,%,up,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,ARR,2307333.8673,USD,up,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,MRR,192277.8223,USD,up,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,Customers,55.9519,count,up,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,New Customers,2.9796,count,up,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,Churned Customers,0.3794,count,down,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,Expansion Revenue,77103.6999,USD,up,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,Contraction Revenue,7014.6051,USD,down,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,Net Revenue Retention,102.5357,%,up,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,Monthly Churn Rate,0.6734,%,down,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,ARPU,3436.4842,USD,up,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,CAC,27410.616,USD,down,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,LTV,262088.0084,USD,up,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,LTV to CAC Ratio,9.5616,x,up,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,CAC Payback Period,15.4256,months,down,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,YoY Revenue Growth,73.8026,%,up,omniintelos:model-v1
+2021-07,Growth,OmniIntelOS,Rule of 40,60.9494,%,up,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,ARR,2474597.1834,USD,up,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,MRR,206216.432,USD,up,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,Customers,58.3531,count,up,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,New Customers,2.8006,count,up,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,Churned Customers,0.3993,count,down,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,Expansion Revenue,68298.8872,USD,up,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,Contraction Revenue,5574.543,USD,down,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,Net Revenue Retention,102.0085,%,up,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,Monthly Churn Rate,0.6796,%,down,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,ARPU,3533.9384,USD,up,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,CAC,37457.5313,USD,down,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,LTV,267263.3938,USD,up,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,LTV to CAC Ratio,7.1351,x,up,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,CAC Payback Period,20.4814,months,down,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,YoY Revenue Growth,85.6443,%,up,omniintelos:model-v1
+2021-08,Growth,OmniIntelOS,Rule of 40,70.1488,%,up,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,ARR,2651997.2366,USD,up,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,MRR,220999.7697,USD,up,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,Customers,61.6906,count,up,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,New Customers,3.7152,count,up,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,Churned Customers,0.3778,count,down,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,Expansion Revenue,63584.2229,USD,up,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,Contraction Revenue,8256.3819,USD,down,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,Net Revenue Retention,101.6035,%,up,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,Monthly Churn Rate,0.6087,%,down,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,ARPU,3582.3922,USD,up,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,CAC,25504.256,USD,down,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,LTV,292393.6036,USD,up,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,LTV to CAC Ratio,11.4645,x,up,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,CAC Payback Period,14.2428,months,down,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,YoY Revenue Growth,97.8579,%,up,omniintelos:model-v1
+2021-09,Growth,OmniIntelOS,Rule of 40,84.411,%,up,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,ARR,2859177.9799,USD,up,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,MRR,238264.8317,USD,up,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,Customers,65.127,count,up,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,New Customers,3.8404,count,up,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,Churned Customers,0.404,count,down,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,Expansion Revenue,82023.5639,USD,up,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,Contraction Revenue,6263.9298,USD,down,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,Net Revenue Retention,102.2137,%,up,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,Monthly Churn Rate,0.6165,%,down,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,ARPU,3658.4662,USD,up,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,CAC,28634.133,USD,down,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,LTV,297255.0499,USD,up,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,LTV to CAC Ratio,10.3811,x,up,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,CAC Payback Period,15.5287,months,down,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,YoY Revenue Growth,105.8518,%,up,omniintelos:model-v1
+2021-10,Growth,OmniIntelOS,Rule of 40,90.6783,%,up,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,ARR,3091243.2403,USD,up,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,MRR,257603.6034,USD,up,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,Customers,68.4167,count,up,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,New Customers,3.7642,count,up,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,Churned Customers,0.4745,count,down,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,Expansion Revenue,109035.1566,USD,up,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,Contraction Revenue,8491.1226,USD,down,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,Net Revenue Retention,102.7962,%,up,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,Monthly Churn Rate,0.6887,%,down,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,ARPU,3765.2157,USD,up,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,CAC,33105.0021,USD,down,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,LTV,280170.5334,USD,up,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,LTV to CAC Ratio,8.4631,x,up,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,CAC Payback Period,17.0377,months,down,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,YoY Revenue Growth,110.7604,%,up,omniintelos:model-v1
+2021-11,Growth,OmniIntelOS,Rule of 40,94.7219,%,up,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,ARR,3344869.2493,USD,up,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,MRR,278739.1041,USD,up,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,Customers,72.3103,count,up,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,New Customers,4.3788,count,up,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,Churned Customers,0.4851,count,down,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,Expansion Revenue,99845.3145,USD,up,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,Contraction Revenue,8927.8335,USD,down,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,Net Revenue Retention,102.2438,%,up,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,Monthly Churn Rate,0.6665,%,down,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,ARPU,3854.7624,USD,up,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,CAC,26733.2348,USD,down,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,LTV,291235.82,USD,up,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,LTV to CAC Ratio,10.8941,x,up,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,CAC Payback Period,13.6815,months,down,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,YoY Revenue Growth,116.715,%,up,omniintelos:model-v1
+2021-12,Growth,OmniIntelOS,Rule of 40,103.6242,%,up,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,ARR,3613548.4761,USD,up,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,MRR,301129.0397,USD,up,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,Customers,75.9575,count,up,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,New Customers,4.263,count,up,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,Churned Customers,0.6158,count,down,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,Expansion Revenue,117419.441,USD,up,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,Contraction Revenue,10925.3408,USD,down,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,Net Revenue Retention,102.3411,%,up,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,Monthly Churn Rate,0.8042,%,down,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,ARPU,3964.4404,USD,up,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,CAC,26127.3161,USD,down,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,LTV,257296.4845,USD,up,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,LTV to CAC Ratio,9.8478,x,up,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,CAC Payback Period,12.5258,months,down,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,YoY Revenue Growth,121.7793,%,up,omniintelos:model-v1
+2022-01,Growth,OmniIntelOS,Rule of 40,109.8909,%,up,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,ARR,3917451.9226,USD,up,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,MRR,326454.3269,USD,up,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,Customers,80.4688,count,up,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,New Customers,5.0699,count,up,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,Churned Customers,0.5586,count,down,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,Expansion Revenue,136181.9559,USD,up,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,Contraction Revenue,12064.5632,USD,down,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,Net Revenue Retention,102.7144,%,up,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,Monthly Churn Rate,0.6893,%,down,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,ARPU,4056.9038,USD,up,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,CAC,22709.2635,USD,down,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,LTV,305569.5048,USD,up,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,LTV to CAC Ratio,13.4557,x,up,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,CAC Payback Period,10.7068,months,down,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,YoY Revenue Growth,127.3047,%,up,omniintelos:model-v1
+2022-02,Growth,OmniIntelOS,Rule of 40,116.088,%,up,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,ARR,4237106.4525,USD,up,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,MRR,353092.2044,USD,up,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,Customers,84.9664,count,up,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,New Customers,5.0439,count,up,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,Churned Customers,0.5464,count,down,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,Expansion Revenue,97745.3991,USD,up,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,Contraction Revenue,9019.1489,USD,down,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,Net Revenue Retention,101.5944,%,up,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,Monthly Churn Rate,0.6389,%,down,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,ARPU,4155.6681,USD,up,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,CAC,25747.4802,USD,down,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,LTV,332427.6484,USD,up,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,LTV to CAC Ratio,12.9111,x,up,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,CAC Payback Period,12.0451,months,down,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,YoY Revenue Growth,132.5105,%,up,omniintelos:model-v1
+2022-03,Growth,OmniIntelOS,Rule of 40,118.1652,%,up,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,ARR,4467365.5999,USD,up,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,MRR,372280.4667,USD,up,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,Customers,86.8371,count,up,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,New Customers,2.9297,count,up,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,Churned Customers,1.059,count,down,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,Expansion Revenue,78958.6262,USD,up,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,Contraction Revenue,17942.1426,USD,down,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,Net Revenue Retention,100.1766,%,up,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,Monthly Churn Rate,1.2048,%,down,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,ARPU,4287.1143,USD,up,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,CAC,39321.6242,USD,down,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,LTV,190729.724,USD,up,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,LTV to CAC Ratio,4.8505,x,up,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,CAC Payback Period,16.9054,months,down,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,YoY Revenue Growth,130.9317,%,up,omniintelos:model-v1
+2022-04,Growth,OmniIntelOS,Rule of 40,123.9681,%,up,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,ARR,4610298.3413,USD,up,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,MRR,384191.5284,USD,up,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,Customers,88.4709,count,up,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,New Customers,2.9503,count,up,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,Churned Customers,1.3164,count,down,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,Expansion Revenue,71947.4392,USD,up,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,Contraction Revenue,25596.5925,USD,down,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,Net Revenue Retention,99.5236,%,up,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,Monthly Churn Rate,1.4662,%,down,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,ARPU,4342.5753,USD,up,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,CAC,42477.0545,USD,down,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,LTV,155704.4594,USD,up,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,LTV to CAC Ratio,3.6656,x,up,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,CAC Payback Period,18.3338,months,down,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,YoY Revenue Growth,123.923,%,up,omniintelos:model-v1
+2022-05,Growth,OmniIntelOS,Rule of 40,114.3464,%,up,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,ARR,4761078.6934,USD,up,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,MRR,396756.5578,USD,up,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,Customers,90.6073,count,up,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,New Customers,3.2116,count,up,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,Churned Customers,1.0752,count,down,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,Expansion Revenue,79655.1748,USD,up,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,Contraction Revenue,18624.3165,USD,down,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,Net Revenue Retention,100.1204,%,up,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,Monthly Churn Rate,1.1727,%,down,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,ARPU,4378.8575,USD,up,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,CAC,35060.9683,USD,down,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,LTV,196500.1157,USD,up,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,LTV to CAC Ratio,5.6045,x,up,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,CAC Payback Period,15.036,months,down,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,YoY Revenue Growth,119.3755,%,up,omniintelos:model-v1
+2022-06,Growth,OmniIntelOS,Rule of 40,113.0082,%,up,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,ARR,4921884.5833,USD,up,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,MRR,410157.0486,USD,up,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,Customers,92.6593,count,up,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,New Customers,3.0103,count,up,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,Churned Customers,0.9583,count,down,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,Expansion Revenue,61092.8944,USD,up,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,Contraction Revenue,18085.1287,USD,down,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,Net Revenue Retention,99.8505,%,up,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,Monthly Churn Rate,1.0237,%,down,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,ARPU,4426.5084,USD,up,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,CAC,42836.3717,USD,down,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,LTV,234311.1161,USD,up,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,LTV to CAC Ratio,5.4699,x,up,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,CAC Payback Period,17.6765,months,down,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,YoY Revenue Growth,113.3148,%,up,omniintelos:model-v1
+2022-07,Growth,OmniIntelOS,Rule of 40,107.754,%,up,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,ARR,5062228.3364,USD,up,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,MRR,421852.3614,USD,up,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,Customers,94.4028,count,up,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,New Customers,3.1022,count,up,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,Churned Customers,1.3586,count,down,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,Expansion Revenue,63566.0803,USD,up,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,Contraction Revenue,25509.5591,USD,down,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,Net Revenue Retention,99.3121,%,up,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,Monthly Churn Rate,1.4187,%,down,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,ARPU,4468.6411,USD,up,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,CAC,39544.2863,USD,down,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,LTV,170318.2734,USD,up,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,LTV to CAC Ratio,4.307,x,up,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,CAC Payback Period,16.133,months,down,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,YoY Revenue Growth,104.5678,%,up,omniintelos:model-v1
+2022-08,Growth,OmniIntelOS,Rule of 40,100.5234,%,up,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,ARR,5214359.6255,USD,up,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,MRR,434529.9688,USD,up,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,Customers,96.7792,count,up,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,New Customers,3.7392,count,up,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,Churned Customers,1.3629,count,down,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,Expansion Revenue,76616.1504,USD,up,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,Contraction Revenue,28601.4262,USD,down,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,Net Revenue Retention,99.5221,%,up,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,Monthly Churn Rate,1.3887,%,down,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,ARPU,4489.9125,USD,up,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,CAC,35414.9696,USD,down,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,LTV,176372.6262,USD,up,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,LTV to CAC Ratio,4.9802,x,up,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,CAC Payback Period,14.2588,months,down,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,YoY Revenue Growth,96.6201,%,up,omniintelos:model-v1
+2022-09,Growth,OmniIntelOS,Rule of 40,90.4183,%,up,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,ARR,5389479.3674,USD,up,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,MRR,449123.2806,USD,up,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,Customers,98.8355,count,up,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,New Customers,3.1752,count,up,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,Churned Customers,1.1189,count,down,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,Expansion Revenue,87075.7099,USD,up,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,Contraction Revenue,21049.7754,USD,down,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,Net Revenue Retention,100.1153,%,up,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,Monthly Churn Rate,1.1194,%,down,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,ARPU,4544.1474,USD,up,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,CAC,40469.3899,USD,down,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,LTV,220298.6729,USD,up,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,LTV to CAC Ratio,5.4436,x,up,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,CAC Payback Period,16.2274,months,down,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,YoY Revenue Growth,88.4975,%,up,omniintelos:model-v1
+2022-10,Growth,OmniIntelOS,Rule of 40,85.9093,%,up,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,ARR,5583582.9038,USD,up,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,MRR,465298.5753,USD,up,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,Customers,101.4348,count,up,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,New Customers,3.9327,count,up,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,Churned Customers,1.3335,count,down,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,Expansion Revenue,99704.9689,USD,up,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,Contraction Revenue,28185.5003,USD,down,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,Net Revenue Retention,99.9909,%,up,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,Monthly Churn Rate,1.2976,%,down,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,ARPU,4587.1708,USD,up,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,CAC,32081.7117,USD,down,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,LTV,189671.04,USD,up,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,LTV to CAC Ratio,5.9121,x,up,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,CAC Payback Period,12.8663,months,down,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,YoY Revenue Growth,80.6258,%,up,omniintelos:model-v1
+2022-11,Growth,OmniIntelOS,Rule of 40,75.1528,%,up,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,ARR,5779140.5918,USD,up,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,MRR,481595.0493,USD,up,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,Customers,103.4991,count,up,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,New Customers,3.5602,count,up,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,Churned Customers,1.4958,count,down,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,Expansion Revenue,87955.3393,USD,up,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,Contraction Revenue,22203.5549,USD,down,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,Net Revenue Retention,99.7049,%,up,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,Monthly Churn Rate,1.4247,%,down,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,ARPU,4653.1312,USD,up,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,CAC,40478.7727,USD,down,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,LTV,181816.2762,USD,up,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,LTV to CAC Ratio,4.4916,x,up,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,CAC Payback Period,15.4046,months,down,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,YoY Revenue Growth,72.7763,%,up,omniintelos:model-v1
+2022-12,Growth,OmniIntelOS,Rule of 40,70.4665,%,up,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,ARR,5881924.1346,USD,up,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,MRR,490160.3445,USD,up,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,Customers,103.977,count,up,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,New Customers,3.1097,count,up,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,Churned Customers,2.6318,count,down,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,Expansion Revenue,44914.9138,USD,up,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,Contraction Revenue,45555.2729,USD,down,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,Net Revenue Retention,97.4185,%,up,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,Monthly Churn Rate,2.4686,%,down,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,ARPU,4714.1216,USD,up,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,CAC,47056.8322,USD,down,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,LTV,94690.0202,USD,up,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,LTV to CAC Ratio,2.0122,x,up,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,CAC Payback Period,19.6338,months,down,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,YoY Revenue Growth,62.7742,%,up,omniintelos:model-v1
+2023-01,Growth,OmniIntelOS,Rule of 40,57.9667,%,up,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,ARR,5889556.6237,USD,up,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,MRR,490796.3853,USD,up,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,Customers,103.5763,count,up,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,New Customers,2.559,count,up,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,Churned Customers,2.9598,count,down,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,Expansion Revenue,59254.531,USD,up,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,Contraction Revenue,47513.1145,USD,down,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,Net Revenue Retention,97.3356,%,up,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,Monthly Churn Rate,2.7782,%,down,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,ARPU,4738.5026,USD,up,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,CAC,53151.8801,USD,down,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,LTV,83694.3078,USD,up,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,LTV to CAC Ratio,1.5746,x,up,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,CAC Payback Period,22.2241,months,down,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,YoY Revenue Growth,50.3415,%,up,omniintelos:model-v1
+2023-02,Growth,OmniIntelOS,Rule of 40,47.3092,%,up,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,ARR,5892735.0391,USD,up,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,MRR,491061.2533,USD,up,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,Customers,103.6715,count,up,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,New Customers,2.51,count,up,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,Churned Customers,2.4147,count,down,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,Expansion Revenue,67035.2402,USD,up,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,Contraction Revenue,55016.5641,USD,down,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,Net Revenue Retention,97.877,%,up,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,Monthly Churn Rate,2.2762,%,down,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,ARPU,4736.7036,USD,up,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,CAC,59431.1249,USD,down,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,LTV,102472.0643,USD,up,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,LTV to CAC Ratio,1.7242,x,up,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,CAC Payback Period,24.8999,months,down,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,YoY Revenue Growth,39.0745,%,up,omniintelos:model-v1
+2023-03,Growth,OmniIntelOS,Rule of 40,32.0274,%,up,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,ARR,5906376.8567,USD,up,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,MRR,492198.0714,USD,up,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,Customers,103.5168,count,up,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,New Customers,2.8303,count,up,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,Churned Customers,2.985,count,down,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,Expansion Revenue,68361.7598,USD,up,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,Contraction Revenue,49684.7361,USD,down,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,Net Revenue Retention,97.4291,%,up,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,Monthly Churn Rate,2.8027,%,down,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,ARPU,4754.7635,USD,up,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,CAC,49839.1406,USD,down,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,LTV,84512.0585,USD,up,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,LTV to CAC Ratio,1.6957,x,up,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,CAC Payback Period,20.4514,months,down,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,YoY Revenue Growth,32.2116,%,up,omniintelos:model-v1
+2023-04,Growth,OmniIntelOS,Rule of 40,29.8194,%,up,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,ARR,5936999.2513,USD,up,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,MRR,494749.9376,USD,up,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,Customers,104.2659,count,up,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,New Customers,3.0985,count,up,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,Churned Customers,2.3494,count,down,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,Expansion Revenue,60227.8014,USD,up,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,Contraction Revenue,51307.1033,USD,down,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,Net Revenue Retention,97.8958,%,up,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,Monthly Churn Rate,2.2037,%,down,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,ARPU,4745.081,USD,up,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,CAC,44696.6641,USD,down,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,LTV,108008.5383,USD,up,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,LTV to CAC Ratio,2.4165,x,up,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,CAC Payback Period,18.3651,months,down,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,YoY Revenue Growth,28.7769,%,up,omniintelos:model-v1
+2023-05,Growth,OmniIntelOS,Rule of 40,24.8503,%,up,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,ARR,6040236.8092,USD,up,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,MRR,503353.0674,USD,up,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,Customers,105.7727,count,up,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,New Customers,3.1781,count,up,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,Churned Customers,1.6712,count,down,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,Expansion Revenue,102530.9411,USD,up,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,Contraction Revenue,32389.1024,USD,down,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,Net Revenue Retention,99.5946,%,up,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,Monthly Churn Rate,1.5554,%,down,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,ARPU,4758.8165,USD,up,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,CAC,49129.0106,USD,down,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,LTV,164326.7392,USD,up,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,LTV to CAC Ratio,3.3448,x,up,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,CAC Payback Period,18.9227,months,down,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,YoY Revenue Growth,26.867,%,up,omniintelos:model-v1
+2023-06,Growth,OmniIntelOS,Rule of 40,25.3306,%,up,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,ARR,6203164.94,USD,up,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,MRR,516930.4117,USD,up,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,Customers,108.1677,count,up,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,New Customers,3.5671,count,up,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,Churned Customers,1.1721,count,down,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,Expansion Revenue,71110.8685,USD,up,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,Contraction Revenue,35797.3244,USD,down,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,Net Revenue Retention,99.4871,%,up,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,Monthly Churn Rate,1.072,%,down,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,ARPU,4778.9728,USD,up,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,CAC,39995.9236,USD,down,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,LTV,239070.9085,USD,up,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,LTV to CAC Ratio,5.9774,x,up,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,CAC Payback Period,15.4388,months,down,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,YoY Revenue Growth,26.0323,%,up,omniintelos:model-v1
+2023-07,Growth,OmniIntelOS,Rule of 40,25.5898,%,up,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,ARR,6378662.1843,USD,up,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,MRR,531555.182,USD,up,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,Customers,110.2992,count,up,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,New Customers,3.8545,count,up,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,Churned Customers,1.723,count,down,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,Expansion Revenue,93319.3199,USD,up,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,Contraction Revenue,34616.9654,USD,down,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,Net Revenue Retention,99.3627,%,up,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,Monthly Churn Rate,1.5381,%,down,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,ARPU,4819.2121,USD,up,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,CAC,38900.7937,USD,down,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,LTV,171257.1737,USD,up,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,LTV to CAC Ratio,4.4024,x,up,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,CAC Payback Period,14.541,months,down,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,YoY Revenue Growth,26.005,%,up,omniintelos:model-v1
+2023-08,Growth,OmniIntelOS,Rule of 40,26.378,%,up,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,ARR,6549115.02,USD,up,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,MRR,545759.585,USD,up,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,Customers,112.325,count,up,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,New Customers,3.3439,count,up,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,Churned Customers,1.3181,count,down,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,Expansion Revenue,78796.2608,USD,up,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,Contraction Revenue,34785.1328,USD,down,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,Net Revenue Retention,99.4999,%,up,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,Monthly Churn Rate,1.1598,%,down,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,ARPU,4858.7534,USD,up,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,CAC,46807.6938,USD,down,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,LTV,223290.3645,USD,up,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,LTV to CAC Ratio,4.7704,x,up,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,CAC Payback Period,17.864,months,down,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,YoY Revenue Growth,25.5977,%,up,omniintelos:model-v1
+2023-09,Growth,OmniIntelOS,Rule of 40,25.3706,%,up,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,ARR,6717495.0962,USD,up,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,MRR,559791.258,USD,up,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,Customers,114.417,count,up,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,New Customers,3.6827,count,up,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,Churned Customers,1.5908,count,down,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,Expansion Revenue,85131.3673,USD,up,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,Contraction Revenue,30259.465,USD,down,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,Net Revenue Retention,99.4304,%,up,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,Monthly Churn Rate,1.3713,%,down,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,ARPU,4892.5546,USD,up,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,CAC,42586.5062,USD,down,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,LTV,196846.1347,USD,up,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,LTV to CAC Ratio,4.6223,x,up,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,CAC Payback Period,15.5603,months,down,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,YoY Revenue Growth,24.6409,%,up,omniintelos:model-v1
+2023-10,Growth,OmniIntelOS,Rule of 40,26.2248,%,up,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,ARR,6918829.1109,USD,up,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,MRR,576569.0926,USD,up,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,Customers,116.7568,count,up,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,New Customers,3.6054,count,up,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,Churned Customers,1.2656,count,down,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,Expansion Revenue,116145.4426,USD,up,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,Contraction Revenue,25942.7023,USD,down,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,Net Revenue Retention,100.2446,%,up,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,Monthly Churn Rate,1.0723,%,down,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,ARPU,4938.2063,USD,up,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,CAC,49030.4422,USD,down,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,LTV,246564.8463,USD,up,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,LTV to CAC Ratio,5.0288,x,up,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,CAC Payback Period,18.3453,months,down,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,YoY Revenue Growth,23.9138,%,up,omniintelos:model-v1
+2023-11,Growth,OmniIntelOS,Rule of 40,20.9386,%,up,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,ARR,7152021.1597,USD,up,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,MRR,596001.7633,USD,up,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,Customers,119.4272,count,up,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,New Customers,4.375,count,up,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,Churned Customers,1.7046,count,down,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,Expansion Revenue,111104.8947,USD,up,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,Contraction Revenue,28547.4448,USD,down,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,Net Revenue Retention,99.7425,%,up,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,Monthly Churn Rate,1.4072,%,down,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,ARPU,4990.5022,USD,up,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,CAC,37424.8029,USD,down,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,LTV,194471.6084,USD,up,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,LTV to CAC Ratio,5.1963,x,up,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,CAC Payback Period,13.4829,months,down,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,YoY Revenue Growth,23.7558,%,up,omniintelos:model-v1
+2023-12,Growth,OmniIntelOS,Rule of 40,25.5456,%,up,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,ARR,7431054.7912,USD,up,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,MRR,619254.5659,USD,up,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,Customers,122.7108,count,up,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,New Customers,4.4951,count,up,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,Churned Customers,1.2115,count,down,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,Expansion Revenue,145358.7564,USD,up,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,Contraction Revenue,21675.3637,USD,down,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,Net Revenue Retention,100.7255,%,up,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,Monthly Churn Rate,0.9777,%,down,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,ARPU,5046.4562,USD,up,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,CAC,37484.8014,USD,down,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,LTV,296775.7097,USD,up,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,LTV to CAC Ratio,7.9172,x,up,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,CAC Payback Period,12.793,months,down,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,YoY Revenue Growth,26.3371,%,up,omniintelos:model-v1
+2024-01,Growth,OmniIntelOS,Rule of 40,29.5406,%,up,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,ARR,7758978.0734,USD,up,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,MRR,646581.5061,USD,up,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,Customers,126.7434,count,up,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,New Customers,5.2418,count,up,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,Churned Customers,1.2092,count,down,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,Expansion Revenue,126177.3034,USD,up,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,Contraction Revenue,30097.306,USD,down,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,Net Revenue Retention,100.3185,%,up,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,Monthly Churn Rate,0.945,%,down,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,ARPU,5101.5016,USD,up,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,CAC,34446.9125,USD,down,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,LTV,308123.5848,USD,up,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,LTV to CAC Ratio,8.9449,x,up,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,CAC Payback Period,11.7183,months,down,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,YoY Revenue Growth,31.7413,%,up,omniintelos:model-v1
+2024-02,Growth,OmniIntelOS,Rule of 40,35.5983,%,up,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,ARR,8131580.4673,USD,up,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,MRR,677631.7056,USD,up,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,Customers,130.6863,count,up,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,New Customers,5.2599,count,up,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,Churned Customers,1.3171,count,down,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,Expansion Revenue,188386.0878,USD,up,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,Contraction Revenue,19944.3934,USD,down,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,Net Revenue Retention,101.1412,%,up,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,Monthly Churn Rate,0.9977,%,down,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,ARPU,5185.1793,USD,up,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,CAC,36612.6733,USD,down,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,LTV,297081.7391,USD,up,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,LTV to CAC Ratio,8.1142,x,up,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,CAC Payback Period,12.2287,months,down,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,YoY Revenue Growth,37.9933,%,up,omniintelos:model-v1
+2024-03,Growth,OmniIntelOS,Rule of 40,38.7758,%,up,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,ARR,8512079.749,USD,up,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,MRR,709339.9791,USD,up,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,Customers,134.6347,count,up,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,New Customers,4.9364,count,up,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,Churned Customers,0.9879,count,down,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,Expansion Revenue,130245.0751,USD,up,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,Contraction Revenue,21327.341,USD,down,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,Net Revenue Retention,100.5873,%,up,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,Monthly Churn Rate,0.7284,%,down,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,ARPU,5268.6263,USD,up,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,CAC,43375.0721,USD,down,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,LTV,424970.2554,USD,up,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,LTV to CAC Ratio,9.7976,x,up,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,CAC Payback Period,13.9098,months,down,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,YoY Revenue Growth,44.1168,%,up,omniintelos:model-v1
+2024-04,Growth,OmniIntelOS,Rule of 40,44.6039,%,up,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,ARR,8907492.6619,USD,up,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,MRR,742291.0552,USD,up,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,Customers,138.9811,count,up,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,New Customers,5.7382,count,up,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,Churned Customers,1.3918,count,down,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,Expansion Revenue,199698.4911,USD,up,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,Contraction Revenue,33971.8565,USD,down,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,Net Revenue Retention,100.9248,%,up,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,Monthly Churn Rate,0.9915,%,down,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,ARPU,5340.948,USD,up,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,CAC,36557.5771,USD,down,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,LTV,316603.7218,USD,up,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,LTV to CAC Ratio,8.6604,x,up,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,CAC Payback Period,11.5306,months,down,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,YoY Revenue Growth,50.0336,%,up,omniintelos:model-v1
+2024-05,Growth,OmniIntelOS,Rule of 40,53.1726,%,up,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,ARR,9379298.9122,USD,up,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,MRR,781608.2427,USD,up,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,Customers,144.0502,count,up,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,New Customers,6.544,count,up,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,Churned Customers,1.475,count,down,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,Expansion Revenue,222691.298,USD,up,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,Contraction Revenue,37679.2933,USD,down,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,Net Revenue Retention,101.0279,%,up,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,Monthly Churn Rate,1.0136,%,down,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,ARPU,5425.9446,USD,up,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,CAC,31424.7745,USD,down,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,LTV,315378.2055,USD,up,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,LTV to CAC Ratio,10.036,x,up,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,CAC Payback Period,9.7311,months,down,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,YoY Revenue Growth,55.2803,%,up,omniintelos:model-v1
+2024-06,Growth,OmniIntelOS,Rule of 40,60.2241,%,up,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,ARR,9847679.4461,USD,up,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,MRR,820639.9538,USD,up,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,Customers,148.9083,count,up,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,New Customers,6.0712,count,up,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,Churned Customers,1.213,count,down,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,Expansion Revenue,145060.9509,USD,up,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,Contraction Revenue,28713.3149,USD,down,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,Net Revenue Retention,100.4039,%,up,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,Monthly Churn Rate,0.808,%,down,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,ARPU,5511.0425,USD,up,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,CAC,41654.1426,USD,down,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,LTV,394480.8416,USD,up,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,LTV to CAC Ratio,9.4704,x,up,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,CAC Payback Period,12.9621,months,down,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,YoY Revenue Growth,58.7525,%,up,omniintelos:model-v1
+2024-07,Growth,OmniIntelOS,Rule of 40,60.9053,%,up,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,ARR,10326996.3852,USD,up,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,MRR,860583.0321,USD,up,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,Customers,154.1083,count,up,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,New Customers,6.6978,count,up,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,Churned Customers,1.4978,count,down,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,Expansion Revenue,216563.6544,USD,up,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,Contraction Revenue,28086.9031,USD,down,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,Net Revenue Retention,100.9208,%,up,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,Monthly Churn Rate,0.9626,%,down,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,ARPU,5584.2726,USD,up,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,CAC,36885.7378,USD,down,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,LTV,341013.3535,USD,up,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,LTV to CAC Ratio,9.2451,x,up,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,CAC Payback Period,11.1292,months,down,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,YoY Revenue Growth,61.8991,%,up,omniintelos:model-v1
+2024-08,Growth,OmniIntelOS,Rule of 40,64.8775,%,up,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,ARR,10862727.8434,USD,up,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,MRR,905227.3203,USD,up,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,Customers,159.81,count,up,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,New Customers,6.6099,count,up,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,Churned Customers,0.9082,count,down,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,Expansion Revenue,199323.8666,USD,up,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,Contraction Revenue,33756.6777,USD,down,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,Net Revenue Retention,101.0204,%,up,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,Monthly Churn Rate,0.5651,%,down,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,ARPU,5664.3957,USD,up,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,CAC,43525.2833,USD,down,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,LTV,750494.0648,USD,up,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,LTV to CAC Ratio,17.2427,x,up,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,CAC Payback Period,10.2055,months,down,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,YoY Revenue Growth,65.8656,%,up,omniintelos:model-v1
+2024-09,Growth,OmniIntelOS,Rule of 40,85.2143,%,up,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,ARR,11380641.3564,USD,up,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,MRR,948386.7797,USD,up,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,Customers,165.0251,count,up,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,New Customers,6.5402,count,up,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,Churned Customers,1.3252,count,down,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,Expansion Revenue,175845.3104,USD,up,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,Contraction Revenue,35315.8433,USD,down,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,Net Revenue Retention,100.4706,%,up,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,Monthly Churn Rate,0.7966,%,down,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,ARPU,5746.9252,USD,up,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,CAC,43321.4731,USD,down,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,LTV,528722.463,USD,up,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,LTV to CAC Ratio,12.2046,x,up,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,CAC Payback Period,10.2035,months,down,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,YoY Revenue Growth,69.4179,%,up,omniintelos:model-v1
+2024-10,Growth,OmniIntelOS,Rule of 40,89.1127,%,up,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,ARR,11939778.0139,USD,up,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,MRR,994981.5012,USD,up,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,Customers,171.7291,count,up,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,New Customers,7.8885,count,up,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,Churned Customers,1.1845,count,down,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,Expansion Revenue,200915.1249,USD,up,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,Contraction Revenue,28931.1666,USD,down,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,Net Revenue Retention,100.8066,%,up,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,Monthly Churn Rate,0.685,%,down,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,ARPU,5793.9003,USD,up,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,CAC,35729.3827,USD,down,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,LTV,624819.1941,USD,up,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,LTV to CAC Ratio,17.4875,x,up,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,CAC Payback Period,8.2908,months,down,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,YoY Revenue Growth,72.5693,%,up,omniintelos:model-v1
+2024-11,Growth,OmniIntelOS,Rule of 40,93.6746,%,up,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,ARR,12586017.3551,USD,up,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,MRR,1048834.7796,USD,up,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,Customers,178.8326,count,up,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,New Customers,8.4531,count,up,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,Churned Customers,1.3496,count,down,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,Expansion Revenue,207250.1282,USD,up,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,Contraction Revenue,27346.4184,USD,down,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,Net Revenue Retention,100.7323,%,up,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,Monthly Churn Rate,0.749,%,down,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,ARPU,5864.8959,USD,up,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,CAC,36990.9275,USD,down,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,LTV,586424.9459,USD,up,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,LTV to CAC Ratio,15.8532,x,up,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,CAC Payback Period,8.3584,months,down,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,YoY Revenue Growth,75.9785,%,up,omniintelos:model-v1
+2024-12,Growth,OmniIntelOS,Rule of 40,94.6901,%,up,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,ARR,13307454.2943,USD,up,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,MRR,1108954.5245,USD,up,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,Customers,186.6387,count,up,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,New Customers,8.8641,count,up,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,Churned Customers,1.058,count,down,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,Expansion Revenue,276835.9637,USD,up,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,Contraction Revenue,40902.9295,USD,down,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,Net Revenue Retention,101.2927,%,up,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,Monthly Churn Rate,0.5637,%,down,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,ARPU,5941.7193,USD,up,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,CAC,39638.8866,USD,down,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,LTV,778283.7526,USD,up,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,LTV to CAC Ratio,19.6343,x,up,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,CAC Payback Period,8.9844,months,down,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,YoY Revenue Growth,79.0789,%,up,omniintelos:model-v1
+2025-01,Growth,OmniIntelOS,Rule of 40,97.191,%,up,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,ARR,14041238.5585,USD,up,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,MRR,1170103.2132,USD,up,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,Customers,193.8329,count,up,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,New Customers,8.4303,count,up,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,Churned Customers,1.2361,count,down,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,Expansion Revenue,216440.864,USD,up,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,Contraction Revenue,33465.1166,USD,down,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,Net Revenue Retention,100.7187,%,up,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,Monthly Churn Rate,0.6337,%,down,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,ARPU,6036.6606,USD,up,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,CAC,40092.5272,USD,down,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,LTV,717487.0584,USD,up,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,LTV to CAC Ratio,17.8958,x,up,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,CAC Payback Period,8.7624,months,down,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,YoY Revenue Growth,80.9676,%,up,omniintelos:model-v1
+2025-02,Growth,OmniIntelOS,Rule of 40,101.1507,%,up,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,ARR,14676549.2307,USD,up,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,MRR,1223045.7692,USD,up,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,Customers,198.7252,count,up,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,New Customers,7.4754,count,up,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,Churned Customers,2.5831,count,down,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,Expansion Revenue,300265.0936,USD,up,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,Contraction Revenue,75119.8499,USD,down,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,Net Revenue Retention,100.2716,%,up,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,Monthly Churn Rate,1.2832,%,down,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,ARPU,6154.4588,USD,up,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,CAC,50774.6979,USD,down,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,LTV,301169.0994,USD,up,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,LTV to CAC Ratio,5.9315,x,up,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,CAC Payback Period,12.9703,months,down,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,YoY Revenue Growth,80.4883,%,up,omniintelos:model-v1
+2025-03,Growth,OmniIntelOS,Rule of 40,89.7292,%,up,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,ARR,15233301.4344,USD,up,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,MRR,1269441.7862,USD,up,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,Customers,203.5717,count,up,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,New Customers,7.5086,count,up,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,Churned Customers,2.662,count,down,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,Expansion Revenue,232495.4406,USD,up,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,Contraction Revenue,54629.6616,USD,down,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,Net Revenue Retention,99.8785,%,up,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,Monthly Churn Rate,1.2908,%,down,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,ARPU,6235.845,USD,up,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,CAC,55824.4167,USD,down,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,LTV,302849.0714,USD,up,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,LTV to CAC Ratio,5.425,x,up,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,CAC Payback Period,14.0965,months,down,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,YoY Revenue Growth,78.961,%,up,omniintelos:model-v1
+2025-04,Growth,OmniIntelOS,Rule of 40,85.1549,%,up,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,ARR,15783818.5671,USD,up,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,MRR,1315318.2139,USD,up,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,Customers,208.0677,count,up,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,New Customers,7.0442,count,up,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,Churned Customers,2.5482,count,down,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,Expansion Revenue,292943.0131,USD,up,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,Contraction Revenue,61023.6965,USD,down,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,Net Revenue Retention,100.2763,%,up,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,Monthly Churn Rate,1.2099,%,down,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,ARPU,6321.5868,USD,up,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,CAC,62872.4438,USD,down,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,LTV,329210.4509,USD,up,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,LTV to CAC Ratio,5.2362,x,up,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,CAC Payback Period,15.594,months,down,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,YoY Revenue Growth,77.1971,%,up,omniintelos:model-v1
+2025-05,Growth,OmniIntelOS,Rule of 40,85.5638,%,up,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,ARR,16372649.6253,USD,up,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,MRR,1364387.4688,USD,up,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,Customers,213.5627,count,up,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,New Customers,8.1893,count,up,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,Churned Customers,2.6943,count,down,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,Expansion Revenue,257545.3164,USD,up,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,Contraction Revenue,60151.7835,USD,down,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,Net Revenue Retention,99.9663,%,up,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,Monthly Churn Rate,1.2459,%,down,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,ARPU,6388.6968,USD,up,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,CAC,55112.539,USD,down,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,LTV,317610.881,USD,up,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,LTV to CAC Ratio,5.763,x,up,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,CAC Payback Period,13.754,months,down,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,YoY Revenue Growth,74.5616,%,up,omniintelos:model-v1
+2025-06,Growth,OmniIntelOS,Rule of 40,80.978,%,up,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,ARR,17042227.0988,USD,up,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,MRR,1420185.5916,USD,up,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,Customers,219.3714,count,up,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,New Customers,8.5303,count,up,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,Churned Customers,2.7216,count,down,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,Expansion Revenue,358365.7699,USD,up,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,Contraction Revenue,71632.1082,USD,down,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,Net Revenue Retention,100.4875,%,up,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,Monthly Churn Rate,1.2254,%,down,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,ARPU,6473.8859,USD,up,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,CAC,57469.2316,USD,down,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,LTV,326267.1204,USD,up,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,LTV to CAC Ratio,5.6772,x,up,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,CAC Payback Period,14.1978,months,down,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,YoY Revenue Growth,73.0583,%,up,omniintelos:model-v1
+2025-07,Growth,OmniIntelOS,Rule of 40,78.1817,%,up,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,ARR,17773016.4911,USD,up,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,MRR,1481084.7076,USD,up,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,Customers,226.1451,count,up,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,New Customers,9.113,count,up,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,Churned Customers,2.3392,count,down,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,Expansion Revenue,285467.8187,USD,up,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,Contraction Revenue,73612.0093,USD,down,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,Net Revenue Retention,100.1866,%,up,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,Monthly Churn Rate,1.0238,%,down,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,ARPU,6549.266,USD,up,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,CAC,49324.5289,USD,down,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,LTV,401088.1368,USD,up,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,LTV to CAC Ratio,8.1316,x,up,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,CAC Payback Period,11.8887,months,down,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,YoY Revenue Growth,72.1025,%,up,omniintelos:model-v1
+2025-08,Growth,OmniIntelOS,Rule of 40,81.4287,%,up,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,ARR,18753179.3891,USD,up,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,MRR,1562764.9491,USD,up,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,Customers,236.7477,count,up,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,New Customers,11.9323,count,up,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,Churned Customers,1.3297,count,down,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,Expansion Revenue,466069.5194,USD,up,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,Contraction Revenue,51343.7896,USD,down,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,Net Revenue Retention,101.7602,%,up,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,Monthly Churn Rate,0.5585,%,down,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,ARPU,6600.9713,USD,up,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,CAC,51537.7508,USD,down,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,LTV,850258.375,USD,up,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,LTV to CAC Ratio,16.4978,x,up,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,CAC Payback Period,10.7922,months,down,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,YoY Revenue Growth,72.6378,%,up,omniintelos:model-v1
+2025-09,Growth,OmniIntelOS,Rule of 40,83.3961,%,up,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,ARR,20076796.7086,USD,up,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,MRR,1673066.3924,USD,up,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,Customers,249.3896,count,up,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,New Customers,14.3002,count,up,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,Churned Customers,1.6584,count,down,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,Expansion Revenue,481029.3596,USD,up,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,Contraction Revenue,42615.0846,USD,down,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,Net Revenue Retention,101.6511,%,up,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,Monthly Churn Rate,0.6606,%,down,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,ARPU,6708.6454,USD,up,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,CAC,51711.9121,USD,down,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,LTV,729005.2623,USD,up,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,LTV to CAC Ratio,14.0974,x,up,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,CAC Payback Period,10.6674,months,down,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,YoY Revenue Growth,76.4118,%,up,omniintelos:model-v1
+2025-10,Growth,OmniIntelOS,Rule of 40,87.0777,%,up,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,ARR,21512530.371,USD,up,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,MRR,1792710.8643,USD,up,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,Customers,261.1723,count,up,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,New Customers,13.4591,count,up,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,Churned Customers,1.6764,count,down,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,Expansion Revenue,573996.9607,USD,up,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,Contraction Revenue,60457.1713,USD,down,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,Net Revenue Retention,101.8933,%,up,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,Monthly Churn Rate,0.6378,%,down,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,ARPU,6864.0936,USD,up,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,CAC,59037.9059,USD,down,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,LTV,772017.9685,USD,up,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,LTV to CAC Ratio,13.0766,x,up,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,CAC Payback Period,11.9138,months,down,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,YoY Revenue Growth,80.1753,%,up,omniintelos:model-v1
+2025-11,Growth,OmniIntelOS,Rule of 40,88.9783,%,up,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,ARR,23028857.9618,USD,up,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,MRR,1919071.4968,USD,up,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,Customers,273.4223,count,up,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,New Customers,13.877,count,up,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,Churned Customers,1.627,count,down,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,Expansion Revenue,648113.0,USD,up,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,Contraction Revenue,63116.6758,USD,down,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,Net Revenue Retention,102.1042,%,up,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,Monthly Churn Rate,0.5915,%,down,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,ARPU,7018.7088,USD,up,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,CAC,63177.3438,USD,down,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,LTV,874505.7249,USD,up,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,LTV to CAC Ratio,13.8421,x,up,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,CAC Payback Period,12.1407,months,down,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,YoY Revenue Growth,82.9718,%,up,omniintelos:model-v1
+2025-12,Growth,OmniIntelOS,Rule of 40,92.7065,%,up,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,ARR,24578221.1224,USD,up,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,MRR,2048185.0935,USD,up,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,Customers,284.38,count,up,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,New Customers,12.8857,count,up,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,Churned Customers,1.9281,count,down,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,Expansion Revenue,643385.1385,USD,up,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,Contraction Revenue,43793.9073,USD,down,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,Net Revenue Retention,101.9024,%,up,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,Monthly Churn Rate,0.6734,%,down,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,ARPU,7202.2831,USD,up,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,CAC,70132.1384,USD,down,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,LTV,777363.8975,USD,up,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,LTV to CAC Ratio,11.0843,x,up,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,CAC Payback Period,13.3068,months,down,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,YoY Revenue Growth,84.6951,%,up,omniintelos:model-v1
+2026-01,Growth,OmniIntelOS,Rule of 40,95.6648,%,up,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,ARR,26333977.0836,USD,up,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,MRR,2194498.0903,USD,up,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,Customers,299.8669,count,up,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,New Customers,17.4637,count,up,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,Churned Customers,1.9768,count,down,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,Expansion Revenue,758632.3587,USD,up,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,Contraction Revenue,73071.1216,USD,down,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,Net Revenue Retention,102.1097,%,up,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,Monthly Churn Rate,0.6549,%,down,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,ARPU,7318.2406,USD,up,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,CAC,56429.5884,USD,down,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,LTV,814244.1288,USD,up,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,LTV to CAC Ratio,14.4294,x,up,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,CAC Payback Period,10.5127,months,down,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,YoY Revenue Growth,87.5474,%,up,omniintelos:model-v1
+2026-02,Growth,OmniIntelOS,Rule of 40,96.3103,%,up,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,ARR,28136341.9011,USD,up,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,MRR,2344695.1584,USD,up,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,Customers,313.5541,count,up,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,New Customers,15.338,count,up,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,Churned Customers,1.6508,count,down,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,Expansion Revenue,488106.5899,USD,up,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,Contraction Revenue,70540.4252,USD,down,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,Net Revenue Retention,101.0392,%,up,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,Monthly Churn Rate,0.5237,%,down,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,ARPU,7477.8002,USD,up,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,CAC,54614.3726,USD,down,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,LTV,1069510.0081,USD,up,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,LTV to CAC Ratio,19.5829,x,up,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,CAC Payback Period,9.6994,months,down,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,YoY Revenue Growth,91.7095,%,up,omniintelos:model-v1
+2026-03,Growth,OmniIntelOS,Rule of 40,110.8301,%,up,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,ARR,29690077.3345,USD,up,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,MRR,2474173.1112,USD,up,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,Customers,325.6047,count,up,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,New Customers,14.5208,count,up,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,Churned Customers,2.4702,count,down,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,Expansion Revenue,489087.0061,USD,up,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,Contraction Revenue,63361.5229,USD,down,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,Net Revenue Retention,100.7327,%,up,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,Monthly Churn Rate,0.7529,%,down,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,ARPU,7598.7014,USD,up,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,CAC,56813.8681,USD,down,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,LTV,751984.7505,USD,up,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,LTV to CAC Ratio,13.2359,x,up,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,CAC Payback Period,9.9586,months,down,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,YoY Revenue Growth,94.9024,%,up,omniintelos:model-v1
+2026-04,Growth,OmniIntelOS,Rule of 40,113.2746,%,up,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,ARR,31436249.3296,USD,up,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,MRR,2619687.4441,USD,up,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,Customers,339.8413,count,up,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,New Customers,16.1629,count,up,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,Churned Customers,1.9263,count,down,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,Expansion Revenue,783423.6953,USD,up,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,Contraction Revenue,63060.1134,USD,down,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,Net Revenue Retention,101.8452,%,up,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,Monthly Churn Rate,0.5636,%,down,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,ARPU,7708.5603,USD,up,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,CAC,56864.3258,USD,down,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,LTV,1019073.6835,USD,up,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,LTV to CAC Ratio,17.9211,x,up,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,CAC Payback Period,9.8443,months,down,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,YoY Revenue Growth,99.1676,%,up,omniintelos:model-v1
+2026-05,Growth,OmniIntelOS,Rule of 40,119.2472,%,up,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,ARR,33290972.5873,USD,up,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,MRR,2774247.7156,USD,up,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,Customers,352.2881,count,up,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,New Customers,14.966,count,up,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,Churned Customers,2.5192,count,down,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,Expansion Revenue,666775.8823,USD,up,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,Contraction Revenue,98748.2812,USD,down,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,Net Revenue Retention,101.0691,%,up,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,Monthly Churn Rate,0.71,%,down,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,ARPU,7874.9413,USD,up,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,CAC,61534.0089,USD,down,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,LTV,841517.0001,USD,up,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,LTV to CAC Ratio,13.6756,x,up,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,CAC Payback Period,10.2254,months,down,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,YoY Revenue Growth,103.3328,%,up,omniintelos:model-v1
+2026-06,Growth,OmniIntelOS,Rule of 40,125.4241,%,up,omniintelos:model-v1

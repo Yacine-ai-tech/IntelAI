@@ -1,0 +1,1093 @@
+period,category,segment,metric_name,value,unit,direction,source
+2020-01,People,OmniIntelOS,Headcount,27.9667,count,up,omniintelos:model-v1
+2020-01,People,OmniIntelOS,New Hires,0.2933,count,up,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Separations,0.3266,count,down,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Annual Employee Turnover,14.0134,%,down,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Time to Hire,32.5219,days,down,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Employee Net Promoter Score,26.128,score,up,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Revenue per Employee,70104.9484,USD,up,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Open Positions,1.1198,count,down,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Offers Extended,1.0,count,up,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Offers Accepted,0.8867,count,up,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Offer Acceptance Rate,88.6671,%,up,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Training Hours per Employee,8.3201,hours,up,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Absenteeism Rate,2.655,%,down,omniintelos:model-v1
+2020-01,People,OmniIntelOS,Cost Per Hire,2916.8488,USD,down,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Headcount,28.2777,count,up,omniintelos:model-v1
+2020-02,People,OmniIntelOS,New Hires,0.5478,count,up,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Separations,0.2368,count,down,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Annual Employee Turnover,10.049,%,down,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Time to Hire,36.4925,days,down,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Employee Net Promoter Score,31.0431,score,up,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Revenue per Employee,68841.9887,USD,up,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Open Positions,1.3474,count,down,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Offers Extended,1.0,count,up,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Offers Accepted,0.8894,count,up,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Offer Acceptance Rate,88.9425,%,up,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Training Hours per Employee,9.6181,hours,up,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Absenteeism Rate,3.16,%,down,omniintelos:model-v1
+2020-02,People,OmniIntelOS,Cost Per Hire,2969.3799,USD,down,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Headcount,28.836,count,up,omniintelos:model-v1
+2020-03,People,OmniIntelOS,New Hires,0.8763,count,up,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Separations,0.318,count,down,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Annual Employee Turnover,13.2333,%,down,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Time to Hire,29.8584,days,down,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Employee Net Promoter Score,27.9439,score,up,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Revenue per Employee,72132.7775,USD,up,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Open Positions,2.0183,count,down,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Offers Extended,1.0953,count,up,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Offers Accepted,0.9629,count,up,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Offer Acceptance Rate,87.9047,%,up,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Training Hours per Employee,9.1617,hours,up,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Absenteeism Rate,2.8776,%,down,omniintelos:model-v1
+2020-03,People,OmniIntelOS,Cost Per Hire,3082.0005,USD,down,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Headcount,30.1485,count,up,omniintelos:model-v1
+2020-04,People,OmniIntelOS,New Hires,1.6085,count,up,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Separations,0.296,count,down,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Annual Employee Turnover,11.7805,%,down,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Time to Hire,35.814,days,down,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Employee Net Promoter Score,27.4958,score,up,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Revenue per Employee,72709.781,USD,up,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Open Positions,2.0667,count,down,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Offers Extended,2.0106,count,up,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Offers Accepted,1.4861,count,up,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Offer Acceptance Rate,73.915,%,up,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Training Hours per Employee,7.4675,hours,up,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Absenteeism Rate,3.2347,%,down,omniintelos:model-v1
+2020-04,People,OmniIntelOS,Cost Per Hire,3492.5414,USD,down,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Headcount,31.0661,count,up,omniintelos:model-v1
+2020-05,People,OmniIntelOS,New Hires,1.2269,count,up,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Separations,0.3093,count,down,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Annual Employee Turnover,11.9485,%,down,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Time to Hire,33.3517,days,down,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Employee Net Promoter Score,27.2437,score,up,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Revenue per Employee,67206.1764,USD,up,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Open Positions,2.3289,count,down,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Offers Extended,1.5336,count,up,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Offers Accepted,1.2036,count,up,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Offer Acceptance Rate,78.4839,%,up,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Training Hours per Employee,7.6262,hours,up,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Absenteeism Rate,3.4609,%,down,omniintelos:model-v1
+2020-05,People,OmniIntelOS,Cost Per Hire,3215.3903,USD,down,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Headcount,31.1393,count,up,omniintelos:model-v1
+2020-06,People,OmniIntelOS,New Hires,0.3933,count,up,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Separations,0.3201,count,down,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Annual Employee Turnover,12.3343,%,down,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Time to Hire,36.4309,days,down,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Employee Net Promoter Score,27.2647,score,up,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Revenue per Employee,71418.4386,USD,up,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Open Positions,1.1714,count,down,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Offers Extended,1.0,count,up,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Offers Accepted,0.7772,count,up,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Offer Acceptance Rate,77.7172,%,up,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Training Hours per Employee,7.5586,hours,up,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Absenteeism Rate,3.2281,%,down,omniintelos:model-v1
+2020-06,People,OmniIntelOS,Cost Per Hire,3391.6698,USD,down,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Headcount,32.5898,count,up,omniintelos:model-v1
+2020-07,People,OmniIntelOS,New Hires,1.881,count,up,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Separations,0.4305,count,down,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Annual Employee Turnover,15.8514,%,down,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Time to Hire,35.9221,days,down,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Employee Net Promoter Score,25.4398,score,up,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Revenue per Employee,68089.2743,USD,up,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Open Positions,3.4258,count,down,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Offers Extended,2.3512,count,up,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Offers Accepted,1.8586,count,up,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Offer Acceptance Rate,79.0498,%,up,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Training Hours per Employee,8.1821,hours,up,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Absenteeism Rate,3.0507,%,down,omniintelos:model-v1
+2020-07,People,OmniIntelOS,Cost Per Hire,3207.4398,USD,down,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Headcount,33.0184,count,up,omniintelos:model-v1
+2020-08,People,OmniIntelOS,New Hires,0.7455,count,up,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Separations,0.3169,count,down,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Annual Employee Turnover,11.5156,%,down,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Time to Hire,33.5715,days,down,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Employee Net Promoter Score,26.7644,score,up,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Revenue per Employee,64059.2103,USD,up,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Open Positions,1.0,count,down,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Offers Extended,1.0,count,up,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Offers Accepted,0.7352,count,up,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Offer Acceptance Rate,73.5156,%,up,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Training Hours per Employee,9.1658,hours,up,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Absenteeism Rate,3.4029,%,down,omniintelos:model-v1
+2020-08,People,OmniIntelOS,Cost Per Hire,3087.1076,USD,down,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Headcount,34.406,count,up,omniintelos:model-v1
+2020-09,People,OmniIntelOS,New Hires,1.8086,count,up,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Separations,0.421,count,down,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Annual Employee Turnover,14.683,%,down,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Time to Hire,33.8059,days,down,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Employee Net Promoter Score,24.2915,score,up,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Revenue per Employee,63745.3573,USD,up,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Open Positions,2.5115,count,down,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Offers Extended,2.2607,count,up,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Offers Accepted,1.7185,count,up,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Offer Acceptance Rate,76.0156,%,up,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Training Hours per Employee,8.4465,hours,up,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Absenteeism Rate,3.0432,%,down,omniintelos:model-v1
+2020-09,People,OmniIntelOS,Cost Per Hire,3232.2814,USD,down,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Headcount,35.4527,count,up,omniintelos:model-v1
+2020-10,People,OmniIntelOS,New Hires,1.3381,count,up,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Separations,0.2914,count,down,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Annual Employee Turnover,9.8625,%,down,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Time to Hire,35.498,days,down,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Employee Net Promoter Score,28.2006,score,up,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Revenue per Employee,65860.6022,USD,up,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Open Positions,1.5772,count,down,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Offers Extended,1.6726,count,up,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Offers Accepted,1.5136,count,up,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Offer Acceptance Rate,90.4919,%,up,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Training Hours per Employee,9.0251,hours,up,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Absenteeism Rate,2.6814,%,down,omniintelos:model-v1
+2020-10,People,OmniIntelOS,Cost Per Hire,3057.261,USD,down,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Headcount,36.9092,count,up,omniintelos:model-v1
+2020-11,People,OmniIntelOS,New Hires,1.7427,count,up,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Separations,0.2863,count,down,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Annual Employee Turnover,9.3074,%,down,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Time to Hire,33.3062,days,down,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Employee Net Promoter Score,31.219,score,up,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Revenue per Employee,63272.5824,USD,up,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Open Positions,4.0476,count,down,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Offers Extended,2.1784,count,up,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Offers Accepted,2.0913,count,up,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Training Hours per Employee,9.429,hours,up,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Absenteeism Rate,2.4709,%,down,omniintelos:model-v1
+2020-11,People,OmniIntelOS,Cost Per Hire,3082.6315,USD,down,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Headcount,38.0989,count,up,omniintelos:model-v1
+2020-12,People,OmniIntelOS,New Hires,1.5149,count,up,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Separations,0.3252,count,down,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Annual Employee Turnover,10.244,%,down,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Time to Hire,31.4622,days,down,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Employee Net Promoter Score,31.4506,score,up,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Revenue per Employee,68000.907,USD,up,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Open Positions,2.3329,count,down,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Offers Extended,1.8937,count,up,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Offers Accepted,1.6967,count,up,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Offer Acceptance Rate,89.5984,%,up,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Training Hours per Employee,10.9368,hours,up,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Absenteeism Rate,2.5793,%,down,omniintelos:model-v1
+2020-12,People,OmniIntelOS,Cost Per Hire,3001.0587,USD,down,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Headcount,39.7779,count,up,omniintelos:model-v1
+2021-01,People,OmniIntelOS,New Hires,2.0234,count,up,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Separations,0.3444,count,down,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Annual Employee Turnover,10.3897,%,down,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Time to Hire,34.5782,days,down,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Employee Net Promoter Score,26.4445,score,up,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Revenue per Employee,63859.9154,USD,up,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Open Positions,4.1681,count,down,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Offers Extended,2.5293,count,up,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Offers Accepted,2.2634,count,up,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Offer Acceptance Rate,89.4885,%,up,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Training Hours per Employee,9.9922,hours,up,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Absenteeism Rate,2.6501,%,down,omniintelos:model-v1
+2021-01,People,OmniIntelOS,Cost Per Hire,2852.1307,USD,down,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Headcount,40.9885,count,up,omniintelos:model-v1
+2021-02,People,OmniIntelOS,New Hires,1.6073,count,up,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Separations,0.3966,count,down,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Annual Employee Turnover,11.6121,%,down,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Time to Hire,31.8457,days,down,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Employee Net Promoter Score,32.462,score,up,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Revenue per Employee,69522.8862,USD,up,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Open Positions,2.3169,count,down,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Offers Extended,2.0091,count,up,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Offers Accepted,1.8868,count,up,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Offer Acceptance Rate,93.9138,%,up,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Training Hours per Employee,9.1235,hours,up,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Absenteeism Rate,2.7085,%,down,omniintelos:model-v1
+2021-02,People,OmniIntelOS,Cost Per Hire,2888.4008,USD,down,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Headcount,43.184,count,up,omniintelos:model-v1
+2021-03,People,OmniIntelOS,New Hires,2.6143,count,up,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Separations,0.4189,count,down,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Annual Employee Turnover,11.6394,%,down,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Time to Hire,35.4312,days,down,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Employee Net Promoter Score,27.8549,score,up,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Revenue per Employee,70032.7427,USD,up,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Open Positions,5.348,count,down,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Offers Extended,3.2679,count,up,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Offers Accepted,3.0889,count,up,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Offer Acceptance Rate,94.5231,%,up,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Training Hours per Employee,10.2431,hours,up,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Absenteeism Rate,2.5008,%,down,omniintelos:model-v1
+2021-03,People,OmniIntelOS,Cost Per Hire,3001.4293,USD,down,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Headcount,44.1017,count,up,omniintelos:model-v1
+2021-04,People,OmniIntelOS,New Hires,1.39,count,up,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Separations,0.4722,count,down,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Annual Employee Turnover,12.8495,%,down,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Time to Hire,30.9324,days,down,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Employee Net Promoter Score,33.1104,score,up,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Revenue per Employee,70769.736,USD,up,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Open Positions,2.993,count,down,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Offers Extended,1.7375,count,up,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Offers Accepted,1.6016,count,up,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Offer Acceptance Rate,92.1793,%,up,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Training Hours per Employee,8.8506,hours,up,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Absenteeism Rate,3.0921,%,down,omniintelos:model-v1
+2021-04,People,OmniIntelOS,Cost Per Hire,3251.5735,USD,down,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Headcount,45.9532,count,up,omniintelos:model-v1
+2021-05,People,OmniIntelOS,New Hires,2.3274,count,up,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Separations,0.476,count,down,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Annual Employee Turnover,12.4296,%,down,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Time to Hire,32.6459,days,down,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Employee Net Promoter Score,26.3613,score,up,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Revenue per Employee,71337.9673,USD,up,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Open Positions,3.7813,count,down,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Offers Extended,2.9093,count,up,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Offers Accepted,2.7906,count,up,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Offer Acceptance Rate,95.9203,%,up,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Training Hours per Employee,9.9499,hours,up,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Absenteeism Rate,2.5923,%,down,omniintelos:model-v1
+2021-05,People,OmniIntelOS,Cost Per Hire,2905.3342,USD,down,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Headcount,48.4517,count,up,omniintelos:model-v1
+2021-06,People,OmniIntelOS,New Hires,2.9857,count,up,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Separations,0.4873,count,down,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Annual Employee Turnover,12.0679,%,down,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Time to Hire,33.1807,days,down,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Employee Net Promoter Score,26.1749,score,up,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Revenue per Employee,70456.4256,USD,up,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Open Positions,5.9901,count,down,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Offers Extended,3.7322,count,up,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Offers Accepted,3.4804,count,up,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Offer Acceptance Rate,93.2533,%,up,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Training Hours per Employee,9.4666,hours,up,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Absenteeism Rate,2.6495,%,down,omniintelos:model-v1
+2021-06,People,OmniIntelOS,Cost Per Hire,3118.3065,USD,down,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Headcount,50.3973,count,up,omniintelos:model-v1
+2021-07,People,OmniIntelOS,New Hires,2.4475,count,up,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Separations,0.5019,count,down,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Annual Employee Turnover,11.9511,%,down,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Time to Hire,36.4753,days,down,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Employee Net Promoter Score,27.0472,score,up,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Revenue per Employee,70991.9713,USD,up,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Open Positions,2.9367,count,down,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Offers Extended,3.0594,count,up,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Offers Accepted,2.5611,count,up,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Offer Acceptance Rate,83.7127,%,up,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Training Hours per Employee,10.039,hours,up,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Absenteeism Rate,3.2398,%,down,omniintelos:model-v1
+2021-07,People,OmniIntelOS,Cost Per Hire,3062.5763,USD,down,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Headcount,52.7868,count,up,omniintelos:model-v1
+2021-08,People,OmniIntelOS,New Hires,2.9206,count,up,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Separations,0.5311,count,down,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Annual Employee Turnover,12.0737,%,down,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Time to Hire,35.048,days,down,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Employee Net Promoter Score,24.5467,score,up,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Revenue per Employee,77529.5976,USD,up,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Open Positions,4.1957,count,down,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Offers Extended,3.6508,count,up,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Offers Accepted,2.9465,count,up,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Offer Acceptance Rate,80.7102,%,up,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Training Hours per Employee,8.6258,hours,up,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Absenteeism Rate,3.3507,%,down,omniintelos:model-v1
+2021-08,People,OmniIntelOS,Cost Per Hire,3316.4394,USD,down,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Headcount,54.7612,count,up,omniintelos:model-v1
+2021-09,People,OmniIntelOS,New Hires,2.4602,count,up,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Separations,0.4858,count,down,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Annual Employee Turnover,10.6462,%,down,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Time to Hire,30.5179,days,down,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Employee Net Promoter Score,29.8953,score,up,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Revenue per Employee,76545.9381,USD,up,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Open Positions,2.8795,count,down,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Offers Extended,3.0753,count,up,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Offers Accepted,2.5618,count,up,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Offer Acceptance Rate,83.3027,%,up,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Training Hours per Employee,8.1113,hours,up,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Absenteeism Rate,3.2343,%,down,omniintelos:model-v1
+2021-09,People,OmniIntelOS,Cost Per Hire,3006.8509,USD,down,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Headcount,56.4049,count,up,omniintelos:model-v1
+2021-10,People,OmniIntelOS,New Hires,2.1491,count,up,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Separations,0.5054,count,down,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Annual Employee Turnover,10.752,%,down,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Time to Hire,32.7875,days,down,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Employee Net Promoter Score,23.1113,score,up,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Revenue per Employee,83199.2749,USD,up,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Open Positions,4.1513,count,down,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Offers Extended,2.6864,count,up,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Offers Accepted,2.3006,count,up,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Offer Acceptance Rate,85.6371,%,up,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Training Hours per Employee,7.8811,hours,up,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Absenteeism Rate,2.6453,%,down,omniintelos:model-v1
+2021-10,People,OmniIntelOS,Cost Per Hire,3311.1707,USD,down,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Headcount,58.1227,count,up,omniintelos:model-v1
+2021-11,People,OmniIntelOS,New Hires,2.3313,count,up,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Separations,0.6135,count,down,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Annual Employee Turnover,12.6662,%,down,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Time to Hire,31.6424,days,down,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Employee Net Promoter Score,26.8808,score,up,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Revenue per Employee,83250.8782,USD,up,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Open Positions,3.5503,count,down,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Offers Extended,2.9141,count,up,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Offers Accepted,2.5464,count,up,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Offer Acceptance Rate,87.3839,%,up,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Training Hours per Employee,8.6465,hours,up,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Absenteeism Rate,3.3123,%,down,omniintelos:model-v1
+2021-11,People,OmniIntelOS,Cost Per Hire,3173.6426,USD,down,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Headcount,60.0981,count,up,omniintelos:model-v1
+2021-12,People,OmniIntelOS,New Hires,2.6813,count,up,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Separations,0.7059,count,down,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Annual Employee Turnover,14.0941,%,down,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Time to Hire,32.5519,days,down,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Employee Net Promoter Score,27.9698,score,up,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Revenue per Employee,86825.1355,USD,up,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Open Positions,3.7766,count,down,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Offers Extended,3.3516,count,up,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Offers Accepted,2.7561,count,up,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Offer Acceptance Rate,82.2304,%,up,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Training Hours per Employee,8.0723,hours,up,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Absenteeism Rate,3.0527,%,down,omniintelos:model-v1
+2021-12,People,OmniIntelOS,Cost Per Hire,3247.3674,USD,down,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Headcount,62.6845,count,up,omniintelos:model-v1
+2022-01,People,OmniIntelOS,New Hires,3.1919,count,up,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Separations,0.6056,count,down,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Annual Employee Turnover,11.5928,%,down,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Time to Hire,35.1419,days,down,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Employee Net Promoter Score,26.8279,score,up,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Revenue per Employee,77280.7718,USD,up,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Open Positions,4.2418,count,down,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Offers Extended,3.9899,count,up,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Offers Accepted,3.226,count,up,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Offer Acceptance Rate,80.8559,%,up,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Training Hours per Employee,9.7177,hours,up,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Absenteeism Rate,3.3095,%,down,omniintelos:model-v1
+2022-01,People,OmniIntelOS,Cost Per Hire,3257.3245,USD,down,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Headcount,64.4567,count,up,omniintelos:model-v1
+2022-02,People,OmniIntelOS,New Hires,2.5252,count,up,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Separations,0.753,count,down,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Annual Employee Turnover,14.019,%,down,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Time to Hire,32.4481,days,down,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Employee Net Promoter Score,30.1311,score,up,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Revenue per Employee,79440.0532,USD,up,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Open Positions,4.8801,count,down,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Offers Extended,3.1566,count,up,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Offers Accepted,2.6002,count,up,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Offer Acceptance Rate,82.3745,%,up,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Training Hours per Employee,9.4038,hours,up,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Absenteeism Rate,3.0958,%,down,omniintelos:model-v1
+2022-02,People,OmniIntelOS,Cost Per Hire,3313.089,USD,down,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Headcount,67.6026,count,up,omniintelos:model-v1
+2022-03,People,OmniIntelOS,New Hires,3.7403,count,up,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Separations,0.5944,count,down,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Annual Employee Turnover,10.5511,%,down,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Time to Hire,33.7821,days,down,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Employee Net Promoter Score,28.7019,score,up,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Revenue per Employee,81431.625,USD,up,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Open Positions,5.7116,count,down,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Offers Extended,4.6754,count,up,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Offers Accepted,4.0168,count,up,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Offer Acceptance Rate,85.9123,%,up,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Training Hours per Employee,10.0301,hours,up,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Absenteeism Rate,2.9345,%,down,omniintelos:model-v1
+2022-03,People,OmniIntelOS,Cost Per Hire,3129.3443,USD,down,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Headcount,68.378,count,up,omniintelos:model-v1
+2022-04,People,OmniIntelOS,New Hires,2.4534,count,up,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Separations,1.6781,count,down,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Annual Employee Turnover,29.4495,%,down,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Time to Hire,51.9865,days,down,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Employee Net Promoter Score,9.9576,score,up,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Revenue per Employee,87570.4214,USD,up,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Open Positions,3.7965,count,down,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Offers Extended,3.0668,count,up,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Offers Accepted,1.5947,count,up,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Offer Acceptance Rate,52.0,%,up,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Training Hours per Employee,3.107,hours,up,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Absenteeism Rate,4.6378,%,down,omniintelos:model-v1
+2022-04,People,OmniIntelOS,Cost Per Hire,4391.9013,USD,down,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Headcount,70.4932,count,up,omniintelos:model-v1
+2022-05,People,OmniIntelOS,New Hires,3.8294,count,up,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Separations,1.7142,count,down,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Annual Employee Turnover,29.1799,%,down,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Time to Hire,53.1811,days,down,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Employee Net Promoter Score,11.1029,score,up,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Revenue per Employee,88305.3893,USD,up,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Open Positions,5.8782,count,down,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Offers Extended,4.7868,count,up,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Offers Accepted,2.4891,count,up,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Offer Acceptance Rate,52.0,%,up,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Training Hours per Employee,3.5336,hours,up,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Absenteeism Rate,4.0514,%,down,omniintelos:model-v1
+2022-05,People,OmniIntelOS,Cost Per Hire,4414.8394,USD,down,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Headcount,72.3825,count,up,omniintelos:model-v1
+2022-06,People,OmniIntelOS,New Hires,3.788,count,up,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Separations,1.8987,count,down,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Annual Employee Turnover,31.4776,%,down,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Time to Hire,53.4217,days,down,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Employee Net Promoter Score,12.3283,score,up,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Revenue per Employee,87160.8803,USD,up,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Open Positions,7.3589,count,down,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Offers Extended,4.735,count,up,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Offers Accepted,2.4622,count,up,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Offer Acceptance Rate,52.0,%,up,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Training Hours per Employee,3.6872,hours,up,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Absenteeism Rate,4.7751,%,down,omniintelos:model-v1
+2022-06,People,OmniIntelOS,Cost Per Hire,4502.6164,USD,down,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Headcount,75.1213,count,up,omniintelos:model-v1
+2022-07,People,OmniIntelOS,New Hires,4.5259,count,up,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Separations,1.7871,count,down,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Annual Employee Turnover,28.5482,%,down,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Time to Hire,53.5739,days,down,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Employee Net Promoter Score,9.4948,score,up,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Revenue per Employee,89900.2757,USD,up,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Open Positions,7.9539,count,down,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Offers Extended,5.6573,count,up,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Offers Accepted,2.9418,count,up,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Offer Acceptance Rate,52.0,%,up,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Training Hours per Employee,4.8393,hours,up,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Absenteeism Rate,4.3903,%,down,omniintelos:model-v1
+2022-07,People,OmniIntelOS,Cost Per Hire,4290.5706,USD,down,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Headcount,77.9592,count,up,omniintelos:model-v1
+2022-08,People,OmniIntelOS,New Hires,4.5095,count,up,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Separations,1.6716,count,down,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Annual Employee Turnover,25.7305,%,down,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Time to Hire,51.198,days,down,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Employee Net Promoter Score,8.5615,score,up,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Revenue per Employee,89015.7089,USD,up,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Open Positions,8.1906,count,down,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Offers Extended,5.6369,count,up,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Offers Accepted,2.9312,count,up,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Offer Acceptance Rate,52.0,%,up,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Training Hours per Employee,5.1444,hours,up,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Absenteeism Rate,4.4066,%,down,omniintelos:model-v1
+2022-08,People,OmniIntelOS,Cost Per Hire,4439.9045,USD,down,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Headcount,81.0689,count,up,omniintelos:model-v1
+2022-09,People,OmniIntelOS,New Hires,4.6108,count,up,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Separations,1.5011,count,down,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Annual Employee Turnover,22.2196,%,down,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Time to Hire,57.4102,days,down,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Employee Net Promoter Score,10.2366,score,up,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Revenue per Employee,85643.1649,USD,up,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Open Positions,7.0921,count,down,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Offers Extended,5.7635,count,up,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Offers Accepted,2.997,count,up,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Offer Acceptance Rate,52.0,%,up,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Training Hours per Employee,3.8492,hours,up,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Absenteeism Rate,4.4783,%,down,omniintelos:model-v1
+2022-09,People,OmniIntelOS,Cost Per Hire,4493.6799,USD,down,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Headcount,83.3883,count,up,omniintelos:model-v1
+2022-10,People,OmniIntelOS,New Hires,4.1795,count,up,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Separations,1.86,count,down,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Annual Employee Turnover,26.7667,%,down,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Time to Hire,56.6915,days,down,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Employee Net Promoter Score,7.4825,score,up,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Revenue per Employee,88276.7755,USD,up,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Open Positions,6.6974,count,down,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Offers Extended,5.2243,count,up,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Offers Accepted,2.7167,count,up,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Offer Acceptance Rate,52.0,%,up,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Training Hours per Employee,5.2668,hours,up,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Absenteeism Rate,4.7784,%,down,omniintelos:model-v1
+2022-10,People,OmniIntelOS,Cost Per Hire,4499.4909,USD,down,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Headcount,87.568,count,up,omniintelos:model-v1
+2022-11,People,OmniIntelOS,New Hires,5.9681,count,up,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Separations,1.7884,count,down,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Annual Employee Turnover,24.5082,%,down,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Time to Hire,52.7205,days,down,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Employee Net Promoter Score,7.0173,score,up,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Revenue per Employee,83230.3901,USD,up,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Open Positions,8.8692,count,down,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Offers Extended,7.4602,count,up,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Offers Accepted,3.8793,count,up,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Offer Acceptance Rate,52.0,%,up,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Training Hours per Employee,4.4378,hours,up,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Absenteeism Rate,4.4416,%,down,omniintelos:model-v1
+2022-11,People,OmniIntelOS,Cost Per Hire,4456.0085,USD,down,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Headcount,89.9361,count,up,omniintelos:model-v1
+2022-12,People,OmniIntelOS,New Hires,4.3263,count,up,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Separations,1.9582,count,down,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Annual Employee Turnover,26.1277,%,down,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Time to Hire,51.1929,days,down,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Employee Net Promoter Score,6.5877,score,up,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Revenue per Employee,87920.385,USD,up,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Open Positions,6.5523,count,down,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Offers Extended,5.4078,count,up,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Offers Accepted,2.8121,count,up,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Offer Acceptance Rate,52.0,%,up,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Training Hours per Employee,4.4915,hours,up,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Absenteeism Rate,4.5257,%,down,omniintelos:model-v1
+2022-12,People,OmniIntelOS,Cost Per Hire,4303.056,USD,down,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Headcount,93.5758,count,up,omniintelos:model-v1
+2023-01,People,OmniIntelOS,New Hires,5.1661,count,up,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Separations,1.5264,count,down,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Annual Employee Turnover,19.5744,%,down,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Time to Hire,43.3023,days,down,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Employee Net Promoter Score,15.7464,score,up,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Revenue per Employee,86789.7995,USD,up,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Open Positions,7.8267,count,down,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Offers Extended,6.4576,count,up,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Offers Accepted,3.4581,count,up,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Offer Acceptance Rate,53.5503,%,up,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Training Hours per Employee,6.5227,hours,up,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Absenteeism Rate,3.6239,%,down,omniintelos:model-v1
+2023-01,People,OmniIntelOS,Cost Per Hire,3626.5069,USD,down,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Headcount,97.1438,count,up,omniintelos:model-v1
+2023-02,People,OmniIntelOS,New Hires,4.8775,count,up,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Separations,1.3094,count,down,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Annual Employee Turnover,16.1745,%,down,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Time to Hire,43.609,days,down,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Employee Net Promoter Score,12.631,score,up,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Revenue per Employee,81126.7284,USD,up,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Open Positions,8.6091,count,down,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Offers Extended,6.0968,count,up,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Offers Accepted,3.4024,count,up,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Offer Acceptance Rate,55.8067,%,up,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Training Hours per Employee,4.7616,hours,up,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Absenteeism Rate,3.381,%,down,omniintelos:model-v1
+2023-02,People,OmniIntelOS,Cost Per Hire,3628.9187,USD,down,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Headcount,100.8119,count,up,omniintelos:model-v1
+2023-03,People,OmniIntelOS,New Hires,5.1992,count,up,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Separations,1.5312,count,down,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Annual Employee Turnover,18.2264,%,down,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Time to Hire,47.1236,days,down,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Employee Net Promoter Score,11.8831,score,up,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Revenue per Employee,78014.5503,USD,up,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Open Positions,9.503,count,down,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Offers Extended,6.499,count,up,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Offers Accepted,3.5799,count,up,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Offer Acceptance Rate,55.0829,%,up,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Training Hours per Employee,5.3281,hours,up,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Absenteeism Rate,3.3014,%,down,omniintelos:model-v1
+2023-03,People,OmniIntelOS,Cost Per Hire,3602.9595,USD,down,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Headcount,104.6402,count,up,omniintelos:model-v1
+2023-04,People,OmniIntelOS,New Hires,5.3077,count,up,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Separations,1.4793,count,down,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Annual Employee Turnover,16.9648,%,down,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Time to Hire,41.3898,days,down,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Employee Net Promoter Score,18.6744,score,up,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Revenue per Employee,74787.221,USD,up,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Open Positions,9.7035,count,down,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Offers Extended,6.6346,count,up,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Offers Accepted,3.6447,count,up,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Offer Acceptance Rate,54.9348,%,up,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Training Hours per Employee,5.8171,hours,up,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Absenteeism Rate,3.411,%,down,omniintelos:model-v1
+2023-04,People,OmniIntelOS,Cost Per Hire,3861.0017,USD,down,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Headcount,109.1265,count,up,omniintelos:model-v1
+2023-05,People,OmniIntelOS,New Hires,6.1145,count,up,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Separations,1.6281,count,down,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Annual Employee Turnover,17.9038,%,down,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Time to Hire,45.4709,days,down,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Employee Net Promoter Score,19.2216,score,up,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Revenue per Employee,72024.1,USD,up,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Open Positions,10.6628,count,down,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Offers Extended,7.6431,count,up,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Offers Accepted,4.0113,count,up,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Offer Acceptance Rate,52.4821,%,up,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Training Hours per Employee,6.7194,hours,up,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Absenteeism Rate,3.6512,%,down,omniintelos:model-v1
+2023-05,People,OmniIntelOS,Cost Per Hire,3868.7759,USD,down,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Headcount,114.4159,count,up,omniintelos:model-v1
+2023-06,People,OmniIntelOS,New Hires,6.48,count,up,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Separations,1.1906,count,down,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Annual Employee Turnover,12.4874,%,down,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Time to Hire,37.5078,days,down,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Employee Net Promoter Score,21.0529,score,up,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Revenue per Employee,69476.8414,USD,up,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Open Positions,9.6838,count,down,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Offers Extended,8.1,count,up,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Offers Accepted,6.0084,count,up,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Offer Acceptance Rate,74.1773,%,up,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Training Hours per Employee,8.5413,hours,up,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Absenteeism Rate,2.8489,%,down,omniintelos:model-v1
+2023-06,People,OmniIntelOS,Cost Per Hire,3355.3625,USD,down,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Headcount,119.8453,count,up,omniintelos:model-v1
+2023-07,People,OmniIntelOS,New Hires,6.6953,count,up,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Separations,1.2658,count,down,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Annual Employee Turnover,12.6747,%,down,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Time to Hire,38.562,days,down,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Employee Net Promoter Score,22.3598,score,up,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Revenue per Employee,67248.0411,USD,up,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Open Positions,10.4842,count,down,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Offers Extended,8.3691,count,up,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Offers Accepted,6.0565,count,up,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Offer Acceptance Rate,72.3676,%,up,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Training Hours per Employee,8.6587,hours,up,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Absenteeism Rate,3.1079,%,down,omniintelos:model-v1
+2023-07,People,OmniIntelOS,Cost Per Hire,3315.0921,USD,down,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Headcount,123.4481,count,up,omniintelos:model-v1
+2023-08,People,OmniIntelOS,New Hires,5.2532,count,up,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Separations,1.6504,count,down,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Annual Employee Turnover,16.0431,%,down,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Time to Hire,38.6195,days,down,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Employee Net Promoter Score,23.1944,score,up,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Revenue per Employee,70315.0591,USD,up,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Open Positions,7.9314,count,down,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Offers Extended,6.5665,count,up,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Offers Accepted,5.0083,count,up,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Offer Acceptance Rate,76.2699,%,up,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Training Hours per Employee,7.0335,hours,up,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Absenteeism Rate,2.9904,%,down,omniintelos:model-v1
+2023-08,People,OmniIntelOS,Cost Per Hire,3321.4075,USD,down,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Headcount,127.6507,count,up,omniintelos:model-v1
+2023-09,People,OmniIntelOS,New Hires,5.6615,count,up,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Separations,1.4589,count,down,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Annual Employee Turnover,13.7144,%,down,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Time to Hire,37.9326,days,down,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Employee Net Promoter Score,20.5765,score,up,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Revenue per Employee,67226.5564,USD,up,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Open Positions,8.1868,count,down,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Offers Extended,7.0768,count,up,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Offers Accepted,5.4613,count,up,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Offer Acceptance Rate,77.1717,%,up,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Training Hours per Employee,8.8745,hours,up,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Absenteeism Rate,3.3274,%,down,omniintelos:model-v1
+2023-09,People,OmniIntelOS,Cost Per Hire,3536.7516,USD,down,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Headcount,133.1277,count,up,omniintelos:model-v1
+2023-10,People,OmniIntelOS,New Hires,7.092,count,up,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Separations,1.615,count,down,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Annual Employee Turnover,14.5575,%,down,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Time to Hire,37.6544,days,down,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Employee Net Promoter Score,24.4543,score,up,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Revenue per Employee,67687.1415,USD,up,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Open Positions,10.8626,count,down,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Offers Extended,8.865,count,up,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Offers Accepted,6.5267,count,up,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Offer Acceptance Rate,73.6227,%,up,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Training Hours per Employee,8.0372,hours,up,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Absenteeism Rate,2.8906,%,down,omniintelos:model-v1
+2023-10,People,OmniIntelOS,Cost Per Hire,3368.4217,USD,down,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Headcount,137.7103,count,up,omniintelos:model-v1
+2023-11,People,OmniIntelOS,New Hires,5.9592,count,up,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Separations,1.3767,count,down,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Annual Employee Turnover,11.9962,%,down,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Time to Hire,36.84,days,down,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Employee Net Promoter Score,24.097,score,up,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Revenue per Employee,68056.8225,USD,up,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Open Positions,9.4649,count,down,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Offers Extended,7.449,count,up,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Offers Accepted,5.465,count,up,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Offer Acceptance Rate,73.3644,%,up,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Training Hours per Employee,8.114,hours,up,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Absenteeism Rate,2.8534,%,down,omniintelos:model-v1
+2023-11,People,OmniIntelOS,Cost Per Hire,3291.2998,USD,down,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Headcount,141.8415,count,up,omniintelos:model-v1
+2023-12,People,OmniIntelOS,New Hires,5.925,count,up,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Separations,1.7938,count,down,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Annual Employee Turnover,15.1754,%,down,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Time to Hire,33.4437,days,down,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Employee Net Promoter Score,21.4397,score,up,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Revenue per Employee,66613.9789,USD,up,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Open Positions,10.0098,count,down,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Offers Extended,7.4062,count,up,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Offers Accepted,5.3484,count,up,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Offer Acceptance Rate,72.2156,%,up,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Training Hours per Employee,7.9087,hours,up,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Absenteeism Rate,3.2802,%,down,omniintelos:model-v1
+2023-12,People,OmniIntelOS,Cost Per Hire,3135.3836,USD,down,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Headcount,147.925,count,up,omniintelos:model-v1
+2024-01,People,OmniIntelOS,New Hires,7.6971,count,up,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Separations,1.6137,count,down,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Annual Employee Turnover,13.0906,%,down,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Time to Hire,30.1371,days,down,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Employee Net Promoter Score,28.0271,score,up,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Revenue per Employee,63754.4352,USD,up,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Open Positions,11.6266,count,down,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Offers Extended,9.6214,count,up,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Offers Accepted,9.1671,count,up,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Offer Acceptance Rate,95.2784,%,up,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Training Hours per Employee,9.8582,hours,up,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Absenteeism Rate,2.7064,%,down,omniintelos:model-v1
+2024-01,People,OmniIntelOS,Cost Per Hire,3200.3456,USD,down,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Headcount,152.7248,count,up,omniintelos:model-v1
+2024-02,People,OmniIntelOS,New Hires,6.3765,count,up,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Separations,1.5766,count,down,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Annual Employee Turnover,12.3882,%,down,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Time to Hire,35.2841,days,down,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Employee Net Promoter Score,31.6419,score,up,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Revenue per Employee,64890.7662,USD,up,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Open Positions,10.7414,count,down,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Offers Extended,7.9707,count,up,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Offers Accepted,7.651,count,up,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Offer Acceptance Rate,95.9899,%,up,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Training Hours per Employee,10.2377,hours,up,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Absenteeism Rate,2.9679,%,down,omniintelos:model-v1
+2024-02,People,OmniIntelOS,Cost Per Hire,3185.3797,USD,down,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Headcount,159.2402,count,up,omniintelos:model-v1
+2024-03,People,OmniIntelOS,New Hires,7.8111,count,up,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Separations,1.2957,count,down,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Annual Employee Turnover,9.7642,%,down,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Time to Hire,29.1809,days,down,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Employee Net Promoter Score,30.6419,score,up,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Revenue per Employee,64538.9183,USD,up,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Open Positions,13.936,count,down,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Offers Extended,9.7639,count,up,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Offers Accepted,9.0688,count,up,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Offer Acceptance Rate,92.8809,%,up,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Training Hours per Employee,9.9048,hours,up,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Absenteeism Rate,2.7731,%,down,omniintelos:model-v1
+2024-03,People,OmniIntelOS,Cost Per Hire,3198.5329,USD,down,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Headcount,165.5397,count,up,omniintelos:model-v1
+2024-04,People,OmniIntelOS,New Hires,7.9005,count,up,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Separations,1.6011,count,down,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Annual Employee Turnover,11.6062,%,down,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Time to Hire,29.0631,days,down,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Employee Net Promoter Score,28.9528,score,up,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Revenue per Employee,65668.9155,USD,up,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Open Positions,12.0383,count,down,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Offers Extended,9.8756,count,up,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Offers Accepted,9.205,count,up,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Offer Acceptance Rate,93.2097,%,up,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Training Hours per Employee,8.9804,hours,up,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Absenteeism Rate,2.7261,%,down,omniintelos:model-v1
+2024-04,People,OmniIntelOS,Cost Per Hire,3219.9661,USD,down,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Headcount,171.1527,count,up,omniintelos:model-v1
+2024-05,People,OmniIntelOS,New Hires,7.3556,count,up,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Separations,1.7426,count,down,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Annual Employee Turnover,12.2176,%,down,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Time to Hire,32.8849,days,down,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Employee Net Promoter Score,27.1945,score,up,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Revenue per Employee,64237.3688,USD,up,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Open Positions,12.3759,count,down,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Offers Extended,9.1945,count,up,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Offers Accepted,8.5715,count,up,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Offer Acceptance Rate,93.2237,%,up,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Training Hours per Employee,9.3757,hours,up,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Absenteeism Rate,3.1604,%,down,omniintelos:model-v1
+2024-05,People,OmniIntelOS,Cost Per Hire,2828.8329,USD,down,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Headcount,178.1379,count,up,omniintelos:model-v1
+2024-06,People,OmniIntelOS,New Hires,8.448,count,up,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Separations,1.4628,count,down,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Annual Employee Turnover,9.8538,%,down,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Time to Hire,29.2988,days,down,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Employee Net Promoter Score,26.8074,score,up,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Revenue per Employee,66192.0711,USD,up,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Open Positions,13.5928,count,down,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Offers Extended,10.56,count,up,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Offers Accepted,10.1376,count,up,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Training Hours per Employee,11.0501,hours,up,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Absenteeism Rate,2.5988,%,down,omniintelos:model-v1
+2024-06,People,OmniIntelOS,Cost Per Hire,3236.0071,USD,down,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Headcount,184.6995,count,up,omniintelos:model-v1
+2024-07,People,OmniIntelOS,New Hires,8.3839,count,up,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Separations,1.8222,count,down,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Annual Employee Turnover,11.8392,%,down,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Time to Hire,34.5653,days,down,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Employee Net Promoter Score,30.2733,score,up,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Revenue per Employee,70335.5463,USD,up,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Open Positions,13.5761,count,down,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Offers Extended,10.4798,count,up,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Offers Accepted,9.6864,count,up,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Offer Acceptance Rate,92.4288,%,up,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Training Hours per Employee,10.7347,hours,up,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Absenteeism Rate,2.5808,%,down,omniintelos:model-v1
+2024-07,People,OmniIntelOS,Cost Per Hire,3136.5137,USD,down,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Headcount,190.3126,count,up,omniintelos:model-v1
+2024-08,People,OmniIntelOS,New Hires,7.4526,count,up,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Separations,1.8396,count,down,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Annual Employee Turnover,11.5994,%,down,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Time to Hire,28.9327,days,down,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Employee Net Promoter Score,32.7949,score,up,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Revenue per Employee,71197.1711,USD,up,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Open Positions,12.1845,count,down,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Offers Extended,9.3158,count,up,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Offers Accepted,8.3891,count,up,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Offer Acceptance Rate,90.0522,%,up,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Training Hours per Employee,9.5871,hours,up,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Absenteeism Rate,2.6607,%,down,omniintelos:model-v1
+2024-08,People,OmniIntelOS,Cost Per Hire,2964.7884,USD,down,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Headcount,196.4264,count,up,omniintelos:model-v1
+2024-09,People,OmniIntelOS,New Hires,7.8972,count,up,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Separations,1.7833,count,down,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Annual Employee Turnover,10.8946,%,down,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Time to Hire,31.4235,days,down,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Employee Net Promoter Score,32.9527,score,up,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Revenue per Employee,74540.0083,USD,up,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Open Positions,12.3462,count,down,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Offers Extended,9.8715,count,up,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Offers Accepted,9.4766,count,up,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Training Hours per Employee,10.9852,hours,up,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Absenteeism Rate,2.5172,%,down,omniintelos:model-v1
+2024-09,People,OmniIntelOS,Cost Per Hire,3093.5353,USD,down,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Headcount,203.7073,count,up,omniintelos:model-v1
+2024-10,People,OmniIntelOS,New Hires,9.1244,count,up,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Separations,1.8436,count,down,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Annual Employee Turnover,10.8605,%,down,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Time to Hire,28.4148,days,down,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Employee Net Promoter Score,30.5302,score,up,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Revenue per Employee,73448.3215,USD,up,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Open Positions,15.5822,count,down,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Offers Extended,11.4056,count,up,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Offers Accepted,10.9493,count,up,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Training Hours per Employee,11.3091,hours,up,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Absenteeism Rate,2.9614,%,down,omniintelos:model-v1
+2024-10,People,OmniIntelOS,Cost Per Hire,2804.4809,USD,down,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Headcount,211.2022,count,up,omniintelos:model-v1
+2024-11,People,OmniIntelOS,New Hires,8.9567,count,up,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Separations,1.4617,count,down,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Annual Employee Turnover,8.3053,%,down,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Time to Hire,30.1637,days,down,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Employee Net Promoter Score,37.2791,score,up,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Revenue per Employee,77306.4788,USD,up,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Open Positions,13.7121,count,down,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Offers Extended,11.1959,count,up,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Offers Accepted,10.7481,count,up,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Training Hours per Employee,10.7266,hours,up,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Absenteeism Rate,3.0171,%,down,omniintelos:model-v1
+2024-11,People,OmniIntelOS,Cost Per Hire,2918.2386,USD,down,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Headcount,218.6493,count,up,omniintelos:model-v1
+2024-12,People,OmniIntelOS,New Hires,9.3185,count,up,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Separations,1.8715,count,down,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Annual Employee Turnover,10.2713,%,down,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Time to Hire,30.1478,days,down,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Employee Net Promoter Score,37.1734,score,up,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Revenue per Employee,76526.027,USD,up,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Open Positions,15.575,count,down,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Offers Extended,11.6482,count,up,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Offers Accepted,11.1822,count,up,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Training Hours per Employee,11.083,hours,up,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Absenteeism Rate,2.9663,%,down,omniintelos:model-v1
+2024-12,People,OmniIntelOS,Cost Per Hire,2723.8419,USD,down,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Headcount,226.4199,count,up,omniintelos:model-v1
+2025-01,People,OmniIntelOS,New Hires,9.5757,count,up,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Separations,1.8051,count,down,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Annual Employee Turnover,9.5666,%,down,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Time to Hire,28.7716,days,down,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Employee Net Promoter Score,32.5901,score,up,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Revenue per Employee,79545.2823,USD,up,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Open Positions,15.5798,count,down,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Offers Extended,11.9696,count,up,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Offers Accepted,11.4909,count,up,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Training Hours per Employee,11.7099,hours,up,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Absenteeism Rate,2.7804,%,down,omniintelos:model-v1
+2025-01,People,OmniIntelOS,Cost Per Hire,2970.7907,USD,down,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Headcount,235.3588,count,up,omniintelos:model-v1
+2025-02,People,OmniIntelOS,New Hires,10.9637,count,up,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Separations,2.0248,count,down,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Annual Employee Turnover,10.3236,%,down,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Time to Hire,31.2602,days,down,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Employee Net Promoter Score,30.3341,score,up,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Revenue per Employee,82147.0656,USD,up,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Open Positions,19.218,count,down,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Offers Extended,13.7046,count,up,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Offers Accepted,13.1564,count,up,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Training Hours per Employee,12.3058,hours,up,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Absenteeism Rate,2.5737,%,down,omniintelos:model-v1
+2025-02,People,OmniIntelOS,Cost Per Hire,2827.8534,USD,down,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Headcount,242.3017,count,up,omniintelos:model-v1
+2025-03,People,OmniIntelOS,New Hires,9.5928,count,up,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Separations,2.65,count,down,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Annual Employee Turnover,13.1241,%,down,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Time to Hire,36.1011,days,down,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Employee Net Promoter Score,20.7301,score,up,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Revenue per Employee,85668.3091,USD,up,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Open Positions,15.2465,count,down,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Offers Extended,11.9911,count,up,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Offers Accepted,9.6496,count,up,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Offer Acceptance Rate,80.4733,%,up,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Training Hours per Employee,7.1639,hours,up,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Absenteeism Rate,3.1881,%,down,omniintelos:model-v1
+2025-03,People,OmniIntelOS,Cost Per Hire,3097.9755,USD,down,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Headcount,250.1622,count,up,omniintelos:model-v1
+2025-04,People,OmniIntelOS,New Hires,10.4935,count,up,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Separations,2.633,count,down,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Annual Employee Turnover,12.6302,%,down,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Time to Hire,38.3627,days,down,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Employee Net Promoter Score,26.8402,score,up,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Revenue per Employee,86350.69,USD,up,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Open Positions,18.3405,count,down,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Offers Extended,13.1169,count,up,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Offers Accepted,9.7141,count,up,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Offer Acceptance Rate,74.0583,%,up,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Training Hours per Employee,8.6772,hours,up,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Absenteeism Rate,3.2575,%,down,omniintelos:model-v1
+2025-04,People,OmniIntelOS,Cost Per Hire,3428.9054,USD,down,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Headcount,258.6481,count,up,omniintelos:model-v1
+2025-05,People,OmniIntelOS,New Hires,11.1482,count,up,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Separations,2.6623,count,down,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Annual Employee Turnover,12.352,%,down,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Time to Hire,33.3674,days,down,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Employee Net Promoter Score,25.1841,score,up,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Revenue per Employee,86352.4189,USD,up,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Open Positions,17.5512,count,down,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Offers Extended,13.9353,count,up,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Offers Accepted,10.4751,count,up,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Offer Acceptance Rate,75.1693,%,up,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Training Hours per Employee,7.3777,hours,up,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Absenteeism Rate,2.8707,%,down,omniintelos:model-v1
+2025-05,People,OmniIntelOS,Cost Per Hire,3097.9797,USD,down,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Headcount,267.6183,count,up,omniintelos:model-v1
+2025-06,People,OmniIntelOS,New Hires,12.419,count,up,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Separations,3.4488,count,down,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Annual Employee Turnover,15.4643,%,down,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Time to Hire,35.1806,days,down,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Employee Net Promoter Score,24.0669,score,up,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Revenue per Employee,87513.7285,USD,up,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Open Positions,19.3539,count,down,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Offers Extended,15.5237,count,up,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Offers Accepted,11.3389,count,up,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Offer Acceptance Rate,73.0426,%,up,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Training Hours per Employee,9.0257,hours,up,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Absenteeism Rate,3.0533,%,down,omniintelos:model-v1
+2025-06,People,OmniIntelOS,Cost Per Hire,3119.7169,USD,down,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Headcount,277.7157,count,up,omniintelos:model-v1
+2025-07,People,OmniIntelOS,New Hires,13.0243,count,up,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Separations,2.9269,count,down,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Annual Employee Turnover,12.6471,%,down,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Time to Hire,32.5788,days,down,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Employee Net Promoter Score,25.3248,score,up,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Revenue per Employee,89618.4939,USD,up,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Open Positions,21.8791,count,down,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Offers Extended,16.2804,count,up,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Offers Accepted,12.1617,count,up,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Offer Acceptance Rate,74.7013,%,up,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Training Hours per Employee,7.9036,hours,up,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Absenteeism Rate,2.9531,%,down,omniintelos:model-v1
+2025-07,People,OmniIntelOS,Cost Per Hire,3482.9296,USD,down,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Headcount,287.4271,count,up,omniintelos:model-v1
+2025-08,People,OmniIntelOS,New Hires,13.0619,count,up,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Separations,3.3504,count,down,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Annual Employee Turnover,13.9879,%,down,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Time to Hire,35.637,days,down,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Employee Net Promoter Score,20.274,score,up,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Revenue per Employee,90378.8011,USD,up,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Open Positions,21.5504,count,down,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Offers Extended,16.3273,count,up,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Offers Accepted,12.8906,count,up,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Offer Acceptance Rate,78.9508,%,up,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Training Hours per Employee,8.9794,hours,up,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Absenteeism Rate,2.7205,%,down,omniintelos:model-v1
+2025-08,People,OmniIntelOS,Cost Per Hire,3177.2071,USD,down,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Headcount,298.2708,count,up,omniintelos:model-v1
+2025-09,People,OmniIntelOS,New Hires,13.9085,count,up,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Separations,3.0648,count,down,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Annual Employee Turnover,12.3303,%,down,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Time to Hire,28.4302,days,down,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Employee Net Promoter Score,32.2936,score,up,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Revenue per Employee,92112.4222,USD,up,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Open Positions,21.8022,count,down,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Offers Extended,17.3857,count,up,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Offers Accepted,16.6902,count,up,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Training Hours per Employee,9.5417,hours,up,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Absenteeism Rate,2.6222,%,down,omniintelos:model-v1
+2025-09,People,OmniIntelOS,Cost Per Hire,2809.2028,USD,down,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Headcount,310.1852,count,up,omniintelos:model-v1
+2025-10,People,OmniIntelOS,New Hires,14.1688,count,up,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Separations,2.2544,count,down,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Annual Employee Turnover,8.7216,%,down,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Time to Hire,30.4019,days,down,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Employee Net Promoter Score,33.5663,score,up,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Revenue per Employee,95443.4138,USD,up,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Open Positions,23.577,count,down,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Offers Extended,17.711,count,up,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Offers Accepted,17.0026,count,up,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Training Hours per Employee,11.64,hours,up,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Absenteeism Rate,2.7301,%,down,omniintelos:model-v1
+2025-10,People,OmniIntelOS,Cost Per Hire,2891.2681,USD,down,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Headcount,321.9542,count,up,omniintelos:model-v1
+2025-11,People,OmniIntelOS,New Hires,14.9009,count,up,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Separations,3.1319,count,down,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Annual Employee Turnover,11.6733,%,down,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Time to Hire,31.7979,days,down,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Employee Net Promoter Score,30.5393,score,up,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Revenue per Employee,98214.6336,USD,up,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Open Positions,25.4611,count,down,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Offers Extended,18.6261,count,up,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Offers Accepted,17.8811,count,up,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Training Hours per Employee,10.5868,hours,up,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Absenteeism Rate,2.3574,%,down,omniintelos:model-v1
+2025-11,People,OmniIntelOS,Cost Per Hire,3061.1874,USD,down,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Headcount,333.6682,count,up,omniintelos:model-v1
+2025-12,People,OmniIntelOS,New Hires,14.496,count,up,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Separations,2.782,count,down,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Annual Employee Turnover,10.0052,%,down,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Time to Hire,29.8798,days,down,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Employee Net Promoter Score,28.8189,score,up,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Revenue per Employee,102233.0021,USD,up,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Open Positions,23.2296,count,down,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Offers Extended,18.12,count,up,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Offers Accepted,17.3952,count,up,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Training Hours per Employee,9.9697,hours,up,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Absenteeism Rate,2.7116,%,down,omniintelos:model-v1
+2025-12,People,OmniIntelOS,Cost Per Hire,3149.5242,USD,down,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Headcount,345.3749,count,up,omniintelos:model-v1
+2026-01,People,OmniIntelOS,New Hires,14.3468,count,up,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Separations,2.6401,count,down,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Annual Employee Turnover,9.1731,%,down,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Time to Hire,30.1169,days,down,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Employee Net Promoter Score,35.1101,score,up,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Revenue per Employee,105018.4046,USD,up,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Open Positions,23.8018,count,down,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Offers Extended,17.9335,count,up,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Offers Accepted,17.2162,count,up,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Training Hours per Employee,11.5907,hours,up,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Absenteeism Rate,2.8876,%,down,omniintelos:model-v1
+2026-01,People,OmniIntelOS,Cost Per Hire,2978.6349,USD,down,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Headcount,358.3001,count,up,omniintelos:model-v1
+2026-02,People,OmniIntelOS,New Hires,15.5707,count,up,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Separations,2.6455,count,down,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Annual Employee Turnover,8.8602,%,down,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Time to Hire,30.3939,days,down,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Employee Net Promoter Score,30.7125,score,up,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Revenue per Employee,111191.33,USD,up,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Open Positions,25.9774,count,down,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Offers Extended,19.4634,count,up,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Offers Accepted,18.5562,count,up,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Offer Acceptance Rate,95.3391,%,up,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Training Hours per Employee,10.8686,hours,up,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Absenteeism Rate,2.7879,%,down,omniintelos:model-v1
+2026-02,People,OmniIntelOS,Cost Per Hire,2848.382,USD,down,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Headcount,371.1093,count,up,omniintelos:model-v1
+2026-03,People,OmniIntelOS,New Hires,15.7227,count,up,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Separations,2.9136,count,down,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Annual Employee Turnover,9.4211,%,down,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Time to Hire,30.9724,days,down,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Employee Net Promoter Score,31.4458,score,up,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Revenue per Employee,116673.8272,USD,up,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Open Positions,27.1119,count,down,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Offers Extended,19.6534,count,up,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Offers Accepted,18.8673,count,up,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Training Hours per Employee,10.5769,hours,up,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Absenteeism Rate,2.6062,%,down,omniintelos:model-v1
+2026-03,People,OmniIntelOS,Cost Per Hire,3021.7153,USD,down,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Headcount,383.4854,count,up,omniintelos:model-v1
+2026-04,People,OmniIntelOS,New Hires,15.8447,count,up,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Separations,3.4686,count,down,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Annual Employee Turnover,10.854,%,down,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Time to Hire,32.2822,days,down,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Employee Net Promoter Score,33.9419,score,up,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Revenue per Employee,119544.242,USD,up,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Open Positions,27.307,count,down,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Offers Extended,19.8059,count,up,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Offers Accepted,19.0136,count,up,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Training Hours per Employee,11.6608,hours,up,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Absenteeism Rate,2.4569,%,down,omniintelos:model-v1
+2026-04,People,OmniIntelOS,Cost Per Hire,3071.294,USD,down,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Headcount,397.6925,count,up,omniintelos:model-v1
+2026-05,People,OmniIntelOS,New Hires,17.8551,count,up,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Separations,3.648,count,down,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Annual Employee Turnover,11.0075,%,down,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Time to Hire,29.4511,days,down,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Employee Net Promoter Score,34.0586,score,up,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Revenue per Employee,121777.074,USD,up,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Open Positions,29.9906,count,down,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Offers Extended,22.3189,count,up,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Offers Accepted,21.4261,count,up,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Training Hours per Employee,10.1768,hours,up,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Absenteeism Rate,2.9424,%,down,omniintelos:model-v1
+2026-05,People,OmniIntelOS,Cost Per Hire,2892.4247,USD,down,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Headcount,411.0411,count,up,omniintelos:model-v1
+2026-06,People,OmniIntelOS,New Hires,17.3429,count,up,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Separations,3.9943,count,down,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Annual Employee Turnover,11.6609,%,down,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Time to Hire,33.2305,days,down,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Employee Net Promoter Score,37.5834,score,up,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Revenue per Employee,127812.1463,USD,up,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Open Positions,28.8058,count,down,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Offers Extended,21.6786,count,up,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Offers Accepted,20.8114,count,up,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Offer Acceptance Rate,96.0,%,up,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Training Hours per Employee,10.512,hours,up,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Absenteeism Rate,2.2746,%,down,omniintelos:model-v1
+2026-06,People,OmniIntelOS,Cost Per Hire,2993.1249,USD,down,omniintelos:model-v1
