@@ -66,7 +66,13 @@ def load_eval_cases() -> List[Dict[str, Any]]:
 def _retry(fn, attempts: int = 3, base_delay: float = 3.0):
     """Retries transient failures from THIS machine's own flaky connection (DNS
     resolution failures, TLS handshake timeouts) — distinct from a real error from the
-    service being tested, which still fails after all attempts, honestly."""
+    service being tested, which still fails after all attempts, honestly.
+
+    A 429 gets its own, longer backoff (respecting Retry-After when the service sends
+    one): three quick retries on a rate limit just add three more requests to an
+    already-throttled window, which was observed live to poison every case for the
+    rest of the run (the window never got a chance to clear). This does not raise the
+    retry COUNT, only how long each 429-triggered wait is."""
     last_exc = None
     for attempt in range(attempts):
         try:
@@ -74,7 +80,13 @@ def _retry(fn, attempts: int = 3, base_delay: float = 3.0):
         except Exception as e:
             last_exc = e
             if attempt < attempts - 1:
-                time.sleep(base_delay * (attempt + 1))
+                resp = getattr(e, "response", None)
+                if resp is not None and resp.status_code == 429:
+                    retry_after = resp.headers.get("Retry-After")
+                    delay = float(retry_after) if retry_after else 30.0 * (attempt + 1)
+                else:
+                    delay = base_delay * (attempt + 1)
+                time.sleep(delay)
     raise last_exc
 
 
@@ -118,10 +130,15 @@ def run() -> Dict[str, Any]:
             query = case["query"]
             persona = PERSONA_MAP.get(case.get("persona", ""), case.get("persona", "ceo"))
             t0 = time.monotonic()
+
+            def _call():
+                r = client.post(f"{GATEWAY}/api/v1/chat", headers=headers,
+                                 json={"message": query, "persona": persona})
+                r.raise_for_status()  # inside the retried call, so 429/502/503 actually retry+backoff
+                return r
+
             try:
-                resp = _retry(lambda: client.post(f"{GATEWAY}/api/v1/chat", headers=headers,
-                                                    json={"message": query, "persona": persona}))
-                resp.raise_for_status()
+                resp = _retry(_call)
                 out = resp.json()
                 latency_ms = (time.monotonic() - t0) * 1000
                 answer = out.get("response", "")
@@ -132,6 +149,14 @@ def run() -> Dict[str, Any]:
             except Exception as e:
                 results.append({"case_id": i, "query": query, "persona": persona, "error": f"chat_call_failed: {e}"})
                 print(f"[{i:02d}/{len(cases):02d}] persona={persona:<9} CHAT ERROR: {e}")
+                resp_obj = getattr(e, "response", None)
+                if resp_obj is not None and resp_obj.status_code == 429:
+                    # Observed live: back-to-back 429s with no gap between cases kept the
+                    # rate-limit window from ever clearing, poisoning every remaining case
+                    # in the run. A short cooldown here costs little against 44 cases and
+                    # gives the window an actual chance to reset before the next request.
+                    print(f"           cooling down 45s after a 429 before the next case ...")
+                    time.sleep(45.0)
                 continue
 
             try:
