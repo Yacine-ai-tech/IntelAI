@@ -3,7 +3,7 @@
 No live server needed. Endpoints that only depend on routing/auth run everywhere
 (incl. CI without a DB). Endpoints that need a seeded database/LLM are exercised
 when the bootstrap-admin login succeeds and are otherwise skipped with a clear
-reason — so the suite is green in CI and full on the Studio (Neon DB).
+reason — so the suite is green in CI and full on a persistent dev host (Neon DB).
 """
 import os
 from pathlib import Path

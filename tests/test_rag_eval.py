@@ -1,5 +1,5 @@
 """Structural validation of the RAG eval set (no LLM/DB needed → CI-safe).
-The full groundedness run is `python -m src.data.rag_eval` (Studio/prod)."""
+The full groundedness run is `python -m src.data.rag_eval` (a live dev or prod environment)."""
 import json
 from pathlib import Path
 

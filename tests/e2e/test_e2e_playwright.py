@@ -5,7 +5,7 @@ E2E Playwright tests for IntelAI — core scoped flow
 Requires a live stack (frontend :5173 + API :8000) and a Playwright browser.
 Skips automatically when Playwright isn't installed or the stack isn't running,
 so the default in-process suite (test_api.py / test_smoke.py) stays green in CI.
-Run on the Studio with the stack up:  pytest tests/test_e2e_playwright.py
+Run with the stack up:  pytest tests/test_e2e_playwright.py
 """
 import os
 import re

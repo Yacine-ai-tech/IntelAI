@@ -2,7 +2,7 @@
 #
 # IntelAI is one deployable service (FastAPI + embedded ChromaDB). This compose is the
 # optional "local full run" convenience: the app + a bundled Postgres.
-#   - Studio dev (app only, Neon DB):  docker compose -f docker-compose.dev.yml up --build
+#   - Local dev (app only, Neon DB):  docker compose -f docker-compose.dev.yml up --build
 #   - Production: ONE cloud service built from the Dockerfile (see render.yaml).
 #
 # For local full run, point the app at the bundled Postgres by setting this in .env:

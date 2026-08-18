@@ -1995,7 +1995,7 @@ async def update_user(
         _users_db[target]["preferred_language"] = req.preferred_language
     # Persist to Postgres too — without this, an admin's change (e.g. deactivating a
     # compromised account) only lived in this one process's in-memory _users_db and
-    # silently reverted on the next restart (routine on Render's free tier: idle sleep
+    # silently reverted on the next restart (routine on a free-tier host: idle sleep
     # + cold start), with no indication to the admin that it had been undone.
     from src.services.pg_store import update_user as _pg_update_user
     await asyncio.to_thread(
