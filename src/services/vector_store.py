@@ -85,6 +85,8 @@ def _embed_batch(texts: List[str]):
     remote = os.environ.get("EMBED_URL", "").strip() or os.environ.get("EMBEDDING_ENDPOINT", "").strip()
     if not remote:
         raise RuntimeError("EMBEDDING_PROVIDER=remote but neither EMBED_URL nor EMBEDDING_ENDPOINT is set")
+    import time
+    import urllib.error
     import urllib.request, json as _json
     h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
     tk = os.environ.get("INFERENCE_TOKEN", "").strip()
@@ -92,22 +94,42 @@ def _embed_batch(texts: List[str]):
         h["Authorization"] = "Bearer " + tk
     timeout = float(os.environ.get("EMBED_TIMEOUT", "30"))
 
-    if "huggingface.co" in remote:
-        body = _json.dumps({"inputs": list(texts)}).encode()
-        req = urllib.request.Request(remote, data=body, headers=h)
-        res = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
-        arr = np.asarray(res, dtype="float32")
-        if arr.ndim == 3:  # per-token vectors from a plain feature-extraction pipeline
-            arr = arr.mean(axis=1)
-        return arr
+    # A self-hosted remote embed host (as opposed to a managed API) can be genuinely
+    # up and warm and still 503 one request in three — confirmed live against an
+    # on-demand GPU-tier backend: a direct probe succeeded in 11.6s, and the very
+    # next call (same host, seconds later, inside this same reindex) 503'd. A single
+    # unretried attempt turns that ordinary transient blip into a hard reindex
+    # failure for the whole batch. Retry a few times with backoff before giving up —
+    # this does NOT paper over a persistently broken host (it still raises after all
+    # attempts fail) but stops one bad millisecond from failing a multi-minute job.
+    attempts = int(os.environ.get("EMBED_RETRY_ATTEMPTS", "4"))
+    backoffs = [3, 8, 20, 20][:attempts]
+    last_exc: Optional[Exception] = None
+    for attempt, wait in enumerate(backoffs):
+        try:
+            if "huggingface.co" in remote:
+                body = _json.dumps({"inputs": list(texts)}).encode()
+                req = urllib.request.Request(remote, data=body, headers=h)
+                res = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+                arr = np.asarray(res, dtype="float32")
+                if arr.ndim == 3:  # per-token vectors from a plain feature-extraction pipeline
+                    arr = arr.mean(axis=1)
+                return arr
 
-    body = _json.dumps({"texts": list(texts)}).encode()
-    req = urllib.request.Request(remote.rstrip("/") + "/embed", data=body, headers=h)
-    res = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
-    vecs = res.get("embeddings")
-    if not (isinstance(vecs, list) and len(vecs) == len(texts)):
-        raise RuntimeError(f"remote embed host returned {len(vecs) if isinstance(vecs, list) else type(vecs)} vectors for {len(texts)} texts")
-    return np.asarray(vecs, dtype="float32")
+            body = _json.dumps({"texts": list(texts)}).encode()
+            req = urllib.request.Request(remote.rstrip("/") + "/embed", data=body, headers=h)
+            res = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+            vecs = res.get("embeddings")
+            if not (isinstance(vecs, list) and len(vecs) == len(texts)):
+                raise RuntimeError(f"remote embed host returned {len(vecs) if isinstance(vecs, list) else type(vecs)} vectors for {len(texts)} texts")
+            return np.asarray(vecs, dtype="float32")
+        except (urllib.error.URLError, TimeoutError) as e:
+            last_exc = e
+            if attempt < len(backoffs) - 1:
+                log.warning("remote embed attempt %d/%d failed (%s) — retrying in %ds",
+                            attempt + 1, len(backoffs), e, wait)
+                time.sleep(wait)
+    raise RuntimeError(f"remote embed host failed after {len(backoffs)} attempts: {last_exc}") from last_exc
 
 def _dim() -> int:
     provider = os.environ.get("EMBEDDING_PROVIDER", "hf").lower()
