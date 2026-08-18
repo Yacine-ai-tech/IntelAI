@@ -17,8 +17,18 @@ class EntityExtractor:
         self.department_patterns = {
             'finance': ['finance', 'financial', 'revenue', 'cost', 'profit', 'margin'],
             'people': ['hr', 'people', 'employee', 'headcount', 'personnel'],
-            'operations': ['ops', 'operations', 'logistics', 'inventory'],
-            'growth': ['growth', 'customer', 'mrr', 'churn', 'acquisition'],
+            'operations': ['ops', 'operations', 'oee', 'defect', 'inventory', 'throughput'],
+            'logistics': ['logistics', 'delivery', 'fulfillment', 'fulfilment', 'warehouse', 'supplier', 'freight'],
+            'growth': ['growth', 'customer', 'mrr', 'arr', 'churn', 'acquisition', 'ltv', 'cac'],
+            # No domain named "IT" or "ESG" ever matched here — every row in those two
+            # categories (100% of them, measured against the live corpus) fell through
+            # to no department entity at all. IT/ESG rows still surface fine in plain
+            # KPI/chat retrieval (this extractor only feeds the graph-based path), but
+            # graph queries scoped to "IT" or "ESG" as a department had nothing to find.
+            'it': ['uptime', 'latency', 'vulnerabilit', 'deployment', 'incident', 'security',
+                   'mttr', 'resolution', 'sla', 'devops', 'change failure'],
+            'esg': ['emission', 'carbon', 'renewable', 'diversity', 'governance', 'sustainab',
+                    'waste', 'water consumption', 'audit compliance'],
         }
         
         self.period_patterns = {
