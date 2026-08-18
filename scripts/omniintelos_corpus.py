@@ -41,6 +41,12 @@ except ImportError:
     _XLSX = False
 
 try:
+    from omniintelos_audio import build_audio, TTS_URL as _TTS_URL, TTS_TOKEN as _TTS_TOKEN
+    _AUDIO = bool(_TTS_URL and _TTS_TOKEN)
+except ImportError:
+    _AUDIO = False  # TTS_ENDPOINT_URL/TTS_ENDPOINT_TOKEN not configured
+
+try:
     from pptx import Presentation
     from pptx.util import Inches, Pt
     _PPTX = True
@@ -1692,89 +1698,6 @@ def decks(by, out: Path) -> List[Path]:
 
 # ─────────────────────────────────────────────────────────────────────────────
 
-def companions(by, root: Path) -> List[Path]:
-    """Markdown companions for the binary formats the document processor cannot
-    reliably extract.
-
-    Measured against the live processor: every .md ingests first time, PDFs mostly
-    do, but .pptx and .png time out (HTTP 524) every single attempt. A slide deck's
-    narrative and a chart's underlying series are real content — losing them because
-    of a format limitation would quietly shrink the corpus. The binaries are still
-    generated (they are genuine downloadable deliverables); these companions make
-    sure the *content* is retrievable regardless."""
-    written: List[Path] = []
-    ms = months()
-
-    # Deck companions
-    for year, q in [(2023, 1), (2025, 4)]:
-        qm = {1: ["01", "02", "03"], 4: ["10", "11", "12"]}[q]
-        qms = [f"{year}-{x}" for x in qm if f"{year}-{x}" in by]
-        if not qms:
-            continue
-        hs, hl = health_index(qms[-1], by)
-        ph = phase_for(qms[-1])
-        lines = [
-            f"# Board deck notes — Q{q} {year} — {COMPANY}", "",
-            f"*Speaker notes and slide content for `omniintelos_board_deck_{year}Q{q}_en.pptx`.*", "",
-            f"**Operating regime:** {ph['label_en']}  ",
-            f"**Enterprise health:** {hs:.1f}/100 ({hl})", "",
-            "## Position", "", ph["narrative_en"], "",
-            "## Key metrics", "",
-            "| Metric | Value |", "|---|---|",
-            f"| Quarterly revenue | {usd(_agg(by, qms, 'Revenue'))} |",
-            f"| Exit ARR | {usd(_agg(by, qms, 'ARR', 'last'))} |",
-            f"| Gross margin | {_agg(by, qms, 'Gross Margin', 'avg'):.1f}% |",
-            f"| EBITDA margin | {_agg(by, qms, 'EBITDA Margin', 'avg'):.1f}% |",
-            f"| Net revenue retention | {_agg(by, qms, 'Net Revenue Retention', 'avg'):.1f}% |",
-            f"| Rule of 40 | {_agg(by, qms, 'Rule of 40', 'avg'):.1f}% |",
-            f"| System uptime | {_agg(by, qms, 'System Uptime', 'avg'):.3f}% |",
-            f"| Headcount | {_agg(by, qms, 'Headcount', 'last'):,.0f} |",
-            f"| Cash runway | {_agg(by, qms, 'Cash Runway', 'last'):.1f} months |", "",
-            "## Domain standing", "",
-        ]
-        for dom, mets in DOMAIN_METRICS.items():
-            lines.append(f"### {dom}")
-            for met in mets:
-                if met in by[qms[-1]]:
-                    lines.append(f"- {commentary(by, qms, met)}")
-            lines.append("")
-        lines += ["---", "",
-                  "*OmniIntelOS S.A. is a fictional company; generated for IntelAI demonstration.*"]
-        p = root / "Corporate" / f"omniintelos_board_deck_notes_{year}Q{q}_en.md"
-        p.write_text("\n".join(lines), encoding="utf-8")
-        written.append(p)
-
-    # Chart companions: the plotted series as text, so the trend is retrievable.
-    specs = [
-        ("arr_growth", "ARR (USD)", "ARR"),
-        ("gross_margin", "Gross margin (%)", "Gross Margin"),
-        ("uptime", "System uptime (%)", "System Uptime"),
-        ("headcount", "Headcount", "Headcount"),
-        ("emissions", "Total carbon footprint (tCO2e)", "Total Carbon Footprint"),
-    ]
-    lines = [f"# Chart data series — {COMPANY}", "",
-             "*Underlying series for the generated PNG charts in this directory, as text.*", "",
-             f"Period covered: {ms[0]} to {ms[-1]} ({len(ms)} months).", ""]
-    for name, label, metric in specs:
-        lines += [f"## {label}", "",
-                  f"*Chart file: `omniintelos_chart_{name}.png`*", "",
-                  "| Period | Value |", "|---|---|"]
-        for m in ms:
-            if metric in by.get(m, {}):
-                lines.append(f"| {m} | {by[m][metric]:,.2f} |")
-        lines.append("")
-    lines += ["## Enterprise health index", "", "| Period | Health | Band |", "|---|---|---|"]
-    for m in ms:
-        h, lab = health_index(m, by)
-        lines.append(f"| {m} | {h:.1f} | {lab} |")
-    lines += ["", "---", "",
-              "*OmniIntelOS S.A. is a fictional company; generated for IntelAI demonstration.*"]
-    p = root / "Corporate" / "omniintelos_chart_series_en.md"
-    p.write_text("\n".join(lines), encoding="utf-8")
-    written.append(p)
-    return written
-
-
 def build_corpus(root: Path) -> Dict[str, Any]:
     """Generate the whole estate under `root`, returning a manifest."""
     kpis = generate_kpis()
@@ -1807,7 +1730,6 @@ def build_corpus(root: Path) -> Dict[str, Any]:
 
     rec("markdown", meeting_minutes(by, root / "Corporate"))
     rec("markdown", policies(root / "Corporate"))
-    rec("markdown", companions(by, root))
 
     if _XLSX:
         rec("xlsx", workbooks(by, root / "Finance"))
@@ -1821,6 +1743,10 @@ def build_corpus(root: Path) -> Dict[str, Any]:
         rec("pptx", decks(by, root / "Corporate"))
     else:
         skipped.append("PPTX (python-pptx not installed)")
+    if _AUDIO:
+        rec("wav", build_audio(root))
+    else:
+        skipped.append("WAV audio (TTS_ENDPOINT_URL/TTS_ENDPOINT_TOKEN not set)")
 
     total_bytes = sum(Path(f).stat().st_size for fs in made.values() for f in fs)
     return {"files": made, "skipped": skipped,
