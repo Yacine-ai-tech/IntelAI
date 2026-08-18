@@ -18,7 +18,7 @@ def client():
 
     from src.api.server import app
 
-    return TestClient(app, headers={"X-OmniIntel-Internal-Token": os.getenv("OMNIINTEL_INTERNAL_TOKEN", "")})
+    return TestClient(app, headers={"X-IntelAI-Internal-Token": os.getenv("INTELAI_INTERNAL_TOKEN", "")})
 
 
 @pytest.mark.unit

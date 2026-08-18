@@ -19,7 +19,7 @@ env:
   RAGEVAL_URL:     ${{ secrets.RAGEVAL_URL    || '' }}
   AGENTKIT_URL:    ${{ secrets.AGENTKIT_URL   || '' }}
   STREAMPULSE_URL: ${{ secrets.STREAMPULSE_URL|| '' }}
-  OMNIINTEL_INTERNAL_TOKEN: ${{ secrets.OMNIINTEL_INTERNAL_TOKEN  }}
+  INTELAI_INTERNAL_TOKEN: ${{ secrets.INTELAI_INTERNAL_TOKEN  }}
 
 jobs:
 
@@ -78,7 +78,7 @@ jobs:
           RAGEVAL_URL:     ${{ env.RAGEVAL_URL }}
           AGENTKIT_URL:    ${{ env.AGENTKIT_URL }}
           STREAMPULSE_URL: ${{ env.STREAMPULSE_URL }}
-          INTERNAL_TOKEN:  ${{ env.OMNIINTEL_INTERNAL_TOKEN }}
+          INTERNAL_TOKEN:  ${{ env.INTELAI_INTERNAL_TOKEN }}
         run: |
           python3 - <<'EOF'
           import urllib.request, json, os, sys
@@ -100,7 +100,7 @@ jobs:
                   continue
               try:
                   req = urllib.request.Request(f"{url}/health",
-                      headers={"X-OmniIntel-Internal-Token": TOKEN})
+                      headers={"X-IntelAI-Internal-Token": TOKEN})
                   with urllib.request.urlopen(req, timeout=10) as r:
                       data = json.loads(r.read().decode())
                       print(f"  ✅ {name}: {data.get('status', 'ok')} [{r.status}]")
@@ -136,7 +136,7 @@ jobs:
       - name: Test DocIntel /classify endpoint
         env:
           DOCINTEL_URL:   ${{ env.DOCINTEL_URL }}
-          INTERNAL_TOKEN: ${{ env.OMNIINTEL_INTERNAL_TOKEN }}
+          INTERNAL_TOKEN: ${{ env.INTELAI_INTERNAL_TOKEN }}
         run: |
           python3 - <<'EOF'
           import urllib.request, json, os
@@ -163,7 +163,7 @@ jobs:
               data=body,
               headers={
                   "Content-Type": f"multipart/form-data; boundary={boundary}",
-                  "X-OmniIntel-Internal-Token": token,
+                  "X-IntelAI-Internal-Token": token,
               },
               method="POST"
           )
@@ -189,7 +189,7 @@ jobs:
       - name: Test VoiceFlow /analytics endpoint
         env:
           VOICEFLOW_URL:  ${{ env.VOICEFLOW_URL }}
-          INTERNAL_TOKEN: ${{ env.OMNIINTEL_INTERNAL_TOKEN }}
+          INTERNAL_TOKEN: ${{ env.INTELAI_INTERNAL_TOKEN }}
         run: |
           python3 - <<'EOF'
           import urllib.request, json, os
@@ -201,7 +201,7 @@ jobs:
               exit(0)
           try:
               req = urllib.request.Request(f"{url}/analytics",
-                  headers={"X-OmniIntel-Internal-Token": token})
+                  headers={"X-IntelAI-Internal-Token": token})
               with urllib.request.urlopen(req, timeout=15) as r:
                   data = json.loads(r.read().decode())
                   print(f"✅ VoiceFlow /analytics: {data}")
@@ -223,7 +223,7 @@ jobs:
       - name: Test RAGeval /health detailed
         env:
           RAGEVAL_URL:    ${{ env.RAGEVAL_URL }}
-          INTERNAL_TOKEN: ${{ env.OMNIINTEL_INTERNAL_TOKEN }}
+          INTERNAL_TOKEN: ${{ env.INTELAI_INTERNAL_TOKEN }}
         run: |
           python3 - <<'EOF'
           import urllib.request, json, os
@@ -235,7 +235,7 @@ jobs:
               exit(0)
           try:
               req = urllib.request.Request(f"{url}/health",
-                  headers={"X-OmniIntel-Internal-Token": token})
+                  headers={"X-IntelAI-Internal-Token": token})
               with urllib.request.urlopen(req, timeout=15) as r:
                   data = json.loads(r.read().decode())
                   print(f"✅ RAGeval /health: {data}")
@@ -289,7 +289,7 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          OMNIINTEL_INTERNAL_TOKEN: ${{ secrets.OMNIINTEL_INTERNAL_TOKEN }}
+          INTELAI_INTERNAL_TOKEN: ${{ secrets.INTELAI_INTERNAL_TOKEN }}
         run: |
           if [ -f "tests/test_exhaustive_api.py" ]; then
             python -m pytest tests/test_exhaustive_api.py -o addopts=""
