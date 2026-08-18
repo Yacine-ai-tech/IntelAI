@@ -320,7 +320,7 @@ test.describe('Phase 12 — Security Tests', () => {
     expect([401, 403]).toContain(resp.status());
   });
 
-  test('API: internal mesh endpoint rejects missing X-OmniIntel-Internal-Token', async ({ request }) => {
+  test('API: internal mesh endpoint rejects missing X-IntelAI-Internal-Token', async ({ request }) => {
     const resp = await request.get(`${API_URL}/internal/health`, {
       headers: {} // No internal token
     });
