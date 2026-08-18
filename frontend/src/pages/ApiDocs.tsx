@@ -949,7 +949,7 @@ export default function ApiDocs() {
         <div style={{ fontSize: ".83rem", color: "var(--text-2)", lineHeight: 1.6 }}>
           <b style={{ color: "var(--text)" }}>Two auth layers.</b> Every route below except <code>/health</code>, the OpenAPI/docs
           routes, and everything under <code>/api/v1/auth/*</code> sits behind the same-origin internal-token middleware
-          (<code>X-OmniIntel-Internal-Token</code>) that the gateway attaches automatically for browser/API traffic — you don't
+          (<code>X-IntelAI-Internal-Token</code>) that the gateway attaches automatically for browser/API traffic — you don't
           set this yourself when calling through <code>{BASE_URL}</code>. On top of that, every endpoint marked{" "}
           <AuthBadge auth="user" /> also requires a <b>Bearer JWT</b> from <code>POST /auth/login</code> or{" "}
           <code>POST /auth/demo-login</code>, and endpoints marked <AuthBadge auth="admin" /> additionally require that JWT's

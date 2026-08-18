@@ -72,12 +72,12 @@ def _dogfood_to_rageval(query: str, answer: str, contexts: List[str], persona: s
             if token:
                 # Sent under both names — see scripts/evaluate_with_rageval.py for why:
                 # generic `Authorization: Bearer` for any compatible evaluator, plus
-                # `X-OmniIntel-Internal-Token` because the upstream RAGeval project's own
+                # `X-RAGeval-Internal-Token` because the upstream RAGeval project's own
                 # internal-token gate (REQUIRE_INTERNAL_TOKEN=true by default) only checks
                 # that header — without it, this call 403s silently against a real RAGeval
                 # deployment even with a correct RAG_EVALUATOR_TOKEN.
                 headers["Authorization"] = f"Bearer {token}"
-                headers["X-OmniIntel-Internal-Token"] = token
+                headers["X-RAGeval-Internal-Token"] = token
             requests.post(
                 f"{url}/eval/log",
                 json={"query": query, "answer": answer, "contexts": contexts,

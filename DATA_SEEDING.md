@@ -182,7 +182,7 @@ existing global rows before a full re-seed. There is no public bulk-delete endpo
 adding one would be a genuinely dangerous thing to expose.
 
 **Environment variables** (no hardcoded secrets or URLs): `INTELAI_API_URL`,
-`SEED_ADMIN_USERNAME`, `SEED_ADMIN_PASSWORD`, `OMNIINTEL_INTERNAL_TOKEN`.
+`SEED_ADMIN_USERNAME`, `SEED_ADMIN_PASSWORD`, `INTELAI_INTERNAL_TOKEN`.
 
 ---
 
