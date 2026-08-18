@@ -59,7 +59,7 @@ Environment variables (no hardcoded secrets or URLs):
   INTELAI_API_URL       Base URL of a running IntelAI backend (default: http://localhost:8000)
   SEED_ADMIN_USERNAME   Real login username (optional - falls back to demo-login)
   SEED_ADMIN_PASSWORD   Real login password
-  OMNIINTEL_INTERNAL_TOKEN  Cross-project gateway token, if the deployment requires one
+  INTELAI_INTERNAL_TOKEN  Cross-project gateway token, if the deployment requires one
 """
 from __future__ import annotations
 
@@ -88,7 +88,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 API_BASE_URL = os.getenv("INTELAI_API_URL", "http://localhost:8000").rstrip("/")
 ADMIN_USERNAME = os.getenv("SEED_ADMIN_USERNAME", "").strip()
 ADMIN_PASSWORD = os.getenv("SEED_ADMIN_PASSWORD", "").strip()
-INTERNAL_TOKEN = os.getenv("OMNIINTEL_INTERNAL_TOKEN", "").strip()
+INTERNAL_TOKEN = os.getenv("INTELAI_INTERNAL_TOKEN", "").strip()
 
 CSV_COLUMNS = ["period", "category", "segment", "metric_name", "value", "unit", "direction", "source"]
 
@@ -178,7 +178,7 @@ def _get_auth_token(client: httpx.Client) -> Optional[str]:
 def _auth_headers(token: str) -> dict:
     headers = {"Authorization": f"Bearer {token}"}
     if INTERNAL_TOKEN:
-        headers["X-OmniIntel-Internal-Token"] = INTERNAL_TOKEN
+        headers["X-IntelAI-Internal-Token"] = INTERNAL_TOKEN
     return headers
 
 

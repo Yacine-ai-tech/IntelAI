@@ -138,7 +138,7 @@ import os as _os
 async def verify_internal_token(request: Request, call_next):
     # Allow health checks, public auth routes, and the public HMAC-signed
     # ingestion webhook (/api/v1/webhook/{source_name}) — its own signature
-    # check IS its auth. Gating it behind X-OmniIntel-Internal-Token too would
+    # check IS its auth. Gating it behind X-IntelAI-Internal-Token too would
     # defeat the entire point of a machine-to-machine endpoint: no external
     # pusher (StreamPulse, a Kafka HTTP sink connector, n8n) can practically
     # obtain an IntelAI-internal secret, only the shared HMAC secret they were
@@ -148,11 +148,11 @@ async def verify_internal_token(request: Request, call_next):
             or request.url.path.startswith("/api/v1/webhook/")):
         return await call_next(request)
 
-    token = request.headers.get("X-OmniIntel-Internal-Token")
-    expected_token = _os.environ.get("OMNIINTEL_INTERNAL_TOKEN", "")
+    token = request.headers.get("X-IntelAI-Internal-Token")
+    expected_token = _os.environ.get("INTELAI_INTERNAL_TOKEN", "")
 
     if token != expected_token and _os.environ.get("REQUIRE_INTERNAL_TOKEN", "true").lower() == "true":
-        return JSONResponse(status_code=403, content={"detail": "Missing or invalid X-OmniIntel-Internal-Token"})
+        return JSONResponse(status_code=403, content={"detail": "Missing or invalid X-IntelAI-Internal-Token"})
 
     return await call_next(request)
 

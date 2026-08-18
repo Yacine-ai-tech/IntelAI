@@ -16,7 +16,7 @@ Postgres runs as a container alongside the app — nothing external required.
 
 `src/api/server.py` has a middleware (`verify_internal_token`) that requires every
 request except `/health`, `/docs`, `/api/v1/auth/*`, and the public webhook to carry
-an `X-OmniIntel-Internal-Token` header matching `OMNIINTEL_INTERNAL_TOKEN`. This exists
+an `X-IntelAI-Internal-Token` header matching `INTELAI_INTERNAL_TOKEN`. This exists
 because the author's own production deployment sits behind a shared gateway that
 injects this header for you — but **the IntelAI frontend itself never sends it**, and
 `REQUIRE_INTERNAL_TOKEN` defaults to `true`. If you're self-hosting standalone (no
@@ -25,8 +25,8 @@ for `docker compose up`), you have two options:
 
 - **Set `REQUIRE_INTERNAL_TOKEN=false`** in your `.env` (simplest — the middleware
   becomes a no-op).
-- Or set `OMNIINTEL_INTERNAL_TOKEN` to a value of your choosing and configure your own
-  reverse proxy/gateway to attach it as `X-OmniIntel-Internal-Token` on every request —
+- Or set `INTELAI_INTERNAL_TOKEN` to a value of your choosing and configure your own
+  reverse proxy/gateway to attach it as `X-IntelAI-Internal-Token` on every request —
   useful if you're running IntelAI behind your own gateway alongside other services.
 
 Without one of these, every authenticated route (chat, KPIs, dashboards — everything
