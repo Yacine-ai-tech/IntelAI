@@ -50,11 +50,11 @@ except ImportError:
 def _is_still_waking(result: Any) -> bool:
     """True when a remote inference host answered 'not ready yet, I'm starting'.
 
-    An on-demand GPU host does NOT hold the connection open while it boots — it
-    answers in ~2s with HTTP 200 and an error body, having *triggered* the wake:
-        {"error": "HTTP Error 530: <none>", "studio": 1, "_woke": true, ...}
-    So a longer socket timeout is useless here; the client has to come back later.
-    Sleeping is the normal, expected state of a free-tier on-demand host, not a fault.
+    An on-demand host does NOT hold the connection open while it boots — it answers
+    quickly with an error body that signals a wake was triggered, e.g. a `_woke`
+    flag, rather than blocking until the boot completes. So a longer socket timeout
+    is useless here; the client has to come back later. Sleeping is the normal,
+    expected state of an on-demand host, not a fault.
     """
     if not isinstance(result, dict):
         return False

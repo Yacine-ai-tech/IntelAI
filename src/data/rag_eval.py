@@ -5,7 +5,7 @@ NOT the standalone RAGeval product. It runs the eval set in ``tests/rag_eval.jso
 through the RAG, then reports keyword recall (did the answer mention the expected terms?)
 and a groundedness proxy (are those terms supported by the retrieved sources?).
 
-Run on the Studio / prod (needs LLM + seeded DB):
+Run against a live dev or prod environment (needs LLM + seeded DB):
     python -m src.data.rag_eval
 Gate: fails (exit 1) if >20% of cases fall below their groundedness threshold.
 """

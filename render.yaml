@@ -25,7 +25,7 @@ services:
         sync: false
       - key: VECTOR_STORE          # pgvector (prod, on Neon) keeps the app tier small
         value: pgvector
-      - key: HOSTED_RERANK_PROVIDER # cohere|jina — off-Studio rerank backstop (see .env.example)
+      - key: HOSTED_RERANK_PROVIDER # cohere|jina — hosted rerank backstop (see .env.example)
         sync: false
       - key: COHERE_API_KEY        # free, no-card key for the rerank backstop
         sync: false
