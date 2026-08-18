@@ -6,9 +6,9 @@ Unlike scripts/evaluate_with_rageval.py and evaluate_with_rageval_package.py —
 both call UltraFastRAG.answer() in-process, so retrieval (embed + rerank, dozens of
 remote HTTP round trips) runs on whatever machine executes the script — this script
 calls the live production POST /api/v1/chat endpoint for every case. All retrieval work
-happens on Render's own network against the real deployed service; the machine running
-this script only ever sends/receives small JSON payloads, plus makes the (also small,
-non-embedding) LLM judge calls to score each answer.
+happens inside the real deployed service itself; the machine running this script only
+ever sends/receives small JSON payloads, plus makes the (also small, non-embedding) LLM
+judge calls to score each answer.
 
 Environment variables:
   PROD_GATEWAY_URL   Base URL of the live gateway (default: the real production domain)

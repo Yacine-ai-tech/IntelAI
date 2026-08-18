@@ -95,13 +95,13 @@ def _embed_batch(texts: List[str]):
     timeout = float(os.environ.get("EMBED_TIMEOUT", "30"))
 
     # A self-hosted remote embed host (as opposed to a managed API) can be genuinely
-    # up and warm and still 503 one request in three — confirmed live against an
-    # on-demand GPU-tier backend: a direct probe succeeded in 11.6s, and the very
-    # next call (same host, seconds later, inside this same reindex) 503'd. A single
-    # unretried attempt turns that ordinary transient blip into a hard reindex
-    # failure for the whole batch. Retry a few times with backoff before giving up —
-    # this does NOT paper over a persistently broken host (it still raises after all
-    # attempts fail) but stops one bad millisecond from failing a multi-minute job.
+    # up and warm and still fail one request in three — confirmed live: a direct
+    # probe succeeded, and the very next call to the same host moments later,
+    # inside the same reindex, failed. A single unretried attempt turns that
+    # ordinary transient blip into a hard reindex failure for the whole batch.
+    # Retry a few times with backoff before giving up — this does NOT paper over a
+    # persistently broken host (it still raises after all attempts fail) but stops
+    # one bad millisecond from failing a multi-minute job.
     attempts = int(os.environ.get("EMBED_RETRY_ATTEMPTS", "4"))
     backoffs = [3, 8, 20, 20][:attempts]
     last_exc: Optional[Exception] = None

@@ -1,6 +1,6 @@
 """Shared test setup: ensure the DB schema, the bootstrap admin (in the in-memory auth
 store that the login route reads), and seed data exist — so the DB-backed tests RUN (no
-skips) wherever a Postgres is reachable (CI service or the Studio's Neon via .env).
+skips) wherever a Postgres is reachable (CI service or a local dev host's Neon via .env).
 
 This calls the app's own ``_init_default_users`` instead of running full startup, so the
 test suite needs a database but NOT the LLM keys (``validate_required_keys`` is skipped).
