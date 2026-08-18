@@ -68,8 +68,9 @@ const NAV_SECTIONS = [
 const INGEST_EXPORT = [
   { icon: UploadCloud, title: 'Bringing data in', points: [
     'CSV upload (Data Hub) — bulk metric rows, mapped to metric/value/period/category/segment.',
-    'Document upload — PDF (text extraction), PNG/JPG (Groq Vision OCR), or plain text — indexed into the knowledge base for the copilot to cite. PII/secrets are redacted before storage.',
-    'Webhook intake — for external systems (e.g. another OmniIntel service) to push KPI rows or knowledge documents directly.',
+    'Document upload — PDF (text extraction), PPTX/DOCX/XLSX (native text extraction — read directly from the file, not OCR), PNG/JPG (vision-model OCR), or plain text — indexed into the knowledge base for the copilot to cite. PII/secrets are redacted before storage.',
+    'Audio upload — meeting recordings and voice notes are transcribed (speech-to-text) and summarized (participants, decisions, action items) automatically, then indexed alongside the rest of the knowledge base.',
+    'Webhook intake — for external systems to push KPI rows or knowledge documents directly.',
   ]},
   { icon: Download, title: 'Getting data out', points: [
     'Export any KPI view or the knowledge base as CSV, JSON, XLSX, or a formatted board-ready PDF.',

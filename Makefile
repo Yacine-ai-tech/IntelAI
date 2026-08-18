@@ -4,7 +4,7 @@
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-12s\033[0m %s\n",$$1,$$2}'
 
-dev: ## Studio dev: app-only container with hot reload (Neon DB via .env)
+dev: ## Local dev: app-only container with hot reload (Neon DB via .env)
 	docker compose -f docker-compose.dev.yml up --build
 
 run: ## Local full stack: app + bundled Postgres
