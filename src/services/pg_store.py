@@ -188,6 +188,19 @@ def _get_conn():
             def __getattr__(self, item):
                 return getattr(self._c, item)
             def close(self):
+                # psycopg3 connections aren't autocommit by default, and none of the
+                # ~60 call sites in this file use `with conn:` — most explicitly
+                # commit, but the ones that don't (bare reads like the /health check)
+                # were returning to the pool mid-transaction. psycopg_pool then had to
+                # force an implicit rollback on every single one — confirmed live,
+                # happening every 5s in lockstep with Render's health-check polling.
+                # Rolling back here is always safe (a no-op if already committed or if
+                # there's nothing pending) and fixes every call site at once, rather
+                # than requiring every future one to remember to commit explicitly.
+                try:
+                    self._c.rollback()
+                except Exception:
+                    pass
                 self._p.putconn(self._c)
             def __enter__(self):
                 return self._c.__enter__()
