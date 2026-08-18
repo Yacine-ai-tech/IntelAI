@@ -30,7 +30,7 @@ First request may take ~60 s to wake the on-demand backend.
 | **GraphRAG-lite** | Multi-hop entity graph for cross-domain queries (`USE_GRAPH_RAG=true`) |
 | **Hybrid retrieval** | Dense + BM25 + RRF + BGE reranker; degrades gracefully |
 | **Answer-block structuring** | Backend parses LLM markdown into typed blocks (heading, kpi, list, quote, code) |
-| **90+ curated KPIs** | Finance, HR, IT, Ops, Logistics, ESG, Growth — 36-month history, 7 benchmarking scenarios |
+| **146 curated KPIs** | Finance, HR, IT, Ops, Logistics, ESG, Growth — 78-month history, 7 benchmarking scenarios |
 | **ML forecasting** | Monte Carlo with confidence bands |
 | **Data export/ingest** | PDF / Excel / CSV / JSON export; CSV & document ingestion |
 | **Auth + RBAC** | JWT, role-based pages, per-persona data scoping, audit log |
@@ -142,6 +142,11 @@ models under structural stress. Selectable via the `Admin → Scenarios` tab or 
 Every scenario also carries a short cross-domain cascade (IT → Logistics/Ops → Growth →
 Finance, mirroring how a real incident's financial impact actually lags its root cause) —
 see DATA_SEEDING.md §4 for the full methodology.
+
+For the reasoning behind the retrieval, evaluation, graph and forecasting design choices,
+see [RESEARCH.md](RESEARCH.md). For real, measured results — a live production RAG
+evaluation, an out-of-sample forecast backtest, and a knowledge-graph coverage/retrieval
+measurement — see [BENCHMARK.md](BENCHMARK.md).
 
 ## Deploy
 

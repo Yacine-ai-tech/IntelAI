@@ -47,22 +47,26 @@ FR_TEMPLATES = [
 ]
 
 # Document questions. Each names a document that must be present in
-# knowledge_base for the case to be emitted.
+# knowledge_base for the case to be emitted — kept in sync with the real
+# OmniIntelOS corpus (PDF/PPTX/XLSX/WAV), not a leftover from an earlier dataset.
 DOC_CASES = [
-    ("salesforce_10K_2026.txt", "What does Salesforce's annual report say about its revenue and business risks?", "cfo"),
-    ("salesforce_10Q_2026Q1.txt", "Summarise the most recent Salesforce quarterly results.", "cfo"),
-    ("salesforce_q1fy27_earnings_release.txt", "What did Salesforce report in its latest earnings release?", "analyst"),
-    ("sonatel_resultats_fcfa_verified.md", "Quel chiffre d'affaires le Groupe Sonatel a-t-il publié, et en quelle devise ?", "cfo"),
-    ("sonatel_resultats_fcfa_verified.md", "What revenue did Sonatel Group report in FCFA?", "cfo"),
-    ("dora_2024_report_findings.md", "What do the DORA findings say about software delivery performance?", "cto"),
-    ("ibm_hr_attrition.csv", "What does the HR attrition data show about employees who left?", "chro"),
-    ("hr_employee_churn.csv", "What factors appear in the employee churn dataset?", "chro"),
-    ("richmond_fed_family_transfers_2026.mp3", "What was discussed in the Richmond Fed recording about family transfers?", "ceo"),
+    ("omniintelos_annual_report_2025_en.pdf", "What does the 2025 annual report say about revenue and business risks?", "cfo"),
+    ("omniintelos_esg_report_2025_en.pdf", "What does the 2025 ESG report cover?", "esg"),
+    ("omniintelos_dc1_whitepaper_en.pdf", "What does the DC1 whitepaper describe about the new data center?", "cto"),
+    ("omniintelos_incident_postmortem_INC-2023-0214_en.pdf", "What happened during incident INC-2023-0214, and what was the resolution?", "cto"),
+    ("omniintelos_employee_handbook_2026_en.pdf", "What does the employee handbook say about company policy?", "chro"),
+    ("omniintelos_employee_handbook_2026_fr.pdf", "Que dit le manuel de l'employé sur la politique de l'entreprise ?", "chro"),
+    ("omniintelos_board_deck_2025Q4_en.pptx", "What was presented in the Q4 2025 board deck?", "ceo"),
+    ("omniintelos_financial_model_2020_2026.xlsx", "What does the financial model project for the company?", "cfo"),
+    ("omniintelos_ceo_allhands_2023-02_en.wav", "What did the CEO discuss in the February 2023 all-hands meeting?", "ceo"),
+    ("omniintelos_comite_crise_2020-05_fr.wav", "Qu'a-t-on discuté lors du comité de crise de mai 2020 ?", "ceo"),
+    ("omniintelos_dc1_commissioning_2024-07_en.wav", "What happened during the DC1 data center commissioning?", "cto"),
+    ("omniintelos_hr_townhall_2022-09_en.wav", "What was discussed at the September 2022 HR town hall?", "chro"),
 ]
 
 GLOSSARY_CASES = [
     ("Capacity Utilization", "What does capacity utilization mean?", "general"),
-    ("Attrition", "How is attrition defined?", "chro"),
+    ("Turnover Rate", "How is turnover rate defined?", "chro"),
     ("Revenue", "Define revenue as this system uses the term.", "general"),
 ]
 

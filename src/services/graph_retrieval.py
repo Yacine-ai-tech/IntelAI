@@ -216,12 +216,35 @@ def _rank_from_persisted_entities(query_entities, top_k: int = 6) -> List[Tuple[
         for ref, val in zip(edf["record_ref"], edf["entity_value"]):
             by_ref.setdefault(str(ref), set()).add(str(val).lower())
         scored = sorted(
-            ((ref, len(q & vals)) for ref, vals in by_ref.items()),
+            ((ref, len(q & vals)) for ref, vals in by_ref.items() if len(q & vals) > 0),
             key=lambda x: -x[1],
         )
-        scored = [s for s in scored if s[1] > 0][:top_k]
         if not scored:
             return []
+        # A single KPI record belongs to exactly one department, so for a genuine
+        # multi-hop query (entities spanning >=2 departments) every relevant record
+        # ties at score=1 — plain sort-then-slice just returns whichever department
+        # happens first in table order, silently starving the other side of the
+        # query. Round-robin across the matched departments (by the ref's category
+        # token) so a query naming N departments actually surfaces records from all
+        # of them, not just one. Measured live: before this fix, 0/8 hand-labeled
+        # cross-domain queries returned records from both named departments.
+        by_category: Dict[str, List[Tuple[str, int]]] = {}
+        for ref, score in scored:
+            cat = ref.split("|", 1)[0]
+            by_category.setdefault(cat, []).append((ref, score))
+        buckets = list(by_category.values())
+        scored = []
+        i = 0
+        while len(scored) < top_k and any(buckets):
+            bucket = buckets[i % len(buckets)]
+            if bucket:
+                scored.append(bucket.pop(0))
+            buckets = [b for b in buckets if b]
+            i += 1
+            if not buckets:
+                break
+        scored = scored[:top_k]
         vmap: Dict[str, Tuple[Any, str]] = {}
         mdf = get_kpi_metrics()
         if mdf is not None and not mdf.empty:
