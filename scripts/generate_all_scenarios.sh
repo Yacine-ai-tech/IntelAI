@@ -13,7 +13,7 @@ SCENARIOS=("healthy" "declining_financial" "high_churn_crisis" "operational_melt
 
 for scenario in "${SCENARIOS[@]}"; do
     echo "📊 Generating scenario: $scenario"
-    python3 -m src.data.seed "$scenario"
+    python3 scripts/seed_scenarios.py "$scenario"
     echo "✅ $scenario completed"
     echo ""
 done
@@ -27,7 +27,7 @@ done
 
 echo ""
 echo "To use a specific scenario:"
-echo "  python3 -m src.data.seed <scenario_name>"
+echo "  python3 scripts/seed_scenarios.py <scenario_name>"
 echo ""
 echo "To seed with the default healthy scenario:"
-echo "  python3 -m src.data.seed"
+echo "  python3 scripts/seed_scenarios.py"
