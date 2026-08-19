@@ -113,13 +113,17 @@ Full interactive reference at `/api/docs`.
 ## Tests
 
 ```bash
-pytest tests/ -q                  # all in-process (no live server needed)
-pytest tests/test_smoke.py -q     # 5 smoke checks (zero deps)
-pytest tests/test_api.py -q       # 30+ auth/RBAC/endpoint checks
-pytest tests/test_chat.py -q      # chat endpoint + answer-block assertions
+pytest tests/ -q                        # fast unit suite (in-process, no DB/LLM keys needed)
+pytest tests/test_smoke.py -q           # 5 smoke checks (zero deps)
+pytest tests/test_api.py -q             # unit-marked subset of the auth/RBAC/endpoint checks
+pytest tests/test_chat.py -q            # unit-marked subset of chat/answer-block assertions
+pytest tests/ -o addopts="" -q          # full suite incl. DB-dependent integration tests
 ```
 
-DB-dependent tests run automatically when `POSTGRES_URL` is reachable and skip cleanly otherwise — CI is green without a database.
+`pytest.ini` restricts the default run to `unit`-marked tests (`addopts = -m "unit"`), which is
+what CI's "Unit Tests" job runs — no database needed. The full suite (42 checks in
+`test_api.py` alone) also includes `integration`-marked tests that need a reachable
+`POSTGRES_URL`/`TEST_POSTGRES_URL`; run it with `-o addopts=""` to lift the default filter.
 
 ## Benchmarking Scenarios (Research & Evaluation)
 
@@ -127,7 +131,9 @@ IntelAI provides seven seeded, deterministic, benchmark-calibrated environments 
 × 7 domains × 146 metrics, formula-derived where a real formula applies — see
 [DATA_SEEDING.md](DATA_SEEDING.md)) for evaluating RAG retrieval accuracy and forecasting
 models under structural stress. Selectable via the `Admin → Scenarios` tab or the API directly
-(`POST /api/v1/admin/scenario`):
+(`POST /api/v1/admin/scenario/async`, then poll `GET /api/v1/admin/scenario/{job_id}` — the
+synchronous `POST /api/v1/admin/scenario` still works but the UI uses the async form so the
+switch survives Cloudflare's proxy timeout on the larger scenarios):
 
 | Scenario | Research Application | Description |
 |---|---|---|
