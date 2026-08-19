@@ -398,6 +398,31 @@ def init_pg_tables():
             """
         )
 
+        # Durable job store for POST /api/v1/chat/async + GET /api/v1/chat/{job_id} —
+        # same pattern as DocIntel's proven batch_processor.py: a real chat turn under
+        # cold retrieval (see BENCHMARK.md) can take 60-100s+, long enough that a
+        # synchronous REST call risks a reverse proxy's own timeout cutting the
+        # connection before an otherwise-successful response comes back. Returning a
+        # job_id immediately and polling in short, fast requests means no single
+        # request can ever run long enough to hit that ceiling. Postgres-backed (not
+        # in-memory) so a job survives this process restarting mid-processing — the
+        # same durability reasoning DocIntel's implementation is built on.
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS chat_jobs (
+                id           TEXT PRIMARY KEY,
+                status       TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'running', 'done', 'error')),
+                request      JSONB NOT NULL,
+                result       JSONB,
+                error        TEXT,
+                owner_user_id TEXT,
+                created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                updated_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            )
+            """
+        )
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_chat_jobs_updated_at ON chat_jobs(updated_at)")
+
         # Domain preference and history
         conn.execute(
             """
