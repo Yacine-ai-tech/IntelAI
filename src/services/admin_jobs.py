@@ -26,6 +26,14 @@ log = logging.getLogger(__name__)
 
 JOB_TTL_SECONDS = 3600
 
+# Same orphan risk as chat_jobs.py (see that module for the full reasoning): run_job()
+# executes on the same worker process that handled the original POST /async request —
+# if that process restarts mid-run, nothing is left to ever write 'done' or 'error',
+# and a polling client sees 'running' forever. Confirmed live: a declining_financial
+# scenario-switch job sat in 'running' for 30+ minutes with repeated polling and never
+# self-healed, because this module never got the poll-time reaper chat_jobs.py has.
+STALE_RUNNING_SECONDS = 600
+
 
 def _evict_expired(conn) -> None:
     try:
@@ -91,10 +99,33 @@ def run_job(job_id: str, fn: Callable[[], Dict[str, Any]]) -> None:
             conn.close()
 
 
+def _reap_if_stale(conn, job_id: str) -> None:
+    """Flip an orphaned 'running' job to 'error', lazily, on poll — see
+    STALE_RUNNING_SECONDS above. Scoped to status='running' so this is a no-op once a
+    job has legitimately finished or already been reaped."""
+    try:
+        conn.execute(
+            "UPDATE admin_jobs SET status='error', "
+            "error=%s, updated_at=NOW() "
+            "WHERE id=%s AND status='running' "
+            "AND updated_at < NOW() - make_interval(secs => %s)",
+            (
+                f"job orphaned: no progress for over {STALE_RUNNING_SECONDS}s — the "
+                "worker process handling it most likely restarted mid-run (deploy, "
+                "OOM, or host recycling). Retry the request.",
+                job_id, STALE_RUNNING_SECONDS,
+            ),
+        )
+        conn.commit()
+    except Exception as e:
+        log.debug("stale-job reap skipped for %s (non-fatal): %s", job_id, e)
+
+
 def get_job(job_id: str, owner_user_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
     from src.services.pg_store import _get_conn
     conn = _get_conn()
     try:
+        _reap_if_stale(conn, job_id)
         row = conn.execute(
             "SELECT id, status, request, result, error, owner_user_id, created_at, updated_at "
             "FROM admin_jobs WHERE id = %s",

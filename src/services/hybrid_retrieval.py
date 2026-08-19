@@ -186,7 +186,17 @@ class HybridRetriever:
         self.rrf_k = rrf_k
         self._embedder = None
         self._reranker = None
-        self._reranker_failed = False  # set if an installed reranker errors at runtime
+        # Cooldown timestamp (epoch seconds), not a permanent latch: this retriever is a
+        # process-wide singleton (see hybrid_doc_retrieve's module-level cache), so a plain
+        # bool here meant one transient timeout — e.g. contention from a concurrent
+        # request, or a cold remote host — permanently disabled reranking for every
+        # request the process ever served afterward, until a redeploy. Confirmed live:
+        # a benchmark run under concurrent load tripped one rerank timeout and every
+        # later single-request probe kept getting RRF-fallback scores (top result
+        # normalized to exactly 1.0) even though isolated rerank calls independently
+        # measured well within budget. A short cooldown bounds the blast radius of one
+        # failure without hammering a genuinely-down host on every request.
+        self._reranker_fail_until = 0.0
         self._chunks: List[str] = []
         self._chunk_vecs = None
         self._bm25 = None
@@ -374,7 +384,7 @@ class HybridRetriever:
         rrf = self._rrf_scores(dense, sparse)
         merged = sorted(rrf, key=lambda i: rrf[i], reverse=True)[:cand_n]
 
-        if rerank and not self._reranker_failed:
+        if rerank and time.time() >= self._reranker_fail_until:
             try:
                 r_func = globals().get("rerank")
                 if r_func:
@@ -384,9 +394,11 @@ class HybridRetriever:
                         order = sorted(range(len(merged)), key=lambda j: scores[j], reverse=True)[:top_n]
                         return [{"chunk": self._chunks[merged[j]], "score": float(scores[j])} for j in order]
             except Exception as e:
-                # Degrade to dense+BM25+RRF fusion instead of failing the whole retrieval.
-                self._reranker_failed = True
-                log.warning("Reranker unavailable (%s) — falling back to RRF fusion for this session", e)
+                # Degrade to dense+BM25+RRF fusion for this call and for a short cooldown
+                # afterward (not permanently — see the field comment above).
+                cooldown = float(os.getenv("RERANK_FAIL_COOLDOWN", "30"))
+                self._reranker_fail_until = time.time() + cooldown
+                log.warning("Reranker unavailable (%s) — falling back to RRF fusion for %.0fs", e, cooldown)
 
         # No (working) reranker: return RRF-ranked results with relevance normalized to
         # 0..1 (top result = 1.0) so the score is meaningful, not a flat 1.0 for all.
