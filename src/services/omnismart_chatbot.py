@@ -195,8 +195,8 @@ def llm_complete(
     # scoped to Claude specifically rather than dropping top_p for everyone. Checked
     # against the model name itself, not the routing prefix: the same Claude model
     # hits this restriction whether reached as anthropic/claude-... (native API) or
-    # openai/anthropic/claude-... (an OpenAI-compatible gateway in front of it, e.g.
-    # LitAI) — confirmed live via the openai/ path, which a prefix-only check misses.
+    # openai/anthropic/claude-... (an OpenAI-compatible gateway in front of it) —
+    # confirmed live via the openai/ path, which a prefix-only check misses.
     if top_p is not None and "claude" not in resolved_model.lower():
         kw["top_p"] = top_p
     r = completion(**kw)
