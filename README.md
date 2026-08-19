@@ -131,7 +131,7 @@ models under structural stress. Selectable via the `Admin → Scenarios` tab or 
 
 | Scenario | Research Application | Description |
 |---|---|---|
-| `healthy` | Baseline RAG Eval | Stable baseline calibrated to sit inside documented "healthy" benchmark bands. |
+| `healthy` | Baseline RAG Eval | Exact revert to the real OmniIntelOS baseline — removes whatever scenario overlay is active rather than generating a fresh approximation of it (every scenario write is additive-alongside, so the baseline underneath is never modified while a scenario is active). |
 | `declining_financial` | Trend Reversal | Revenue contraction & margin compression; tests forecast adaptability. |
 | `high_churn_crisis` | Lagging Indicators | Customer retention failure; tests cross-domain correlation (Growth vs Finance). |
 | `operational_meltdown` | Volatility Stress | OEE collapse & quality failures; introduces severe noise to operational metrics. |
@@ -145,8 +145,9 @@ see DATA_SEEDING.md §4 for the full methodology.
 
 For the reasoning behind the retrieval, evaluation, graph and forecasting design choices,
 see [RESEARCH.md](RESEARCH.md). For real, measured results — a live production RAG
-evaluation, an out-of-sample forecast backtest, and a knowledge-graph coverage/retrieval
-measurement — see [BENCHMARK.md](BENCHMARK.md).
+evaluation, an out-of-sample forecast backtest, a knowledge-graph coverage/retrieval
+measurement, and the scenario-switcher correctness fixes above — see
+[BENCHMARK.md](BENCHMARK.md).
 
 ## Deploy
 
@@ -175,8 +176,3 @@ This project collects anonymous, GDPR-compliant startup pings to help the author
 
 <!-- Scarf Analytics Pixel -->
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ada53b5b-d56f-447f-b5ab-a65a061b7d5a" />
-
-
-
-
-![telemetry](https://gateway.ysiddo-ai-projects.app/pixel.png)
