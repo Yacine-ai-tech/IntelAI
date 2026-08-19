@@ -2,16 +2,19 @@
 """
 IntelAI RAG evaluation against the REAL, LIVE production deployment.
 
-Unlike scripts/evaluate_with_rageval.py and evaluate_with_rageval_package.py — which
-both call UltraFastRAG.answer() in-process, so retrieval (embed + rerank, dozens of
-remote HTTP round trips) runs on whatever machine executes the script — this script
-calls the live production POST /api/v1/chat/async + GET /api/v1/chat/{job_id} endpoints
-for every case (not the synchronous POST /api/v1/chat) — a cold-retrieval case can take
-60-100s+, long enough to risk Cloudflare's free-tier proxy cutting the connection
-(HTTP 524) on a single blocking request; polling in short requests avoids that entirely.
-All retrieval work happens inside the real deployed service itself; the machine running
-this script only ever sends/receives small JSON payloads, plus makes the (also small,
-non-embedding) LLM judge calls to score each answer.
+Unlike scripts/evaluate_with_rageval.py — which calls UltraFastRAG.answer() in-process,
+so retrieval (embed + rerank, dozens of remote HTTP round trips) runs on whatever machine
+executes the script — this script calls the live production POST /api/v1/chat/async +
+GET /api/v1/chat/{job_id} endpoints for every case (not the synchronous POST
+/api/v1/chat) — a cold-retrieval case can take 60-100s+, long enough to risk Cloudflare's
+free-tier proxy cutting the connection (HTTP 524) on a single blocking request; polling
+in short requests avoids that entirely. All retrieval work happens inside the real
+deployed service itself; the machine running this script only ever sends/receives small
+JSON payloads, plus makes the (also small, non-embedding) LLM judge calls to score each
+answer. evaluate_with_rageval_package.py takes the same gateway-polling approach for
+generation, for the same reliability reason — its own focus is the RAGeval PACKAGE's
+mechanics (decorator, judge consensus), not retrieval, so it doesn't need in-process
+retrieval either.
 
 Environment variables:
   PROD_GATEWAY_URL   Base URL of the live gateway (default: the real production domain)
@@ -59,6 +62,10 @@ except ImportError:
     sys.exit(1)
 
 GATEWAY = os.getenv("PROD_GATEWAY_URL", "https://intelai.ysiddo-ai-projects.app").rstrip("/")
+
+# Best-effort model for RAGeval's cost_usd pricing lookup (see the comment at its use
+# below) — production's own configured default, not a per-case exact match.
+COST_ESTIMATE_MODEL = os.getenv("PROD_COST_ESTIMATE_MODEL", os.getenv("LLM_DEFAULT", "groq/openai/gpt-oss-120b"))
 
 
 def load_eval_cases() -> List[Dict[str, Any]]:
@@ -250,13 +257,21 @@ def run() -> Dict[str, Any]:
                 scores = asyncio.run(evaluator.score_interaction(
                     query=query, answer=answer, chunks=contexts,
                     tokens_used=out.get("tokens_used", 0), latency_ms=latency_ms,
-                    model="intelai-production-live", persona=persona,
+                    # The live gateway response has no field naming which model actually
+                    # answered this case, so cost_usd can only be estimated against the
+                    # production default rather than the exact per-case model (a handful
+                    # of personas' reasoning tier can differ — see BENCHMARK.md §3b). A
+                    # literal sentinel like "intelai-production-live" here would silently
+                    # price every case at $0 (RAGeval's cost table has no such entry) — this
+                    # is a labeled best-effort estimate instead of a wrong-by-construction one.
+                    model=COST_ESTIMATE_MODEL, persona=persona,
                 ))
                 g = scores.get("groundedness_consensus", {}).get("consensus", scores.get("groundedness"))
                 result.update({
                     "groundedness": g, "relevance": scores.get("relevance"),
                     "faithfulness": scores.get("faithfulness"),
                     "overall_quality": scores.get("overall_quality"),
+                    "cost_usd": scores.get("cost_usd"),
                     "flags": scores.get("flags", []),
                 })
                 print(f"[{i:02d}/{len(cases):02d}] persona={persona:<9} "
@@ -280,6 +295,9 @@ def run() -> Dict[str, Any]:
     overall_scored = [r for r in scored if r.get("overall_quality") is not None]
     avg_overall = sum(r["overall_quality"] for r in overall_scored) / len(overall_scored) if overall_scored else None
     avg_latency = sum(r["latency_ms"] for r in scored) / len(scored) if scored else None
+    costed = [r for r in scored if r.get("cost_usd") is not None]
+    total_cost_usd = sum(r["cost_usd"] for r in costed) if costed else None
+    avg_cost_usd_per_case = (total_cost_usd / len(costed)) if costed else None
 
     summary = {
         "service_evaluated": "IntelAI production (live /api/v1/chat)",
@@ -294,6 +312,8 @@ def run() -> Dict[str, Any]:
         "avg_groundedness": round(avg_groundedness, 4) if avg_groundedness is not None else None,
         "avg_overall_quality": round(avg_overall, 4) if avg_overall is not None else None,
         "avg_latency_ms": round(avg_latency) if avg_latency is not None else None,
+        "total_cost_usd": round(total_cost_usd, 6) if total_cost_usd is not None else None,
+        "avg_cost_usd_per_case": round(avg_cost_usd_per_case, 6) if avg_cost_usd_per_case is not None else None,
         "results": results,
     }
 
@@ -310,6 +330,8 @@ def run() -> Dict[str, Any]:
     print(f"Avg groundedness (judged): {summary['avg_groundedness']} ({len(judged)} cases judged)")
     print(f"Avg overall quality:{summary['avg_overall_quality']}")
     print(f"Avg latency:        {summary['avg_latency_ms']}ms")
+    print(f"Total cost:         ${summary['total_cost_usd']}")
+    print(f"Avg cost/case:      ${summary['avg_cost_usd_per_case']}")
     print(f"Full report: {out_path}")
     return summary
 
