@@ -34,6 +34,29 @@ precision differently, and running a cheap bi-encoder first to narrow candidates
 more expensive cross-encoder to re-order the shortlist, is the standard two-stage pattern
 in both academic IR and production RAG deployments as of 2026.
 
+## Grounding numeric conversions via glossary, not model recall
+
+An LLM asked to convert a dollar figure into another currency will produce a plausible-
+looking number from its own training-data recall of typical exchange rates — fine for a
+rough approximation, wrong for a system whose whole premise is citing the dataset's own
+recorded figures. OmniIntelOS is modelled as headquartered in Niamey, Niger, in the West
+African CFA franc (XOF) zone, and keeps its statutory books in XOF while reporting
+externally in USD (`data/glossary.py`'s `"XOF Exchange Rate"` entry) — so every USD figure
+elsewhere in the corpus is itself a conversion of an XOF-native transaction, at a specific,
+recorded internal rate (1 USD ≈ 607.37 XOF, derived from the real, fixed BCEAO/Eurozone
+peg of 655.957 XOF/EUR and the dataset's own 1.08 USD/EUR planning assumption). A model
+asked "what's that in FCFA" has no way to know this specific dataset uses that specific
+rate rather than whatever floating market rate it last saw in training — it would
+hallucinate a plausible-sounding but wrong number, silently disagreeing with the dataset's
+own recorded XOF rows.
+
+The fix follows the same pattern as every other domain term in this glossary: the
+conversion rate is written down once, as a seeded, cited knowledge-base entry the RAG
+pipeline retrieves and grounds against, rather than left to model recall. This is a small
+instance of a general principle this codebase applies wherever a claim is checkable
+against the dataset's own facts rather than general knowledge — the retrieval layer's
+job is to make the checkable fact available, not to trust the model to already know it.
+
 ## Why an external, dogfooded evaluator rather than an in-process one
 
 IntelAI does not implement its own groundedness scoring. Every live chat interaction is
