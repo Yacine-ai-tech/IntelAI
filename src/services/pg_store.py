@@ -433,6 +433,26 @@ def init_pg_tables():
         )
         conn.execute("CREATE INDEX IF NOT EXISTS idx_chat_jobs_updated_at ON chat_jobs(updated_at)")
 
+        # Same job+poll pattern as chat_jobs, for POST /api/v1/admin/scenario/async —
+        # a scenario switch writes thousands of rows + extracts entities + generates
+        # and embeds knowledge docs, confirmed live to take 80s+, long enough to hit
+        # Cloudflare's proxy timeout even though the operation succeeds server-side.
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS admin_jobs (
+                id           TEXT PRIMARY KEY,
+                status       TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'running', 'done', 'error')),
+                request      JSONB NOT NULL,
+                result       JSONB,
+                error        TEXT,
+                owner_user_id TEXT,
+                created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                updated_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            )
+            """
+        )
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_admin_jobs_updated_at ON admin_jobs(updated_at)")
+
         # Domain preference and history
         conn.execute(
             """
