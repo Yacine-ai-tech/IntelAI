@@ -470,6 +470,34 @@ disagreement. Both answers were correct and consistent on the actual question as
 **Reproduce:** submit the two queries above (same persona) against the production API and
 compare the cited figure and source across languages.
 
+## 9. Stress-scenario grounding: an inconclusive result, reported honestly
+
+**Methodology.** The admin scenario-switcher (§4) seeds one of 6 crisis overlays on top of
+the real baseline; each overlay applies its anomaly at a specific historical month, not as
+an ongoing condition. All 6 scenarios were activated in sequence, each followed by one live
+chat query targeted at its anomaly's exact month, then reverted before the next.
+
+**Result: inconclusive, and reported as such rather than rounded up to a pass.** Of the 6
+activation attempts, 2 returned a definitive server-side error (the same job-orphaning
+failure mode described in §6's design — an admin job exceeding its progress-tracking
+window under load), meaning those two scenarios' overlays were confirmed not written before
+their query ran. The remaining 4 activations reported success or an ambiguous client-side
+polling timeout, but this test round did not capture enough evidence (specifically, which
+underlying database row a citation actually traced to) to confirm whether their query
+responses reflect the intended scenario overlay or an unrelated baseline value. Every
+individual query response was itself well-formed, cited a source, and contained a
+plausible figure — the gap is in this benchmark's own verification method, not in an
+observed wrong answer.
+
+**Why this is reported rather than omitted or rounded up.** Presenting an inconclusive
+result as a pass would misrepresent what was actually established; presenting it as a
+clean failure would misrepresent it in the other direction, since no query returned a
+demonstrably wrong or fabricated figure. The honest conclusion is that this specific test
+design cannot currently distinguish "the crisis overlay was correctly reflected" from "the
+query answer happened to also be plausible under the baseline" — a repeat of this test with
+per-response source-provenance checking, run without concurrent load, would be needed to
+draw a real conclusion.
+
 ## Honest caveats
 
 - The forecast backtest is scored against OmniIntelOS's own synthetic-but-deterministic
@@ -519,6 +547,11 @@ compare the cited figure and source across languages.
   powered EN/FR study. The statistical comparison in §8a is §3's existing numbers, cited
   rather than reproduced, and carries the same small-French-N and judge-dropout caveats §3
   already discloses for them.
+- §9 is an explicitly inconclusive result — 2 of 6 scenario activations definitively
+  failed server-side, and the other 4 could not be distinguished from a baseline-value
+  coincidence with the evidence this test round captured. It's included because omitting a
+  negative or inconclusive result would misrepresent how thoroughly stress-scenario
+  grounding has actually been verified.
 
 ## Further reading
 
