@@ -70,6 +70,35 @@ GLOSSARY_CASES = [
     ("Revenue", "Define revenue as this system uses the term.", "general"),
 ]
 
+# Beyond single-value lookups: the copilot is built to correlate metrics, assess
+# health/risk status, produce grounded action plans, and pull in live web context
+# when internal data alone can't answer (see PERSONA_TEMPLATES' "when you do
+# recommend, tie it to a specific figure" instruction and _needs_web in
+# omnismart_chatbot.py). Each entry names the real metric(s) it depends on so it's
+# still checked against the live DB before being emitted, same discipline as the
+# KPI cases above — this just exercises reasoning ACROSS data rather than a single
+# value lookup.
+CAPABILITY_CASES = [
+    ("How does Deployment Frequency correlate with Change Failure Rate over the "
+     "period we have on record, and what does that tell us about release risk?",
+     "cto", "IT", "correlation", ["Deployment Frequency", "Change Failure Rate"]),
+    ("How does Customer Acquisition Cost (CAC) correlate with Sales & Marketing Spend, "
+     "and is our spend efficiency improving or worsening over time?",
+     "analyst", "cross", "correlation", ["CAC", "Sales & Marketing Spend"]),
+    ("Based on Audit Compliance Score and Privacy Incident Count, what is our current "
+     "compliance health status, and are there any red flags?",
+     "risk", "ESG", "health", ["Audit Compliance Score", "Privacy Incident Count"]),
+    ("Given the current Stockout Rate and On-Time Delivery Rate, what action plan "
+     "would you recommend to improve fulfillment reliability?",
+     "coo", "Logistics", "action-plan", ["Stockout Rate", "On-Time Delivery Rate"]),
+    ("Given the current Annual Employee Turnover and Absenteeism Rate, what action "
+     "plan would you recommend to improve retention?",
+     "chro", "People", "action-plan", ["Annual Employee Turnover", "Absenteeism Rate"]),
+    ("How does our Renewable Energy Ratio compare to current industry best practices "
+     "and benchmark standards for sustainability?",
+     "esg", "ESG", "web-search", ["Renewable Energy Ratio"]),
+]
+
 
 def main() -> int:
     ap = argparse.ArgumentParser()
@@ -82,7 +111,7 @@ def main() -> int:
     from src.services.pg_store import _get_conn
     conn = _get_conn()
     with conn.cursor() as c:
-        c.execute("""SELECT category, metric, period, unit, source FROM kpi_metrics""")
+        c.execute("""SELECT category, metric, period, unit, source, value FROM kpi_metrics""")
         kpis = [dict(r) for r in c.fetchall()]
         c.execute("""SELECT title, source FROM knowledge_base""")
         docs = [dict(r) for r in c.fetchall()]
@@ -104,14 +133,23 @@ def main() -> int:
 
     for domain, rows in sorted(by_domain.items()):
         persona = DOMAIN_PERSONA.get(domain, "analyst")
-        # latest period per metric, so the question targets current data
-        latest: dict[str, dict] = {}
+        # Group by metric, keeping every period each metric has (2020-01..2026-06 in
+        # the real corpus) — previously this always picked each metric's single latest
+        # period, and since every metric's latest period is the same month, the whole
+        # eval set ended up asking about that one month regardless of what else existed.
+        by_metric: dict[str, list[dict]] = {}
         for r in rows:
-            k = r["metric"]
-            if k not in latest or r["period"] > latest[k]["period"]:
-                latest[k] = r
-        picks = sorted(latest.values(), key=lambda r: r["metric"])
-        for r in picks[:3]:
+            by_metric.setdefault(r["metric"], []).append(r)
+        metrics = sorted(by_metric)
+        for i, metric in enumerate(metrics[:3]):
+            periods_sorted = sorted(by_metric[metric], key=lambda r: r["period"])
+            # Rotate the 3 sampled metrics per domain through the early / mid / recent
+            # third of the timeline instead of all landing on the same month — real
+            # timeline coverage, not three questions about the same period.
+            third = max(len(periods_sorted) // 3, 1)
+            buckets = [periods_sorted[:third], periods_sorted[third:2 * third], periods_sorted[2 * third:]]
+            bucket = buckets[i % 3] or periods_sorted
+            r = rng.choice(bucket)
             tpl = rng.choice(EN_TEMPLATES)
             cases.append({
                 "query": tpl.format(metric=r["metric"], period=r["period"]),
@@ -120,10 +158,17 @@ def main() -> int:
                 "domain": domain,
                 "provenance": r["source"],
                 "kind": "kpi",
+                # Real ground truth from the live DB, not a subjective judge score —
+                # lets the eval check factual correctness (does the answer contain
+                # the actual recorded value) independent of any LLM judge's
+                # availability. See evaluate_production_live.py's ground-truth check.
+                "expected_value": r["value"],
+                "expected_unit": r["unit"],
             })
-        # one French case per domain, mirroring the bilingual digests
-        if picks:
-            r = picks[0]
+        # one French case per domain, also drawn from a random period rather than
+        # always the latest, for the same timeline-diversity reason as above
+        if metrics:
+            r = rng.choice(by_metric[metrics[0]])
             cases.append({
                 "query": rng.choice(FR_TEMPLATES).format(metric=r["metric"], period=r["period"]),
                 "expected": r["metric"].lower(),
@@ -131,6 +176,8 @@ def main() -> int:
                 "domain": domain,
                 "provenance": r["source"],
                 "kind": "kpi-fr",
+                "expected_value": r["value"],
+                "expected_unit": r["unit"],
             })
 
     # --- document questions, only for documents actually present -------------
@@ -149,6 +196,17 @@ def main() -> int:
                           "kind": "glossary"})
         else:
             print(f"  skip (no glossary entry): {term}")
+
+    # --- capability cases: correlation / health-status / action-plan / web-search ---
+    all_metrics = {r["metric"] for r in kpis}
+    for query, persona, domain, kind, required_metrics in CAPABILITY_CASES:
+        missing = [m for m in required_metrics if m not in all_metrics]
+        if missing:
+            print(f"  skip ({kind}, metric(s) not in DB): {missing}")
+            continue
+        cases.append({"query": query, "expected": None, "persona": persona,
+                      "domain": domain, "provenance": ",".join(required_metrics),
+                      "kind": kind})
 
     # --- cross-domain, for the executive personas ----------------------------
     domains = sorted(by_domain)
