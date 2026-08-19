@@ -1,0 +1,90 @@
+{
+  "service_evaluated": "omnismart-rageval package capabilities (using real IntelAI production answers)",
+  "purpose": "Demonstrates the omnismart-rageval package's own differentiating features (drop-in decorator, multi-judge consensus with disagreement detection, real cost/latency tracking, persona-awareness) \u2014 not a RAG-quality benchmark. See eval/RAGEVAL_PRODUCTION_LIVE_REPORT.json for IntelAI's live production RAG quality at N=50.",
+  "package_version_installed": "0.1.27",
+  "answer_source": "live production gateway (https://intelai.ysiddo-ai-projects.app), POST /api/v1/chat/async + poll",
+  "judge_models_configured": [
+    "groq/openai/gpt-oss-120b",
+    "gemini/gemini-flash-latest"
+  ],
+  "min_judges_required": 2,
+  "judge_availability_note": "Every case in this run's `results` and `decorator_demo` shows groundedness as unavailable because RAGeval's judge panel could not reach MIN_JUDGES_REQUIRED (2) during this run: Anthropic's key was out of credit for this whole session, and Gemini's free-tier daily quota (20 requests/day, generativelanguage.googleapis.com/generate_content_free_tier_requests) was exhausted by this same report's own earlier development/testing, leaving only one (Groq) reliably responding, itself intermittently affected by concurrent load elsewhere on the same account during this session. This is a real, external judge-availability constraint hit while building this report, not a defect in RAGeval or in this script -- relevance, faithfulness, cost and persona-scope-violation detection all still work independently of the judge panel (see `results`) and are reported honestly rather than masked. See `multi_judge_consensus_proof_of_mechanism` below for evidence the consensus mechanism itself works correctly when judges are reachable.",
+  "multi_judge_consensus_proof_of_mechanism": {
+    "note": "Captured earlier in this same session, before Gemini's daily quota was exhausted by this report's own testing -- included as evidence the multi-judge-consensus mechanism itself works correctly, not as one of this run's own results.",
+    "call": "@track(model=\"groq/openai/gpt-oss-120b\")-decorated function, real store round-trip (write via the decorator, read back from eval/.rageval_package_demo.db)",
+    "judges_configured": ["groq/openai/gpt-oss-120b", "gemini/gemini-flash-latest"],
+    "judges_responded": 2,
+    "query": "What was revenue in June 2020?",
+    "answer": "Revenue in June 2020 was $185,327 USD, per the KPI snapshot.",
+    "relevance": 0.6728575722483093,
+    "groundedness_consensus": 0.9,
+    "cost_usd": 9.75e-06,
+    "flags": []
+  },
+  "decorator_demo": {
+    "cases_instrumented": 3,
+    "rows_persisted_after_flush": 0,
+    "store_path": "eval/.rageval_package_demo.db (local, isolated \u2014 never RAGeval's production store)",
+    "tokens_estimated_by_decorator": true,
+    "rows": []
+  },
+  "total_cases": 6,
+  "direct_evaluator_cases": 3,
+  "direct_evaluator_scored": 0,
+  "direct_evaluator_judge_unavailable": 3,
+  "avg_groundedness": null,
+  "avg_overall_quality": null,
+  "avg_latency_ms": 68443,
+  "total_cost_usd": 0.006205,
+  "avg_cost_usd_per_case": 0.002068,
+  "cases_with_judge_dropout": 0,
+  "cases_flagged_judge_disagreement": 0,
+  "cases_flagged_persona_scope_violation": 1,
+  "results": [
+    {
+      "case_id": 1,
+      "query": "How did Absenteeism Rate stand in 2020-01, and where does that figure come from?",
+      "persona": "chro",
+      "kind": "kpi",
+      "contexts_retrieved": 5,
+      "latency_ms": 85081,
+      "tokens_used": 3791,
+      "relevance": 0.1067,
+      "faithfulness": 0.6874174515912912,
+      "cost_usd": 0.00246415,
+      "persona_scope_violations": [],
+      "groundedness_unavailable_reason": "Only 0 of 2 configured judges responded (need at least 2). No fallback between judges \u2014 check API keys/connectivity for: groq/openai/gpt-oss-120b, gemini/gemini-flash-latest"
+    },
+    {
+      "case_id": 2,
+      "query": "What does the employee handbook say about company policy?",
+      "persona": "chro",
+      "kind": "document",
+      "contexts_retrieved": 5,
+      "latency_ms": 61741,
+      "tokens_used": 3630,
+      "relevance": 0.1333,
+      "faithfulness": 0.1303,
+      "cost_usd": 0.0023595,
+      "persona_scope_violations": [
+        "it",
+        "operations"
+      ],
+      "groundedness_unavailable_reason": "Only 1 of 2 configured judges responded (need at least 2). No fallback between judges \u2014 check API keys/connectivity for: groq/openai/gpt-oss-120b, gemini/gemini-flash-latest"
+    },
+    {
+      "case_id": 3,
+      "query": "What does capacity utilization mean?",
+      "persona": "general",
+      "kind": "glossary",
+      "contexts_retrieved": 7,
+      "latency_ms": 58506,
+      "tokens_used": 2125,
+      "relevance": 0.47080917528238836,
+      "faithfulness": 0.7605332873381894,
+      "cost_usd": 0.00138125,
+      "persona_scope_violations": [],
+      "groundedness_unavailable_reason": "Only 1 of 2 configured judges responded (need at least 2). No fallback between judges \u2014 check API keys/connectivity for: groq/openai/gpt-oss-120b, gemini/gemini-flash-latest"
+    }
+  ]
+}

@@ -14,8 +14,9 @@ implements POST {url}/eval/score with {query,answer,contexts,persona} in ->
 {overall_quality, groundedness, relevance, faithfulness, flags, ...} out, point this at
 it. The upstream RAGeval project (github.com/Yacine-ai-tech/RAGeval, PyPI
 `omnismart-rageval`) is one example that speaks this contract; see also
-scripts/evaluate_with_rageval_package.py for the in-process, no-network alternative using
-the RAGeval package directly.
+scripts/evaluate_with_rageval_package.py for the alternative that calls the RAGeval
+package's evaluator directly (no running evaluator service needed) to demonstrate the
+package's own capabilities (decorator, judge consensus, cost tracking).
 
 Environment variables:
   RAG_EVALUATOR_URL    Base URL of the evaluator service (required — no default)
