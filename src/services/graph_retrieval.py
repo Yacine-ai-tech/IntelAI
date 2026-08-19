@@ -208,10 +208,16 @@ def _rank_from_persisted_entities(query_entities, top_k: int = 6) -> List[Tuple[
     """
     try:
         from src.services.pg_store import get_kpi_entities, get_kpi_metrics
-        edf = get_kpi_entities()
+        q = {e.lower() for e in query_entities}
+        if not q:
+            return []
+        # Filtered server-side to just this query's own entity tokens — the table
+        # holds 70,000+ rows total, of which the vast majority are never relevant to
+        # any single query; pulling everything on every call added multiple seconds
+        # of pure data transfer that had nothing to do with the actual ranking work.
+        edf = get_kpi_entities(entity_values=list(q))
         if edf is None or edf.empty:
             return []
-        q = {e.lower() for e in query_entities}
         by_ref: Dict[str, set] = {}
         for ref, val in zip(edf["record_ref"], edf["entity_value"]):
             by_ref.setdefault(str(ref), set()).add(str(val).lower())
