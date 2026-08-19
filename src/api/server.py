@@ -908,7 +908,7 @@ async def _localize_glossary_entry(entry: Dict[str, Any], lang: str) -> Dict[str
     term = entry.get("term")
     # 1) Static French overlay — the authoritative, complete source.
     try:
-        from src.data.glossary_fr import GLOSSARY_FR
+        from data.glossary_fr import GLOSSARY_FR
         static = GLOSSARY_FR.get(str(term)) or {}
     except Exception:
         static = {}
@@ -955,7 +955,7 @@ async def get_glossary(
     explainer and grounds term definitions (no hallucination). ``lang=fr`` returns
     French definitions (LLM-translated + cached; numbers/formulas preserved)."""
     import asyncio
-    from src.data.glossary import for_domain, get_term
+    from data.glossary import for_domain, get_term
     lang = (lang or getattr(user, "language", None) or "en").lower()
     if term:
         entry = get_term(term)
@@ -2075,16 +2075,22 @@ async def seed_data(user: TokenData = Depends(require_role("admin"))):
 
 @app.post("/api/v1/admin/scenario")
 async def switch_scenario(req: ScenarioRequest, user: TokenData = Depends(require_role("admin"))):
-    """Switch database scenario for benchmarking (admin only)."""
-    from src.data.seed import seed_database
+    """Switch database scenario for benchmarking (admin only).
+
+    "healthy" is not "generate a fresh synthetic healthy-looking dataset" — it resets
+    to the real OmniIntelOS baseline exactly, by removing the active scenario's overlay
+    rather than regenerating an approximation of it (see reset_to_baseline())."""
+    from scripts.seed_scenarios import reset_to_baseline, seed_database
     try:
         # Validate scenario
         valid_scenarios = ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown", "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]
         if req.scenario not in valid_scenarios:
             raise HTTPException(status_code=400, detail=f"Invalid scenario. Valid: {', '.join(valid_scenarios)}")
 
-        # Seed with new scenario
-        counts = seed_database(replace=True, scenario=req.scenario)
+        if req.scenario == "healthy":
+            counts = reset_to_baseline()
+        else:
+            counts = seed_database(replace=True, scenario=req.scenario)
         return {"status": "success", "scenario": req.scenario, "counts": counts}
     except HTTPException:
         raise
