@@ -2083,7 +2083,7 @@ def _run_scenario_switch(scenario: str) -> Dict[str, Any]:
     is called from a background task by the async endpoint below rather than inline.
 
     "healthy" is not "generate a fresh synthetic healthy-looking dataset" — it resets
-    to the real OmniIntelOS baseline exactly, by removing the active scenario's overlay
+    to the real baseline dataset exactly, by removing the active scenario's overlay
     rather than regenerating an approximation of it (see reset_to_baseline())."""
     from scripts.seed_scenarios import reset_to_baseline, seed_database
     if scenario == "healthy":
