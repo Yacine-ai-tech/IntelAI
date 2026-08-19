@@ -1,0 +1,928 @@
+{
+  "service_evaluated": "IntelAI production (live /api/v1/chat)",
+  "gateway_url": "https://intelai.ysiddo-ai-projects.app",
+  "total_cases": 50,
+  "scored_cases": 50,
+  "failed_cases": 0,
+  "ground_truth_applicable_cases": 28,
+  "ground_truth_correct_cases": 20,
+  "ground_truth_accuracy": 0.7143,
+  "judged_cases": 50,
+  "avg_groundedness": 0.5721,
+  "avg_overall_quality": 0.4785,
+  "avg_latency_ms": 74632,
+  "results": [
+    {
+      "case_id": 1,
+      "query": "How did Audit Compliance Score stand in 2021-03, and where does that figure come from?",
+      "persona": "esg",
+      "kind": "kpi",
+      "contexts_retrieved": 6,
+      "latency_ms": 135492,
+      "ground_truth_match": true,
+      "groundedness": 0.25,
+      "relevance": 0.4801084911131652,
+      "faithfulness": 0.6685835471059108,
+      "overall_quality": 0.4257601058664483,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 2,
+      "query": "Report the recorded value of Board Diversity Ratio for 2024-03.",
+      "persona": "esg",
+      "kind": "kpi",
+      "contexts_retrieved": 6,
+      "latency_ms": 50244,
+      "ground_truth_match": true,
+      "groundedness": 0.25,
+      "relevance": 0.1364,
+      "faithfulness": 0.5,
+      "overall_quality": 0.25456,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 3,
+      "query": "How did Carbon Intensity per Revenue stand in 2025-07, and where does that figure come from?",
+      "persona": "esg",
+      "kind": "kpi",
+      "contexts_retrieved": 9,
+      "latency_ms": 53031,
+      "ground_truth_match": false,
+      "groundedness": 0.8375,
+      "relevance": 0.5159340942757054,
+      "faithfulness": 0.7123677798743729,
+      "overall_quality": 0.6838471936851569,
+      "flags": [
+        "HIGH_LATENCY",
+        "PERSONA_SCOPE_VIOLATION"
+      ]
+    },
+    {
+      "case_id": 4,
+      "query": "Quelle \u00e9tait la valeur de Audit Compliance Score en 2026-04 ?",
+      "persona": "esg",
+      "kind": "kpi-fr",
+      "contexts_retrieved": 9,
+      "latency_ms": 47038,
+      "ground_truth_match": true,
+      "groundedness": 1.0,
+      "relevance": 0.2929,
+      "faithfulness": 1.0,
+      "overall_quality": 0.71716,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 5,
+      "query": "How did COGS stand in 2020-06, and where does that figure come from?",
+      "persona": "cfo",
+      "kind": "kpi",
+      "contexts_retrieved": 5,
+      "latency_ms": 115012,
+      "ground_truth_match": true,
+      "groundedness": 0.5,
+      "relevance": 0.1143,
+      "faithfulness": 0.1429,
+      "overall_quality": 0.27430000000000004,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 6,
+      "query": "How did Capital Expenditure stand in 2023-06, and where does that figure come from?",
+      "persona": "cfo",
+      "kind": "kpi",
+      "contexts_retrieved": 5,
+      "latency_ms": 58198,
+      "ground_truth_match": true,
+      "groundedness": 0.25,
+      "relevance": 0.1067,
+      "faithfulness": 0.2857,
+      "overall_quality": 0.19982,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 7,
+      "query": "What was Cash Balance in 2025-12?",
+      "persona": "cfo",
+      "kind": "kpi",
+      "contexts_retrieved": 7,
+      "latency_ms": 75497,
+      "ground_truth_match": false,
+      "groundedness": 0.995,
+      "relevance": 0.5155454055780868,
+      "faithfulness": 0.7387275152979448,
+      "overall_quality": 0.7519636652908238,
+      "flags": [
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 8,
+      "query": "Donnez le chiffre enregistr\u00e9 pour COGS au titre de 2021-01.",
+      "persona": "cfo",
+      "kind": "kpi-fr",
+      "contexts_retrieved": 5,
+      "latency_ms": 146440,
+      "ground_truth_match": false,
+      "groundedness": 0.9375,
+      "relevance": 0.1636,
+      "faithfulness": 0.1731,
+      "overall_quality": 0.47506,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 9,
+      "query": "What was ARPU in 2020-10?",
+      "persona": "ceo",
+      "kind": "kpi",
+      "contexts_retrieved": 10,
+      "latency_ms": 56639,
+      "ground_truth_match": true,
+      "groundedness": 0.0,
+      "relevance": 0.0833,
+      "faithfulness": 0.673220326360283,
+      "overall_quality": 0.1679640652720566,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 10,
+      "query": "How did ARR stand in 2022-05, and where does that figure come from?",
+      "persona": "ceo",
+      "kind": "kpi",
+      "contexts_retrieved": 10,
+      "latency_ms": 72297,
+      "ground_truth_match": true,
+      "groundedness": 0.0,
+      "relevance": 0.0357,
+      "faithfulness": 0.2854,
+      "overall_quality": 0.07136,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 11,
+      "query": "How did CAC stand in 2026-06, and where does that figure come from?",
+      "persona": "ceo",
+      "kind": "kpi",
+      "contexts_retrieved": 10,
+      "latency_ms": 64739,
+      "ground_truth_match": true,
+      "groundedness": 0.2,
+      "relevance": 0.5022297297357909,
+      "faithfulness": 0.1333,
+      "overall_quality": 0.3075518918943164,
+      "flags": [
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 12,
+      "query": "Donnez le chiffre enregistr\u00e9 pour ARPU au titre de 2020-06.",
+      "persona": "ceo",
+      "kind": "kpi-fr",
+      "contexts_retrieved": 10,
+      "latency_ms": 157903,
+      "ground_truth_match": false,
+      "groundedness": 0.975,
+      "relevance": 0.4937977300971256,
+      "faithfulness": 0.1543,
+      "overall_quality": 0.6183790920388502,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 13,
+      "query": "How did API P99 Latency stand in 2021-03, and where does that figure come from?",
+      "persona": "cto",
+      "kind": "kpi",
+      "contexts_retrieved": 6,
+      "latency_ms": 63269,
+      "ground_truth_match": true,
+      "groundedness": 0.4625,
+      "relevance": 0.46065667641194613,
+      "faithfulness": 0.3107,
+      "overall_quality": 0.43140267056477843,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 14,
+      "query": "How did Active Users stand in 2024-02, and where does that figure come from?",
+      "persona": "cto",
+      "kind": "kpi",
+      "contexts_retrieved": 6,
+      "latency_ms": 60974,
+      "ground_truth_match": true,
+      "groundedness": 0.25,
+      "relevance": 0.0889,
+      "faithfulness": 0.6081609679252884,
+      "overall_quality": 0.2571921935850577,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 15,
+      "query": "What was Change Failure Rate in 2026-01?",
+      "persona": "cto",
+      "kind": "kpi",
+      "contexts_retrieved": 9,
+      "latency_ms": 67987,
+      "ground_truth_match": true,
+      "groundedness": 0.6375,
+      "relevance": 0.5183425273016753,
+      "faithfulness": 0.594473493043508,
+      "overall_quality": 0.5812317095293718,
+      "flags": [
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 16,
+      "query": "Quelle \u00e9tait la valeur de API P99 Latency en 2020-02 ?",
+      "persona": "cto",
+      "kind": "kpi-fr",
+      "contexts_retrieved": 6,
+      "latency_ms": 59857,
+      "ground_truth_match": false,
+      "groundedness": 0.9166666666666666,
+      "relevance": 0.1667,
+      "faithfulness": 0.4970731601872181,
+      "overall_quality": 0.5327612987041104,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 17,
+      "query": "What was Average Lead Time in 2020-02?",
+      "persona": "coo",
+      "kind": "kpi",
+      "contexts_retrieved": 7,
+      "latency_ms": 62707,
+      "ground_truth_match": true,
+      "groundedness": 0.3333333333333333,
+      "relevance": 0.47406250729571014,
+      "faithfulness": 0.6928528672960673,
+      "overall_quality": 0.4615289097108309,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 18,
+      "query": "What was Carrying Cost of Inventory in 2022-09?",
+      "persona": "coo",
+      "kind": "kpi",
+      "contexts_retrieved": 7,
+      "latency_ms": 53652,
+      "ground_truth_match": true,
+      "groundedness": 0.25,
+      "relevance": 0.1429,
+      "faithfulness": 0.5714,
+      "overall_quality": 0.27144,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT",
+        "PERSONA_SCOPE_VIOLATION"
+      ]
+    },
+    {
+      "case_id": 19,
+      "query": "What was Inventory Turnover in 2025-12?",
+      "persona": "coo",
+      "kind": "kpi",
+      "contexts_retrieved": 11,
+      "latency_ms": 179952,
+      "ground_truth_match": true,
+      "groundedness": 0.8125,
+      "relevance": 0.2338,
+      "faithfulness": 1.0,
+      "overall_quality": 0.61852,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 20,
+      "query": "Donnez le chiffre enregistr\u00e9 pour Average Lead Time au titre de 2024-12.",
+      "persona": "coo",
+      "kind": "kpi-fr",
+      "contexts_retrieved": 11,
+      "latency_ms": 64540,
+      "ground_truth_match": true,
+      "groundedness": 0.9625,
+      "relevance": 0.5106815109073696,
+      "faithfulness": 0.7106453232479564,
+      "overall_quality": 0.7314016690125391,
+      "flags": [
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 21,
+      "query": "How did Availability stand in 2021-03, and where does that figure come from?",
+      "persona": "coo",
+      "kind": "kpi",
+      "contexts_retrieved": 7,
+      "latency_ms": 113492,
+      "ground_truth_match": true,
+      "groundedness": 0.25,
+      "relevance": 0.49813503608752413,
+      "faithfulness": 0.7872573910129197,
+      "overall_quality": 0.45670549263759364,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 22,
+      "query": "How did Capacity Utilization stand in 2022-09, and where does that figure come from?",
+      "persona": "coo",
+      "kind": "kpi",
+      "contexts_retrieved": 7,
+      "latency_ms": 61629,
+      "ground_truth_match": true,
+      "groundedness": 0.25,
+      "relevance": 0.4945043377463087,
+      "faithfulness": 0.7674926519174554,
+      "overall_quality": 0.4513002654820146,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 23,
+      "query": "How did Cycle Time Efficiency stand in 2024-12, and where does that figure come from?",
+      "persona": "coo",
+      "kind": "kpi",
+      "contexts_retrieved": 11,
+      "latency_ms": 52496,
+      "ground_truth_match": true,
+      "groundedness": 0.9875,
+      "relevance": 0.501103011137145,
+      "faithfulness": 0.852826786406642,
+      "overall_quality": 0.7660065617361864,
+      "flags": [
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 24,
+      "query": "Donnez le chiffre enregistr\u00e9 pour Availability au titre de 2023-02.",
+      "persona": "coo",
+      "kind": "kpi-fr",
+      "contexts_retrieved": 7,
+      "latency_ms": 21592,
+      "ground_truth_match": false,
+      "groundedness": 0.9625,
+      "relevance": 0.48172286969983624,
+      "faithfulness": 0.5733257904531603,
+      "overall_quality": 0.6923543059705666,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 25,
+      "query": "How did Absenteeism Rate stand in 2020-01, and where does that figure come from?",
+      "persona": "chro",
+      "kind": "kpi",
+      "contexts_retrieved": 5,
+      "latency_ms": 51274,
+      "ground_truth_match": true,
+      "groundedness": 0.25,
+      "relevance": 0.4855690128256954,
+      "faithfulness": 0.6890199970065001,
+      "overall_quality": 0.4320316045315782,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 26,
+      "query": "Report the recorded value of Annual Employee Turnover for 2022-05.",
+      "persona": "chro",
+      "kind": "kpi",
+      "contexts_retrieved": 5,
+      "latency_ms": 125131,
+      "ground_truth_match": true,
+      "groundedness": 0.2875,
+      "relevance": 0.5414276722334503,
+      "faithfulness": 0.6776767066714502,
+      "overall_quality": 0.4671064102276702,
+      "flags": [
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 27,
+      "query": "Report the recorded value of Cost Per Hire for 2026-01.",
+      "persona": "chro",
+      "kind": "kpi",
+      "contexts_retrieved": 7,
+      "latency_ms": 51728,
+      "ground_truth_match": false,
+      "groundedness": 1.0,
+      "relevance": 0.2338,
+      "faithfulness": 0.6387824944425065,
+      "overall_quality": 0.6212764988885013,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 28,
+      "query": "Quelle \u00e9tait la valeur de Absenteeism Rate en 2024-05 ?",
+      "persona": "chro",
+      "kind": "kpi-fr",
+      "contexts_retrieved": 5,
+      "latency_ms": 21288,
+      "ground_truth_match": false,
+      "groundedness": 0.6666666666666666,
+      "relevance": 0.4634125573985071,
+      "faithfulness": 0.6017828852626915,
+      "overall_quality": 0.5723882666786079,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 29,
+      "query": "What does the 2025 annual report say about revenue and business risks?",
+      "persona": "cfo",
+      "kind": "document",
+      "contexts_retrieved": 5,
+      "latency_ms": 72107,
+      "ground_truth_match": null,
+      "groundedness": 0.35,
+      "relevance": 0.49413206579624525,
+      "faithfulness": 0.5494681717400252,
+      "overall_quality": 0.44754646066650317,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT",
+        "PERSONA_SCOPE_VIOLATION"
+      ]
+    },
+    {
+      "case_id": 30,
+      "query": "What does the 2025 ESG report cover?",
+      "persona": "esg",
+      "kind": "document",
+      "contexts_retrieved": 6,
+      "latency_ms": 72565,
+      "ground_truth_match": null,
+      "groundedness": 0.4875,
+      "relevance": 0.47805646890128245,
+      "faithfulness": 0.7887244387501162,
+      "overall_quality": 0.5439674753105362,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT",
+        "PERSONA_SCOPE_VIOLATION"
+      ]
+    },
+    {
+      "case_id": 31,
+      "query": "What does the DC1 whitepaper describe about the new data center?",
+      "persona": "cto",
+      "kind": "document",
+      "contexts_retrieved": 6,
+      "latency_ms": 138861,
+      "ground_truth_match": null,
+      "groundedness": 0.7125,
+      "relevance": 0.476442653790446,
+      "faithfulness": 0.1682,
+      "overall_quality": 0.5092170615161784,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT",
+        "PERSONA_SCOPE_VIOLATION"
+      ]
+    },
+    {
+      "case_id": 32,
+      "query": "What happened during incident INC-2023-0214, and what was the resolution?",
+      "persona": "cto",
+      "kind": "document",
+      "contexts_retrieved": 6,
+      "latency_ms": 75471,
+      "ground_truth_match": null,
+      "groundedness": 0.7125,
+      "relevance": 0.41262399995835747,
+      "faithfulness": 0.5369224560357528,
+      "overall_quality": 0.5574340911904936,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT",
+        "PERSONA_SCOPE_VIOLATION"
+      ]
+    },
+    {
+      "case_id": 33,
+      "query": "What does the employee handbook say about company policy?",
+      "persona": "chro",
+      "kind": "document",
+      "contexts_retrieved": 5,
+      "latency_ms": 69521,
+      "ground_truth_match": null,
+      "groundedness": 0.3333333333333333,
+      "relevance": 0.4433169253767992,
+      "faithfulness": 0.5157367529537666,
+      "overall_quality": 0.41380745407480635,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT",
+        "PERSONA_SCOPE_VIOLATION"
+      ]
+    },
+    {
+      "case_id": 34,
+      "query": "Que dit le manuel de l'employ\u00e9 sur la politique de l'entreprise ?",
+      "persona": "chro",
+      "kind": "document",
+      "contexts_retrieved": 5,
+      "latency_ms": 46584,
+      "ground_truth_match": null,
+      "groundedness": 0.25,
+      "relevance": 0.43921301186963263,
+      "faithfulness": 0.4345965138155301,
+      "overall_quality": 0.3626045075109591,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 35,
+      "query": "What was presented in the Q4 2025 board deck?",
+      "persona": "ceo",
+      "kind": "document",
+      "contexts_retrieved": 10,
+      "latency_ms": 65552,
+      "ground_truth_match": null,
+      "groundedness": 0.39999999999999997,
+      "relevance": 0.44469017452396925,
+      "faithfulness": 0.1736,
+      "overall_quality": 0.3725960698095877,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 36,
+      "query": "What does the financial model project for the company?",
+      "persona": "cfo",
+      "kind": "document",
+      "contexts_retrieved": 5,
+      "latency_ms": 94561,
+      "ground_truth_match": null,
+      "groundedness": 0.475,
+      "relevance": 0.47597391143055123,
+      "faithfulness": 0.1788,
+      "overall_quality": 0.4161495645722205,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 37,
+      "query": "What did the CEO discuss in the February 2023 all-hands meeting?",
+      "persona": "ceo",
+      "kind": "document",
+      "contexts_retrieved": 10,
+      "latency_ms": 67782,
+      "ground_truth_match": null,
+      "groundedness": 0.525,
+      "relevance": 0.0273,
+      "faithfulness": 0.1107,
+      "overall_quality": 0.24306000000000003,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 38,
+      "query": "Qu'a-t-on discut\u00e9 lors du comit\u00e9 de crise de mai 2020 ?",
+      "persona": "ceo",
+      "kind": "document",
+      "contexts_retrieved": 10,
+      "latency_ms": 112343,
+      "ground_truth_match": null,
+      "groundedness": 0.95,
+      "relevance": 0.30818965642260165,
+      "faithfulness": 0.4923880495863441,
+      "overall_quality": 0.6017534724863095,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 39,
+      "query": "What happened during the DC1 data center commissioning?",
+      "persona": "cto",
+      "kind": "document",
+      "contexts_retrieved": 6,
+      "latency_ms": 67805,
+      "ground_truth_match": null,
+      "groundedness": 0.7875,
+      "relevance": 0.43909760314773344,
+      "faithfulness": 0.3353,
+      "overall_quality": 0.5576990412590934,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT",
+        "PERSONA_SCOPE_VIOLATION"
+      ]
+    },
+    {
+      "case_id": 40,
+      "query": "What was discussed at the September 2022 HR town hall?",
+      "persona": "chro",
+      "kind": "document",
+      "contexts_retrieved": 5,
+      "latency_ms": 84176,
+      "ground_truth_match": null,
+      "groundedness": 0.375,
+      "relevance": 0.4099294430743091,
+      "faithfulness": 0.5313432192600857,
+      "overall_quality": 0.4202404210817408,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 41,
+      "query": "What does capacity utilization mean?",
+      "persona": "general",
+      "kind": "glossary",
+      "contexts_retrieved": 7,
+      "latency_ms": 51452,
+      "ground_truth_match": null,
+      "groundedness": 0.9875,
+      "relevance": 0.4654067240773293,
+      "faithfulness": 0.7742968681790138,
+      "overall_quality": 0.7360220632667345,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 42,
+      "query": "How is turnover rate defined?",
+      "persona": "chro",
+      "kind": "glossary",
+      "contexts_retrieved": 5,
+      "latency_ms": 54063,
+      "ground_truth_match": null,
+      "groundedness": 0.9625,
+      "relevance": 0.47431513165921074,
+      "faithfulness": 0.8035365921702657,
+      "overall_quality": 0.7354333710977375,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 43,
+      "query": "Define revenue as this system uses the term.",
+      "persona": "general",
+      "kind": "glossary",
+      "contexts_retrieved": 7,
+      "latency_ms": 52320,
+      "ground_truth_match": null,
+      "groundedness": 0.9875,
+      "relevance": 0.0893,
+      "faithfulness": 0.3321,
+      "overall_quality": 0.49714,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "HIGH_LATENCY"
+      ]
+    },
+    {
+      "case_id": 44,
+      "query": "How does Deployment Frequency correlate with Change Failure Rate over the period we have on record, and what does that tell us about release risk?",
+      "persona": "cto",
+      "kind": "correlation",
+      "contexts_retrieved": 6,
+      "latency_ms": 74749,
+      "ground_truth_match": null,
+      "groundedness": 0.5875,
+      "relevance": 0.40568261038568937,
+      "faithfulness": 0.1053,
+      "overall_quality": 0.4183330441542758,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 45,
+      "query": "How does Customer Acquisition Cost (CAC) correlate with Sales & Marketing Spend, and is our spend efficiency improving or worsening over time?",
+      "persona": "ceo",
+      "kind": "correlation",
+      "contexts_retrieved": 14,
+      "latency_ms": 83957,
+      "ground_truth_match": null,
+      "groundedness": 0.7,
+      "relevance": 0.5381416636253614,
+      "faithfulness": 0.271,
+      "overall_quality": 0.5494566654501446,
+      "flags": [
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 46,
+      "query": "Based on Audit Compliance Score and Privacy Incident Count, what is our current compliance health status, and are there any red flags?",
+      "persona": "risk",
+      "kind": "health",
+      "contexts_retrieved": 7,
+      "latency_ms": 60220,
+      "ground_truth_match": null,
+      "groundedness": 0.5125,
+      "relevance": 0.48602809223331844,
+      "faithfulness": 0.5590786516072136,
+      "overall_quality": 0.5112269672147701,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 47,
+      "query": "Given the current Stockout Rate and On-Time Delivery Rate, what action plan would you recommend to improve fulfillment reliability?",
+      "persona": "coo",
+      "kind": "action-plan",
+      "contexts_retrieved": 7,
+      "latency_ms": 57959,
+      "ground_truth_match": null,
+      "groundedness": 0.5125,
+      "relevance": 0.4656654037232353,
+      "faithfulness": 0.579846943375435,
+      "overall_quality": 0.507235550164381,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT",
+        "PERSONA_SCOPE_VIOLATION"
+      ]
+    },
+    {
+      "case_id": 48,
+      "query": "Given the current Annual Employee Turnover and Absenteeism Rate, what action plan would you recommend to improve retention?",
+      "persona": "chro",
+      "kind": "action-plan",
+      "contexts_retrieved": 5,
+      "latency_ms": 57496,
+      "ground_truth_match": null,
+      "groundedness": 0.4875,
+      "relevance": 0.46281245864235493,
+      "faithfulness": 0.0822,
+      "overall_quality": 0.396564983456942,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT",
+        "PERSONA_SCOPE_VIOLATION"
+      ]
+    },
+    {
+      "case_id": 49,
+      "query": "How does our Renewable Energy Ratio compare to current industry best practices and benchmark standards for sustainability?",
+      "persona": "esg",
+      "kind": "web-search",
+      "contexts_retrieved": 10,
+      "latency_ms": 55041,
+      "ground_truth_match": null,
+      "groundedness": 0.275,
+      "relevance": 0.1588,
+      "faithfulness": 0.6666702265154629,
+      "overall_quality": 0.30685404530309257,
+      "flags": [
+        "LOW_RETRIEVAL_RELEVANCE",
+        "POTENTIAL_HALLUCINATION",
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    },
+    {
+      "case_id": 50,
+      "query": "Give an overview of how ESG and Finance indicators are tracking.",
+      "persona": "ceo",
+      "kind": "cross-domain",
+      "contexts_retrieved": 10,
+      "latency_ms": 72917,
+      "ground_truth_match": null,
+      "groundedness": 0.7625,
+      "relevance": 0.5258530681828185,
+      "faithfulness": 0.0735,
+      "overall_quality": 0.5300412272731275,
+      "flags": [
+        "HIGH_LATENCY",
+        "JUDGE_DISAGREEMENT"
+      ]
+    }
+  ]
+}
