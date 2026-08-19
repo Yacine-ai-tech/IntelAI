@@ -2073,35 +2073,78 @@ async def seed_data(user: TokenData = Depends(require_role("admin"))):
     count = await asyncio.to_thread(seed_all_domains)
     return {"status": "seeded", "rows": count}
 
-@app.post("/api/v1/admin/scenario")
-async def switch_scenario(req: ScenarioRequest, user: TokenData = Depends(require_role("admin"))):
-    """Switch database scenario for benchmarking (admin only).
+VALID_SCENARIOS = ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown",
+                    "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]
+
+
+def _run_scenario_switch(scenario: str) -> Dict[str, Any]:
+    """The actual scenario switch — writes thousands of KPI rows, extracts entities,
+    generates + embeds knowledge docs. Confirmed live to take 80s+, which is why this
+    is called from a background task by the async endpoint below rather than inline.
 
     "healthy" is not "generate a fresh synthetic healthy-looking dataset" — it resets
     to the real OmniIntelOS baseline exactly, by removing the active scenario's overlay
     rather than regenerating an approximation of it (see reset_to_baseline())."""
     from scripts.seed_scenarios import reset_to_baseline, seed_database
-    try:
-        # Validate scenario
-        valid_scenarios = ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown", "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]
-        if req.scenario not in valid_scenarios:
-            raise HTTPException(status_code=400, detail=f"Invalid scenario. Valid: {', '.join(valid_scenarios)}")
+    if scenario == "healthy":
+        return reset_to_baseline()
+    return seed_database(replace=True, scenario=scenario)
 
-        if req.scenario == "healthy":
-            counts = reset_to_baseline()
-        else:
-            counts = seed_database(replace=True, scenario=req.scenario)
+
+@app.post("/api/v1/admin/scenario")
+async def switch_scenario(req: ScenarioRequest, user: TokenData = Depends(require_role("admin"))):
+    """Switch database scenario for benchmarking (admin only) — synchronous, blocks
+    until the switch completes. Confirmed live to take 80s+, long enough that
+    Cloudflare's free-tier proxy in production can cut the connection with a 502
+    before this response comes back, even though the switch succeeds server-side a
+    few seconds later. Prefer POST .../async + GET .../{job_id} below for any caller
+    behind that proxy; this synchronous form is kept for callers that set their own
+    longer timeout (e.g. local dev, or scripts run directly against the backend)."""
+    if req.scenario not in VALID_SCENARIOS:
+        raise HTTPException(status_code=400, detail=f"Invalid scenario. Valid: {', '.join(VALID_SCENARIOS)}")
+    try:
+        counts = await asyncio.to_thread(_run_scenario_switch, req.scenario)
         return {"status": "success", "scenario": req.scenario, "counts": counts}
-    except HTTPException:
-        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/v1/admin/scenario/async")
+async def switch_scenario_async(req: ScenarioRequest, background: BackgroundTasks,
+                                 user: TokenData = Depends(require_role("admin"))):
+    """Same switch as POST /api/v1/admin/scenario, but returns a job_id immediately
+    instead of blocking — the fix for the Cloudflare 524/502 risk documented above.
+    Poll GET /api/v1/admin/scenario/{job_id} for the result."""
+    if req.scenario not in VALID_SCENARIOS:
+        raise HTTPException(status_code=400, detail=f"Invalid scenario. Valid: {', '.join(VALID_SCENARIOS)}")
+    from src.services.admin_jobs import new_job, run_job
+    job_id = new_job({"scenario": req.scenario}, owner_user_id=user.user_id)
+    background.add_task(run_job, job_id, lambda: _run_scenario_switch(req.scenario))
+    return {"job_id": job_id}
+
+
+@app.get("/api/v1/admin/scenario/{job_id}")
+async def scenario_job_status(job_id: str, user: TokenData = Depends(require_role("admin"))):
+    """Poll target for POST /api/v1/admin/scenario/async."""
+    from src.services.admin_jobs import get_job
+    job = await asyncio.to_thread(get_job, job_id, user.user_id)
+    if not job:
+        raise HTTPException(status_code=404, detail=f"Job '{job_id}' not found")
+    out = {"job_id": job_id, "status": job["status"]}
+    if job["status"] == "done":
+        result = job.get("result") or {}
+        out["scenario"] = (job.get("request") or {}).get("scenario")
+        out["counts"] = result
+    elif job["status"] == "error":
+        out["error"] = job.get("error")
+    return out
+
 
 @app.get("/api/v1/admin/scenario")
 async def get_current_scenario(user: TokenData = Depends(require_role("admin"))):
     """Get current active scenario (admin only)."""
     # This would require tracking current scenario in database, for now return default
-    return {"current_scenario": "healthy", "available_scenarios": ["healthy", "declining_financial", "high_churn_crisis", "operational_meltdown", "talent_crisis", "cybersecurity_breach", "esg_compliance_failure"]}
+    return {"current_scenario": "healthy", "available_scenarios": VALID_SCENARIOS}
 
 
 

@@ -193,7 +193,33 @@ export const downloadFile = (fileId) => api.get(`/files/${fileId}/download`, { r
 export const getStatus = () => api.get('/status')
 
 // ── Scenario Management ─────────────────────────────────
-export const switchScenario = (scenarioId) => api.post('/admin/scenario', { scenario: scenarioId })
+// A scenario switch writes thousands of KPI rows, extracts entities, and generates +
+// embeds knowledge docs — confirmed live to take 80s+, long enough that the proxy in
+// front of production can cut the connection with a 502/524 before the (otherwise
+// successful) synchronous response comes back. Submit + poll instead, so no single
+// request needs to stay open long enough to hit that ceiling.
+// Mimics axios's error shape (err.response.data.detail) on failure — existing callers
+// already read errors that way (from the old synchronous endpoint's real axios
+// errors), so this keeps their error handling working unchanged.
+const scenarioError = (detail) => {
+  const err = new Error(detail)
+  err.response = { data: { detail } }
+  return err
+}
+
+export const switchScenario = async (scenarioId, { pollIntervalMs = 3000, timeoutMs = 180000 } = {}) => {
+  const submit = await api.post('/admin/scenario/async', { scenario: scenarioId })
+  const jobId = submit.data.job_id
+  const start = Date.now()
+  while (Date.now() - start < timeoutMs) {
+    const poll = await api.get(`/admin/scenario/${jobId}`)
+    const { status } = poll.data
+    if (status === 'done') return poll
+    if (status === 'error') throw scenarioError(poll.data.error || 'Scenario switch failed')
+    await delay(pollIntervalMs)
+  }
+  throw scenarioError('Scenario switch timed out waiting for completion')
+}
 export const getCurrentScenario = () => api.get('/admin/scenario')
 
 export default api
