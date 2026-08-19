@@ -56,9 +56,9 @@ the `rageval` package; it's opt-in for anyone running the benchmark scripts loca
 model and a full 4-judge panel to produce meaningful numbers, but the direct Anthropic
 credentials available at benchmark time were exhausted. Rather than skip reasoning-tier
 personas or run a degraded judge panel, that one evaluation run temporarily pointed
-`LLM_REASONING` and `JUDGE_MODELS`' non-Groq entries at Lightning AI's LitAI gateway
-(`https://lightning.ai/api/v1`) — a real, third-party OpenAI-compatible multi-model API,
-reached through LiteLLM's existing generic `openai/` prefix + `OPENAI_BASE_URL` override
+`LLM_REASONING` and `JUDGE_MODELS`' non-Groq entries at a third-party OpenAI-compatible
+multi-model gateway — a real third-party multi-model API, reached through LiteLLM's
+existing generic `openai/` prefix + `OPENAI_BASE_URL` override
 mechanism (the same mechanism this codebase already uses for any self-hosted or
 third-party inference endpoint — see the hybrid-retrieval section above). No code changed
 to make this work; it's the same provider-agnostic routing this project already has,

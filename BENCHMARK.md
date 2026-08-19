@@ -12,14 +12,14 @@ as such — a benchmark that only shows wins isn't a benchmark.
 
 **A methodology note on §3:** the live production RAG evaluation's judge panel, and the
 reasoning-tier persona chat calls it scores (`ceo`/`cfo`/`cto`/`risk`), were temporarily
-routed through Lightning AI's LitAI multi-model gateway for the duration of that
-evaluation run only — direct Anthropic credentials were unavailable at benchmark time.
-LitAI is a real, third-party multi-model API (`https://lightning.ai/api/v1`,
-OpenAI-compatible), reached via LiteLLM's standard `openai/` prefix + `OPENAI_BASE_URL`
-override — zero code changes, pure config, and reverted immediately after this run
-completed. Nothing about this routing lives in any tracked config in this repo or any
-other project repo; it's disclosed here because it's part of how these specific numbers
-were produced, not because it's part of the system's design.
+routed through a third-party OpenAI-compatible multi-model gateway for the duration of
+that evaluation run only — direct Anthropic credentials were unavailable at benchmark
+time. The gateway is a real, third-party multi-model API, reached via LiteLLM's
+standard `openai/` prefix + `OPENAI_BASE_URL` override — zero code changes, pure
+config, and reverted immediately after this run completed. Nothing about this routing
+lives in any tracked config in this repo or any other project repo; it's disclosed here
+because it's part of how these specific numbers were produced, not because it's part of
+the system's design.
 
 ## 1. Forecasting: out-of-sample backtest
 
@@ -212,13 +212,13 @@ number. The judge-panel groundedness average is reported too, but with the cavea
 | kpi (English) | 21 | 0.431 | 77.4s |
 | web-search | 1 | 0.275 | 55.0s |
 
-### 3b. Judge-panel reliability under concurrent LitAI load
+### 3b. Judge-panel reliability under concurrent gateway load
 
 This run's judge panel (`JUDGE_MODELS`) and 4 of the 9 personas' reasoning tier
-(`ceo`/`cfo`/`cto`/`risk`) were both temporarily routed through Lightning AI's LitAI
-multi-model gateway for this evaluation — see the note at the top of this document on why,
-and `RESEARCH.md` for the mechanism. Sharing one gateway key between the judge panel and
-the chat calls being judged meant both competed for the same rate limit: 2 of the 4
+(`ceo`/`cfo`/`cto`/`risk`) were both temporarily routed through the same third-party
+multi-model gateway for this evaluation — see the note at the top of this document on
+why, and `RESEARCH.md` for the mechanism. Sharing one gateway key between the judge
+panel and the chat calls being judged meant both competed for the same rate limit: 2 of the 4
 configured judges (`claude-haiku-4-5`, `gpt-3.5-turbo`) were intermittently reported
 `unavailable (skipped)` by RAGeval's own judge-availability check on 7 of the 50 cases.
 
