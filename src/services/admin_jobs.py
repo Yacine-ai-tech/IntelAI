@@ -96,7 +96,7 @@ def get_job(job_id: str, owner_user_id: Optional[str] = None) -> Optional[Dict[s
     conn = _get_conn()
     try:
         row = conn.execute(
-            "SELECT id, status, result, error, owner_user_id, created_at, updated_at "
+            "SELECT id, status, request, result, error, owner_user_id, created_at, updated_at "
             "FROM admin_jobs WHERE id = %s",
             (job_id,),
         ).fetchone()
