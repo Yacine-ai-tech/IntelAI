@@ -269,7 +269,9 @@ that the values are internally generated and not audited.
 `scripts/seed_scenarios.py` lives alongside `scripts/seed_data.py` — both are ways to
 populate the dataset — but it's a different kind of thing: it's also imported live by the
 running server (`from scripts.seed_scenarios import seed_database`) as what
-`POST /api/v1/admin/scenario` and the `Admin → Scenarios` UI tab call at runtime to switch
+`POST /api/v1/admin/scenario` (and its async form, `POST /api/v1/admin/scenario/async` +
+`GET /api/v1/admin/scenario/{job_id}`, which the `Admin → Scenarios` UI tab actually calls so
+the switch survives Cloudflare's proxy timeout) calls at runtime to switch
 between 7 modelled health scenarios for offline demos and benchmarking (see
 `scripts/generate_all_scenarios.sh` to generate all 7 at once). It writes directly to
 Postgres and labels every row `source = 'seed_*'`, so it is always separable from the
