@@ -346,6 +346,74 @@ rather than reading this flag as evidence either way.
 scripts/evaluate_production_live.py`. Full per-case results:
 `eval/RAGEVAL_PRODUCTION_LIVE_REPORT.json`.
 
+## 4. Admin scenario-switching correctness
+
+The `Admin → Scenarios` tab (`POST /api/v1/admin/scenario`, `scripts/seed_scenarios.py`)
+overlays one of 7 modelled health scenarios on top of the real OmniIntelOS baseline for
+demos and benchmarking (§9 of `DATA_SEEDING.md`) — every scenario row is tagged
+`source LIKE 'seed_%'` so it's always separable from, and never supposed to touch, the
+baseline underneath. Diversifying the RAG eval set (§3c) led to testing this feature more
+thoroughly, which surfaced two real correctness bugs in how that overlay actually behaved
+in the database, not just in the demo UI.
+
+### 4a. Duplicate/conflicting KPI values while a scenario is active
+
+`get_kpi_metrics()` had no awareness that the scenario-switcher writes an alternate value
+for the same `(period, category, metric)` under a `seed_`-prefixed `source`, without
+touching the real baseline row. While a scenario was active, a query for a single
+metric+period could return **two** rows — the baseline's and the scenario's — with no
+defined winner. Confirmed live: `_retrieve_context()`'s KPI-snapshot builder joins every
+matching row into one text block, so the chat copilot's own prompt would contain the same
+metric twice with two different values (e.g. `COGS=82,084 USD; COGS=95,000 USD`) with
+nothing in the text distinguishing which one was real.
+
+The first fix attempt — a `DISTINCT ON` keyed on `period + category + metric + segment` —
+didn't actually resolve it: the baseline and scenario generators stamp different,
+arbitrary segment labels (`"OmniIntelOS"` vs `"Global"`) for what's the same underlying
+fact, so both rows survived the dedup as if they were legitimately different data. The
+real fix resolves conflicts at `(period, category, metric)` only, letting a `seed_`-source
+row win outright whenever one exists for that fact — segment stays a free dimension
+*within* whichever source wins, so legitimate multi-segment data elsewhere in the corpus
+(e.g. per-country ESG rows) is untouched.
+
+### 4b. Activating any scenario wiped the ENTIRE `kpi_entities` table
+
+`store_kpi_entities(rows, replace=True)` ran an unconditional `DELETE FROM kpi_entities` —
+not scoped to the scenario's own rows — every single time a scenario was activated. This
+silently destroyed every GraphRAG-lite entity extracted from the real baseline dataset on
+ordinary CSV ingest, not just the previous scenario's entities: switching scenarios twice
+in a demo was enough to leave the baseline's own multi-hop retrieval graph permanently
+empty. Fixed by adding a `source` column to `kpi_entities` and scoping the delete to
+`source LIKE 'seed_%'` — the same `replace_prefix` contract `store_knowledge_docs()`
+already used for the identical reason — with both write paths (auto-extraction on
+ordinary ingest, and the scenario generator) now stamping `source` per row so the delete
+knows what it's actually allowed to remove.
+
+A third gap closed in the same fix: there was previously no way to get back to the *exact*
+original baseline — selecting the `healthy` scenario meant "regenerate a fresh
+synthetic healthy-looking dataset," not "restore the real thing," so the specific baseline
+values any earlier benchmark run in this document was measured against weren't
+guaranteed to survive a scenario round-trip. Since every scenario write is
+additive-alongside (the baseline's own rows/tags are never modified while a scenario is
+active), `reset_to_baseline()` now just deletes the scenario's overlay across all three
+affected tables (`kpi_metrics`, `kpi_entities`, `knowledge_base`) — exposing the real
+baseline again exactly, by construction, since it was never touched in the first place,
+rather than by re-running a generator and hoping the output matches.
+
+A related, unrelated-to-correctness perf fix found along the way: `get_kpi_entities()` had
+no filtering at all — it pulled the entire table (77,000+ rows) on every call, including
+on the hot GraphRAG-lite chat-retrieval path (§2b). Added a server-side, indexed
+`entity_values` filter and wired `graph_retrieval.py`'s ranking function to request only
+the entity values a given query actually mentions, instead of the whole table.
+
+Shipped as issue [#151](https://github.com/Yacine-ai-tech/IntelAI/issues/151) (PR
+[#152](https://github.com/Yacine-ai-tech/IntelAI/pull/152)).
+
+**The lesson generalizes the same way §3c's did:** these bugs were invisible from the
+demo UI (which always shows a single, defined answer) and only surfaced once the
+underlying data model was queried the way the RAG copilot actually queries it —
+diversifying what gets tested, not just adding more of the same test, is what found both.
+
 ## Honest caveats
 
 - The forecast backtest is scored against OmniIntelOS's own synthetic-but-deterministic
@@ -370,6 +438,9 @@ scripts/evaluate_production_live.py`. Full per-case results:
 - The two case kinds with n=1 (health, web-search) and n=2 (correlation, action-plan) are
   real, live-verified capability checks, not statistically powered quality measurements —
   reported as what they are in §3e rather than inflated into a false-precision average.
+- §4's two scenario-switching bugs, like the entity-extraction/multi-hop fixes above, were
+  found by testing more thoroughly *while* this benchmark work was underway, not before
+  it — disclosed the same way, rather than presented as if they'd always been correct.
 
 ## Further reading
 
