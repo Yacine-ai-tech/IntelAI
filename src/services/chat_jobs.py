@@ -33,6 +33,18 @@ log = logging.getLogger(__name__)
 # its own unbounded-growth problem in the DB.
 JOB_TTL_SECONDS = 3600
 
+# How long a job may sit in 'running' with no update before it's treated as orphaned.
+# run_job() executes via FastAPI's BackgroundTasks on the SAME worker process that
+# handled the original POST /chat/async request — if that process restarts mid-run
+# (a real risk on this single free-tier instance: deploys, OOM, host recycling, all
+# explicitly called out in this module's own docstring above), nothing is left to
+# ever write 'done' or 'error' for that job, and a polling client sees 'running'
+# forever. Confirmed live: a real job sat in 'running' for 650+s (see BENCHMARK.md
+# §5) with no sign of progress, well past the 50-150s real chat turns actually take.
+# Set well above that real-world ceiling so a merely slow turn is never mistaken for
+# an orphan.
+STALE_RUNNING_SECONDS = 600
+
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -105,14 +117,43 @@ async def run_job(job_id: str, fn: Callable[[], Any]) -> None:
             conn.close()
 
 
+def _reap_if_stale(conn, job_id: str) -> None:
+    """Flip an orphaned 'running' job to 'error', lazily, on poll — same lazy-check
+    style as _evict_expired() above rather than a dedicated background loop. Scoped
+    to status='running' in the WHERE clause so this is a no-op (and safe to call on
+    every poll) once a job has legitimately finished or already been reaped."""
+    try:
+        conn.execute(
+            "UPDATE chat_jobs SET status='error', "
+            "error=%s, updated_at=NOW() "
+            "WHERE id=%s AND status='running' "
+            "AND updated_at < NOW() - make_interval(secs => %s)",
+            (
+                f"job orphaned: no progress for over {STALE_RUNNING_SECONDS}s — the "
+                "worker process handling it most likely restarted mid-run (deploy, "
+                "OOM, or host recycling). Retry the request.",
+                job_id, STALE_RUNNING_SECONDS,
+            ),
+        )
+        conn.commit()
+    except Exception as e:
+        log.debug("stale-job reap skipped for %s (non-fatal): %s", job_id, e)
+
+
 def get_job(job_id: str, owner_user_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
     """Returns the job row, or None if it doesn't exist / TTL-expired / owned by
     someone else. Scoping by owner_user_id (when the caller has one) keeps one user's
     chat job from being pollable by another — same privacy reasoning DocIntel's
-    session-scoped batch endpoints use."""
+    session-scoped batch endpoints use.
+
+    Before reading, reaps the job if it's been stuck in 'running' past
+    STALE_RUNNING_SECONDS (see that constant) — without this, a client polling an
+    orphaned job gets 'running' forever with no way to know its request was lost
+    rather than merely slow."""
     from src.services.pg_store import _get_conn
     conn = _get_conn()
     try:
+        _reap_if_stale(conn, job_id)
         row = conn.execute(
             "SELECT id, status, result, error, owner_user_id, created_at, updated_at "
             "FROM chat_jobs WHERE id = %s",
