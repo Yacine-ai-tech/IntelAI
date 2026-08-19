@@ -540,22 +540,38 @@ code path — the two probes' score *shapes* look like the two different code pa
 (reranked vs. RRF-only) `retrieve()`'s own fallback branch describes, not like the same
 mechanism producing different numbers by chance.
 
-**Is this the already-documented timeout fallback, or a new bug?** Reranking here almost
-certainly hit the cold-host path, not a bug. `RERANK_URL`/`EMBED_URL` point at the same
-on-demand orchestrator host already discussed in this document's honest caveats (§3's "GPU
-inference backend that isn't always warm on first request") and in `.env`'s own comments:
-`INFERENCE_WAKE_TIMEOUT` was deliberately capped at 40s this session (down from a
-420s default that previously guaranteed every cold rerank/embed call would blow through
-Cloudflare's ~100-125s ceiling) specifically so a cold host fails fast into the RRF
-fallback instead of hanging the whole request. §5c's 69.8s total is consistent with up to
-~40s spent retrying a sleeping rerank host before falling back, plus KPI-snapshot
-assembly and a long structured generation for the rest — server logs aren't available to
-confirm this directly, so this is an inference from timing and score shape, not a proven
-root cause, but it matches already-documented, intentional behavior rather than pointing
-to anything newly broken. §5a's clean, distinct scores at a similar 52.5s latency suggest
-the reranker *can* and does engage successfully when the host happens to be warm — the
-degradation is real, situational, and already accounted for by this session's timeout
-tuning, not evidence hybrid retrieval's rerank stage is broken.
+**Is this the already-documented timeout fallback, or a new bug? Verified directly against
+the orchestrator host, not just inferred.** The three probes above were run *concurrently*
+(§5a/§5b/§5c fired as three simultaneous background jobs against production), so this
+question was checked by calling `RERANK_URL`/`EMBED_URL`'s `/embed` and `/rerank` endpoints
+directly, in isolation, outside the app:
+
+| Call | Payload | Isolated latency | vs. configured timeout |
+|---|---|---|---|
+| `/embed` | 1 realistic query string | 2.6-2.9s (2 runs) | well under `EMBED_TIMEOUT=15s` |
+| `/rerank` | 20 texts (this pipeline's realistic candidate count, `cand=max(top_k*4,20)`) | 10.7-11.1s (2 runs) | well under `RERANK_TIMEOUT=15s` |
+| `/rerank` | 3 texts, fired back-to-back with other overlapping test calls | 23.0-24.5s | **exceeds** `RERANK_TIMEOUT=15s` |
+
+A single, uncontended request comfortably fits inside both configured timeouts — and
+produces genuine, well-differentiated cross-encoder output: a direct `/rerank` call with
+the query *"employee turnover"* against three real corpus sentences returned distinct
+scores of 0.724 (the actual turnover sentence), 0.008 (a related but different metric),
+and 0.00007 (an unrelated one) — exactly the kind of continuous, semantically-ordered
+output a working cross-encoder should produce, confirming the reranker model itself is not
+broken. The slow, timeout-triggering readings only appeared when multiple requests were
+fired at this same host in close succession — which is exactly what running §5a, §5b, and
+§5c *concurrently* against production did to the shared inference host behind the scenes.
+**The most likely explanation for §5c's tied RRF-fallback score, corrected from an earlier
+draft of this section, is contention from this benchmark's own concurrent probes on a
+low-concurrency host — not a standing per-request timeout misconfiguration.** `.env`'s
+`INFERENCE_WAKE_TIMEOUT=40s` cap (this session's earlier, correct fix for a *different*,
+already-documented incident — a cold host previously blowing through Cloudflare's
+~100-125s ceiling) is real and still matters under genuine cold-start or concurrent-load
+conditions; it just isn't the deterministic per-request cause it first looked like here.
+Server logs still aren't available to confirm which of "concurrent-load contention" or
+"a genuinely cold host at that moment" actually triggered this specific fallback — both
+remain live possibilities, and both are the same class of shared-low-concurrency-host
+degradation this document already discloses, not a newly discovered defect.
 
 **Summary across the three probes:**
 
@@ -563,12 +579,50 @@ tuning, not evidence hybrid retrieval's rerank stage is broken.
 |---|---|---|---|---|
 | §5a lexical exact-match | BM25 half | 52.5s | 5,684 | Correct value, correct doc, distinct rerank-shaped scores |
 | §5b semantic paraphrase | dense half | 53.2s | 2,445 | Real, grounded, zero-vocab-overlap match; resolved to a related but less precise fact than the exact DB row |
-| §5c rerank under ambiguity | cross-encoder stage | 69.8s | 6,861 | Correct domain disambiguation; tied scores indicate RRF-fallback, consistent with documented cold-host behavior |
+| §5c rerank under ambiguity | cross-encoder stage | 69.8s | 6,861 | Correct domain disambiguation; tied scores indicate RRF-fallback — isolated direct testing shows this is very likely concurrent-probe contention on a shared host, not a per-request config bug |
 
 **Reproduce:** `POST /api/v1/chat/async` with the three queries and personas above against
 `https://intelai.ysiddo-ai-projects.app`, poll `GET /api/v1/chat/{job_id}`, and inspect the
 `sources` array's `relevance` field per source `type` — excluding `kpi`-type entries, whose
 relevance is hardcoded and not evidence of anything.
+
+## 6. A real bug §5 surfaced: orphaned async chat jobs never resolve
+
+**What happened.** While the very first attempt at §5a's lexical-match probe was running,
+its job sat at `status: "running"` for over 650 seconds — more than 4x the longest real
+chat turn measured anywhere else in this document — and never moved. Re-polling the exact
+same `job_id` repeatedly confirmed it: not slow, genuinely stuck.
+
+**Root cause.** `src/services/chat_jobs.py::run_job()` is passed to FastAPI's
+`BackgroundTasks.add_task()` and executes on the *same worker process* that handled the
+original `POST /api/v1/chat/async` request — this is by design (see `POST /chat/async` in
+`src/api/server.py`), not a defect on its own. But this is also a single free-tier
+`WEB_CONCURRENCY=1` instance that does restart (deploys, OOM, host recycling — all called
+out in `chat_jobs.py`'s own module docstring as real, expected events). If that restart
+happens while a job is mid-run, nothing is left running to ever write `status='done'` or
+`status='error'` for it — the row (durably persisted in Postgres specifically so a job
+*record* survives a restart) is left at `'running'` forever, and `GET /chat/{job_id}`
+faithfully, endlessly reports a status that no process is ever going to change again. The
+Postgres-backed job store solves "don't lose the job's existence" but not "notice when the
+work behind it is gone" — those are two different guarantees, and only the first existed.
+
+**Fix.** Added `_reap_if_stale()` to `chat_jobs.py`, called at the top of `get_job()`
+(`STALE_RUNNING_SECONDS = 600` — comfortably above the 50-150s real chat turns measured in
+§3, so a merely slow turn is never misdiagnosed as orphaned). On each poll, a single scoped
+`UPDATE ... WHERE status='running' AND updated_at < NOW() - make_interval(secs => 600)`
+flips a stuck job to `'error'` with an explanatory message, so a polling client gets a real
+terminal status — and can retry — instead of polling a corpse indefinitely. Scoped
+correctly, this is a no-op on every poll of a healthy or already-finished job; it only ever
+touches a row that is both still `'running'` and stale. Covered by
+`tests/test_unit_chat_jobs.py` (in-memory, no live DB needed — asserts the reaper's SQL
+targets exactly a stuck-and-running row, never raises on a broken connection, and that the
+threshold stays well clear of a real chat turn's latency).
+
+**Scope note:** this fix changes real backend code, not just this document. Render's
+`render.yaml` has `autoDeploy: false` for this service, so — unlike the docs-only §1-5
+change this benchmark started as — this fix does not take effect on the live deployment
+until a maintainer with Render dashboard access triggers a manual deploy of the merged
+commit.
 
 ## Honest caveats
 
@@ -602,8 +656,16 @@ relevance is hardcoded and not evidence of anything.
   compare against directly; each probe instead isolates one mechanism as cleanly as a
   single live query can.
 - §5c's conclusion that a tied relevance score indicates RRF-fallback (not genuine
-  reranking) is an inference from score shape and timing, not a server-log confirmation —
-  disclosed as such rather than presented as directly observed.
+  reranking) is an inference from score shape and direct isolated testing of the
+  orchestrator host, not a server-log confirmation — disclosed as such rather than
+  presented as directly observed. An earlier draft of this section attributed the
+  fallback to `INFERENCE_WAKE_TIMEOUT`'s cold-host behavior specifically; direct testing
+  showed a single uncontended request comfortably fits the configured timeouts, so that
+  draft's framing was corrected in place to point at concurrent-probe contention instead
+  — left visible here rather than silently rewritten.
+- §6's fix is real backend code, verified by a passing in-memory unit test, but not
+  verified against the live deployment — `render.yaml`'s `autoDeploy: false` means it
+  isn't live until someone with Render dashboard access deploys the merged commit.
 
 ## Further reading
 
