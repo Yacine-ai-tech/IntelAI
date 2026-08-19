@@ -942,7 +942,15 @@ class AgentPersonaFactory:
         # doc whose domain is outside scope. Domain-agnostic docs (glossary definitions,
         # untagged docs) are kept — they carry no scoped company data.
         try:
-            docs = _get_shared_rag()._retrieve_documents(message, top_k=6, language=language)
+            # Tunable, not hardcoded — the right breadth depends on the deployer's own
+            # corpus (redundancy, document count, typical chunk relevance), not
+            # anything specific to one dataset. Confirmed live: 6 was pulling several
+            # near-duplicate documents for a single query, inflating prompt size well
+            # past a real downstream token-per-minute limit with mostly redundant
+            # content — a symptom of "too broad for this corpus," not a fixed constant
+            # to hardcode differently. Default lowered to 3; any deployment can retune.
+            doc_top_k = int(os.getenv("CHAT_DOC_TOP_K", "3"))
+            docs = _get_shared_rag()._retrieve_documents(message, top_k=doc_top_k, language=language)
             for title, content, score in (docs or []):
                 dom = _doc_domain(title)
                 if scope and dom and dom not in scope:
