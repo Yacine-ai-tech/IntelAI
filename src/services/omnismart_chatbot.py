@@ -190,10 +190,14 @@ def llm_complete(
     msgs = _apply_cache_control(messages, resolved_model)
     kw = {"model": resolved_model, "messages": msgs, "temperature": temperature,
           "max_tokens": max_tokens, "timeout": timeout_s}
-    # Anthropic rejects a request that sets both temperature and top_p ("cannot both be
+    # Claude rejects a request that sets both temperature and top_p ("cannot both be
     # specified for this model") — every other provider here accepts both, so this is
-    # scoped to Anthropic specifically rather than dropping top_p for everyone.
-    if top_p is not None and not resolved_model.startswith("anthropic/"):
+    # scoped to Claude specifically rather than dropping top_p for everyone. Checked
+    # against the model name itself, not the routing prefix: the same Claude model
+    # hits this restriction whether reached as anthropic/claude-... (native API) or
+    # openai/anthropic/claude-... (an OpenAI-compatible gateway in front of it, e.g.
+    # LitAI) — confirmed live via the openai/ path, which a prefix-only check misses.
+    if top_p is not None and "claude" not in resolved_model.lower():
         kw["top_p"] = top_p
     r = completion(**kw)
     text = r.choices[0].message.content
