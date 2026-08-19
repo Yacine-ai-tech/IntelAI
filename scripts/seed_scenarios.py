@@ -30,18 +30,30 @@ category/RBAC).
 Idempotent: writes directly to Postgres via ``pg_store`` (replace=True). This is the fast,
 in-process path the server itself uses on first boot and for instant Admin/API scenario
 switching (``POST /api/v1/admin/scenario``) — see DATA_SEEDING.md for how this differs
-from the real KPI/document dataset ``scripts/seed_data.py`` builds and seeds.
+from the real KPI/document dataset ``scripts/seed_data.py`` builds and seeds. Lives
+alongside it in ``scripts/`` rather than under ``src/`` because both are the same kind of
+thing — ways to populate the dataset — even though this one is also imported live by the
+running server for the Admin scenario-switch API.
 
-Run standalone:  python -m src.data.seed         (uses POSTGRES_URL from env/.env)
-Or from code:    from src.data.seed import seed_database; seed_database()
+Run standalone:  python scripts/seed_scenarios.py         (uses POSTGRES_URL from env/.env)
+Or from code:    from scripts.seed_scenarios import seed_database; seed_database()
 """
 from __future__ import annotations
 
 import math
 import random
+import sys
 from datetime import datetime, timedelta
 from itertools import chain
+from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
+
+# So `from src.services...` resolves when this is run standalone (`python
+# scripts/seed_scenarios.py`) — Python only puts the script's OWN directory on
+# sys.path by default, not the repo root, unlike this file's old location under
+# src/data/, run via `python -m src.data.seed`, which had the repo root on
+# sys.path automatically.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 SEED = 42
 MONTHS = 78
@@ -753,8 +765,13 @@ def generate_knowledge_docs(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     return docs
 
 
-def generate_entity_rows(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
-    """GraphRAG-lite ingest-time extraction → kpi_entities rows (record_ref + entity)."""
+def generate_entity_rows(rows: List[Dict[str, Any]], source: str = "") -> List[Dict[str, str]]:
+    """GraphRAG-lite ingest-time extraction → kpi_entities rows (record_ref + entity).
+
+    ``source`` is stamped on every row so store_kpi_entities() can scope its
+    delete-before-insert to this scenario's own rows (replace_prefix="seed_"),
+    instead of wiping the whole table including entities extracted from the real
+    baseline on ordinary CSV ingest."""
     from src.services.entity_extractor import get_entity_extractor
     extractor = get_entity_extractor()
     out: List[Dict[str, str]] = []
@@ -767,8 +784,49 @@ def generate_entity_rows(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
                 "record_ref": ref,
                 "entity_type": e["entity_type"],
                 "entity_value": e["entity_value"],
+                "source": source,
             })
     return out
+
+
+def reset_to_baseline() -> Dict[str, int]:
+    """Deactivate whatever Admin scenario is currently active and expose the real
+    OmniIntelOS baseline again — exactly, not a freshly-generated approximation of it.
+
+    This works because every scenario write is additive-alongside, never destructive:
+    kpi_metrics/kpi_entities rows are tagged source LIKE 'seed_%' and knowledge_base
+    docs doc_id LIKE 'seed-%', while the baseline keeps its own distinct tags
+    (omniintelos:model-v1, etc.) untouched the entire time a scenario is active. So
+    "reset" is just deleting the scenario's overlay, not regenerating anything — the
+    baseline underneath was never modified, so this is exact by construction rather
+    than by re-running a generator and hoping the output matches.
+    """
+    from src.services.pg_store import _get_conn
+
+    conn = _get_conn()
+    counts: Dict[str, int] = {}
+    try:
+        with conn.cursor() as c:
+            c.execute("DELETE FROM kpi_metrics WHERE source LIKE 'seed_%'")
+            counts["kpi_metrics"] = c.rowcount
+            c.execute("DELETE FROM kpi_entities WHERE source LIKE 'seed_%'")
+            counts["kpi_entities"] = c.rowcount
+            c.execute("DELETE FROM knowledge_base WHERE doc_id LIKE 'seed-%'")
+            counts["knowledge_base"] = c.rowcount
+        conn.commit()
+    finally:
+        conn.close()
+
+    # Deliberately does NOT call vector_store.reindex() here. A deleted scenario
+    # document could in principle still sit in a stale Qdrant/pgvector entry until
+    # the next full reindex, but vector_store_retrieve() already authorizes every
+    # dense hit against the CURRENT knowledge_base before returning it (see its own
+    # docstring) — so a stale vector is inert, never actually surfaced. Confirmed
+    # live: reindexing the full corpus here took 10+ minutes (remote embedding calls
+    # for every document), which directly defeats the point of this being the fast,
+    # instant-revert path — the whole reason a scenario can be reset in the first
+    # place instead of needing a slow full re-seed.
+    return counts
 
 
 def seed_database(replace: bool = True, scenario: str = "healthy",
@@ -787,9 +845,11 @@ def seed_database(replace: bool = True, scenario: str = "healthy",
     source = f"seed_{scenario}" + (f"_{vertical}" if vertical else "")
     store_kpi_metrics(pd.DataFrame(rows), source_name=source, replace=replace, replace_prefix="seed_")
 
-    # GraphRAG-lite: extract entities at ingest and persist them (kpi_entities sidecar table).
+    # GraphRAG-lite: extract entities at ingest and persist them (kpi_entities sidecar
+    # table). replace_prefix="seed_" clears any previously-active scenario's entities
+    # without touching the real baseline's — see store_kpi_entities()'s docstring.
     try:
-        n_entities = store_kpi_entities(generate_entity_rows(rows), replace=replace)
+        n_entities = store_kpi_entities(generate_entity_rows(rows, source=source), replace_prefix="seed_")
     except Exception:
         n_entities = 0
 
@@ -797,7 +857,7 @@ def seed_database(replace: bool = True, scenario: str = "healthy",
     # Glossary docs: authoritative, sourced definitions so the copilot cites a vetted
     # source when explaining a metric/term (anti-hallucination).
     try:
-        from src.data.glossary import as_knowledge_docs
+        from data.glossary import as_knowledge_docs
         docs += as_knowledge_docs()
     except Exception:
         import logging; logging.error('Unhandled exception', exc_info=True)
@@ -830,12 +890,10 @@ def seed_database(replace: bool = True, scenario: str = "healthy",
 
 def main() -> None:
     from dotenv import load_dotenv
-    from pathlib import Path
-    import sys
 
-    load_dotenv(Path(__file__).resolve().parents[2] / ".env")
+    load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
-    # CLI:  python -m src.data.seed [scenario] [vertical]
+    # CLI:  python scripts/seed_scenarios.py [scenario] [vertical]
     scenario = "healthy"  # default
     if len(sys.argv) > 1:
         scenario = sys.argv[1]
@@ -850,6 +908,17 @@ def main() -> None:
             print(f"⚠️  Unknown vertical '{vertical}'. Using the generic catalog. "
                   f"Available: {', '.join(sorted(VERTICALS))}")
             vertical = None
+
+    # "healthy" with no vertical override means "the real baseline" — reset removes
+    # whatever scenario overlay is active rather than generating a fresh approximation
+    # of it. A vertical override is a genuinely different generated catalog (no
+    # baseline equivalent exists for it), so that combination still generates.
+    if scenario == "healthy" and vertical is None:
+        counts = reset_to_baseline()
+        print(f"✅ Reset to the real OmniIntelOS baseline — removed {counts['kpi_metrics']} scenario "
+              f"KPI rows, {counts['kpi_entities']} scenario entities, {counts['knowledge_base']} "
+              f"scenario docs. The baseline itself was never touched.")
+        return
 
     counts = seed_database(replace=True, scenario=scenario, vertical=vertical)
     spec = kpi_spec_for(vertical)
