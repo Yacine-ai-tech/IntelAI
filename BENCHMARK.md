@@ -607,10 +607,99 @@ targets exactly a stuck-and-running row, never raises on a broken connection, an
 threshold stays well clear of a real chat turn's latency).
 
 **Scope note:** this fix changes real backend code, not just this document. Render's
-`render.yaml` has `autoDeploy: false` for this service, so — unlike the docs-only §1-5
-change this benchmark started as — this fix does not take effect on the live deployment
-until a maintainer with Render dashboard access triggers a manual deploy of the merged
-commit.
+`render.yaml` has `autoDeploy: false` for this service, so it required a manual deploy
+(`POST .../deploys` against the Render API) to take effect — done and confirmed live: the
+`chat_jobs` reaper shipped in PR #180 and is running in production.
+
+`admin_jobs.py` (the scenario-switch job store) turned out to have the exact same orphan
+risk `chat_jobs.py` had, but never received the equivalent fix — found live during this
+benchmark's own stress-scenario testing (see the stress-scenario section below), when a
+`declining_financial` scenario-switch job sat at `status: "running"` for over 30 minutes
+across repeated polls and never self-healed, the same symptom this section describes for
+chat jobs. Ported the same
+`_reap_if_stale()` pattern to `admin_jobs.py` (PR #181), manually deployed, and confirmed:
+this is a straight port of an already-tested pattern, not new logic.
+
+## 7. Multi-provider LLM routing resilience
+
+**Methodology.** `src/services/llm_router.py` is the single place model selection happens.
+`_resolve(tier)` maps a `tier` string (`default` | `reasoning` | `judge` | `local`) to a
+`provider/model` string read from an environment variable, with a hardcoded fallback if
+unset: `DEFAULT_MODEL = os.getenv("LLM_DEFAULT", "groq/openai/gpt-oss-120b")`,
+`REASONING_MODEL = os.getenv("LLM_REASONING", "anthropic/claude-sonnet-4-6")`,
+`JUDGE_MODEL = os.getenv("LLM_JUDGE", "anthropic/claude-haiku-4-5")`,
+`LOCAL_MODEL = os.getenv("LLM_LOCAL", "ollama/llama3.3")`. Every call site resolves a tier
+through this one function — there is no second, divergent model-selection path. `llm_call()`
+/`llm_call_sync()` then dispatch through LiteLLM's `acompletion`/`completion` using that
+resolved string directly as the `model` parameter, so swapping providers is a matter of
+which `provider/model` string an env var holds, not which code path runs.
+`omnismart_chatbot.py::llm_complete()` adds one exception on top for latency: if the
+resolved model starts with `groq/`, it calls the native Groq SDK directly instead of going
+through LiteLLM ("Fast path... for maximum speed"); every other resolved model — Anthropic,
+OpenAI, Ollama, or anything else LiteLLM can reach — goes through LiteLLM's generic
+`completion()` call. Both paths are reached from the exact same `_resolve(tier)` output, so
+which SDK actually fires is a runtime branch on the *value* of an env var, not a
+compile-time choice.
+
+**Four independently configurable tiers exist, three of them actively wired to live call
+sites.** `PERSONA_TIER_MAP` routes the `ceo`/`cfo`/`cto`/`risk` personas to `reasoning` and
+the remaining five personas to `default` — this is what makes `LLM_REASONING` and
+`LLM_DEFAULT` both live on real production traffic. The `judge` tier has exactly one call
+site: `omnismart_chatbot.py::_needs_web()`, which asks the judge model a one-word YES/NO
+routing question ("Does the query ask for external market data, news, competitor intel, or
+current events?") to decide whether to trigger a live Tavily web search. The `local`/Ollama
+tier is fully defined in `_resolve()` and has a real default (`ollama/llama3.3`) but no
+call site in this codebase currently passes `tier="local"` — it exists as configured
+capacity, not as something exercised by live traffic today. Each of the three active tiers
+is swappable independently: setting `LLM_JUDGE` to a different `provider/model` string
+changes only judge-tier calls, `LLM_REASONING` changes only the four reasoning personas,
+and `LLM_DEFAULT` changes the rest — none of the three requires touching the other two, and
+none requires a code change, because `_resolve()` reads the env var fresh and every caller
+already goes through it.
+
+**Incident 1: an Anthropic credit exhaustion, absorbed by a graceful fallback, then fixed
+by a pure env override.** During this project's benchmark work, the Anthropic account
+backing `ANTHROPIC_API_KEY` ran out of credit while `LLM_JUDGE` was still pointed at
+`anthropic/claude-haiku-4-5`. Reading `_needs_web()` directly confirms this did **not**
+error the whole chat response: the judge call is wrapped in a `try`/`except Exception`,
+which logs a warning (`"LLM Judge failed for _needs_web: %s"`) and falls through to a
+keyword-trigger heuristic — a fixed list of terms like `"benchmark"`, `"industry"`,
+`"competitor"`, `"regulation"`, plus French equivalents — that decides whether to trigger
+web search without needing any LLM call at all. So the actual failure mode was silent
+degradation of web-search *triggering accuracy* (a keyword heuristic is a coarser signal
+than an LLM judgment), not a broken or errored chat turn — every other part of a chat
+response is unaffected by a judge-tier failure, since `_needs_web()`'s only downstream
+effect is the boolean gate on whether `_web_context()` runs. The fix was a one-line
+environment change: `LLM_JUDGE` was repointed from `anthropic/claude-haiku-4-5` to
+`groq/openai/gpt-oss-120b`. No code in `llm_router.py`, `omnismart_chatbot.py`, or anywhere
+else changed — `_resolve("judge")` simply started returning a different string, and every
+existing call site picked it up automatically. This is a direct, live demonstration of the
+resilience the tier design is meant to provide: a provider outage on one tier is an env-var
+edit, not a deploy.
+
+**Incident 2: Groq, the fallback provider, has its own real capacity limits.** Groq is not
+an unlimited safety net — under sustained benchmark load against the live deployment, Groq
+API calls hit real rate limits twice, at two different granularities. First, a token-per-day
+quota was exhausted; separately, on another occasion, a token-per-minute limit was hit on a
+single request that pulled unusually large retrieved context (this codebase's own
+`_window_around_query()`/prompt-assembly path can put multi-thousand-character document
+excerpts into one prompt — §3c documents a full annual KPI digest running past 24,000
+characters before truncation, which is the kind of request that consumes an outsized token
+budget in one call). The evaluation script's own retry logic
+(`scripts/evaluate_production_live.py::_retry()`) treats a `429` differently from any other
+transient failure specifically because of this: it honors a `Retry-After` header when the
+provider sends one, and separately, the case loop cools down for 45 seconds after a `429`
+before issuing the next request, with an inline comment noting this was needed because
+"back-to-back 429s with no gap between cases kept the rate-limit window from ever clearing,
+poisoning every remaining case in the run." The same script also loads a *separate*
+`GROQ_API_KEY` for judge-model calls specifically to avoid what its own comment calls "the
+shared-Groq-quota problem" — reusing one Groq key for both the chat traffic under test and
+the judge scoring it competes for the same quota and can starve both. None of this is
+disclosed as a flaw in the routing design — it's the opposite: the routing design is exactly
+what made recovering from it possible (retry/backoff plus credential separation, no code
+change to the dispatch path itself) — but it is a real, load-bearing caveat about Groq
+specifically that's worth stating plainly rather than treating "fell back to Groq" as a
+capacity-free escape hatch.
 
 ## Honest caveats
 
@@ -651,9 +740,22 @@ commit.
   showed a single uncontended request comfortably fits the configured timeouts, so that
   draft's framing was corrected in place to point at concurrent-probe contention instead
   — left visible here rather than silently rewritten.
-- §6's fix is real backend code, verified by a passing in-memory unit test, but not
-  verified against the live deployment — `render.yaml`'s `autoDeploy: false` means it
-  isn't live until someone with Render dashboard access deploys the merged commit.
+- §6's fix is real backend code, verified by a passing in-memory unit test, and has since
+  been manually deployed and confirmed live (`render.yaml`'s `autoDeploy: false` means this
+  required an explicit deploy trigger, not a push-to-deploy). The same orphan-job pattern
+  was independently found in `admin_jobs.py` and fixed the same way (§6, PR #181),
+  likewise manually deployed and live.
+- §7's provider-swap resilience has only been exercised reactively, in response to two real
+  provider failures that happened during this project's own operation (an Anthropic credit
+  exhaustion, a Groq TPD/TPM rate limit) — it has not been validated by a deliberate
+  chaos/fault-injection test that forces a provider failure on demand, so its behavior under
+  failure modes other than "exception raised, non-2xx response, or rate limit" (e.g. a
+  provider returning a slow-but-technically-valid malformed response) is unverified.
+- The `local`/`LLM_LOCAL` (Ollama) tier is fully defined in `llm_router.py::_resolve()` with
+  a working default and env-var override, but no call site in this codebase currently
+  invokes it (`tier="local"` is not passed anywhere in `PERSONA_TIER_MAP` or elsewhere) — it
+  is configured capacity, not a tier with any live-traffic evidence behind it, unlike
+  `default`/`reasoning`/`judge`.
 
 ## Further reading
 
