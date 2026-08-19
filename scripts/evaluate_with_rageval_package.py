@@ -211,6 +211,26 @@ def fetch_real_answers(cases: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 
 async def run_decorator_demo(fetched: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Phase A entry point — runs the actual work in a real OS thread via
+    asyncio.to_thread, not directly on this coroutine's own event loop.
+
+    This matters for correctness, not just style: rageval.decorator's flush() only
+    waits on futures scheduled through its "no running loop" code path (documented as
+    "script/CLI path only" in its own docstring) — when a running loop IS detected
+    (asyncio.get_running_loop() succeeds), _fire_and_forget() instead does
+    loop.create_task(coro) on THAT loop and never registers it with flush()'s tracked
+    futures at all. Since this whole script runs under asyncio.run(run_async()),
+    calling the @track-wrapped function directly from here (a coroutine on that same
+    loop) hit exactly that branch — confirmed live: every case reported "0/N
+    persisted" with no error, because flush() had nothing to wait on and returned
+    immediately, racing ahead of evaluations that were still in flight. A plain OS
+    thread has no event loop of its own, so asyncio.get_running_loop() correctly
+    raises RuntimeError there, taking flush()'s intended path instead.
+    """
+    return await asyncio.to_thread(_run_decorator_demo_sync, fetched)
+
+
+def _run_decorator_demo_sync(fetched: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Phase A: the package's actual drop-in-decorator integration path, for real.
 
     Wraps a real, already-fetched RAG answer with `@track` exactly as README.md's
