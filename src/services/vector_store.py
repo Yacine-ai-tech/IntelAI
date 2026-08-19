@@ -447,14 +447,25 @@ def vector_store_retrieve(
     fused: Dict[str, float] = {}
     meta: Dict[str, Tuple[str, str]] = {}
 
+    # Prefer the fuller copy of a document's content when both dense (Qdrant, whose
+    # embedded copy is capped at VECTOR_STORE_CONTENT_CHARS — see reindex()) and
+    # sparse (BM25 over Postgres, always the full content) surface the same doc.
+    # _key() only looks at the first 80 chars, so a truncated and an untruncated
+    # copy of the same document collide on the same key — whichever loop assigned
+    # meta[k] first used to win unconditionally, silently discarding the rest of
+    # any document longer than the cap. Confirmed live: a 24K-char annual digest
+    # was served to the LLM cut off at ~4000 chars (mid-February of a 12-month
+    # digest) even though the full text was sitting right there in `sparse`.
     for rank, d in enumerate(dense):
         k = _key(d["title"], d["content"])
         fused[k] = fused.get(k, 0.0) + 1.0 / (K + rank + 1)
-        meta[k] = (d["title"], d["content"])
+        if k not in meta or len(d["content"] or "") > len(meta[k][1] or ""):
+            meta[k] = (d["title"], d["content"])
     for rank, (t, c) in enumerate(sparse):
         k = _key(t, c)
         fused[k] = fused.get(k, 0.0) + 1.0 / (K + rank + 1)
-        meta.setdefault(k, (t, c))
+        if k not in meta or len(c or "") > len(meta[k][1] or ""):
+            meta[k] = (t, c)
 
     ranked = sorted(fused, key=lambda k: fused[k], reverse=True)[:cand]
     if not ranked:
