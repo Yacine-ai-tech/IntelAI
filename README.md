@@ -101,6 +101,7 @@ you're most likely to touch:
 /health  ·  /api/docs
 POST /api/v1/auth/login   GET /api/v1/auth/me
 POST /api/v1/chat         WS  /api/v1/ws/chat      GET /api/v1/personas
+POST /api/v1/chat/async   GET /api/v1/chat/{job_id}   (async job+poll form — avoids proxy timeouts on slow turns)
 GET  /api/v1/kpis[/periods|/metrics|/categories]
 GET  /api/v1/insights/{health,risk,summary,anomalies}
 POST /api/v1/forecast      GET /api/v1/glossary
