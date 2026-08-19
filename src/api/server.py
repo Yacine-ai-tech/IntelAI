@@ -86,11 +86,19 @@ def _telemetry_instance_id() -> str:
 
 def _send_telemetry():
     """
-    One anonymous startup ping per ~6h to TELEMETRY_URL, so the project can count distinct
-    installs. Sends only {service, event, instance_id} — no request data, document/KPI
-    content, or credentials. Disable entirely with TELEMETRY_OPT_OUT=true.
+    One anonymous startup ping per ~6h to TELEMETRY_URL, so a deployer running their own
+    fork/instance can (optionally) count distinct installs. Sends only {service, event,
+    instance_id} — no request data, document/KPI content, or credentials. Opt-in only:
+    a no-op unless TELEMETRY_URL is explicitly set to a collector the deployer controls
+    — this must never default to a specific hardcoded endpoint, since that would silently
+    phone home to whoever wrote this default rather than the person actually running it.
+    Also fully disable-able with TELEMETRY_OPT_OUT=true regardless of TELEMETRY_URL.
     """
     if os.environ.get("TELEMETRY_OPT_OUT", "").strip().lower() in ("true", "1", "yes"):
+        return
+
+    telemetry_url = os.environ.get("TELEMETRY_URL", "").strip()
+    if not telemetry_url:
         return
 
     lock_file = os.path.join(str(settings.LOGS_DIR), ".telemetry_last_ping")
@@ -103,9 +111,6 @@ def _send_telemetry():
         pass
 
     try:
-        telemetry_url = os.environ.get(
-            "TELEMETRY_URL", os.environ.get("TELEMETRY_URL", "https://gateway.ysiddo-ai-projects.app/telemetry")
-        )
         if "log" in globals():
             globals()["log"].info(
                 "Anonymous telemetry ping to %s (set TELEMETRY_OPT_OUT=true to disable).",
