@@ -5,10 +5,13 @@ IntelAI RAG evaluation against the REAL, LIVE production deployment.
 Unlike scripts/evaluate_with_rageval.py and evaluate_with_rageval_package.py — which
 both call UltraFastRAG.answer() in-process, so retrieval (embed + rerank, dozens of
 remote HTTP round trips) runs on whatever machine executes the script — this script
-calls the live production POST /api/v1/chat endpoint for every case. All retrieval work
-happens inside the real deployed service itself; the machine running this script only
-ever sends/receives small JSON payloads, plus makes the (also small, non-embedding) LLM
-judge calls to score each answer.
+calls the live production POST /api/v1/chat/async + GET /api/v1/chat/{job_id} endpoints
+for every case (not the synchronous POST /api/v1/chat) — a cold-retrieval case can take
+60-100s+, long enough to risk Cloudflare's free-tier proxy cutting the connection
+(HTTP 524) on a single blocking request; polling in short requests avoids that entirely.
+All retrieval work happens inside the real deployed service itself; the machine running
+this script only ever sends/receives small JSON payloads, plus makes the (also small,
+non-embedding) LLM judge calls to score each answer.
 
 Environment variables:
   PROD_GATEWAY_URL   Base URL of the live gateway (default: the real production domain)
@@ -23,6 +26,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -90,6 +94,26 @@ def _retry(fn, attempts: int = 3, base_delay: float = 3.0):
     raise last_exc
 
 
+def _poll_chat_job(client: httpx.Client, headers: Dict[str, str], job_id: str,
+                    timeout: float = 180.0, interval: float = 3.0) -> Dict[str, Any]:
+    """Polls GET /api/v1/chat/{job_id} until it's done|error, or raises after `timeout`
+    seconds — generous relative to the ~50-60s a real cold-retrieval turn takes, since a
+    poll request itself can never 524 (each one is small and fast; only the underlying
+    chat turn is slow, and that now runs server-side without any client connection open)."""
+    t0 = time.monotonic()
+    while time.monotonic() - t0 < timeout:
+        r = client.get(f"{GATEWAY}/api/v1/chat/{job_id}", headers=headers, timeout=30.0)
+        r.raise_for_status()
+        data = r.json()
+        status = data.get("status")
+        if status == "done":
+            return data
+        if status == "error":
+            raise RuntimeError(f"chat job {job_id} failed: {data.get('error')}")
+        time.sleep(interval)
+    raise TimeoutError(f"chat job {job_id} did not complete within {timeout}s")
+
+
 def get_admin_token(client: httpx.Client) -> str:
     token = os.getenv("PROD_ADMIN_TOKEN", "").strip()
     if token:
@@ -106,6 +130,54 @@ PERSONA_MAP = {
     "esg": "esg", "finance": "cfo", "hr": "chro", "it": "cio",
     "logistics": "coo", "operations": "coo", "growth": "ceo", "analyst": "ceo",
 }
+
+
+def _number_variants(value: float) -> List[str]:
+    """Every plausible way an LLM might render `value` in prose — exact, 1/2-decimal
+    rounding, comma-grouped, and K/M-abbreviated for large numbers — so a match
+    isn't defeated by harmless formatting differences. Deliberately does NOT
+    include a bare round-to-nearest-integer variant: for a value like 99.6, that
+    would be "100", which is short and common enough to false-positive-match
+    against unrelated text (confirmed: "roughly 100%" wrongly matched 99.6 in
+    testing). Every variant here stays within ~0.05 of the true value."""
+    variants = set()
+    for v in (value, round(value, 1), round(value, 2)):
+        variants.add(f"{v:g}")
+    if abs(value) >= 1000:
+        # A comma-grouped whole-number form ("4,378,004") is standard business
+        # reporting for anything this large, and long/specific enough that a
+        # coincidental match in unrelated text is effectively impossible — unlike
+        # the short bare integers a small value like 99.6 would round to (see
+        # module docstring above: that's exactly what "100" false-matched).
+        variants.add(f"{value:,.0f}")
+    if abs(value) >= 1_000_000:
+        variants.add(f"{value / 1_000_000:.1f}M")
+        variants.add(f"{value / 1_000_000:.2f}M")
+    elif abs(value) >= 1_000:
+        variants.add(f"{value / 1_000:.1f}K")
+    return [v for v in variants if v]
+
+
+def _check_ground_truth(answer: str, expected_value, expected_unit) -> "bool | None":
+    """Objective correctness check: does the answer actually contain the real,
+    known value from the live database — not a subjective LLM-judge opinion.
+    Independent of any judge API being available, unlike groundedness_consensus.
+    Returns None when the case has no ground-truth value to check (documents,
+    glossary terms, cross-domain questions).
+
+    Word-boundary matching, not plain substring — "100" must not match inside
+    "1,100" or "10000", and a trailing "%"/unit character counts as a boundary."""
+    if expected_value is None:
+        return None
+    try:
+        value = float(expected_value)
+    except (TypeError, ValueError):
+        return None
+    for variant in _number_variants(value):
+        pattern = r"(?<![\d.,])" + re.escape(variant) + r"(?![\d])"
+        if re.search(pattern, answer):
+            return True
+    return False
 
 
 def run() -> Dict[str, Any]:
@@ -132,14 +204,14 @@ def run() -> Dict[str, Any]:
             t0 = time.monotonic()
 
             def _call():
-                r = client.post(f"{GATEWAY}/api/v1/chat", headers=headers,
+                r = client.post(f"{GATEWAY}/api/v1/chat/async", headers=headers,
                                  json={"message": query, "persona": persona})
                 r.raise_for_status()  # inside the retried call, so 429/502/503 actually retry+backoff
-                return r
+                job_id = r.json()["job_id"]
+                return _poll_chat_job(client, headers, job_id)
 
             try:
-                resp = _retry(_call)
-                out = resp.json()
+                out = _retry(_call)
                 latency_ms = (time.monotonic() - t0) * 1000
                 answer = out.get("response", "")
                 contexts = [
@@ -159,6 +231,21 @@ def run() -> Dict[str, Any]:
                     time.sleep(45.0)
                 continue
 
+            # Objective correctness — does the answer contain the real, known value
+            # from the live DB? Always computed, independent of judge availability.
+            ground_truth_match = _check_ground_truth(
+                answer, case.get("expected_value"), case.get("expected_unit"))
+
+            result = {
+                "case_id": i, "query": query, "persona": persona, "kind": case.get("kind"),
+                "contexts_retrieved": len(contexts), "latency_ms": round(latency_ms),
+                "ground_truth_match": ground_truth_match,
+            }
+
+            # Judge-based groundedness is best-effort on top of the ground-truth check
+            # above, not a precondition for recording a result — an unavailable judge
+            # panel (e.g. no API credit) shouldn't discard a case that otherwise
+            # produced a real, checkable answer.
             try:
                 scores = asyncio.run(evaluator.score_interaction(
                     query=query, answer=answer, chunks=contexts,
@@ -166,27 +253,32 @@ def run() -> Dict[str, Any]:
                     model="intelai-production-live", persona=persona,
                 ))
                 g = scores.get("groundedness_consensus", {}).get("consensus", scores.get("groundedness"))
-                result = {
-                    "case_id": i, "query": query, "persona": persona,
-                    "contexts_retrieved": len(contexts), "latency_ms": round(latency_ms),
+                result.update({
                     "groundedness": g, "relevance": scores.get("relevance"),
                     "faithfulness": scores.get("faithfulness"),
                     "overall_quality": scores.get("overall_quality"),
                     "flags": scores.get("flags", []),
-                }
+                })
                 print(f"[{i:02d}/{len(cases):02d}] persona={persona:<9} "
-                      f"groundedness={g!s:<6} overall={scores.get('overall_quality')!s:<6} "
+                      f"gt_match={ground_truth_match!s:<5} groundedness={g!s:<6} "
                       f"latency={latency_ms:.0f}ms query='{query[:50]}'")
             except Exception as e:
-                result = {"case_id": i, "query": query, "persona": persona, "error": f"scoring_failed: {e}"}
-                print(f"[{i:02d}/{len(cases):02d}] persona={persona:<9} SCORE ERROR: {e}")
+                result["judge_error"] = f"scoring_failed: {e}"
+                print(f"[{i:02d}/{len(cases):02d}] persona={persona:<9} "
+                      f"gt_match={ground_truth_match!s:<5} JUDGE UNAVAILABLE "
+                      f"latency={latency_ms:.0f}ms query='{query[:50]}'")
 
             results.append(result)
 
-    scored = [r for r in results if "error" not in r and r.get("overall_quality") is not None]
+    scored = [r for r in results if "error" not in r]
     n_errors = len(results) - len(scored)
-    avg_groundedness = sum(r["groundedness"] for r in scored) / len(scored) if scored else None
-    avg_overall = sum(r["overall_quality"] for r in scored) / len(scored) if scored else None
+    gt_applicable = [r for r in scored if r.get("ground_truth_match") is not None]
+    gt_correct = [r for r in gt_applicable if r["ground_truth_match"]]
+    ground_truth_accuracy = (len(gt_correct) / len(gt_applicable)) if gt_applicable else None
+    judged = [r for r in scored if r.get("groundedness") is not None]
+    avg_groundedness = sum(r["groundedness"] for r in judged) / len(judged) if judged else None
+    overall_scored = [r for r in scored if r.get("overall_quality") is not None]
+    avg_overall = sum(r["overall_quality"] for r in overall_scored) / len(overall_scored) if overall_scored else None
     avg_latency = sum(r["latency_ms"] for r in scored) / len(scored) if scored else None
 
     summary = {
@@ -195,6 +287,10 @@ def run() -> Dict[str, Any]:
         "total_cases": len(results),
         "scored_cases": len(scored),
         "failed_cases": n_errors,
+        "ground_truth_applicable_cases": len(gt_applicable),
+        "ground_truth_correct_cases": len(gt_correct),
+        "ground_truth_accuracy": round(ground_truth_accuracy, 4) if ground_truth_accuracy is not None else None,
+        "judged_cases": len(judged),
         "avg_groundedness": round(avg_groundedness, 4) if avg_groundedness is not None else None,
         "avg_overall_quality": round(avg_overall, 4) if avg_overall is not None else None,
         "avg_latency_ms": round(avg_latency) if avg_latency is not None else None,
@@ -209,7 +305,9 @@ def run() -> Dict[str, Any]:
 
     print(f"\n{'='*70}")
     print(f"Scored {len(scored)}/{len(results)} cases against LIVE production")
-    print(f"Avg groundedness:   {summary['avg_groundedness']}")
+    print(f"Ground-truth accuracy: {summary['ground_truth_accuracy']} "
+          f"({len(gt_correct)}/{len(gt_applicable)} applicable cases)")
+    print(f"Avg groundedness (judged): {summary['avg_groundedness']} ({len(judged)} cases judged)")
     print(f"Avg overall quality:{summary['avg_overall_quality']}")
     print(f"Avg latency:        {summary['avg_latency_ms']}ms")
     print(f"Full report: {out_path}")

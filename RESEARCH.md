@@ -50,6 +50,25 @@ project treats evaluation as someone else's well-scoped job rather than reimplem
 which is also why `requirements-dev.txt` notes IntelAI has no *import-time* dependency on
 the `rageval` package; it's opt-in for anyone running the benchmark scripts locally.
 
+## A note on judge/model routing for one benchmark run
+
+`BENCHMARK.md`'s live production RAG evaluation (§3) needed a real, working reasoning-tier
+model and a full 4-judge panel to produce meaningful numbers, but the direct Anthropic
+credentials available at benchmark time were exhausted. Rather than skip reasoning-tier
+personas or run a degraded judge panel, that one evaluation run temporarily pointed
+`LLM_REASONING` and `JUDGE_MODELS`' non-Groq entries at Lightning AI's LitAI gateway
+(`https://lightning.ai/api/v1`) — a real, third-party OpenAI-compatible multi-model API,
+reached through LiteLLM's existing generic `openai/` prefix + `OPENAI_BASE_URL` override
+mechanism (the same mechanism this codebase already uses for any self-hosted or
+third-party inference endpoint — see the hybrid-retrieval section above). No code changed
+to make this work; it's the same provider-agnostic routing this project already has,
+pointed at a different backend for the duration of one benchmark run, then reverted.
+
+This is disclosed here because it's part of how §3's numbers were produced, not because
+it's part of IntelAI's designed architecture — the production default is, and remains,
+direct provider credentials per model tier (`LLM_DEFAULT`, `LLM_REASONING`, `LLM_JUDGE`,
+each independently configurable, none hardcoded to one vendor).
+
 ## Persona/RBAC-scoped retrieval: a distinctive angle, honestly scoped
 
 Every chat request carries the caller's role, and retrieval — not just the UI — is scoped
