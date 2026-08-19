@@ -716,12 +716,21 @@ def _doc_domain(title: str) -> Optional[str]:
     for d in domains:  # "People KPI Summary ...", "Finance KPI Summary ..."
         if t.startswith(d + " kpi") or t.startswith(d + " summary"):
             return d
-    # "people_2025-04_en.md" / "esg_2025Q1_fr.md" — {domain}_{period}_{lang}.{ext}
+    # "people_2025-04_en.md" / "esg_2025Q1_fr.md" / "esg_2022_en.md" (annual digest) —
+    # {domain}_{period}_{lang}.{ext}. The annual-digest shape (a bare 4-digit year, no
+    # month/quarter) was missing from the period pattern entirely — confirmed live: it's
+    # exactly what scripts/seed_data.py's stage_digests() names its output
+    # ({domain}_{year}_{lang}.md, one file per domain per year), so every annual digest
+    # in the real corpus fell through to `return None` ("domain-agnostic") and leaked
+    # across every persona regardless of data_access — e.g. a COO (no ESG access)
+    # retrieving and reporting real figures from esg_2022_en.md. The exact fail-open
+    # regression this function's own docstring already warned about, just in the one
+    # period shape the docstring didn't yet enumerate.
     stem = re.sub(r"\.[a-z0-9]{1,4}$", "", t)
     parts = stem.split("_")
     if len(parts) >= 3 and parts[-1] in ("en", "fr"):
         period, domain = parts[-2], "_".join(parts[:-2])
-        if re.match(r"^\d{4}-\d{2}$|^\d{4}q[1-4]$", period) and domain in domains:
+        if re.match(r"^\d{4}-\d{2}$|^\d{4}q[1-4]$|^\d{4}$", period) and domain in domains:
             return domain
     return None
 
