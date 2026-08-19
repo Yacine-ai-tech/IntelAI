@@ -35,6 +35,26 @@ GLOSSARY: Dict[str, Dict[str, Any]] = {
         "benchmark": "Growth vs prior period matters more than the absolute; SaaS targets 2–3%+ MoM.",
         "source": "GAAP/IFRS revenue recognition",
     },
+    "XOF Exchange Rate": {
+        "domain": "Finance", "abbr": "FCFA",
+        "definition": (
+            "OmniIntelOS is headquartered in Niamey, Niger and keeps its statutory (OHADA) "
+            "books in West African CFA francs (XOF, informally FCFA) — every USD figure "
+            "elsewhere in this dataset is the reporting-currency conversion of an XOF-native "
+            "transaction, not the other way around. The XOF/EUR rate is fixed by the CFA "
+            "franc's currency-board peg with the Eurozone (via BCEAO), not floating. To "
+            "convert any USD figure in this dataset to FCFA and match the dataset's own "
+            "recorded XOF rows (e.g. Revenue) exactly, use 1 USD ≈ 607.37 XOF — not a live "
+            "market rate."
+        ),
+        "formula": "1 EUR = 655.957 XOF (fixed peg) ; 1 USD ≈ 607.37 XOF (655.957 / 1.08)",
+        "direction": None,
+        "benchmark": "The peg itself (655.957) is a real, verifiable BCEAO/Eurozone monetary "
+                      "constant, unchanged since the CFA franc's 1999 EUR re-denomination; the "
+                      "1.08 USD/EUR planning rate is this dataset's own internal assumption, not "
+                      "a claim about real-world FX markets.",
+        "source": "BCEAO (Banque Centrale des États de l'Afrique de l'Ouest) currency-board peg",
+    },
     "Gross Margin": {
         "domain": "Finance", "abbr": "GM",
         "definition": "Share of revenue left after the direct cost of delivering the product (COGS).",
@@ -788,7 +808,7 @@ def for_domain(domain: Optional[str] = None) -> List[Dict[str, Any]]:
 def as_knowledge_docs(lang: str = "en") -> List[Dict[str, str]]:
     """Render the glossary as RAG knowledge docs so the copilot can cite definitions.
 
-    lang="fr" overlays src.data.glossary_fr's static French definition/benchmark
+    lang="fr" overlays data.glossary_fr's static French definition/benchmark
     translations onto the same GLOSSARY entries (domain/formula/direction/source
     aren't translated — they're standard/technical, not prose). Falls back to the
     English definition/benchmark for any term glossary_fr.py doesn't cover, so a
@@ -797,7 +817,7 @@ def as_knowledge_docs(lang: str = "en") -> List[Dict[str, str]]:
     fr_overrides: Dict[str, Dict[str, str]] = {}
     fr_terms: Dict[str, str] = {}
     if lang == "fr":
-        from src.data.glossary_fr import GLOSSARY_FR, TERMS_FR
+        from data.glossary_fr import GLOSSARY_FR, TERMS_FR
         fr_overrides = GLOSSARY_FR
         fr_terms = TERMS_FR
 
