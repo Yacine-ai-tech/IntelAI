@@ -210,6 +210,33 @@ def llm_complete(
 # UTILITY FUNCTIONS
 # ════════════════════════════════════════════════════════════════════════════
 
+_PERIOD_RE = re.compile(r"\b(?:19|20)\d{2}-(?:0[1-9]|1[0-2])\b")
+
+
+def _window_around_query(text: str, query: str, cap: int) -> str:
+    """Returns up to `cap` chars of `text`, centered on wherever the query's own
+    date/period mention (e.g. "2020-06") appears in it — not always the document's
+    head. A flat text[:cap] silently drops anything past the cap regardless of what
+    the query actually asks about; for a document organized by period (an annual
+    digest with one section per month, say), that means every period past the cap
+    is simply invisible to the model no matter how the retrieval scored the
+    document. Falls back to the head when the query names no period, or the
+    document doesn't contain it — i.e. exactly the previous behavior for queries
+    that aren't asking about one specific point in the document (e.g. "what does
+    this document cover overall")."""
+    if len(text) <= cap:
+        return text
+    m = _PERIOD_RE.search(query)
+    if not m:
+        return text[:cap]
+    idx = text.find(m.group())
+    if idx == -1:
+        return text[:cap]
+    start = max(0, idx - cap // 4)
+    end = min(len(text), start + cap)
+    start = max(0, end - cap)
+    return text[start:end]
+
 
 # ════════════════════════════════════════════════════════════════════════════
 # PATTERN 1: MULTI-STEP AUTONOMOUS AGENTS
@@ -988,18 +1015,18 @@ class AgentPersonaFactory:
         for title, text in doc_blocks:
             s = by_title.get(title.lower())
             if s:
-                # 500 was truncating EVERY digest document (every real one is 688+ chars)
-                # before reaching most of its content — confirmed live: a real "Security
-                # Score" line at char 747 of an IT digest never reached the model's
-                # prompt. Raised to 2000, which was still short for a digest covering
-                # several segments in one category+period (People's company-wide +
-                # per-department breakdown runs 3800+ chars) — confirmed live again:
-                # "Training Completion Rate" at char 2763 also never reached the prompt.
-                # 4000 matches vector_store.py's VECTOR_STORE_CONTENT_CHARS default (the
-                # same "how much of one document is enough" budget already established
-                # elsewhere in this codebase) and covers all but 1 of 250 current digests
-                # in full.
-                parts.append(f"[{s['id']}] {title}: {text[:4000]}")
+                # This cap was raised twice before (500 -> 2000 -> 4000) chasing the same
+                # symptom each time: a real figure sitting past the cap in a large digest
+                # never reached the model's prompt. Raising it again doesn't fix that —
+                # any digest longer than the cap (a full year's month-by-month breakdown
+                # runs 24K+ chars) still loses everything past it. Confirmed live: a
+                # 2020-06 query got an answer built from a digest cut off in February
+                # because the cap always takes the document's HEAD regardless of what
+                # the query asks about. _window_around_query centers the cap on the
+                # query's own period/date mention when the document has one at that
+                # location, and falls back to the head otherwise (e.g. "what does this
+                # document cover overall") — same budget, pointed at the right place.
+                parts.append(f"[{s['id']}] {title}: {_window_around_query(text, message, 4000)}")
 
         return ("\n\n".join(parts), sources)
 
