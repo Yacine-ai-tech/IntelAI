@@ -915,7 +915,7 @@ def main() -> None:
     # baseline equivalent exists for it), so that combination still generates.
     if scenario == "healthy" and vertical is None:
         counts = reset_to_baseline()
-        print(f"✅ Reset to the real OmniIntelOS baseline — removed {counts['kpi_metrics']} scenario "
+        print(f"✅ Reset to the real baseline dataset — removed {counts['kpi_metrics']} scenario "
               f"KPI rows, {counts['kpi_entities']} scenario entities, {counts['knowledge_base']} "
               f"scenario docs. The baseline itself was never touched.")
         return
