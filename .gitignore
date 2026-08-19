@@ -23,7 +23,11 @@ logs/
 *.log
 tmp/
 test-results/
-eval/*.json
+# NOTE: eval/*.json reports used to be ignored here. They're real evidence BENCHMARK.md
+# cites directly (e.g. "Full per-case results: eval/RAGEVAL_PRODUCTION_LIVE_REPORT.json")
+# — they belong in the repo, not gitignored out from under those references. (The local
+# decorator-demo SQLite store scripts/evaluate_with_rageval_package.py writes to is
+# already covered by the generic *.db rule above.)
 
 # Large data (keep schema, not runtime data)
 enhanced_synthetic_dataset/pdf/
