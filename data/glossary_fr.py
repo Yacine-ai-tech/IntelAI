@@ -10,6 +10,22 @@ GLOSSARY_FR: Dict[str, Dict[str, str]] = {
         "definition": "Revenu total provenant de la vente de biens ou de services pendant une période, avant déduction de tout coût (première ligne).",
         "benchmark": "La croissance par rapport à la période précédente est plus importante que le montant absolu ; les logiciels SaaS visent 2-3%+ MoM."
     },
+    "XOF Exchange Rate": {
+        "definition": (
+            "OmniIntelOS a son siège à Niamey, au Niger, et tient sa comptabilité statutaire "
+            "(OHADA) en francs CFA ouest-africains (XOF, familièrement FCFA) — chaque montant "
+            "en USD ailleurs dans ce jeu de données est la conversion, à titre de monnaie de "
+            "présentation, d'une transaction native en XOF, et non l'inverse. Le taux XOF/EUR "
+            "est fixé par l'arrimage monétaire du franc CFA à la zone euro (via la BCEAO), et "
+            "non flottant. Pour convertir tout montant en USD de ce jeu de données en FCFA et "
+            "obtenir exactement la valeur des lignes XOF déjà enregistrées (ex. le chiffre "
+            "d'affaires), utilisez 1 USD ≈ 607,37 XOF — pas un taux de marché en temps réel."
+        ),
+        "benchmark": "L'arrimage lui-même (655,957) est une constante monétaire BCEAO/zone euro "
+                      "réelle et vérifiable, inchangée depuis la redénomination en euros de 1999 ; "
+                      "le taux de planification de 1,08 USD/EUR est une hypothèse interne à ce "
+                      "jeu de données, pas une affirmation sur les marchés des changes réels."
+    },
     "Gross Margin": {
         "definition": "Partie du revenu restant après le coût direct de livraison du produit (COGS).",
         "benchmark": "Logiciels 70-85% ; >75% est sain. En dessous de 50% exerce une pression sur tout ce qui suit."

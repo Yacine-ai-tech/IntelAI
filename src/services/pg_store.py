@@ -288,10 +288,16 @@ def init_pg_tables():
                 record_ref    TEXT NOT NULL,
                 entity_type   TEXT NOT NULL,
                 entity_value  TEXT NOT NULL,
+                source        TEXT DEFAULT '',
                 created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
             )
         """)
+        # Idempotent migration for tables created before source existed.
+        conn.execute("ALTER TABLE kpi_entities ADD COLUMN IF NOT EXISTS source TEXT DEFAULT ''")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_entities_ref ON kpi_entities(record_ref)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_entities_source ON kpi_entities(source)")
+        # Supports get_kpi_entities(entity_values=...)'s case-insensitive lookup.
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_entities_value ON kpi_entities(lower(entity_value))")
         conn.execute("""
             CREATE TABLE IF NOT EXISTS kpi_targets (
                 metric          TEXT PRIMARY KEY,
@@ -335,6 +341,10 @@ def init_pg_tables():
         conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_period ON kpi_metrics(period)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_category ON kpi_metrics(category)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_metric ON kpi_metrics(metric)")
+        # Supports get_kpi_metrics()'s DISTINCT ON (period, category, metric, segment) —
+        # a covering composite index lets that dedup run as an index scan instead of a
+        # full sort, which matters since this query runs on every chat request.
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_dedup ON kpi_metrics(category, metric, period, segment)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_audit_type ON audit_trail(event_type)")
 
         # File management (uploaded artifacts and extracted content)
@@ -584,11 +594,13 @@ def store_kpi_metrics(
                     met = str(row.get("metric", ""))
                     per = str(row.get("period", ""))
                     ref = f"{cat}|{met}|{per}"
+                    row_source = _source_of(row)
                     for e in extractor.extract_entities({"category": cat, "metric_name": met, "period": per}):
                         entity_rows.append({
                             "record_ref": ref,
                             "entity_type": e["entity_type"],
                             "entity_value": e["entity_value"],
+                            "source": row_source,
                         })
                 if entity_rows:
                     store_kpi_entities(entity_rows, replace=False)
@@ -622,7 +634,6 @@ def get_kpi_metrics(
     import pandas as pd
     conn = _get_conn()
     try:
-        q = "SELECT period, metric, value, category, segment, unit, direction, source FROM kpi_metrics"
         filters: List[str] = []
         params: List[Any] = []
         for col, vals in [("period", periods), ("metric", metrics), ("category", categories), ("segment", segments)]:
@@ -633,8 +644,33 @@ def get_kpi_metrics(
         if _demo_session_scoping_enabled():
             filters.append("(owner_user_id IS NULL OR owner_user_id = %s)")
             params.append(get_request_scope_user())
-        if filters:
-            q += " WHERE " + " AND ".join(filters)
+        where = (" WHERE " + " AND ".join(filters)) if filters else ""
+        # The Admin scenario-switcher (scripts/seed_scenarios.py) writes an alternate
+        # value for the same (period, category, metric) under a source starting
+        # "seed_", without touching the real baseline row — so while a scenario is
+        # active, a (period, category, metric) can briefly carry rows from both
+        # sources. Deliberately NOT keyed on segment too: segment is a legitimate
+        # extra dimension within a source (e.g. one row per country for a World
+        # Bank-sourced ESG series — see the comment on kpi_entities' auto-extraction
+        # above), but the baseline and scenario generators happen to stamp different,
+        # arbitrary segment labels ("OmniIntelOS" vs "Global") for what is otherwise
+        # the same fact — confirmed live: keying on segment let both survive
+        # side-by-side as if they were different data. This instead suppresses a
+        # baseline row outright whenever ANY seed_ row exists for its
+        # (period, category, metric), regardless of what either one's segment says,
+        # so callers downstream never see two conflicting values for one fact.
+        q = f"""
+            SELECT period, metric, value, category, segment, unit, direction, source
+            FROM kpi_metrics k{where}
+            {"AND" if where else "WHERE"} (
+                left(k.source, 5) = 'seed_'
+                OR NOT EXISTS (
+                    SELECT 1 FROM kpi_metrics s
+                    WHERE s.period = k.period AND s.category = k.category AND s.metric = k.metric
+                      AND left(s.source, 5) = 'seed_'
+                )
+            )
+        """
         # When a row cap applies, keep the NEWEST rows, not the oldest. Ordering
         # ascending and then truncating silently returns the START of history: with
         # 7,878 rows and the 2,000 default, callers got 2020-01..2021-08 and every
@@ -646,7 +682,7 @@ def get_kpi_metrics(
         q += " ORDER BY period DESC, metric" if limit else " ORDER BY period, metric"
         if limit:
             q += " LIMIT %s"
-            params.append(limit)
+            params = params + [limit]
         rows = conn.execute(q, params).fetchall()
         if not rows:
             return pd.DataFrame()
@@ -656,25 +692,35 @@ def get_kpi_metrics(
         conn.close()
 
 
-def store_kpi_entities(rows: List[Dict[str, str]], replace: bool = True) -> int:
+def store_kpi_entities(rows: List[Dict[str, str]], replace: bool = True,
+                        replace_prefix: Optional[str] = None) -> int:
     """Persist GraphRAG-lite entities (the kpi_entities sidecar table).
 
-    ``rows`` = ``[{record_ref, entity_type, entity_value}, ...]`` extracted at ingestion.
-    Returns the number of rows written.
+    ``rows`` = ``[{record_ref, entity_type, entity_value, source}, ...]`` extracted at
+    ingestion. ``replace_prefix`` scopes the delete-before-insert to rows whose source
+    starts with it (e.g. ``"seed_"`` for the Admin scenario-switcher) — the same
+    contract as store_knowledge_docs()'s replace_prefix. Without it, ``replace=True``
+    used to delete the WHOLE table unconditionally on every write, including entities
+    extracted from the real seeded baseline on ordinary CSV ingest — confirmed live:
+    activating any Admin scenario silently wiped every baseline entity, with nothing
+    scoping the delete to the scenario's own rows. Returns the number of rows written.
     """
     if not rows:
         return 0
     conn = _get_conn()
     try:
-        if replace:
+        if replace_prefix:
+            conn.execute("DELETE FROM kpi_entities WHERE source LIKE %s", (f"{replace_prefix}%",))
+        elif replace:
             conn.execute("DELETE FROM kpi_entities")
         params = [
-            (str(r.get("record_ref", "")), str(r.get("entity_type", "")), str(r.get("entity_value", "")))
+            (str(r.get("record_ref", "")), str(r.get("entity_type", "")),
+             str(r.get("entity_value", "")), str(r.get("source", "")))
             for r in rows
         ]
         with conn.cursor() as cur:
             cur.executemany(
-                "INSERT INTO kpi_entities (record_ref, entity_type, entity_value) VALUES (%s, %s, %s)",
+                "INSERT INTO kpi_entities (record_ref, entity_type, entity_value, source) VALUES (%s, %s, %s, %s)",
                 params,
             )
         conn.commit()
@@ -683,14 +729,29 @@ def store_kpi_entities(rows: List[Dict[str, str]], replace: bool = True) -> int:
         conn.close()
 
 
-def get_kpi_entities() -> "pd.DataFrame":
-    """Return the persisted GraphRAG-lite entities (record_ref, entity_type, entity_value)."""
+def get_kpi_entities(entity_values: Optional[List[str]] = None) -> "pd.DataFrame":
+    """Return the persisted GraphRAG-lite entities (record_ref, entity_type, entity_value).
+
+    ``entity_values`` (case-insensitive) filters server-side to just the rows a caller
+    actually needs — e.g. graph_retrieval.py's ranking only cares about rows matching
+    the current query's own extracted entity tokens. Without it, this pulled all
+    77,000+ rows on every call regardless of how few were ever used, adding several
+    seconds of transfer that had nothing to do with the (sub-millisecond) query itself.
+    Omit the filter to get every row, unchanged from before, for callers that
+    genuinely need the whole table."""
     import pandas as pd
     conn = _get_conn()
     try:
-        rows = conn.execute(
-            "SELECT record_ref, entity_type, entity_value FROM kpi_entities"
-        ).fetchall()
+        if entity_values:
+            rows = conn.execute(
+                "SELECT record_ref, entity_type, entity_value FROM kpi_entities "
+                "WHERE lower(entity_value) = ANY(%s)",
+                ([str(v).lower() for v in entity_values],),
+            ).fetchall()
+        else:
+            rows = conn.execute(
+                "SELECT record_ref, entity_type, entity_value FROM kpi_entities"
+            ).fetchall()
         return pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
     finally:
         conn.close()
@@ -951,7 +1012,7 @@ def seed_glossary_knowledge_docs() -> int:
     reranker retrieval path have real FR content to be evaluated against, not just EN."""
     try:
         import pandas as pd
-        from src.data.glossary import as_knowledge_docs
+        from data.glossary import as_knowledge_docs
         g_docs = as_knowledge_docs(lang="en") + as_knowledge_docs(lang="fr")
         if not g_docs:
             return 0
