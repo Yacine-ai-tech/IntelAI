@@ -169,9 +169,12 @@ This project is open-source under the **AGPL-3.0 License**. It is completely fre
 > Please reach out to discuss commercial licensing and integration consulting.
 
 ## 📡 Anonymous Telemetry
-This project collects anonymous, GDPR-compliant startup pings to help the author understand usage volume and prioritize development. 
+This project can send an anonymous, GDPR-compliant startup ping so whoever is running a
+deployment can count distinct installs — **opt-in only**: it does nothing unless you set
+`TELEMETRY_URL` to a collector you control, so a fresh clone never phones home anywhere
+by default.
 * **What is collected:** Only the project name and a "startup" event timestamp. No PII, no API keys, no user data.
-* **How to disable:** We respect your privacy. To opt-out, simply set `TELEMETRY_OPT_OUT=true` in your `.env` file.
+* **How to enable/disable:** Set `TELEMETRY_URL` in your `.env` file to opt in; set `TELEMETRY_OPT_OUT=true` to force it off regardless of `TELEMETRY_URL`.
 
 
 <!-- Scarf Analytics Pixel -->
