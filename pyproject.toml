@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+# PyPI distribution name (the bare "rageval" is blocked as too-similar to an existing project).
+# The Python import name stays `rageval` (e.g. `pip install omnismart-rageval` -> `import rageval`).
+name = "omnismart-rageval"
+version = "0.1.27"
+description = "Drop-in LLMOps observability. Self-hosted. Postgres-backed. Persona-aware. Multi-judge consensus."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "Yacine"}]
+license = { text = "AGPL-3.0" }
+classifiers = [
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+]
+# Core install is light (logging/metrics/tracking work with the stdlib + dotenv). Heavy/LLM deps
+# live in extras so the package installs fast on any machine:
+#   pip install omnismart-rageval            # observability core (store, track, metrics)
+#   pip install "omnismart-rageval[eval]"    # + multi-judge scoring & embeddings
+#   pip install "omnismart-rageval[server]"  # + run the bundled API (`rageval serve`)
+#   pip install "omnismart-rageval[all]"
+dependencies = [
+    "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+eval = [
+    "litellm>=1.55.0",
+    "anthropic>=0.40.0",
+    "groq>=0.11.0",
+    "openai>=1.55.0",
+    "google-genai>=0.1.1",
+    "sentence-transformers>=3.1.1",
+    "scikit-learn>=1.5.2",
+    "numpy>=2.1.3",
+    "httpx>=0.27.0",
+    "psycopg2-binary>=2.9.9",
+]
+server = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+]
+all = [
+    "litellm>=1.55.0", "anthropic>=0.40.0", "groq>=0.11.0", "openai>=1.55.0",
+    "google-genai>=0.1.1",
+    "sentence-transformers>=3.1.1", "scikit-learn>=1.5.2", "numpy>=2.1.3",
+    "httpx>=0.27.0", "psycopg2-binary>=2.9.9",
+    "fastapi>=0.115.0", "uvicorn[standard]>=0.32.0",
+]
+
+[project.scripts]
+rageval = "rageval.cli:main"
+
+[tool.setuptools]
+packages = ["rageval"]
+package-dir = {"" = "src"}
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+pythonpath = ["src"]
+testpaths = ["tests"]

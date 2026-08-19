@@ -1,0 +1,59 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Env
+.env
+*.env
+
+# Data / runtime
+chroma_db/
+*.db
+*.sqlite
+uploads/
+logs/
+*.log
+tmp/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+Zone.Identifier
+*.Zone.Identifier
+
+# Node
+node_modules/
+dist/
+
+
+# Working notes (not committed)
+STATUS.md
+
+# Writing drafts (publish later, not in repo)
+drafts/
+steps.md
+
+# The self-hosting Docker image serves the built SPA directly from the repo,
+# so the production bundle is committed rather than built at deploy time.
+frontend/node_modules/
+!frontend/dist/
+!frontend/dist/**
+frontend/playwright-report/
+frontend/test-results/
+frontend/.vercel/
+
+# Local dev-session architecture notes (not committed) — session-specific
+ARCHITECTURE.md
