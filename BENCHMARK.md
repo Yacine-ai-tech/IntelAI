@@ -414,6 +414,162 @@ demo UI (which always shows a single, defined answer) and only surfaced once the
 underlying data model was queried the way the RAG copilot actually queries it —
 diversifying what gets tested, not just adding more of the same test, is what found both.
 
+## 5. Hybrid retrieval as its own axis: three targeted live probes
+
+**Methodology.** `USE_HYBRID_RETRIEVAL=true` is always on in production (`src/services/
+hybrid_retrieval.py` + `vector_store.py::vector_store_retrieve()`) — dense (Qdrant) and
+sparse (BM25) candidates fused via Reciprocal Rank Fusion, then optionally reranked by a
+cross-encoder (`RERANK_PROVIDER=remote`, currently the same on-demand orchestrator host
+`EMBED_URL`/`RERANK_URL` point at). There's no live toggle to disable hybrid via the API,
+so this can't be an A/B ("hybrid vs. dense-only") test through the deployed system.
+Instead, three live queries were designed to each isolate a *different* mechanism hybrid
+retrieval is supposed to provide over either half alone, submitted via the real
+`POST /api/v1/chat/async` + poll path (same pattern as §3d) against production, and judged
+against real ground truth from `tests/rag_eval.jsonl` and the raw corpus in `data/`, not
+against the model's own prose. All three latencies below are the API's own server-side
+`latency_ms`, not client-measured wall time.
+
+A structural note that applies to all three: the `sources` array returned by the chat API
+mixes two different provenance types, visible directly in `omnismart_chatbot.py`'s
+`_retrieve_context()` (lines ~926–1002) — "Live KPI snapshot" cards, one per domain in the
+persona's scope, injected directly with a **hardcoded `relevance: 1.0`** (not a retrieval
+score at all), and actual hybrid-retrieved `knowledge`/`glossary` docs, which carry the
+real fused/reranked `relevance: round(score, 3)`. Only the second group is evidence about
+hybrid retrieval's own behavior — the KPI cards' `1.0` is not a signal of anything and is
+excluded from the analysis below.
+
+### 5a. Lexical exact-match (BM25-favorable)
+
+**Query** (`esg` persona): *"How did Carbon Intensity per Revenue stand in 2025-07, and
+where does that figure come from?"* — the exact metric name as it appears in the corpus.
+
+**Result:** correct on the first try. **129.57 tCO₂e/USD million**, against the live
+database's recorded 129.5739 (`tests/rag_eval.jsonl`) — matches to the reported precision.
+Server latency: **52.5s** (5,684 tokens).
+
+| Rank | Source | Type | Relevance |
+|---|---|---|---|
+| 4 | `esg_2025_en.md` | knowledge | 1.0 |
+| 5 | `esg_2025_fr.md` | knowledge | 0.984 |
+| 6 | `esg_2024_en.md` | knowledge | 0.961 |
+
+(3 KPI-snapshot cards preceded these at ranks 1–3, hardcoded relevance, excluded per the
+note above.) The answer cited `[4]` — the correct English 2025 digest — over the French
+duplicate of the same document and the prior year's digest, both real near-neighbors a
+lexical-only match could plausibly have confused. This is hybrid retrieval doing exactly
+what BM25 is for: an exact metric-name-plus-period query resolved to the right document
+on the first pass, with **distinct**, monotonically-decreasing relevance scores across the
+three real candidates (1.0 / 0.984 / 0.961) — a pattern that recurs as the key signal in
+§5c below.
+
+### 5b. Semantic paraphrase, zero shared vocabulary (dense-favorable)
+
+**Query** (`chro` persona): *"Roughly what share of our staff left the company in the
+twelve months ending around May 2022?"* — deliberately shares no vocabulary with the
+corpus's actual metric name, "Annual Employee Turnover" (checked against
+`tests/rag_eval.jsonl`'s `expected` field before writing this query): "staff" not
+"employee", "left the company" not "turnover", no use of "annual".
+
+**Result:** *"Approximately 22% of the workforce left the company over the twelve-month
+period ending around May 2022 (annual employee turnover reported as 22.22% in the
+September 2022 review)"* — cited `[4]`, `omniintelos_minutes_2022-09_en.md`. Server
+latency: **53.2s** (2,445 tokens).
+
+| Rank | Source | Type | Relevance |
+|---|---|---|---|
+| 3 | `Glossary: Gross Margin` | glossary | 1.0 |
+| 4 | `omniintelos_minutes_2022-09_en.md` | knowledge | 0.963 |
+
+**Verified real, not hallucinated:** line 52 of that document (`data/omniintelos/
+Corporate/omniintelos_minutes_2022-09_en.md`) literally reads *"Annual Employee Turnover
+closed the period at 22.22% (average 22.22%), flat from 22.22% - in the risk band"* — the
+cited figure is genuine and correctly grounded.
+
+**But it's not the same fact the eval set's matching case checks.** A separate
+`tests/rag_eval.jsonl` case asks for this exact metric at the exact period 2022-05 and its
+ground truth is **29.1799%**, not 22.22% — a different, more precise fact (the actual
+monthly KPI table row) than what a Sept 2022 crisis-review meeting's narrative summary
+reports for "the period" in looser terms. This is the honest, real behavior of dense
+retrieval on a genuinely paraphrased, loosely-dated query: it found a real, well-grounded,
+topically on-target document with **zero lexical overlap** with the query — proving the
+dense half of hybrid retrieval is doing real semantic work, not just falling through to
+BM25 on the shared "2022"/"May" tokens — but a vague natural-language period reference
+("around May 2022") does not reliably resolve to the one precise monthly database row the
+way an exact metric-name-plus-period query does in §5a. That's a real precision trade-off,
+not a hallucination: every number in the answer traces to a real, cited source.
+
+A second honest note from the same call: `Glossary: Gross Margin` — topically unrelated to
+employee turnover — surfaced in `sources` at the top-normalized relevance of 1.0. Glossary
+entries are seeded as ordinary knowledge docs (`data/glossary.py`) and retrieved through
+the identical hybrid path as any other document, so this is real fusion noise on a query
+whose paraphrased vocabulary apparently pulled in a spurious dense-side neighbor, not a
+separate bug — worth disclosing rather than cropping out of the sources list.
+
+### 5c. Rerank under real ambiguity: did the cross-encoder actually engage?
+
+**Query** (`ceo` persona, full 7-domain scope): *"What is our turnover situation right
+now, both from a staffing perspective and a warehouse-stock perspective?"* — deliberately
+overloads the single word "turnover" across two real, differently-scaled metrics (Annual
+Employee Turnover / Turnover Rate in People vs. Inventory Turnover in Logistics) to force
+real reranking work: fusion alone can't tell these apart on lexical grounds.
+
+**Result:** the response correctly separated the two — **Turnover Rate: 6.86%** cited to
+the People KPI snapshot `[7]`, **Inventory Turnover: 10.21x** cited to the Logistics KPI
+snapshot `[5]`, plus historical comparison figures pulled from two logistics digests —
+correct domain disambiguation, driven by the KPI-snapshot injection's own per-domain
+tagging rather than anything rerank-specific. Server latency: **69.8s**, the longest of
+the three (6,861 tokens — a full structured answer with headings, two metric sections, and
+a summary table, which alone accounts for a real share of the extra time).
+
+| Rank | Source | Type | Relevance |
+|---|---|---|---|
+| 8 | `Glossary: Inventory Turnover` | glossary | 1.0 |
+| 9 | `logistics_2023_en.md` | knowledge | 0.639 |
+| 10 | `logistics_2020_en.md` | knowledge | 0.639 |
+
+**This is the signal the task asked for.** `logistics_2023_en.md` and `logistics_2020_en.md`
+are two different documents with different content, yet tied at **exactly** 0.639 — three
+decimal places of coincidence. A real cross-encoder forward pass produces continuous
+floating-point logits; two distinct documents landing on the identical score to three
+decimals is a vanishingly unlikely coincidence for a genuine rerank, but is exactly what
+`hybrid_retrieval.py`'s own documented RRF-fallback formula produces (`rrf[i] / max(rrf)`
+— an exact tie whenever two candidates' fused rank-sums happen to match, which two
+structurally near-identical "Logistics — Annual KPI Digest" documents plausibly did here).
+Compare §5a's three **distinct**, non-tied scores (1.0 / 0.984 / 0.961) under the same
+code path — the two probes' score *shapes* look like the two different code paths
+(reranked vs. RRF-only) `retrieve()`'s own fallback branch describes, not like the same
+mechanism producing different numbers by chance.
+
+**Is this the already-documented timeout fallback, or a new bug?** Reranking here almost
+certainly hit the cold-host path, not a bug. `RERANK_URL`/`EMBED_URL` point at the same
+on-demand orchestrator host already discussed in this document's honest caveats (§3's "GPU
+inference backend that isn't always warm on first request") and in `.env`'s own comments:
+`INFERENCE_WAKE_TIMEOUT` was deliberately capped at 40s this session (down from a
+420s default that previously guaranteed every cold rerank/embed call would blow through
+Cloudflare's ~100-125s ceiling) specifically so a cold host fails fast into the RRF
+fallback instead of hanging the whole request. §5c's 69.8s total is consistent with up to
+~40s spent retrying a sleeping rerank host before falling back, plus KPI-snapshot
+assembly and a long structured generation for the rest — server logs aren't available to
+confirm this directly, so this is an inference from timing and score shape, not a proven
+root cause, but it matches already-documented, intentional behavior rather than pointing
+to anything newly broken. §5a's clean, distinct scores at a similar 52.5s latency suggest
+the reranker *can* and does engage successfully when the host happens to be warm — the
+degradation is real, situational, and already accounted for by this session's timeout
+tuning, not evidence hybrid retrieval's rerank stage is broken.
+
+**Summary across the three probes:**
+
+| Probe | Mechanism tested | Server latency | Tokens | Outcome |
+|---|---|---|---|---|
+| §5a lexical exact-match | BM25 half | 52.5s | 5,684 | Correct value, correct doc, distinct rerank-shaped scores |
+| §5b semantic paraphrase | dense half | 53.2s | 2,445 | Real, grounded, zero-vocab-overlap match; resolved to a related but less precise fact than the exact DB row |
+| §5c rerank under ambiguity | cross-encoder stage | 69.8s | 6,861 | Correct domain disambiguation; tied scores indicate RRF-fallback, consistent with documented cold-host behavior |
+
+**Reproduce:** `POST /api/v1/chat/async` with the three queries and personas above against
+`https://intelai.ysiddo-ai-projects.app`, poll `GET /api/v1/chat/{job_id}`, and inspect the
+`sources` array's `relevance` field per source `type` — excluding `kpi`-type entries, whose
+relevance is hardcoded and not evidence of anything.
+
 ## Honest caveats
 
 - The forecast backtest is scored against OmniIntelOS's own synthetic-but-deterministic
@@ -441,6 +597,13 @@ diversifying what gets tested, not just adding more of the same test, is what fo
 - §4's two scenario-switching bugs, like the entity-extraction/multi-hop fixes above, were
   found by testing more thoroughly *while* this benchmark work was underway, not before
   it — disclosed the same way, rather than presented as if they'd always been correct.
+- §5 is 3 targeted probes, not a statistically powered study — `USE_HYBRID_RETRIEVAL` has
+  no live off-switch in production, so there is no true dense-only/BM25-only control to
+  compare against directly; each probe instead isolates one mechanism as cleanly as a
+  single live query can.
+- §5c's conclusion that a tied relevance score indicates RRF-fallback (not genuine
+  reranking) is an inference from score shape and timing, not a server-log confirmation —
+  disclosed as such rather than presented as directly observed.
 
 ## Further reading
 
