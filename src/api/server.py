@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import pandas as pd
-from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, WebSocket, WebSocketDisconnect, Query, Request
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, WebSocket, WebSocketDisconnect, Query, Request, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -774,8 +774,11 @@ async def get_me(user: TokenData = Depends(get_current_user)):
 # CHAT & PERSONAS
 # ════════════════════════════════════════════════════════════
 
-@app.post("/api/v1/chat")
-async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
+async def _run_chat_turn(req: "ChatRequest", user: TokenData) -> Dict[str, Any]:
+    """The actual chat pipeline — retrieval + LLM completion + persistence. Shared by
+    the synchronous POST /api/v1/chat and the async POST /api/v1/chat/async + GET
+    /api/v1/chat/{job_id} pair, so both paths produce identical results; only how the
+    caller receives them differs."""
     import json as _json
     from src.services.omnismart_chatbot import get_persona_factory
 
@@ -837,6 +840,50 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
         "sources": sources,
         "blocks": _structure_answer(response_text),
     }
+
+
+@app.post("/api/v1/chat")
+async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
+    return await _run_chat_turn(req, user)
+
+
+@app.post("/api/v1/chat/async")
+async def chat_async(req: ChatRequest, background: BackgroundTasks,
+                      user: TokenData = Depends(get_current_user)):
+    """Same pipeline as POST /api/v1/chat, but returns a job_id immediately and runs
+    the actual chat turn as a background task instead of blocking the request until
+    it's done.
+
+    Exists because a real chat turn under cold retrieval (see BENCHMARK.md) can take
+    60-100s+ — long enough that a reverse proxy in front of this service (Cloudflare,
+    in production) risks cutting the connection before an otherwise-successful
+    response comes back. Confirmed live: repeated 524s on POST /api/v1/chat under
+    exactly this condition. Polling in short, fast requests instead means no single
+    request can ever run long enough to hit that ceiling — same pattern DocIntel's
+    POST /batch/upload + GET /batch/{job_id} already uses for the identical reason.
+    """
+    from src.services.chat_jobs import new_job, run_job
+    job_id = new_job(req.model_dump(), owner_user_id=user.user_id)
+    background.add_task(run_job, job_id, lambda: _run_chat_turn(req, user))
+    return {"job_id": job_id}
+
+
+@app.get("/api/v1/chat/{job_id}")
+async def chat_job_status(job_id: str, user: TokenData = Depends(get_current_user)):
+    """Poll target for POST /api/v1/chat/async. Returns {status: pending|running} while
+    in flight, or {status: done, ...same shape as POST /api/v1/chat...} /
+    {status: error, error: "..."} once finished. 404 if the job doesn't exist, has
+    expired (1h TTL), or belongs to a different user."""
+    from src.services.chat_jobs import get_job
+    job = await asyncio.to_thread(get_job, job_id, user.user_id)
+    if not job:
+        raise HTTPException(status_code=404, detail=f"Job '{job_id}' not found")
+    out = {"job_id": job_id, "status": job["status"]}
+    if job["status"] == "done":
+        out.update(job.get("result") or {})
+    elif job["status"] == "error":
+        out["error"] = job.get("error")
+    return out
 
 
 @app.get("/api/v1/personas")
@@ -2239,11 +2286,29 @@ async def websocket_chat(websocket: WebSocket):
                 session_id = data["session_id"]
             # Use language from message if provided, otherwise fall back to user language
             language = data.get("language") or user.language
-            result = await asyncio.to_thread(
+            # A real chat turn can genuinely take 60-100s+ under cold retrieval — see
+            # BENCHMARK.md. A proxy sitting in front of this socket (Cloudflare or
+            # otherwise) can treat a connection with no traffic in either direction for
+            # too long as dead, same risk a slow synchronous REST call has. Unlike REST,
+            # the socket is already open for the whole turn, so the fix here is a
+            # periodic status frame while the real work runs in the background — resets
+            # any such idle-timeout AND gives the client something to show instead of
+            # silence, rather than needing the job+poll pattern REST callers get instead.
+            chat_task = asyncio.create_task(asyncio.to_thread(
                 factory.chat,
                 message=message, user_role=user.role,
                 persona_override=persona_override, language=language, history=history,
-            )
+            ))
+            keepalive_interval = float(os.getenv("WS_CHAT_KEEPALIVE_SECONDS", "12"))
+            while not chat_task.done():
+                try:
+                    await asyncio.wait_for(asyncio.shield(chat_task), timeout=keepalive_interval)
+                except asyncio.TimeoutError:
+                    try:
+                        await websocket.send_json({"type": "status", "note": "still working..."})
+                    except Exception:
+                        break  # client gone — let the outer try/except handle cleanup
+            result = await chat_task
             history.append({"role": "user", "content": message})
             history.append({"role": "assistant", "content": result["response"]})
             # Persist the turn so it appears in history with a real title (store_message
