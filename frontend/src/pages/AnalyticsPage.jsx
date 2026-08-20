@@ -50,6 +50,9 @@ function AnalyticsInner() {
   const forecast = useMutation({ mutationFn: (m) => api.runForecast(m, 6).then(r => r.data) })
 
   const categories = useMemo(() => [...new Set(kpis.map(k => k.category).filter(Boolean))], [kpis])
+  const recentKpis = useMemo(() => [...kpis]
+    .sort((a, b) => (b.period || '').localeCompare(a.period || ''))
+    .slice(0, 60), [kpis])
   const selected = metric || metricNames[0] || ''
   const series = useMemo(() => kpis
     .filter(k => k.metric === selected)
@@ -115,7 +118,16 @@ function AnalyticsInner() {
             <table className="table">
               <thead><tr><th>{t('thMetric') || 'Metric'}</th><th>{t('thValue') || 'Value'}</th><th>{t('thDomain') || 'Domain'}</th><th>{t('thPeriod') || 'Period'}</th></tr></thead>
               <tbody>
-                {kpis.slice(0, 60).map((k, i) => (
+                {/* api.getKPIs() returns rows sorted ASCENDING by period (oldest first —
+                    see pg_store.py::get_kpi_metrics' final df.sort_values(["period", ...])).
+                    kpis.slice(0, 60) used to take the FIRST 60 of that ascending list, i.e.
+                    the OLDEST rows in the whole dataset — with live data spanning 2020-01
+                    through 2026-06, that's always deep in 2024 or earlier regardless of how
+                    current the actual data is (reproduced live: this table only ever showed
+                    2024 rows despite 2026 data existing and the chart above it, and the
+                    Periods stat tile, both correctly reflecting the full range). Sort
+                    descending first so the 60 shown are the MOST RECENT across all metrics. */}
+                {recentKpis.map((k, i) => (
                   <tr key={i}>
                     <td>{k.metric}</td>
                     <td style={{ fontFamily: 'var(--font-mono)' }}>{typeof k.value === 'number' ? fmtNum(k.value) : k.value}</td>
