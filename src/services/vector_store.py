@@ -82,7 +82,7 @@ def _embed_batch(texts: List[str]):
     if provider != "remote":
         raise RuntimeError(f"EMBEDDING_PROVIDER must be 'local' or 'remote', got {provider!r}")
 
-    remote = os.environ.get("EMBED_URL", "").strip() or os.environ.get("EMBEDDING_ENDPOINT", "https://orchestrator-wf53.onrender.com/embed").strip()
+    remote = os.environ.get("EMBED_URL", "").strip() or os.environ.get("EMBEDDING_ENDPOINT", "").strip()
     if not remote:
         raise RuntimeError("EMBEDDING_PROVIDER=remote but neither EMBED_URL nor EMBEDDING_ENDPOINT is set")
     import time

@@ -229,7 +229,7 @@ class HybridRetriever:
         return self._remote_embed_batch(texts)
 
     def _remote_embed_batch(self, texts: List[str]):
-        url = os.getenv("EMBED_URL", "").strip() or os.getenv("EMBEDDING_ENDPOINT", "https://orchestrator-wf53.onrender.com/embed").strip()
+        url = os.getenv("EMBED_URL", "").strip() or os.getenv("EMBEDDING_ENDPOINT", "").strip()
         if not url:
             raise RuntimeError(
                 "EMBEDDING_PROVIDER=remote but neither EMBED_URL nor EMBEDDING_ENDPOINT is set")
@@ -541,7 +541,7 @@ def _rerank_remote(query: str, texts: List[str]) -> List[float]:
     URL is called in HF's native cross-encoder shape; anything else via the generic
     POST {url}/rerank contract ({"query","texts":[...]} -> {"scores":[...]}) that
     any compliant host can implement."""
-    remote = os.getenv("RERANK_URL", "https://orchestrator-wf53.onrender.com").strip()
+    remote = os.getenv("RERANK_URL", "").strip()
     if not remote:
         raise RuntimeError("RERANK_PROVIDER=remote but RERANK_URL is not set")
     h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
