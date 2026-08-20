@@ -257,7 +257,7 @@ class UltraFastRAG:
         self.embedding_model = None
         self.vectorstore = None
         
-        if _SBERT and os.getenv("INFERENCE_MODE", "local").lower() != "remote":
+        if _SBERT and os.getenv("INFERENCE_MODE", "remote").lower() != "remote":
             pass # Loaded lazily only if needed
         
         default_instruction = (
@@ -309,7 +309,7 @@ class UltraFastRAG:
             # Semantic search with embeddings
             if _SBERT and "embedding" in docs.columns:
                 try:
-                    if self.embedding_model is None and os.getenv("INFERENCE_MODE", "local").lower() != "remote":
+                    if self.embedding_model is None and os.getenv("INFERENCE_MODE", "remote").lower() != "remote":
                         self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL or "all-MiniLM-L6-v2")
                     if self.embedding_model:
                         query_embedding = self.embedding_model.encode([query])[0]
@@ -1251,6 +1251,7 @@ class AgentPersonaFactory:
                 "tokens_used": tokens,
                 "latency_ms": latency,
                 "sources": sources,
+                "query": message,
             }
         except Exception as exc:
             log.error("Persona chat error (%s): %s", persona.name, exc)
@@ -1259,6 +1260,7 @@ class AgentPersonaFactory:
                 "persona_used": persona.name,
                 "tokens_used": 0,
                 "latency_ms": (time.time() - start) * 1000,
+                "query": message,
             }
 
     def list_personas(self, user_role: Optional[str] = None) -> List[Dict[str, Any]]:
