@@ -96,8 +96,14 @@ def _post_json_awaiting_wake(url: str, payload: Dict[str, Any], headers: Dict[st
                 return result
             last_desc = str(result.get("error"))[:120]
         except urllib.error.HTTPError as e:
+            err_body = ""
+            try:
+                err_body = e.read().decode("utf-8").lower()
+            except Exception:
+                pass
             if e.code >= 400 and e.code < 500 and e.code != 408 and e.code != 429:
-                raise
+                if "waking" not in err_body and "530" not in err_body and "cold" not in err_body:
+                    raise
             last_desc = f"HTTPError: {e.code} {e.reason}"[:120]
         except Exception as e:
             # A transport-level failure can also mean "still coming up" — keep waiting
