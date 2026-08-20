@@ -88,12 +88,11 @@ This needs the same honest scoping RAGeval gives its own persona-scope detector:
 general-purpose RAG-evaluation frameworks and observability platforms most commonly cited
 in 2026 (RAGAS, ARES, TruLens, Phoenix, Langfuse) do not ship an authorization-scoped
 retrieval layer as a first-class concept — retrieval-time RBAC is IntelAI's own design
-choice, not a reimplementation of prior art. This project's own security review found and
-closed a cross-domain leak where one endpoint returned every domain's data regardless of
-role while a sibling endpoint scoped correctly — direct evidence that retrieval-time
-enforcement, applied consistently everywhere data leaves the system, not UI-level hiding,
-is the thing that actually has to be correct. §7 of `BENCHMARK.md` verifies this
-enforcement directly with a live test.
+choice, not a reimplementation of prior art. Enforcement is applied consistently at every
+endpoint that returns domain data, not only at the ones a UI happens to route through, on
+the premise that retrieval-time enforcement — not UI-level hiding — is what actually has
+to be correct for the guarantee to hold. §6 of `BENCHMARK.md` verifies this enforcement
+directly with a live test.
 
 ## GraphRAG-lite: a real scoping distinction worth stating plainly
 
