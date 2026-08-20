@@ -58,7 +58,7 @@ def _embed(texts: List[str]):
     EMBED_BATCH_SIZE was already a configured env var but nothing in this module read
     it)."""
     provider = (os.environ.get("EMBEDDING_PROVIDER", "").strip().lower()
-                or ("remote" if os.environ.get("INFERENCE_MODE", "").strip().lower() == "remote"
+                or ("remote" if os.environ.get("INFERENCE_MODE", "remote").strip().lower() == "remote"
                     else "local"))
     if provider == "remote" and len(texts) > 1:
         batch_size = int(os.environ.get("EMBED_BATCH_SIZE", "32"))
@@ -72,7 +72,7 @@ def _embed(texts: List[str]):
 def _embed_batch(texts: List[str]):
     import numpy as np
     provider = (os.environ.get("EMBEDDING_PROVIDER", "").strip().lower()
-                or ("remote" if os.environ.get("INFERENCE_MODE", "").strip().lower() == "remote"
+                or ("remote" if os.environ.get("INFERENCE_MODE", "remote").strip().lower() == "remote"
                     else "local"))
 
     if provider == "local":
@@ -82,7 +82,7 @@ def _embed_batch(texts: List[str]):
     if provider != "remote":
         raise RuntimeError(f"EMBEDDING_PROVIDER must be 'local' or 'remote', got {provider!r}")
 
-    remote = os.environ.get("EMBED_URL", "").strip() or os.environ.get("EMBEDDING_ENDPOINT", "").strip()
+    remote = os.environ.get("EMBED_URL", "").strip() or os.environ.get("EMBEDDING_ENDPOINT", "https://orchestrator-wf53.onrender.com/embed").strip()
     if not remote:
         raise RuntimeError("EMBEDDING_PROVIDER=remote but neither EMBED_URL nor EMBEDDING_ENDPOINT is set")
     import time
@@ -117,7 +117,8 @@ def _embed_batch(texts: List[str]):
                 return arr
 
             body = _json.dumps({"texts": list(texts)}).encode()
-            req = urllib.request.Request(remote.rstrip("/") + "/embed", data=body, headers=h)
+            endpoint = remote if remote.endswith("/embed") else remote.rstrip("/") + "/embed"
+            req = urllib.request.Request(endpoint, data=body, headers=h)
             res = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
             vecs = res.get("embeddings")
             if not (isinstance(vecs, list) and len(vecs) == len(texts)):
