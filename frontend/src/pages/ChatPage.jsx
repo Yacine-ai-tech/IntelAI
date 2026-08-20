@@ -224,6 +224,14 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
   const wsRef = useRef(null)
   const abortControllerRef = useRef(null)
   const reconnectRef = useRef(null)
+  // Tracks which transport the in-flight send() used, so cancelRequest() knows whether to
+  // abort the HTTP request or close/reopen the socket. Previously cancelRequest() referenced
+  // an undefined `useWs` variable — clicking Stop while a message was in flight over the
+  // WebSocket (the default transport whenever connected) threw a ReferenceError before the
+  // socket could be closed or `loading` reset, leaving the UI stuck mid-response (this is
+  // also the likely cause of the floating-widget "freeze after Stop" report, since the
+  // widget renders this same component).
+  const wsInFlightRef = useRef(false)
 
   const { data: personas = [] } = useQuery({
     queryKey: ['personas'],
@@ -286,9 +294,17 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
             persona_used: d.persona_used,
           }])
           setLoading(false)
+          wsInFlightRef.current = false
         } else if (d.type === 'error' || d.error) {
           setMessages(p => [...p, { role: 'assistant', content: `Error: ${d.error || 'request failed'}` }])
           setLoading(false)
+          wsInFlightRef.current = false
+        } else if (d.type === 'status') {
+          // Backend keepalive frame sent every WS_CHAT_KEEPALIVE_SECONDS while a turn is
+          // still running (e.g. a cold Studio wake per the retrieval pipeline's wake-aware
+          // polling). Surface it instead of silently dropping it, so a slow response reads
+          // as "still working" rather than looking hung with no signal at all.
+          setSlowHint(true)
         }
       }
       ws.onerror = () => setStatus('error')
@@ -308,8 +324,10 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
     
     const ws = wsRef.current
     if (ws && ws.readyState === WebSocket.OPEN) {
+      wsInFlightRef.current = true
       ws.send(JSON.stringify({ message: q, persona: persona || 'general', session_id: activeSession || undefined, language: lang }))
     } else {
+      wsInFlightRef.current = false
       api.sendChat(q, persona || 'general', activeSession, '', lang, abortControllerRef.current.signal)
         .then(r => setMessages(p => [...p, {
           role: 'assistant',
@@ -334,10 +352,19 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
       abortControllerRef.current.abort()
       abortControllerRef.current = null
     }
-    if (useWs && wsRef.current) {
+    if (wsInFlightRef.current && wsRef.current) {
+      // There's no per-message cancel over the WS protocol (the backend runs the chat
+      // turn as a plain background thread, not a cancellable task), so the only real way
+      // to stop receiving this turn's answer is to close the socket outright — the
+      // existing onclose handler reconnects automatically a moment later. This previously
+      // referenced an undefined `useWs` variable, which threw before the socket could be
+      // closed or `loading` reset, leaving the UI stuck showing the typing indicator with
+      // a Stop button that no longer did anything.
       wsRef.current.close()
+      wsInFlightRef.current = false
       setMessages(p => [...p, { role: 'assistant', content: 'Message canceled.' }])
     }
+    setSlowHint(false)
     setLoading(false)
   }
 
@@ -468,6 +495,18 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
               <div className="chat-avatar"><Sparkles size={15} /></div>
               <div className="chat-bubble">
                 <span className="typing-dot" /> <span className="typing-dot" style={{ animationDelay: '.2s' }} /> <span className="typing-dot" style={{ animationDelay: '.4s' }} />
+                {slowHint && (
+                  // `slowHint` was previously computed (flips true 6s into a request) but
+                  // never rendered anywhere — so a slow/cold-starting response looked
+                  // identical to a hung one for the entire wait, with nothing distinguishing
+                  // "still working" from "stuck". This is the visible half of that fix; a
+                  // real Studio cold start can still take several minutes (see the
+                  // wake-aware retrieval pattern), so the message says so rather than
+                  // implying it's almost done.
+                  <div className="chat-slow-hint" style={{ marginTop: 6, fontSize: '.8rem', color: 'var(--text-3)' }}>
+                    {t('chatSlowHint') || 'Still working — this can take a couple of minutes on a cold start…'}
+                  </div>
+                )}
               </div>
             </div>
           )}

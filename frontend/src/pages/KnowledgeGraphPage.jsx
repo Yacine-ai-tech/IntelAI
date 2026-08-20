@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Share2, Search, Loader2 } from 'lucide-react'
 import { PageHeader, Panel, Empty } from '../components/ui'
 import { useTranslation } from '../i18n/I18nContext'
@@ -97,7 +98,11 @@ function useForceSimulation(nodes, links, width, height) {
 
 export default function KnowledgeGraphPage() {
   const { t } = useTranslation()
-  const [query, setQuery] = useState('Overview')
+  const [searchParams, setSearchParams] = useSearchParams()
+  // A "View Graph" deep-link from the Copilot (?q=<query>) should open the graph for that
+  // specific query/entity, not the default overview — previously this param was read by
+  // nobody, so every deep-link silently fell back to the hardcoded 'Overview' seed query.
+  const [query, setQuery] = useState(() => searchParams.get('q') || 'Overview')
   const [busy, setBusy] = useState(false)
   const [graphData, setGraphData] = useState(null)
   const [hover, setHover] = useState(null)

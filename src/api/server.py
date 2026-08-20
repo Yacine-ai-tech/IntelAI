@@ -251,7 +251,16 @@ def _structure_answer(text: str) -> List[Dict[str, Any]]:
     - ``kpi``       — ``**Label:** value`` lines (KPI pill pattern)
     - ``quote``     — ``> …`` blockquotes
     - ``code``      — fenced ``` blocks
+    - ``table``     — GFM ``| a | b |`` pipe tables; ``rows`` key holds ``[[cell, ...], ...]``
     - ``text``      — everything else
+
+    Table support: previously absent entirely, so every ``| Dimension | Key Metrics |
+    Assessment |``-style GFM table the LLM produced fell through to the generic ``text``
+    branch and was shown to the user as literal, unrendered pipe syntax (confirmed live
+    on a "business health?" query) — the frontend's own client-side parser
+    (``ChatPage.jsx::parseBlocks``) already handles tables correctly, but
+    ``FormattedContent`` always prefers these server-sent ``blocks[]`` when present, so
+    the frontend's table support was unreachable for any server-structured response.
     """
     import re as _re
     lines = (text or "").replace("\r\n", "\n").split("\n")
@@ -261,6 +270,12 @@ def _structure_answer(text: str) -> List[Dict[str, Any]]:
     code_buf: List[str] = []
     list_buf: List[str] = []
     list_ordered = False
+
+    def _is_table_row(s: str) -> bool:
+        return bool(_re.match(r"^\|.*\|$", s))
+
+    def _is_table_separator(s: str) -> bool:
+        return bool(_re.match(r"^\|[\s:|-]+\|$", s))
 
     def flush_text():
         t = " ".join(buf).strip()
@@ -273,8 +288,33 @@ def _structure_answer(text: str) -> List[Dict[str, Any]]:
             blocks.append({"type": "list", "ordered": list_ordered, "items": list(list_buf)})
             list_buf.clear()
 
+    table_buf: List[str] = []
+
+    def flush_table():
+        if not table_buf:
+            return
+        rows = [r for r in table_buf if not _is_table_separator(r)]
+        parsed = [
+            [c.strip() for c in _re.sub(r"^\||\|$", "", r).split("|")]
+            for r in rows
+        ]
+        if parsed:
+            blocks.append({"type": "table", "rows": parsed})
+        table_buf.clear()
+
     for line in lines:
         stripped = line.strip()
+
+        # GFM pipe table: consume consecutive `|...|` rows (header, separator, body rows)
+        # as one block, same shape the frontend's own client-side parser already produces
+        # (ChatPage.jsx::parseBlocks) so both code paths render an actual <table>.
+        if _is_table_row(stripped) and not in_code:
+            flush_list()
+            flush_text()
+            table_buf.append(stripped)
+            continue
+        elif table_buf:
+            flush_table()
 
         # Fenced code block toggle
         if stripped.startswith("```"):
@@ -346,6 +386,7 @@ def _structure_answer(text: str) -> List[Dict[str, Any]]:
         flush_list()
         buf.append(stripped)
 
+    flush_table()
     flush_list()
     flush_text()
     if code_buf:
@@ -1582,6 +1623,20 @@ async def generate_financial_statement(
     if not period:
         from src.services.pg_store import get_latest_period
         period = await asyncio.to_thread(get_latest_period) or "2025-06"
+
+    # _fetch_metrics() does an exact-string match against `period`; KPI periods are only
+    # ever written as monthly "YYYY-MM" strings (get_latest_period, every ingestion path).
+    # A period that matches nothing used to fall through silently to an all-$0.00 statement
+    # with no indication anything was wrong — reported live as a confusing/"empty-looking"
+    # generated P&L. Fail loudly instead so the user knows to pick a real period.
+    from src.services.pg_store import get_available_periods
+    available_periods = await asyncio.to_thread(get_available_periods)
+    if available_periods and period not in available_periods:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No KPI data for period '{period}'. Available periods: {', '.join(sorted(available_periods)[-6:])}"
+            + (" (showing latest 6)" if len(available_periods) > 6 else ""),
+        )
 
     try:
         if req.statement_type in ("income_statement", "pl", "P&L", "profit_loss"):
