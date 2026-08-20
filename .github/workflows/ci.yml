@@ -290,6 +290,12 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           INTELAI_INTERNAL_TOKEN: ${{ secrets.INTELAI_INTERNAL_TOKEN }}
+          # tests/test_exhaustive_api.py reads TEST_BASE_URL (defaulting to
+          # http://localhost:8000, which doesn't exist on this runner) — this job
+          # never set it, so all 71 tests failed with a connection error on every
+          # single push to master, producing a GitHub Actions failure-email on
+          # every push (the "constant failure alerts" reported live 2026-08-20).
+          TEST_BASE_URL: ${{ env.INTELAI_URL }}
         run: |
           if [ -f "tests/test_exhaustive_api.py" ]; then
             python -m pytest tests/test_exhaustive_api.py -o addopts=""
