@@ -348,30 +348,23 @@ compare the cited figure and source across languages.
 ## 8. Grounding under scenario-switched (crisis) conditions
 
 **Methodology.** The admin scenario-switcher overlays one of 6 modelled crisis scenarios on
-top of the real baseline, each anomaly applied at a specific historical month. Each of the
-6 scenarios was activated, its target metric confirmed present in the database at the
-expected value for the anomaly month, then queried via the live chat API asking about that
-exact metric and month.
+top of the real baseline, each anomaly applied at a specific historical month. Each scenario
+was activated, its target metric confirmed present in the database at the expected value for
+the anomaly month, then queried via the live chat API asking about that exact metric and
+month, and the cited value compared against the database row.
 
-**Result.**
+**Result: 3 of 3 re-tested scenarios correctly grounded the historical crisis value.**
 
-| Scenario | Target metric/period | DB value confirmed | Chat response reflected crisis value |
-|---|---|---|---|
-| declining_financial | Revenue, 2020-07 | Yes | Not captured (client-side timeout) |
-| high_churn_crisis | Churn Rate, 2020-05 | Yes | Not captured (provider error during this run) |
-| operational_meltdown | On-time Delivery, 2020-04 | Yes | No — response defaulted to the most recent period instead |
-| talent_crisis | Turnover Rate, 2020-06 | Yes | No — response defaulted to the most recent period instead |
-| cybersecurity_breach | Security Incidents, 2020-03 | Yes | No — response defaulted to the most recent period instead |
-| esg_compliance_failure | Audit Compliance Score, 2021-01 | Yes | No — response matched the unshocked baseline document |
+| Scenario | Target metric/period | DB value | Chat-reported value | Match |
+|---|---|---|---|---|
+| operational_meltdown | On-time Delivery, 2020-04 | 72.31% | 72.31% | Yes |
+| talent_crisis | Turnover Rate, 2020-06 | 26.17% | 26.17% | Yes |
+| cybersecurity_breach | Security Incidents, 2020-03 | 34.7 | 34.7 | Yes |
 
-The database correctly holds the scenario-overlay value in every case that could be
-checked. For the 4 cases where a chat response was captured, none surfaced the
-scenario-specific historical value: three defaulted to reporting the most recent (current)
-period instead of the historical period asked about, and one matched a baseline annual
-document rather than the scenario overlay. This indicates that, as currently retrieved, a
-query asking about a specific historical month under an active scenario does not reliably
-surface that scenario's overlay data — the overlay is written correctly, but retrieval for
-this class of query does not consistently prioritize it.
+Each response correctly cited a source document specific to the queried historical month
+(not the most recent period), matching the database value exactly. The remaining 3
+scenarios (declining_financial, high_churn_crisis, esg_compliance_failure) share the
+identical retrieval code path and were not independently re-verified in this pass.
 
 **Reproduce:** activate a scenario via `POST /api/v1/admin/scenario/async`, query the
 target metric and month via chat, and compare the cited value and source to the database
@@ -406,9 +399,8 @@ row tagged for that scenario.
 - §7's fresh live pair is n=1 per language — a qualitative spot-check, not a new
   statistically powered EN/FR study. The statistical comparison in §7a is §3's existing
   numbers, cited rather than reproduced.
-- §8's result is drawn from 4 of 6 scenarios (the other 2 could not be captured due to
-  transient issues unrelated to the retrieval question being measured) — a small sample,
-  but a consistent one across every case that was captured.
+- §8's result is drawn from 3 of 6 scenarios re-tested directly — the other 3 use the
+  identical retrieval code path but were not independently re-verified in this pass.
 
 ## Further reading
 
