@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, Component } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
@@ -28,15 +28,27 @@ const CCY_CODE = (import.meta.env.VITE_CURRENCY || 'USD').toUpperCase()
 const [CCY_SYM, CCY_WORD] = CURRENCIES[CCY_CODE] || [CCY_CODE, true]
 const IS_FR = (import.meta.env.VITE_LANGUAGE || 'en').toLowerCase() === 'fr'
 
-export const fmtMoney = (v) => {
+export const fmtMoney = (v) => fmtCurrency(v, CCY_CODE)
+
+// Format a value in a SPECIFIC ISO 4217 currency, regardless of the deployer's configured
+// display currency (VITE_CURRENCY). Needed because a KPI row's own `unit` can legitimately
+// be a different currency than the rest of the dashboard — e.g. OmniIntelOS reports most
+// Finance metrics in USD but also carries one statutory "Chiffre d'affaires (XOF)" row in
+// its real functional/local currency (West African CFA franc). Previously any non-USD unit
+// fell through to the generic unitless fmtNum(), so that XOF figure rendered as a bare huge
+// number sitting right next to $-labeled USD figures — confusing, and not obviously either
+// currency. Labeling it "FCFA" explicitly (instead of mislabeling it "$") fixes that without
+// guessing at conversion.
+export const fmtCurrency = (v, code) => {
   if (v == null || isNaN(v)) return '—'
+  const [sym, isWord] = CURRENCIES[String(code || CCY_CODE).toUpperCase()] || [code, true]
   let n = fmtNum(v)                           // e.g. "3.60M" / "850"
   if (IS_FR) {
     n = n.replace('.', ',').replace('B', ' Md').replace('M', ' M').replace('K', ' k')
     // word currencies get a space ("3,60 M FCFA"); symbol currencies attach ("3,60 M€" / "850 €")
-    return CCY_WORD ? `${n} ${CCY_SYM}` : (n.includes(' ') ? `${n}${CCY_SYM}` : `${n} ${CCY_SYM}`)
+    return isWord ? `${n} ${sym}` : (n.includes(' ') ? `${n}${sym}` : `${n} ${sym}`)
   }
-  return CCY_WORD ? `${n} ${CCY_SYM}` : `${CCY_SYM}${n}`           // EN: "$3.60M" / "3.60M FCFA"
+  return isWord ? `${n} ${sym}` : `${sym}${n}`           // EN: "$3.60M" / "3.60M FCFA"
 }
 export const fmtPct = (v) => (v == null || isNaN(v) ? '—' : (Math.round(v * 10) / 10) + '%')
 
@@ -189,6 +201,33 @@ export function ErrorState({ text = 'Could not load this data.' }) {
       <span>{text}</span>
     </div>
   )
+}
+
+// ── crash containment ──────────────────────────────────────────
+// React only lets class components catch render errors (no hook equivalent). Without one
+// anywhere in the tree, ANY uncaught error thrown while rendering — e.g. from a chat
+// message/citation click handler triggering a re-render — unmounts the whole app (a blank,
+// totally unresponsive page: "hard freeze, nothing clickable"), matching the floating
+// Copilot widget's reported crash-on-citation-click behavior exactly regardless of which
+// specific line throws. Wrap any risky subtree (the floating widget in particular, since
+// it's reported to crash and previously had zero fault isolation from the rest of the app)
+// so a bug there degrades to a small inline error card instead of taking down the page.
+export class ErrorBoundary extends Component {
+  constructor(props) { super(props); this.state = { error: null } }
+  static getDerivedStateFromError(error) { return { error } }
+  componentDidCatch(error, info) { console.error('ErrorBoundary caught:', error, info) }
+  render() {
+    if (this.state.error) {
+      return this.props.fallback ? this.props.fallback(this.state.error, () => this.setState({ error: null }))
+        : (
+          <div className="card" style={{ color: 'var(--bad)', padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}><AlertTriangle size={16} /> Something went wrong.</div>
+            <button className="btn btn-ghost btn-sm" onClick={() => this.setState({ error: null })}>Retry</button>
+          </div>
+        )
+    }
+    return this.props.children
+  }
 }
 
 // ── charts ───────────────────────────────────────────────────

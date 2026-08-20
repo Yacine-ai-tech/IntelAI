@@ -8,6 +8,7 @@ import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { HelpCircle, Menu, X, Maximize2 } from 'lucide-react'
 import ChatPage from '../pages/ChatPage'
+import { ErrorBoundary } from './ui'
 
 // route segment → { title key, glossary domain (null = show everything) }
 const ROUTES = {
@@ -115,11 +116,21 @@ export default function Layout() {
       
       {/* Floating Mini Copilot */}
       {copilotOpen && seg !== 'chat' && (
-        <div style={{
-          position: 'fixed', bottom: 20, right: 20, width: 450, height: 600,
-          background: 'var(--surface)', borderRadius: 12, boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
-          display: 'flex', flexDirection: 'column', zIndex: 9999, border: '1px solid var(--border)', overflow: 'hidden'
-        }}>
+        <div
+          className="floating-copilot"
+          style={{
+            position: 'fixed', bottom: 20, right: 20,
+            // Fixed 450x600 px previously overflowed small/narrow viewports (no responsive
+            // fallback at all — confirmed: on a ~375px-wide viewport the panel runs off the
+            // left edge, and on short viewports the 600px height runs off the top). Clamp
+            // to the viewport instead, and drop the side/bottom insets to 0 below ~480px so
+            // it behaves like a full-screen sheet on phones instead of clipping.
+            width: 'min(450px, calc(100vw - 40px))',
+            height: 'min(600px, calc(100vh - 40px))',
+            maxWidth: '100vw', maxHeight: '100vh',
+            background: 'var(--surface)', borderRadius: 12, boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+            display: 'flex', flexDirection: 'column', zIndex: 9999, border: '1px solid var(--border)', overflow: 'hidden'
+          }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', background: 'var(--surface-2)', borderBottom: '1px solid var(--border)' }}>
             <span style={{ fontWeight: 600, fontSize: '.95rem' }}>{t('navAssistant') || 'Copilot'}</span>
             <div style={{ display: 'flex', gap: 6 }}>
@@ -131,8 +142,19 @@ export default function Layout() {
               </button>
             </div>
           </div>
-          <div style={{ flex: 1, position: 'relative' }}>
-             <ChatPage isWidget={true} initialQuery={copilotQuery} />
+          <div style={{ flex: 1, position: 'relative', minHeight: 0 }}>
+             {/* A crash anywhere in the widget's chat tree (e.g. the citation-click path
+                 reported to hard-freeze the whole UI) previously had no fault isolation —
+                 React unmounts the entire app on an uncaught render error with no error
+                 boundary anywhere upstream. Contain it to this panel instead. */}
+             <ErrorBoundary fallback={(err, retry) => (
+               <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10, height: '100%', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+                 <span>{t('copilotCrashed') || 'The assistant hit an error and had to reset.'}</span>
+                 <button className="btn btn-primary btn-sm" onClick={retry}>{t('retry') || 'Retry'}</button>
+               </div>
+             )}>
+               <ChatPage isWidget={true} initialQuery={copilotQuery} />
+             </ErrorBoundary>
           </div>
         </div>
       )}
