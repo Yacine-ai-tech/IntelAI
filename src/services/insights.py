@@ -98,12 +98,28 @@ def compute_health_index(df: pd.DataFrame) -> Dict[str, float | str]:
         lbl = t("COMMON", "no_data") if I18N.lang() == "fr" else "No Data"
         return {"score": 0, "label": lbl}
 
-    rev = _metric_lookup(df, ["revenue", "sales", "arr", "mrr"]).sort_values("period")
+    # Bug found live: this used to sort_values("period") over EVERY row matched by the
+    # revenue/sales/arr/mrr keyword filter — with several distinct revenue-family metrics in
+    # the real data (e.g. "Revenue", "Subscription Revenue", "Professional Services Revenue",
+    # "Data Centre Revenue"), iloc[-2]/iloc[-1] on that combined frame just grabbed whichever
+    # two ROWS happened to sort last, which are very often two DIFFERENT metrics from the
+    # same or adjacent periods rather than one metric one period apart. That produced a
+    # wildly wrong (often large-negative) "growth" figure, and growth*2 alone was big enough
+    # to drag the whole formula below 0 before np.clip(..., 0, 100) silently floored it —
+    # exactly the "health score = 0 while every underlying metric looks strong" symptom,
+    # since none of those per-dimension metrics (EBITDA margin, Rule of 40, NRR, etc.) are
+    # even inputs to this score; this narrower revenue/margin/cash/opex formula is.
+    # Fix: sum same-period revenue-like rows together (consistent with extract_key_metrics'
+    # own revenue calc above) and compare one period's total against the previous period's.
+    rev_df = _metric_lookup(df, ["revenue", "sales", "arr", "mrr"])
     growth = 0.0
-    if len(rev) >= 2:
-        prev = rev.iloc[-2]["value"]
-        if prev:
-            growth = (rev.iloc[-1]["value"] - prev) / prev * 100
+    if not rev_df.empty:
+        rev_by_period = rev_df.groupby("period")["value"].sum().sort_index()
+        if len(rev_by_period) >= 2:
+            prev = rev_by_period.iloc[-2]
+            curr = rev_by_period.iloc[-1]
+            if prev:
+                growth = (curr - prev) / prev * 100
 
     margin_s = _metric_lookup(df, ["gross margin", "margin"])
     margin = margin_s["value"].mean() if not margin_s.empty else 0
