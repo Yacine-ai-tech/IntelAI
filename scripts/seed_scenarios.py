@@ -668,50 +668,61 @@ def generate_knowledge_docs(rows: List[Dict[str, Any]], scenario: str = "healthy
             "source": f"seed/{category.lower()}_{latest}.md",
         })
 
+    def _deep_dive_doc(r, p):
+        unit = f" {r.unit}".rstrip()
+        slug = str(r.metric).lower().replace(" ", "_").replace("/", "_")
+        return {
+            "title": f"{r.metric} ({r.category}) — {p}",
+            "content": (
+                f"=== METRIC DEEP-DIVE: {r.metric} ===\n"
+                f"Domain: {r.category}\n"
+                f"Period: {p}\n"
+                f"Value recorded: {r.value}{unit}\n\n"
+                f"## OPERATIONAL ANALYSIS & BENCHMARKING\n"
+                f"The {r.metric} metric is a critical indicator of the health of the {r.category} domain. "
+                f"For {p}, the system recorded a value of {r.value}{unit}. This data point was automatically ingested "
+                f"from the underlying operational data stores. \n\n"
+                f"## INDUSTRY DATA ALIGNMENT\n"
+                f"To ensure trustworthiness, this data is cross-referenced with public enterprise datasets (2020-2026):\n"
+                f"- **Finance:** Reconciled against SEC EDGAR XBRL filings and the secfsdstools extraction methodology.\n"
+                f"- **People:** Benchmarked against the open-source IBM HR Analytics Employee Attrition dataset norms.\n"
+                f"- **ESG:** Audited following the French national Open Data (data.gouv.fr) CSRD reporting standards and Portail RSE guidelines.\n"
+                f"- **IT Security:** Correlated with the European Repository of Cyber Incidents (EuRepoC) and Verizon DBIR dataset standards.\n"
+                f"- **Logistics:** Aligned with The Supply Chain Data Hub and Upply Open Data metrics.\n"
+                f"Consistent monitoring of {r.metric} allows the organization to maintain alignment with these global standards. "
+                f"Any sudden deviation in this metric should be cross-referenced with related metrics in other domains."
+            ),
+            "source": f"seed/{r.category.lower()}_{slug}_{p}.md",
+        }
+
     # Per-metric docs (latest period) so specific-metric queries retrieve a precise,
     # dedicated source (improves groundedness vs. burying the metric in a domain summary).
-    periods_to_gen = set(sorted(df["period"].unique())[-3:])  # Last 3 periods to guarantee 500+ docs
+    periods_to_gen = sorted(df["period"].unique())[-3:]  # Last 3 periods to guarantee 500+ docs
+    for p in periods_to_gen:
+        for r in df[df["period"] == p].itertuples():
+            docs.append(_deep_dive_doc(r, p))
+
     # A scenario's anomaly is injected at a specific historical month (see
     # UNHEALTHY_SCENARIOS), not necessarily one of the 3 most recent periods — without a
     # grounding document at that exact month, a query about the crisis period has nothing
     # to retrieve via semantic search even though the raw KPI value is correctly written to
     # kpi_metrics, so retrieval falls back to whatever's topically closest (the most recent
     # period's own deep-dive doc), silently answering about "now" instead of the period
-    # asked about. Also generate a deep-dive doc for every period this scenario's own
-    # anomalies land on, so the exact month a crisis query targets is always groundable.
+    # asked about. Generate a deep-dive doc for exactly the (category, metric, period)
+    # tuples this scenario's own anomalies land on — not every metric at those periods,
+    # which would multiply the sweep above several-fold and meaningfully slow down every
+    # scenario switch for no groundedness benefit beyond the specific shocked metric.
     if scenario in UNHEALTHY_SCENARIOS:
         all_periods = sorted(df["period"].unique())
-        for _, _, month_index, _ in UNHEALTHY_SCENARIOS[scenario]:
-            if 0 <= month_index < len(all_periods):
-                periods_to_gen.add(all_periods[month_index])
-    periods_to_gen = sorted(periods_to_gen)
-    for p in periods_to_gen:
-        for r in df[df["period"] == p].itertuples():
-            unit = f" {r.unit}".rstrip()
-            slug = str(r.metric).lower().replace(" ", "_").replace("/", "_")
-            docs.append({
-                "title": f"{r.metric} ({r.category}) — {p}",
-                "content": (
-                    f"=== METRIC DEEP-DIVE: {r.metric} ===\n"
-                    f"Domain: {r.category}\n"
-                    f"Period: {p}\n"
-                    f"Value recorded: {r.value}{unit}\n\n"
-                    f"## OPERATIONAL ANALYSIS & BENCHMARKING\n"
-                    f"The {r.metric} metric is a critical indicator of the health of the {r.category} domain. "
-                    f"For {p}, the system recorded a value of {r.value}{unit}. This data point was automatically ingested "
-                    f"from the underlying operational data stores. \n\n"
-                    f"## INDUSTRY DATA ALIGNMENT\n"
-                    f"To ensure trustworthiness, this data is cross-referenced with public enterprise datasets (2020-2026):\n"
-                    f"- **Finance:** Reconciled against SEC EDGAR XBRL filings and the secfsdstools extraction methodology.\n"
-                    f"- **People:** Benchmarked against the open-source IBM HR Analytics Employee Attrition dataset norms.\n"
-                    f"- **ESG:** Audited following the French national Open Data (data.gouv.fr) CSRD reporting standards and Portail RSE guidelines.\n"
-                    f"- **IT Security:** Correlated with the European Repository of Cyber Incidents (EuRepoC) and Verizon DBIR dataset standards.\n"
-                    f"- **Logistics:** Aligned with The Supply Chain Data Hub and Upply Open Data metrics.\n"
-                    f"Consistent monitoring of {r.metric} allows the organization to maintain alignment with these global standards. "
-                    f"Any sudden deviation in this metric should be cross-referenced with related metrics in other domains."
-                ),
-                "source": f"seed/{r.category.lower()}_{slug}_{p}.md",
-            })
+        for category, metric, month_index, _ in UNHEALTHY_SCENARIOS[scenario]:
+            if not (0 <= month_index < len(all_periods)):
+                continue
+            p = all_periods[month_index]
+            if p in periods_to_gen:
+                continue  # already covered by the broad sweep above
+            match = df[(df["period"] == p) & (df["category"] == category) & (df["metric"] == metric)]
+            for r in match.itertuples():
+                docs.append(_deep_dive_doc(r, p))
 
     # Cross-domain narrative for multi-hop / GraphRAG demo queries
     docs.append({
