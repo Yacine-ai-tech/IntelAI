@@ -639,7 +639,7 @@ def generate_kpi_rows(months: int = MONTHS, seed: int = SEED, scenario: str = "h
     return rows
 
 
-def generate_knowledge_docs(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+def generate_knowledge_docs(rows: List[Dict[str, Any]], scenario: str = "healthy") -> List[Dict[str, str]]:
     """Narrative knowledge-base docs (per domain + cross-domain) for RAG grounding."""
     import pandas as pd
     df = pd.DataFrame(rows)
@@ -670,7 +670,21 @@ def generate_knowledge_docs(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
 
     # Per-metric docs (latest period) so specific-metric queries retrieve a precise,
     # dedicated source (improves groundedness vs. burying the metric in a domain summary).
-    periods_to_gen = sorted(df["period"].unique())[-3:]  # Last 3 periods to guarantee 500+ docs
+    periods_to_gen = set(sorted(df["period"].unique())[-3:])  # Last 3 periods to guarantee 500+ docs
+    # A scenario's anomaly is injected at a specific historical month (see
+    # UNHEALTHY_SCENARIOS), not necessarily one of the 3 most recent periods — without a
+    # grounding document at that exact month, a query about the crisis period has nothing
+    # to retrieve via semantic search even though the raw KPI value is correctly written to
+    # kpi_metrics, so retrieval falls back to whatever's topically closest (the most recent
+    # period's own deep-dive doc), silently answering about "now" instead of the period
+    # asked about. Also generate a deep-dive doc for every period this scenario's own
+    # anomalies land on, so the exact month a crisis query targets is always groundable.
+    if scenario in UNHEALTHY_SCENARIOS:
+        all_periods = sorted(df["period"].unique())
+        for _, _, month_index, _ in UNHEALTHY_SCENARIOS[scenario]:
+            if 0 <= month_index < len(all_periods):
+                periods_to_gen.add(all_periods[month_index])
+    periods_to_gen = sorted(periods_to_gen)
     for p in periods_to_gen:
         for r in df[df["period"] == p].itertuples():
             unit = f" {r.unit}".rstrip()
@@ -853,7 +867,7 @@ def seed_database(replace: bool = True, scenario: str = "healthy",
     except Exception:
         n_entities = 0
 
-    docs = generate_knowledge_docs(rows)
+    docs = generate_knowledge_docs(rows, scenario=scenario)
     # Glossary docs: authoritative, sourced definitions so the copilot cites a vetted
     # source when explaining a metric/term (anti-hallucination).
     try:
