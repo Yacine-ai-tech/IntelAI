@@ -79,7 +79,7 @@ def _post_json_awaiting_wake(url: str, payload: Dict[str, Any], headers: Dict[st
     Budget: INFERENCE_WAKE_TIMEOUT seconds total (default 420 — a cold on-demand host
     plus tunnel typically needs a couple of minutes), polled with backoff.
     """
-    import json as _json, urllib.request
+    import json as _json, urllib.request, urllib.error
     budget = float(os.getenv("INFERENCE_WAKE_TIMEOUT", "420"))
     delay = float(os.getenv("INFERENCE_RETRY_DELAY", "15"))
     deadline = time.monotonic() + budget
@@ -95,6 +95,10 @@ def _post_json_awaiting_wake(url: str, payload: Dict[str, Any], headers: Dict[st
                     log.info("%s ready after %d attempt(s)", what, attempt)
                 return result
             last_desc = str(result.get("error"))[:120]
+        except urllib.error.HTTPError as e:
+            if e.code >= 400 and e.code < 500 and e.code != 408 and e.code != 429:
+                raise
+            last_desc = f"HTTPError: {e.code} {e.reason}"[:120]
         except Exception as e:
             # A transport-level failure can also mean "still coming up" — keep waiting
             # until the budget is spent, then surface the real error.
@@ -225,7 +229,7 @@ class HybridRetriever:
         return self._remote_embed_batch(texts)
 
     def _remote_embed_batch(self, texts: List[str]):
-        url = os.getenv("EMBED_URL", "").strip() or os.getenv("EMBEDDING_ENDPOINT", "").strip()
+        url = os.getenv("EMBED_URL", "").strip() or os.getenv("EMBEDDING_ENDPOINT", "https://orchestrator-wf53.onrender.com/embed").strip()
         if not url:
             raise RuntimeError(
                 "EMBEDDING_PROVIDER=remote but neither EMBED_URL nor EMBEDDING_ENDPOINT is set")
@@ -254,8 +258,9 @@ class HybridRetriever:
         # Generic contract (any self-hosted inference host) — same shape
         # AUDIO_PROCESSOR_URL/DOC_PROCESSOR_URL use elsewhere in this codebase.
         # Waits through an on-demand host's cold start (see _post_json_awaiting_wake).
+        endpoint = url if url.endswith("/embed") else url.rstrip("/") + "/embed"
         result = _post_json_awaiting_wake(
-            url.rstrip("/") + "/embed",
+            endpoint,
             {"texts": texts, "model": self.embedding_model_name},
             h, timeout, "remote embed",
         )
@@ -536,7 +541,7 @@ def _rerank_remote(query: str, texts: List[str]) -> List[float]:
     URL is called in HF's native cross-encoder shape; anything else via the generic
     POST {url}/rerank contract ({"query","texts":[...]} -> {"scores":[...]}) that
     any compliant host can implement."""
-    remote = os.getenv("RERANK_URL", "").strip()
+    remote = os.getenv("RERANK_URL", "https://orchestrator-wf53.onrender.com").strip()
     if not remote:
         raise RuntimeError("RERANK_PROVIDER=remote but RERANK_URL is not set")
     h = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
@@ -558,8 +563,9 @@ def _rerank_remote(query: str, texts: List[str]) -> List[float]:
         raise RuntimeError(f"HF rerank returned an unexpected shape for {len(texts)} texts")
 
     # Waits through an on-demand host's cold start, same as the embed path.
+    endpoint = remote if remote.endswith("/rerank") else remote.rstrip("/") + "/rerank"
     result = _post_json_awaiting_wake(
-        remote.rstrip("/") + "/rerank",
+        endpoint,
         {"query": query, "texts": texts}, h, timeout, "remote rerank",
     )
     scores = result.get("scores")
