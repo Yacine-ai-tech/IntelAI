@@ -77,7 +77,7 @@ except ImportError:
     print("The `rageval` package isn't installed. Run: pip install omnismart-rageval", file=sys.stderr)
     sys.exit(1)
 
-GATEWAY = os.getenv("PROD_GATEWAY_URL", "https://intelai.ysiddo-ai-projects.app").rstrip("/")
+GATEWAY = os.getenv("PROD_GATEWAY_URL", "[YOUR_APP]").rstrip("/")
 # Best-effort model for RAGeval's cost_usd pricing lookup — the live gateway's response
 # has no field naming which model actually answered (see the identical note in
 # scripts/evaluate_production_live.py); this is production's configured default.
