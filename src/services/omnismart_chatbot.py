@@ -413,7 +413,7 @@ class UltraFastRAG:
         friendliness: the instruction is stable per language (a cacheable prefix),
         while the retrieved docs + query are volatile and go in the user turn."""
         doc_context = "\n\n".join(
-            f"📄 **{title}** (relevance: {sim:.1%})\n{content[:300]}..."
+            f"**{title}** (relevance: {sim:.1%})\n{content[:300]}..."
             for title, content, sim in documents
         )
         lang_instruction = "Répondez en français." if I18N.lang() == "fr" else "Reply in English."
