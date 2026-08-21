@@ -175,7 +175,7 @@ This project is open-source under the **AGPL-3.0 License**. It is completely fre
 > If you wish to use this framework in a closed-source commercial environment, or require **Enterprise features** (SSO, Active Directory, Custom VPC Deployment, Strict RBAC), you must obtain a **Commercial License**. 
 > Please reach out to discuss commercial licensing and integration consulting.
 
-## 📡 Anonymous Telemetry
+## Anonymous Telemetry
 This project can send an anonymous, GDPR-compliant startup ping so whoever is running a
 deployment can count distinct installs — **opt-in only**: it does nothing unless you set
 `TELEMETRY_URL` to a collector you control, so a fresh clone never phones home anywhere

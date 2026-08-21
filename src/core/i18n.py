@@ -188,7 +188,7 @@ class I18N:
     # ── Data Hub / Ingestion ────────────────────────────────────────────
     INGESTION: Dict[str, Dict[str, str]] = {
         "en": {
-            "title": "📥 Data Ingestion Hub",
+            "title": "Data Ingestion Hub",
             "mode": "Select Ingestion Mode",
             "excel": "Excel / CSV", "excel_csv": "Excel / CSV",
             "ocr": "Invoice / Receipt (OCR)",
@@ -203,7 +203,7 @@ class I18N:
             "web_query": "Search query", "search": "Search",
         },
         "fr": {
-            "title": "📥 Hub d'ingestion",
+            "title": "Hub d'ingestion",
             "mode": "Mode d'ingestion",
             "excel": "Excel / CSV", "excel_csv": "Excel / CSV",
             "ocr": "Facture / Reçu (OCR)",

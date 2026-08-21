@@ -499,7 +499,7 @@ def _init_default_users():
 
 async def startup():
     """Validate required keys, initialize database, seed default data, start cleanup tasks."""
-    log.info("🚀 IntelAI API starting...")
+    log.info("IntelAI API starting...")
 
     # Fail fast — required API keys must be present
     from src.core.config import validate_required_keys
