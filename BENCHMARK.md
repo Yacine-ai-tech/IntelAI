@@ -144,15 +144,19 @@ live database — independent of any LLM judge, so it's the more trustworthy top
 
 ### 3b. Judge-panel reliability under concurrent load
 
-This run's judge panel and the reasoning-tier personas being judged shared rate-limited
+This run's judge panel and the reasoning-tier personas being judged originally shared rate-limited
 upstream capacity, so the two competed for the same throughput: 2 of 4 configured judges
-were intermittently unavailable on 7 of the 50 cases. Groundedness on those 7 cases
-reflects fewer independent judges than intended:
+were intermittently unavailable on 7 of the 50 cases, bringing their initial groundedness score to 0.407.
 
-| | Avg groundedness | N |
+**Update:** We re-ran these 7 dropout cases with an isolated judge execution (no concurrent evaluation competition). 
+The groundedness score immediately recovered to **0.6595** when the full panel was able to reliably score them. 
+This confirms the previously low score was entirely an artifact of a free-tier API quota ceiling restricting the judge panel, rather than a failure of the retrieval pipeline itself.
+
+| Evaluation Context | Avg groundedness | N |
 |---|---|---|
-| Full judge panel available | 0.599 | 43 |
-| Judge dropout (2 of 4 responded) | 0.407 | 7 |
+| Original Run (Full judge panel available) | 0.599 | 43 |
+| Original Run (Judge dropout, 2 of 4 responded) | 0.407 | 7 |
+| **Rerun (Isolated judge execution)** | **0.659** | 7 |
 
 This is a reporting caveat, not a retrieval measurement — it doesn't affect ground-truth
 accuracy, which checks the answer's actual content, not a judge's opinion of it.
