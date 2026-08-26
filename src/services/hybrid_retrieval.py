@@ -14,7 +14,13 @@ Vector store via env: VECTOR_STORE=chroma | qdrant (default: chroma in dev)
 """
 from __future__ import annotations
 
+
 import os
+# Pass agnostic tokens down to huggingface_hub to prevent rate limits
+_agnostic_token = os.getenv("RERANK_TOKEN", os.getenv("INFERENCE_TOKEN", "")).strip()
+if _agnostic_token and not os.getenv("HF_TOKEN"):
+    os.environ["HF_TOKEN"] = _agnostic_token
+
 import time
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -582,9 +588,9 @@ def _rerank_remote(query: str, texts: List[str]) -> List[float]:
 
 def _rerank_hf(query: str, texts: List[str]) -> List[float]:
     """Hugging Face Inference API cross-encoder. Raises if unavailable."""
-    hf_token = os.getenv("HF_TOKEN", "").strip()
+    hf_token = os.getenv("RERANK_TOKEN", os.getenv("INFERENCE_TOKEN", "")).strip()
     if not hf_token:
-        raise RuntimeError("RERANK_PROVIDER=hf but HF_TOKEN is not set")
+        raise RuntimeError("RERANK_PROVIDER=hf but RERANK_TOKEN / INFERENCE_TOKEN is not set")
     import urllib.request, json as _json
     model = os.getenv("HF_RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
     url = f"https://router.huggingface.co/hf-inference/models/{model}"
@@ -603,7 +609,7 @@ def _rerank_hf(query: str, texts: List[str]) -> List[float]:
 def _rerank_hosted(query: str, texts: List[str], provider: str) -> List[float]:
     """Hosted cross-encoder rerank API — Cohere /v2/rerank or Jina /v1/rerank.
     Raises if unavailable. Stdlib urllib only; both have a free, no-card tier."""
-    key = os.getenv("COHERE_API_KEY" if provider == "cohere" else "JINA_API_KEY", "").strip()
+    key = os.getenv("RERANK_TOKEN", os.getenv("INFERENCE_TOKEN", "")).strip()
     if not key:
         raise RuntimeError(f"RERANK_PROVIDER={provider} but "
                            f"{'COHERE_API_KEY' if provider == 'cohere' else 'JINA_API_KEY'} is not set")
@@ -643,9 +649,9 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
 
     local  cross-encoder loaded in-process on this host (needs sentence-transformers)
     remote self-hosted rerank endpoint (RERANK_URL)
-    hf     Hugging Face Inference API (HF_TOKEN)
-    cohere Cohere /v2/rerank (COHERE_API_KEY)
-    jina   Jina /v1/rerank (JINA_API_KEY)
+    hf     Hugging Face Inference API (RERANK_TOKEN / INFERENCE_TOKEN)
+    cohere Cohere /v2/rerank (RERANK_TOKEN / INFERENCE_TOKEN)
+    jina   Jina /v1/rerank (RERANK_TOKEN / INFERENCE_TOKEN)
 
     Chaining providers is deliberately NOT done: a silent failover changes retrieval
     quality (and cost) without anyone noticing, and hides the fact that the intended
