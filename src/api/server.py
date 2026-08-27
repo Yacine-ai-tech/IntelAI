@@ -148,7 +148,7 @@ async def verify_internal_token(request: Request, call_next):
     # pusher (StreamPulse, a Kafka HTTP sink connector, n8n) can practically
     # obtain an IntelAI-internal secret, only the shared HMAC secret they were
     # actually given for this integration.
-    if (request.url.path in ["/health", "/docs", "/openapi.json", "/api/redoc"]
+    if (request.url.path in ["/health", "/api/health", "/docs", "/api/docs", "/openapi.json", "/api/openapi.json", "/redoc", "/api/redoc"]
             or request.url.path.startswith("/api/v1/auth/")
             or request.url.path.startswith("/api/v1/webhook/")):
         return await call_next(request)
@@ -167,7 +167,7 @@ async def verify_internal_token(request: Request, call_next):
         ) if t
     ]
 
-    if _os.environ.get("REQUIRE_INTERNAL_TOKEN", "true").lower() == "true":
+    if expected_tokens and _os.environ.get("REQUIRE_INTERNAL_TOKEN", "true").lower() == "true":
         if not token or not any(token == exp for exp in expected_tokens):
             return JSONResponse(status_code=403, content={"detail": "Missing or invalid X-IntelAI-Internal-Token"})
 
