@@ -107,8 +107,7 @@ except ImportError:
 try:
     from sentence_transformers import SentenceTransformer
     _SBERT = True
-except Exception:
-    import logging; logging.error('Unhandled exception', exc_info=True)
+except ImportError:
     pass
 
 try:
