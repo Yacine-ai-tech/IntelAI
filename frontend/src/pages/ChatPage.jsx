@@ -232,6 +232,10 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
   // also the likely cause of the floating-widget "freeze after Stop" report, since the
   // widget renders this same component).
   const wsInFlightRef = useRef(false)
+  // Bridges the outbound question to the WS response handler below, which runs in the
+  // `connect()` closure and has no direct access to `send()`'s local `q` — needed so the
+  // assistant message carries the query that produced it (see the "View Graph" deep-link).
+  const pendingQueryRef = useRef('')
 
   const { data: personas = [] } = useQuery({
     queryKey: ['personas'],
@@ -292,6 +296,7 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
             sources: d.sources || [],
             blocks: d.blocks || [],
             persona_used: d.persona_used,
+            query: pendingQueryRef.current,
           }])
           setLoading(false)
           wsInFlightRef.current = false
@@ -325,6 +330,7 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
     const ws = wsRef.current
     if (ws && ws.readyState === WebSocket.OPEN) {
       wsInFlightRef.current = true
+      pendingQueryRef.current = q
       ws.send(JSON.stringify({ message: q, persona: persona || 'general', session_id: activeSession || undefined, language: lang }))
     } else {
       wsInFlightRef.current = false
@@ -374,10 +380,16 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
   const loadSession = async (id) => {
     try {
       const r = await api.getChatMessages?.(id)
-      setMessages((r?.data?.messages || []).map(m => ({
-        role: m.role || (m.is_user ? 'user' : 'assistant'),
-        content: m.content || m.message || m.response, sources: m.sources || [],
-      })))
+      let lastUserContent = ''
+      setMessages((r?.data?.messages || []).map(m => {
+        const role = m.role || (m.is_user ? 'user' : 'assistant')
+        const content = m.content || m.message || m.response
+        if (role === 'user') lastUserContent = content
+        // Pairs each assistant reply with the question that produced it, so a
+        // reloaded session's "View Graph" deep-link still targets the right query
+        // instead of falling back to a generic default.
+        return { role, content, sources: m.sources || [], query: role === 'assistant' ? lastUserContent : content }
+      }))
       setActiveSession(id)
     } catch { /* ignore */ }
   }
