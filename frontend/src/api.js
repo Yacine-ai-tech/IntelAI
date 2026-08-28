@@ -70,8 +70,28 @@ export const register = (username, password, role = 'viewer') =>
 export const getMe = () => api.get('/auth/me')
 
 // ── Chat ────────────────────────────────────────────────
-export const sendChat = (message, persona = null, sessionId = null, context = '', lang = 'en', signal = null) =>
-  api.post('/chat', { message, persona, session_id: sessionId, context, language: lang }, { signal })
+// POST /chat is synchronous end-to-end, and a real chat turn under cold retrieval can
+// take 60-100s+ — long enough that the reverse proxy in front of this service cuts the
+// connection before an otherwise-successful response comes back (confirmed live: this
+// showed up as the request hanging with no response at all). The backend's own
+// /chat/async + GET /chat/{job_id} pair exists specifically to avoid that: return
+// immediately with a job_id, then poll in short, fast requests that can never individually
+// run long enough to hit that ceiling — same pattern as DocIntel's batch upload/status.
+export const sendChat = async (message, persona = null, sessionId = null, context = '', lang = 'en', signal = null) => {
+  const { data: job } = await api.post('/chat/async', { message, persona, session_id: sessionId, context, language: lang }, { signal })
+  const jobId = job.job_id
+  const pollIntervalMs = 2000
+  const maxWaitMs = 6 * 60 * 1000
+  const startedAt = Date.now()
+  while (true) {
+    if (signal?.aborted) { const e = new Error('canceled'); e.name = 'CanceledError'; throw e }
+    if (Date.now() - startedAt > maxWaitMs) throw new Error('Chat request timed out waiting for a response.')
+    await new Promise(r => setTimeout(r, pollIntervalMs))
+    const { data: status } = await api.get(`/chat/${jobId}`, { signal })
+    if (status.status === 'done') return { data: status }
+    if (status.status === 'error') throw new Error(status.error || 'request failed')
+  }
+}
 
 export const listPersonas = () => api.get('/personas')
 
