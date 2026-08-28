@@ -500,9 +500,8 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
                   // never rendered anywhere — so a slow/cold-starting response looked
                   // identical to a hung one for the entire wait, with nothing distinguishing
                   // "still working" from "stuck". This is the visible half of that fix; a
-                  // real Studio cold start can still take several minutes (see the
-                  // wake-aware retrieval pattern), so the message says so rather than
-                  // implying it's almost done.
+                  // real cold start can still take several minutes, so the message says
+                  // so rather than implying it's almost done.
                   <div className="chat-slow-hint" style={{ marginTop: 6, fontSize: '.8rem', color: 'var(--text-3)' }}>
                     {t('chatSlowHint') || 'Still working — this can take a couple of minutes on a cold start…'}
                   </div>
