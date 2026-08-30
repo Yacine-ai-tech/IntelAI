@@ -7,6 +7,12 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
+// Bare, unauthenticated liveness check at the API root (not /api/v1) — used to tell a
+// cold/unreachable backend apart from "you're just not logged in yet", so a first-time
+// visitor sees a "waking up" state instead of a login form that will silently fail.
+const HEALTH_BASE = import.meta.env.VITE_API_BASE_URL || ''
+export const checkHealth = () => axios.get(HEALTH_BASE + '/health', { timeout: 8000 })
+
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // One anonymous, per-browser id — lets the demo give each visitor their own chat
