@@ -1,5 +1,8 @@
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
+import { checkHealth } from './api'
+import { WakingBackend } from './components/ui'
 import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
@@ -40,9 +43,35 @@ function ProtectedRoute({ children, page }) {
 }
 
 export default function App() {
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, loading, token } = useAuth()
+  const [backendUp, setBackendUp] = useState(null) // null = checking, true/false once known
+  const [attempts, setAttempts] = useState(0)
+  const everConnected = useRef(false)
+
+  // Only needed for the no-token path: with a stored token, AuthContext's own getMe()
+  // call already proves the backend is reachable (or isn't, via its catch) before
+  // `loading` clears, so a second independent check here would be redundant.
+  const check = useCallback(() => {
+    if (token) return
+    checkHealth()
+      .then(() => { everConnected.current = true; setBackendUp(true) })
+      .catch(() => setBackendUp(false))
+  }, [token])
+
+  useEffect(() => { check() }, [check, attempts])
+
+  useEffect(() => {
+    if (backendUp === false && attempts < 6) {
+      const t = setTimeout(() => setAttempts((a) => a + 1), 8000)
+      return () => clearTimeout(t)
+    }
+  }, [backendUp, attempts])
 
   if (loading) return <div className="text-center" style={{ padding: '100px' }}>Loading IntelAI...</div>
+
+  if (!token && backendUp === false && attempts >= 6 && !everConnected.current) {
+    return <WakingBackend waking={attempts < 6} onRetry={() => setAttempts(0)} />
+  }
 
   return (
     <Routes>

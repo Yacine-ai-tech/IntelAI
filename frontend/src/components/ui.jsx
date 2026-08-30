@@ -203,6 +203,29 @@ export function ErrorState({ text = 'Could not load this data.' }) {
   )
 }
 
+// A first-time visitor with no stored login token skips the auth check entirely (there's
+// nothing to check yet) and lands straight on a normal-looking login form — even when the
+// backend is completely unreachable. They'd only discover that after typing credentials and
+// watching the request silently fail. This tells a cold/unreachable backend apart from
+// "just not logged in yet" before the login form ever renders.
+export function WakingBackend({ waking = true, onRetry }) {
+  return (
+    <div style={{ display: 'flex', minHeight: '60vh', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, textAlign: 'center', padding: 24 }}>
+      <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>
+        {waking ? 'Waking the backend…' : 'Backend unreachable'}
+      </div>
+      <div style={{ maxWidth: 320, fontSize: 13, color: 'var(--text-3)' }}>
+        {waking
+          ? 'The free-tier service sleeps when idle. First start can take up to a minute.'
+          : 'Could not reach the API. It may still be starting.'}
+      </div>
+      {waking ? <div className="spinner" /> : (
+        <button className="btn btn-secondary" onClick={onRetry}>Retry</button>
+      )}
+    </div>
+  )
+}
+
 // ── crash containment ──────────────────────────────────────────
 // React only lets class components catch render errors (no hook equivalent). Without one
 // anywhere in the tree, ANY uncaught error thrown while rendering — e.g. from a chat
