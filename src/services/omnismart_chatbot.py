@@ -90,6 +90,32 @@ def _dogfood_to_rageval(query: str, answer: str, contexts: List[str], persona: s
 
     threading.Thread(target=_send, daemon=True).start()
 
+
+def _run_with_timeout(fn, timeout_s: float, *args, **kwargs):
+    """Best-effort timeout guard for synchronous calls made inside chat turns.
+
+    Runs `fn` on a daemon thread and returns None if the timeout is hit, so a stuck
+    remote dependency cannot pin the whole chat turn forever.
+    """
+    box: Dict[str, Any] = {"done": False, "value": None, "error": None}
+
+    def _target() -> None:
+        try:
+            box["value"] = fn(*args, **kwargs)
+        except Exception as e:
+            box["error"] = e
+        finally:
+            box["done"] = True
+
+    t = threading.Thread(target=_target, daemon=True)
+    t.start()
+    t.join(max(0.1, float(timeout_s)))
+    if not box["done"]:
+        return None
+    if box["error"] is not None:
+        raise box["error"]
+    return box["value"]
+
 # ════════════════════════════════════════════════════════════════════════════
 # LAZY-LOADED DEPENDENCIES
 # ════════════════════════════════════════════════════════════════════════════
@@ -277,7 +303,16 @@ class UltraFastRAG:
             # fused with BM25 + reranker. No-op (returns None) when VECTOR_STORE=memory.
             try:
                 from src.services.vector_store import vector_store_retrieve
-                vr = vector_store_retrieve(query, top_k, language)
+                vr_timeout = float(os.getenv("VECTOR_RETRIEVAL_TIMEOUT", "12"))
+                vr = _run_with_timeout(
+                    vector_store_retrieve,
+                    vr_timeout,
+                    query,
+                    top_k,
+                    language,
+                )
+                if vr is None:
+                    log.warning("Vector store retrieval timed out after %.1fs", vr_timeout)
                 if vr:
                     return vr
             except Exception as e:
@@ -299,7 +334,20 @@ class UltraFastRAG:
                 from src.services.hybrid_retrieval import hybrid_enabled, hybrid_doc_retrieve
                 if hybrid_enabled():
                     records = list(zip(docs["title"].tolist(), docs["content"].fillna("").tolist()))
-                    hy = hybrid_doc_retrieve(query, records, top_k)
+                    # Unlike vector_store_retrieve above, this call had no timeout guard —
+                    # it goes through _post_json_awaiting_wake for both the query embed and
+                    # the rerank leg, each willing to wait a full INFERENCE_WAKE_TIMEOUT
+                    # (up to 420s by that function's own default) for a remote inference
+                    # host to wake. Two sequential legs meant a degraded/unreachable host
+                    # could cost a chat turn several minutes with nothing bounding it —
+                    # reproduced live 2026-09-01/02 at ~195s for a request that should take
+                    # single-digit seconds once the host is warm. Bound the whole call the
+                    # same way the vector-store path already is, and fall through to the
+                    # BM25/TF-IDF path below instead of hanging when it doesn't finish.
+                    hy_timeout = float(os.getenv("HYBRID_RETRIEVAL_TIMEOUT", "20"))
+                    hy = _run_with_timeout(hybrid_doc_retrieve, hy_timeout, query, records, top_k)
+                    if hy is None:
+                        log.warning("Hybrid retrieval timed out after %.1fs, falling back", hy_timeout)
                     if hy:
                         return hy
             except Exception as e:
