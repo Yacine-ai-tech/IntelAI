@@ -299,24 +299,42 @@ class UltraFastRAG:
     ) -> List[Tuple[str, str, float]]:
         """Retrieve most relevant documents using semantic similarity."""
         try:
+            # Both the vector-store path and the hybrid path below embed the query
+            # through the same remote host (EMBED_URL) when EMBEDDING_PROVIDER=remote.
+            # A single cheap, TTL-cached reachability check lets either leg skip
+            # straight to its local fallback while that host is known-down, instead
+            # of each independently re-discovering it via a full multi-second
+            # timeout — see remote_inference_reachable()'s docstring for the
+            # measured impact (this was ~32s of pure duplicated waiting per
+            # request during a live outage, 2026-09-02).
+            remote_ready = True
+            try:
+                from src.services.hybrid_retrieval import remote_inference_reachable
+                remote_ready = remote_inference_reachable()
+            except Exception:
+                pass
+
             # Persistent vector store (chroma/pgvector/qdrant) — dense hits from the store
             # fused with BM25 + reranker. No-op (returns None) when VECTOR_STORE=memory.
-            try:
-                from src.services.vector_store import vector_store_retrieve
-                vr_timeout = float(os.getenv("VECTOR_RETRIEVAL_TIMEOUT", "12"))
-                vr = _run_with_timeout(
-                    vector_store_retrieve,
-                    vr_timeout,
-                    query,
-                    top_k,
-                    language,
-                )
-                if vr is None:
-                    log.warning("Vector store retrieval timed out after %.1fs", vr_timeout)
-                if vr:
-                    return vr
-            except Exception as e:
-                log.warning("Vector store retrieval skipped: %s", e)
+            if remote_ready:
+                try:
+                    from src.services.vector_store import vector_store_retrieve
+                    vr_timeout = float(os.getenv("VECTOR_RETRIEVAL_TIMEOUT", "12"))
+                    vr = _run_with_timeout(
+                        vector_store_retrieve,
+                        vr_timeout,
+                        query,
+                        top_k,
+                        language,
+                    )
+                    if vr is None:
+                        log.warning("Vector store retrieval timed out after %.1fs", vr_timeout)
+                    if vr:
+                        return vr
+                except Exception as e:
+                    log.warning("Vector store retrieval skipped: %s", e)
+            else:
+                log.info("Remote inference host is known-down (cached probe) — skipping vector store retrieval")
 
             docs = get_knowledge_docs()
             if docs.empty:
@@ -332,7 +350,9 @@ class UltraFastRAG:
             # Falls through to the vector/TF-IDF path below when disabled or unavailable.
             try:
                 from src.services.hybrid_retrieval import hybrid_enabled, hybrid_doc_retrieve
-                if hybrid_enabled():
+                if hybrid_enabled() and not remote_ready:
+                    log.info("Remote inference host is known-down (cached probe) — skipping hybrid retrieval's remote legs")
+                elif hybrid_enabled():
                     records = list(zip(docs["title"].tolist(), docs["content"].fillna("").tolist()))
                     # Unlike vector_store_retrieve above, this call had no timeout guard —
                     # it goes through _post_json_awaiting_wake for both the query embed and
