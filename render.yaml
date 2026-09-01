@@ -1,9 +1,16 @@
 # Render Blueprint — one-click redeploy of the IntelAI backend.
 # Render builds from ./Dockerfile (which honors $PORT) and health-checks /health.
 # No secrets live here: every key is `sync: false`, so Render prompts for the value in the dashboard.
-# IntelAI loads ML when local rerank/embedding is on — on Render free (512MB) keep heavy ML OFF-box:
-# set VECTOR_STORE=pgvector (Neon) + HOSTED_RERANK_PROVIDER=cohere (no local model). Bump to
-# `plan: starter` only if you enable in-process models and see OOM.
+# IntelAI loads ML when local rerank/embedding is on — on Render free (512MB) keep heavy ML OFF-box.
+#
+# This blueprint previously pointed at VECTOR_STORE=pgvector + HOSTED_RERANK_PROVIDER, but the
+# live service was hand-configured differently (VECTOR_STORE=qdrant, RERANK_PROVIDER=remote via
+# the orchestrator's inference proxy) and HOSTED_RERANK_PROVIDER isn't read by any code path at
+# all — only RERANK_PROVIDER is (see hybrid_retrieval.py). A blueprint redeploy from the old
+# values would have silently regressed RERANK_PROVIDER to its `local` default, which needs a
+# ~600MB CrossEncoder this 512MB free-tier host can't hold. Corrected 2026-09-02 to match what's
+# actually live and working, so `render blueprint launch`/sync doesn't reintroduce that bug.
+# Bump to `plan: starter` only if you enable in-process models and see OOM.
 services:
   - type: web
     name: intelai
@@ -13,7 +20,7 @@ services:
     plan: free
     autoDeploy: false
     envVars:
-      - key: POSTGRES_URL          # Neon Postgres (also serves pgvector)
+      - key: POSTGRES_URL          # Neon Postgres (RAG session/eval storage)
         sync: false
       - key: SECRET_KEY            # python -c "import secrets; print(secrets.token_hex(32))"
         sync: false
@@ -27,9 +34,27 @@ services:
         sync: false
       - key: CORS_ALLOWED_ORIGINS  # your Vercel frontend origin
         sync: false
-      - key: VECTOR_STORE          # pgvector (prod, on Neon) keeps the app tier small
-        value: pgvector
-      - key: HOSTED_RERANK_PROVIDER # cohere|jina — hosted rerank backstop (see .env.example)
+      - key: VECTOR_STORE          # qdrant (prod) — keeps the app tier small, no local ANN index
+        value: qdrant
+      - key: QDRANT_URL
+        sync: false
+      - key: QDRANT_API_KEY
+        sync: false
+      - key: EMBEDDING_PROVIDER    # remote — embeds via the orchestrator's inference proxy, not in-process
+        value: remote
+      - key: RERANK_PROVIDER       # remote — reranks via the orchestrator's inference proxy, not in-process
+        value: remote
+      - key: EMBED_URL             # orchestrator's inference proxy, e.g. https://<orchestrator>.onrender.com/api/inference
+        sync: false
+      - key: RERANK_URL            # same host as EMBED_URL
+        sync: false
+      - key: INFERENCE_TOKEN       # this service's client token, issued by the orchestrator
+        sync: false
+      - key: INFERENCE_WAKE_TIMEOUT # seconds to wait for a cold Lightning Studio to wake per call
+        value: "90"
+      - key: HYBRID_RETRIEVAL_TIMEOUT # bounds the combined embed+rerank leg so a degraded
+        value: "20"                   # inference host can't cost a whole chat turn several minutes
+      - key: HOSTED_RERANK_PROVIDER # cohere|jina — optional hosted rerank backstop (see .env.example)
         sync: false
       - key: COHERE_API_KEY        # free, no-card key for the rerank backstop
         sync: false
