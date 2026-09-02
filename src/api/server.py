@@ -926,6 +926,23 @@ async def chat_async(req: ChatRequest, background: BackgroundTasks,
     return {"job_id": job_id}
 
 
+@app.get("/api/v1/chat/sessions")
+async def get_chat_sessions(user: TokenData = Depends(get_current_user)):
+    """Registered here, ahead of GET /api/v1/chat/{job_id}, on purpose: Starlette matches
+    routes in registration order, and a single-segment path-param route matches literally
+    anything in that slot. With this endpoint defined later (as it originally was, down in
+    the CHAT HISTORY & SESSIONS section), every GET /api/v1/chat/sessions request was
+    captured by chat_job_status with job_id="sessions" instead — confirmed live in
+    production: 404 {"detail": "Job 'sessions' not found"}, silently breaking the chat
+    history sidebar. Keep this ahead of chat_job_status."""
+    try:
+        from src.services.pg_store import get_user_sessions
+        sessions = await asyncio.to_thread(get_user_sessions, user.user_id, limit=50)
+        return {"sessions": sessions}
+    except Exception as e:
+        return {"sessions": [], "error": str(e)}
+
+
 @app.get("/api/v1/chat/{job_id}")
 async def chat_job_status(job_id: str, user: TokenData = Depends(get_current_user)):
     """Poll target for POST /api/v1/chat/async. Returns {status: pending|running} while
@@ -2270,16 +2287,8 @@ async def reindex_vectors(force: bool = True, user: TokenData = Depends(require_
 # ════════════════════════════════════════════════════════════
 # CHAT HISTORY & SESSIONS (PostgreSQL)
 # ════════════════════════════════════════════════════════════
-
-@app.get("/api/v1/chat/sessions")
-async def get_chat_sessions(user: TokenData = Depends(get_current_user)):
-    try:
-        from src.services.pg_store import get_user_sessions
-        sessions = await asyncio.to_thread(get_user_sessions, user.user_id, limit=50)
-        return {"sessions": sessions}
-    except Exception as e:
-        return {"sessions": [], "error": str(e)}
-
+# NOTE: GET /api/v1/chat/sessions itself is registered earlier, right before
+# GET /api/v1/chat/{job_id} — see the comment there for why route order matters here.
 
 @app.get("/api/v1/chat/sessions/{session_id}/messages")
 async def get_chat_messages(session_id: str, user: TokenData = Depends(get_current_user)):
@@ -2343,9 +2352,18 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
         # Match the (working) chat retrieval path: pass a language so the vector-store query
         # filters consistently instead of returning nothing.
         rag = _get_shared_rag()
-        hits = rag._retrieve_documents(q, top_k=n, language=getattr(user, "language", None) or "en")
+        # Retrieval can block for up to HYBRID_RETRIEVAL_TIMEOUT (default 150s) waiting on a
+        # cold remote host. This route used to call it directly on the event loop; with
+        # --workers 1 (see Dockerfile) that froze the ENTIRE server — every other user's
+        # request, including /health — for the full wait, not just this one. Confirmed
+        # live: a single knowledge search during cold retrieval hung ~65s before the
+        # reverse proxy cut it with a 502. Same fix the chat turn already applies
+        # (asyncio.to_thread) so this route only blocks its own request, not the process.
+        hits = await asyncio.to_thread(
+            rag._retrieve_documents, q, top_k=n, language=getattr(user, "language", None) or "en"
+        )
         if not hits:  # last-resort: retry language-agnostic
-            hits = rag._retrieve_documents(q, top_k=n)
+            hits = await asyncio.to_thread(rag._retrieve_documents, q, top_k=n)
         results = [
             {"title": title, "content": (content or "")[:600], "score": round(score, 4)}
             for title, content, score in hits
