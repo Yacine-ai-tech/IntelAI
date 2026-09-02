@@ -52,12 +52,10 @@ services:
         sync: false
       - key: INFERENCE_WAKE_TIMEOUT # seconds to wait for a cold Lightning Studio to wake per call
         value: "90"
-      - key: HYBRID_RETRIEVAL_TIMEOUT # bounds the combined embed+rerank leg so a degraded
-        value: "20"                   # inference host can't cost a whole chat turn several minutes
-      - key: HOSTED_RERANK_PROVIDER # cohere|jina — optional hosted rerank backstop (see .env.example)
-        sync: false
-      - key: COHERE_API_KEY        # free, no-card key for the rerank backstop
-        sync: false
+      - key: HYBRID_RETRIEVAL_TIMEOUT # bounds the combined embed+rerank leg — generous (above
+        value: "150"                  # INFERENCE_WAKE_TIMEOUT) so a real cold Studio wake still
+                                       # completes through the full pipeline; only a genuinely
+                                       # failed/very slow wake falls back to BM25-only
       - key: INTELAI_INTERNAL_TOKEN  # REQUIRED: must match gateway
         sync: false
       - key: REQUIRE_INTERNAL_TOKEN
