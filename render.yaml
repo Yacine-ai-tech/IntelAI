@@ -56,10 +56,6 @@ services:
         value: "150"                  # INFERENCE_WAKE_TIMEOUT) so a real cold Studio wake still
                                        # completes through the full pipeline; only a genuinely
                                        # failed/very slow wake falls back to BM25-only
-      - key: HOSTED_RERANK_PROVIDER # cohere|jina — optional hosted rerank backstop (see .env.example)
-        sync: false
-      - key: COHERE_API_KEY        # free, no-card key for the rerank backstop
-        sync: false
       - key: INTELAI_INTERNAL_TOKEN  # REQUIRED: must match gateway
         sync: false
       - key: REQUIRE_INTERNAL_TOKEN
