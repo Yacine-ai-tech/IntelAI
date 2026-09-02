@@ -692,6 +692,17 @@ async def login(req: LoginRequest):
         import logging; logging.error('Unhandled exception', exc_info=True)
         pass
 
+    # A real login is a genuine "the user is about to use this app" signal —
+    # fire a real (non-blocking) inference request to start waking the Studio
+    # now instead of on the user's first chat message. See warmup.py's
+    # docstring for why this, specifically, is the one legitimate proactive
+    # trigger allowed here.
+    try:
+        from src.services.warmup import fire_session_warmup
+        fire_session_warmup()
+    except Exception:
+        pass
+
     from src.services.pg_store import get_available_categories
     all_categories = await asyncio.to_thread(get_available_categories)
 
@@ -773,6 +784,13 @@ async def demo_login(role: str, request: Request):
     token = create_access_token(TokenData(user_id=user_id, username=username, role=role, language="en"))
     from src.services.pg_store import get_available_categories
     all_categories = await asyncio.to_thread(get_available_categories)
+
+    try:
+        from src.services.warmup import fire_session_warmup
+        fire_session_warmup()
+    except Exception:
+        pass
+
     return {
         "access_token": token, "token_type": "bearer",
         "user": {
