@@ -299,24 +299,52 @@ class UltraFastRAG:
     ) -> List[Tuple[str, str, float]]:
         """Retrieve most relevant documents using semantic similarity."""
         try:
-            # Both the vector-store path and the hybrid path below embed the query
-            # through the same remote host (EMBED_URL) when EMBEDDING_PROVIDER=remote.
-            # A single cheap, TTL-cached reachability check lets either leg skip
-            # straight to its local fallback while that host is known-down, instead
-            # of each independently re-discovering it via a full multi-second
-            # timeout — see remote_inference_reachable()'s docstring for the
-            # measured impact (this was ~32s of pure duplicated waiting per
-            # request during a live outage, 2026-09-02).
-            remote_ready = True
-            try:
-                from src.services.hybrid_retrieval import remote_inference_reachable
-                remote_ready = remote_inference_reachable()
-            except Exception:
-                pass
+            docs = get_knowledge_docs()
+            if docs.empty:
+                return []
 
-            # Persistent vector store (chroma/pgvector/qdrant) — dense hits from the store
-            # fused with BM25 + reranker. No-op (returns None) when VECTOR_STORE=memory.
-            if remote_ready:
+            # Filter by language if specified
+            if language and "language" in docs.columns:
+                lang_docs = docs[docs["language"] == language]
+                if not lang_docs.empty:
+                    docs = lang_docs
+
+            # Hybrid retrieval (dense + BM25 + RRF + reranker) is the canonical
+            # retrieval path — opt-in via USE_HYBRID_RETRIEVAL, but always
+            # attempted first (not just when a quick probe finds the remote host
+            # already warm) whenever it's enabled. It used to run only *after*
+            # vector_store_retrieve below, and only if that returned nothing —
+            # but vector_store_retrieve succeeds on its own (dense search only,
+            # no reranking) whenever Qdrant is reachable, which is effectively
+            # always, so hybrid's fuller dense+BM25+RRF+rerank pipeline rarely
+            # got exercised at all, warm or cold. Bounded by a generous timeout
+            # (default 150s, comfortably above INFERENCE_WAKE_TIMEOUT=90s) so a
+            # genuine cold Studio wake completes through the real pipeline
+            # instead of bailing into a degraded BM25-only answer — that
+            # degradation is a last resort for a genuinely failed/very slow
+            # wake, not the routine per-request experience.
+            hybrid_timed_out = False
+            try:
+                from src.services.hybrid_retrieval import hybrid_enabled, hybrid_doc_retrieve
+                if hybrid_enabled():
+                    records = list(zip(docs["title"].tolist(), docs["content"].fillna("").tolist()))
+                    hy_timeout = float(os.getenv("HYBRID_RETRIEVAL_TIMEOUT", "150"))
+                    hy = _run_with_timeout(hybrid_doc_retrieve, hy_timeout, query, records, top_k)
+                    if hy:
+                        return hy
+                    hybrid_timed_out = True
+                    log.warning("Hybrid retrieval unavailable after %.0fs, falling back", hy_timeout)
+            except Exception as e:
+                log.warning("Hybrid retrieval skipped: %s", e)
+
+            # Persistent vector store (chroma/pgvector/qdrant) — dense-only, no
+            # reranking. Secondary path now: only reached when hybrid is
+            # disabled, or just failed/timed out above. It embeds the query
+            # through the same remote host hybrid does, so if hybrid just spent
+            # its full timeout budget finding that host unreachable, paying
+            # that wait again here would be pure duplication — skip straight to
+            # the local TF-IDF/BM25 fallback below in that case instead.
+            if not hybrid_timed_out:
                 try:
                     from src.services.vector_store import vector_store_retrieve
                     vr_timeout = float(os.getenv("VECTOR_RETRIEVAL_TIMEOUT", "12"))
@@ -334,44 +362,7 @@ class UltraFastRAG:
                 except Exception as e:
                     log.warning("Vector store retrieval skipped: %s", e)
             else:
-                log.info("Remote inference host is known-down (cached probe) — skipping vector store retrieval")
-
-            docs = get_knowledge_docs()
-            if docs.empty:
-                return []
-            
-            # Filter by language if specified
-            if language and "language" in docs.columns:
-                lang_docs = docs[docs["language"] == language]
-                if not lang_docs.empty:
-                    docs = lang_docs
-
-            # Hybrid retrieval (dense + BM25 + RRF + reranker) — opt-in via USE_HYBRID_RETRIEVAL.
-            # Falls through to the vector/TF-IDF path below when disabled or unavailable.
-            try:
-                from src.services.hybrid_retrieval import hybrid_enabled, hybrid_doc_retrieve
-                if hybrid_enabled() and not remote_ready:
-                    log.info("Remote inference host is known-down (cached probe) — skipping hybrid retrieval's remote legs")
-                elif hybrid_enabled():
-                    records = list(zip(docs["title"].tolist(), docs["content"].fillna("").tolist()))
-                    # Unlike vector_store_retrieve above, this call had no timeout guard —
-                    # it goes through _post_json_awaiting_wake for both the query embed and
-                    # the rerank leg, each willing to wait a full INFERENCE_WAKE_TIMEOUT
-                    # (up to 420s by that function's own default) for a remote inference
-                    # host to wake. Two sequential legs meant a degraded/unreachable host
-                    # could cost a chat turn several minutes with nothing bounding it —
-                    # reproduced live 2026-09-01/02 at ~195s for a request that should take
-                    # single-digit seconds once the host is warm. Bound the whole call the
-                    # same way the vector-store path already is, and fall through to the
-                    # BM25/TF-IDF path below instead of hanging when it doesn't finish.
-                    hy_timeout = float(os.getenv("HYBRID_RETRIEVAL_TIMEOUT", "20"))
-                    hy = _run_with_timeout(hybrid_doc_retrieve, hy_timeout, query, records, top_k)
-                    if hy is None:
-                        log.warning("Hybrid retrieval timed out after %.1fs, falling back", hy_timeout)
-                    if hy:
-                        return hy
-            except Exception as e:
-                log.warning("Hybrid retrieval skipped: %s", e)
+                log.info("Skipping vector store retrieval — hybrid just timed out on the same remote host")
 
             # Semantic search with embeddings
             if _SBERT and "embedding" in docs.columns:
