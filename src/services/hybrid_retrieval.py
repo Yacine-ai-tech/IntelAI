@@ -129,43 +129,55 @@ def _post_json_awaiting_wake(url: str, payload: Dict[str, Any], headers: Dict[st
 _READY_CACHE: Dict[str, Any] = {"ts": 0.0, "ready": True}
 
 
+def _probe_remote_json(endpoint: str, payload: Dict[str, Any], timeout: float) -> bool:
+    import json as _json, urllib.request
+    headers = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
+    tk = os.getenv("INFERENCE_TOKEN", "").strip()
+    if tk:
+        headers["Authorization"] = "Bearer " + tk
+    try:
+        req = urllib.request.Request(endpoint, data=_json.dumps(payload).encode(), headers=headers)
+        result = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+        return not _is_still_waking(result)
+    except Exception:
+        return False
+
+
 def remote_inference_reachable() -> bool:
-    """Fast, TTL-cached check for whether the remote embed host is currently
-    answering (vs. still waking / down).
+    """Fast, TTL-cached check for whether the remote embed AND rerank hosts are
+    currently answering (vs. still waking / down).
 
     vector_store_retrieve() and hybrid_doc_retrieve() both ultimately depend on
-    this same remote host for dense embeddings, but each pays its own multi-
-    second (12s / 20s) attempt independently — confirmed live 2026-09-02: a
-    single chat turn against a down host paid both in full, sequentially,
-    before ever reaching the BM25/local fallback. A cache hit here is a
-    dict-timestamp comparison; a cache miss still costs one real ~3s probe, so
-    both callers can skip straight to their fallback while the host stays down
-    instead of each re-discovering that fact the slow way.
+    these same remote hosts, but each pays its own multi-second (12s / 20s)
+    attempt independently — confirmed live 2026-09-02: a single chat turn
+    against a down host paid both in full, sequentially, before ever reaching
+    the BM25/local fallback. Embed and rerank are checked separately and both
+    must be up: live testing found them fail independently (embed reachable
+    while rerank was still waking), so probing only one under-reports and lets
+    hybrid_doc_retrieve still hang on the other. A cache hit is a
+    dict-timestamp comparison; a cache miss still costs at most two real ~3s
+    probes, so callers can skip straight to their fallback while either host
+    stays down instead of re-discovering that fact the slow way.
     """
     now = time.monotonic()
     ttl = float(os.getenv("REMOTE_INFERENCE_READY_CACHE_TTL", "20"))
     if now - _READY_CACHE["ts"] < ttl:
         return bool(_READY_CACHE["ready"])
 
+    probe_timeout = float(os.getenv("REMOTE_INFERENCE_READY_PROBE_TIMEOUT", "3"))
     ready = True
+
     if os.getenv("EMBEDDING_PROVIDER", "").strip().lower() == "remote":
         url = os.getenv("EMBED_URL", "").strip() or os.getenv("EMBEDDING_ENDPOINT", "").strip()
         if url and "huggingface.co" not in url:
-            import json as _json, urllib.request
             endpoint = url if url.endswith("/embed") else url.rstrip("/") + "/embed"
-            headers = {"Content-Type": "application/json", "User-Agent": "IntelAI/1.0"}
-            tk = os.getenv("INFERENCE_TOKEN", "").strip()
-            if tk:
-                headers["Authorization"] = "Bearer " + tk
-            probe_timeout = float(os.getenv("REMOTE_INFERENCE_READY_PROBE_TIMEOUT", "3"))
-            try:
-                req = urllib.request.Request(
-                    endpoint, data=_json.dumps({"texts": ["ping"]}).encode(), headers=headers,
-                )
-                result = _json.loads(urllib.request.urlopen(req, timeout=probe_timeout).read())
-                ready = not _is_still_waking(result)
-            except Exception:
-                ready = False
+            ready = ready and _probe_remote_json(endpoint, {"texts": ["ping"]}, probe_timeout)
+
+    if ready and os.getenv("RERANK_PROVIDER", "").strip().lower() == "remote":
+        url = os.getenv("RERANK_URL", "").strip()
+        if url and "huggingface.co" not in url:
+            endpoint = url if url.endswith("/rerank") else url.rstrip("/") + "/rerank"
+            ready = ready and _probe_remote_json(endpoint, {"query": "ping", "texts": ["ping"]}, probe_timeout)
 
     _READY_CACHE["ts"] = now
     _READY_CACHE["ready"] = ready
