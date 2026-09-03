@@ -283,7 +283,11 @@ class QdrantVectorStore:
         from qdrant_client.models import Distance, VectorParams
         if not settings.QDRANT_URL:
             raise RuntimeError("QDRANT_URL not set")
-        self.client = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY or None)
+        self.client = QdrantClient(
+            url=settings.QDRANT_URL,
+            api_key=settings.QDRANT_API_KEY or None,
+            timeout=float(os.getenv("QDRANT_TIMEOUT", "8")),
+        )
         self.coll = settings.QDRANT_COLLECTION
         self.dim = _dim()
         if not self.client.collection_exists(self.coll):

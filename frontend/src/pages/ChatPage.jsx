@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import * as Recharts from "recharts";
 const { AreaChart, Area, YAxis, ResponsiveContainer } = Recharts;
+const USE_WS = String(import.meta.env.VITE_USE_WS || 'false').toLowerCase() === 'true'
 
 // Persona identity (color + icon + suggested prompts) — the persona-routed RAG copilot.
 const PERSONA_META = {
@@ -274,6 +275,10 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
   // WebSocket
   useEffect(() => {
     if (!user) return
+    if (!USE_WS) {
+      setStatus('connected')
+      return
+    }
     const connect = () => {
       const token = localStorage.getItem('access_token')
       if (!token) { setStatus('error'); return }
@@ -328,7 +333,7 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
     abortControllerRef.current = new AbortController()
     
     const ws = wsRef.current
-    if (ws && ws.readyState === WebSocket.OPEN) {
+    if (USE_WS && ws && ws.readyState === WebSocket.OPEN) {
       wsInFlightRef.current = true
       pendingQueryRef.current = q
       ws.send(JSON.stringify({ message: q, persona: persona || 'general', session_id: activeSession || undefined, language: lang }))
