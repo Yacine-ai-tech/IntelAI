@@ -32,6 +32,13 @@ from src.core.config import get_cors_allowed_origins, settings
 
 log = get_logger(__name__)
 
+
+def _chat_turn_timeout_seconds() -> float:
+    try:
+        return max(1.0, float(_os.environ.get("CHAT_TURN_TIMEOUT", "180")))
+    except Exception:
+        return 180.0
+
 # ════════════════════════════════════════════════════════════
 # APP INITIALIZATION
 # ════════════════════════════════════════════════════════════
@@ -881,15 +888,23 @@ async def _run_chat_turn(req: "ChatRequest", user: TokenData) -> Dict[str, Any]:
     # factory.chat is the expensive part of this request — retrieval + an LLM completion,
     # typically seconds — and is synchronous throughout (sync retrieval, sync LLM client
     # calls). Off the event loop so one in-flight chat can't stall every other request.
-    result = await asyncio.to_thread(
-        factory.chat,
-        message=req.message,
-        user_role=user.role,
-        persona_override=req.persona,
-        language=req.language or user.language,
-        context=req.context or "",
-        history=history,
-    )
+    try:
+        result = await asyncio.wait_for(
+            asyncio.to_thread(
+                factory.chat,
+                message=req.message,
+                user_role=user.role,
+                persona_override=req.persona,
+                language=req.language or user.language,
+                context=req.context or "",
+                history=history,
+            ),
+            timeout=_chat_turn_timeout_seconds(),
+        )
+    except asyncio.TimeoutError as e:
+        raise TimeoutError(
+            f"chat turn exceeded CHAT_TURN_TIMEOUT={int(_chat_turn_timeout_seconds())}s"
+        ) from e
 
     response_text = result.get("response", "")
     sources = result.get("sources", [])
@@ -920,7 +935,10 @@ async def _run_chat_turn(req: "ChatRequest", user: TokenData) -> Dict[str, Any]:
 
 @app.post("/api/v1/chat")
 async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
-    return await _run_chat_turn(req, user)
+    try:
+        return await _run_chat_turn(req, user)
+    except TimeoutError as e:
+        raise HTTPException(status_code=504, detail=str(e))
 
 
 @app.post("/api/v1/chat/async")
@@ -2451,11 +2469,11 @@ async def websocket_chat(websocket: WebSocket):
             # periodic status frame while the real work runs in the background — resets
             # any such idle-timeout AND gives the client something to show instead of
             # silence, rather than needing the job+poll pattern REST callers get instead.
-            chat_task = asyncio.create_task(asyncio.to_thread(
+            chat_task = asyncio.create_task(asyncio.wait_for(asyncio.to_thread(
                 factory.chat,
                 message=message, user_role=user.role,
                 persona_override=persona_override, language=language, history=history,
-            ))
+            ), timeout=_chat_turn_timeout_seconds()))
             keepalive_interval = float(os.getenv("WS_CHAT_KEEPALIVE_SECONDS", "12"))
             while not chat_task.done():
                 try:
@@ -2465,7 +2483,14 @@ async def websocket_chat(websocket: WebSocket):
                         await websocket.send_json({"type": "status", "note": "still working..."})
                     except Exception:
                         break  # client gone — let the outer try/except handle cleanup
-            result = await chat_task
+            try:
+                result = await chat_task
+            except asyncio.TimeoutError:
+                await websocket.send_json({
+                    "type": "error",
+                    "error": f"Chat turn timed out after {int(_chat_turn_timeout_seconds())}s. Please retry.",
+                })
+                continue
             history.append({"role": "user", "content": message})
             history.append({"role": "assistant", "content": result["response"]})
             # Persist the turn so it appears in history with a real title (store_message
