@@ -1,14 +1,37 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
 import { Leaf, Cloud, Zap, Droplet, Recycle, Users, Scale, Landmark, ShieldCheck } from 'lucide-react'
 import { fmtPct, PageHeader, Stat, StatGrid, fmtNum, Loading, ErrorState, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
+import PeriodFilter from '../components/PeriodFilter'
 
 const ACCENT = 'var(--p-esg)'
 
 export default function ESGPage() {
   const { t } = useTranslation()
-  const { data, isLoading, isError } = useQuery({ queryKey: ['esg'], queryFn: () => api.getESGSummary().then(r => r.data), retry: 1 })
+  const [selectedPeriod, setSelectedPeriod] = useState('')
+  const [startPeriod, setStartPeriod] = useState('')
+  const [endPeriod, setEndPeriod] = useState('')
+
+  const { data: periods = [] } = useQuery({
+    queryKey: ['periods'],
+    queryFn: () => api.getPeriods().then(r => r.data?.periods || []),
+    staleTime: 600_000,
+  })
+
+  const queryParams = {
+    period: selectedPeriod || undefined,
+    start_period: startPeriod || undefined,
+    end_period: endPeriod || undefined,
+  }
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['esg', queryParams],
+    queryFn: () => api.getESGSummary(queryParams).then(r => r.data),
+    retry: 1,
+  })
+
   if (isLoading) return <Loading />
   if (isError) return <ErrorState />
   const d = data || {}
@@ -28,14 +51,34 @@ export default function ESGPage() {
 
   return (
     <div>
-      <PageHeader icon={Leaf} accent={ACCENT} title={t('navESG') || 'ESG & Sustainability'}
+      <PageHeader
+        icon={Leaf}
+        accent={ACCENT}
+        title={t('navESG') || 'ESG & Sustainability'}
         subtitle={t('esgSubtitle') || 'Environmental, social & governance — GHG Protocol / CSRD aligned'}
-        actions={<AskCopilot q={t('askCopilot_ESGPage_SummarizeOurEsg')} />} />
+        actions={<AskCopilot q={t('askCopilot_ESGPage_SummarizeOurEsg')} />}
+      />
+
+      <PeriodFilter
+        periods={periods}
+        selectedPeriod={selectedPeriod}
+        onSelectPeriod={(p) => setSelectedPeriod(p)}
+        startPeriod={startPeriod}
+        endPeriod={endPeriod}
+        onRangeChange={({ start, end }) => {
+          setStartPeriod(start)
+          setEndPeriod(end)
+        }}
+        accent={ACCENT}
+      />
 
       <DomainHero health={esgHealth} accent={ACCENT} />
 
-      <Panel title={t('lblCarbonTrend')} icon={Cloud}
-        actions={<AskCopilot q={t('askCopilot_ESGPage_WhatIsDriving')} label={t('lblImproveScore')} />}>
+      <Panel
+        title={t('lblCarbonTrend')}
+        icon={Cloud}
+        actions={<AskCopilot q={t('askCopilot_ESGPage_WhatIsDriving')} label={t('lblImproveScore')} />}
+      >
         <AreaTrend data={d.trends || []} y="carbon" color={ACCENT} height={200} />
       </Panel>
 
