@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
@@ -5,15 +6,48 @@ import {
   Users, UserMinus, Smile, Briefcase, Clock, GraduationCap, DollarSign, CalendarX, UserPlus,
 } from 'lucide-react'
 import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, ErrorState, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
+import PeriodFilter from '../components/PeriodFilter'
 
 const ACCENT = 'var(--p-chro)'
 
 export default function HRPage() {
   const { t } = useTranslation()
-  const summary = useQuery({ queryKey: ['hr-summary'], queryFn: () => api.getHRSummary().then(r => r.data), retry: 1 })
-  const depts = useQuery({ queryKey: ['hr-depts'], queryFn: () => api.getHRDepartments().then(r => r.data?.departments || []), retry: 1 })
-  const recruit = useQuery({ queryKey: ['hr-recruit'], queryFn: () => api.getHRRecruitment().then(r => r.data), retry: 1 })
-  const hlt = useQuery({ queryKey: ['hr-health'], queryFn: () => api.getHRHealth().then(r => r.data), retry: 1 })
+  const [selectedPeriod, setSelectedPeriod] = useState('')
+  const [startPeriod, setStartPeriod] = useState('')
+  const [endPeriod, setEndPeriod] = useState('')
+
+  const { data: periods = [] } = useQuery({
+    queryKey: ['periods'],
+    queryFn: () => api.getPeriods().then(r => r.data?.periods || []),
+    staleTime: 600_000,
+  })
+
+  const queryParams = {
+    period: selectedPeriod || undefined,
+    start_period: startPeriod || undefined,
+    end_period: endPeriod || undefined,
+  }
+
+  const summary = useQuery({
+    queryKey: ['hr-summary', queryParams],
+    queryFn: () => api.getHRSummary(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const depts = useQuery({
+    queryKey: ['hr-depts', queryParams],
+    queryFn: () => api.getHRDepartments(queryParams).then(r => r.data?.departments || []),
+    retry: 1,
+  })
+  const recruit = useQuery({
+    queryKey: ['hr-recruit', queryParams],
+    queryFn: () => api.getHRRecruitment(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const hlt = useQuery({
+    queryKey: ['hr-health', queryParams],
+    queryFn: () => api.getHRHealth(queryParams).then(r => r.data),
+    retry: 1,
+  })
 
   if (summary.isLoading) return <Loading />
   if (summary.isError) return <ErrorState />
@@ -22,9 +56,26 @@ export default function HRPage() {
 
   return (
     <div>
-      <PageHeader icon={Users} accent={ACCENT} title={t('navHR') || 'Human Resources'}
+      <PageHeader
+        icon={Users}
+        accent={ACCENT}
+        title={t('navHR') || 'Human Resources'}
         subtitle={t('hrSubtitle') || 'Workforce, engagement & talent analytics'}
-        actions={<AskCopilot q={t('askCopilot_HRPage_SummarizeOurPeople')} />} />
+        actions={<AskCopilot q={t('askCopilot_HRPage_SummarizeOurPeople')} />}
+      />
+
+      <PeriodFilter
+        periods={periods}
+        selectedPeriod={selectedPeriod}
+        onSelectPeriod={(p) => setSelectedPeriod(p)}
+        startPeriod={startPeriod}
+        endPeriod={endPeriod}
+        onRangeChange={({ start, end }) => {
+          setStartPeriod(start)
+          setEndPeriod(end)
+        }}
+        accent={ACCENT}
+      />
 
       <DomainHero health={hlt.data} accent={ACCENT} />
 
@@ -56,18 +107,29 @@ export default function HRPage() {
         </Panel>
       </Grid>
 
-      <Panel title={t('lblByDepartment')} icon={Users} style={{ marginTop: 18 }}
-        actions={<AskCopilot q={t('askCopilot_HRPage_WhichDepartmentHas')} label={t('lblAnalyze')} />}>
+      <Panel
+        title={t('lblByDepartment')}
+        icon={Users}
+        style={{ marginTop: 18 }}
+        actions={<AskCopilot q={t('askCopilot_HRPage_WhichDepartmentHas')} label={t('lblAnalyze')} />}
+      >
         <table className="table">
-          <thead><tr><th>{t('thDept') || 'Department'}</th><th>{t('thHeadcount') || 'Headcount'}</th><th>{t('thSat') || 'Satisfaction'}</th><th>{t('thTurnover') || 'Turnover'}</th><th>{t('thAvgSalary') || 'Avg Salary'}</th><th>{t('thTraining') || 'Training'}</th></tr></thead>
+          <thead>
+            <tr>
+              <th>{t('thDepartment') || 'Department'}</th>
+              <th>{t('thHeadcount') || 'Headcount'}</th>
+              <th>{t('thSatisfaction') || 'Satisfaction'}</th>
+              <th>{t('thTurnover') || 'Turnover'}</th>
+              <th>{t('thTraining') || 'Training completion'}</th>
+            </tr>
+          </thead>
           <tbody>
-            {(Array.isArray(depts.data) ? depts.data : []).map((d, i) => (
+            {(depts.data || []).map((d, i) => (
               <tr key={i}>
-                <td style={{ fontWeight: 600 }}>{d.department}</td>
+                <td style={{ fontWeight: 500 }}>{d.department}</td>
                 <td>{fmtNum(d.headcount)}</td>
-                <td>{fmtNum(d.satisfaction)}</td>
-                <td><span className={`badge ${d.turnover > 15 ? 'bad' : d.turnover > 10 ? 'warn' : 'ok'}`}>{fmtPct(d.turnover)}</span></td>
-                <td>{fmtMoney(d.avg_salary)}</td>
+                <td>{fmtNum(d.satisfaction)}/100</td>
+                <td>{fmtPct(d.turnover)}</td>
                 <td>{fmtPct(d.training_completion)}</td>
               </tr>
             ))}
