@@ -146,39 +146,39 @@ export const generateStatement = (statementType, period = null) =>
   api.post('/financial/statement', { statement_type: statementType, period })
 
 // ── HR / People ─────────────────────────────────────────
-export const getHRSummary = () => api.get('/hr/summary')
-export const getHRDepartments = () => api.get('/hr/departments')
-export const getHRRecruitment = () => api.get('/hr/recruitment')
-export const getHRTraining = () => api.get('/hr/training')
-export const getHRHealth = () => api.get('/hr/health')
+export const getHRSummary = (params = {}) => api.get('/hr/summary', { params })
+export const getHRDepartments = (params = {}) => api.get('/hr/departments', { params })
+export const getHRRecruitment = (params = {}) => api.get('/hr/recruitment', { params })
+export const getHRTraining = (params = {}) => api.get('/hr/training', { params })
+export const getHRHealth = (params = {}) => api.get('/hr/health', { params })
 
 // ── Growth ──────────────────────────────────────────────
-export const getGrowthSummary = () => api.get('/growth/summary')
+export const getGrowthSummary = (params = {}) => api.get('/growth/summary', { params })
 
 // ── Logistics ───────────────────────────────────────────
-export const getLogisticsSummary = () => api.get('/logistics/summary')
-export const getLogisticsInventory = () => api.get('/logistics/inventory')
-export const getLogisticsShipping = () => api.get('/logistics/shipping')
-export const getLogisticsSuppliers = () => api.get('/logistics/suppliers')
-export const getLogisticsHealth = () => api.get('/logistics/health')
+export const getLogisticsSummary = (params = {}) => api.get('/logistics/summary', { params })
+export const getLogisticsInventory = (params = {}) => api.get('/logistics/inventory', { params })
+export const getLogisticsShipping = (params = {}) => api.get('/logistics/shipping', { params })
+export const getLogisticsSuppliers = (params = {}) => api.get('/logistics/suppliers', { params })
+export const getLogisticsHealth = (params = {}) => api.get('/logistics/health', { params })
 
 // ── IT Operations ───────────────────────────────────────
-export const getITOverview = () => api.get('/it/overview')
-export const getITTickets = () => api.get('/it/tickets')
-export const getITSecurity = () => api.get('/it/security')
-export const getITInfrastructure = () => api.get('/it/infrastructure')
-export const getITDevOps = () => api.get('/it/devops')
-export const getITHealth = () => api.get('/it/health')
+export const getITOverview = (params = {}) => api.get('/it/overview', { params })
+export const getITTickets = (params = {}) => api.get('/it/tickets', { params })
+export const getITSecurity = (params = {}) => api.get('/it/security', { params })
+export const getITInfrastructure = (params = {}) => api.get('/it/infrastructure', { params })
+export const getITDevOps = (params = {}) => api.get('/it/devops', { params })
+export const getITHealth = (params = {}) => api.get('/it/health', { params })
 
 // ── Operations ──────────────────────────────────────────
-export const getOpsSummary = () => api.get('/operations/summary')
-export const getOpsQuality = () => api.get('/operations/quality')
-export const getOpsProduction = () => api.get('/operations/production')
-export const getOpsSafety = () => api.get('/operations/safety')
-export const getOpsHealth = () => api.get('/operations/health')
+export const getOpsSummary = (params = {}) => api.get('/operations/summary', { params })
+export const getOpsQuality = (params = {}) => api.get('/operations/quality', { params })
+export const getOpsProduction = (params = {}) => api.get('/operations/production', { params })
+export const getOpsSafety = (params = {}) => api.get('/operations/safety', { params })
+export const getOpsHealth = (params = {}) => api.get('/operations/health', { params })
 
 // ── ESG ─────────────────────────────────────────────────
-export const getESGSummary = () => api.get('/esg/summary')
+export const getESGSummary = (params = {}) => api.get('/esg/summary', { params })
 
 // ── Admin ───────────────────────────────────────────────
 export const listUsers = () => api.get('/admin/users')
