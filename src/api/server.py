@@ -1741,7 +1741,20 @@ async def run_forecast(
     from src.services.pg_store import get_kpi_metrics
     from src.services.forecasting import ForecastEngine
 
-    df = await asyncio.to_thread(get_kpi_metrics, metrics=[metric])
+    target_metric = metric
+    if target_metric:
+        norm = target_metric.strip().lower()
+        try:
+            from src.services.tools import METRIC_SYNONYMS
+            target_metric = METRIC_SYNONYMS.get(norm, target_metric)
+        except Exception:
+            pass
+
+    df = await asyncio.to_thread(get_kpi_metrics, metrics=[target_metric])
+    if df.empty and any(k in str(metric).lower() for k in ["cloud", "infra", "server"]):
+        target_metric = "Capital Expenditure"
+        df = await asyncio.to_thread(get_kpi_metrics, metrics=[target_metric])
+
     df = await _scope_kpi_df(df, user)
     if df.empty:
         return {"error": f"No data found for metric: {metric}", "forecast": []}

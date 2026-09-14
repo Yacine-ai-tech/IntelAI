@@ -138,8 +138,9 @@ export default function Layout() {
               <button className="btn btn-ghost btn-sm btn-icon" title={t('expandToFull') || 'Expand to full page'} aria-label={t('expandToFull') || 'Expand to full page'} onClick={() => {
                 setCopilotOpen(false)
                 const params = new URLSearchParams()
-                if (copilotSessionId) {
-                  params.set('session', copilotSessionId)
+                const activeSess = copilotSessionId || localStorage.getItem('intelai_copilot_session_id')
+                if (activeSess) {
+                  params.set('session', activeSess)
                 } else if (copilotQuery) {
                   params.set('q', copilotQuery)
                 }
