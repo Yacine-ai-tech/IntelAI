@@ -77,3 +77,4 @@ frontend/playwright-report/
 ARCHITECTURE.md
 PROJECT_OVERVIEW.md
 .claude/
+eval/cache/
