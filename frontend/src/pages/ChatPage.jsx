@@ -314,6 +314,7 @@ export default function ChatPage({
         else if (d.type === 'response') {
           const newSessionId = d.session_id
           if (newSessionId) {
+            try { localStorage.setItem('intelai_copilot_session_id', newSessionId) } catch {}
             if (!activeSession) {
               setActiveSession(newSessionId)
               onSessionChange?.(newSessionId)
@@ -368,6 +369,7 @@ export default function ChatPage({
         .then(r => {
           const newSessionId = r.data.session_id
           if (newSessionId) {
+            try { localStorage.setItem('intelai_copilot_session_id', newSessionId) } catch {}
             if (!activeSession) {
               setActiveSession(newSessionId)
               onSessionChange?.(newSessionId)
@@ -432,6 +434,7 @@ export default function ChatPage({
       }))
       setActiveSession(id)
       onSessionChange?.(id)
+      try { localStorage.setItem('intelai_copilot_session_id', id) } catch {}
     } catch { /* ignore */ }
   }
 
