@@ -1141,12 +1141,27 @@ class AgentPersonaFactory:
     @staticmethod
     def _needs_web(text: str) -> bool:
         """True when a question calls for external / real-time / benchmark information that the
-        internal KPI snapshot + knowledge base cannot answer on their own. Uses LLM for intelligent judgment."""
+        internal KPI snapshot + knowledge base cannot answer on their own. Evaluates fast keyword
+        triggers first to avoid an expensive 1.5-3s LLM roundtrip on routine internal/KPI questions."""
         t = (text or "").lower()
         if not t.strip():
             return False
+
+        triggers = (
+            "benchmark", "industry", "market", "competitor", "competition", "peer", " vs ",
+            "versus", "news", "latest", "regulation", "gdpr", "csrd", "sec filing", "best practice",
+            "macro", "inflation", "interest rate", "industry standard", "industry average",
+            "external", "compare to other", "how do other", "current events", "what's happening",
+            "actualité", "marché", "concurrent", "réglementation", "secteur", "meilleures pratiques",
+            "tendance du marché", "moyenne du secteur", "web search", "search the web", "online",
+            "live search", "tavily", "internet"
+        )
         
-        from src.core.config import settings
+        # Fast exit: if no external keywords are mentioned, skip the LLM judge completely
+        if not any(x in t for x in triggers):
+            return False
+
+        # If external triggers match, use LLM judge to verify if true web search is required
         prompt = (
             "You are a routing agent for a corporate AI copilot. The user asked: {query}\n"
             "Does the query ask for external market data, news, competitor intel, or current events? "
@@ -1169,17 +1184,7 @@ class AgentPersonaFactory:
             import logging
             logging.getLogger(__name__).warning("LLM Judge failed for _needs_web: %s", e)
 
-        # Fallback to smart triggers if LLM is down
-        triggers = (
-            "benchmark", "industry", "market", "competitor", "competition", "peer", " vs ",
-            "versus", "news", "latest", "regulation", "gdpr", "csrd", "sec filing", "best practice",
-            "macro", "inflation", "interest rate", "industry standard", "industry average",
-            "external", "compare to other", "how do other", "current events", "what's happening",
-            "actualité", "marché", "concurrent", "réglementation", "secteur", "meilleures pratiques",
-            "tendance du marché", "moyenne du secteur", "web search", "search the web", "online",
-            "live search", "tavily", "internet"
-        )
-        return any(x in t for x in triggers)
+        return True
 
     def _web_context(self, query: str, max_results: int, start_id: int):
         """Fetch real-time web results and format them as citable context blocks.
