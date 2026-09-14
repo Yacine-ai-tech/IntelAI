@@ -47,13 +47,14 @@ sys.path.insert(0, str(ROOT_DIR))
 # IntelAI's .env. This script has no other import that would load either as a side
 # effect (see module docstring: no `src.*` import, so retrieval never runs on this
 # machine) — RAGEVAL_ENV_PATH overrides the sibling-repo guess for other layouts.
+# Load IntelAI's own .env for PROD_GATEWAY_URL and auth
+load_dotenv(ROOT_DIR / ".env")
+
 _rageval_env = Path(os.getenv("RAGEVAL_ENV_PATH", "")) if os.getenv("RAGEVAL_ENV_PATH") else ROOT_DIR.parent / "RAGeval" / ".env"
 if _rageval_env.exists():
     load_dotenv(_rageval_env)
 else:
-    print(f"Warning: RAGeval .env not found at {_rageval_env} — falling back to IntelAI's own .env "
-          f"for judge credentials (this reintroduces the shared-Groq-quota problem).", file=sys.stderr)
-    load_dotenv(ROOT_DIR / ".env")
+    print(f"Warning: RAGeval .env not found at {_rageval_env} — using existing env credentials.", file=sys.stderr)
 
 try:
     from rageval.evaluator import RAGEvaluator
@@ -199,6 +200,18 @@ def run() -> Dict[str, Any]:
     evaluator = RAGEvaluator()
     results: List[Dict[str, Any]] = []
 
+    cache_file = ROOT_DIR / "eval" / "cache" / "live_eval_cache.jsonl"
+    cache_file.parent.mkdir(parents=True, exist_ok=True)
+    cached_cases: Dict[int, Dict[str, Any]] = {}
+    if cache_file.exists():
+        with open(cache_file, "r") as f:
+            for line in f:
+                if line.strip():
+                    item = json.loads(line)
+                    cached_cases[item["case_id"]] = item
+        if cached_cases:
+            print(f"Resuming evaluation: {len(cached_cases)} case(s) loaded from cache {cache_file}")
+
     print(f"Evaluating {len(cases)} case(s) from tests/rag_eval.jsonl against LIVE production ({GATEWAY}) ...\n")
 
     with httpx.Client(timeout=120.0) as client:
@@ -206,6 +219,16 @@ def run() -> Dict[str, Any]:
         headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
         for i, case in zip(case_ids, cases):
+            if i in cached_cases:
+                r = cached_cases[i]
+                results.append(r)
+                g = r.get("groundedness")
+                gt_match = r.get("ground_truth_match")
+                print(f"[{i:02d}/{len(cases):02d}] (cached) persona={r.get('persona', ''):<9} "
+                      f"gt_match={gt_match!s:<5} groundedness={g!s:<6} "
+                      f"latency={r.get('latency_ms', 0):.0f}ms query='{r.get('query', '')[:50]}'")
+                continue
+
             query = case["query"]
             persona = PERSONA_MAP.get(case.get("persona", ""), case.get("persona", "ceo"))
             t0 = time.monotonic()
@@ -284,6 +307,11 @@ def run() -> Dict[str, Any]:
                       f"latency={latency_ms:.0f}ms query='{query[:50]}'")
 
             results.append(result)
+            try:
+                with open(cache_file, "a") as f:
+                    f.write(json.dumps(result) + "\n")
+            except Exception as ce:
+                print(f"Warning: Failed to write to cache: {ce}")
 
     scored = [r for r in results if "error" not in r]
     n_errors = len(results) - len(scored)
