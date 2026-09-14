@@ -2368,18 +2368,27 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
     VECTOR_STORE is set, otherwise the in-process hybrid retriever."""
     try:
         from src.services.omnismart_chatbot import _get_shared_rag
-        # Match the (working) chat retrieval path: pass a language so the vector-store query
-        # filters consistently instead of returning nothing.
         rag = _get_shared_rag()
-        # Retrieval can block for up to HYBRID_RETRIEVAL_TIMEOUT (default 150s) waiting on a
-        # cold remote host. This route used to call it directly on the event loop; with
-        # --workers 1 (see Dockerfile) that froze the ENTIRE server — every other user's
-        # request, including /health — for the full wait, not just this one. Confirmed
-        # live: a single knowledge search during cold retrieval hung ~65s before the
-        # reverse proxy cut it with a 502. Same fix the chat turn already applies
-        # (asyncio.to_thread) so this route only blocks its own request, not the process.
+        # Auto-detect language from the query rather than always passing 'en'.
+        # French queries like "financement du departement it pour achat d'ordinateur et de serveur"
+        # were previously forced through English tokenisation, producing zero relevant French matches.
+        detected_lang: str | None = None
+        try:
+            _fr_markers = ['du', 'de', 'le', 'la', 'les', 'un', 'une', 'des', 'et', 'en', 'pour',
+                           'avec', 'sur', 'dans', 'qui', 'que', 'au', 'aux', 'par', 'est', 'sont',
+                           'du', "l'", "d'", "c'", "j'", "qu'"]
+            q_lower = q.lower()
+            fr_hits = sum(1 for m in _fr_markers if f' {m} ' in f' {q_lower} ')
+            if fr_hits >= 2:
+                detected_lang = 'fr'
+            else:
+                # Fall back to user's profile language
+                detected_lang = getattr(user, 'language', None) or 'en'
+        except Exception:
+            detected_lang = 'en'
+
         hits = await asyncio.to_thread(
-            rag._retrieve_documents, q, top_k=n, language=getattr(user, "language", None) or "en"
+            rag._retrieve_documents, q, top_k=n, language=detected_lang
         )
         if not hits:  # last-resort: retry language-agnostic
             hits = await asyncio.to_thread(rag._retrieve_documents, q, top_k=n)
@@ -2387,7 +2396,7 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
             {"title": title, "content": (content or "")[:600], "score": round(score, 4)}
             for title, content, score in hits
         ]
-        return {"results": results, "query": q, "count": len(results)}
+        return {"results": results, "query": q, "count": len(results), "detected_language": detected_lang}
     except Exception as e:
         return {"results": [], "query": q, "error": str(e)}
 
