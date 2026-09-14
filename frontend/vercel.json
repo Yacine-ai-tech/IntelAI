@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/api/(.*)",
+      "destination": "https://gateway.ysiddo-ai-projects.app/intelai/api/$1"
+    },
+    {
+      "source": "/health",
+      "destination": "https://gateway.ysiddo-ai-projects.app/intelai/health"
+    },
+    {
       "source": "/docs",
       "destination": "https://gateway.ysiddo-ai-projects.app/intelai/api/docs"
     },
