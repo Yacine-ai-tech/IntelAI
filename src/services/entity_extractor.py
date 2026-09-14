@@ -26,10 +26,16 @@ class EntityExtractor:
             # KPI/chat retrieval (this extractor only feeds the graph-based path), but
             # graph queries scoped to "IT" or "ESG" as a department had nothing to find.
             'it': ['uptime', 'latency', 'vulnerabilit', 'deployment', 'incident', 'security',
-                   'mttr', 'resolution', 'sla', 'devops', 'change failure'],
+                   'mttr', 'resolution', 'sla', 'devops', 'change failure',
+                   # French infrastructure / IT terms
+                   'ordinateur', 'serveur', 'informatique', 'achat', 'materiel',
+                   'infrastructure', 'financement', 'capex', 'logiciel', 'reseau',
+                   'cloud', 'systeme', 'equipement', 'departement it', 'departement informatique'],
             'esg': ['emission', 'carbon', 'renewable', 'diversity', 'governance', 'sustainab',
                     'waste', 'water consumption', 'audit compliance'],
         }
+        # Characters that indicate a malformed / synthetic token — skip these as entities
+        self._bad_entity_chars = re.compile(r'[()=<>%,;:"]')
         
         self.period_patterns = {
             'quarterly': r'Q[1-4]',
@@ -108,8 +114,10 @@ class EntityExtractor:
         
         for part in parts:
             if len(part) > 2 and part not in entities:
-                # Skip common words
-                if part.lower() not in ['total', 'net', 'gross', 'avg']:
+                # Skip common words and tokens containing special characters that indicate
+                # a synthetic / malformed value (e.g. '(moyenne(target', '=value>')
+                if (part.lower() not in ['total', 'net', 'gross', 'avg']
+                        and not self._bad_entity_chars.search(part)):
                     entities.append({
                         'entity_type': 'metric_subentity',
                         'entity_value': part,

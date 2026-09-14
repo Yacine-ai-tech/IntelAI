@@ -46,6 +46,7 @@ export default function Layout() {
   // Global Mini Copilot State
   const [copilotOpen, setCopilotOpen] = useState(false)
   const [copilotQuery, setCopilotQuery] = useState('')
+  const [copilotSessionId, setCopilotSessionId] = useState(null)
 
   useEffect(() => {
     const handleOpen = (e) => {
@@ -134,7 +135,16 @@ export default function Layout() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', background: 'var(--surface-2)', borderBottom: '1px solid var(--border)' }}>
             <span style={{ fontWeight: 600, fontSize: '.95rem' }}>{t('navAssistant') || 'Copilot'}</span>
             <div style={{ display: 'flex', gap: 6 }}>
-              <button className="btn btn-ghost btn-sm btn-icon" title={t('expandToFull') || 'Expand to full page'} aria-label={t('expandToFull') || 'Expand to full page'} onClick={() => { setCopilotOpen(false); navigate(`/chat?q=${encodeURIComponent(copilotQuery)}`) }}>
+              <button className="btn btn-ghost btn-sm btn-icon" title={t('expandToFull') || 'Expand to full page'} aria-label={t('expandToFull') || 'Expand to full page'} onClick={() => {
+                setCopilotOpen(false)
+                const params = new URLSearchParams()
+                if (copilotSessionId) {
+                  params.set('session', copilotSessionId)
+                } else if (copilotQuery) {
+                  params.set('q', copilotQuery)
+                }
+                navigate(`/chat?${params.toString()}`)
+              }}>
                 <Maximize2 size={14} />
               </button>
               <button className="btn btn-ghost btn-sm btn-icon" aria-label={t('close') || 'Close'} onClick={() => setCopilotOpen(false)}>
@@ -153,7 +163,12 @@ export default function Layout() {
                  <button className="btn btn-primary btn-sm" onClick={retry}>{t('retry') || 'Retry'}</button>
                </div>
              )}>
-               <ChatPage isWidget={true} initialQuery={copilotQuery} />
+               <ChatPage 
+                 isWidget={true} 
+                 initialQuery={copilotQuery} 
+                 initialSessionId={copilotSessionId}
+                 onSessionChange={setCopilotSessionId}
+               />
              </ErrorBoundary>
           </div>
         </div>
