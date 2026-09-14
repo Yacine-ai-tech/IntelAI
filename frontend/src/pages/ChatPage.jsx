@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import * as api from '../api'
 import { Citations } from '../components/ui'
 import {
@@ -208,15 +208,21 @@ function MessageBubble({ msg }) {
   )
 }
 
-export default function ChatPage({ isWidget = false, initialQuery = '' }) {
+export default function ChatPage({ 
+  isWidget = false, 
+  initialQuery = '', 
+  initialSessionId = null,
+  onSessionChange = null 
+}) {
   const { user } = useAuth()
   const { t, lang } = useTranslation()
+  const queryClient = useQueryClient()
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [slowHint, setSlowHint] = useState(false)
   const [persona, setPersona] = useState('')          // '' = auto (role-based)
-  const [activeSession, setActiveSession] = useState(null)
+  const [activeSession, setActiveSession] = useState(initialSessionId)
   const [status, setStatus] = useState('disconnected')
   const [searchParams, setSearchParams] = useSearchParams()
   const [showHistory, setShowHistory] = useState(false)
@@ -258,19 +264,30 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
     return () => clearTimeout(id)
   }, [loading])
 
-  // Prefill from a Dashboard "ask copilot" deep-link (?q=…), then clear it from the URL.
+  // Prefill from a Dashboard "ask copilot" deep-link (?q=…), restored session (?session=…), or widget props.
   useEffect(() => {
     if (isWidget) {
       if (initialQuery) {
         setInput(initialQuery)
       }
+      if (initialSessionId && !activeSession) {
+        loadSession(initialSessionId)
+      }
       return
     }
     const pp = searchParams.get('persona')
     if (pp && PERSONA_META[pp]) { setPersona(pp); searchParams.delete('persona'); setSearchParams(searchParams, { replace: true }) }
+    const sessId = searchParams.get('session') || searchParams.get('session_id')
+    if (sessId) {
+      loadSession(sessId)
+      searchParams.delete('session')
+      searchParams.delete('session_id')
+      setSearchParams(searchParams, { replace: true })
+      return
+    }
     const q = searchParams.get('q')
     if (q) { setInput(q); setSearchParams({}, { replace: true }) }
-  }, [searchParams, setSearchParams, isWidget, initialQuery])
+  }, [searchParams, setSearchParams, isWidget, initialQuery, initialSessionId])
 
   // WebSocket
   useEffect(() => {
@@ -295,6 +312,14 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
         const d = JSON.parse(ev.data)
         if (d.type === 'connected') setStatus('connected')
         else if (d.type === 'response') {
+          const newSessionId = d.session_id
+          if (newSessionId) {
+            if (!activeSession) {
+              setActiveSession(newSessionId)
+              onSessionChange?.(newSessionId)
+            }
+            queryClient.invalidateQueries({ queryKey: ['chat-sessions'] })
+          }
           setMessages(p => [...p, {
             role: 'assistant',
             content: d.response,
@@ -340,13 +365,23 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
     } else {
       wsInFlightRef.current = false
       api.sendChat(q, persona || 'general', activeSession, '', lang, abortControllerRef.current.signal)
-        .then(r => setMessages(p => [...p, {
-          role: 'assistant',
-          content: r.data.response || 'No response.',
-          sources: r.data.sources || [],
-          blocks: r.data.blocks || [],
-          query: q,
-        }]))
+        .then(r => {
+          const newSessionId = r.data.session_id
+          if (newSessionId) {
+            if (!activeSession) {
+              setActiveSession(newSessionId)
+              onSessionChange?.(newSessionId)
+            }
+            queryClient.invalidateQueries({ queryKey: ['chat-sessions'] })
+          }
+          setMessages(p => [...p, {
+            role: 'assistant',
+            content: r.data.response || 'No response.',
+            sources: r.data.sources || [],
+            blocks: r.data.blocks || [],
+            query: q,
+          }])
+        })
         .catch(e => {
           if (e.name === 'CanceledError' || e.message === 'canceled') {
             setMessages(p => [...p, { role: 'assistant', content: 'Message canceled.' }])
@@ -396,6 +431,7 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
         return { role, content, sources: m.sources || [], query: role === 'assistant' ? lastUserContent : content }
       }))
       setActiveSession(id)
+      onSessionChange?.(id)
     } catch { /* ignore */ }
   }
 
@@ -405,7 +441,7 @@ export default function ChatPage({ isWidget = false, initialQuery = '' }) {
   const dotColor = status === 'connected' ? 'var(--ok)' : status === 'connecting' ? 'var(--warn)' : 'var(--bad)'
 
   return (
-    <div className="chat-layout" style={{ position: 'relative', overflow: 'hidden' }}>
+    <div className={`chat-layout${isWidget ? ' is-widget' : ''}`} style={{ position: 'relative', overflow: 'hidden' }}>
       {!isWidget && (
         <aside className={`chat-history-panel${showHistory ? ' mobile-open' : ' collapsed'}`}>
           <div className="chat-history-header" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
