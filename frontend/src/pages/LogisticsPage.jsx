@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
@@ -5,15 +6,48 @@ import {
   Package, Truck, Clock, RefreshCw, Boxes, DollarSign, Warehouse, RotateCcw, PackageCheck, Ban,
 } from 'lucide-react'
 import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, ErrorState, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
+import PeriodFilter from '../components/PeriodFilter'
 
 const ACCENT = 'var(--p-coo)'
 
 export default function LogisticsPage() {
   const { t } = useTranslation()
-  const sum = useQuery({ queryKey: ['log-sum'], queryFn: () => api.getLogisticsSummary().then(r => r.data), retry: 1 })
-  const inv = useQuery({ queryKey: ['log-inv'], queryFn: () => api.getLogisticsInventory().then(r => r.data), retry: 1 })
-  const ship = useQuery({ queryKey: ['log-ship'], queryFn: () => api.getLogisticsShipping().then(r => r.data), retry: 1 })
-  const hlt = useQuery({ queryKey: ['log-health'], queryFn: () => api.getLogisticsHealth().then(r => r.data), retry: 1 })
+  const [selectedPeriod, setSelectedPeriod] = useState('')
+  const [startPeriod, setStartPeriod] = useState('')
+  const [endPeriod, setEndPeriod] = useState('')
+
+  const { data: periods = [] } = useQuery({
+    queryKey: ['periods'],
+    queryFn: () => api.getPeriods().then(r => r.data?.periods || []),
+    staleTime: 600_000,
+  })
+
+  const queryParams = {
+    period: selectedPeriod || undefined,
+    start_period: startPeriod || undefined,
+    end_period: endPeriod || undefined,
+  }
+
+  const sum = useQuery({
+    queryKey: ['log-sum', queryParams],
+    queryFn: () => api.getLogisticsSummary(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const inv = useQuery({
+    queryKey: ['log-inv', queryParams],
+    queryFn: () => api.getLogisticsInventory(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const ship = useQuery({
+    queryKey: ['log-ship', queryParams],
+    queryFn: () => api.getLogisticsShipping(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const hlt = useQuery({
+    queryKey: ['log-health', queryParams],
+    queryFn: () => api.getLogisticsHealth(queryParams).then(r => r.data),
+    retry: 1,
+  })
 
   if (sum.isLoading) return <Loading />
   if (sum.isError) return <ErrorState />
@@ -21,9 +55,26 @@ export default function LogisticsPage() {
 
   return (
     <div>
-      <PageHeader icon={Package} accent={ACCENT} title={t('navLogistics') || 'Logistics'}
+      <PageHeader
+        icon={Package}
+        accent={ACCENT}
+        title={t('navLogistics') || 'Logistics'}
         subtitle={t('logSubtitle') || 'Fulfilment, inventory & transportation'}
-        actions={<AskCopilot q={t('askCopilot_LogisticsPage_HowIsOur')} />} />
+        actions={<AskCopilot q={t('askCopilot_LogisticsPage_HowIsOur')} />}
+      />
+
+      <PeriodFilter
+        periods={periods}
+        selectedPeriod={selectedPeriod}
+        onSelectPeriod={(p) => setSelectedPeriod(p)}
+        startPeriod={startPeriod}
+        endPeriod={endPeriod}
+        onRangeChange={({ start, end }) => {
+          setStartPeriod(start)
+          setEndPeriod(end)
+        }}
+        accent={ACCENT}
+      />
 
       <DomainHero health={hlt.data} accent={ACCENT} />
 

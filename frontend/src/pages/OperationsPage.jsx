@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
@@ -6,16 +7,53 @@ import {
   Factory, HardHat, ShieldCheck,
 } from 'lucide-react'
 import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, ErrorState, Grid, AskCopilot, AreaTrend, DomainHero, Panel, fmtMoney } from '../components/ui'
+import PeriodFilter from '../components/PeriodFilter'
 
 const ACCENT = 'var(--p-coo)'
 
 export default function OperationsPage() {
   const { t } = useTranslation()
-  const sum = useQuery({ queryKey: ['ops-sum'], queryFn: () => api.getOpsSummary().then(r => r.data), retry: 1 })
-  const qual = useQuery({ queryKey: ['ops-qual'], queryFn: () => api.getOpsQuality().then(r => r.data), retry: 1 })
-  const prod = useQuery({ queryKey: ['ops-prod'], queryFn: () => api.getOpsProduction().then(r => r.data), retry: 1 })
-  const safe = useQuery({ queryKey: ['ops-safe'], queryFn: () => api.getOpsSafety().then(r => r.data), retry: 1 })
-  const hlt = useQuery({ queryKey: ['ops-health'], queryFn: () => api.getOpsHealth().then(r => r.data), retry: 1 })
+  const [selectedPeriod, setSelectedPeriod] = useState('')
+  const [startPeriod, setStartPeriod] = useState('')
+  const [endPeriod, setEndPeriod] = useState('')
+
+  const { data: periods = [] } = useQuery({
+    queryKey: ['periods'],
+    queryFn: () => api.getPeriods().then(r => r.data?.periods || []),
+    staleTime: 600_000,
+  })
+
+  const queryParams = {
+    period: selectedPeriod || undefined,
+    start_period: startPeriod || undefined,
+    end_period: endPeriod || undefined,
+  }
+
+  const sum = useQuery({
+    queryKey: ['ops-sum', queryParams],
+    queryFn: () => api.getOpsSummary(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const qual = useQuery({
+    queryKey: ['ops-qual', queryParams],
+    queryFn: () => api.getOpsQuality(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const prod = useQuery({
+    queryKey: ['ops-prod', queryParams],
+    queryFn: () => api.getOpsProduction(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const safe = useQuery({
+    queryKey: ['ops-safe', queryParams],
+    queryFn: () => api.getOpsSafety(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const hlt = useQuery({
+    queryKey: ['ops-health', queryParams],
+    queryFn: () => api.getOpsHealth(queryParams).then(r => r.data),
+    retry: 1,
+  })
 
   if (sum.isLoading) return <Loading />
   if (sum.isError) return <ErrorState />
@@ -23,9 +61,26 @@ export default function OperationsPage() {
 
   return (
     <div>
-      <PageHeader icon={Settings2} accent={ACCENT} title={t('navOperations') || 'Operations'}
+      <PageHeader
+        icon={Settings2}
+        accent={ACCENT}
+        title={t('navOperations') || 'Operations'}
         subtitle={t('opsSubtitle') || 'Efficiency, quality, production & safety'}
-        actions={<AskCopilot q={t('askCopilot_OperationsPage_SummarizeOperationsHealth')} />} />
+        actions={<AskCopilot q={t('askCopilot_OperationsPage_SummarizeOperationsHealth')} />}
+      />
+
+      <PeriodFilter
+        periods={periods}
+        selectedPeriod={selectedPeriod}
+        onSelectPeriod={(p) => setSelectedPeriod(p)}
+        startPeriod={startPeriod}
+        endPeriod={endPeriod}
+        onRangeChange={({ start, end }) => {
+          setStartPeriod(start)
+          setEndPeriod(end)
+        }}
+        accent={ACCENT}
+      />
 
       <DomainHero health={hlt.data} accent={ACCENT} />
 

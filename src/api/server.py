@@ -1619,13 +1619,27 @@ async def get_kpis(
     period: Optional[str] = None,
     category: Optional[str] = None,
     segment: Optional[str] = None,
+    metric: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    limit: Optional[int] = 10000,
     user: TokenData = Depends(get_current_user),
 ):
     from src.services.pg_store import get_kpi_metrics, get_available_categories
     periods = [period] if period else None
+    metrics = [m.strip() for m in metric.split(",")] if metric else None
     categories = [category] if category else None
     segments = [segment] if segment else None
-    df = await asyncio.to_thread(get_kpi_metrics, periods=periods, categories=categories, segments=segments)
+    df = await asyncio.to_thread(
+        get_kpi_metrics,
+        periods=periods,
+        metrics=metrics,
+        categories=categories,
+        segments=segments,
+        start_period=start_period,
+        end_period=end_period,
+        limit=limit,
+    )
 
     # Filter by user's data access
     all_categories = await asyncio.to_thread(get_available_categories)
@@ -1634,8 +1648,8 @@ async def get_kpis(
         user_cat_lower = [c.lower() for c in user_categories]
         df = df[df["category"].str.lower().isin(user_cat_lower)]
 
-    metrics = df.to_dict(orient="records") if not df.empty else []
-    return {"metrics": metrics, "count": len(metrics)}
+    metrics_list = df.to_dict(orient="records") if not df.empty else []
+    return {"metrics": metrics_list, "count": len(metrics_list)}
 
 
 @app.get("/api/v1/kpis/periods")
@@ -1859,35 +1873,79 @@ async def get_anomalies(
 # HR / PEOPLE DOMAIN
 # ════════════════════════════════════════════════════════════
 
-@app.get("/api/v1/hr/summary")
-async def get_hr_summary(user: TokenData = Depends(require_page("hr"))):
+def _domain_df_call(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    category: Optional[str] = None,
+):
     from src.services.pg_store import get_kpi_metrics
+    kw: Dict[str, Any] = {}
+    if category:
+        kw["categories"] = [category]
+    if period:
+        kw["end_period"] = period
+    elif end_period:
+        kw["end_period"] = end_period
+    if start_period:
+        kw["start_period"] = start_period
+    return get_kpi_metrics(**kw)
+
+
+@app.get("/api/v1/hr/summary")
+async def get_hr_summary(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("hr")),
+):
     from src.services.hr import HRService
-    return HRService().get_workforce_summary(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="People")
+    return HRService().get_workforce_summary(df)
 
 @app.get("/api/v1/hr/departments")
-async def get_hr_departments(user: TokenData = Depends(require_page("hr"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_hr_departments(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("hr")),
+):
     from src.services.hr import HRService
-    return {"departments": HRService().get_department_analytics(await asyncio.to_thread(get_kpi_metrics))}
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="People")
+    return {"departments": HRService().get_department_analytics(df)}
 
 @app.get("/api/v1/hr/recruitment")
-async def get_hr_recruitment(user: TokenData = Depends(require_page("hr"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_hr_recruitment(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("hr")),
+):
     from src.services.hr import HRService
-    return HRService().get_recruitment_pipeline(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="People")
+    return HRService().get_recruitment_pipeline(df)
 
 @app.get("/api/v1/hr/training")
-async def get_hr_training(user: TokenData = Depends(require_page("hr"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_hr_training(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("hr")),
+):
     from src.services.hr import HRService
-    return HRService().get_training_overview(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="People")
+    return HRService().get_training_overview(df)
 
 @app.get("/api/v1/hr/health")
-async def get_hr_health(user: TokenData = Depends(require_page("hr"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_hr_health(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("hr")),
+):
     from src.services.hr import HRService
-    return HRService().compute_hr_health_score(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="People")
+    return HRService().compute_hr_health_score(df)
 
 
 # ════════════════════════════════════════════════════════════
@@ -1895,34 +1953,59 @@ async def get_hr_health(user: TokenData = Depends(require_page("hr"))):
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/logistics/summary")
-async def get_logistics_summary(user: TokenData = Depends(require_page("logistics"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_logistics_summary(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("logistics")),
+):
     from src.services.logistics import LogisticsService
-    return LogisticsService().get_supply_chain_summary(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="Logistics")
+    return LogisticsService().get_supply_chain_summary(df)
 
 @app.get("/api/v1/logistics/inventory")
-async def get_logistics_inventory(user: TokenData = Depends(require_page("logistics"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_logistics_inventory(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("logistics")),
+):
     from src.services.logistics import LogisticsService
-    return LogisticsService().get_inventory_status(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="Logistics")
+    return LogisticsService().get_inventory_status(df)
 
 @app.get("/api/v1/logistics/shipping")
-async def get_logistics_shipping(user: TokenData = Depends(require_page("logistics"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_logistics_shipping(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("logistics")),
+):
     from src.services.logistics import LogisticsService
-    return LogisticsService().get_shipping_analytics(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="Logistics")
+    return LogisticsService().get_shipping_analytics(df)
 
 @app.get("/api/v1/logistics/suppliers")
-async def get_logistics_suppliers(user: TokenData = Depends(require_page("logistics"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_logistics_suppliers(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("logistics")),
+):
     from src.services.logistics import LogisticsService
-    return {"suppliers": LogisticsService().get_supplier_metrics(await asyncio.to_thread(get_kpi_metrics))}
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="Logistics")
+    return {"suppliers": LogisticsService().get_supplier_metrics(df)}
 
 @app.get("/api/v1/logistics/health")
-async def get_logistics_health(user: TokenData = Depends(require_page("logistics"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_logistics_health(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("logistics")),
+):
     from src.services.logistics import LogisticsService
-    return LogisticsService().compute_logistics_health(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="Logistics")
+    return LogisticsService().compute_logistics_health(df)
 
 
 # ════════════════════════════════════════════════════════════
@@ -1930,40 +2013,70 @@ async def get_logistics_health(user: TokenData = Depends(require_page("logistics
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/it/overview")
-async def get_it_overview(user: TokenData = Depends(require_page("it"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_it_overview(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("it")),
+):
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_it_overview(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="IT")
+    return ITOpsService().get_it_overview(df)
 
 @app.get("/api/v1/it/tickets")
-async def get_it_tickets(user: TokenData = Depends(require_page("it"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_it_tickets(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("it")),
+):
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_ticket_analytics(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="IT")
+    return ITOpsService().get_ticket_analytics(df)
 
 @app.get("/api/v1/it/security")
-async def get_it_security(user: TokenData = Depends(require_page("it"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_it_security(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("it")),
+):
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_security_dashboard(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="IT")
+    return ITOpsService().get_security_dashboard(df)
 
 @app.get("/api/v1/it/infrastructure")
-async def get_it_infrastructure(user: TokenData = Depends(require_page("it"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_it_infrastructure(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("it")),
+):
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_infrastructure_metrics(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="IT")
+    return ITOpsService().get_infrastructure_metrics(df)
 
 @app.get("/api/v1/it/devops")
-async def get_it_devops(user: TokenData = Depends(require_page("it"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_it_devops(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("it")),
+):
     from src.services.it_ops import ITOpsService
-    return ITOpsService().get_devops_metrics(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="IT")
+    return ITOpsService().get_devops_metrics(df)
 
 @app.get("/api/v1/it/health")
-async def get_it_health(user: TokenData = Depends(require_page("it"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_it_health(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("it")),
+):
     from src.services.it_ops import ITOpsService
-    return ITOpsService().compute_it_health(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="IT")
+    return ITOpsService().compute_it_health(df)
 
 
 # ════════════════════════════════════════════════════════════
@@ -1971,34 +2084,59 @@ async def get_it_health(user: TokenData = Depends(require_page("it"))):
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/operations/summary")
-async def get_ops_summary(user: TokenData = Depends(require_page("operations"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_ops_summary(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("operations")),
+):
     from src.services.operations import OperationsService
-    return OperationsService().get_operations_summary(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="Operations")
+    return OperationsService().get_operations_summary(df)
 
 @app.get("/api/v1/operations/quality")
-async def get_ops_quality(user: TokenData = Depends(require_page("operations"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_ops_quality(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("operations")),
+):
     from src.services.operations import OperationsService
-    return OperationsService().get_quality_metrics(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="Operations")
+    return OperationsService().get_quality_metrics(df)
 
 @app.get("/api/v1/operations/production")
-async def get_ops_production(user: TokenData = Depends(require_page("operations"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_ops_production(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("operations")),
+):
     from src.services.operations import OperationsService
-    return OperationsService().get_production_metrics(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="Operations")
+    return OperationsService().get_production_metrics(df)
 
 @app.get("/api/v1/operations/safety")
-async def get_ops_safety(user: TokenData = Depends(require_page("operations"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_ops_safety(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("operations")),
+):
     from src.services.operations import OperationsService
-    return OperationsService().get_safety_metrics(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="Operations")
+    return OperationsService().get_safety_metrics(df)
 
 @app.get("/api/v1/operations/health")
-async def get_ops_health(user: TokenData = Depends(require_page("operations"))):
-    from src.services.pg_store import get_kpi_metrics
+async def get_ops_health(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("operations")),
+):
     from src.services.operations import OperationsService
-    return OperationsService().compute_ops_health(await asyncio.to_thread(get_kpi_metrics))
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="Operations")
+    return OperationsService().compute_ops_health(df)
 
 
 # ════════════════════════════════════════════════════════════
@@ -2006,9 +2144,13 @@ async def get_ops_health(user: TokenData = Depends(require_page("operations"))):
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/growth/summary")
-async def get_growth_summary(user: TokenData = Depends(require_page("analytics"))):
-    from src.services.pg_store import get_kpi_metrics
-    df = await asyncio.to_thread(get_kpi_metrics, categories=["Growth"])
+async def get_growth_summary(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("analytics")),
+):
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="Growth")
     if df.empty:
         return {"mrr": 0, "arr": 0, "cac": 0, "ltv": 0, "churn_rate": 0, "trends": [], "mrr_trend": 0, "cac_trend": 0, "churn_trend": 0}
 
@@ -2047,9 +2189,13 @@ async def get_growth_summary(user: TokenData = Depends(require_page("analytics")
 # ════════════════════════════════════════════════════════════
 
 @app.get("/api/v1/esg/summary")
-async def get_esg_summary(user: TokenData = Depends(require_page("esg"))):
-    from src.services.pg_store import get_kpi_metrics
-    df = await asyncio.to_thread(get_kpi_metrics, categories=["ESG"])
+async def get_esg_summary(
+    period: Optional[str] = None,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    user: TokenData = Depends(require_page("esg")),
+):
+    df = await asyncio.to_thread(_domain_df_call, period=period, start_period=start_period, end_period=end_period, category="ESG")
     if df.empty:
         return {"score": 0, "environment": {}, "social": {}, "governance": {}, "trends": []}
 
@@ -2062,12 +2208,12 @@ async def get_esg_summary(user: TokenData = Depends(require_page("esg"))):
 
     # Build trends
     trends = []
-    for period in sorted(df["period"].unique()):
-        p_df = df[df["period"] == period]
+    for period_val in sorted(df["period"].unique()):
+        p_df = df[df["period"] == period_val]
         score_rows = p_df[p_df["metric"].str.lower().str.contains("esg score")]
         carbon_rows = p_df[p_df["metric"].str.lower().str.contains("carbon")]
         trends.append({
-            "period": period,
+            "period": period_val,
             "score": float(score_rows.iloc[0]["value"]) if not score_rows.empty else 0,
             "carbon": float(carbon_rows.iloc[0]["value"]) if not carbon_rows.empty else 0,
         })

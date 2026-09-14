@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
 import { useTranslation } from '../i18n/I18nContext'
@@ -6,15 +7,48 @@ import {
   AlertTriangle, Bug, Lock, GitBranch,
 } from 'lucide-react'
 import { fmtPct, PageHeader, Stat, StatGrid, BarList, fmtNum, Loading, ErrorState, Grid, AskCopilot, DomainHero, Panel, fmtMoney } from '../components/ui'
+import PeriodFilter from '../components/PeriodFilter'
 
 const ACCENT = 'var(--p-cto)'
 
 export default function ITPage() {
   const { t } = useTranslation()
-  const ov = useQuery({ queryKey: ['it-ov'], queryFn: () => api.getITOverview().then(r => r.data), retry: 1 })
-  const sec = useQuery({ queryKey: ['it-sec'], queryFn: () => api.getITSecurity().then(r => r.data), retry: 1 })
-  const dev = useQuery({ queryKey: ['it-dev'], queryFn: () => api.getITDevOps().then(r => r.data), retry: 1 })
-  const hlt = useQuery({ queryKey: ['it-health'], queryFn: () => api.getITHealth().then(r => r.data), retry: 1 })
+  const [selectedPeriod, setSelectedPeriod] = useState('')
+  const [startPeriod, setStartPeriod] = useState('')
+  const [endPeriod, setEndPeriod] = useState('')
+
+  const { data: periods = [] } = useQuery({
+    queryKey: ['periods'],
+    queryFn: () => api.getPeriods().then(r => r.data?.periods || []),
+    staleTime: 600_000,
+  })
+
+  const queryParams = {
+    period: selectedPeriod || undefined,
+    start_period: startPeriod || undefined,
+    end_period: endPeriod || undefined,
+  }
+
+  const ov = useQuery({
+    queryKey: ['it-ov', queryParams],
+    queryFn: () => api.getITOverview(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const sec = useQuery({
+    queryKey: ['it-sec', queryParams],
+    queryFn: () => api.getITSecurity(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const dev = useQuery({
+    queryKey: ['it-dev', queryParams],
+    queryFn: () => api.getITDevOps(queryParams).then(r => r.data),
+    retry: 1,
+  })
+  const hlt = useQuery({
+    queryKey: ['it-health', queryParams],
+    queryFn: () => api.getITHealth(queryParams).then(r => r.data),
+    retry: 1,
+  })
 
   if (ov.isLoading) return <Loading />
   if (ov.isError) return <ErrorState />
@@ -22,9 +56,26 @@ export default function ITPage() {
 
   return (
     <div>
-      <PageHeader icon={Monitor} accent={ACCENT} title={t('navIT') || 'IT Operations'}
+      <PageHeader
+        icon={Monitor}
+        accent={ACCENT}
+        title={t('navIT') || 'IT Operations'}
         subtitle={t('itSubtitle') || 'Reliability, security & DevOps performance (DORA)'}
-        actions={<AskCopilot q={t('askCopilot_ITPage_HowHealthyIs')} />} />
+        actions={<AskCopilot q={t('askCopilot_ITPage_HowHealthyIs')} />}
+      />
+
+      <PeriodFilter
+        periods={periods}
+        selectedPeriod={selectedPeriod}
+        onSelectPeriod={(p) => setSelectedPeriod(p)}
+        startPeriod={startPeriod}
+        endPeriod={endPeriod}
+        onRangeChange={({ start, end }) => {
+          setStartPeriod(start)
+          setEndPeriod(end)
+        }}
+        accent={ACCENT}
+      />
 
       <DomainHero health={hlt.data} accent={ACCENT} />
 
@@ -40,8 +91,11 @@ export default function ITPage() {
       </StatGrid>
 
       <Grid style={{ marginTop: 18 }}>
-        <Panel title={t('lblDevOpsDORAMetrics')} icon={GitBranch}
-          actions={<AskCopilot q={t('askCopilot_ITPage_InterpretOurDora')} label={t('lblInterpret')} />}>
+        <Panel
+          title={t('lblDevOpsDORAMetrics')}
+          icon={GitBranch}
+          actions={<AskCopilot q={t('askCopilot_ITPage_InterpretOurDora')} label={t('lblInterpret')} />}
+        >
           <BarList items={[
             { label: 'Deployment frequency (/mo)', value: d.deployment_frequency, display: fmtNum(d.deployment_frequency) },
             { label: 'Lead time (h)', value: d.lead_time_hours, display: fmtNum(d.lead_time_hours) + 'h', color: 'var(--warn)' },

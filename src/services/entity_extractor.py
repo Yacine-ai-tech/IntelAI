@@ -15,24 +15,49 @@ class EntityExtractor:
     def __init__(self):
         # Common entity patterns
         self.department_patterns = {
-            'finance': ['finance', 'financial', 'revenue', 'cost', 'profit', 'margin'],
-            'people': ['hr', 'people', 'employee', 'headcount', 'personnel'],
-            'operations': ['ops', 'operations', 'oee', 'defect', 'inventory', 'throughput'],
-            'logistics': ['logistics', 'delivery', 'fulfillment', 'fulfilment', 'warehouse', 'supplier', 'freight'],
-            'growth': ['growth', 'customer', 'mrr', 'arr', 'churn', 'acquisition', 'ltv', 'cac'],
-            # No domain named "IT" or "ESG" ever matched here — every row in those two
-            # categories (100% of them, measured against the live corpus) fell through
-            # to no department entity at all. IT/ESG rows still surface fine in plain
-            # KPI/chat retrieval (this extractor only feeds the graph-based path), but
-            # graph queries scoped to "IT" or "ESG" as a department had nothing to find.
-            'it': ['uptime', 'latency', 'vulnerabilit', 'deployment', 'incident', 'security',
-                   'mttr', 'resolution', 'sla', 'devops', 'change failure',
-                   # French infrastructure / IT terms
-                   'ordinateur', 'serveur', 'informatique', 'achat', 'materiel',
-                   'infrastructure', 'financement', 'capex', 'logiciel', 'reseau',
-                   'cloud', 'systeme', 'equipement', 'departement it', 'departement informatique'],
-            'esg': ['emission', 'carbon', 'renewable', 'diversity', 'governance', 'sustainab',
-                    'waste', 'water consumption', 'audit compliance'],
+            'finance': [
+                'finance', 'financial', 'revenue', 'cost', 'profit', 'margin', 'cash', 'debt',
+                'chiffre d affaires', 'chiffre d\'affaires', 'tresorerie', 'trésorerie',
+                'benefice', 'bénéfice', 'dette', 'charges', 'resultat net', 'résultat net',
+                'ebitda', 'amortissement', 'comptabilite', 'comptabilité', 'tresor', 'depenses',
+                'dépenses', 'impots', 'impôts', 'financier', 'financière'
+            ],
+            'people': [
+                'hr', 'people', 'employee', 'headcount', 'personnel', 'talent', 'workforce',
+                'ressources humaines', 'rh', 'effectif', 'effectifs', 'salaries', 'salariés',
+                'recrutement', 'embauche', 'demission', 'démission', 'absenteisme', 'absentéisme',
+                'formation', 'remuneration', 'rémunération', 'salaire', 'salaires'
+            ],
+            'operations': [
+                'ops', 'operations', 'oee', 'defect', 'inventory', 'throughput', 'efficiency',
+                'exploitation', 'rendement', 'cadence', 'defauts', 'défauts', 'qualite', 'qualité',
+                'fabrication', 'production', 'panne', 'arret', 'sécurité', 'securite', 'usine'
+            ],
+            'logistics': [
+                'logistics', 'delivery', 'fulfillment', 'fulfilment', 'warehouse', 'supplier', 'freight', 'shipping',
+                'logistique', 'livraison', 'entrepot', 'entrepôt', 'fournisseur', 'stocks',
+                'rupture de stock', 'fret', 'expedition', 'expédition', 'delai', 'délai', 'transport'
+            ],
+            'growth': [
+                'growth', 'customer', 'mrr', 'arr', 'churn', 'acquisition', 'ltv', 'cac', 'sales',
+                'croissance', 'vente', 'ventes', 'commercial', 'clients', 'attrition', 'revenu recurrent',
+                'revenu récurrent', 'prospection'
+            ],
+            'it': [
+                'uptime', 'latency', 'vulnerabilit', 'deployment', 'incident', 'security',
+                'mttr', 'resolution', 'sla', 'devops', 'change failure',
+                # French infrastructure / IT terms
+                'ordinateur', 'serveur', 'informatique', 'achat', 'materiel',
+                'infrastructure', 'financement', 'capex', 'logiciel', 'reseau',
+                'cloud', 'systeme', 'equipement', 'departement it', 'departement informatique'
+            ],
+            'esg': [
+                'emission', 'carbon', 'renewable', 'diversity', 'governance', 'sustainab',
+                'waste', 'water consumption', 'audit compliance',
+                # French ESG terms
+                'rse', 'environnement', 'carbone', 'renouvelable', 'dechets', 'déchets',
+                'diversite', 'diversité', 'gouvernance', 'durabilite', 'durabilité', 'eau'
+            ],
         }
         # Characters that indicate a malformed / synthetic token — skip these as entities
         self._bad_entity_chars = re.compile(r'[()=<>%,;:"]')
