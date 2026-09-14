@@ -39,7 +39,7 @@ DOMAIN_PERSONA = {
 EN_TEMPLATES = [
     "What was {metric} in {period}?",
     "Report the recorded value of {metric} for {period}.",
-    "How did {metric} stand in {period}, and where does that figure come from?",
+    "Provide the recorded figure for {metric} in {period}.",
 ]
 FR_TEMPLATES = [
     "Quelle était la valeur de {metric} en {period} ?",
