@@ -645,7 +645,9 @@ def get_kpi_metrics(
     metrics: Optional[List[str]] = None,
     categories: Optional[List[str]] = None,
     segments: Optional[List[str]] = None,
-    limit: Optional[int] = 2000,
+    start_period: Optional[str] = None,
+    end_period: Optional[str] = None,
+    limit: Optional[int] = 10000,
 ) -> "pd.DataFrame":
     """Read KPI rows. Demo-session scoping (default on): a visitor always sees the global
     seeded baseline (owner_user_id IS NULL) plus anything they personally ingested, never
@@ -661,6 +663,12 @@ def get_kpi_metrics(
                 ph = ",".join(["%s"] * len(vals))
                 filters.append(f"{col} IN ({ph})")
                 params.extend(vals)
+        if start_period:
+            filters.append("period >= %s")
+            params.append(start_period)
+        if end_period:
+            filters.append("period <= %s")
+            params.append(end_period)
         if _demo_session_scoping_enabled():
             filters.append("(owner_user_id IS NULL OR owner_user_id = %s)")
             params.append(get_request_scope_user())
