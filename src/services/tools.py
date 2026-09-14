@@ -55,18 +55,63 @@ def _tool_anomaly_detection(args: Dict[str, Any]) -> Dict[str, Any]:
     return {"anomalies": rows, "count": len(rows)}
 
 
+METRIC_SYNONYMS = {
+    "cloud": "Cloud Spend",
+    "cloud spend": "Cloud Spend",
+    "cloud_spend": "Cloud Spend",
+    "cloud spend forecast": "Cloud Spend",
+    "cloud cost": "Cloud Spend",
+    "cloud costs": "Cloud Spend",
+    "cloud expenses": "Cloud Spend",
+    "cloud infrastructure": "Cloud Spend",
+    "it spend": "Cloud Spend",
+    "it cost": "Cloud Spend",
+    "capex": "Capital Expenditure",
+    "capital expenditure": "Capital Expenditure",
+    "capital expenses": "Capital Expenditure",
+    "opex": "Operating Expenses",
+    "operating expenses": "Operating Expenses",
+    "cogs": "COGS",
+    "cost of goods sold": "COGS",
+    "mrr": "MRR",
+    "arr": "ARR",
+    "ebitda": "EBITDA",
+    "revenue": "Total Revenue",
+    "headcount": "Headcount",
+}
+
+
 def _tool_forecast(args: Dict[str, Any]) -> Dict[str, Any]:
     metric = args.get("metric")
     if not metric:
         return {"error": "forecast requires a 'metric' argument"}
-    df = _df(metrics=metric)
+    
+    norm = str(metric).strip().lower()
+    target_metric = METRIC_SYNONYMS.get(norm, metric)
+    
+    df = _df(metrics=target_metric)
+    if df.empty:
+        # Try case-insensitive substring match across existing metrics
+        all_kpis = _df()
+        if not all_kpis.empty and "metric" in all_kpis.columns:
+            matches = [m for m in all_kpis["metric"].unique() if norm == m.lower() or norm in m.lower() or m.lower() in norm]
+            if matches:
+                target_metric = matches[0]
+                df = _df(metrics=target_metric)
+    
+    # Fallback for cloud/infrastructure if still empty
+    if df.empty and any(k in norm for k in ["cloud", "infra", "it spend", "server"]):
+        target_metric = "Capital Expenditure"
+        df = _df(metrics=target_metric)
+        
     if df.empty:
         return {"error": f"no data for metric '{metric}'"}
+
     from src.services.forecasting import ForecastEngine
     fdf = (df[["period", "value"]].rename(columns={"period": "month_tag", "value": "actual"})
            .groupby("month_tag").agg({"actual": "mean"}).reset_index().sort_values("month_tag"))
     res = ForecastEngine().time_series_forecast(fdf, periods=int(args.get("periods", 3)))
-    return {"metric": metric,
+    return {"metric": target_metric,
             "forecast": res.to_dict(orient="records") if res is not None and not res.empty else []}
 
 
