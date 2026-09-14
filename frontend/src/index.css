@@ -432,10 +432,21 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 .msg-pre code { font-family:var(--font-mono); font-size:.82rem; color:var(--text); white-space:pre; }
 .msg-quote { margin:8px 0; padding:8px 14px; border-left:3px solid var(--primary-line);
   background:var(--primary-soft); border-radius:0 var(--r-sm) var(--r-sm) 0; color:var(--text-2); font-style:italic; }
-.msg-table-wrap { overflow-x:auto; margin:8px 0; }
+.msg-table-wrap { overflow-x:auto; margin:8px 0; max-width:100%; }
 .msg-table { font-size:.82rem; }
 .msg-table th { color:var(--text-2); }
 .msg-em, .msg-text em { color:var(--text-2); font-style:italic; }
+
+/* Responsive widget overrides */
+.chat-layout.is-widget { height:100%; }
+.chat-layout.is-widget .chat-main { height:100%; display:flex; flex-direction:column; }
+.chat-layout.is-widget .chat-header { padding:8px 12px; }
+.chat-layout.is-widget .chat-messages { padding:10px 12px; }
+.chat-layout.is-widget .chat-message { max-width:100%; }
+.chat-layout.is-widget .chat-bubble { max-width:92%; word-break:break-word; overflow-wrap:anywhere; }
+.chat-layout.is-widget .msg-table-wrap { max-width:100%; overflow-x:auto; }
+.chat-layout.is-widget .chat-input-bar { padding:8px 10px 10px; }
+.chat-layout.is-widget .chat-input-wrap { padding:6px 6px 6px 12px; }
 
 /* KPI answer-block pill (server-structured response) */
 .msg-kpi-block { display:flex; align-items:center; gap:12px; padding:9px 14px; margin:4px 0; border-radius:10px;
