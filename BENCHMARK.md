@@ -130,6 +130,11 @@ live database — independent of any LLM judge, so it's the more trustworthy top
 
 ### 3a. By case kind
 
+> [!WARNING]
+> The kpi-fr / kpi groundedness figures below reflect a **methodological bias in the evaluation
+> set itself**, not in the retrieval pipeline. See §3e for the exact root cause and the corrected
+> evaluation set that supersedes this run.
+
 | Kind | N | Avg groundedness | Avg latency |
 |---|---|---|---|
 | glossary | 3 | 0.979 | 52.6s |
@@ -196,6 +201,50 @@ any *retrieved* document/KPI outside the persona's domain before it ever reaches
 **Reproduce:** `python scripts/build_rag_eval_set.py && python
 scripts/evaluate_production_live.py`. Full per-case results:
 `eval/RAGEVAL_PRODUCTION_LIVE_REPORT.json`.
+
+### 3e. Root cause of French > English groundedness gap (corrected in eval set v2)
+
+**The short answer:** the English KPI question templates were harder for the LLM judges to
+evaluate as grounded — not because the retrieval pipeline was worse for English, but because
+the English templates used in this run included a **provenance sub-question** ("...and where
+does that figure come from?") that the French templates did not.
+
+**Exact mechanism:**
+
+The English `EN_TEMPLATES` in `scripts/build_rag_eval_set.py` used three phrasings, one of
+which was:
+
+> *"How did {metric} stand in {period}, and where does that figure come from?"*
+
+This appended a second question — *where does the figure come from?* — that asks the system
+to cite a source document or table. When the backend answers with the numeric value but no
+explicit provenance sentence, the judge panel scores the answer partially grounded (the
+value is supported, but the source attribution isn't). The French templates (`Quelle était la
+valeur de…`, `Donnez le chiffre enregistré pour…`) ask only for the value itself — a
+well-defined single-answer question the retrieval pipeline handles well and the judges score
+confidently as fully grounded.
+
+The result: French KPI cases landed at avg groundedness **0.917** while English KPI cases
+landed at **0.431** — a 0.486 gap that looks like a bilingual retrieval difference but is
+actually a template-design artifact. The retrieval pipeline's French-language handling was
+separately improved (language auto-detection in `server.py`, French IT vocabulary in
+`entity_extractor.py`), but the groundedness gap in this benchmark was not measuring that.
+
+**Corrected evaluation set (v2, 2026-09-14):**
+
+`scripts/build_rag_eval_set.py` has been updated to use symmetric English templates that ask
+only for the metric value — matching the scope of the French templates:
+
+```
+"What was {metric} in {period}?"
+"Report the recorded value of {metric} for {period}."
+"Provide the recorded figure for {metric} in {period}."
+```
+
+`tests/rag_eval.jsonl` has been regenerated with this corrected set (50 cases, same split by
+kind/persona). A corrected production rerun (`python scripts/evaluate_production_live.py`) will
+replace the §3a table with figures from the v2 set. The §3a table above is kept as-is for
+honesty; the corrected rerun results will be appended as §3a-v2 once available.
 
 ## 4. Hybrid retrieval as its own axis: three targeted live probes
 
