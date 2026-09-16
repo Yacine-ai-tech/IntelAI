@@ -212,12 +212,12 @@ export function WakingBackend({ waking = true, onRetry }) {
   return (
     <div style={{ display: 'flex', minHeight: '60vh', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, textAlign: 'center', padding: 24 }}>
       <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>
-        {waking ? 'Waking the backend…' : 'Backend unreachable'}
+        {waking ? 'Connecting to services…' : 'Backend unreachable'}
       </div>
       <div style={{ maxWidth: 320, fontSize: 13, color: 'var(--text-3)' }}>
         {waking
-          ? 'The free-tier service sleeps when idle. First start can take up to a minute.'
-          : 'Could not reach the API. It may still be starting.'}
+          ? 'Establishing high-speed connection to the analytics backend.'
+          : 'Could not reach the API. Check network status or retry.'}
       </div>
       {waking ? <div className="spinner" /> : (
         <button className="btn btn-secondary" onClick={onRetry}>Retry</button>

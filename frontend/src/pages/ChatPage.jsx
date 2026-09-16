@@ -559,7 +559,7 @@ export default function ChatPage({
                   // real cold start can still take several minutes, so the message says
                   // so rather than implying it's almost done.
                   <div className="chat-slow-hint" style={{ marginTop: 6, fontSize: '.8rem', color: 'var(--text-3)' }}>
-                    {t('chatSlowHint') || 'Still working — this can take a couple of minutes on a cold start…'}
+                    {t('chatSlowHint') || 'Processing analytics query across knowledge sources…'}
                   </div>
                 )}
               </div>
