@@ -158,10 +158,12 @@ measurement, and the scenario-switcher correctness fixes above — see
 
 ## Deploy
 
-IntelAI deploys as **one cloud service** (`render.yaml` included). Connect the repo on Render,
-set the env vars above, and attach a Postgres add-on. Deploy the frontend separately on Vercel with
-`VITE_API_BASE_URL` pointing to the Render service URL and keep `VITE_USE_WS=false` in production
-to use the resilient `/chat/async` job+poll path by default.
+IntelAI deploys as **one containerized service** — build the included `Dockerfile` and run it on
+any host that honors `$PORT` (a VPS with Docker Compose, Fly.io, Railway, Render, etc.), set the
+env vars above, and attach a managed Postgres instance. Deploy the frontend separately (Vercel,
+Netlify, or served as static files) with `VITE_API_BASE_URL` pointing to wherever the backend
+lands, and keep `VITE_USE_WS=false` in production to use the resilient `/chat/async` job+poll path
+by default. See [SELF_HOSTING.md](SELF_HOSTING.md) for a walkthrough.
 
 ## License
 
