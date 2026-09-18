@@ -6,7 +6,7 @@
 # as the 0.1.x releases before it; deps live in requirements.txt for the real deploy).
 [project]
 name = "intelai"
-version = "0.1.5"
+version = "0.1.7"
 description = "Persona-Aware AI Analytics & RAG Copilot — multi-domain KPI intelligence, GraphRAG-lite, ML forecasting."
 readme = "README.md"
 requires-python = ">=3.11"
