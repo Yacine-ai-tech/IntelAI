@@ -119,15 +119,38 @@ class EntityExtractor:
         return entities
     
     def _infer_department(self, category: str, metric_name: str) -> Optional[str]:
-        """Infer department from category and metric name."""
-        category_lower = category.lower() if category else ''
+        """Infer department from category and metric name.
+
+        Two tiers, in order:
+        1. Trust an already-known, clean `category` field directly. Structured KPI
+           records are ingested with a real domain tag (category="IT", "ESG", etc.) —
+           the old code ignored that and went straight to a keyword scan over
+           metric_name, so an IT/ESG row whose metric name happened to contain none
+           of that domain's keywords got no department at all (the measured 71.4%/
+           91.7% coverage ceiling on IT/ESG vs 100% on the other 5 domains, whose
+           metric vocabulary is more keyword-distinctive — see BENCHMARK.md §2a).
+        2. Fall back to a weighted multi-pattern vote across ALL domains — not the
+           previous first-match scan, which always resolved shared vocabulary (e.g.
+           "audit compliance" appearing in both ESG and Finance/Operations word
+           lists) to whichever domain happened to be checked first in dict order.
+           Voting by total matched-term count picks the domain with the strongest
+           textual evidence instead.
+        """
+        category_lower = category.strip().lower() if category else ''
         metric_lower = metric_name.lower() if metric_name else ''
-        
+
+        if category_lower in self.department_patterns:
+            return category_lower.capitalize()
+
+        text = f'{category_lower} {metric_lower}'
+        scores: Dict[str, int] = {}
         for dept, patterns in self.department_patterns.items():
-            for pattern in patterns:
-                if pattern in category_lower or pattern in metric_lower:
-                    return dept.capitalize()
-        
+            score = sum(1 for pattern in patterns if pattern in text)
+            if score:
+                scores[dept] = score
+        if scores:
+            return max(scores, key=scores.get).capitalize()
+
         return None
     
     def _extract_metric_subentities(self, metric_name: str) -> List[Dict[str, str]]:
