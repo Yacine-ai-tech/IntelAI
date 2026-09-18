@@ -132,7 +132,13 @@ class ForecastEngine:
         margin = z * residual_std * np.sqrt(1 + horizon / max(1, len(y)))
 
         last_month = datetime.strptime(df["month_tag"].iloc[-1], "%Y-%m")
-        future_months = [(last_month + timedelta(days=30 * i)).strftime("%Y-%m") for i in range(1, periods + 1)]
+        # Calendar-month arithmetic, not a fixed 30-day step — the old `timedelta(days=30*i)`
+        # drifts (e.g. +60 days from June 1 lands July 31, not Aug 1), producing duplicate or
+        # skipped month labels for periods spanning 31-day months.
+        future_months = [
+            (pd.Timestamp(last_month) + pd.DateOffset(months=i)).strftime("%Y-%m")
+            for i in range(1, periods + 1)
+        ]
 
         forecast_df = pd.DataFrame({
             "month_tag": future_months,
