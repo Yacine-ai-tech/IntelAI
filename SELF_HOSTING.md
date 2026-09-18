@@ -39,11 +39,10 @@ past login) returns `403`.
 2. **Vector store:** Set `VECTOR_STORE=qdrant` + `QDRANT_URL`/`QDRANT_API_KEY` for a
    managed Qdrant cluster, or `VECTOR_STORE=pgvector` to reuse the same Postgres
    instance (no separate service). `chroma` (the default) needs neither.
-3. **Hosting:** Deploy the container on Render, Fly.io, or any host that runs a
-   Dockerfile and honors `$PORT` — see `render.yaml` for a working reference (it's the
-   author's own disaster-recovery config; swap the env values for yours). Any
-   on-demand GPU host works too if you enable local hybrid-retrieval models
-   (`USE_HYBRID_RETRIEVAL=true` + local reranker/embedder — see `.env.example`).
+3. **Hosting:** Deploy the container on a VPS with Docker Compose, Fly.io, Render, or any
+   host that runs a Dockerfile and honors `$PORT`. Any on-demand GPU host works too if you
+   enable local hybrid-retrieval models (`USE_HYBRID_RETRIEVAL=true` + local
+   reranker/embedder — see `.env.example`).
 
 ## LLM provider
 
