@@ -18,8 +18,93 @@ from src.core.logger import get_logger
 log = get_logger(__name__)
 
 
+def _fit_linear(y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    """OLS on the whole series. In-sample fit + a forecast(h)->array closure."""
+    X = np.arange(len(y)).reshape(-1, 1)
+    model = LinearRegression().fit(X, y)
+    fitted = model.predict(X)
+
+    def forecast(h: int) -> np.ndarray:
+        future_idx = np.arange(len(y), len(y) + h).reshape(-1, 1)
+        return model.predict(future_idx)
+
+    return fitted, forecast
+
+
+def _fit_holt_linear(y: np.ndarray, alpha: float = 0.5, beta: float = 0.35) -> Tuple[np.ndarray, np.ndarray]:
+    """Holt's linear (double exponential smoothing) trend method. Unlike OLS over the
+    whole series, the level/trend state is updated recursively with recency weighting,
+    so it tracks a recent acceleration in growth rate instead of averaging it away
+    against months of slower-growth history."""
+    level = float(y[0])
+    trend = float(y[1] - y[0]) if len(y) > 1 else 0.0
+    fitted = [level]
+    for t in range(1, len(y)):
+        last_level = level
+        level = alpha * float(y[t]) + (1 - alpha) * (level + trend)
+        trend = beta * (level - last_level) + (1 - beta) * trend
+        fitted.append(level)
+    fitted = np.array(fitted)
+    final_level, final_trend = level, trend
+
+    def forecast(h: int) -> np.ndarray:
+        return np.array([final_level + (i + 1) * final_trend for i in range(h)])
+
+    return fitted, forecast
+
+
+def _fit_quadratic(y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    """Degree-2 polynomial trend — captures curvature (d^2y/dt^2 != 0) directly, which a
+    linear fit structurally cannot. Only useful with enough points to constrain 3
+    coefficients without overfitting; callers should prefer this only when validated."""
+    x = np.arange(len(y))
+    coeffs = np.polyfit(x, y, deg=2)
+    poly = np.poly1d(coeffs)
+    fitted = poly(x)
+
+    def forecast(h: int) -> np.ndarray:
+        return poly(np.arange(len(y), len(y) + h))
+
+    return fitted, forecast
+
+
+_CANDIDATES = {
+    "linear": _fit_linear,
+    "holt_linear": _fit_holt_linear,
+    "quadratic": _fit_quadratic,
+}
+
+
+def _select_model(y: np.ndarray, holdout: int = 3):
+    """Auto-select the candidate model with the lowest backtested APE on the last
+    `holdout` points of THIS series alone (no peeking at the actual forecast target) —
+    fit on y[:-holdout], predict holdout steps, score against the real y[-holdout:].
+    Falls back to linear when there isn't enough history to hold anything out."""
+    if len(y) < holdout + 3:
+        return "linear", _CANDIDATES["linear"]
+
+    train, truth = y[:-holdout], y[-holdout:]
+    best_name, best_err = "linear", float("inf")
+    for name, fit_fn in _CANDIDATES.items():
+        if name == "quadratic" and len(train) < 5:
+            continue  # degree-2 fit needs enough points to not just overfit noise
+        try:
+            _, forecast_fn = fit_fn(train)
+            pred = forecast_fn(holdout)
+            ape = np.mean(np.abs((truth - pred) / np.where(truth == 0, 1, truth)))
+        except Exception:
+            continue
+        if ape < best_err:
+            best_err, best_name = ape, name
+    return best_name, _CANDIDATES[best_name]
+
+
 class ForecastEngine:
-    """Linear-regression time-series forecasts with confidence intervals."""
+    """Time-series forecasts with confidence intervals. Auto-selects between OLS,
+    Holt's linear trend, and a quadratic trend per call, based on which one backtests
+    best on that series' own recent history — replaces a single always-linear OLS fit,
+    which systematically under-forecasts during compounding growth acceleration
+    (see BENCHMARK.md §1)."""
 
     def time_series_forecast(
         self,
@@ -32,21 +117,19 @@ class ForecastEngine:
 
         df = df.sort_values("month_tag").copy()
         df["time_index"] = range(len(df))
-        X = df[["time_index"]].values
-        y = df["actual"].values
+        y = df["actual"].values.astype(float)
 
-        model = LinearRegression().fit(X, y)
-        preds = model.predict(X)
-        residual_std = np.std(y - preds)
-
-        last_idx = df["time_index"].max()
-        future_idx = np.arange(last_idx + 1, last_idx + periods + 1).reshape(-1, 1)
-        future_preds = model.predict(future_idx)
+        _, chosen_fit = _select_model(y)
+        fitted, forecast_fn = chosen_fit(y)
+        residual_std = np.std(y - fitted)
+        future_preds = forecast_fn(periods)
 
         z = stats.norm.ppf((1 + confidence_level) / 2)
-        margin = z * residual_std * np.sqrt(
-            1 + 1 / len(df) + (future_idx - X.mean()) ** 2 / np.sum((X - X.mean()) ** 2)
-        )
+        # Widening margin with forecast horizon (same shape as the old OLS prediction
+        # interval) — a fixed per-point residual_std alone understates uncertainty
+        # further out regardless of which point-forecast model produced the mean.
+        horizon = np.arange(1, periods + 1)
+        margin = z * residual_std * np.sqrt(1 + horizon / max(1, len(y)))
 
         last_month = datetime.strptime(df["month_tag"].iloc[-1], "%Y-%m")
         future_months = [(last_month + timedelta(days=30 * i)).strftime("%Y-%m") for i in range(1, periods + 1)]
@@ -54,8 +137,8 @@ class ForecastEngine:
         forecast_df = pd.DataFrame({
             "month_tag": future_months,
             "forecast": future_preds,
-            "lower_bound": future_preds - margin.flatten(),
-            "upper_bound": future_preds + margin.flatten(),
+            "lower_bound": future_preds - margin,
+            "upper_bound": future_preds + margin,
             "confidence_level": confidence_level,
         })
 
