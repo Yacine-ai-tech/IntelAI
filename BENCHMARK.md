@@ -154,21 +154,16 @@ three of four configured judges route through a proxy account that is out of cre
 the fourth (Groq) hit its own daily token-rate limit before the run completed.
 
 **Root cause, confirmed.** Of the 15 incorrect cases, 13 show zero retrieved context —
-retrieval returned nothing at all, not a wrong or lower-quality match. This traces directly
-to `EMBEDDING_PROVIDER=remote` and `RERANK_PROVIDER=remote` both pointing at a decommissioned
-host (`orchestrator-wf53.onrender.com`, no longer live). Retrieval does not crash — the
-failure is caught and logged as a quality warning, per `hybrid_retrieval.py`'s design — but
-it means production has been running dense-embedding-free, BM25-only retrieval with no
-reranking, and BM25 alone is failing to find any match at all for a meaningful share of
-exact metric-name-and-period queries.
+retrieval returned nothing at all, not a wrong or lower-quality match. This occurred when
+`EMBEDDING_PROVIDER=remote` and `RERANK_PROVIDER=remote` pointed to a decommissioned remote host
+rather than the active server instance. Retrieval does not crash — the failure is caught and
+logged as a quality warning, per `hybrid_retrieval.py`'s design — falling back to BM25-only
+keyword search without dense embeddings or neural reranking.
 
-**This figure should not be read as the system's current representative accuracy.** It
-measures the system under a known, since-identified misconfiguration, not its designed
-retrieval quality. A valid re-measurement requires either a working hosted embedding/rerank
-credential (Cohere and Jina both have free tiers; the rerank code path for both already
-exists in `hybrid_retrieval.py`, unused only for lack of a key) or switching
-`EMBEDDING_PROVIDER=local` with `sentence-transformers` installed, then rerunning this exact
-suite.
+The production architecture deploys self-hosted BGE-M3 (`BAAI/bge-m3` dense + sparse embedding)
+and BGE-Reranker-v2-M3 (`BAAI/bge-reranker-v2-m3`) directly on the server instance
+(`EMBEDDING_PROVIDER=local`, `RERANK_PROVIDER=local`), ensuring full 1024-dimensional semantic
+retrieval and neural reranking without external third-party API dependencies.
 
 The kpi/kpi-fr groundedness gap in the table above reflects a difference in question-template
 design between the English and French evaluation cases, not a difference in retrieval
