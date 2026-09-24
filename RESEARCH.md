@@ -12,7 +12,7 @@ information-retrieval, RAG-evaluation, access-control and time-series-forecastin
 literature and applies them to persona-scoped enterprise analytics — it does not claim to
 introduce novel methodology of its own.
 
-## Why hybrid retrieval (dense + BM25 + reciprocal rank fusion), not dense alone
+## Why Hybrid Retrieval (Dense + BM25 + Reciprocal Rank Fusion), Not Dense Alone
 
 A dense embedding retriever finds semantically similar text well but is a known poor fit
 for exact-match lookups — a metric name, a period string like `2023-02`, an entity ID —
@@ -34,7 +34,7 @@ precision differently, and running a cheap bi-encoder first to narrow candidates
 more expensive cross-encoder to re-order the shortlist, is the standard two-stage pattern
 in both academic IR and production RAG deployments as of 2026.
 
-## Grounding numeric conversions via glossary, not model recall
+## Grounding Numeric Conversions via Glossary, Not Model Recall
 
 An LLM asked to convert a dollar figure into another currency will produce a plausible-
 looking number from its own training-data recall of typical exchange rates — fine for a
@@ -57,7 +57,7 @@ instance of a general principle this codebase applies wherever a claim is checka
 against the dataset's own facts rather than general knowledge — the retrieval layer's
 job is to make the checkable fact available, not to trust the model to already know it.
 
-## Why an external, dogfooded evaluator rather than an in-process one
+## Why an External Evaluator Rather Than an In-Process One
 
 IntelAI does not implement its own groundedness scoring. Every live chat interaction is
 fire-and-forget logged to a RAGeval-compatible evaluation endpoint
@@ -73,7 +73,7 @@ project treats evaluation as someone else's well-scoped job rather than reimplem
 which is also why `requirements-dev.txt` notes IntelAI has no *import-time* dependency on
 the `rageval` package; it's opt-in for anyone running the benchmark scripts locally.
 
-## Persona/RBAC-scoped retrieval: a distinctive angle, honestly scoped
+## Persona/RBAC-Scoped Retrieval
 
 Every chat request carries the caller's role, and retrieval — not just the UI — is scoped
 to that role's granted data categories (`get_user_data_categories`, enforced in
@@ -94,7 +94,7 @@ the premise that retrieval-time enforcement — not UI-level hiding — is what 
 to be correct for the guarantee to hold. §6 of `BENCHMARK.md` verifies this enforcement
 directly with a live test.
 
-## GraphRAG-lite: a real scoping distinction worth stating plainly
+## GraphRAG-Lite: Scope and Distinction from GraphRAG
 
 `src/services/graph_retrieval.py` and `src/services/entity_extractor.py` are named after,
 and inspired by, the graph-augmented-retrieval line of work popularized by Microsoft's
@@ -111,25 +111,29 @@ accuracy would be — measured directly in [`BENCHMARK.md`](BENCHMARK.md) rather
 asserted. Calling it "GraphRAG-lite" throughout this codebase is meant as an honest
 qualifier, not a marketing shorthand for the full technique.
 
-## Forecasting: classical statistics, not a novel model, measured honestly
+## Forecasting: classical statistics, selected per series by backtest
 
-`src/services/forecasting.py::ForecastEngine` fits ordinary least-squares linear
-regression per metric and reports a confidence interval from the residual standard
-deviation — deliberately the simplest model that produces a defensible interval, chosen
-for the same reason many production BI tools default to it: it is CPU-only, needs no
-training data beyond the series itself, is trivially explainable to a non-technical
-stakeholder ("the trend continues at its recent slope"), and its failure mode is
-predictable rather than mysterious. That failure mode is real and is measured directly
-rather than hidden: a linear model systematically **under-forecasts** a metric during a
-genuine acceleration in growth rate, because by construction it extrapolates the recent
-*average* slope forward, not a changing one. [`BENCHMARK.md`](BENCHMARK.md) reports exactly
-this — the worst individual forecast errors in a 378-forecast backtest cluster entirely in
-the accelerating-growth tail of the test period, a textbook, well-understood limitation of
-linear extrapolation (see e.g. Hyndman & Athanasopoulos, *Forecasting: Principles and
-Practice*, 3rd ed., 2021, on trend-model failure under regime change) rather than an
-unexplained anomaly.
+`src/services/forecasting.py::ForecastEngine` selects, per metric, whichever of three
+candidate models — ordinary least-squares linear regression, Holt's linear trend, or a
+degree-2 polynomial — backtests best on that series' own recent history, and reports a
+confidence interval from the residual standard deviation. This is deliberately a family of
+simple, classical models rather than a learned or deep-learning forecaster, for the same
+reason many production BI tools default to this class: each candidate is CPU-only, needs no
+training data beyond the series itself, and is trivially explainable to a non-technical
+stakeholder.
 
-## Where IntelAI sits in the landscape
+A single always-linear fit has a well-understood, predictable failure mode: it systematically
+under-forecasts a metric during a genuine acceleration in growth rate, because it extrapolates
+the recent average slope forward rather than a changing one (see Hyndman & Athanasopoulos,
+*Forecasting: Principles and Practice*, 3rd ed., 2021, on trend-model failure under regime
+change). Backtesting three candidate model classes per series and selecting whichever fits
+that series' own recent behavior best directly addresses this failure mode for series that are
+accelerating, while remaining exactly as simple and explainable as the single-model approach
+for series that are not. [`BENCHMARK.md`](BENCHMARK.md) reports the resulting accuracy,
+including an ablation against the single always-linear fit's degraded accuracy on the
+accelerating-growth window where the difference is largest.
+
+## Where IntelAI Sits in the Landscape
 
 IntelAI is one of a large and fast-growing category of "enterprise analytics copilot"
 tools as of 2026 — LLM-based chat interfaces over structured business metrics and
@@ -146,7 +150,7 @@ state-of-the-art, which is a defensible tradeoff for a system whose answers info
 business decisions and need to be explainable when they're wrong, not just accurate when
 they're right.
 
-## Future directions
+## Future Directions
 
 Three extensions follow from what's already implemented and measured, not from a
 departure from it:
@@ -173,7 +177,7 @@ departure from it:
 None of these is committed or scheduled here — they're the honest next steps that follow
 from being specific about what today's numbers do and don't establish.
 
-## Further reading
+## Further Reading
 
 - [`BENCHMARK.md`](BENCHMARK.md) — the actual live-production RAG evaluation, the
   forecast backtest, the entity-extraction coverage measurement, and honest caveats about
