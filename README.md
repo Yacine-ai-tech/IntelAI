@@ -148,7 +148,7 @@ out-of-sample forecast backtest, and a knowledge-graph coverage measurement — 
 ## Deploy
 
 IntelAI deploys as one containerized service — build the included `Dockerfile` and run it on
-any host that honors `$PORT` (a VPS with Docker Compose, Fly.io, Railway, Render, and similar),
+any host that honors `$PORT` (a VPS with Docker Compose, Fly.io, Render, and similar),
 set the environment variables above, and attach a managed Postgres instance. Deploy the
 frontend separately (Vercel, Netlify, or as static files) with `VITE_API_BASE_URL` pointing to
 the backend, and keep `VITE_USE_WS=false` in production to use the resilient `/chat/async`
