@@ -319,7 +319,7 @@ class UltraFastRAG:
             # always, so hybrid's fuller dense+BM25+RRF+rerank pipeline rarely
             # got exercised at all, warm or cold. Bounded by a generous timeout
             # (default 150s, comfortably above INFERENCE_WAKE_TIMEOUT=90s) so a
-            # genuine cold Studio wake completes through the real pipeline
+            # genuine cold GPU-backend wake completes through the real pipeline
             # instead of bailing into a degraded BM25-only answer — that
             # degradation is a last resort for a genuinely failed/very slow
             # wake, not the routine per-request experience.
