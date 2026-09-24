@@ -144,7 +144,33 @@ availability is excluded from this figure and reported separately below.
 | kpi (English) | 21 | 0.431 | 77.4s |
 | web-search | 1 | 0.275 | 55.0s |
 
-The kpi/kpi-fr groundedness gap in this table reflects a difference in question-template
+### 3a-v2. Regression: Retrieval Returning No Context on a Subset of Queries
+
+A later run of the same 50-case set, using symmetric English/French templates (§7),
+measured ground-truth accuracy at **46.4%** (13/28 applicable cases) — a real regression
+from the 71.4% reported above, not a difference attributable to the template change itself.
+Judge-based groundedness could not be measured on this run at all (0 of 50 cases judged):
+three of four configured judges route through a proxy account that is out of credits, and
+the fourth (Groq) hit its own daily token-rate limit before the run completed.
+
+**Root cause, confirmed.** Of the 15 incorrect cases, 13 show zero retrieved context —
+retrieval returned nothing at all, not a wrong or lower-quality match. This traces directly
+to `EMBEDDING_PROVIDER=remote` and `RERANK_PROVIDER=remote` both pointing at a decommissioned
+host (`orchestrator-wf53.onrender.com`, no longer live). Retrieval does not crash — the
+failure is caught and logged as a quality warning, per `hybrid_retrieval.py`'s design — but
+it means production has been running dense-embedding-free, BM25-only retrieval with no
+reranking, and BM25 alone is failing to find any match at all for a meaningful share of
+exact metric-name-and-period queries.
+
+**This figure should not be read as the system's current representative accuracy.** It
+measures the system under a known, since-identified misconfiguration, not its designed
+retrieval quality. A valid re-measurement requires either a working hosted embedding/rerank
+credential (Cohere and Jina both have free tiers; the rerank code path for both already
+exists in `hybrid_retrieval.py`, unused only for lack of a key) or switching
+`EMBEDDING_PROVIDER=local` with `sentence-transformers` installed, then rerunning this exact
+suite.
+
+The kpi/kpi-fr groundedness gap in the table above reflects a difference in question-template
 design between the English and French evaluation cases, not a difference in retrieval
 quality by language — see §7 for the isolated, template-matched comparison and the mechanism
 behind this table's gap.
