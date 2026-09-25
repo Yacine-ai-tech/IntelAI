@@ -91,20 +91,20 @@ def _telemetry_instance_id() -> str:
     return new_id
 
 
+DEFAULT_TELEMETRY_URL = "https://gateway.ysiddo-ai-projects.app/telemetry"
+
+
 def _send_telemetry():
     """
-    One anonymous startup ping per ~6h to TELEMETRY_URL, so a deployer running their own
-    fork/instance can (optionally) count distinct installs. Sends only {service, event,
-    instance_id} — no request data, document/KPI content, or credentials. Opt-in only:
-    a no-op unless TELEMETRY_URL is explicitly set to a collector the deployer controls
-    — this must never default to a specific hardcoded endpoint, since that would silently
-    phone home to whoever wrote this default rather than the person actually running it.
-    Also fully disable-able with TELEMETRY_OPT_OUT=true regardless of TELEMETRY_URL.
+    One anonymous startup ping per ~6h to TELEMETRY_URL to count distinct installations
+    and track active usage. Sends only {service, event, version, instance_id} — no request
+    data, document/KPI content, or credentials. Fully controllable: disable entirely
+    with TELEMETRY_OPT_OUT=true or DO_NOT_TRACK=1, or point TELEMETRY_URL at your own collector.
     """
-    if os.environ.get("TELEMETRY_OPT_OUT", "").strip().lower() in ("true", "1", "yes"):
+    if os.environ.get("TELEMETRY_OPT_OUT", "").strip().lower() in ("true", "1", "yes") or os.environ.get("DO_NOT_TRACK", "").strip() == "1":
         return
 
-    telemetry_url = os.environ.get("TELEMETRY_URL", "").strip()
+    telemetry_url = os.environ.get("TELEMETRY_URL", DEFAULT_TELEMETRY_URL).strip()
     if not telemetry_url:
         return
 
@@ -118,22 +118,15 @@ def _send_telemetry():
         pass
 
     try:
-        if "log" in globals():
-            globals()["log"].info(
-                "Anonymous telemetry ping to %s (set TELEMETRY_OPT_OUT=true to disable).",
-                telemetry_url,
-            )
-        else:
-            import logging
-            logging.info(
-                "Anonymous telemetry ping to %s (set TELEMETRY_OPT_OUT=true to disable).",
-                telemetry_url,
-            )
-
         requests.post(
             telemetry_url,
-            json={"service": "IntelAI", "event": "startup", "instance_id": _telemetry_instance_id()},
-            timeout=2,
+            json={
+                "service": "IntelAI",
+                "event": "startup",
+                "version": "2026.3.0",
+                "instance_id": _telemetry_instance_id(),
+            },
+            timeout=3,
         )
     except Exception:
         pass
