@@ -2455,6 +2455,80 @@ async def reindex_vectors(force: bool = True, user: TokenData = Depends(require_
     return {"status": "reindexed", "docs": n, "force": force}
 
 
+# ─── DocIntel Admin Integration ───────────────────────────────────────────────
+
+@app.get("/api/v1/admin/docintel/stats")
+async def get_admin_docintel_stats(user: TokenData = Depends(require_role("admin"))):
+    """Fetch live DocIntel extraction statistics and database metrics from the DocIntel service."""
+    doc_url = settings.DOC_PROCESSOR_URL or "https://docintel.ysiddo-ai-projects.app"
+    import httpx
+    headers = {}
+    if settings.DOC_PROCESSOR_TOKEN:
+        headers["X-DocIntel-Internal-Token"] = settings.DOC_PROCESSOR_TOKEN
+        headers["Authorization"] = f"Bearer {settings.DOC_PROCESSOR_TOKEN}"
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp = await client.get(f"{doc_url}/api/documents/stats", headers=headers)
+            if resp.status_code == 200:
+                data = resp.json()
+                data["service_url"] = doc_url
+                data["connected"] = True
+                return data
+            return {
+                "service_url": doc_url,
+                "connected": False,
+                "error": f"DocIntel responded with status {resp.status_code}",
+                "total_documents": 0,
+                "avg_confidence": 0.0,
+                "avg_processing_time_ms": 0.0,
+                "total_pages": 0,
+                "by_doc_type": {},
+                "by_route": {},
+            }
+    except Exception as e:
+        return {
+            "service_url": doc_url,
+            "connected": False,
+            "error": str(e),
+            "total_documents": 0,
+            "avg_confidence": 0.0,
+            "avg_processing_time_ms": 0.0,
+            "total_pages": 0,
+            "by_doc_type": {},
+            "by_route": {},
+        }
+
+
+@app.get("/api/v1/admin/docintel/documents")
+async def get_admin_docintel_documents(
+    limit: int = 50,
+    offset: int = 0,
+    doc_type: Optional[str] = None,
+    search: Optional[str] = None,
+    user: TokenData = Depends(require_role("admin")),
+):
+    """List persistent document extraction records from DocIntel Neon DB."""
+    doc_url = settings.DOC_PROCESSOR_URL or "https://docintel.ysiddo-ai-projects.app"
+    import httpx
+    headers = {}
+    if settings.DOC_PROCESSOR_TOKEN:
+        headers["X-DocIntel-Internal-Token"] = settings.DOC_PROCESSOR_TOKEN
+        headers["Authorization"] = f"Bearer {settings.DOC_PROCESSOR_TOKEN}"
+    params = {"limit": limit, "offset": offset}
+    if doc_type:
+        params["doc_type"] = doc_type
+    if search:
+        params["search"] = search
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp = await client.get(f"{doc_url}/api/documents", headers=headers, params=params)
+            if resp.status_code == 200:
+                return resp.json()
+            return {"total": 0, "documents": [], "limit": limit, "offset": offset, "error": resp.text}
+    except Exception as e:
+        return {"total": 0, "documents": [], "limit": limit, "offset": offset, "error": str(e)}
+
+
 # ════════════════════════════════════════════════════════════
 # CHAT HISTORY & SESSIONS (PostgreSQL)
 # ════════════════════════════════════════════════════════════
