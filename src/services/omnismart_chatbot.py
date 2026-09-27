@@ -342,9 +342,7 @@ class UltraFastRAG:
             # disabled, or just failed/timed out above. It embeds the query
             # through the same remote host hybrid does, so if hybrid just spent
             # its full timeout budget finding that host unreachable, paying
-            # that wait again here would be pure duplication — skip straight to
-            # the local TF-IDF/BM25 fallback below in that case instead.
-            if not hybrid_timed_out:
+            if not hybrid_timed_out and settings.VECTOR_STORE not in ("memory", ""):
                 try:
                     from src.services.vector_store import vector_store_retrieve
                     vr_timeout = float(os.getenv("VECTOR_RETRIEVAL_TIMEOUT", "12"))
@@ -361,7 +359,7 @@ class UltraFastRAG:
                         return vr
                 except Exception as e:
                     log.warning("Vector store retrieval skipped: %s", e)
-            else:
+            elif hybrid_timed_out:
                 log.info("Skipping vector store retrieval — hybrid just timed out on the same remote host")
 
             # Semantic search with embeddings
