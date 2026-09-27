@@ -248,6 +248,12 @@ export const switchScenario = async (scenarioId, { pollIntervalMs = 3000, timeou
 }
 export const getCurrentScenario = () => api.get('/admin/scenario')
 
+// ── DocIntel Admin Integration ──────────────────────────
+export const getDocIntelStats = () => api.get('/admin/docintel/stats')
+export const getDocIntelDocuments = (params = {}) => api.get('/admin/docintel/documents', { params })
+export const getDocIntelDocument = (docId) => api.get(`/admin/docintel/documents/${docId}`)
+
 export default api
 
 export const deleteFile = (fileId) => api.delete(`/files/${fileId}`)
+
