@@ -57,6 +57,20 @@ def get_request_scope_user() -> Optional[str]:
 def _demo_session_scoping_enabled() -> bool:
     return os.getenv("DEMO_SESSION_SCOPING", "true").lower() == "true"
 
+
+import time
+import threading
+
+_KPI_CACHE: Dict[Any, Tuple[float, Any]] = {}
+_DOCS_CACHE: Dict[Any, Tuple[float, Any]] = {}
+_CACHE_LOCK = threading.Lock()
+_CACHE_TTL = 60.0  # 60 seconds TTL
+
+def clear_pg_cache() -> None:
+    with _CACHE_LOCK:
+        _KPI_CACHE.clear()
+        _DOCS_CACHE.clear()
+
 _pool = None
 _pool_lock = None
 
@@ -554,6 +568,7 @@ def store_kpi_metrics(
     demo visitor; passing the ingesting visitor's user_id scopes the rows to them only
     (see get_kpi_metrics). Replace-by-source is scoped to the same owner so one visitor's
     re-ingest can never delete another visitor's — or the seed data's — rows."""
+    clear_pg_cache()
     if df.empty:
         return
     # A per-row "source" column wins over the caller's source_name. Rows loaded from
@@ -653,6 +668,23 @@ def get_kpi_metrics(
     seeded baseline (owner_user_id IS NULL) plus anything they personally ingested, never
     another visitor's ingested rows. Scope key comes from the current request's JWT, set by
     the middleware in src/api/server.py — no caller here needs to pass it explicitly."""
+    cache_key = (
+        tuple(periods or ()),
+        tuple(metrics or ()),
+        tuple(categories or ()),
+        tuple(segments or ()),
+        start_period,
+        end_period,
+        limit,
+        get_request_scope_user() if _demo_session_scoping_enabled() else None,
+    )
+    now = time.time()
+    with _CACHE_LOCK:
+        if cache_key in _KPI_CACHE:
+            ts, cached_df = _KPI_CACHE[cache_key]
+            if now - ts < _CACHE_TTL:
+                return cached_df.copy()
+
     import pandas as pd
     conn = _get_conn()
     try:
@@ -713,9 +745,12 @@ def get_kpi_metrics(
             params = params + [limit]
         rows = conn.execute(q, params).fetchall()
         if not rows:
-            return pd.DataFrame()
-        df = pd.DataFrame([dict(r) for r in rows])
-        return df.sort_values(["period", "metric"]).reset_index(drop=True)
+            df = pd.DataFrame()
+        else:
+            df = pd.DataFrame([dict(r) for r in rows]).sort_values(["period", "metric"]).reset_index(drop=True)
+        with _CACHE_LOCK:
+            _KPI_CACHE[cache_key] = (now, df)
+        return df.copy()
     finally:
         conn.close()
 
@@ -995,6 +1030,7 @@ def store_knowledge_docs(
     ``owner_user_id=None`` writes global rows visible to every visitor (seeded digests,
     glossary); passing the uploading user's id scopes these rows to them only — mirrors
     store_kpi_metrics()'s owner_user_id contract (see get_knowledge_docs)."""
+    clear_pg_cache()
     if docs_df.empty:
         return
     # Postgres text columns reject embedded NUL (0x00) bytes — pypdf's extraction hits
@@ -1061,6 +1097,14 @@ def get_knowledge_docs(limit: int = 2000, all_owners: bool = False) -> "pd.DataF
     personally uploaded, never another visitor's upload. ``all_owners=True`` bypasses this —
     only for the full-corpus vector-store reindex, which must embed every document
     (retrieval-time scoping then applies via vector_store_retrieve()'s post-filter)."""
+    cache_key = (limit, all_owners, get_request_scope_user() if (not all_owners and _demo_session_scoping_enabled()) else None)
+    now = time.time()
+    with _CACHE_LOCK:
+        if cache_key in _DOCS_CACHE:
+            ts, cached_df = _DOCS_CACHE[cache_key]
+            if now - ts < _CACHE_TTL:
+                return cached_df.copy()
+
     import pandas as pd
     conn = _get_conn()
     try:
@@ -1072,7 +1116,10 @@ def get_knowledge_docs(limit: int = 2000, all_owners: bool = False) -> "pd.DataF
         q += " ORDER BY created_at ASC LIMIT %s"
         params.append(limit)
         rows = conn.execute(q, params).fetchall()
-        return pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
+        df = pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
+        with _CACHE_LOCK:
+            _DOCS_CACHE[cache_key] = (now, df)
+        return df.copy()
     finally:
         conn.close()
 
