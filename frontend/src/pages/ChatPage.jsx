@@ -220,7 +220,6 @@ export default function ChatPage({
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [slowHint, setSlowHint] = useState(false)
   const [persona, setPersona] = useState('')          // '' = auto (role-based)
   const [activeSession, setActiveSession] = useState(initialSessionId)
   const [status, setStatus] = useState('disconnected')
@@ -257,12 +256,6 @@ export default function ChatPage({
 
   const scroll = useCallback(() => endRef.current?.scrollIntoView({ behavior: 'smooth' }), [])
   useEffect(() => { scroll() }, [messages, loading, scroll])
-  // Show a gentle "warming up" hint if a reply takes a while (cold model load / on-demand wake).
-  useEffect(() => {
-    if (!loading) { setSlowHint(false); return }
-    const id = setTimeout(() => setSlowHint(true), 6000)
-    return () => clearTimeout(id)
-  }, [loading])
 
   // Prefill from a Dashboard "ask copilot" deep-link (?q=…), restored session (?session=…), or widget props.
   useEffect(() => {
@@ -311,6 +304,18 @@ export default function ChatPage({
       ws.onmessage = (ev) => {
         const d = JSON.parse(ev.data)
         if (d.type === 'connected') setStatus('connected')
+        else if (d.type === 'chunk') {
+          // Streaming token received — append to the in-progress assistant message
+          setMessages(prev => {
+            const msgs = [...prev]
+            const last = msgs[msgs.length - 1]
+            if (last?.role === 'assistant' && last.streaming) {
+              return [...msgs.slice(0, -1), { ...last, content: last.content + d.text }]
+            }
+            // First chunk — create the streaming placeholder message
+            return [...msgs, { role: 'assistant', content: d.text, streaming: true, sources: [], blocks: [], query: pendingQueryRef.current }]
+          })
+        }
         else if (d.type === 'response') {
           const newSessionId = d.session_id
           if (newSessionId) {
@@ -321,14 +326,30 @@ export default function ChatPage({
             }
             queryClient.invalidateQueries({ queryKey: ['chat-sessions'] })
           }
-          setMessages(p => [...p, {
-            role: 'assistant',
-            content: d.response,
-            sources: d.sources || [],
-            blocks: d.blocks || [],
-            persona_used: d.persona_used,
-            query: pendingQueryRef.current,
-          }])
+          setMessages(p => {
+            const msgs = [...p]
+            const last = msgs[msgs.length - 1]
+            // If we were streaming, finalize the message with full data; otherwise append fresh
+            if (last?.role === 'assistant' && last.streaming) {
+              return [...msgs.slice(0, -1), {
+                role: 'assistant',
+                content: d.response,
+                sources: d.sources || [],
+                blocks: d.blocks || [],
+                persona_used: d.persona_used,
+                query: pendingQueryRef.current,
+                streaming: false,
+              }]
+            }
+            return [...msgs, {
+              role: 'assistant',
+              content: d.response,
+              sources: d.sources || [],
+              blocks: d.blocks || [],
+              persona_used: d.persona_used,
+              query: pendingQueryRef.current,
+            }]
+          })
           setLoading(false)
           wsInFlightRef.current = false
         } else if (d.type === 'error' || d.error) {
@@ -336,11 +357,7 @@ export default function ChatPage({
           setLoading(false)
           wsInFlightRef.current = false
         } else if (d.type === 'status') {
-          // Backend keepalive frame sent every WS_CHAT_KEEPALIVE_SECONDS while a turn is
-          // still running (e.g. a cold Studio wake per the retrieval pipeline's wake-aware
-          // polling). Surface it instead of silently dropping it, so a slow response reads
-          // as "still working" rather than looking hung with no signal at all.
-          setSlowHint(true)
+          // Backend keepalive frame — connection is alive, no UI action needed with streaming
         }
       }
       ws.onerror = () => setStatus('error')
@@ -412,7 +429,6 @@ export default function ChatPage({
       wsInFlightRef.current = false
       setMessages(p => [...p, { role: 'assistant', content: 'Message canceled.' }])
     }
-    setSlowHint(false)
     setLoading(false)
   }
 
@@ -546,22 +562,11 @@ export default function ChatPage({
             </div>
           )}
           {messages.map((m, i) => <MessageBubble key={i} msg={m} />)}
-          {loading && (
+          {loading && !messages.some(m => m.streaming) && (
             <div className="chat-message assistant">
               <div className="chat-avatar"><Sparkles size={15} /></div>
               <div className="chat-bubble">
                 <span className="typing-dot" /> <span className="typing-dot" style={{ animationDelay: '.2s' }} /> <span className="typing-dot" style={{ animationDelay: '.4s' }} />
-                {slowHint && (
-                  // `slowHint` was previously computed (flips true 6s into a request) but
-                  // never rendered anywhere — so a slow/cold-starting response looked
-                  // identical to a hung one for the entire wait, with nothing distinguishing
-                  // "still working" from "stuck". This is the visible half of that fix; a
-                  // real cold start can still take several minutes, so the message says
-                  // so rather than implying it's almost done.
-                  <div className="chat-slow-hint" style={{ marginTop: 6, fontSize: '.8rem', color: 'var(--text-3)' }}>
-                    {t('chatSlowHint') || 'Processing analytics query across knowledge sources…'}
-                  </div>
-                )}
               </div>
             </div>
           )}
