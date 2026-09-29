@@ -124,8 +124,23 @@ def compute_health_index(df: pd.DataFrame) -> Dict[str, float | str]:
     margin_s = _metric_lookup(df, ["gross margin", "margin"])
     margin = margin_s["value"].mean() if not margin_s.empty else 0
 
-    cash_s = _metric_lookup(df, ["cash"])
-    cash_score = min(100, max(0, cash_s["value"].mean() / 1_000_000 * 20)) if not cash_s.empty else 0
+    # Use Cash Runway (months) when available — same normalisation as AgentKit's corrected
+    # compute_health_index (PR #43): score = min(100, runway_months / 24 * 100) so that
+    # 24 months → 100, 12 months → 50, etc.  Fall back to Cash Balance (USD) only when
+    # no runway metric is present.  Previously a single _metric_lookup(["cash"]) matched
+    # BOTH "Cash Runway" (months, ~36) and "Cash Balance" (USD, ~12 M) and averaged them —
+    # mixing units through the USD formula produced a semantically invalid cash_score.
+    runway_s = _metric_lookup(df, ["cash runway", "runway"])
+    if not runway_s.empty:
+        runway_months = runway_s["value"].mean()
+        cash_score = min(100.0, max(0.0, (runway_months / 24.0) * 100.0))
+    else:
+        cash_balance_s = _metric_lookup(df, ["cash balance", "cash", "liquidity"])
+        cash_score = (
+            min(100, max(0, cash_balance_s["value"].mean() / 1_000_000 * 20))
+            if not cash_balance_s.empty
+            else 0.0
+        )
 
     eff_s = _metric_lookup(df, ["operating expense", "opex"])
     efficiency = 100 - min(100, eff_s["value"].mean() / 1_000_000 * 10) if not eff_s.empty else 60
