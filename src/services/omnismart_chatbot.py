@@ -231,6 +231,68 @@ def llm_complete(
     return text, tokens, resolved_model
 
 
+async def llm_stream(
+    messages: List[Dict[str, str]],
+    temperature: float = 0.3,
+    max_tokens: int = 2048,
+    top_p: Optional[float] = None,
+    model: Optional[str] = None,
+    persona_name: Optional[str] = None,
+):
+    """Async generator that streams LLM tokens as they are produced.
+
+    Yields individual token strings. Callers accumulate them to build the full
+    response and can forward each chunk to the WebSocket client in real time.
+    Falls back to a single-shot call and yields the full text as one chunk for
+    providers that don't support streaming (e.g. Ollama without stream support).
+    """
+    from src.services.llm_router import _resolve, PERSONA_TIER_MAP, _apply_cache_control
+
+    tier = "default"
+    if persona_name and persona_name.lower() in PERSONA_TIER_MAP:
+        tier = PERSONA_TIER_MAP[persona_name.lower()]
+
+    resolved_model = model or _resolve(tier)
+    timeout_s = float(os.getenv("LLM_TIMEOUT", "60"))
+
+    # Groq native streaming path
+    client = _groq_client()
+    if resolved_model.startswith("groq/") and client is not None:
+        actual_model = resolved_model.replace("groq/", "")
+        kw: Dict[str, Any] = {"model": actual_model, "messages": messages,
+                              "temperature": temperature, "max_tokens": max_tokens,
+                              "stream": True, "timeout": timeout_s}
+        if top_p is not None:
+            kw["top_p"] = top_p
+        stream = client.chat.completions.create(**kw)
+        for chunk in stream:
+            delta = chunk.choices[0].delta if chunk.choices else None
+            text = getattr(delta, "content", None) if delta else None
+            if text:
+                yield text
+        return
+
+    # LiteLLM async streaming for all other providers (Anthropic, OpenAI, Gemini, etc.)
+    from litellm import acompletion  # type: ignore
+    msgs = _apply_cache_control(messages, resolved_model)
+    kw = {"model": resolved_model, "messages": msgs, "temperature": temperature,
+          "max_tokens": max_tokens, "timeout": timeout_s, "stream": True}
+    if top_p is not None and "claude" not in resolved_model.lower():
+        kw["top_p"] = top_p
+    try:
+        stream = await acompletion(**kw)
+        async for chunk in stream:
+            delta = chunk.choices[0].delta if chunk.choices else None
+            text = getattr(delta, "content", None) if delta else None
+            if text:
+                yield text
+    except Exception:
+        # Streaming unsupported or failed — fall back to blocking call and yield full text
+        text, _, _ = llm_complete(messages, temperature=temperature, max_tokens=max_tokens,
+                                   top_p=top_p, model=model, persona_name=persona_name)
+        yield text
+
+
 # ════════════════════════════════════════════════════════════════════════════
 # UTILITY FUNCTIONS
 # ════════════════════════════════════════════════════════════════════════════
@@ -1264,6 +1326,7 @@ class AgentPersonaFactory:
         # so it forms a long stable prefix that Groq auto-caches at 50% (and that Anthropic
         # caches via cache_control). The volatile live data + question go LAST, in the user
         # turn, so they never invalidate the cached prefix.
+        data_cutoff = os.getenv("DATA_CUTOFF_LABEL", "June 2026")
         system_prompt = (
             persona.system_prompt + "\n\n"
             "INSTRUCTIONS:\n"
@@ -1272,7 +1335,11 @@ class AgentPersonaFactory:
             "3. If the user asks for external data (market, news) not in the knowledge base, use the provided WEB RESULTS if available. If none are available, inform them you don't have access to the web.\n"
             "4. When using LIVE DATA, quote metric values exactly as shown (e.g., '$3.6M') and cite sources inline using bracketed numbers (e.g., [1]).\n"
             "5. Stay strictly within your persona's data-access scope. If asked about out-of-scope metrics, briefly point the user to the correct persona.\n"
-            "6. Use standard, well-structured Markdown (bullets, bold text) without stray symbols.\n\n"
+            "6. Use standard, well-structured Markdown (bullets, bold text) without stray symbols.\n"
+            f"7. DATA RECENCY: The knowledge base reflects the full operating history through {data_cutoff} (the most recently completed reporting period). "
+            "Respond in present tense based on this data. When the recency is directly relevant to the answer, frame it warmly — for example: "
+            f"'Based on our latest reporting through {data_cutoff}, ...' or 'As of {data_cutoff}, our most recent data shows...'. "
+            "Do not frame the data horizon as a limitation; it represents the complete, verified dataset for the period.\n\n"
             "LANGUAGE (critical): Always detect the language of the user's question and write your ENTIRE reply in that exact same language."
         )
         messages: List[Dict[str, str]] = [{"role": "system", "content": system_prompt}]
@@ -1323,6 +1390,83 @@ class AgentPersonaFactory:
                 "latency_ms": (time.time() - start) * 1000,
                 "query": message,
             }
+
+    def chat_prepare(
+        self,
+        message: str,
+        user_role: str,
+        persona_override: Optional[str] = None,
+        language: str = "en",
+        history: Optional[List[Dict[str, str]]] = None,
+        context: str = "",
+    ) -> Dict[str, Any]:
+        """Perform RAG retrieval and prompt construction without calling the LLM.
+
+        Returns a dict with ``messages`` (ready for llm_stream/llm_complete),
+        ``persona_name``, ``persona_display``, ``sources``, and ``temperature``.
+        The WebSocket streaming handler calls this first (fast, in a thread), then
+        streams the LLM response directly on the async event loop.
+        """
+        detected = self._detect_language(message)
+        if detected:
+            language = detected
+        elif not language or language == "auto":
+            language = "en"
+
+        if not llm_available():
+            raise RuntimeError("AI agent unavailable (missing API key).")
+
+        persona = self.resolve_persona(user_role, persona_override, language)
+
+        if self._is_smalltalk(message):
+            retrieved_ctx, sources = "", []
+        else:
+            from concurrent.futures import ThreadPoolExecutor
+            with ThreadPoolExecutor(max_workers=2) as executor:
+                rag_future = executor.submit(self._retrieve_context, message, persona, language)
+                judge_future = executor.submit(self._needs_web, message)
+                retrieved_ctx, sources = rag_future.result()
+                needs_web = judge_future.result()
+            if needs_web:
+                max_id = max((s.get("id", 0) for s in sources), default=0)
+                web_ctx, web_sources = self._web_context(message, settings.WEB_SEARCH_MAX_RESULTS, max_id)
+                if web_ctx:
+                    retrieved_ctx = (retrieved_ctx + "\n\n" + web_ctx).strip() if retrieved_ctx else web_ctx
+                    sources = sources + web_sources
+
+        full_context = "\n\n".join(c for c in [context, retrieved_ctx] if c).strip()
+        data_cutoff = os.getenv("DATA_CUTOFF_LABEL", "June 2026")
+        system_prompt = (
+            persona.system_prompt + "\n\n"
+            "INSTRUCTIONS:\n"
+            "1. Answer concisely and directly. Never output internal classifications like 'CLASSIFICATION: ADVICE'.\n"
+            "2. Never use emojis or icons (like ⚠️ or 💡). Keep the layout strictly professional and clean.\n"
+            "3. If the user asks for external data (market, news) not in the knowledge base, use the provided WEB RESULTS if available. If none are available, inform them you don't have access to the web.\n"
+            "4. When using LIVE DATA, quote metric values exactly as shown (e.g., '$3.6M') and cite sources inline using bracketed numbers (e.g., [1]).\n"
+            "5. Stay strictly within your persona's data-access scope. If asked about out-of-scope metrics, briefly point the user to the correct persona.\n"
+            "6. Use standard, well-structured Markdown (bullets, bold text) without stray symbols.\n"
+            f"7. DATA RECENCY: The knowledge base reflects the full operating history through {data_cutoff} (the most recently completed reporting period). "
+            "Respond in present tense based on this data. When the recency is directly relevant to the answer, frame it warmly — for example: "
+            f"'Based on our latest reporting through {data_cutoff}, ...' or 'As of {data_cutoff}, our most recent data shows...'. "
+            "Do not frame the data horizon as a limitation; it represents the complete, verified dataset for the period.\n\n"
+            "LANGUAGE (critical): Always detect the language of the user's question and write your ENTIRE reply in that exact same language."
+        )
+        messages: List[Dict[str, str]] = [{"role": "system", "content": system_prompt}]
+        if history:
+            messages.extend(history[-10:])
+        data_block = (
+            f"=== LIVE DATA (scope: {', '.join(persona.data_access) or 'all'}) ===\n"
+            f"{full_context if full_context else '(no data retrieved)'}"
+        )
+        messages.append({"role": "user", "content": f"{data_block}\n\n=== QUESTION ===\n{message}"})
+
+        return {
+            "messages": messages,
+            "persona_name": persona.name,
+            "persona_display": persona.display_name,
+            "temperature": getattr(persona, "temperature", 0.3),
+            "sources": sources,
+        }
 
     def list_personas(self, user_role: Optional[str] = None) -> List[Dict[str, Any]]:
         """List available personas. When ``user_role`` is given, return only the
