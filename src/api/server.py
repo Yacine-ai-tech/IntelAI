@@ -2662,10 +2662,8 @@ async def websocket_chat(websocket: WebSocket):
             await websocket.close()
             return
 
-        from src.services.omnismart_chatbot import get_persona_factory
+        from src.services.omnismart_chatbot import get_persona_factory, llm_stream
         factory = get_persona_factory()
-        # Reuse the client's session when provided (so reconnects continue the same thread);
-        # otherwise start a new one. Persisted lazily on the first real message.
         session_id = str(uuid.uuid4())
         history = []
         _session_ready = False
@@ -2677,42 +2675,100 @@ async def websocket_chat(websocket: WebSocket):
             persona_override = data.get("persona")
             if data.get("session_id"):
                 session_id = data["session_id"]
-            # Use language from message if provided, otherwise fall back to user language
             language = data.get("language") or user.language
-            # A real chat turn can genuinely take 60-100s+ under cold retrieval — see
-            # BENCHMARK.md. A proxy sitting in front of this socket (Cloudflare or
-            # otherwise) can treat a connection with no traffic in either direction for
-            # too long as dead, same risk a slow synchronous REST call has. Unlike REST,
-            # the socket is already open for the whole turn, so the fix here is a
-            # periodic status frame while the real work runs in the background — resets
-            # any such idle-timeout AND gives the client something to show instead of
-            # silence, rather than needing the job+poll pattern REST callers get instead.
-            chat_task = asyncio.create_task(asyncio.wait_for(asyncio.to_thread(
-                factory.chat,
-                message=message, user_role=user.role,
-                persona_override=persona_override, language=language, history=history,
-            ), timeout=_chat_turn_timeout_seconds()))
-            keepalive_interval = float(os.getenv("WS_CHAT_KEEPALIVE_SECONDS", "12"))
-            while not chat_task.done():
-                try:
-                    await asyncio.wait_for(asyncio.shield(chat_task), timeout=keepalive_interval)
-                except asyncio.TimeoutError:
-                    try:
-                        await websocket.send_json({"type": "status", "note": "still working..."})
-                    except Exception:
-                        break  # client gone — let the outer try/except handle cleanup
+
+            # Phase 1: RAG retrieval + persona setup (fast, synchronous-in-thread)
+            # This builds the full messages list with retrieved context.
             try:
-                result = await chat_task
+                rag_result = await asyncio.wait_for(
+                    asyncio.to_thread(
+                        factory.chat_prepare,
+                        message=message, user_role=user.role,
+                        persona_override=persona_override, language=language, history=history,
+                    ),
+                    timeout=_chat_turn_timeout_seconds(),
+                )
             except asyncio.TimeoutError:
                 await websocket.send_json({
                     "type": "error",
-                    "error": f"Chat turn timed out after {int(_chat_turn_timeout_seconds())}s. Please retry.",
+                    "error": f"Retrieval timed out after {int(_chat_turn_timeout_seconds())}s. Please retry.",
                 })
                 continue
+            except AttributeError:
+                # chat_prepare not available — fall back to full blocking chat with chunk wrapping
+                try:
+                    result = await asyncio.wait_for(
+                        asyncio.to_thread(
+                            factory.chat,
+                            message=message, user_role=user.role,
+                            persona_override=persona_override, language=language, history=history,
+                        ),
+                        timeout=_chat_turn_timeout_seconds(),
+                    )
+                except asyncio.TimeoutError:
+                    await websocket.send_json({
+                        "type": "error",
+                        "error": f"Chat turn timed out after {int(_chat_turn_timeout_seconds())}s. Please retry.",
+                    })
+                    continue
+                # Simulate streaming by sending the full response as a single chunk then the response frame
+                await websocket.send_json({"type": "chunk", "text": result["response"]})
+                history.append({"role": "user", "content": message})
+                history.append({"role": "assistant", "content": result["response"]})
+                try:
+                    import json as _json
+                    from src.services.pg_store import ensure_session_exists, store_message
+                    if not _session_ready:
+                        await asyncio.to_thread(ensure_session_exists, session_id, getattr(user, "user_id", user.username))
+                        _session_ready = True
+                    await asyncio.to_thread(store_message, session_id, "user", message)
+                    await asyncio.to_thread(store_message, session_id, "assistant", result["response"],
+                                  sources=_json.dumps(result.get("sources", [])))
+                except Exception as e:
+                    log.warning("WS message persistence failed: %s", e)
+                await websocket.send_json({
+                    "type": "response", "response": result["response"],
+                    "session_id": session_id,
+                    "persona_used": result["persona_used"],
+                    "persona_display": result.get("persona_display", ""),
+                    "tokens_used": result.get("tokens_used", 0),
+                    "latency_ms": result.get("latency_ms", 0),
+                    "sources": result.get("sources", []),
+                    "blocks": _structure_answer(result["response"]),
+                })
+                continue
+
+            # Phase 2: Streaming LLM generation — send tokens as they arrive
+            messages_for_llm = rag_result["messages"]
+            persona_name = rag_result.get("persona_name", "general")
+            sources = rag_result.get("sources", [])
+
+            full_text = ""
+            import time as _time
+            start_ts = _time.time()
+            try:
+                async for token_text in llm_stream(
+                    messages=messages_for_llm,
+                    temperature=rag_result.get("temperature", 0.3),
+                    max_tokens=2048,
+                    persona_name=persona_name,
+                ):
+                    full_text += token_text
+                    try:
+                        await websocket.send_json({"type": "chunk", "text": token_text})
+                    except Exception:
+                        break  # client disconnected during streaming
+            except Exception as e:
+                log.error("Streaming LLM error: %s", e)
+                if not full_text:
+                    await websocket.send_json({"type": "error", "error": f"Generation failed: {e}"})
+                    continue
+
+            latency_ms = int((_time.time() - start_ts) * 1000)
             history.append({"role": "user", "content": message})
-            history.append({"role": "assistant", "content": result["response"]})
-            # Persist the turn so it appears in history with a real title (store_message
-            # auto-titles the session from the first user message). Best-effort.
+            history.append({"role": "assistant", "content": full_text})
+
+            # Persist turn
             try:
                 import json as _json
                 from src.services.pg_store import ensure_session_exists, store_message
@@ -2720,23 +2776,26 @@ async def websocket_chat(websocket: WebSocket):
                     await asyncio.to_thread(ensure_session_exists, session_id, getattr(user, "user_id", user.username))
                     _session_ready = True
                 await asyncio.to_thread(store_message, session_id, "user", message)
-                await asyncio.to_thread(store_message, session_id, "assistant", result["response"],
-                              sources=_json.dumps(result.get("sources", [])))
+                await asyncio.to_thread(store_message, session_id, "assistant", full_text,
+                              sources=_json.dumps(sources))
             except Exception as e:
                 log.warning("WS message persistence failed: %s", e)
+
             await websocket.send_json({
-                "type": "response", "response": result["response"],
-                "persona_used": result["persona_used"],
-                "persona_display": result.get("persona_display", ""),
-                "tokens_used": result.get("tokens_used", 0),
-                "latency_ms": result.get("latency_ms", 0),
-                "sources": result.get("sources", []),
-                "blocks": _structure_answer(result["response"]),
+                "type": "response", "response": full_text,
+                "session_id": session_id,
+                "persona_used": persona_name,
+                "persona_display": rag_result.get("persona_display", ""),
+                "tokens_used": 0,  # streaming doesn't return usage in all providers
+                "latency_ms": latency_ms,
+                "sources": sources,
+                "blocks": _structure_answer(full_text),
             })
     except WebSocketDisconnect:
         log.info("WebSocket client disconnected")
     except Exception as e:
         log.error("WebSocket error: %s", e)
+
 
 
 # ════════════════════════════════════════════════════════════
