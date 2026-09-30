@@ -221,12 +221,12 @@ function useForceSimulation(nodes, links, width, height, mode) {
     const cy = height / 2
 
     if (mode === 'departments') {
-      // Symmetrical radial ring for 8 departments
+      // Symmetrical radial ring for 8 departments — use larger radius for clear separation
       const deptNodes = nodes.filter(n => n.type === 'domain')
       deptNodes.forEach((n, i) => {
         const angle = (i / deptNodes.length) * Math.PI * 2 - Math.PI / 2
-        const rx = width * 0.36
-        const ry = height * 0.34
+        const rx = width * 0.42
+        const ry = height * 0.40
         currentPositions[n.id] = {
           x: cx + Math.cos(angle) * rx,
           y: cy + Math.sin(angle) * ry,
@@ -234,14 +234,14 @@ function useForceSimulation(nodes, links, width, height, mode) {
         }
       })
     } else {
-      // General layout
+      // General layout — larger radii so nodes start spread out
       nodes.forEach((n, i) => {
         const angle = (i / nodes.length) * Math.PI * 2
-        let radius = 220
+        let radius = 280
         if (n.type === 'query') radius = 0
-        else if (n.type === 'domain') radius = 160 + (i % 2) * 30
-        else if (n.type === 'document') radius = 260 + (i % 3) * 20
-        else if (n.type === 'entity') radius = 340 + (i % 2) * 25
+        else if (n.type === 'domain') radius = 220 + (i % 2) * 40
+        else if (n.type === 'document') radius = 340 + (i % 3) * 30
+        else if (n.type === 'entity') radius = 460 + (i % 2) * 35
 
         currentPositions[n.id] = {
           x: cx + Math.cos(angle) * radius,
@@ -265,7 +265,7 @@ function useForceSimulation(nodes, links, width, height, mode) {
 
       const nextPositions = { ...currentPositions }
 
-      // Springs
+      // Springs — increased target distance for clearer visual separation
       links.forEach(link => {
         const source = nextPositions[link.source]
         const target = nextPositions[link.target]
@@ -273,7 +273,7 @@ function useForceSimulation(nodes, links, width, height, mode) {
         const dx = target.x - source.x
         const dy = target.y - source.y
         const dist = Math.sqrt(dx * dx + dy * dy) || 1
-        const targetDist = link.distance || 150
+        const targetDist = link.distance || 220
         const force = (dist - targetDist) * 0.08 * alpha
         const fx = (dx / dist) * force
         const fy = (dy / dist) * force
@@ -281,7 +281,7 @@ function useForceSimulation(nodes, links, width, height, mode) {
         if (link.target !== 'query') { target.vx -= fx; target.vy -= fy }
       })
 
-      // Node-to-node repulsion
+      // Node-to-node repulsion — stronger min distances to prevent node overlap
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const n1 = nextPositions[nodes[i].id]
@@ -290,9 +290,9 @@ function useForceSimulation(nodes, links, width, height, mode) {
           const dx = n2.x - n1.x
           const dy = n2.y - n1.y
           const dist = Math.sqrt(dx * dx + dy * dy) || 1
-          const minDist = (nodes[i].type === 'document' || nodes[j].type === 'document') ? 190 : 130
+          const minDist = (nodes[i].type === 'document' || nodes[j].type === 'document') ? 280 : 200
           if (dist < minDist) {
-            const force = (minDist - dist) * 0.08 * alpha
+            const force = (minDist - dist) * 0.12 * alpha
             const fx = (dx / dist) * force
             const fy = (dy / dist) * force
             if (nodes[i].id !== 'query') { n1.vx -= fx; n1.vy -= fy }
@@ -301,7 +301,7 @@ function useForceSimulation(nodes, links, width, height, mode) {
         }
       }
 
-      // Keep within bounds
+      // Keep within bounds with generous padding
       nodes.forEach(n => {
         if (n.id === 'query') return
         const pos = nextPositions[n.id]
@@ -310,8 +310,8 @@ function useForceSimulation(nodes, links, width, height, mode) {
         pos.y += pos.vy
         pos.vx *= 0.78
         pos.vy *= 0.78
-        pos.x = Math.max(100, Math.min(width - 100, pos.x))
-        pos.y = Math.max(60, Math.min(height - 60, pos.y))
+        pos.x = Math.max(130, Math.min(width - 130, pos.x))
+        pos.y = Math.max(80, Math.min(height - 80, pos.y))
       })
 
       currentPositions = nextPositions
@@ -349,8 +349,24 @@ export default function KnowledgeGraphPage() {
   // Zoom level
   const [zoom, setZoom] = useState(1.0)
 
-  const width = 1000
-  const height = 660
+  // Dynamic canvas dimensions — tracks actual container size via ResizeObserver so the
+  // graph always fills the full available width and a tall fraction of the viewport.
+  const canvasRef = useRef(null)
+  const [canvasDims, setCanvasDims] = useState({ width: 1400, height: 820 })
+  useEffect(() => {
+    if (!canvasRef.current) return
+    const observer = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        const w = Math.max(900, entry.contentRect.width)
+        const h = Math.max(600, Math.round(w * 0.60))
+        setCanvasDims({ width: Math.round(w), height: h })
+      }
+    })
+    observer.observe(canvasRef.current)
+    return () => observer.disconnect()
+  }, [])
+  const width = canvasDims.width
+  const height = canvasDims.height
 
   const buildGraphFromResults = (resList, qTarget, currentMode) => {
     const nodes = []
@@ -826,7 +842,10 @@ export default function KnowledgeGraphPage() {
         subtitle={`${stats.docs} Documents · ${stats.domains} Enterprise Domains · ${stats.entities} Extracted Entities · ${stats.deptRels} Inter-Department Links`}
         style={{ marginTop: 18 }}
       >
-        <div style={{ position: 'relative', background: '#0b1120', borderRadius: 14, overflow: 'hidden', border: '1px solid #1e293b' }}>
+        <div
+          ref={canvasRef}
+          style={{ position: 'relative', background: '#0b1120', borderRadius: 14, overflow: 'hidden', border: '1px solid #1e293b', minHeight: 600, height: 'calc(100vh - 220px)' }}
+        >
           
           {/* Zoom & View Controls */}
           <div style={{ position: 'absolute', top: 16, right: 16, display: 'flex', gap: 6, zIndex: 10 }}>
@@ -856,13 +875,12 @@ export default function KnowledgeGraphPage() {
             </button>
           </div>
 
-          <svg 
-            viewBox={`0 0 ${width} ${height}`} 
-            style={{ 
-              width: '100%', 
-              height: 'auto', 
-              display: 'block', 
-              minHeight: 560,
+          <svg
+            viewBox={`0 0 ${width} ${height}`}
+            style={{
+              width: '100%',
+              height: height,
+              display: 'block',
               transform: `scale(${zoom})`,
               transformOrigin: 'center center',
               transition: 'transform 0.2s ease'
