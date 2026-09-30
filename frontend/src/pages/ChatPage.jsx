@@ -189,10 +189,27 @@ function MessageBubble({ msg }) {
           {isUser ? (
             <div style={{ whiteSpace: 'pre-wrap' }}>{msg.content}</div>
           ) : (
-            <FormattedContent content={msg.content} blocks={msg.blocks} />
+            <>
+              <FormattedContent content={msg.content} blocks={msg.blocks} />
+              {msg.streaming && (
+                <span 
+                  className="streaming-cursor" 
+                  style={{ 
+                    display: 'inline-block', 
+                    width: 7, 
+                    height: 15, 
+                    marginLeft: 4, 
+                    verticalAlign: 'text-bottom', 
+                    background: 'var(--primary, #22d3ee)', 
+                    borderRadius: 1,
+                    animation: 'pulse 0.9s infinite' 
+                  }} 
+                />
+              )}
+            </>
           )}
         </div>
-        {!isUser && (
+        {!isUser && !msg.streaming && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginTop: 8 }}>
             <Citations sources={msg.sources} />
             {msg.sources?.length > 0 && (
@@ -230,6 +247,7 @@ export default function ChatPage({
   const wsRef = useRef(null)
   const abortControllerRef = useRef(null)
   const reconnectRef = useRef(null)
+  const streamIntervalRef = useRef(null)
   // Tracks which transport the in-flight send() used, so cancelRequest() knows whether to
   // abort the HTTP request or close/reopen the socket. Previously cancelRequest() referenced
   // an undefined `useWs` variable — clicking Stop while a message was in flight over the
@@ -242,6 +260,67 @@ export default function ChatPage({
   // `connect()` closure and has no direct access to `send()`'s local `q` — needed so the
   // assistant message carries the query that produced it (see the "View Graph" deep-link).
   const pendingQueryRef = useRef('')
+
+  // Clean up streaming interval on unmount
+  useEffect(() => {
+    return () => {
+      if (streamIntervalRef.current) clearInterval(streamIntervalRef.current)
+    }
+  }, [])
+
+  // Word-by-word streaming revealing text token-by-token (ChatGPT/Claude UX)
+  const streamText = (fullText, sources = [], blocks = [], query = '') => {
+    const tokens = fullText.match(/\S+\s*/g) || [fullText]
+    let currentIdx = 0
+    let accumulated = ''
+
+    // Seed empty assistant bubble with streaming flag
+    setMessages(p => [
+      ...p,
+      {
+        role: 'assistant',
+        content: '',
+        sources,
+        blocks,
+        query,
+        streaming: true,
+      }
+    ])
+
+    if (streamIntervalRef.current) clearInterval(streamIntervalRef.current)
+
+    // Token speed: 16ms interval, progressive chunking for natural cadence
+    const stepSize = tokens.length > 500 ? 3 : tokens.length > 150 ? 2 : 1
+    const intervalMs = 16
+
+    streamIntervalRef.current = setInterval(() => {
+      if (currentIdx < tokens.length) {
+        const nextSlice = tokens.slice(currentIdx, currentIdx + stepSize).join('')
+        currentIdx += stepSize
+        accumulated += nextSlice
+        setMessages(prev => {
+          const msgs = [...prev]
+          const last = msgs[msgs.length - 1]
+          if (last && last.role === 'assistant' && last.streaming) {
+            return [...msgs.slice(0, -1), { ...last, content: accumulated }]
+          }
+          return msgs
+        })
+      } else {
+        clearInterval(streamIntervalRef.current)
+        streamIntervalRef.current = null
+        setMessages(prev => {
+          const msgs = [...prev]
+          const last = msgs[msgs.length - 1]
+          if (last && last.role === 'assistant') {
+            return [...msgs.slice(0, -1), { ...last, content: fullText, streaming: false }]
+          }
+          return msgs
+        })
+        setLoading(false)
+      }
+    }, intervalMs)
+  }
 
   const { data: personas = [] } = useQuery({
     queryKey: ['personas'],
@@ -393,13 +472,8 @@ export default function ChatPage({
             }
             queryClient.invalidateQueries({ queryKey: ['chat-sessions'] })
           }
-          setMessages(p => [...p, {
-            role: 'assistant',
-            content: r.data.response || 'No response.',
-            sources: r.data.sources || [],
-            blocks: r.data.blocks || [],
-            query: q,
-          }])
+          const responseText = r.data.response || 'No response.'
+          streamText(responseText, r.data.sources || [], r.data.blocks || [], q)
         })
         .catch(e => {
           if (e.name === 'CanceledError' || e.message === 'canceled') {
@@ -407,12 +481,25 @@ export default function ChatPage({
           } else {
             setMessages(p => [...p, { role: 'assistant', content: `Error: ${e.response?.data?.detail || 'request failed'}` }])
           }
+          setLoading(false)
         })
-        .finally(() => { setLoading(false); abortControllerRef.current = null })
+        .finally(() => { abortControllerRef.current = null })
     }
   }
 
   const cancelRequest = () => {
+    if (streamIntervalRef.current) {
+      clearInterval(streamIntervalRef.current)
+      streamIntervalRef.current = null
+      setMessages(prev => {
+        const msgs = [...prev]
+        const last = msgs[msgs.length - 1]
+        if (last && last.role === 'assistant' && last.streaming) {
+          return [...msgs.slice(0, -1), { ...last, streaming: false }]
+        }
+        return msgs
+      })
+    }
     if (abortControllerRef.current) {
       abortControllerRef.current.abort()
       abortControllerRef.current = null
@@ -565,8 +652,11 @@ export default function ChatPage({
           {loading && !messages.some(m => m.streaming) && (
             <div className="chat-message assistant">
               <div className="chat-avatar"><Sparkles size={15} /></div>
-              <div className="chat-bubble">
-                <span className="typing-dot" /> <span className="typing-dot" style={{ animationDelay: '.2s' }} /> <span className="typing-dot" style={{ animationDelay: '.4s' }} />
+              <div className="chat-bubble" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: 'var(--bg-2, #18181b)', border: '1px solid var(--border-subtle, rgba(255,255,255,0.08))', borderRadius: 12 }}>
+                <span style={{ display: 'inline-block', width: 14, height: 14, border: '2px solid rgba(34, 211, 238, 0.25)', borderTopColor: 'var(--primary, #22d3ee)', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+                <span style={{ fontSize: '0.85rem', color: 'var(--text-2, #a1a1aa)', fontStyle: 'italic' }}>
+                  {t('chatThinking') || 'Thinking & synthesizing enterprise context...'}
+                </span>
               </div>
             </div>
           )}
