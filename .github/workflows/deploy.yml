@@ -1,22 +1,15 @@
-name: Deploy to Render
+name: Production Health Verification
 
-# Repo recreation dropped the GitHub→Render push webhook, so this workflow
-# restores auto-deploy: every push to main/master triggers a Render deploy via the API.
 on:
-  push:
-    branches: [main, master, develop]
   workflow_dispatch: {}
 
 jobs:
-  deploy:
+  verify:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Render deploy
+      - name: Verify Live Service Health
         run: |
           code=$(curl -fsS -o /tmp/resp.json -w "%{http_code}" \
-            -X POST "${{ secrets.DEPLOYMENT_API_ENDPOINT }}/services/${{ secrets.SERVICE_ID }}/deploys" \
-            -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_API_KEY }}" \
-            -H "Content-Type: application/json" \
-            -d '{"clearCache":"do_not_clear"}') || { echo "deploy trigger failed"; exit 1; }
-          echo "Deployment responded HTTP $code"
+            "https://intelai.ysiddo-ai-projects.app/health") || { echo "Health check failed"; exit 1; }
+          echo "Production service responded HTTP $code"
           cat /tmp/resp.json
