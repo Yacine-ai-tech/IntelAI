@@ -4,6 +4,7 @@ import { useTranslation } from '../i18n/I18nContext'
 import { Settings, User, SlidersHorizontal, Info, Check, Globe, Database, RefreshCw } from 'lucide-react'
 import { PageHeader, Stat, StatGrid, Grid, Panel } from '../components/ui'
 import * as api from '../api'
+import queryClient from '../QueryClient'
 
 const getScenarios = (t) => [
   { id: 'healthy', label: t('scenHealthyLbl') || 'Healthy', description: t('scenHealthyDesc') || 'Baseline healthy company with strong performance' },
@@ -32,6 +33,7 @@ export default function SettingsPage() {
     try {
       await api.switchScenario(scenarioId)
       setCurrentScenario(scenarioId)
+      queryClient.invalidateQueries()
       save()
     } catch (err) {
       setSeedError(err.response?.data?.detail || err.message || 'Failed to switch scenario')
