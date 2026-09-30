@@ -30,7 +30,7 @@ export default function OrganizationPage() {
         subtitle={t('deptDataDomainsTooltip') || 'Departments, the data domains each owns, and the executive persona that governs each lens.'}
         accent="var(--accent)" />
 
-      {isLoading ? <Loading label={t('loadingOrg') || 'Loading organization…'} /> : (
+      {isLoading && personas.length === 0 ? <Loading label={t('loadingOrg') || 'Loading organization…'} /> : (
         <Panel title={t('execLensesDataDomains') || 'Executive lenses & data domains'} icon={Network}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(280px,1fr))', gap: 12 }}>
             {personas.map(p => {
