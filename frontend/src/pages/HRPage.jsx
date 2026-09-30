@@ -49,8 +49,8 @@ export default function HRPage() {
     retry: 1,
   })
 
-  if (summary.isLoading) return <Loading />
-  if (summary.isError) return <ErrorState />
+  if (summary.isLoading && !summary.data) return <Loading />
+  if (summary.isError && !summary.data) return <ErrorState />
   const s = summary.data || {}
   const r = recruit.data || {}
 

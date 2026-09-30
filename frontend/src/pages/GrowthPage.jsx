@@ -32,8 +32,8 @@ export default function GrowthPage() {
     retry: 1,
   })
 
-  if (isLoading) return <Loading />
-  if (isError) return <ErrorState />
+  if (isLoading && !s) return <Loading />
+  if (isError && !s) return <ErrorState />
   const d = s || {}
 
   return (
