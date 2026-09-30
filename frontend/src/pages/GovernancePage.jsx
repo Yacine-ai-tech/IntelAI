@@ -28,7 +28,7 @@ export default function GovernancePage() {
 
       {/* RBAC */}
       <Panel title={t('rolesPermissions') || 'Roles & permissions'} icon={KeyRound}>
-        {rLoading ? <Loading /> : Object.keys(roles).length === 0 ? <Empty text="No roles defined." /> : (
+        {rLoading && Object.keys(roles).length === 0 ? <Loading /> : Object.keys(roles).length === 0 ? <Empty text="No roles defined." /> : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(240px,1fr))', gap: 12 }}>
             {Object.entries(roles).map(([role, def]) => {
               const actions = def?.actions || def?.permissions || []

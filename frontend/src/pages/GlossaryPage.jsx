@@ -10,7 +10,7 @@ export default function GlossaryPage() {
   const { data: terms = [], isLoading } = useQuery({ queryKey: ['glossary', lang], queryFn: () => api.getGlossary(null, lang).then(r => r.data?.terms || []), retry: 1 })
   const [q, setQ] = useState('')
 
-  if (isLoading) return <Loading />
+  if (isLoading && terms.length === 0) return <Loading />
 
   const filtered = terms.filter(tt => 
     (tt.term || '').toLowerCase().includes(q.toLowerCase()) || 

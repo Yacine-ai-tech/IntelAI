@@ -49,8 +49,8 @@ export default function LogisticsPage() {
     retry: 1,
   })
 
-  if (sum.isLoading) return <Loading />
-  if (sum.isError) return <ErrorState />
+  if (sum.isLoading && !sum.data) return <Loading />
+  if (sum.isError && !sum.data) return <ErrorState />
   const s = sum.data || {}, iv = inv.data || {}, sh = ship.data || {}
 
   return (

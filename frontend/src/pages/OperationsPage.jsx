@@ -55,8 +55,8 @@ export default function OperationsPage() {
     retry: 1,
   })
 
-  if (sum.isLoading) return <Loading />
-  if (sum.isError) return <ErrorState />
+  if (sum.isLoading && !sum.data) return <Loading />
+  if (sum.isError && !sum.data) return <ErrorState />
   const s = sum.data || {}, q = qual.data || {}, p = prod.data || {}, sf = safe.data || {}
 
   return (
