@@ -393,8 +393,8 @@ for that scenario.
 - GraphRAG-lite, as documented in `RESEARCH.md`, is a deterministic keyword-pattern
   extractor, not an LLM-driven entity/relationship pipeline; its accuracy ceiling is that of a
   keyword-substring heuristic.
-- Live production evaluation depends on an on-demand inference backend that is not always warm
-  on first request. Any case failing after retries is reported as a failure, not excluded.
+- Live production evaluation targets production inference backends behind Caddy reverse-proxy.
+  Any case failing after retries is reported as a failure, not excluded.
 - The judge-panel groundedness figure in §3 is affected by real judge-availability variance on
   a subset of cases (§3b); ground-truth accuracy is the more reliable measure of system
   quality from this run.
