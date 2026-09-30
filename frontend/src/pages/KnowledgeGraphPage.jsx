@@ -206,8 +206,8 @@ const FALLBACK_DOCUMENTS = [
   }
 ]
 
-// Custom physics force simulation
-function useForceSimulation(nodes, links, width, height, mode) {
+// Custom physics force simulation with drag support and full-canvas expansion
+function useForceSimulation(nodes, links, width, height, mode, draggedNodeRef) {
   const [positions, setPositions] = useState({})
   
   useEffect(() => {
@@ -221,12 +221,12 @@ function useForceSimulation(nodes, links, width, height, mode) {
     const cy = height / 2
 
     if (mode === 'departments') {
-      // Symmetrical radial ring for 8 departments — use larger radius for clear separation
+      // Symmetrical radial ring for 8 departments — large radius for maximum canvas coverage and clear separation
       const deptNodes = nodes.filter(n => n.type === 'domain')
       deptNodes.forEach((n, i) => {
         const angle = (i / deptNodes.length) * Math.PI * 2 - Math.PI / 2
-        const rx = width * 0.42
-        const ry = height * 0.40
+        const rx = width * 0.44
+        const ry = height * 0.42
         currentPositions[n.id] = {
           x: cx + Math.cos(angle) * rx,
           y: cy + Math.sin(angle) * ry,
@@ -234,14 +234,14 @@ function useForceSimulation(nodes, links, width, height, mode) {
         }
       })
     } else {
-      // General layout — larger radii so nodes start spread out
+      // General layout — larger radii so nodes spread across the full width and height
       nodes.forEach((n, i) => {
         const angle = (i / nodes.length) * Math.PI * 2
-        let radius = 280
+        let radius = 340
         if (n.type === 'query') radius = 0
-        else if (n.type === 'domain') radius = 220 + (i % 2) * 40
-        else if (n.type === 'document') radius = 340 + (i % 3) * 30
-        else if (n.type === 'entity') radius = 460 + (i % 2) * 35
+        else if (n.type === 'domain') radius = 280 + (i % 2) * 60
+        else if (n.type === 'document') radius = 480 + (i % 3) * 60
+        else if (n.type === 'entity') radius = 660 + (i % 2) * 60
 
         currentPositions[n.id] = {
           x: cx + Math.cos(angle) * radius,
@@ -260,10 +260,18 @@ function useForceSimulation(nodes, links, width, height, mode) {
     let alpha = 1.0
 
     const tick = () => {
-      alpha *= 0.94
-      if (alpha < 0.004) return
+      alpha *= 0.95
+      if (alpha < 0.003) return
 
       const nextPositions = { ...currentPositions }
+
+      // If a node is being actively dragged, pin it to the drag position
+      if (draggedNodeRef?.current && nextPositions[draggedNodeRef.current.id]) {
+        nextPositions[draggedNodeRef.current.id].x = draggedNodeRef.current.x
+        nextPositions[draggedNodeRef.current.id].y = draggedNodeRef.current.y
+        nextPositions[draggedNodeRef.current.id].vx = 0
+        nextPositions[draggedNodeRef.current.id].vy = 0
+      }
 
       // Springs — increased target distance for clearer visual separation
       links.forEach(link => {
@@ -273,15 +281,15 @@ function useForceSimulation(nodes, links, width, height, mode) {
         const dx = target.x - source.x
         const dy = target.y - source.y
         const dist = Math.sqrt(dx * dx + dy * dy) || 1
-        const targetDist = link.distance || 220
-        const force = (dist - targetDist) * 0.08 * alpha
+        const targetDist = link.distance || 280
+        const force = (dist - targetDist) * 0.07 * alpha
         const fx = (dx / dist) * force
         const fy = (dy / dist) * force
-        if (link.source !== 'query') { source.vx += fx; source.vy += fy }
-        if (link.target !== 'query') { target.vx -= fx; target.vy -= fy }
+        if (link.source !== 'query' && link.source !== draggedNodeRef?.current?.id) { source.vx += fx; source.vy += fy }
+        if (link.target !== 'query' && link.target !== draggedNodeRef?.current?.id) { target.vx -= fx; target.vy -= fy }
       })
 
-      // Node-to-node repulsion — stronger min distances to prevent node overlap
+      // Node-to-node repulsion — strong min distances to prevent node overlap
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const n1 = nextPositions[nodes[i].id]
@@ -290,28 +298,28 @@ function useForceSimulation(nodes, links, width, height, mode) {
           const dx = n2.x - n1.x
           const dy = n2.y - n1.y
           const dist = Math.sqrt(dx * dx + dy * dy) || 1
-          const minDist = (nodes[i].type === 'document' || nodes[j].type === 'document') ? 280 : 200
+          const minDist = (nodes[i].type === 'document' || nodes[j].type === 'document') ? 340 : 250
           if (dist < minDist) {
-            const force = (minDist - dist) * 0.12 * alpha
+            const force = (minDist - dist) * 0.16 * alpha
             const fx = (dx / dist) * force
             const fy = (dy / dist) * force
-            if (nodes[i].id !== 'query') { n1.vx -= fx; n1.vy -= fy }
-            if (nodes[j].id !== 'query') { n2.vx += fx; n2.vy -= fy }
+            if (nodes[i].id !== 'query' && nodes[i].id !== draggedNodeRef?.current?.id) { n1.vx -= fx; n1.vy -= fy }
+            if (nodes[j].id !== 'query' && nodes[j].id !== draggedNodeRef?.current?.id) { n2.vx += fx; n2.vy += fy }
           }
         }
       }
 
       // Keep within bounds with generous padding
       nodes.forEach(n => {
-        if (n.id === 'query') return
+        if (n.id === 'query' || n.id === draggedNodeRef?.current?.id) return
         const pos = nextPositions[n.id]
         if (!pos) return
         pos.x += pos.vx
         pos.y += pos.vy
         pos.vx *= 0.78
         pos.vy *= 0.78
-        pos.x = Math.max(130, Math.min(width - 130, pos.x))
-        pos.y = Math.max(80, Math.min(height - 80, pos.y))
+        pos.x = Math.max(140, Math.min(width - 140, pos.x))
+        pos.y = Math.max(90, Math.min(height - 90, pos.y))
       })
 
       currentPositions = nextPositions
@@ -323,7 +331,7 @@ function useForceSimulation(nodes, links, width, height, mode) {
     return () => cancelAnimationFrame(animationFrameId)
   }, [nodes, links, width, height, mode])
 
-  return positions
+  return [positions, setPositions]
 }
 
 export default function KnowledgeGraphPage() {
@@ -346,24 +354,39 @@ export default function KnowledgeGraphPage() {
   const [showEntities, setShowEntities] = useState(true)
   const [showDeptLinks, setShowDeptLinks] = useState(true)
   
-  // Zoom level
+  // Zoom & Drag State
   const [zoom, setZoom] = useState(1.0)
+  const svgRef = useRef(null)
+  const draggedNodeRef = useRef(null)
+  const [isDragging, setIsDragging] = useState(false)
 
   // Dynamic canvas dimensions — tracks actual container size via ResizeObserver so the
   // graph always fills the full available width and a tall fraction of the viewport.
   const canvasRef = useRef(null)
-  const [canvasDims, setCanvasDims] = useState({ width: 1400, height: 820 })
+  const [canvasDims, setCanvasDims] = useState({ width: 1400, height: 860 })
   useEffect(() => {
     if (!canvasRef.current) return
+    const updateDims = () => {
+      if (!canvasRef.current) return
+      const rect = canvasRef.current.getBoundingClientRect()
+      const w = Math.max(1100, rect.width || window.innerWidth - 280)
+      const h = Math.max(760, window.innerHeight - 220)
+      setCanvasDims({ width: Math.round(w), height: Math.round(h) })
+    }
+    updateDims()
     const observer = new ResizeObserver(entries => {
       for (const entry of entries) {
-        const w = Math.max(900, entry.contentRect.width)
-        const h = Math.max(600, Math.round(w * 0.60))
-        setCanvasDims({ width: Math.round(w), height: h })
+        const w = Math.max(1100, entry.contentRect.width)
+        const h = Math.max(760, entry.contentRect.height || window.innerHeight - 220)
+        setCanvasDims({ width: Math.round(w), height: Math.round(h) })
       }
     })
     observer.observe(canvasRef.current)
-    return () => observer.disconnect()
+    window.addEventListener('resize', updateDims)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', updateDims)
+    }
   }, [])
   const width = canvasDims.width
   const height = canvasDims.height
@@ -694,7 +717,46 @@ export default function KnowledgeGraphPage() {
     return { nodes: filteredNodes, links: filteredLinks }
   }, [graphData, showDocs, showEntities, showDeptLinks])
 
-  const positions = useForceSimulation(filteredGraph.nodes, filteredGraph.links, width, height, viewMode)
+  const [positions, setPositions] = useForceSimulation(filteredGraph.nodes, filteredGraph.links, width, height, viewMode, draggedNodeRef)
+
+  const handleNodeMouseDown = (e, nodeId) => {
+    e.stopPropagation()
+    const svg = svgRef.current
+    if (!svg) return
+    const rect = svg.getBoundingClientRect()
+    const scaleX = (rect.width / width) * zoom
+    const scaleY = (rect.height / height) * zoom
+    const mouseX = (e.clientX - rect.left) / (rect.width / width)
+    const mouseY = (e.clientY - rect.top) / (rect.height / height)
+    draggedNodeRef.current = { id: nodeId, x: mouseX, y: mouseY }
+    setIsDragging(true)
+  }
+
+  const handleMouseMove = (e) => {
+    if (!draggedNodeRef.current) return
+    const svg = svgRef.current
+    if (!svg) return
+    const rect = svg.getBoundingClientRect()
+    const mouseX = Math.max(90, Math.min(width - 90, (e.clientX - rect.left) / (rect.width / width)))
+    const mouseY = Math.max(60, Math.min(height - 60, (e.clientY - rect.top) / (rect.height / height)))
+    draggedNodeRef.current.x = mouseX
+    draggedNodeRef.current.y = mouseY
+    setPositions(prev => ({
+      ...prev,
+      [draggedNodeRef.current.id]: {
+        ...prev[draggedNodeRef.current.id],
+        x: mouseX,
+        y: mouseY,
+        vx: 0,
+        vy: 0
+      }
+    }))
+  }
+
+  const handleMouseUp = () => {
+    draggedNodeRef.current = null
+    setIsDragging(false)
+  }
 
   // Quick stats
   const stats = useMemo(() => {
@@ -844,7 +906,7 @@ export default function KnowledgeGraphPage() {
       >
         <div
           ref={canvasRef}
-          style={{ position: 'relative', background: '#0b1120', borderRadius: 14, overflow: 'hidden', border: '1px solid #1e293b', minHeight: 600, height: 'calc(100vh - 220px)' }}
+          style={{ position: 'relative', background: '#0b1120', borderRadius: 14, overflow: 'hidden', border: '1px solid #1e293b', minHeight: 740, height: 'calc(100vh - 200px)' }}
         >
           
           {/* Zoom & View Controls */}
@@ -876,14 +938,20 @@ export default function KnowledgeGraphPage() {
           </div>
 
           <svg
+            ref={svgRef}
             viewBox={`0 0 ${width} ${height}`}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
             style={{
               width: '100%',
               height: height,
               display: 'block',
               transform: `scale(${zoom})`,
               transformOrigin: 'center center',
-              transition: 'transform 0.2s ease'
+              transition: isDragging ? 'none' : 'transform 0.2s ease',
+              cursor: isDragging ? 'grabbing' : 'default',
+              userSelect: 'none'
             }}
           >
             <defs>
@@ -1021,8 +1089,9 @@ export default function KnowledgeGraphPage() {
                 return (
                   <g 
                     key={n.id} 
+                    onMouseDown={(e) => handleNodeMouseDown(e, n.id)}
                     onClick={() => { setSelectedNode(n); setSelectedLink(null) }} 
-                    style={{ cursor: 'pointer', pointerEvents: 'all' }}
+                    style={{ cursor: isDragging ? 'grabbing' : 'grab', pointerEvents: 'all' }}
                   >
                     <circle cx={pos.x} cy={pos.y} r={32} fill="#4f46e5" style={{ filter: 'url(#glow-query)' }} />
                     <circle cx={pos.x} cy={pos.y} r={40} fill="none" stroke="#818cf8" strokeWidth={2} strokeDasharray="4 4" opacity={0.7} />
@@ -1054,10 +1123,11 @@ export default function KnowledgeGraphPage() {
                 return (
                   <g 
                     key={n.id} 
+                    onMouseDown={(e) => handleNodeMouseDown(e, n.id)}
                     onClick={() => { setSelectedNode(n); setSelectedLink(null) }} 
                     onMouseEnter={() => setHover(n)} 
                     onMouseLeave={() => setHover(null)} 
-                    style={{ cursor: 'pointer', pointerEvents: 'all' }}
+                    style={{ cursor: isDragging ? 'grabbing' : 'grab', pointerEvents: 'all' }}
                   >
                     {/* Card Base Container */}
                     <rect 
@@ -1145,10 +1215,11 @@ export default function KnowledgeGraphPage() {
                 return (
                   <g 
                     key={n.id} 
+                    onMouseDown={(e) => handleNodeMouseDown(e, n.id)}
                     onClick={() => { setSelectedNode(n); setSelectedLink(null) }} 
                     onMouseEnter={() => setHover(n)} 
                     onMouseLeave={() => setHover(null)} 
-                    style={{ cursor: 'pointer', pointerEvents: 'all' }}
+                    style={{ cursor: isDragging ? 'grabbing' : 'grab', pointerEvents: 'all' }}
                   >
                     {/* Domain Card / Hexagon Pill */}
                     <rect 
@@ -1200,10 +1271,11 @@ export default function KnowledgeGraphPage() {
                 return (
                   <g 
                     key={n.id} 
+                    onMouseDown={(e) => handleNodeMouseDown(e, n.id)}
                     onClick={() => { setSelectedNode(n); setSelectedLink(null) }} 
                     onMouseEnter={() => setHover(n)} 
                     onMouseLeave={() => setHover(null)} 
-                    style={{ cursor: 'pointer', pointerEvents: 'all' }}
+                    style={{ cursor: isDragging ? 'grabbing' : 'grab', pointerEvents: 'all' }}
                   >
                     <rect 
                       x={pos.x - entW / 2} 
