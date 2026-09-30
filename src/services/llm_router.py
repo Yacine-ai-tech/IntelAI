@@ -32,6 +32,30 @@ REASONING_MODEL = os.getenv("LLM_REASONING", "anthropic/claude-sonnet-4-6")
 JUDGE_MODEL = os.getenv("LLM_JUDGE", "anthropic/claude-haiku-4-5")
 LOCAL_MODEL = os.getenv("LLM_LOCAL", "ollama/llama3.3")
 
+# Fallback models — set ONLY in VPS .env when the primary provider key is unavailable.
+# Never hardcoded here; cloners without a fallback simply get the primary behaviour.
+# Example VPS .env: LLM_REASONING_FALLBACK=groq/moonshotai/kimi-k2-instruct
+REASONING_FALLBACK = os.getenv("LLM_REASONING_FALLBACK", "")
+JUDGE_FALLBACK = os.getenv("LLM_JUDGE_FALLBACK", "")
+DEFAULT_FALLBACK = os.getenv("LLM_DEFAULT_FALLBACK", "")
+
+_AUTH_ERRORS = (
+    "AuthenticationError", "PermissionDeniedError", "AuthorizationError",
+    "401", "403", "invalid_api_key", "invalid api key",
+)
+
+
+def _is_auth_error(exc: Exception) -> bool:
+    """Return True when the exception indicates a missing or invalid API key."""
+    msg = str(exc).lower()
+    type_name = type(exc).__name__
+    return any(e.lower() in msg or e.lower() in type_name.lower() for e in _AUTH_ERRORS)
+
+
+def _fallback_for(tier: str) -> str:
+    """Return the configured fallback model for a tier (empty string = none configured)."""
+    return {"reasoning": REASONING_FALLBACK, "judge": JUDGE_FALLBACK}.get(tier, DEFAULT_FALLBACK)
+
 
 PERSONA_TIER_MAP: Dict[str, str] = {
     "ceo": "reasoning",
@@ -108,16 +132,21 @@ async def llm_call(
         return {"choices": [{"message": {"content": "stub: litellm not installed"}}], "model": model}
 
     messages = _apply_cache_control(messages, model)
-    # Same LLM_TIMEOUT contract as omnismart_chatbot.py's llm_complete() — without it an
-    # unbounded litellm call can hang indefinitely (confirmed elsewhere in this codebase
-    # as a 9-hour-hang bug in RAGeval's judge path before that one got this same fix).
     params: Dict[str, Any] = {
         "model": model, "messages": messages, "temperature": temperature,
         "timeout": float(os.getenv("LLM_TIMEOUT", "30")), **kwargs,
     }
     if max_tokens:
         params["max_tokens"] = max_tokens
-    return await acompletion(**params)
+    try:
+        return await acompletion(**params)
+    except Exception as exc:
+        fallback = _fallback_for(tier)
+        if fallback and _is_auth_error(exc):
+            log.warning("Primary model %s auth failed (%s); retrying with fallback %s", model, type(exc).__name__, fallback)
+            fb_params = {**params, "model": fallback, "messages": _apply_cache_control(messages, fallback)}
+            return await acompletion(**fb_params)
+        raise
 
 
 def llm_call_sync(
@@ -144,4 +173,12 @@ def llm_call_sync(
     }
     if max_tokens:
         params["max_tokens"] = max_tokens
-    return completion(**params)
+    try:
+        return completion(**params)
+    except Exception as exc:
+        fallback = _fallback_for(tier)
+        if fallback and _is_auth_error(exc):
+            log.warning("Primary model %s auth failed (%s); retrying with fallback %s", model, type(exc).__name__, fallback)
+            fb_params = {**params, "model": fallback, "messages": _apply_cache_control(messages, fallback)}
+            return completion(**fb_params)
+        raise
