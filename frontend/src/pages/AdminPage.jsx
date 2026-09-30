@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import { PageHeader, Stat, StatGrid, Loading, Panel } from '../components/ui'
 import { reindexVectors, cleanupData } from '../api'
+import queryClient from '../QueryClient'
 
 const SCENARIOS = [
   { id: 'healthy',               label: 'Healthy',                desc: 'S&P 500 baseline — all green metrics.' },
@@ -117,6 +118,7 @@ export default function AdminPage() {
     try {
       await api.switchScenario(id)
       setActiveScenario(id)
+      queryClient.invalidateQueries()
       setScenarioMsg(`✓ Switched to "${SCENARIOS.find(s => s.id === id)?.label}" — data refreshed.`)
     } catch (err) {
       setScenarioMsg(`✗ ${err.response?.data?.detail || 'Scenario switch failed'}`)
