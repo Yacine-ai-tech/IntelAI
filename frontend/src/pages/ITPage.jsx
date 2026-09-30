@@ -50,8 +50,8 @@ export default function ITPage() {
     retry: 1,
   })
 
-  if (ov.isLoading) return <Loading />
-  if (ov.isError) return <ErrorState />
+  if (ov.isLoading && !ov.data) return <Loading />
+  if (ov.isError && !ov.data) return <ErrorState />
   const o = ov.data || {}, s = sec.data || {}, d = dev.data || {}
 
   return (

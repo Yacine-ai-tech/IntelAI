@@ -32,8 +32,8 @@ export default function ESGPage() {
     retry: 1,
   })
 
-  if (isLoading) return <Loading />
-  if (isError) return <ErrorState />
+  if (isLoading && !data) return <Loading />
+  if (isError && !data) return <ErrorState />
   const d = data || {}
   const env = d.environment || {}, soc = d.social || {}, gov = d.governance || {}
   const score = Math.round(d.score ?? 0)
