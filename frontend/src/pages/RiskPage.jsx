@@ -34,8 +34,8 @@ export default function RiskPage() {
   const anom = useQuery({ queryKey: ['anomalies'], queryFn: () => api.getAnomalies().then(r => r.data?.anomalies || []), retry: 1 })
   const health = useQuery({ queryKey: ['health'], queryFn: () => api.getHealth().then(r => r.data), retry: 1 })
 
-  if (risk.isLoading) return <Loading />
-  if (risk.isError) return <ErrorState />
+  if (risk.isLoading && !risk.data) return <Loading />
+  if (risk.isError && !risk.data) return <ErrorState />
   const r = risk.data || {}
   const radar = [
     { subject: 'Liquidity', value: r.liquidity_score ?? 0 },

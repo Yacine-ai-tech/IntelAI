@@ -133,8 +133,10 @@ export default function DashboardPage() {
   })
 
   const loading = kpisLoading || healthLoading || summaryLoading
-  const dashboardError = kpisError || healthError || summaryError
+  const hasExistingData = kpis.length > 0 || !!health || !!summary
+  const dashboardError = (kpisError || healthError || summaryError) && !hasExistingData
   if (dashboardError) return <ErrorState />
+  const initialLoading = loading && !hasExistingData
 
   const fmt = (val) => {
     if (typeof val !== 'number') return val || '—'
@@ -191,7 +193,7 @@ export default function DashboardPage() {
         </button>
       </div>
 
-      {loading ? (
+      {initialLoading ? (
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'var(--text-2)', padding: 40 }}>
           <div className="spinner" /> {t('loadingDashboard') || 'Loading…'}
         </div>
