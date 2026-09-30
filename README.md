@@ -75,7 +75,7 @@ adjusted:
 
 | Variable | Required | Description |
 |---|---|---|
-| `POSTGRES_URL` | Yes | Neon, Render, or local Postgres |
+| `POSTGRES_URL` | Yes | Neon or self-hosted Postgres |
 | `GROQ_API_KEY` | Yes | Default-tier LLM provider key |
 | `SECRET_KEY` | Yes | JWT signing key |
 | `REQUIRE_INTERNAL_TOKEN` | No | Set `false` for standalone self-hosting — see [SELF_HOSTING.md](SELF_HOSTING.md) |
@@ -148,8 +148,8 @@ out-of-sample forecast backtest, and a knowledge-graph coverage measurement — 
 ## Deploy
 
 IntelAI deploys as one containerized service — build the included `Dockerfile` and run it on
-any host that honors `$PORT` (a VPS with Docker Compose, Fly.io, Render, and similar),
-set the environment variables above, and attach a managed Postgres instance. Deploy the
+any host that honors `$PORT` (a Linux VPS with Docker Compose, Kubernetes, Fly.io, and similar),
+set the environment variables above, and attach a managed Postgres instance (e.g. Neon). Deploy the
 frontend separately (Vercel, Netlify, or as static files) with `VITE_API_BASE_URL` pointing to
 the backend, and keep `VITE_USE_WS=false` in production to use the resilient `/chat/async`
 job-and-poll path by default. See [SELF_HOSTING.md](SELF_HOSTING.md) for a full walkthrough.
