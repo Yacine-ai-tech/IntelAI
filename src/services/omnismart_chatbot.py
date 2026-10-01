@@ -428,7 +428,7 @@ class UltraFastRAG:
             if _SBERT and "embedding" in docs.columns:
                 try:
                     if self.embedding_model is None and os.getenv("INFERENCE_MODE", "remote").lower() != "remote":
-                        self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL or "all-MiniLM-L6-v2")
+                        self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL or "BAAI/bge-m3")
                     if self.embedding_model:
                         query_embedding = self.embedding_model.encode([query])[0]
                     else:
