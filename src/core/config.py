@@ -120,7 +120,7 @@ class Settings:
 
     # Embedding / RAG
     EMBEDDING_MODEL: str = field(
-        default_factory=lambda: os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+        default_factory=lambda: os.getenv("EMBEDDING_MODEL", "BAAI/bge-m3")
     )
     CHROMA_COLLECTION: str = "company_knowledge"
     QDRANT_COLLECTION: str = field(
