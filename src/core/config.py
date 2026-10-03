@@ -46,9 +46,7 @@ class Settings:
 
     # PostgreSQL — primary and only database
     POSTGRES_URL: str = field(
-        default_factory=lambda: os.getenv(
-            "POSTGRES_URL", "postgresql://intelai:change_me@localhost:5432/intelai"
-        )
+        default_factory=lambda: os.getenv("POSTGRES_URL", "")
     )
 
     # API keys — required; validated at startup
@@ -99,7 +97,7 @@ class Settings:
 
     # Security
     SECRET_KEY: str = field(
-        default_factory=lambda: os.getenv("SECRET_KEY", "change-me-in-production")
+        default_factory=lambda: os.getenv("SECRET_KEY", "")
     )
     SESSION_TIMEOUT: int = field(default_factory=lambda: int(os.getenv("SESSION_TIMEOUT", "3600")))
 
@@ -168,9 +166,13 @@ def validate_required_keys() -> None:
             "Set them in .env before starting the platform."
         )
 
-    if settings.ENVIRONMENT == "production" and settings.SECRET_KEY == "change-me-in-production":
+    if settings.ENVIRONMENT == "production" and (
+        not settings.SECRET_KEY
+        or len(settings.SECRET_KEY) < 16
+        or settings.SECRET_KEY in ("change-me-in-production", "change_this_to_a_secure_random_string_in_production")
+    ):
         raise EnvironmentError(
-            "Insecure SECRET_KEY for production environment. "
+            "Insecure or missing SECRET_KEY for production environment. "
             "Set a strong random SECRET_KEY in .env."
         )
 

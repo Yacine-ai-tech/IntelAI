@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import hashlib
+import os
 
 from cryptography.fernet import Fernet
 
@@ -15,7 +16,11 @@ def _derive_key(secret: str) -> bytes:
 
 
 def get_fernet() -> Fernet:
-    key = _derive_key(settings.SECRET_KEY or 'change-me-in-production')
+    secret = settings.SECRET_KEY or os.getenv("SECRET_KEY", "")
+    if not secret:
+        # Ephemeral dev fallback when SECRET_KEY is omitted in local dev/tests
+        secret = os.getenv("SESSION_SECRET", os.getenv("HOSTNAME", "intelai-local-dev-fallback-key"))
+    key = _derive_key(secret)
     return Fernet(key)
 
 
