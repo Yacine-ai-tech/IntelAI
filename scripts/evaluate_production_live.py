@@ -62,7 +62,7 @@ except ImportError:
     print("The `rageval` package isn't installed. Run: pip install omnismart-rageval", file=sys.stderr)
     sys.exit(1)
 
-GATEWAY = os.getenv("PROD_GATEWAY_URL", "[YOUR_APP]").rstrip("/")
+GATEWAY = os.getenv("PROD_GATEWAY_URL", os.getenv("FASTAPI_URL", "http://localhost:8000")).rstrip("/")
 
 # Best-effort model for RAGeval's cost_usd pricing lookup (see the comment at its use
 # below) — production's own configured default, not a per-case exact match.
