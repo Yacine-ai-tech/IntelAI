@@ -4,19 +4,19 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/intelai.svg)](https://pypi.org/project/intelai/)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://python.org)
-[![Live App](https://img.shields.io/badge/Live_App-intelai--ui-0070f3?style=flat&logo=vercel)](https://intelai-ui-2026.vercel.app)
-[![Research](https://img.shields.io/badge/Research-Empirical_Methods-8a2be2?style=flat)](https://intelai-ui-2026.vercel.app/research)
-[![Benchmarks](https://img.shields.io/badge/Benchmarks-Backtest_4.64%25-green?style=flat)](https://intelai-ui-2026.vercel.app/benchmark)
-[![Guide](https://img.shields.io/badge/Docs-User_Guide-blue?style=flat)](https://intelai-ui-2026.vercel.app/guide)
+[![Live App](https://img.shields.io/badge/Live_App-intelai-0070f3?style=flat)](https://intelai.ysiddo-ai-projects.app)
+[![Research](https://img.shields.io/badge/Research-Empirical_Methods-8a2be2?style=flat)](https://intelai.ysiddo-ai-projects.app/research)
+[![Benchmarks](https://img.shields.io/badge/Benchmarks-Backtest_4.64%25-green?style=flat)](https://intelai.ysiddo-ai-projects.app/benchmark)
+[![Guide](https://img.shields.io/badge/Docs-User_Guide-blue?style=flat)](https://intelai.ysiddo-ai-projects.app/guide)
 
 **Persona-aware AI analytics and RAG copilot.** A nine-persona, role-scoped analytics
 assistant with hybrid retrieval, a lightweight knowledge graph for multi-hop queries, classical
 forecasting, and board-ready exports, over 146 curated KPIs.
 
-**Live Application:** [intelai-ui-2026.vercel.app](https://intelai-ui-2026.vercel.app) (also accessible at [intelai.ysiddo-ai-projects.app](https://intelai.ysiddo-ai-projects.app)) — role-based access control with live persona scoping.
-- **Research Background:** [`RESEARCH.md`](RESEARCH.md) / [Online Research Documentation](https://intelai-ui-2026.vercel.app/research)
-- **Empirical Benchmarks:** [`BENCHMARK.md`](BENCHMARK.md) / [Online Benchmark Dashboard](https://intelai-ui-2026.vercel.app/benchmark)
-- **User Guide:** [Online User Guide](https://intelai-ui-2026.vercel.app/guide)
+**Live Application:** [intelai.ysiddo-ai-projects.app](https://intelai.ysiddo-ai-projects.app) — role-based access control with live persona scoping.
+- **Research Background:** [`RESEARCH.md`](RESEARCH.md) / [Online Research Documentation](https://intelai.ysiddo-ai-projects.app/research)
+- **Empirical Benchmarks:** [`BENCHMARK.md`](BENCHMARK.md) / [Online Benchmark Dashboard](https://intelai.ysiddo-ai-projects.app/benchmark)
+- **User Guide:** [Online User Guide](https://intelai.ysiddo-ai-projects.app/guide)
 - **Self-Hosting Guide:** [`SELF_HOSTING.md`](SELF_HOSTING.md)
 
 ## Features
