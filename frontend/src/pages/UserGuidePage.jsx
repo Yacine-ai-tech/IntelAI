@@ -61,6 +61,8 @@ const NAV_SECTIONS = [
       { label: 'Governance', detail: 'RBAC role table, audit-trail visibility, and platform governance controls (admin role).' },
       { label: 'Admin', detail: 'User management, benchmarking scenarios, vector-store reindex, safe data cleanup (admin role).' },
       { label: 'Settings', detail: 'Personal preferences — language, and per-user configuration.' },
+      { label: 'Research', detail: 'Architectural research background, theoretical grounding, IR formulation, and academic citations.' },
+      { label: 'Benchmarks', detail: 'Empirical validation: forecasting backtest (4.64% APE), GraphRAG entity coverage (100%), and RBAC boundary tests.' },
     ],
   },
 ]
