@@ -23,6 +23,6 @@ build: ## Build the app image
 	docker build -t intelai:latest .
 
 deploy-info: ## How IntelAI deploys
-	@echo "IntelAI deploys as ONE cloud service built from the Dockerfile (see render.yaml)."
-	@echo "Render/Fly: connect the repo; set env vars POSTGRES_URL, GROQ_API_KEY,"
-	@echo "ANTHROPIC_API_KEY, TAVILY_API_KEY, SECRET_KEY. Frontend deploys separately (Vercel/Netlify)."
+	@echo "IntelAI deploys as a containerized service built from the Dockerfile."
+	@echo "Production backend runs on Contabo VPS behind Caddy/Cloudflare Edge with Neon Postgres & Qdrant."
+	@echo "Frontend deploys separately to Vercel (https://intelai-ui-2026.vercel.app)."
