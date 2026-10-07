@@ -31,6 +31,8 @@ import GrowthPage from './pages/GrowthPage'
 import GlossaryPage from './pages/GlossaryPage'
 import ApiDocs from './pages/ApiDocs'
 import UserGuidePage from './pages/UserGuidePage'
+import ResearchPage from './pages/ResearchPage'
+import BenchmarkPage from './pages/BenchmarkPage'
 
 function ProtectedRoute({ children, page }) {
   const { isAuthenticated, loading, hasPage } = useAuth()
@@ -107,6 +109,10 @@ export default function App() {
         <Route path="knowledge" element={<ProtectedRoute page="analytics"><KnowledgePage /></ProtectedRoute>} />
         <Route path="glossary" element={<ProtectedRoute page="analytics"><GlossaryPage /></ProtectedRoute>} />
         <Route path="user-guide" element={<ProtectedRoute page="assistant"><UserGuidePage /></ProtectedRoute>} />
+        <Route path="guide" element={<Navigate to="/user-guide" replace />} />
+        <Route path="research" element={<ProtectedRoute page="assistant"><ResearchPage /></ProtectedRoute>} />
+        <Route path="benchmark" element={<ProtectedRoute page="assistant"><BenchmarkPage /></ProtectedRoute>} />
+        <Route path="benchmarks" element={<Navigate to="/benchmark" replace />} />
         <Route path="api-docs" element={<ProtectedRoute page="assistant"><ApiDocs /></ProtectedRoute>} />
       </Route>
       
