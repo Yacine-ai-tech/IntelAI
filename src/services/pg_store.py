@@ -75,6 +75,14 @@ _pool = None
 _pool_lock = None
 
 
+def _get_pooler_url(url: str) -> str:
+    """Enforce Neon PgBouncer -pooler endpoint to eliminate TCP/TLS handshake latency."""
+    if not url or "-pooler" in url or "neon.tech" not in url:
+        return url
+    import re
+    return re.sub(r'(@ep-[a-z0-9-]+)(\.[a-z0-9-.]*neon\.tech)', r'\1-pooler\2', url)
+
+
 def _init_pool():
     """Initialize a persistent connection pool for Neon PostgreSQL.
     
@@ -93,10 +101,13 @@ def _init_pool():
             return _pool
         try:
             from psycopg_pool import ConnectionPool
+            pool_url = _get_pooler_url(settings.POSTGRES_URL)
             _pool = ConnectionPool(
-                settings.POSTGRES_URL,
+                pool_url,
                 min_size=2,
-                max_size=8,
+                max_size=10,
+                max_idle=300,
+                timeout=10.0,
                 # Every DB call in this module is synchronous and invoked directly from
                 # async route handlers (no to_thread/executor) — a query that hangs
                 # therefore blocks the single event loop for every concurrent request,
@@ -109,11 +120,12 @@ def _init_pool():
                 open=False,
                 reconnect_timeout=30,
                 reconnect_failed=None,
+                check=ConnectionPool.check_connection,
             )
             # Open the pool in the background so it doesn't block startup
             import threading
             threading.Thread(target=_pool.open, daemon=True).start()
-            log.info("✅ Neon connection pool initialized (min=2, max=8, lazy open)")
+            log.info("✅ Neon connection pool initialized (min=2, max=10, pooler enabled, lazy open)")
         except ImportError:
             log.warning("⚠️ psycopg_pool not installed — falling back to per-call connections (slower)")
             _pool = False  # Mark as unavailable, fall through to direct connect
@@ -227,7 +239,7 @@ def _get_conn():
     import time
     for attempt in range(3):
         try:
-            return psycopg.connect(settings.POSTGRES_URL, row_factory=dict_row, connect_timeout=15,
+            return psycopg.connect(_get_pooler_url(settings.POSTGRES_URL), row_factory=dict_row, connect_timeout=15,
                                     options="-c statement_timeout=30000")
         except Exception as e:
             if attempt == 2:
