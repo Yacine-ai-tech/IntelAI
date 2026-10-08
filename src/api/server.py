@@ -209,6 +209,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi.middleware.gzip import GZipMiddleware
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+
 # Serve static files (logo, etc.)
 import os as _os
 _static_dir = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.dirname(__file__))), "static")
@@ -620,13 +623,19 @@ def _health_vector_store_check() -> str:
         return f"unreachable: {e}"
 
 
+_HEALTH_CACHE_LOCK = threading.Lock()
+_HEALTH_CACHE_TIME = 0.0
+_HEALTH_CACHE_DATA = None
+
+
 @app.get("/health")
 async def health_check():
-    # The configured Render + docker-compose health check — previously a hardcoded
-    # "postgresql" string regardless of whether the DB was actually reachable, so a
-    # dead connection pool never showed up here. Bounded so a slow DB can't make this
-    # endpoint itself the timeout; still returns 200 (informational, not a hard gate)
-    # to avoid turning a transient DB hiccup into a restart storm.
+    global _HEALTH_CACHE_TIME, _HEALTH_CACHE_DATA
+    now = time.time()
+    with _HEALTH_CACHE_LOCK:
+        if _HEALTH_CACHE_DATA is not None and (now - _HEALTH_CACHE_TIME) < 5.0:
+            return _HEALTH_CACHE_DATA
+
     try:
         db_status, vs_status = await asyncio.wait_for(
             asyncio.gather(
@@ -637,7 +646,7 @@ async def health_check():
         )
     except asyncio.TimeoutError:
         db_status = vs_status = "timeout"
-    return {
+    result = {
         "status": "healthy" if db_status == "ok" else "degraded",
         "service": "IntelAI API",
         "version": "2026.3.0",
@@ -645,6 +654,10 @@ async def health_check():
         "database": db_status,
         "vector_store": vs_status,
     }
+    with _HEALTH_CACHE_LOCK:
+        _HEALTH_CACHE_TIME = now
+        _HEALTH_CACHE_DATA = result
+    return result
 
 
 @app.get("/api/v1/status")
