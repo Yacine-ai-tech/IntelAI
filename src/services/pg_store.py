@@ -116,7 +116,7 @@ def _init_pool():
                 # 5+ minutes because of this. A server-side statement_timeout turns an
                 # indefinite hang into a bounded failure instead of fixing the
                 # underlying blocking-call architecture, which this alone does not.
-                kwargs={"row_factory": dict_row, "options": "-c statement_timeout=30000"},
+                kwargs={"row_factory": dict_row},
                 open=False,
                 reconnect_timeout=30,
                 reconnect_failed=None,
@@ -239,8 +239,7 @@ def _get_conn():
     import time
     for attempt in range(3):
         try:
-            return psycopg.connect(_get_pooler_url(settings.POSTGRES_URL), row_factory=dict_row, connect_timeout=15,
-                                    options="-c statement_timeout=30000")
+            return psycopg.connect(_get_pooler_url(settings.POSTGRES_URL), row_factory=dict_row, connect_timeout=15)
         except Exception as e:
             if attempt == 2:
                 log.error("Failed to connect to PostgreSQL after 3 attempts: %s", e)
