@@ -45,11 +45,16 @@ api.interceptors.response.use(
     if (config) {
       config.__retryCount = config.__retryCount || 0;
       const status = error.response ? error.response.status : null;
-      // Retry on network errors or 502, 503, 504 (Cloudflare auto-wake)
-      if (!status || status >= 500) {
-        if (config.__retryCount < 5) {
+      const url = config.url || '';
+      const isAuthEndpoint = url.includes('/auth/') || url.startsWith('auth/');
+
+      // Only retry transient gateway wake errors (502, 503, 504), never 500 application errors
+      // and NEVER retry on authentication endpoints to prevent indefinite login spinners
+      const isWakeError = status === 502 || status === 503 || status === 504 || (!status && error.code !== 'ECONNABORTED');
+      if (!isAuthEndpoint && !config.noRetry && isWakeError) {
+        if (config.__retryCount < 2) {
           config.__retryCount += 1;
-          await delay(2000 * config.__retryCount);
+          await delay(1000 * config.__retryCount);
           return api(config);
         }
       }
@@ -66,12 +71,12 @@ api.interceptors.response.use(
 
 // ── Auth ────────────────────────────────────────────────
 export const login = (username, password) =>
-  api.post('/auth/login', { username, password })
+  api.post('/auth/login', { username, password }, { timeout: 15000, noRetry: true })
 export const demoLogin = (role) =>
-  api.post(`/auth/demo-login?role=${encodeURIComponent(role)}`)
+  api.post(`/auth/demo-login?role=${encodeURIComponent(role)}`, null, { timeout: 15000, noRetry: true })
 
 export const register = (username, password, role = 'viewer') =>
-  api.post('/auth/register', { username, password, role })
+  api.post('/auth/register', { username, password, role }, { timeout: 15000, noRetry: true })
 
 export const getMe = () => api.get('/auth/me')
 
