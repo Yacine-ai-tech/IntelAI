@@ -27,7 +27,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://gateway.ysiddo-ai-projects.app" crossorigin />
+    <link rel="dns-prefetch" href="https://gateway.ysiddo-ai-projects.app" />
+    <script>
+      (function() {
+        if (window.location.hostname.endsWith('.vercel.app')) {
+          window.location.replace('https://intelai.ysiddo-ai-projects.app' + window.location.pathname + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
