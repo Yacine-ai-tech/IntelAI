@@ -196,52 +196,77 @@ def llm_complete(
     resolved model string is returned too so callers (e.g. RAGeval dogfood logging)
     can attribute cost/quality to the model that actually served the request.
     """
-    from src.services.llm_router import _resolve, PERSONA_TIER_MAP, _apply_cache_control, _tune_params_for_model
+    from src.services.llm_router import (
+        _resolve,
+        PERSONA_TIER_MAP,
+        _apply_cache_control,
+        _tune_params_for_model,
+        _fallback_for,
+        _should_fallback,
+    )
 
     tier = "default"
     if persona_name and persona_name.lower() in PERSONA_TIER_MAP:
         tier = PERSONA_TIER_MAP[persona_name.lower()]
 
     resolved_model = model or _resolve(tier)
-    # Neither the Groq SDK nor LiteLLM bound this by default — a provider having
-    # connectivity trouble hung the whole chat request (confirmed live: >2 min on a
-    # single message) with nothing in this codebase to cut it short.
-    timeout_s = float(os.getenv("LLM_TIMEOUT", "30"))
+    timeout_s = float(os.getenv("LLM_TIMEOUT", "15"))
 
-    # Fast path: use native Groq SDK if resolved model is a Groq model
-    client = _groq_client()
-    if resolved_model.startswith("groq/") and client is not None:
-        actual_model = resolved_model.replace("groq/", "")
-        kw: Dict[str, Any] = {"model": actual_model, "messages": messages,
-                              "temperature": temperature, "max_tokens": max_tokens,
-                              "timeout": timeout_s}
-        if top_p is not None:
+    def _execute(target_model: str) -> Tuple[str, int, str]:
+        # Fast path: use native Groq SDK if resolved model is a Groq model
+        client = _groq_client()
+        if target_model.startswith("groq/") and client is not None:
+            actual_model = target_model.replace("groq/", "")
+            kw: Dict[str, Any] = {
+                "model": actual_model,
+                "messages": messages,
+                "temperature": temperature,
+                "max_tokens": max_tokens,
+                "timeout": timeout_s,
+            }
+            if top_p is not None:
+                kw["top_p"] = top_p
+            r = client.chat.completions.create(**kw)
+            tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
+            return r.choices[0].message.content, tokens, target_model
+
+        # Any other provider → LiteLLM
+        if not _LITELLM_READY or _litellm_completion is None:
+            raise RuntimeError("LiteLLM is not installed or available")
+        msgs = _apply_cache_control(messages, target_model)
+        kw = {
+            "model": target_model,
+            "messages": msgs,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+            "timeout": timeout_s,
+        }
+        if top_p is not None and "claude" not in target_model.lower():
             kw["top_p"] = top_p
-        r = client.chat.completions.create(**kw)
-        tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
-        return r.choices[0].message.content, tokens, resolved_model
+        kw = _tune_params_for_model(kw, target_model)
+        r = _litellm_completion(**kw)
+        text = r.choices[0].message.content
+        usage = getattr(r, "usage", None)
+        tokens = getattr(usage, "total_tokens", 0) if usage else 0
+        return text, tokens, target_model
 
-    # Any other provider → LiteLLM
-    if not _LITELLM_READY or _litellm_completion is None:
-        raise RuntimeError("LiteLLM is not installed or available")
-    msgs = _apply_cache_control(messages, resolved_model)
-    kw = {"model": resolved_model, "messages": msgs, "temperature": temperature,
-          "max_tokens": max_tokens, "timeout": timeout_s}
-    # Claude rejects a request that sets both temperature and top_p ("cannot both be
-    # specified for this model") — every other provider here accepts both, so this is
-    # scoped to Claude specifically rather than dropping top_p for everyone. Checked
-    # against the model name itself, not the routing prefix: the same Claude model
-    # hits this restriction whether reached as anthropic/claude-... (native API) or
-    # openai/anthropic/claude-... (an OpenAI-compatible gateway in front of it) —
-    # confirmed live via the openai/ path, which a prefix-only check misses.
-    if top_p is not None and "claude" not in resolved_model.lower():
-        kw["top_p"] = top_p
-    kw = _tune_params_for_model(kw, resolved_model)
-    r = _litellm_completion(**kw)
-    text = r.choices[0].message.content
-    usage = getattr(r, "usage", None)
-    tokens = getattr(usage, "total_tokens", 0) if usage else 0
-    return text, tokens, resolved_model
+    try:
+        return _execute(resolved_model)
+    except Exception as exc:
+        fallback = _fallback_for(tier)
+        if fallback and fallback != resolved_model and _should_fallback(exc):
+            log.warning(
+                "Primary chat model %s failed (%s); retrying with fallback %s",
+                resolved_model,
+                type(exc).__name__,
+                fallback,
+            )
+            try:
+                return _execute(fallback)
+            except Exception as fb_exc:
+                log.error("Fallback chat model %s also failed: %s", fallback, fb_exc)
+                raise
+        raise
 
 
 async def llm_stream(
@@ -266,7 +291,7 @@ async def llm_stream(
         tier = PERSONA_TIER_MAP[persona_name.lower()]
 
     resolved_model = model or _resolve(tier)
-    timeout_s = float(os.getenv("LLM_TIMEOUT", "60"))
+    timeout_s = float(os.getenv("LLM_TIMEOUT", "15"))
 
     # Groq native streaming path
     client = _groq_client()
