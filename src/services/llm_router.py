@@ -111,6 +111,8 @@ def _tune_params_for_model(params: Dict[str, Any], model_name: str) -> Dict[str,
             out["temperature"] = 1.0
         if out.get("max_tokens") is not None and out["max_tokens"] < 1024:
             out["max_tokens"] = 1024
+        if "timeout" in out:
+            out["timeout"] = max(float(out["timeout"]), 60.0)
     return out
 
 
