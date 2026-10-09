@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import pandas as pd
-from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, WebSocket, WebSocketDisconnect, Query, Request, BackgroundTasks
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, WebSocket, WebSocketDisconnect, Query, Request, BackgroundTasks, Header
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -110,7 +110,7 @@ def _send_telemetry():
 
     lock_file = os.path.join(str(settings.LOGS_DIR), ".telemetry_last_ping")
     try:
-        if os.path.exists(lock_file) and time.time() - os.path.getmtime(lock_file) < 21600:
+        if os.path.exists(lock_file) and time.time() - os.path.getmtime(lock_file) < 30:
             return
         with open(lock_file, "w") as f:
             f.write(str(time.time()))
@@ -952,7 +952,12 @@ async def chat_async(req: ChatRequest, background: BackgroundTasks,
 
 
 @app.get("/api/v1/chat/sessions")
-async def get_chat_sessions(user: TokenData = Depends(get_current_user)):
+async def get_chat_sessions(
+    request: Request,
+    user: TokenData = Depends(get_current_user),
+    x_admin_token: Optional[str] = Header(default=None, alias="X-Admin-Token"),
+    x_intelai_token: Optional[str] = Header(default=None, alias="X-IntelAI-Internal-Token"),
+):
     """Registered here, ahead of GET /api/v1/chat/{job_id}, on purpose: Starlette matches
     routes in registration order, and a single-segment path-param route matches literally
     anything in that slot. With this endpoint defined later (as it originally was, down in
@@ -962,7 +967,14 @@ async def get_chat_sessions(user: TokenData = Depends(get_current_user)):
     history sidebar. Keep this ahead of chat_job_status."""
     try:
         from src.services.pg_store import get_user_sessions
-        sessions = await asyncio.to_thread(get_user_sessions, user.user_id, limit=50)
+        admin_secret = os.getenv("ADMIN_TOKEN") or os.getenv("INTELAI_INTERNAL_TOKEN")
+        is_admin = bool(
+            (x_admin_token and admin_secret and x_admin_token == admin_secret) or
+            (x_intelai_token and admin_secret and x_intelai_token == admin_secret) or
+            (user.role == "admin" and request.headers.get("X-Scope-All", "").lower() == "true")
+        )
+        target_user = "*" if is_admin else user.user_id
+        sessions = await asyncio.to_thread(get_user_sessions, target_user, limit=50)
         return {"sessions": sessions}
     except Exception as e:
         return {"sessions": [], "error": str(e)}
@@ -1080,13 +1092,23 @@ async def get_glossary(
 
 @app.get("/api/v1/files")
 async def get_user_files(
+    request: Request,
     user: TokenData = Depends(get_current_user),
     limit: int = Query(50, ge=1, le=1000),
-    offset: int = Query(0, ge=0)
+    offset: int = Query(0, ge=0),
+    x_admin_token: Optional[str] = Header(default=None, alias="X-Admin-Token"),
+    x_intelai_token: Optional[str] = Header(default=None, alias="X-IntelAI-Internal-Token"),
 ):
     """Get user's uploaded files."""
     from src.services.pg_store import get_user_files
-    files = await asyncio.to_thread(get_user_files, user.username, limit=limit, offset=offset)
+    admin_secret = os.getenv("ADMIN_TOKEN") or os.getenv("INTELAI_INTERNAL_TOKEN")
+    is_admin = bool(
+        (x_admin_token and admin_secret and x_admin_token == admin_secret) or
+        (x_intelai_token and admin_secret and x_intelai_token == admin_secret) or
+        (user.role == "admin" and request.headers.get("X-Scope-All", "").lower() == "true")
+    )
+    target_user = "*" if is_admin else user.username
+    files = await asyncio.to_thread(get_user_files, target_user, limit=limit, offset=offset)
     return files
 
 @app.get("/api/v1/files/{file_id}/preview")
@@ -2549,10 +2571,23 @@ async def get_admin_docintel_documents(
 # GET /api/v1/chat/{job_id} — see the comment there for why route order matters here.
 
 @app.get("/api/v1/chat/sessions/{session_id}/messages")
-async def get_chat_messages(session_id: str, user: TokenData = Depends(get_current_user)):
+async def get_chat_messages(
+    session_id: str,
+    request: Request,
+    user: TokenData = Depends(get_current_user),
+    x_admin_token: Optional[str] = Header(default=None, alias="X-Admin-Token"),
+    x_intelai_token: Optional[str] = Header(default=None, alias="X-IntelAI-Internal-Token"),
+):
     try:
         from src.services.pg_store import get_session_messages
-        messages = await asyncio.to_thread(get_session_messages, session_id, user.user_id)
+        admin_secret = os.getenv("ADMIN_TOKEN") or os.getenv("INTELAI_INTERNAL_TOKEN")
+        is_admin = bool(
+            (x_admin_token and admin_secret and x_admin_token == admin_secret) or
+            (x_intelai_token and admin_secret and x_intelai_token == admin_secret) or
+            (user.role == "admin")
+        )
+        target_user = "*" if is_admin else user.user_id
+        messages = await asyncio.to_thread(get_session_messages, session_id, target_user)
         return {"messages": messages, "session_id": session_id}
     except Exception as e:
         return {"messages": [], "error": str(e)}

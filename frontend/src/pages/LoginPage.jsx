@@ -40,15 +40,22 @@ export default function LoginPage() {
       await login(u, p)
       navigate('/workspace')
     } catch (err) {
-      setError(err.response?.data?.detail || t('loginFailed') || 'Login failed')
+      const msg = err.response?.data?.detail || err.message || t('loginFailed') || 'Login failed'
+      setError(typeof msg === 'string' ? msg : JSON.stringify(msg))
       setLoading(false)
     }
   }
   const onSubmit = (e) => { e.preventDefault(); doLogin(username, password) }
   const demoLogin = async (u) => {
     setError(''); setLoading(true)
-    try { await demoAuth(u); navigate('/workspace') }
-    catch (err) { setError(err.response?.data?.detail || t('loginFailed') || 'Login failed'); setLoading(false) }
+    try {
+      await demoAuth(u)
+      navigate('/workspace')
+    } catch (err) {
+      const msg = err.response?.data?.detail || err.message || t('loginFailed') || 'Login failed'
+      setError(typeof msg === 'string' ? msg : JSON.stringify(msg))
+      setLoading(false)
+    }
   }
 
   const features = [
