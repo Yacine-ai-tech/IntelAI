@@ -55,7 +55,8 @@ def get_request_scope_user() -> Optional[str]:
 
 
 def _demo_session_scoping_enabled() -> bool:
-    return os.getenv("DEMO_SESSION_SCOPING", "true").lower() == "true"
+    val = (os.getenv("DEMO_SESSION_SCOPING") or "true").strip().lower()
+    return val not in ("false", "0", "no", "off")
 
 
 import time

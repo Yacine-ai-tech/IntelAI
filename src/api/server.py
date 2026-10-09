@@ -779,9 +779,9 @@ async def demo_login(role: str, request: Request):
     if role not in ROLE_DEFINITIONS:
         raise HTTPException(status_code=404, detail=f"Unknown role: {role}")
 
-    demo_session_id = request.headers.get("X-Demo-Session-Id")
-    from src.services.pg_store import get_or_create_demo_user
-    if _os.getenv("DEMO_SESSION_SCOPING", "true").lower() == "true" and demo_session_id:
+    demo_session_id = request.headers.get("X-Demo-Session-Id") or request.query_params.get("session_id")
+    from src.services.pg_store import get_or_create_demo_user, _demo_session_scoping_enabled
+    if _demo_session_scoping_enabled() and demo_session_id:
         user_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f"intelai-demo:{role}:{demo_session_id}"))
         username = f"{role}-{user_id[:8]}"
     else:
