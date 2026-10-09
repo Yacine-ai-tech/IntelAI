@@ -28,14 +28,14 @@ except ImportError:
 
 
 DEFAULT_MODEL = os.getenv("LLM_DEFAULT", "groq/openai/gpt-oss-120b")
-REASONING_MODEL = os.getenv("LLM_REASONING", "anthropic/claude-sonnet-4-6")
+REASONING_MODEL = os.getenv("LLM_REASONING", "gemini/gemini-3.5-flash")
 JUDGE_MODEL = os.getenv("LLM_JUDGE", "anthropic/claude-haiku-4-5")
 LOCAL_MODEL = os.getenv("LLM_LOCAL", "ollama/llama3.3")
 
 # Fallback models — set ONLY in VPS .env when the primary provider key is unavailable.
 # Never hardcoded here; cloners without a fallback simply get the primary behaviour.
-# Example VPS .env: LLM_REASONING_FALLBACK=groq/moonshotai/kimi-k2-instruct
-REASONING_FALLBACK = os.getenv("LLM_REASONING_FALLBACK", "")
+# Example VPS .env: LLM_REASONING_FALLBACK=gemini/gemini-3-flash-preview
+REASONING_FALLBACK = os.getenv("LLM_REASONING_FALLBACK", "gemini/gemini-3-flash-preview")
 JUDGE_FALLBACK = os.getenv("LLM_JUDGE_FALLBACK", "")
 DEFAULT_FALLBACK = os.getenv("LLM_DEFAULT_FALLBACK", "")
 
