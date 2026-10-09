@@ -28,16 +28,16 @@ except ImportError:
 
 
 DEFAULT_MODEL = os.getenv("LLM_DEFAULT", "groq/openai/gpt-oss-120b")
-REASONING_MODEL = os.getenv("LLM_REASONING", "gemini/gemini-3.5-flash")
-JUDGE_MODEL = os.getenv("LLM_JUDGE", "anthropic/claude-haiku-4-5")
+REASONING_MODEL = os.getenv("LLM_REASONING", "gemini/gemini-3.5-flash-lite")
+JUDGE_MODEL = os.getenv("LLM_JUDGE", "groq/openai/gpt-oss-20b")
 LOCAL_MODEL = os.getenv("LLM_LOCAL", "ollama/llama3.3")
 
 # Fallback models — set ONLY in VPS .env when the primary provider key is unavailable.
 # Never hardcoded here; cloners without a fallback simply get the primary behaviour.
-# Example VPS .env: LLM_REASONING_FALLBACK=gemini/gemini-3-flash-preview
-REASONING_FALLBACK = os.getenv("LLM_REASONING_FALLBACK", "gemini/gemini-3-flash-preview")
-JUDGE_FALLBACK = os.getenv("LLM_JUDGE_FALLBACK", "")
-DEFAULT_FALLBACK = os.getenv("LLM_DEFAULT_FALLBACK", "")
+# Example VPS .env: LLM_REASONING_FALLBACK=groq/openai/gpt-oss-120b
+REASONING_FALLBACK = os.getenv("LLM_REASONING_FALLBACK", "groq/openai/gpt-oss-120b")
+JUDGE_FALLBACK = os.getenv("LLM_JUDGE_FALLBACK", "groq/openai/gpt-oss-20b")
+DEFAULT_FALLBACK = os.getenv("LLM_DEFAULT_FALLBACK", "groq/openai/gpt-oss-120b")
 
 _FALLBACK_ERRORS = (
     "AuthenticationError", "PermissionDeniedError", "AuthorizationError",
@@ -112,7 +112,8 @@ def _tune_params_for_model(params: Dict[str, Any], model_name: str) -> Dict[str,
         if out.get("max_tokens") is not None and out["max_tokens"] < 1024:
             out["max_tokens"] = 1024
         if "timeout" in out:
-            out["timeout"] = max(float(out["timeout"]), 60.0)
+            # Keep timeout bounded (default 15s) so slow or 503 requests fail over rapidly
+            out["timeout"] = min(max(float(out["timeout"]), 10.0), 20.0)
     return out
 
 
