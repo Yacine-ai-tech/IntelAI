@@ -103,6 +103,17 @@ def _apply_cache_control(messages: List[Dict[str, Any]], model: str) -> List[Dic
     return out
 
 
+def _tune_params_for_model(params: Dict[str, Any], model_name: str) -> Dict[str, Any]:
+    """Tune parameters for Gemini reasoning/thinking models to avoid degraded reasoning or truncation."""
+    out = dict(params)
+    if "gemini" in model_name.lower():
+        if out.get("temperature", 1.0) < 1.0:
+            out["temperature"] = 1.0
+        if out.get("max_tokens") is not None and out["max_tokens"] < 1024:
+            out["max_tokens"] = 1024
+    return out
+
+
 async def llm_call(
     messages: List[Dict[str, str]],
     tier: str = "default",
@@ -140,13 +151,15 @@ async def llm_call(
     }
     if max_tokens:
         params["max_tokens"] = max_tokens
+    call_params = _tune_params_for_model(params, model)
     try:
-        return await acompletion(**params)
+        return await acompletion(**call_params)
     except Exception as exc:
         fallback = _fallback_for(tier)
         if fallback and _should_fallback(exc):
             log.warning("Primary model %s failed (%s); retrying with fallback %s", model, type(exc).__name__, fallback)
             fb_params = {**params, "model": fallback, "messages": _apply_cache_control(messages, fallback)}
+            fb_params = _tune_params_for_model(fb_params, fallback)
             return await acompletion(**fb_params)
         raise
 
@@ -175,12 +188,14 @@ def llm_call_sync(
     }
     if max_tokens:
         params["max_tokens"] = max_tokens
+    call_params = _tune_params_for_model(params, model)
     try:
-        return completion(**params)
+        return completion(**call_params)
     except Exception as exc:
         fallback = _fallback_for(tier)
         if fallback and _should_fallback(exc):
             log.warning("Primary model %s failed (%s); retrying with fallback %s", model, type(exc).__name__, fallback)
             fb_params = {**params, "model": fallback, "messages": _apply_cache_control(messages, fallback)}
+            fb_params = _tune_params_for_model(fb_params, fallback)
             return completion(**fb_params)
         raise
