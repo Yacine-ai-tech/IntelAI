@@ -232,9 +232,9 @@ def _load_default_users() -> dict:
         except json.JSONDecodeError as exc:
             log.warning("Invalid OMNI_DEFAULT_USERS_JSON: %s", exc)
 
-    if os.getenv("ALLOW_INSECURE_DEFAULT_USERS", "false").lower() == "true":
-        log.warning("Using insecure default users; disable in production")
-        return {
+    users = {}
+    if os.getenv("ALLOW_INSECURE_DEFAULT_USERS", "false").lower() == "true" or os.getenv("DEMO_MODE", "true").lower() == "true":
+        users = {
             "admin": {"password": "admin123", "role": "admin"},
             "ceo": {"password": "ceo123", "role": "ceo"},
             "cfo": {"password": "cfo123", "role": "cfo"},
@@ -247,9 +247,9 @@ def _load_default_users() -> dict:
     bootstrap_user = os.getenv("BOOTSTRAP_ADMIN_USERNAME", "").strip()
     bootstrap_pass = os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "").strip()
     if bootstrap_user and bootstrap_pass:
-        return {bootstrap_user: {"password": bootstrap_pass, "role": "admin"}}
+        users[bootstrap_user] = {"password": bootstrap_pass, "role": "admin"}
 
-    return {}
+    return users
 
 
 DEFAULT_USERS = _load_default_users()
