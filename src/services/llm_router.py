@@ -39,17 +39,19 @@ REASONING_FALLBACK = os.getenv("LLM_REASONING_FALLBACK", "")
 JUDGE_FALLBACK = os.getenv("LLM_JUDGE_FALLBACK", "")
 DEFAULT_FALLBACK = os.getenv("LLM_DEFAULT_FALLBACK", "")
 
-_AUTH_ERRORS = (
+_FALLBACK_ERRORS = (
     "AuthenticationError", "PermissionDeniedError", "AuthorizationError",
-    "401", "403", "invalid_api_key", "invalid api key",
+    "NotFoundError", "BadRequestError", "RateLimitError", "APIConnectionError",
+    "401", "403", "404", "429", "500", "502", "503", "invalid_api_key", "invalid api key",
+    "model_not_found", "not_found", "does not exist",
 )
 
 
-def _is_auth_error(exc: Exception) -> bool:
-    """Return True when the exception indicates a missing or invalid API key."""
+def _should_fallback(exc: Exception) -> bool:
+    """Return True when the exception indicates an auth, missing model, or provider error that warrants fallback."""
     msg = str(exc).lower()
     type_name = type(exc).__name__
-    return any(e.lower() in msg or e.lower() in type_name.lower() for e in _AUTH_ERRORS)
+    return any(e.lower() in msg or e.lower() in type_name.lower() for e in _FALLBACK_ERRORS)
 
 
 def _fallback_for(tier: str) -> str:
@@ -142,8 +144,8 @@ async def llm_call(
         return await acompletion(**params)
     except Exception as exc:
         fallback = _fallback_for(tier)
-        if fallback and _is_auth_error(exc):
-            log.warning("Primary model %s auth failed (%s); retrying with fallback %s", model, type(exc).__name__, fallback)
+        if fallback and _should_fallback(exc):
+            log.warning("Primary model %s failed (%s); retrying with fallback %s", model, type(exc).__name__, fallback)
             fb_params = {**params, "model": fallback, "messages": _apply_cache_control(messages, fallback)}
             return await acompletion(**fb_params)
         raise
@@ -177,8 +179,8 @@ def llm_call_sync(
         return completion(**params)
     except Exception as exc:
         fallback = _fallback_for(tier)
-        if fallback and _is_auth_error(exc):
-            log.warning("Primary model %s auth failed (%s); retrying with fallback %s", model, type(exc).__name__, fallback)
+        if fallback and _should_fallback(exc):
+            log.warning("Primary model %s failed (%s); retrying with fallback %s", model, type(exc).__name__, fallback)
             fb_params = {**params, "model": fallback, "messages": _apply_cache_control(messages, fallback)}
             return completion(**fb_params)
         raise
