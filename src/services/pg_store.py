@@ -940,19 +940,30 @@ def upsert_kpi_targets(targets_df: "pd.DataFrame") -> None:
 # ═══════════════════════════════════════════════════════════
 
 def get_user_files(username: str, limit: int = 50, offset: int = 0) -> List[Dict[str, Any]]:
-    """Return uploaded files metadata for a user."""
+    """Return uploaded files metadata for a user. If username == '*', returns all files (admin bypass)."""
     conn = _get_conn()
     try:
-        rows = conn.execute(
-            """
-            SELECT id, file_name, file_path, file_type, created_at
-            FROM uploaded_files
-            WHERE username = %s
-            ORDER BY created_at DESC
-            LIMIT %s OFFSET %s
-            """,
-            [username, limit, offset],
-        ).fetchall()
+        if username == "*":
+            rows = conn.execute(
+                """
+                SELECT id, file_name, file_path, file_type, created_at
+                FROM uploaded_files
+                ORDER BY created_at DESC
+                LIMIT %s OFFSET %s
+                """,
+                [limit, offset],
+            ).fetchall()
+        else:
+            rows = conn.execute(
+                """
+                SELECT id, file_name, file_path, file_type, created_at
+                FROM uploaded_files
+                WHERE username = %s
+                ORDER BY created_at DESC
+                LIMIT %s OFFSET %s
+                """,
+                [username, limit, offset],
+            ).fetchall()
         return [dict(r) for r in rows] if rows else []
     except Exception as e:
         log.warning("Failed to fetch user files: %s", e)
@@ -1356,18 +1367,31 @@ def create_chat_session(user_id: str, title: str = "New Chat", persona: str = "g
 def get_user_sessions(user_id: str, limit: int = 50) -> List[Dict[str, Any]]:
     conn = _get_conn()
     try:
-        rows = conn.execute(
-            """SELECT s.id, s.title, s.persona, s.is_pinned, s.created_at, s.updated_at,
-                      COUNT(m.id) AS message_count,
-                      MAX(m.created_at) AS last_message_at
-               FROM chat_sessions s
-               LEFT JOIN chat_messages m ON m.session_id = s.id
-               WHERE s.user_id = %s
-               GROUP BY s.id
-               ORDER BY s.is_pinned DESC, s.updated_at DESC
-               LIMIT %s""",
-            [user_id, limit],
-        ).fetchall()
+        if user_id == "*":
+            rows = conn.execute(
+                """SELECT s.id, s.title, s.persona, s.is_pinned, s.created_at, s.updated_at,
+                          COUNT(m.id) AS message_count,
+                          MAX(m.created_at) AS last_message_at
+                   FROM chat_sessions s
+                   LEFT JOIN chat_messages m ON m.session_id = s.id
+                   GROUP BY s.id
+                   ORDER BY s.is_pinned DESC, s.updated_at DESC
+                   LIMIT %s""",
+                [limit],
+            ).fetchall()
+        else:
+            rows = conn.execute(
+                """SELECT s.id, s.title, s.persona, s.is_pinned, s.created_at, s.updated_at,
+                          COUNT(m.id) AS message_count,
+                          MAX(m.created_at) AS last_message_at
+                   FROM chat_sessions s
+                   LEFT JOIN chat_messages m ON m.session_id = s.id
+                   WHERE s.user_id = %s
+                   GROUP BY s.id
+                   ORDER BY s.is_pinned DESC, s.updated_at DESC
+                   LIMIT %s""",
+                [user_id, limit],
+            ).fetchall()
         return [dict(r) for r in rows]
     finally:
         conn.close()
@@ -1452,17 +1476,26 @@ def store_message(
 
 def get_session_messages(session_id: str, user_id: str, limit: int = 100) -> List[Dict[str, Any]]:
     """Ownership is enforced in the query itself: a session_id belonging to a different
-    user_id returns no rows rather than that user's messages."""
+    user_id returns no rows rather than that user's messages (unless user_id == '*' for admin)."""
     conn = _get_conn()
     try:
-        rows = conn.execute(
-            """SELECT m.id, m.role, m.content, m.mode, m.sources, m.tokens_used, m.latency_ms, m.created_at
-               FROM chat_messages m
-               JOIN chat_sessions s ON s.id = m.session_id
-               WHERE m.session_id = %s AND s.user_id = %s
-               ORDER BY m.created_at ASC LIMIT %s""",
-            [session_id, user_id, limit],
-        ).fetchall()
+        if user_id == "*":
+            rows = conn.execute(
+                """SELECT m.id, m.role, m.content, m.mode, m.sources, m.tokens_used, m.latency_ms, m.created_at
+                   FROM chat_messages m
+                   WHERE m.session_id = %s
+                   ORDER BY m.created_at ASC LIMIT %s""",
+                [session_id, limit],
+            ).fetchall()
+        else:
+            rows = conn.execute(
+                """SELECT m.id, m.role, m.content, m.mode, m.sources, m.tokens_used, m.latency_ms, m.created_at
+                   FROM chat_messages m
+                   JOIN chat_sessions s ON s.id = m.session_id
+                   WHERE m.session_id = %s AND s.user_id = %s
+                   ORDER BY m.created_at ASC LIMIT %s""",
+                [session_id, user_id, limit],
+            ).fetchall()
         return [dict(r) for r in rows]
     finally:
         conn.close()
