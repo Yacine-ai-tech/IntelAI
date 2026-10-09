@@ -520,6 +520,20 @@ async def startup():
     from src.core.config import validate_required_keys
     validate_required_keys()
 
+    # Warm up LiteLLM modules eagerly on the main thread to prevent thread import lock deadlocks
+    try:
+        import litellm
+        litellm.suppress_debug_info = True
+        litellm.set_verbose = False
+        from litellm import completion, acompletion  # noqa: F401
+        try:
+            import litellm.types.secret_managers.main  # noqa: F401
+        except Exception:
+            pass
+        log.info("✅ LiteLLM pre-warmed successfully")
+    except Exception as e:
+        log.warning("LiteLLM pre-warm notice: %s", e)
+
     # Initialize PostgreSQL (users, chat sessions, monitoring)
     try:
         from src.services.pg_store import init_pg_tables

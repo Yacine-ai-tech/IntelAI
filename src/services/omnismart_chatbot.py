@@ -48,6 +48,17 @@ from src.services.pg_store import (
     get_knowledge_docs,
 )
 
+try:
+    import litellm
+    litellm.suppress_debug_info = True
+    litellm.set_verbose = False
+    from litellm import completion as _litellm_completion, acompletion as _litellm_acompletion
+    _LITELLM_READY = True
+except ImportError:
+    _LITELLM_READY = False
+    _litellm_completion = None
+    _litellm_acompletion = None
+
 log = get_logger(__name__)
 
 
@@ -185,7 +196,7 @@ def llm_complete(
     resolved model string is returned too so callers (e.g. RAGeval dogfood logging)
     can attribute cost/quality to the model that actually served the request.
     """
-    from src.services.llm_router import _resolve, PERSONA_TIER_MAP, _apply_cache_control
+    from src.services.llm_router import _resolve, PERSONA_TIER_MAP, _apply_cache_control, _tune_params_for_model
 
     tier = "default"
     if persona_name and persona_name.lower() in PERSONA_TIER_MAP:
@@ -211,7 +222,8 @@ def llm_complete(
         return r.choices[0].message.content, tokens, resolved_model
 
     # Any other provider → LiteLLM
-    from litellm import completion  # type: ignore
+    if not _LITELLM_READY or _litellm_completion is None:
+        raise RuntimeError("LiteLLM is not installed or available")
     msgs = _apply_cache_control(messages, resolved_model)
     kw = {"model": resolved_model, "messages": msgs, "temperature": temperature,
           "max_tokens": max_tokens, "timeout": timeout_s}
@@ -224,7 +236,8 @@ def llm_complete(
     # confirmed live via the openai/ path, which a prefix-only check misses.
     if top_p is not None and "claude" not in resolved_model.lower():
         kw["top_p"] = top_p
-    r = completion(**kw)
+    kw = _tune_params_for_model(kw, resolved_model)
+    r = _litellm_completion(**kw)
     text = r.choices[0].message.content
     usage = getattr(r, "usage", None)
     tokens = getattr(usage, "total_tokens", 0) if usage else 0
@@ -246,7 +259,7 @@ async def llm_stream(
     Falls back to a single-shot call and yields the full text as one chunk for
     providers that don't support streaming (e.g. Ollama without stream support).
     """
-    from src.services.llm_router import _resolve, PERSONA_TIER_MAP, _apply_cache_control
+    from src.services.llm_router import _resolve, PERSONA_TIER_MAP, _apply_cache_control, _tune_params_for_model
 
     tier = "default"
     if persona_name and persona_name.lower() in PERSONA_TIER_MAP:
@@ -273,14 +286,19 @@ async def llm_stream(
         return
 
     # LiteLLM async streaming for all other providers (Anthropic, OpenAI, Gemini, etc.)
-    from litellm import acompletion  # type: ignore
+    if not _LITELLM_READY or _litellm_acompletion is None:
+        text, _, _ = llm_complete(messages, temperature=temperature, max_tokens=max_tokens,
+                                   top_p=top_p, model=model, persona_name=persona_name)
+        yield text
+        return
     msgs = _apply_cache_control(messages, resolved_model)
     kw = {"model": resolved_model, "messages": msgs, "temperature": temperature,
           "max_tokens": max_tokens, "timeout": timeout_s, "stream": True}
     if top_p is not None and "claude" not in resolved_model.lower():
         kw["top_p"] = top_p
+    kw = _tune_params_for_model(kw, resolved_model)
     try:
-        stream = await acompletion(**kw)
+        stream = await _litellm_acompletion(**kw)
         async for chunk in stream:
             delta = chunk.choices[0].delta if chunk.choices else None
             text = getattr(delta, "content", None) if delta else None
