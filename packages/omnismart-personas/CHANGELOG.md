@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.6] - 2026-10-09
+### Updated
+- Synchronized persona templates and domain-scoped RBAC definitions with latest IntelAI 2.0 multi-domain engine.
+
 ## [0.1.5] - 2026-08-27
 ### Fixed
 - Synced the committed `pyproject.toml` version with the version already published to
