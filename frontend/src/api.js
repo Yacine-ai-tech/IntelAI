@@ -5,13 +5,14 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BA
 const api = axios.create({
   baseURL: API_BASE,
   headers: { 'Content-Type': 'application/json' },
+  timeout: 15000,
 })
 
 // Bare, unauthenticated liveness check at the API root (not /api/v1) — used to tell a
 // cold/unreachable backend apart from "you're just not logged in yet", so a first-time
 // visitor sees a "waking up" state instead of a login form that will silently fail.
 const HEALTH_BASE = import.meta.env.VITE_API_BASE_URL || ''
-export const checkHealth = () => axios.get(HEALTH_BASE + '/health', { timeout: 8000 })
+export const checkHealth = () => axios.get(HEALTH_BASE + '/health', { timeout: 5000 })
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -61,9 +62,13 @@ api.interceptors.response.use(
     }
     
     if (error.response?.status === 401) {
+      const url = error.config?.url || '';
+      const isAuthEndpoint = url.includes('/auth/') || url.startsWith('auth/');
       localStorage.removeItem('access_token')
       localStorage.removeItem('user')
-      window.location.href = '/login'
+      if (!isAuthEndpoint && window.location.pathname !== '/login') {
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(error)
   }
@@ -78,7 +83,7 @@ export const demoLogin = (role) =>
 export const register = (username, password, role = 'viewer') =>
   api.post('/auth/register', { username, password, role }, { timeout: 15000, noRetry: true })
 
-export const getMe = () => api.get('/auth/me')
+export const getMe = () => api.get('/auth/me', { timeout: 8000, noRetry: true })
 
 // ── Chat ────────────────────────────────────────────────
 // POST /chat is synchronous end-to-end, and a real chat turn under cold retrieval can
