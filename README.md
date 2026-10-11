@@ -65,7 +65,10 @@ python main.py
 cd frontend && npm install && npm run dev
 ```
 
-Default login: `admin` / `admin123` — change after first login.
+There are no built-in login credentials. Configure a unique `BOOTSTRAP_ADMIN_USERNAME` and
+`BOOTSTRAP_ADMIN_PASSWORD` before starting the service, or create an account through the
+registration endpoint. Passwordless demo personas are disabled by default and never grant
+administrator access; enable them explicitly with `DEMO_MODE=true` only for a demo deployment.
 
 **Docker:**
 

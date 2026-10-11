@@ -23,7 +23,7 @@ load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 BASE_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 API_BASE = os.getenv("FASTAPI_HOST", "http://localhost:8000")
 ADMIN_USER = os.getenv("BOOTSTRAP_ADMIN_USERNAME", "admin")
-ADMIN_PASS = os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "admin123")
+ADMIN_PASS = os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "")
 
 
 def _stack_running() -> bool:
