@@ -760,8 +760,8 @@ def _check_demo_login_rate_limit(request: Request) -> None:
 @app.post("/api/v1/auth/demo-login")
 async def demo_login(role: str, request: Request):
     """One-click 'try as persona' for the demo — issues a token for the role WITHOUT exposing
-    any password in the frontend. Gated by DEMO_MODE (default on). Real logins still use passwords
-    (documented in the repo-root `credentials` file).
+    any password in the frontend. Gated by an explicit DEMO_MODE opt-in. Administrator access
+    is never granted through this endpoint; real logins require configured credentials.
 
     Demo-session scoping (default on, DEMO_SESSION_SCOPING): when the caller sends
     X-Demo-Session-Id, each browser gets its own ephemeral identity per role — deterministic
@@ -771,13 +771,15 @@ async def demo_login(role: str, request: Request):
     access) stays keyed by role either way. Falls back to the old shared-per-role identity
     when no session header is sent or scoping is disabled — not a production auth model."""
     import os as _os
-    if _os.getenv("DEMO_MODE", "true").lower() != "true":
+    if _os.getenv("DEMO_MODE", "false").lower() != "true":
         raise HTTPException(status_code=403, detail="Demo mode disabled")
     _check_demo_login_rate_limit(request)
     from src.core.jwt_auth import ROLE_DEFINITIONS
     role = (role or "").lower()
     if role not in ROLE_DEFINITIONS:
         raise HTTPException(status_code=404, detail=f"Unknown role: {role}")
+    if role == "admin":
+        raise HTTPException(status_code=403, detail="Administrator access is not available through demo login")
 
     demo_session_id = request.headers.get("X-Demo-Session-Id") or request.query_params.get("session_id")
     from src.services.pg_store import get_or_create_demo_user, _demo_session_scoping_enabled

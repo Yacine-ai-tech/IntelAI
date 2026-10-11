@@ -21,7 +21,7 @@ client = TestClient(app)
 
 ADMIN_CREDENTIALS = {
     "username": os.getenv("BOOTSTRAP_ADMIN_USERNAME", "admin"),
-    "password": os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "admin123")
+    "password": os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "")
 }
 
 @pytest.fixture(scope="module")

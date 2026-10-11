@@ -15,7 +15,7 @@ os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai_test")
 
 ADMIN = {
     "username": os.getenv("BOOTSTRAP_ADMIN_USERNAME", "admin"),
-    "password": os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "admin123"),
+    "password": os.environ["BOOTSTRAP_ADMIN_PASSWORD"],
 }
 
 
