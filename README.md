@@ -77,10 +77,16 @@ docker compose -f docker-compose.dev.yml up --build   # app only, uses .env's da
 docker compose up --build                              # app plus a bundled Postgres
 ```
 
-The full local retrieval pipeline uses CPU PyTorch, `BAAI/bge-m3`, BM25/RRF, and
+The full local retrieval pipeline uses `BAAI/bge-m3`, BM25/RRF, and
 `BAAI/bge-reranker-v2-m3`. First use downloads the model weights; Docker Compose
 persists them in the `model-cache` volume. Allocate several GiB of RAM to the app
 container before enabling both local models.
+
+For faster local CPU reranking without changing the model or candidate pool, set
+`RERANK_BACKEND=onnx-int8`. The same BGE reranker snapshot is exported and dynamically
+quantized once, then cached alongside the Hugging Face models. The first ONNX startup
+per model revision performs this export; later starts reuse the cache. If export or
+inference fails, retrieval reports the failure instead of silently switching backends.
 
 With `VECTOR_STORE=qdrant`, chat uses the persistent Qdrant dense index fused with
 BM25 through RRF and the local BGE reranker. Qdrant, BM25, and the configured reranker
@@ -107,6 +113,8 @@ adjusted:
 | `USE_HYBRID_RETRIEVAL` | No | `true` enables local BGE-M3 dense + BM25/RRF retrieval |
 | `EMBEDDING_PROVIDER` / `EMBEDDING_MODEL` | No | Use `local` and `BAAI/bge-m3` for CPU-local embeddings |
 | `USE_RERANKER` / `RERANK_PROVIDER` | No | Use `true` and `local` for `BAAI/bge-reranker-v2-m3` |
+| `RERANK_BACKEND` | No | `torch` (default) or `onnx-int8` for local CPU reranking |
+| `RERANK_MAX_LENGTH` | No | Maximum query/document pair token length (default `512`) |
 | `EMBED_BATCH_SIZE` / `RERANK_BATCH_SIZE` | No | Bound CPU inference batch memory |
 | `VECTOR_STORE` | No | `chroma` (dev, default), `pgvector`, or `qdrant` (production) |
 | `AUDIO_PROCESSOR_URL` / `DOC_PROCESSOR_URL` | No | Pluggable audio/document processors — for example, a VoiceFlow or DocIntel instance |
