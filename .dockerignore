@@ -12,7 +12,7 @@ venv/
 # The Dockerfile copies frontend/dist so a single container can serve the UI itself
 # (src/api/server.py mounts /assets and serves "/" from it) — the self-hosting story in
 # SELF_HOSTING.md / docker-compose.yml. Excluding ALL of frontend/ while the Dockerfile
-# still did `COPY frontend` is what broke every Render build ("/frontend: not found").
+# still did `COPY frontend` is what previously broke container builds ("/frontend: not found").
 # Listed explicitly rather than as `frontend/*` + `!frontend/dist`, because exclude-then-
 # re-include ordering is easy to get subtly wrong and this must not break the build again.
 frontend/node_modules/

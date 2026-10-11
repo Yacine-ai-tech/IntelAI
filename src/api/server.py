@@ -39,6 +39,10 @@ def _chat_turn_timeout_seconds() -> float:
     except Exception:
         return 180.0
 
+
+def _requires_persistent_database(environment: str, vector_store: str) -> bool:
+    return environment.lower() == "production" or vector_store.lower() in {"qdrant", "pgvector"}
+
 # ════════════════════════════════════════════════════════════
 # APP INITIALIZATION
 # ════════════════════════════════════════════════════════════
@@ -540,6 +544,9 @@ async def startup():
         await asyncio.to_thread(init_pg_tables)
         log.info("✅ PostgreSQL initialized")
     except Exception as e:
+        if _requires_persistent_database(settings.ENVIRONMENT, settings.VECTOR_STORE):
+            log.exception("Required PostgreSQL bootstrap or migration failed")
+            raise RuntimeError("Required PostgreSQL bootstrap or migration failed") from e
         log.warning("⚠️ PostgreSQL init failed (will use in-memory fallback): %s", e)
 
     # Seed default users
@@ -738,6 +745,14 @@ async def health_check():
     with _HEALTH_CACHE_LOCK:
         _HEALTH_CACHE_TIME = now
         _HEALTH_CACHE_DATA = result
+    return result
+
+
+@app.get("/ready")
+async def readiness_check():
+    result = await health_check()
+    if result["status"] != "healthy":
+        raise HTTPException(status_code=503, detail=result)
     return result
 
 

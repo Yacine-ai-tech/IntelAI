@@ -220,7 +220,7 @@ def _get_conn():
                 # commit, but the ones that don't (bare reads like the /health check)
                 # were returning to the pool mid-transaction. psycopg_pool then had to
                 # force an implicit rollback on every single one — confirmed live,
-                # happening every 5s in lockstep with Render's health-check polling.
+                # happening in lockstep with frequent health-check polling.
                 # Rolling back here is always safe (a no-op if already committed or if
                 # there's nothing pending) and fixes every call site at once, rather
                 # than requiring every future one to remember to commit explicitly.
