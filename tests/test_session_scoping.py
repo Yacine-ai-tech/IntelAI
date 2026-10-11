@@ -1,5 +1,7 @@
 """Unit tests for demo session scoping and admin bypass in IntelAI."""
 import os
+import json
+import secrets
 import pytest
 from unittest.mock import MagicMock, patch
 
@@ -24,12 +26,50 @@ class _MockConn:
 
 
 @pytest.mark.unit
-def test_load_default_users_in_demo_mode():
-    with patch.dict(os.environ, {"DEMO_MODE": "true", "ALLOW_INSECURE_DEFAULT_USERS": "false"}, clear=False):
+def test_demo_mode_does_not_create_builtin_users():
+    with patch.dict(os.environ, {
+        "DEMO_MODE": "true",
+        "ALLOW_INSECURE_DEFAULT_USERS": "true",
+        "OMNI_DEFAULT_USERS_JSON": "",
+        "BOOTSTRAP_ADMIN_USERNAME": "",
+        "BOOTSTRAP_ADMIN_PASSWORD": "",
+    }, clear=True):
         users = _load_default_users()
-        assert "analyst" in users
-        assert users["analyst"]["password"] == "analyst123"
-        assert "admin" in users
+    assert users == {}
+
+
+@pytest.mark.unit
+def test_bootstrap_users_require_explicit_environment_credentials():
+    password = secrets.token_urlsafe(24)
+    configured = {"analyst": {"password": password, "role": "analyst"}}
+    with patch.dict(os.environ, {
+        "DEMO_MODE": "true",
+        "OMNI_DEFAULT_USERS_JSON": json.dumps(configured),
+        "BOOTSTRAP_ADMIN_USERNAME": "",
+        "BOOTSTRAP_ADMIN_PASSWORD": "",
+    }, clear=True):
+        users = _load_default_users()
+    assert users == configured
+
+
+@pytest.mark.unit
+def test_demo_login_never_issues_admin_token(monkeypatch):
+    from fastapi.testclient import TestClient
+    from src.api.server import app
+
+    monkeypatch.setenv("DEMO_MODE", "true")
+    response = TestClient(app).post("/api/v1/auth/demo-login?role=admin")
+    assert response.status_code == 403
+
+
+@pytest.mark.unit
+def test_demo_login_is_disabled_when_setting_is_missing(monkeypatch):
+    from fastapi.testclient import TestClient
+    from src.api.server import app
+
+    monkeypatch.delenv("DEMO_MODE", raising=False)
+    response = TestClient(app).post("/api/v1/auth/demo-login?role=cfo")
+    assert response.status_code == 403
 
 
 @pytest.mark.unit
