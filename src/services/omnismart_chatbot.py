@@ -414,29 +414,25 @@ class UltraFastRAG:
                 if not lang_docs.empty:
                     docs = lang_docs
 
-            # Prefer the persistent dense index when configured. Its retrieval path
-            # fuses Qdrant results with BM25/RRF and local BGE reranking; the in-process
-            # chunk index below remains the fallback if the persistent store is absent.
+            # A configured persistent store is authoritative. In particular, Qdrant
+            # failures must not trigger a second in-process dense index.
             if settings.VECTOR_STORE not in ("memory", ""):
-                try:
-                    from src.services.vector_store import vector_store_retrieve
-                    vr_timeout = float(os.getenv("VECTOR_RETRIEVAL_TIMEOUT", "12"))
-                    vr = _run_with_timeout(
-                        vector_store_retrieve,
-                        vr_timeout,
-                        query,
-                        top_k,
-                        language,
+                from src.services.vector_store import vector_store_retrieve
+                vr_timeout = float(os.getenv("VECTOR_RETRIEVAL_TIMEOUT", "12"))
+                vr = _run_with_timeout(
+                    vector_store_retrieve,
+                    vr_timeout,
+                    query,
+                    top_k,
+                    language,
+                )
+                if vr is None:
+                    raise RuntimeError(
+                        f"Configured vector store {settings.VECTOR_STORE!r} returned no backend"
                     )
-                    if vr:
-                        return vr
-                    if vr is None:
-                        log.warning("Persistent vector retrieval unavailable or timed out")
-                except Exception as e:
-                    log.warning("Persistent vector retrieval skipped: %s", e)
+                return vr
 
-            # If the persistent backend is unavailable or has no matching results,
-            # use the local BGE-M3 + BM25/RRF + reranker passage index.
+            # In-process retrieval is reserved for explicit memory-mode development.
             try:
                 from src.services.hybrid_retrieval import hybrid_enabled, hybrid_doc_retrieve
                 if hybrid_enabled():
@@ -545,6 +541,8 @@ class UltraFastRAG:
             
         except Exception as e:
             log.error("Document retrieval error: %s", e)
+            if settings.VECTOR_STORE == "qdrant":
+                raise
             return []
 
     def _build_rag_prompt(
