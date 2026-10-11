@@ -63,6 +63,25 @@ def test_qdrant_failure_is_not_hidden_by_local_index(monkeypatch):
 
 
 @pytest.mark.unit
+def test_qdrant_retrieval_timeout_is_reported_explicitly(monkeypatch):
+    from types import SimpleNamespace
+    import pandas as pd
+    from src.services import omnismart_chatbot as chatbot
+
+    monkeypatch.setattr(chatbot, "get_knowledge_docs", lambda: pd.DataFrame({
+        "title": ["title"], "content": ["body"]
+    }))
+    monkeypatch.setattr(
+        chatbot, "settings", SimpleNamespace(VECTOR_STORE="qdrant", GROQ_API_KEY="")
+    )
+    monkeypatch.setenv("VECTOR_RETRIEVAL_TIMEOUT", "30")
+    monkeypatch.setattr(chatbot, "_run_with_timeout", lambda *args, **kwargs: None)
+
+    with pytest.raises(RuntimeError, match="retrieval timed out after 30s"):
+        chatbot.UltraFastRAG()._retrieve_documents("query")
+
+
+@pytest.mark.unit
 def test_retrieval_returns_persistent_results_before_local_fallback(monkeypatch):
     from types import SimpleNamespace
     import pandas as pd
