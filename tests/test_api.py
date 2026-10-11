@@ -6,6 +6,7 @@ when the bootstrap-admin login succeeds and are otherwise skipped with a clear
 reason — so the suite is green in CI and full on a persistent dev host (Neon DB).
 """
 import os
+import secrets
 from pathlib import Path
 
 import pytest
@@ -16,8 +17,9 @@ os.environ.setdefault("POSTGRES_URL", "postgresql://localhost/intelai_test")
 
 ADMIN = {
     "username": os.getenv("BOOTSTRAP_ADMIN_USERNAME", "admin"),
-    "password": os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "admin123"),
+    "password": os.environ["BOOTSTRAP_ADMIN_PASSWORD"],
 }
+VIEWER_PASSWORD = secrets.token_urlsafe(24)
 
 
 @pytest.fixture(scope="module")
@@ -210,9 +212,9 @@ def test_admin_audit_as_admin(client, admin_token):
 def test_rbac_viewer_blocked(client, admin_token):
     """Register a viewer (non-admin) and confirm admin endpoints are forbidden."""
     u = f"viewer_{os.urandom(4).hex()}"
-    reg = client.post("/api/v1/auth/register", json={"username": u, "password": "viewer123", "role": "viewer"})
+    reg = client.post("/api/v1/auth/register", json={"username": u, "password": VIEWER_PASSWORD, "role": "viewer"})
     assert reg.status_code in (200, 201), f"register viewer failed ({reg.status_code}): {reg.text[:200]}"
-    login = client.post("/api/v1/auth/login", json={"username": u, "password": "viewer123"})
+    login = client.post("/api/v1/auth/login", json={"username": u, "password": VIEWER_PASSWORD})
     assert login.status_code == 200
     viewer = login.json()["access_token"]
     assert client.get("/api/v1/admin/users", headers=H(viewer)).status_code in (401, 403)
