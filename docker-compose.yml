@@ -34,6 +34,10 @@ services:
     environment:
       PYTHONUNBUFFERED: "1"
       CHROMA_DB_PATH: /app/chroma_db
+      HF_HOME: /app/model_cache
+      OMP_NUM_THREADS: "4"
+      MKL_NUM_THREADS: "4"
+      TOKENIZERS_PARALLELISM: "false"
     ports:
       - "8000:8000"
     volumes:
@@ -41,10 +45,15 @@ services:
       - ./uploads:/app/uploads
       - ./logs:/app/logs
       - chroma-data:/app/chroma_db
+      - model-cache:/app/model_cache
     depends_on:
       postgres:
         condition: service_healthy
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 6G
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
@@ -55,3 +64,4 @@ services:
 volumes:
   postgres-data:
   chroma-data:
+  model-cache:
