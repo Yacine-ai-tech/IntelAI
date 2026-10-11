@@ -7,7 +7,7 @@ from playwright.sync_api import sync_playwright, expect
 
 BASE_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 ADMIN_USER = os.getenv("BOOTSTRAP_ADMIN_USERNAME", "admin")
-ADMIN_PASS = os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "admin123")
+ADMIN_PASS = os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "")
 
 # Exhaustive list of all 24 pages in the platform
 PAGES = [
