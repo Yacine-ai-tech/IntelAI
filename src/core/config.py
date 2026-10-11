@@ -166,6 +166,11 @@ def validate_required_keys() -> None:
             "Set them in .env before starting the platform."
         )
 
+    if settings.ENVIRONMENT == "production" and settings.VECTOR_STORE != "qdrant":
+        raise EnvironmentError(
+            "Production requires VECTOR_STORE=qdrant; in-process retrieval is not supported."
+        )
+
     if settings.ENVIRONMENT == "production" and (
         not settings.SECRET_KEY
         or len(settings.SECRET_KEY) < 16
@@ -181,4 +186,3 @@ def get_cors_allowed_origins() -> List[str]:
     """Parse and normalize CORS origins from env."""
     origins = [o.strip() for o in settings.CORS_ALLOWED_ORIGINS.split(",") if o.strip()]
     return origins or ["*"]
-

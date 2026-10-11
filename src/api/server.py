@@ -583,17 +583,24 @@ async def startup():
                     else:
                         log.warning("Vector store probe error: %s", e)
         except Exception as e:
-            log.warning("Vector store self-heal skipped: %s", e)
+            log.error("Required vector-store self-heal failed: %s", e)
 
     import asyncio as _asyncio
     _asyncio.create_task(_asyncio.to_thread(_vector_selfheal))
     log.info("Vector store self-heal scheduled (background)")
 
-    # Load and fit the local dense+sparse index, then execute a real local reranker
-    # pass before users hit chat. The shared model cache prevents the Qdrant and hybrid
-    # paths from keeping duplicate BGE-M3 weights resident.
+    # In memory mode, warm the in-process dense+sparse index. With Qdrant configured,
+    # retrieval must use its persistent dense index and must not construct a duplicate
+    # document-vector index in this process.
     def _rag_prewarm():
         try:
+            from src.core.config import settings
+            if settings.VECTOR_STORE == "qdrant":
+                from src.services.hybrid_retrieval import rerank
+                if not rerank("startup retrieval readiness probe", ["readiness probe"]):
+                    raise RuntimeError("Local BGE reranker failed its readiness probe")
+                log.info("Persistent Qdrant retrieval and local BGE reranker pre-warmed")
+                return
             from src.services.omnismart_chatbot import _get_shared_rag
             _get_shared_rag()
             from src.services import hybrid_retrieval as retrieval
@@ -673,6 +680,20 @@ def _health_vector_store_check() -> str:
 
 def _health_hybrid_retrieval_check() -> str:
     try:
+        from src.core.config import settings
+        if settings.VECTOR_STORE == "qdrant":
+            from src.services.hybrid_retrieval import _RERANK_RETRIEVER
+            if os.getenv("USE_HYBRID_RETRIEVAL", "true").strip().lower() not in (
+                "1", "true", "yes", "on"
+            ):
+                return "unavailable: hybrid retrieval is disabled"
+            if os.getenv("USE_RERANKER", "true").strip().lower() not in (
+                "1", "true", "yes", "on"
+            ) or os.getenv("RERANK_PROVIDER", "local").strip().lower() != "local":
+                return "unavailable: local BGE reranker is not required/configured"
+            if _RERANK_RETRIEVER is None or _RERANK_RETRIEVER._reranker is None:
+                return "warming: local BGE reranker has not passed its readiness probe"
+            return "ready: Qdrant dense + BM25/RRF + local BGE reranker"
         from src.services.hybrid_retrieval import hybrid_status
         return hybrid_status()
     except Exception as e:
