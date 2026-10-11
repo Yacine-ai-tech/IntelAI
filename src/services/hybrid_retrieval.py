@@ -44,10 +44,10 @@ try:
     from sentence_transformers import SentenceTransformer
     from sentence_transformers import CrossEncoder
     _LOCAL_EMBED = True
-except ImportError:
+except ImportError as e:
     _LOCAL_EMBED = False
-    log.info("sentence-transformers not installed — local embedding/reranker unavailable "
-             "(remote EMBEDDING_ENDPOINT / RERANK_URL still work)")
+    log.info("sentence-transformers unavailable (%s) — local embedding/reranker disabled "
+             "(remote EMBEDDING_ENDPOINT / RERANK_URL still work)", e)
 
 _LOCAL_EMBEDDERS: Dict[str, Any] = {}
 _LOCAL_EMBEDDERS_LOCK = threading.Lock()
@@ -585,14 +585,24 @@ def hybrid_status() -> str:
     embedding_model = os.getenv("EMBEDDING_MODEL", "BAAI/bge-m3")
     if embedding_provider == "local" and _HYBRID.embedding_model_name != embedding_model:
         return f"unavailable: loaded embedding model is not {embedding_model}"
-    if (
+    if embedding_provider == "local":
+        vector_shape = getattr(_HYBRID._chunk_vecs, "shape", ())
+        if not vector_shape or vector_shape[-1] != 1024:
+            return "unavailable: local BGE-M3 embeddings are not 1024-dimensional"
+    rerank_enabled = (
         os.getenv("USE_RERANKER", "true").strip().lower() in ("1", "true", "yes", "on")
-        and os.getenv("RERANK_PROVIDER", "local").strip().lower() == "local"
-    ):
+    )
+    rerank_provider = os.getenv("RERANK_PROVIDER", "local").strip().lower()
+    if rerank_enabled and rerank_provider == "local":
         reranker_model = os.getenv("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3")
         if _RERANK_RETRIEVER.reranker_model_name != reranker_model:
             return f"unavailable: loaded reranker is not {reranker_model}"
-    return "ready"
+        reranker_description = f"{reranker_model} local reranker"
+    elif rerank_enabled:
+        reranker_description = f"{rerank_provider} reranker"
+    else:
+        reranker_description = "reranking disabled"
+    return f"ready: {embedding_model} dense (1024d) + BM25/RRF + {reranker_description}"
 
 
 def _rerank_local(query: str, texts: List[str]) -> List[float]:

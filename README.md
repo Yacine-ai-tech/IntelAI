@@ -82,6 +82,12 @@ The full local retrieval pipeline uses CPU PyTorch, `BAAI/bge-m3`, BM25/RRF, and
 persists them in the `model-cache` volume. Allocate several GiB of RAM to the app
 container before enabling both local models.
 
+With `VECTOR_STORE=qdrant`, chat uses the persistent Qdrant dense index fused with
+BM25 through RRF and the local BGE reranker. The in-process passage index is the
+fallback when the persistent store is unavailable. `/health` reports model readiness
+and the persistent store's point count; an empty or unreachable configured store is
+reported as degraded rather than as persistent-ready.
+
 ## Configuration
 
 Every variable and its default is documented in `.env.example`. The ones most commonly
