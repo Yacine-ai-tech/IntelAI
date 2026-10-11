@@ -39,10 +39,13 @@ openai>=1.55.0
 
 # ── Retrieval — hybrid (dense + BM25 + rerank) ──
 sentence-transformers==5.6.0
-transformers==5.12.1
-huggingface-hub==1.21.0
+transformers==4.57.6
+huggingface-hub==0.36.2
 sentencepiece>=0.2.0
 rank-bm25>=0.2.2
+# Optional local acceleration for the same BGE reranker weights (RERANK_BACKEND=onnx-int8).
+optimum-onnx[onnxruntime]==0.1.0
+onnxruntime==1.27.0
 
 # ── Vector stores (VECTOR_STORE=chroma|pgvector|qdrant; memory needs none) ─
 # chromadb>=0.5.0
