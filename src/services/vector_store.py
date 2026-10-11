@@ -30,17 +30,9 @@ log = get_logger(__name__)
 
 Doc = Dict[str, Any]  # {doc_id, title, content, source, category?}
 
-# ── Shared embedder (lazy; one model per process) ─────────────────────────────
-_EMBEDDER = None
-
-
 def _embedder():
-    global _EMBEDDER
-    if _EMBEDDER is None:
-        from sentence_transformers import SentenceTransformer
-        log.info("Vector store embedder: %s", settings.EMBEDDING_MODEL)
-        _EMBEDDER = SentenceTransformer(settings.EMBEDDING_MODEL)
-    return _EMBEDDER
+    from src.services.hybrid_retrieval import load_local_embedder
+    return load_local_embedder(settings.EMBEDDING_MODEL)
 
 
 def _embed(texts: List[str]):
@@ -76,7 +68,12 @@ def _embed_batch(texts: List[str]):
                     else "local"))
 
     if provider == "local":
-        vecs = _embedder().encode(list(texts), normalize_embeddings=True, show_progress_bar=False)
+        from src.services.hybrid_retrieval import encode_local_embeddings
+        vecs = encode_local_embeddings(
+            _embedder(),
+            list(texts),
+            batch_size=max(1, int(os.environ.get("EMBED_BATCH_SIZE", "16"))),
+        )
         return np.asarray(vecs, dtype="float32")
 
     if provider != "remote":

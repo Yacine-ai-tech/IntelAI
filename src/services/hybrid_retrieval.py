@@ -2,7 +2,7 @@
 HybridRetriever — 2026-leading RAG retrieval.
 
 Combines:
-  - Dense retrieval via BGE-large-en-v1.5 embeddings
+  - Dense retrieval via BGE-M3 embeddings
   - Sparse retrieval via BM25 (rank_bm25)
   - Reciprocal Rank Fusion (RRF) merging
   - BGE Reranker v2 m3 final reranking
@@ -16,6 +16,7 @@ from __future__ import annotations
 
 
 import os
+import threading
 # Pass agnostic tokens down to huggingface_hub to prevent rate limits
 _agnostic_token = os.getenv("RERANK_TOKEN", os.getenv("INFERENCE_TOKEN", "")).strip()
 if _agnostic_token and not os.getenv("HF_TOKEN"):
@@ -35,22 +36,45 @@ except ImportError:  # pragma: no cover — numpy is a hard dependency, this is 
     _NUMPY = False
     log.warning("numpy not installed — dense retrieval disabled")
 
-# Local embedding/reranker models (sentence-transformers, ~1.3GB with torch) are commented
-# out of requirements.txt by default — they OOM a 512MB deploy host. Dense retrieval's math
-# (cosine similarity) only needs numpy, which IS a hard dependency; the embedding VECTORS
-# themselves can come from a remote inference host instead (see _remote_embed below), so
-# dense retrieval still works on a constrained host as long as EMBEDDING_ENDPOINT is set —
-# _DENSE (can we do the math) and _LOCAL_EMBED (can we also load a model in-process) are
-# deliberately separate capabilities.
+# Dense retrieval math needs numpy. Local model loading is available when
+# sentence-transformers is installed; constrained deployments may still select a remote
+# endpoint explicitly.
 _DENSE = _NUMPY
 try:
     from sentence_transformers import SentenceTransformer
     from sentence_transformers import CrossEncoder
     _LOCAL_EMBED = True
-except ImportError:
+except ImportError as e:
     _LOCAL_EMBED = False
-    log.info("sentence-transformers not installed — local embedding/reranker unavailable "
-             "(remote EMBEDDING_ENDPOINT / RERANK_URL still work)")
+    log.info("sentence-transformers unavailable (%s) — local embedding/reranker disabled "
+             "(remote EMBEDDING_ENDPOINT / RERANK_URL still work)", e)
+
+_LOCAL_EMBEDDERS: Dict[str, Any] = {}
+_LOCAL_EMBEDDERS_LOCK = threading.Lock()
+_LOCAL_INFERENCE_LOCK = threading.Lock()
+_LOCAL_RERANKER_LOAD_LOCK = threading.Lock()
+
+
+def load_local_embedder(model_name: str):
+    """Load each local embedding model once per process and share it across retrieval paths."""
+    if not _LOCAL_EMBED:
+        raise RuntimeError("sentence-transformers is required for local embeddings")
+    with _LOCAL_EMBEDDERS_LOCK:
+        if model_name not in _LOCAL_EMBEDDERS:
+            log.info("Loading embedder: %s", model_name)
+            _LOCAL_EMBEDDERS[model_name] = SentenceTransformer(model_name, device="cpu")
+        return _LOCAL_EMBEDDERS[model_name]
+
+
+def encode_local_embeddings(embedder: Any, texts: List[str], batch_size: int):
+    """Serialize CPU inference across the shared dense and vector-store retrieval paths."""
+    with _LOCAL_INFERENCE_LOCK:
+        return embedder.encode(
+            texts,
+            batch_size=max(1, batch_size),
+            normalize_embeddings=True,
+            show_progress_bar=False,
+        )
 
 
 def _is_still_waking(result: Any) -> bool:
@@ -221,8 +245,7 @@ class HybridRetriever:
         if not _LOCAL_EMBED:
             return None
         if self._embedder is None:
-            log.info("Loading embedder: %s", self.embedding_model_name)
-            self._embedder = SentenceTransformer(self.embedding_model_name)
+            self._embedder = load_local_embedder(self.embedding_model_name)
         return self._embedder
 
     def _remote_embed(self, texts: List[str]):
@@ -306,20 +329,21 @@ class HybridRetriever:
                 "EMBEDDING_PROVIDER=local but sentence-transformers isn't installed on this "
                 "host. Install it (pip install sentence-transformers) or set "
                 "EMBEDDING_PROVIDER=remote + EMBED_URL.")
-        return embedder.encode(texts, show_progress_bar=False)
+        return encode_local_embeddings(
+            embedder,
+            texts,
+            batch_size=max(1, int(os.getenv("EMBED_BATCH_SIZE", "16"))),
+        )
 
     def _ensure_reranker(self, force: bool = False):
-        """Load the local CrossEncoder (~600MB). Only used when RERANK_PROVIDER=local —
-        the module-level rerank() dispatches explicitly, so `force=True` from that path
-        means "the operator asked for local, load it". Note this model does not fit a
-        512MB app host; use RERANK_PROVIDER=remote|cohere|jina|hf on constrained hosts."""
+        """Load the local cross-encoder only when the configured provider is local."""
         if not _RERANKER:
             raise RuntimeError("sentence-transformers not installed — local reranker unavailable")
         if not force:
             return None
         if self._reranker is None:
             log.info("Loading reranker (CrossEncoder): %s", self.reranker_model_name)
-            self._reranker = CrossEncoder(self.reranker_model_name)
+            self._reranker = CrossEncoder(self.reranker_model_name, device="cpu")
         return self._reranker
 
     def fit(self, chunks: List[str]) -> None:
@@ -426,6 +450,7 @@ class HybridRetriever:
 # ── Module-level helpers (opt-in wiring for the RAG path) ─────────────────────
 _HYBRID: Optional["HybridRetriever"] = None
 _HYBRID_SIG = None
+_HYBRID_INDEX_LOCK = threading.Lock()
 
 
 def hybrid_enabled() -> bool:
@@ -508,19 +533,23 @@ def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int =
         if not passages:
             return []
 
-        sig = (len(passages), hash(tuple(t for t, _ in passages)), size, overlap)
-        if _HYBRID is None or _HYBRID_SIG != sig:
-            r = HybridRetriever(
-                embedding_model=os.getenv("EMBEDDING_MODEL", "BAAI/bge-m3"),
-                reranker_model=os.getenv("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3"),
-            )
-            log.info("Hybrid index: %d docs -> %d passages (size=%d overlap=%d)",
-                     len(records), len(passages), size, overlap)
-            r.fit([_indexed(t, c) for t, c in passages])
-            _HYBRID, _HYBRID_SIG = r, sig
+        sig = (len(passages), hash(tuple(passages)), size, overlap)
+        with _HYBRID_INDEX_LOCK:
+            if _HYBRID is None or _HYBRID_SIG != sig:
+                r = HybridRetriever(
+                    embedding_model=os.getenv("EMBEDDING_MODEL", "BAAI/bge-m3"),
+                    reranker_model=os.getenv("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3"),
+                )
+                log.info("Hybrid index: %d docs -> %d passages (size=%d overlap=%d)",
+                         len(records), len(passages), size, overlap)
+                r.fit([_indexed(t, c) for t, c in passages])
+                _HYBRID, _HYBRID_SIG = r, sig
+            retriever = _HYBRID
+        if retriever is None:
+            raise RuntimeError("Hybrid index initialization failed")
         by_chunk = {_indexed(t, c): (t, c) for t, c in passages}
         out = []
-        for hit in _HYBRID.retrieve(query, top_n=top_k):
+        for hit in retriever.retrieve(query, top_n=top_k):
             title, passage = by_chunk.get(hit["chunk"], ("Document", hit["chunk"]))
             out.append((title, passage, float(hit.get("score", 1.0))))
         return out
@@ -533,6 +562,49 @@ def hybrid_doc_retrieve(query: str, records: List[Tuple[str, str]], top_k: int =
 _RERANK_RETRIEVER: Optional["HybridRetriever"] = None
 
 
+def hybrid_status() -> str:
+    """Report whether each configured hybrid retrieval stage is actually ready."""
+    if not hybrid_enabled():
+        return "disabled"
+    if _HYBRID is None:
+        return "warming: hybrid index has not been built"
+    if _HYBRID._chunk_vecs is None:
+        return "unavailable: dense embedding index is not ready"
+    if _HYBRID._bm25 is None:
+        return "unavailable: BM25 index is not ready"
+    if (
+        os.getenv("USE_RERANKER", "true").strip().lower() in ("1", "true", "yes", "on")
+        and os.getenv("RERANK_PROVIDER", "local").strip().lower() == "local"
+        and (_RERANK_RETRIEVER is None or _RERANK_RETRIEVER._reranker is None)
+    ):
+        return "unavailable: local BGE reranker is not ready"
+    embedding_provider = (
+        os.getenv("EMBEDDING_PROVIDER", "").strip().lower()
+        or ("remote" if os.getenv("INFERENCE_MODE", "").strip().lower() == "remote" else "local")
+    )
+    embedding_model = os.getenv("EMBEDDING_MODEL", "BAAI/bge-m3")
+    if embedding_provider == "local" and _HYBRID.embedding_model_name != embedding_model:
+        return f"unavailable: loaded embedding model is not {embedding_model}"
+    if embedding_provider == "local":
+        vector_shape = getattr(_HYBRID._chunk_vecs, "shape", ())
+        if not vector_shape or vector_shape[-1] != 1024:
+            return "unavailable: local BGE-M3 embeddings are not 1024-dimensional"
+    rerank_enabled = (
+        os.getenv("USE_RERANKER", "true").strip().lower() in ("1", "true", "yes", "on")
+    )
+    rerank_provider = os.getenv("RERANK_PROVIDER", "local").strip().lower()
+    if rerank_enabled and rerank_provider == "local":
+        reranker_model = os.getenv("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3")
+        if _RERANK_RETRIEVER.reranker_model_name != reranker_model:
+            return f"unavailable: loaded reranker is not {reranker_model}"
+        reranker_description = f"{reranker_model} local reranker"
+    elif rerank_enabled:
+        reranker_description = f"{rerank_provider} reranker"
+    else:
+        reranker_description = "reranking disabled"
+    return f"ready: {embedding_model} dense (1024d) + BM25/RRF + {reranker_description}"
+
+
 def _rerank_local(query: str, texts: List[str]) -> List[float]:
     """Cross-encoder loaded in-process on this host. Raises if unavailable."""
     global _RERANK_RETRIEVER
@@ -540,10 +612,15 @@ def _rerank_local(query: str, texts: List[str]) -> List[float]:
         raise RuntimeError(
             "RERANK_PROVIDER=local but sentence-transformers isn't installed on this host. "
             "Install it, or set RERANK_PROVIDER=remote|cohere|jina|hf.")
-    if _RERANK_RETRIEVER is None:
-        _RERANK_RETRIEVER = HybridRetriever()
-    reranker = _RERANK_RETRIEVER._ensure_reranker(force=True)
-    scores = reranker.predict([(query, t) for t in texts])
+    with _LOCAL_RERANKER_LOAD_LOCK:
+        if _RERANK_RETRIEVER is None:
+            _RERANK_RETRIEVER = HybridRetriever()
+        reranker = _RERANK_RETRIEVER._ensure_reranker(force=True)
+    with _LOCAL_INFERENCE_LOCK:
+        scores = reranker.predict(
+            [(query, t) for t in texts],
+            batch_size=max(1, int(os.getenv("RERANK_BATCH_SIZE", "8"))),
+        )
     return [float(s) for s in scores]
 
 

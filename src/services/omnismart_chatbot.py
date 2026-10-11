@@ -414,40 +414,10 @@ class UltraFastRAG:
                 if not lang_docs.empty:
                     docs = lang_docs
 
-            # Hybrid retrieval (dense + BM25 + RRF + reranker) is the canonical
-            # retrieval path — opt-in via USE_HYBRID_RETRIEVAL, but always
-            # attempted first (not just when a quick probe finds the remote host
-            # already warm) whenever it's enabled. It used to run only *after*
-            # vector_store_retrieve below, and only if that returned nothing —
-            # but vector_store_retrieve succeeds on its own (dense search only,
-            # no reranking) whenever Qdrant is reachable, which is effectively
-            # always, so hybrid's fuller dense+BM25+RRF+rerank pipeline rarely
-            # got exercised at all, warm or cold. Bounded by a generous timeout
-            # (default 150s, comfortably above INFERENCE_WAKE_TIMEOUT=90s) so a
-            # genuine cold GPU-backend wake completes through the real pipeline
-            # instead of bailing into a degraded BM25-only answer — that
-            # degradation is a last resort for a genuinely failed/very slow
-            # wake, not the routine per-request experience.
-            hybrid_timed_out = False
-            try:
-                from src.services.hybrid_retrieval import hybrid_enabled, hybrid_doc_retrieve
-                if hybrid_enabled():
-                    records = list(zip(docs["title"].tolist(), docs["content"].fillna("").tolist()))
-                    hy_timeout = float(os.getenv("HYBRID_RETRIEVAL_TIMEOUT", "150"))
-                    hy = _run_with_timeout(hybrid_doc_retrieve, hy_timeout, query, records, top_k)
-                    if hy:
-                        return hy
-                    hybrid_timed_out = True
-                    log.warning("Hybrid retrieval unavailable after %.0fs, falling back", hy_timeout)
-            except Exception as e:
-                log.warning("Hybrid retrieval skipped: %s", e)
-
-            # Persistent vector store (chroma/pgvector/qdrant) — dense-only, no
-            # reranking. Secondary path now: only reached when hybrid is
-            # disabled, or just failed/timed out above. It embeds the query
-            # through the same remote host hybrid does, so if hybrid just spent
-            # its full timeout budget finding that host unreachable, paying
-            if not hybrid_timed_out and settings.VECTOR_STORE not in ("memory", ""):
+            # Prefer the persistent dense index when configured. Its retrieval path
+            # fuses Qdrant results with BM25/RRF and local BGE reranking; the in-process
+            # chunk index below remains the fallback if the persistent store is absent.
+            if settings.VECTOR_STORE not in ("memory", ""):
                 try:
                     from src.services.vector_store import vector_store_retrieve
                     vr_timeout = float(os.getenv("VECTOR_RETRIEVAL_TIMEOUT", "12"))
@@ -458,14 +428,26 @@ class UltraFastRAG:
                         top_k,
                         language,
                     )
-                    if vr is None:
-                        log.warning("Vector store retrieval timed out after %.1fs", vr_timeout)
                     if vr:
                         return vr
+                    if vr is None:
+                        log.warning("Persistent vector retrieval unavailable or timed out")
                 except Exception as e:
-                    log.warning("Vector store retrieval skipped: %s", e)
-            elif hybrid_timed_out:
-                log.info("Skipping vector store retrieval — hybrid just timed out on the same remote host")
+                    log.warning("Persistent vector retrieval skipped: %s", e)
+
+            # If the persistent backend is unavailable or has no matching results,
+            # use the local BGE-M3 + BM25/RRF + reranker passage index.
+            try:
+                from src.services.hybrid_retrieval import hybrid_enabled, hybrid_doc_retrieve
+                if hybrid_enabled():
+                    records = list(zip(docs["title"].tolist(), docs["content"].fillna("").tolist()))
+                    hy_timeout = float(os.getenv("HYBRID_RETRIEVAL_TIMEOUT", "150"))
+                    hy = _run_with_timeout(hybrid_doc_retrieve, hy_timeout, query, records, top_k)
+                    if hy:
+                        return hy
+                    log.warning("Local hybrid retrieval returned no results after %.0fs", hy_timeout)
+            except Exception as e:
+                log.warning("Hybrid retrieval skipped: %s", e)
 
             # Semantic search with embeddings
             if _SBERT and "embedding" in docs.columns:
