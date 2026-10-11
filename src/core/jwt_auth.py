@@ -221,28 +221,21 @@ ROLE_DEFINITIONS = {
 }
 
 def _load_default_users() -> dict:
-    """Build bootstrap users from env, keeping insecure defaults opt-in."""
+    """Load only explicitly configured bootstrap users."""
     users_json = os.getenv("OMNI_DEFAULT_USERS_JSON", "").strip()
     if users_json:
         try:
             parsed = json.loads(users_json)
             if isinstance(parsed, dict):
-                return parsed
-            log.warning("OMNI_DEFAULT_USERS_JSON must be a JSON object; ignoring value")
+                users = parsed
+            else:
+                log.warning("OMNI_DEFAULT_USERS_JSON must be a JSON object; ignoring value")
+                users = {}
         except json.JSONDecodeError as exc:
             log.warning("Invalid OMNI_DEFAULT_USERS_JSON: %s", exc)
-
-    users = {}
-    if os.getenv("ALLOW_INSECURE_DEFAULT_USERS", "false").lower() == "true" or os.getenv("DEMO_MODE", "true").lower() == "true":
-        users = {
-            "admin": {"password": "admin123", "role": "admin"},
-            "ceo": {"password": "ceo123", "role": "ceo"},
-            "cfo": {"password": "cfo123", "role": "cfo"},
-            "cto": {"password": "cto123", "role": "cto"},
-            "coo": {"password": "coo123", "role": "coo"},
-            "analyst": {"password": "analyst123", "role": "analyst"},
-            "viewer": {"password": "viewer123", "role": "viewer"},
-        }
+            users = {}
+    else:
+        users = {}
 
     bootstrap_user = os.getenv("BOOTSTRAP_ADMIN_USERNAME", "").strip()
     bootstrap_pass = os.getenv("BOOTSTRAP_ADMIN_PASSWORD", "").strip()
