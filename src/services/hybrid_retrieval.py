@@ -15,8 +15,13 @@ Vector store via env: VECTOR_STORE=chroma | qdrant (default: chroma in dev)
 from __future__ import annotations
 
 
+import gc
+import json
 import os
+import shutil
+import tempfile
 import threading
+from pathlib import Path
 # Pass agnostic tokens down to huggingface_hub to prevent rate limits
 _agnostic_token = os.getenv("RERANK_TOKEN", os.getenv("INFERENCE_TOKEN", "")).strip()
 if _agnostic_token and not os.getenv("HF_TOKEN"):
@@ -342,9 +347,77 @@ class HybridRetriever:
         if not force:
             return None
         if self._reranker is None:
-            log.info("Loading reranker (CrossEncoder): %s", self.reranker_model_name)
-            self._reranker = CrossEncoder(self.reranker_model_name, device="cpu")
+            backend = os.getenv("RERANK_BACKEND", "torch").strip().lower()
+            max_length = max(1, int(os.getenv("RERANK_MAX_LENGTH", "512")))
+            if backend == "torch":
+                log.info("Loading reranker (CrossEncoder/%s): %s", backend, self.reranker_model_name)
+                self._reranker = CrossEncoder(
+                    self.reranker_model_name, device="cpu", max_length=max_length
+                )
+            elif backend == "onnx-int8":
+                self._reranker = self._load_onnx_int8_reranker(max_length)
+            else:
+                raise RuntimeError(
+                    f"RERANK_BACKEND must be 'torch' or 'onnx-int8', got {backend!r}"
+                )
         return self._reranker
+
+    def _load_onnx_int8_reranker(self, max_length: int):
+        """Build once and persist a dynamically quantized ONNX copy of the same model."""
+        from huggingface_hub import snapshot_download
+
+        snapshot = Path(snapshot_download(self.reranker_model_name))
+        cache_root = Path(os.getenv("HF_HOME", "/app/model_cache")) / "rerankers"
+        cache_dir = cache_root / f"{snapshot.parent.parent.name}-{snapshot.name}-onnx-int8"
+        marker = cache_dir / ".ready.json"
+        expected = {
+            "model": self.reranker_model_name,
+            "revision": snapshot.name,
+            "format": "onnx-int8",
+        }
+
+        if not marker.is_file() or json.loads(marker.read_text()) != expected:
+            cache_root.mkdir(parents=True, exist_ok=True)
+            if cache_dir.exists():
+                shutil.rmtree(cache_dir)
+            temporary_dir = Path(tempfile.mkdtemp(prefix=".reranker-", dir=cache_root))
+            try:
+                log.info("Exporting local reranker to ONNX INT8: %s", self.reranker_model_name)
+                exported = CrossEncoder(
+                    str(snapshot), device="cpu", backend="onnx", max_length=max_length
+                )
+                exported.model.save_pretrained(temporary_dir)
+                exported.tokenizer.save_pretrained(temporary_dir)
+                del exported
+                gc.collect()
+
+                from onnxruntime.quantization import QuantType, quantize_dynamic
+
+                model_file = next(temporary_dir.rglob("model.onnx"), None)
+                if model_file is None:
+                    raise RuntimeError("ONNX export did not produce model.onnx")
+                quantized_file = model_file.with_name("model-quantized.onnx")
+                quantize_dynamic(
+                    str(model_file),
+                    str(quantized_file),
+                    weight_type=QuantType.QInt8,
+                    op_types_to_quantize=["MatMul", "Gemm"],
+                )
+                quantized_file.replace(model_file)
+                (temporary_dir / ".ready.json").write_text(json.dumps(expected))
+                temporary_dir.replace(cache_dir)
+            except Exception:
+                shutil.rmtree(temporary_dir, ignore_errors=True)
+                raise
+
+        log.info("Loading cached ONNX INT8 reranker: %s", self.reranker_model_name)
+        return CrossEncoder(
+            str(cache_dir),
+            device="cpu",
+            backend="onnx",
+            max_length=max_length,
+            local_files_only=True,
+        )
 
     def fit(self, chunks: List[str]) -> None:
         """Index a corpus of text chunks for retrieval.
