@@ -83,10 +83,12 @@ persists them in the `model-cache` volume. Allocate several GiB of RAM to the ap
 container before enabling both local models.
 
 With `VECTOR_STORE=qdrant`, chat uses the persistent Qdrant dense index fused with
-BM25 through RRF and the local BGE reranker. The in-process passage index is the
-fallback when the persistent store is unavailable. `/health` reports model readiness
-and the persistent store's point count; an empty or unreachable configured store is
-reported as degraded rather than as persistent-ready.
+BM25 through RRF and the local BGE reranker. Qdrant, BM25, and the configured reranker
+are required for this mode; retrieval errors are surfaced rather than replaced with an
+in-process dense index. Production startup requires `VECTOR_STORE=qdrant`. The in-process
+passage index is reserved for explicit non-production memory mode. `/health` reports
+model readiness and the persistent store's point count; an empty or unreachable store
+is reported as degraded.
 
 ## Configuration
 
