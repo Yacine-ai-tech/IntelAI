@@ -37,7 +37,7 @@ def test_local_embedding_model_is_shared_between_retrievers(monkeypatch):
             created.append((model_name, device))
 
     monkeypatch.setattr(retrieval, "_LOCAL_EMBED", True)
-    monkeypatch.setattr(retrieval, "SentenceTransformer", FakeEmbedder)
+    monkeypatch.setattr(retrieval, "SentenceTransformer", FakeEmbedder, raising=False)
     monkeypatch.setattr(
         vector_store, "settings", SimpleNamespace(EMBEDDING_MODEL="test/bge-m3")
     )
@@ -56,7 +56,7 @@ def test_local_embedding_model_is_shared_between_retrievers(monkeypatch):
 
 @pytest.mark.unit
 def test_local_embedding_uses_bounded_batches_and_normalization(monkeypatch):
-    from src.services.hybrid_retrieval import HybridRetriever
+    from src.services import hybrid_retrieval as retrieval
 
     class FakeEmbedder:
         def encode(self, texts, **kwargs):
@@ -67,7 +67,8 @@ def test_local_embedding_uses_bounded_batches_and_normalization(monkeypatch):
 
     monkeypatch.setenv("EMBEDDING_PROVIDER", "local")
     monkeypatch.setenv("EMBED_BATCH_SIZE", "4")
-    retriever = HybridRetriever()
+    monkeypatch.setattr(retrieval, "_LOCAL_EMBED", True)
+    retriever = retrieval.HybridRetriever()
     retriever._embedder = FakeEmbedder()
 
     assert retriever._encode(["query"]) == [[1.0, 0.0]]
@@ -116,7 +117,7 @@ def test_local_reranker_uses_cpu_and_bounded_batches(monkeypatch):
             return [0.9]
 
     monkeypatch.setattr(retrieval, "_RERANKER", True)
-    monkeypatch.setattr(retrieval, "CrossEncoder", FakeReranker)
+    monkeypatch.setattr(retrieval, "CrossEncoder", FakeReranker, raising=False)
     monkeypatch.setattr(retrieval, "_RERANK_RETRIEVER", None)
     monkeypatch.setenv("RERANK_BATCH_SIZE", "3")
 
@@ -138,7 +139,7 @@ def test_local_reranker_model_load_is_shared_across_concurrent_calls(monkeypatch
             return [0.5] * len(pairs)
 
     monkeypatch.setattr(retrieval, "_RERANKER", True)
-    monkeypatch.setattr(retrieval, "CrossEncoder", FakeReranker)
+    monkeypatch.setattr(retrieval, "CrossEncoder", FakeReranker, raising=False)
     monkeypatch.setattr(retrieval, "_RERANK_RETRIEVER", None)
     with ThreadPoolExecutor(max_workers=4) as pool:
         results = list(pool.map(
@@ -161,7 +162,9 @@ def test_hybrid_status_requires_dense_sparse_and_local_reranker(monkeypatch):
     monkeypatch.setenv("RERANK_PROVIDER", "local")
     monkeypatch.setenv("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3")
     monkeypatch.setattr(retrieval, "_HYBRID", SimpleNamespace(
-        _chunk_vecs=[[1.0]], _bm25=object(), embedding_model_name="BAAI/bge-m3"
+        _chunk_vecs=SimpleNamespace(shape=(1, 1024)),
+        _bm25=object(),
+        embedding_model_name="BAAI/bge-m3",
     ))
     monkeypatch.setattr(retrieval, "_RERANK_RETRIEVER", None)
 
@@ -169,7 +172,10 @@ def test_hybrid_status_requires_dense_sparse_and_local_reranker(monkeypatch):
     monkeypatch.setattr(retrieval, "_RERANK_RETRIEVER", SimpleNamespace(
         _reranker=object(), reranker_model_name="BAAI/bge-reranker-v2-m3"
     ))
-    assert retrieval.hybrid_status() == "ready"
+    assert retrieval.hybrid_status() == (
+        "ready: BAAI/bge-m3 dense (1024d) + BM25/RRF + "
+        "BAAI/bge-reranker-v2-m3 local reranker"
+    )
 
 
 @pytest.mark.unit
