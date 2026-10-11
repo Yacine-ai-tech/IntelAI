@@ -34,7 +34,7 @@ COPY data/glossary.py data/glossary_fr.py /app/data/
 COPY frontend/dist /app/frontend/dist
 COPY main.py /app/main.py
 
-RUN mkdir -p /app/uploads /app/logs /app/chroma_db && \
+RUN mkdir -p /app/uploads /app/logs /app/chroma_db /app/model_cache && \
     useradd -m -u 1000 appuser && chown -R appuser /app
 
 USER appuser
