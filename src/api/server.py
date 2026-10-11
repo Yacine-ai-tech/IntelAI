@@ -662,8 +662,11 @@ def _health_vector_store_check() -> str:
             if settings.VECTOR_STORE in ("", "memory"):
                 return "memory (no persistent store configured)"
             return f"unavailable (configured {settings.VECTOR_STORE})"
-        vs.count()
-        return "ok"
+        count = vs.count()
+        if count <= 0:
+            return f"empty (configured {settings.VECTOR_STORE})"
+        vs.query("healthcheck probe", n=1)
+        return f"ok ({count} points)"
     except Exception as e:
         return f"unreachable: {e}"
 
@@ -700,10 +703,10 @@ async def health_check():
         )
     except asyncio.TimeoutError:
         db_status = vs_status = retrieval_status = "timeout"
+    store_ready = vs_status == "ok" or vs_status.startswith(("ok (", "memory "))
+    retrieval_ready = not retrieval_status.startswith(("warming", "unavailable", "timeout"))
     result = {
-        "status": "healthy" if db_status == "ok" and (
-            vs_status == "ok" or vs_status.startswith("memory ")
-        ) and not retrieval_status.startswith(("warming", "unavailable", "timeout")) else "degraded",
+        "status": "healthy" if db_status == "ok" and store_ready and retrieval_ready else "degraded",
         "service": "IntelAI API",
         "version": "2026.3.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),

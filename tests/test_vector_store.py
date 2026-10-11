@@ -38,3 +38,40 @@ def test_vector_store_retrieve_signals_memory_with_none():
     finally:
         vs.settings = orig
         vs.reset_cache()
+
+
+def test_health_marks_an_empty_persistent_store_degraded(monkeypatch):
+    from types import SimpleNamespace
+    from src.api import server
+    from src.core import config
+
+    class EmptyStore:
+        def count(self):
+            return 0
+
+    monkeypatch.setattr(vs, "settings", SimpleNamespace(VECTOR_STORE="qdrant"))
+    monkeypatch.setattr(config, "settings", SimpleNamespace(VECTOR_STORE="qdrant"))
+    monkeypatch.setattr(vs, "get_vector_store", lambda: EmptyStore())
+
+    assert server._health_vector_store_check() == "empty (configured qdrant)"
+
+
+def test_health_reports_persistent_store_point_count(monkeypatch):
+    from types import SimpleNamespace
+    from src.api import server
+    from src.core import config
+
+    class PopulatedStore:
+        def count(self):
+            return 42
+
+        def query(self, text, n):
+            assert text == "healthcheck probe"
+            assert n == 1
+            return [{"title": "doc", "content": "body"}]
+
+    monkeypatch.setattr(vs, "settings", SimpleNamespace(VECTOR_STORE="qdrant"))
+    monkeypatch.setattr(config, "settings", SimpleNamespace(VECTOR_STORE="qdrant"))
+    monkeypatch.setattr(vs, "get_vector_store", lambda: PopulatedStore())
+
+    assert server._health_vector_store_check() == "ok (42 points)"
