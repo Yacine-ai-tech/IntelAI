@@ -11,16 +11,15 @@ Selected at runtime via ``VECTOR_STORE`` (env):
 
 Every backend embeds documents with ``EMBEDDING_MODEL`` (sentence-transformers) and supports
 ``upsert(docs)`` + ``query(text, n)``. ``vector_store_retrieve()`` fuses the store's dense
-hits with BM25 (RRF) and applies the BGE reranker when available — the same hybrid recipe,
-but with the dense side served from a real, persistent index.
+hits with BM25 (RRF) and applies the configured reranker.
 
-All backends degrade gracefully: if the client library or service is unavailable, the
-factory logs a warning and returns ``None`` so retrieval falls back to the in-process path —
-the chat path never breaks because a vector DB is misconfigured.
+When Qdrant is configured, connection and retrieval failures are errors; callers must not
+silently replace persistent retrieval with an in-process index.
 """
 from __future__ import annotations
 
 import os
+import threading
 from typing import Any, Dict, List, Optional, Tuple
 
 from src.core.config import settings
@@ -288,9 +287,16 @@ class QdrantVectorStore:
         self.coll = settings.QDRANT_COLLECTION
         self.dim = _dim()
         if not self.client.collection_exists(self.coll):
-            self.client.create_collection(
-                self.coll, vectors_config=VectorParams(size=self.dim, distance=Distance.COSINE)
-            )
+            try:
+                self.client.create_collection(
+                    self.coll,
+                    vectors_config=VectorParams(size=self.dim, distance=Distance.COSINE),
+                )
+            except Exception:
+                # Concurrent app startup can race between collection_exists() and
+                # create_collection(). Accept the race only if the collection now exists.
+                if not self.client.collection_exists(self.coll):
+                    raise
 
     @staticmethod
     def _pid(doc_id: str) -> int:
@@ -339,32 +345,40 @@ class QdrantVectorStore:
 
 # ── Factory (cached) ──────────────────────────────────────────────────────────
 _STORE: Any = "unset"
+_STORE_LOCK = threading.Lock()
 _BACKENDS = {"chroma": ChromaVectorStore, "pgvector": PgVectorStore, "qdrant": QdrantVectorStore}
 
 
 def get_vector_store():
-    """Return the configured backend instance, or ``None`` for ``memory``/unavailable."""
+    """Return the configured backend; fail explicitly if configured Qdrant is unavailable."""
     global _STORE
     if _STORE != "unset":
         return _STORE
-    kind = settings.VECTOR_STORE
-    cls = _BACKENDS.get(kind)
-    if cls is None:
-        _STORE = None
-        return _STORE
-    try:
-        _STORE = cls()
-        log.info("Vector store backend active: %s", kind)
-    except Exception as e:  # missing client lib or unreachable service → graceful fallback
-        log.warning("Vector store '%s' unavailable (%s) — using in-process retrieval", kind, e)
-        _STORE = None
+    with _STORE_LOCK:
+        if _STORE != "unset":
+            return _STORE
+        kind = settings.VECTOR_STORE
+        cls = _BACKENDS.get(kind)
+        if cls is None:
+            _STORE = None
+            return _STORE
+        try:
+            _STORE = cls()
+            log.info("Vector store backend active: %s", kind)
+        except Exception as e:
+            if kind == "qdrant":
+                log.error("Required Qdrant backend '%s' is unavailable: %s", kind, e)
+                raise RuntimeError(f"Required Qdrant backend is unavailable: {e}") from e
+            log.warning("Vector store '%s' unavailable (%s)", kind, e)
+            _STORE = None
     return _STORE
 
 
 def reset_cache() -> None:
     """Drop the cached backend (used by tests that flip VECTOR_STORE)."""
     global _STORE
-    _STORE = "unset"
+    with _STORE_LOCK:
+        _STORE = "unset"
 
 
 def reindex(docs: Optional[List[Doc]] = None, force: bool = False) -> int:
@@ -401,9 +415,11 @@ def vector_store_retrieve(
     query: str, top_k: int = 5, language: Optional[str] = None
 ) -> Optional[List[Tuple[str, str, float]]]:
     """Return ``[(title, content, score)]`` from the persistent store fused with BM25,
-    or ``None`` when no store is configured (caller uses its in-process path)."""
+    or ``None`` when no persistent store is configured. Configured backend failures raise."""
     vs = get_vector_store()
     if vs is None:
+        if settings.VECTOR_STORE == "qdrant":
+            raise RuntimeError("Required Qdrant backend is unavailable")
         return None
     from src.services.pg_store import get_knowledge_docs
     from src.services.hybrid_retrieval import _tokenize, rerank
@@ -442,6 +458,8 @@ def vector_store_retrieve(
         order = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:cand]
         sparse = [(titles[i], contents[i]) for i in order]
     except Exception as e:
+        if settings.VECTOR_STORE == "qdrant":
+            raise RuntimeError("BM25 indexing failed; refusing degraded Qdrant retrieval") from e
         log.warning("BM25 side skipped in vector_store_retrieve: %s", e)
 
     # Reciprocal Rank Fusion, keyed by title + content prefix (stable across both sources).
@@ -475,6 +493,10 @@ def vector_store_retrieve(
     cands = [meta[k] for k in ranked]
 
     rr = rerank(query, [c for _, c in cands])
+    if rr is None and os.getenv("USE_RERANKER", "true").strip().lower() in (
+        "1", "true", "yes", "on"
+    ):
+        raise RuntimeError("Configured reranker failed; refusing degraded Qdrant retrieval")
     if rr:
         idx = sorted(range(len(cands)), key=lambda j: rr[j], reverse=True)[:top_k]
         return [(cands[j][0], cands[j][1], float(rr[j])) for j in idx]
