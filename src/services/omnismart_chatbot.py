@@ -428,7 +428,7 @@ class UltraFastRAG:
                 )
                 if vr is None:
                     raise RuntimeError(
-                        f"Configured vector store {settings.VECTOR_STORE!r} returned no backend"
+                        f"Configured vector store retrieval timed out after {vr_timeout:g}s"
                     )
                 return vr
 
