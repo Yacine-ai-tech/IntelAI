@@ -107,9 +107,10 @@ def test_local_reranker_uses_cpu_and_bounded_batches(monkeypatch):
     from src.services import hybrid_retrieval as retrieval
 
     class FakeReranker:
-        def __init__(self, model_name, device):
+        def __init__(self, model_name, device, max_length):
             assert model_name == "BAAI/bge-reranker-v2-m3"
             assert device == "cpu"
+            assert max_length == 512
 
         def predict(self, pairs, batch_size):
             assert pairs == [("query", "candidate")]
@@ -120,8 +121,36 @@ def test_local_reranker_uses_cpu_and_bounded_batches(monkeypatch):
     monkeypatch.setattr(retrieval, "CrossEncoder", FakeReranker, raising=False)
     monkeypatch.setattr(retrieval, "_RERANK_RETRIEVER", None)
     monkeypatch.setenv("RERANK_BATCH_SIZE", "3")
+    monkeypatch.setenv("RERANK_BACKEND", "torch")
 
     assert retrieval._rerank_local("query", ["candidate"]) == [0.9]
+
+
+@pytest.mark.unit
+def test_local_reranker_rejects_unknown_backend(monkeypatch):
+    from src.services import hybrid_retrieval as retrieval
+
+    monkeypatch.setattr(retrieval, "_RERANKER", True)
+    monkeypatch.setattr(retrieval, "_RERANK_RETRIEVER", None)
+    monkeypatch.setenv("RERANK_BACKEND", "remote-fallback")
+
+    with pytest.raises(RuntimeError, match="RERANK_BACKEND"):
+        retrieval._rerank_local("query", ["candidate"])
+
+
+@pytest.mark.unit
+def test_local_reranker_selects_configured_onnx_backend(monkeypatch):
+    from src.services import hybrid_retrieval as retrieval
+
+    retriever = retrieval.HybridRetriever()
+    loaded = object()
+    monkeypatch.setattr(retrieval, "_RERANKER", True)
+    monkeypatch.setattr(retrieval, "_RERANK_RETRIEVER", retriever)
+    monkeypatch.setattr(retriever, "_load_onnx_int8_reranker", lambda max_length: loaded)
+    monkeypatch.setenv("RERANK_BACKEND", "onnx-int8")
+    monkeypatch.setenv("RERANK_MAX_LENGTH", "384")
+
+    assert retriever._ensure_reranker(force=True) is loaded
 
 
 @pytest.mark.unit
@@ -132,8 +161,9 @@ def test_local_reranker_model_load_is_shared_across_concurrent_calls(monkeypatch
     created = []
 
     class FakeReranker:
-        def __init__(self, model_name, device):
+        def __init__(self, model_name, device, max_length):
             created.append((model_name, device))
+            assert max_length == 512
 
         def predict(self, pairs, batch_size):
             return [0.5] * len(pairs)
