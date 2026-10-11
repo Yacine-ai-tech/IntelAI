@@ -29,6 +29,24 @@ def test_unknown_backend_falls_back_to_none():
     assert _factory_for("does-not-exist") is None
 
 
+def test_unavailable_qdrant_raises_instead_of_returning_none(monkeypatch):
+    class UnavailableQdrant:
+        def __init__(self):
+            raise ConnectionError("connection refused")
+
+    monkeypatch.setattr(vs, "_BACKENDS", {**vs._BACKENDS, "qdrant": UnavailableQdrant})
+    orig = vs.settings
+    vs.settings = SimpleNamespace(VECTOR_STORE="qdrant")
+    vs.reset_cache()
+    try:
+        import pytest
+        with pytest.raises(RuntimeError, match="Required Qdrant backend is unavailable"):
+            vs.get_vector_store()
+    finally:
+        vs.settings = orig
+        vs.reset_cache()
+
+
 def test_vector_store_retrieve_signals_memory_with_none():
     orig = vs.settings
     vs.settings = SimpleNamespace(VECTOR_STORE="memory")
@@ -75,3 +93,38 @@ def test_health_reports_persistent_store_point_count(monkeypatch):
     monkeypatch.setattr(vs, "get_vector_store", lambda: PopulatedStore())
 
     assert server._health_vector_store_check() == "ok (42 points)"
+
+
+def test_production_requires_qdrant(monkeypatch):
+    import pytest
+    from src.core import config
+
+    monkeypatch.setattr(
+        config, "settings",
+        SimpleNamespace(
+            ENVIRONMENT="production", VECTOR_STORE="memory", GROQ_API_KEY="present",
+            SECRET_KEY="a-valid-production-secret",
+        ),
+    )
+    with pytest.raises(EnvironmentError, match="Production requires VECTOR_STORE=qdrant"):
+        config.validate_required_keys()
+
+
+def test_qdrant_health_does_not_require_in_process_dense_index(monkeypatch):
+    from types import SimpleNamespace
+    from src.api import server
+    from src.core import config
+    from src.services import hybrid_retrieval
+
+    monkeypatch.setattr(config, "settings", SimpleNamespace(VECTOR_STORE="qdrant"))
+    monkeypatch.setenv("USE_HYBRID_RETRIEVAL", "true")
+    monkeypatch.setenv("USE_RERANKER", "true")
+    monkeypatch.setenv("RERANK_PROVIDER", "local")
+    monkeypatch.setattr(
+        hybrid_retrieval, "_RERANK_RETRIEVER",
+        SimpleNamespace(_reranker=object()),
+    )
+
+    assert server._health_hybrid_retrieval_check() == (
+        "ready: Qdrant dense + BM25/RRF + local BGE reranker"
+    )
