@@ -589,16 +589,44 @@ async def startup():
     _asyncio.create_task(_asyncio.to_thread(_vector_selfheal))
     log.info("Vector store self-heal scheduled (background)")
 
-    # The comment above claims chat is available immediately after startup — it wasn't:
-    # _get_shared_rag() is a lazy singleton, so the FIRST real chat message (not this
-    # self-heal, which only covers the separate, currently-unused Qdrant path) paid the
-    # full embedding-index-build cost inline (confirmed live: minutes, not seconds).
-    # Same fix, same pattern — build it here instead, off the request path.
+    # Load and fit the local dense+sparse index, then execute a real local reranker
+    # pass before users hit chat. The shared model cache prevents the Qdrant and hybrid
+    # paths from keeping duplicate BGE-M3 weights resident.
     def _rag_prewarm():
         try:
             from src.services.omnismart_chatbot import _get_shared_rag
             _get_shared_rag()
-            log.info("✅ Chat retrieval index pre-warmed (background)")
+            from src.services import hybrid_retrieval as retrieval
+            if not retrieval.hybrid_enabled():
+                log.warning("Hybrid retrieval disabled; local RAG pipeline was not warmed")
+                return
+            from src.services.pg_store import get_knowledge_docs
+            docs = get_knowledge_docs()
+            records = list(zip(
+                docs["title"].tolist(),
+                docs["content"].fillna("").tolist(),
+            )) if not docs.empty else []
+            if not records:
+                log.warning("No knowledge documents available to warm local RAG")
+                return
+            hits = retrieval.hybrid_doc_retrieve("startup retrieval warmup", records, top_k=1)
+            if (
+                not hits
+                or retrieval._HYBRID is None
+                or retrieval._HYBRID._chunk_vecs is None
+                or retrieval._HYBRID._bm25 is None
+            ):
+                raise RuntimeError("Local BGE-M3, BM25, or RRF retrieval did not initialize")
+            if (
+                os.getenv("USE_RERANKER", "true").strip().lower() in ("1", "true", "yes", "on")
+                and os.getenv("RERANK_PROVIDER", "local").strip().lower() == "local"
+                and (
+                    retrieval._RERANK_RETRIEVER is None
+                    or retrieval._RERANK_RETRIEVER._reranker is None
+                )
+            ):
+                raise RuntimeError("Local BGE reranker did not initialize")
+            log.info("✅ Local BGE-M3 + BM25/RRF + BGE reranker pipeline pre-warmed")
         except Exception as e:
             log.warning("Chat retrieval pre-warm skipped: %s", e)
 
@@ -628,13 +656,24 @@ def _health_db_check() -> str:
 def _health_vector_store_check() -> str:
     try:
         from src.services.vector_store import get_vector_store
+        from src.core.config import settings
         vs = get_vector_store()
         if vs is None:
-            return "memory (no persistent store configured)"
+            if settings.VECTOR_STORE in ("", "memory"):
+                return "memory (no persistent store configured)"
+            return f"unavailable (configured {settings.VECTOR_STORE})"
         vs.count()
         return "ok"
     except Exception as e:
         return f"unreachable: {e}"
+
+
+def _health_hybrid_retrieval_check() -> str:
+    try:
+        from src.services.hybrid_retrieval import hybrid_status
+        return hybrid_status()
+    except Exception as e:
+        return f"unavailable: {e}"
 
 
 _HEALTH_CACHE_LOCK = threading.Lock()
@@ -651,22 +690,26 @@ async def health_check():
             return _HEALTH_CACHE_DATA
 
     try:
-        db_status, vs_status = await asyncio.wait_for(
+        db_status, vs_status, retrieval_status = await asyncio.wait_for(
             asyncio.gather(
                 asyncio.to_thread(_health_db_check),
                 asyncio.to_thread(_health_vector_store_check),
+                asyncio.to_thread(_health_hybrid_retrieval_check),
             ),
             timeout=5.0,
         )
     except asyncio.TimeoutError:
-        db_status = vs_status = "timeout"
+        db_status = vs_status = retrieval_status = "timeout"
     result = {
-        "status": "healthy" if db_status == "ok" else "degraded",
+        "status": "healthy" if db_status == "ok" and (
+            vs_status == "ok" or vs_status.startswith("memory ")
+        ) and not retrieval_status.startswith(("warming", "unavailable", "timeout")) else "degraded",
         "service": "IntelAI API",
         "version": "2026.3.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "database": db_status,
         "vector_store": vs_status,
+        "retrieval": retrieval_status,
     }
     with _HEALTH_CACHE_LOCK:
         _HEALTH_CACHE_TIME = now

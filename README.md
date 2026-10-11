@@ -25,7 +25,7 @@ forecasting, and board-ready exports, over 146 curated KPIs.
 |---|---|
 | Nine-persona RAG copilot | CEO, CFO, CTO, COO, CHRO, ESG, Risk, Analyst, Assistant — role-scoped data, WebSocket streaming, source citations |
 | GraphRAG-lite | A multi-hop entity graph for cross-domain queries (`USE_GRAPH_RAG=true`) |
-| Hybrid retrieval | Dense embeddings + BM25 + Reciprocal Rank Fusion + a cross-encoder reranker, degrading gracefully when a component is unavailable |
+| Hybrid retrieval | Local BGE-M3 dense embeddings + BM25 fused with Reciprocal Rank Fusion, followed by the local BGE reranker |
 | Answer-block structuring | The backend parses LLM markdown into typed blocks (heading, KPI, list, quote, code) |
 | 146 curated KPIs | Finance, HR, IT, Operations, Logistics, ESG, Growth — 78-month history, 7 benchmarking scenarios |
 | ML forecasting | Monte Carlo forecasting with confidence bands |
@@ -45,7 +45,7 @@ FastAPI  (src/api/server.py)
         │
    PostgreSQL (Neon)             LLM (OpenAI-compatible via LiteLLM)
    KPIs · auth · sessions ·      GraphRAG-lite · hybrid retrieval ·
-   vectors (pgvector, opt-in)    BGE reranker · BM25
+   vectors (pgvector/Qdrant)    BGE-M3 · BM25/RRF · BGE reranker
 ```
 
 ## Quick Start
@@ -77,6 +77,11 @@ docker compose -f docker-compose.dev.yml up --build   # app only, uses .env's da
 docker compose up --build                              # app plus a bundled Postgres
 ```
 
+The full local retrieval pipeline uses CPU PyTorch, `BAAI/bge-m3`, BM25/RRF, and
+`BAAI/bge-reranker-v2-m3`. First use downloads the model weights; Docker Compose
+persists them in the `model-cache` volume. Allocate several GiB of RAM to the app
+container before enabling both local models.
+
 ## Configuration
 
 Every variable and its default is documented in `.env.example`. The ones most commonly
@@ -91,7 +96,10 @@ adjusted:
 | `ANTHROPIC_API_KEY` | No | Reasoning-tier LLM (CEO/CFO/CTO/Risk personas); falls back to Groq if unset |
 | `LLM_DEFAULT` / `LLM_REASONING` / `LLM_JUDGE` | No | LiteLLM model IDs per tier, for any provider LiteLLM supports |
 | `USE_GRAPH_RAG` | No | `true` enables GraphRAG-lite multi-hop retrieval |
-| `USE_HYBRID_RETRIEVAL` | No | `true` enables dense + BM25 + RRF + reranker |
+| `USE_HYBRID_RETRIEVAL` | No | `true` enables local BGE-M3 dense + BM25/RRF retrieval |
+| `EMBEDDING_PROVIDER` / `EMBEDDING_MODEL` | No | Use `local` and `BAAI/bge-m3` for CPU-local embeddings |
+| `USE_RERANKER` / `RERANK_PROVIDER` | No | Use `true` and `local` for `BAAI/bge-reranker-v2-m3` |
+| `EMBED_BATCH_SIZE` / `RERANK_BATCH_SIZE` | No | Bound CPU inference batch memory |
 | `VECTOR_STORE` | No | `chroma` (dev, default), `pgvector`, or `qdrant` (production) |
 | `AUDIO_PROCESSOR_URL` / `DOC_PROCESSOR_URL` | No | Pluggable audio/document processors — for example, a VoiceFlow or DocIntel instance |
 | `INGEST_WEBHOOK_SECRET` | No | Enables the HMAC-signed `/api/v1/webhook/{source}` ingestion path |
