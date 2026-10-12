@@ -82,11 +82,18 @@ The full local retrieval pipeline uses `BAAI/bge-m3`, BM25/RRF, and
 persists them in the `model-cache` volume. Allocate several GiB of RAM to the app
 container before enabling both local models.
 
-For faster local CPU reranking without changing the model or candidate pool, set
-`RERANK_BACKEND=onnx-int8`. The same BGE reranker snapshot is exported and dynamically
-quantized once, then cached alongside the Hugging Face models. The first ONNX startup
-per model revision performs this export; later starts reuse the cache. If export or
-inference fails, retrieval reports the failure instead of silently switching backends.
+The local CPU reranker keeps the same `BAAI/bge-reranker-v2-m3` model and 20-candidate
+pool. Its defaults use a 256-token query/document limit and score all 20 candidates in
+one inference batch. On the Contabo CPU canary, four CPU cores with these settings
+reduced rerank time from roughly 17–27 seconds to roughly 13–21 seconds; the top five
+were unchanged for three tested queries. This is a small smoke comparison, not a
+labeled relevance benchmark. A shorter token limit can omit later document context,
+so evaluate with representative relevance labels before adopting a different limit.
+
+`RERANK_BACKEND=onnx-int8` remains available for testing the same dynamically quantized
+BGE model, but the Contabo full-retrieval comparison did not show a speed improvement
+over PyTorch. Exported files are cached alongside the Hugging Face models; export or
+inference errors are surfaced rather than silently switching backends.
 
 With `VECTOR_STORE=qdrant`, chat uses the persistent Qdrant dense index fused with
 BM25 through RRF and the local BGE reranker. Qdrant, BM25, and the configured reranker
@@ -114,8 +121,8 @@ adjusted:
 | `EMBEDDING_PROVIDER` / `EMBEDDING_MODEL` | No | Use `local` and `BAAI/bge-m3` for CPU-local embeddings |
 | `USE_RERANKER` / `RERANK_PROVIDER` | No | Use `true` and `local` for `BAAI/bge-reranker-v2-m3` |
 | `RERANK_BACKEND` | No | `torch` (default) or `onnx-int8` for local CPU reranking |
-| `RERANK_MAX_LENGTH` | No | Maximum query/document pair token length (default `512`) |
-| `EMBED_BATCH_SIZE` / `RERANK_BATCH_SIZE` | No | Bound CPU inference batch memory |
+| `RERANK_MAX_LENGTH` | No | Maximum query/document pair token length (default `256`) |
+| `EMBED_BATCH_SIZE` / `RERANK_BATCH_SIZE` | No | Embedding batch size / reranker candidates per inference batch (defaults `16` / `20`) |
 | `VECTOR_STORE` | No | `chroma` (dev, default), `pgvector`, or `qdrant` (production) |
 | `AUDIO_PROCESSOR_URL` / `DOC_PROCESSOR_URL` | No | Pluggable audio/document processors — for example, a VoiceFlow or DocIntel instance |
 | `INGEST_WEBHOOK_SECRET` | No | Enables the HMAC-signed `/api/v1/webhook/{source}` ingestion path |
