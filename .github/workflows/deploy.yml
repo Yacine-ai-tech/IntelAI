@@ -13,3 +13,7 @@ jobs:
             "https://intelai.ysiddo-ai-projects.app/health") || { echo "Health check failed"; exit 1; }
           echo "Production service responded HTTP $code"
           cat /tmp/resp.json
+          ready_code=$(curl -fsS -o /tmp/ready.json -w "%{http_code}" \
+            "https://intelai.ysiddo-ai-projects.app/ready") || { echo "Production readiness check failed"; exit 1; }
+          echo "Production readiness returned HTTP $ready_code"
+          cat /tmp/ready.json
