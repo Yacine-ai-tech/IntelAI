@@ -348,7 +348,7 @@ class HybridRetriever:
             return None
         if self._reranker is None:
             backend = os.getenv("RERANK_BACKEND", "torch").strip().lower()
-            max_length = max(1, int(os.getenv("RERANK_MAX_LENGTH", "512")))
+            max_length = max(1, int(os.getenv("RERANK_MAX_LENGTH", "256")))
             if backend == "torch":
                 log.info("Loading reranker (CrossEncoder/%s): %s", backend, self.reranker_model_name)
                 self._reranker = CrossEncoder(
@@ -692,7 +692,7 @@ def _rerank_local(query: str, texts: List[str]) -> List[float]:
     with _LOCAL_INFERENCE_LOCK:
         scores = reranker.predict(
             [(query, t) for t in texts],
-            batch_size=max(1, int(os.getenv("RERANK_BATCH_SIZE", "8"))),
+            batch_size=max(1, int(os.getenv("RERANK_BATCH_SIZE", "20"))),
         )
     return [float(s) for s in scores]
 
