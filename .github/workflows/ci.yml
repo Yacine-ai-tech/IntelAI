@@ -1,4 +1,4 @@
-name: IntelAI — Render Deploy & E2E Smoke Tests
+name: IntelAI CI & Production Smoke Tests
 
 on:
   push:
@@ -36,13 +36,45 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install pytest pytest-asyncio
-      - name: Run unit tests (in-memory, no DB/LLM keys required)
+      - name: Run unit tests (no database or provider credentials required)
         run: python -m pytest
 
+  postgres-migrations:
+    name: "PostgreSQL bootstrap and migration tests"
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: intelai_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d intelai_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio
+      - name: Test isolated PostgreSQL bootstrap and migrations
+        env:
+          TEST_POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/intelai_test
+          RUN_POSTGRES_MIGRATION_TESTS: "true"
+        run: python -m pytest tests/test_pg_store_bootstrap.py -q -o addopts=""
+
   # ═══════════════════════════════════════════════════════════════════════════
-  # PHASE 1 — Deploy: see deploy.yml, the single dedicated workflow for this
-  # (removed the duplicate deploy-trigger job that used to live here — every push
-  # to main/master/develop was firing two separate Render deploy API calls).
+  # Production deployments run on the Contabo VPS, outside this CI workflow.
+  # This workflow validates source changes and performs post-merge smoke tests only.
   # ═══════════════════════════════════════════════════════════════════════════
   # PHASE 2 — Wait for Deploy + Smoke Test all 6 live endpoints
   # NOTE: E2E tests run on GitHub Actions runners ONLY — never locally.

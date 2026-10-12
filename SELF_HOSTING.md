@@ -34,12 +34,12 @@ past login) returns `403`.
 
 ## Scaling up to managed cloud services (optional)
 
-1. **Database:** Point `POSTGRES_URL` at a managed Postgres (Neon, Render, RDS, etc.)
+1. **Database:** Point `POSTGRES_URL` at a managed Postgres (Neon, RDS, or another provider)
    instead of the bundled container.
 2. **Vector store:** Set `VECTOR_STORE=qdrant` + `QDRANT_URL`/`QDRANT_API_KEY` for a
    managed Qdrant cluster, or `VECTOR_STORE=pgvector` to reuse the same Postgres
    instance (no separate service). `chroma` (the default) needs neither.
-3. **Hosting:** Deploy the container on a VPS with Docker Compose, Fly.io, Render, or any
+3. **Hosting:** Deploy the container on a VPS with Docker Compose or any
    host that runs a Dockerfile and honors `$PORT`. Any on-demand GPU host works too if you
    enable local hybrid-retrieval models (`USE_HYBRID_RETRIEVAL=true` + local
    reranker/embedder — see `.env.example`).

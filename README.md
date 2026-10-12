@@ -94,7 +94,13 @@ are required for this mode; retrieval errors are surfaced rather than replaced w
 in-process dense index. Production startup requires `VECTOR_STORE=qdrant`. The in-process
 passage index is reserved for explicit non-production memory mode. `/health` reports
 model readiness and the persistent store's point count; an empty or unreachable store
-is reported as degraded.
+is reported as degraded. `/ready` returns HTTP 503 until PostgreSQL, Qdrant, and the
+configured retrieval pipeline are ready.
+
+PostgreSQL bootstrap and additive schema migrations run transactionally during application
+startup. In production or when Qdrant/pgvector is configured, a failed database migration
+aborts startup; there is no in-memory auth/database fallback. CI exercises both a clean
+Postgres database and legacy schemas missing the current `owner_user_id`/`source` columns.
 
 ## Configuration
 
@@ -123,7 +129,7 @@ adjusted:
 ## Key API Endpoints
 
 ```
-/health  ·  /api/docs
+/health  ·  /ready  ·  /api/docs
 POST /api/v1/auth/login          GET /api/v1/auth/me
 POST /api/v1/chat                WS  /api/v1/ws/chat        GET /api/v1/personas
 POST /api/v1/chat/async          GET /api/v1/chat/{job_id}  (async job+poll form for slow turns behind a timeout-limited proxy)
@@ -180,9 +186,9 @@ out-of-sample forecast backtest, and a knowledge-graph coverage measurement — 
 
 ## Deploy
 
-IntelAI deploys as one containerized service — build the included `Dockerfile` and run it on
-any host that honors `$PORT` (a Linux VPS with Docker Compose, Kubernetes, Fly.io, and similar),
-set the environment variables above, and attach a managed Postgres instance (e.g. Neon). Deploy the
+IntelAI deploys as one containerized service on the Contabo VPS — build the included `Dockerfile`
+and run it with Docker Compose, set the environment variables above, and attach the configured
+Postgres and Qdrant stores. Deploy the
 frontend separately (Vercel, Netlify, or as static files) with `VITE_API_BASE_URL` pointing to
 the backend, and keep `VITE_USE_WS=false` in production to use the resilient `/chat/async`
 job-and-poll path by default. See [SELF_HOSTING.md](SELF_HOSTING.md) for a full walkthrough.
