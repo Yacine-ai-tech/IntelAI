@@ -110,7 +110,7 @@ def test_local_reranker_uses_cpu_and_bounded_batches(monkeypatch):
         def __init__(self, model_name, device, max_length):
             assert model_name == "BAAI/bge-reranker-v2-m3"
             assert device == "cpu"
-            assert max_length == 512
+            assert max_length == 256
 
         def predict(self, pairs, batch_size):
             assert pairs == [("query", "candidate")]
@@ -163,7 +163,7 @@ def test_local_reranker_model_load_is_shared_across_concurrent_calls(monkeypatch
     class FakeReranker:
         def __init__(self, model_name, device, max_length):
             created.append((model_name, device))
-            assert max_length == 512
+            assert max_length == 256
 
         def predict(self, pairs, batch_size):
             return [0.5] * len(pairs)
