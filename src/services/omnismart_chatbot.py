@@ -418,15 +418,32 @@ class UltraFastRAG:
             # failures must not trigger a second in-process dense index.
             if settings.VECTOR_STORE not in ("memory", ""):
                 from src.services.vector_store import vector_store_retrieve
-                vr_timeout = float(os.getenv("VECTOR_RETRIEVAL_TIMEOUT", "12"))
-                vr = _run_with_timeout(
-                    vector_store_retrieve,
-                    vr_timeout,
-                    query,
-                    top_k,
-                    language,
-                )
+                from src.services import retrieval_progress as _rp
+
+                vr_timeout = _rp.retrieval_budget_seconds()
+                ctx = _rp.RetrievalContext(_rp.progress_key())
+
+                def _bound_retrieve():
+                    token = _rp.bind(ctx)
+                    try:
+                        return vector_store_retrieve(query, top_k, language)
+                    finally:
+                        _rp.unbind(token)
+
+                vr = _run_with_timeout(_bound_retrieve, vr_timeout)
                 if vr is None:
+                    # Stop the remaining cross-encoder batches: nobody is waiting for them.
+                    ctx.cancel.set()
+                    allow_partial = os.getenv("RETRIEVAL_ALLOW_PARTIAL", "true").strip().lower() in (
+                        "1", "true", "yes", "on")
+                    if ctx.preliminary and allow_partial:
+                        log.warning(
+                            "Retrieval exceeded its %.0fs budget during reranking; "
+                            "returning the fused (RRF) ranking flagged as partial", vr_timeout)
+                        ctx.report("partial")
+                        partial = _rp.RankedHits(ctx.preliminary)
+                        partial.partial, partial.stage = True, "fused"
+                        return partial
                     raise RuntimeError(
                         f"Configured vector store retrieval timed out after {vr_timeout:g}s"
                     )
