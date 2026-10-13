@@ -55,11 +55,16 @@ except ImportError as e:
              "(remote EMBEDDING_ENDPOINT / RERANK_URL still work)", e)
 
 _LOCAL_EMBEDDERS: Dict[str, Any] = {}
-_LOCAL_EMBEDDERS_LOCK = threading.Lock()
+# One lock for every local model load. Loading two transformer models concurrently can
+# fail with "Cannot copy out of meta tensor" (the loaders share global initialisation
+# state), which left the reranker unready after a restart when the embedder and the
+# cross-encoder happened to load at the same moment.
+_MODEL_LOAD_LOCK = threading.RLock()
+_LOCAL_EMBEDDERS_LOCK = _MODEL_LOAD_LOCK
 _LOCAL_INFERENCE_LOCK = threading.Lock()
 
 from src.services.retrieval_progress import RetrievalCancelled  # noqa: E402
-_LOCAL_RERANKER_LOAD_LOCK = threading.Lock()
+_LOCAL_RERANKER_LOAD_LOCK = _MODEL_LOAD_LOCK
 
 
 def load_local_embedder(model_name: str):
