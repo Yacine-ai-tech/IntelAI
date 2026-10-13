@@ -144,13 +144,13 @@ availability is excluded from this figure and reported separately below.
 | kpi (English) | 21 | 0.431 | 77.4s |
 | web-search | 1 | 0.275 | 55.0s |
 
-### 3a-v2. Regression: Retrieval Returning No Context on a Subset of Queries
+### 3a-v2. Re-run with Symmetric English/French Templates
 
 A later run of the same 50-case set, using symmetric English/French templates (§7),
 measured ground-truth accuracy at **71.4%** across applicable cases under full dense-sparse
 retrieval and reranking.
 
-**Architectural Foundation.** The production architecture deploys self-hosted BGE-M3
+**Retrieval stack.** The production deployment runs self-hosted BGE-M3
 (`BAAI/bge-m3` dense + sparse embedding) and BGE-Reranker-v2-M3 (`BAAI/bge-reranker-v2-m3`)
 directly on the server instance (`EMBEDDING_PROVIDER=local`, `RERANK_PROVIDER=local`),
 ensuring full 1024-dimensional semantic retrieval and neural reranking without external
@@ -162,10 +162,9 @@ see §7 for the isolated, template-matched comparison and the mechanism behind t
 
 ### 3b. Multi-Judge Consensus Under Production Routing
 
-Evaluation relies on heterogeneous multi-judge consensus across frontier models and deterministic
-symbolic verification. When full multi-judge consensus is aggregated, groundedness reaches
-0.659+ on complex analytical synthesis, validating that multi-hop context synthesis is
-faithfully anchored to ingested enterprise data.
+Evaluation uses a multi-judge consensus across several hosted models plus a deterministic
+symbolic check. The table separates cases scored with the full panel from cases scored while
+part of the panel was unavailable.
 
 | Evaluation condition | Avg. groundedness | N |
 |---|---|---|
@@ -405,12 +404,6 @@ dominates the remaining time, as expected for a 568M-parameter model scoring one
 query-passage pair per candidate on CPU. A request for 20 results, which previously ended in a
 retrieval timeout returned as an empty success, now completes with all 20 results.
 
-## Limitations (continued)
-
-- §9 uses three queries and one run each on one host; the figures show the order of magnitude
-  and the shape of the stages, not a latency distribution. Ranking quality against labelled
-  relevance data was not re-measured in this pass.
-
 ## Limitations
 
 - The forecast backtest is scored against a synthetic-but-deterministic 78-month series; it
@@ -420,8 +413,8 @@ retrieval timeout returned as an empty success, now completes with all 20 result
 - GraphRAG-lite, as documented in `RESEARCH.md`, is a deterministic keyword-pattern
   extractor, not an LLM-driven entity/relationship pipeline; its accuracy ceiling is that of a
   keyword-substring heuristic.
-- Live production evaluation targets production inference backends behind Caddy reverse-proxy.
-  Any case failing after retries is reported as a failure, not excluded.
+- Live production evaluation targets the deployed production API. Any case failing after
+  retries is reported as a failure, not excluded.
 - The judge-panel groundedness figure in §3 is affected by real judge-availability variance on
   a subset of cases (§3b); ground-truth accuracy is the more reliable measure of system
   quality from this run.
@@ -440,6 +433,9 @@ retrieval timeout returned as an empty success, now completes with all 20 result
   reproduced independently.
 - §8's result is drawn from three of six scenarios tested directly; the other three use the
   identical retrieval code path but were not independently re-verified in this pass.
+- §9 uses three queries and one run each on one host; the figures show the order of magnitude
+  and the shape of the stages, not a latency distribution. Ranking quality against labelled
+  relevance data was not re-measured in this pass.
 
 ## Further Reading
 
