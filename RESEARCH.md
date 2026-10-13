@@ -84,7 +84,7 @@ role-based access control (RBAC), a decades-old access-control model (Ferraiolo 
 *Role-Based Access Control*, 1992) applied here to what an LLM is allowed to *see* during
 retrieval, not only to what a data store returns.
 
-This needs the same honest scoping RAGeval gives its own persona-scope detector: the
+This needs the same scoping RAGeval gives its own persona-scope detector: the
 general-purpose RAG-evaluation frameworks and observability platforms most commonly cited
 in 2026 (RAGAS, ARES, TruLens, Phoenix, Langfuse) do not ship an authorization-scoped
 retrieval layer as a first-class concept — retrieval-time RBAC is IntelAI's own design
@@ -108,7 +108,7 @@ extraction and community-summarization pipeline like the reference GraphRAG
 implementation. It is explainable and cheap to run at ingestion time; it is not a learned
 or LLM-graded extractor, and its accuracy is exactly what a keyword-substring heuristic's
 accuracy would be — measured directly in [`BENCHMARK.md`](BENCHMARK.md) rather than
-asserted. Calling it "GraphRAG-lite" throughout this codebase is meant as an honest
+asserted. Calling it "GraphRAG-lite" throughout this codebase is meant as a plain
 qualifier, not a marketing shorthand for the full technique.
 
 ## Forecasting: classical statistics, selected per series by backtest
@@ -174,13 +174,13 @@ departure from it:
   retrieval quality be reported with the same rigor as the groundedness numbers in
   `BENCHMARK.md`, rather than folded into the general RAG score.
 
-None of these is committed or scheduled here — they're the honest next steps that follow
+None of these is committed or scheduled here — they're the next steps that follow
 from being specific about what today's numbers do and don't establish.
 
 ## Further Reading
 
 - [`BENCHMARK.md`](BENCHMARK.md) — the actual live-production RAG evaluation, the
-  forecast backtest, the entity-extraction coverage measurement, and honest caveats about
+  forecast backtest, the entity-extraction coverage measurement, and caveats about
   what those numbers do and don't establish.
 - [`README.md`](README.md) — feature overview and quick start.
 - [RAGeval's RESEARCH.md](https://github.com/Yacine-ai-tech/RAGeval/blob/main/RESEARCH.md) —

@@ -695,7 +695,7 @@ export default function ChatPage({
                   )}
                   {waitSeconds >= 25 && (
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-3, #71717a)' }}>
-                      {t('chatSlowNote') || 'Ranking runs on CPU and can take up to a minute on a cold start. You can stop this turn at any time.'}
+                      {t('chatSlowNote') || 'Ranking can take up to a minute on the first request. You can stop this turn at any time.'}
                     </span>
                   )}
                 </div>

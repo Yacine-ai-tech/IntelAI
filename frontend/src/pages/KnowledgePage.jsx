@@ -108,7 +108,7 @@ export default function KnowledgePage() {
           )}
           {elapsed >= 20 && (
             <div style={{ marginTop: 10, fontSize: '.78rem', color: 'var(--text-3)' }}>
-              {t('searchSlowNote') || 'Still working. Ranking runs on CPU and can take up to a minute on a cold start; the list below is the preliminary order.'}
+              {t('searchSlowNote') || 'Still working. Ranking can take up to a minute on the first request; the list below is the preliminary order.'}
             </div>
           )}
         </div>
