@@ -4,14 +4,14 @@ import { useAuth } from '../context/AuthContext'
 import { useTranslation } from '../i18n/I18nContext'
 import CubeMark from '../components/Brand'
 import {
-  ShieldCheck, Briefcase, DollarSign, Cpu, BarChart3, Eye, EyeOff, AlertCircle,
+  Briefcase, DollarSign, Cpu, BarChart3, Eye, EyeOff, AlertCircle,
   Sparkles, FileText, Languages, Lock, ArrowRight, Loader2,
   Settings2, Users, Leaf, ShieldAlert, Landmark,
 } from 'lucide-react'
 
-// All personas — one-click demo via the password-less /auth/demo-login endpoint.
+// Business personas — one-click demo via the password-less /auth/demo-login endpoint.
+// Administrator access is not offered through demo login (the API refuses it).
 const DEMO = [
-  { user: 'admin',   role: 'Admin',   Icon: ShieldCheck },
   { user: 'ceo',     role: 'CEO',     Icon: Briefcase },
   { user: 'cfo',     role: 'CFO',     Icon: DollarSign },
   { user: 'cto',     role: 'CTO',     Icon: Cpu },
