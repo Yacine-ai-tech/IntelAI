@@ -24,7 +24,7 @@ Environment variables:
 
 On any per-case failure (network error, malformed response), that case is recorded with
 an explicit "error" field and excluded from the averages — never a fabricated score. A
-0% success rate is reported honestly as 0%, not backfilled with plausible-looking numbers.
+0% success rate is reported as 0%, not backfilled with plausible-looking numbers.
 """
 from __future__ import annotations
 

@@ -6,7 +6,7 @@ missing. It documents the current implementation, not an intended one.
 **The dataset is a generated virtual company: OmniIntelOS S.A.** It is fictional. No
 figure here is any real company's disclosed result, and nothing in this repository should
 be read as one. What makes it trustworthy is not a claim of realness — it is that the
-data is *internally verifiable*, *causally coherent*, and *honestly labelled* at every
+data is *internally verifiable*, *causally coherent*, and *labelled* at every
 layer, right down to the disclosure line printed inside each generated PDF.
 
 ---
