@@ -84,9 +84,9 @@ export default function BenchmarkPage() {
         />
         <Stat
           label="RBAC Persona Isolation"
-          value="100.0%"
-          unit="enforced"
-          hint="0 cross-role data leaks across 9 personas"
+          value="3 / 3"
+          unit="probes passed"
+          hint="Out-of-scope document absent for the narrow persona, present for the wide one"
           icon={ShieldCheck}
           accent="var(--primary)"
         />
@@ -261,26 +261,18 @@ export default function BenchmarkPage() {
             IntelAI implements strict pre-retrieval authorization. Each request JWT defines allowable data domains, filtering database queries and vector indexes prior to retrieval.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14 }}>
-            <div style={{ padding: 16, borderRadius: 8, background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
-              <div style={{ fontWeight: 600, fontSize: '.9rem', color: 'var(--text)', marginBottom: 6 }}>Boundary Verification Test</div>
-              <p style={{ margin: 0, fontSize: '.84rem', color: 'var(--text-2)', lineHeight: 1.5 }}>
-                A test query for sensitive executive payroll figures was submitted under CHRO (authorized) and Logistics Manager (unauthorized) roles.
-              </p>
-              <div style={{ marginTop: 12, padding: 8, background: 'var(--surface)', borderRadius: 6, fontSize: '.8rem', fontFamily: 'var(--font-mono)' }}>
-                Result: 0 unauthorized records returned (HTTP 200 with strictly filtered domain context).
-              </div>
+          <div style={{ padding: 16, borderRadius: 8, background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
+            <div style={{ fontWeight: 600, fontSize: '.9rem', color: 'var(--text)', marginBottom: 6 }}>Live A/B boundary test</div>
+            <p style={{ margin: 0, fontSize: '.84rem', color: 'var(--text-2)', lineHeight: 1.5 }}>
+              A CFO persona (Finance and Growth only) and a CEO persona (all seven domains) were asked the same question about an
+              out-of-scope ESG annual document, and the CFO was also asked for an in-scope Finance document.
+            </p>
+            <div style={{ marginTop: 12, padding: 8, background: 'var(--surface)', borderRadius: 6, fontSize: '.8rem', fontFamily: 'var(--font-mono)' }}>
+              Result: absent for the CFO, top-ranked for the CEO, and the in-scope document returned for the CFO.
             </div>
-
-            <div style={{ padding: 16, borderRadius: 8, background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
-              <div style={{ fontWeight: 600, fontSize: '.9rem', color: 'var(--text)', marginBottom: 6 }}>Statutory Currency Translation</div>
-              <p style={{ margin: 0, fontSize: '.84rem', color: 'var(--text-2)', lineHeight: 1.5 }}>
-                Verified deterministic currency conversion: XOF records convert to USD using the fixed BCEAO rate peg (655.957 XOF/EUR, 607.37 XOF/USD) retrieved from <code>data/glossary.py</code>, preventing floating rate hallucinations.
-              </p>
-              <div style={{ marginTop: 12, padding: 8, background: 'var(--surface)', borderRadius: 6, fontSize: '.8rem', fontFamily: 'var(--font-mono)' }}>
-                Verification: 100% adherence to internal statutory rate across 50 simulated currency inquiries.
-              </div>
-            </div>
+            <p style={{ margin: '10px 0 0', fontSize: '.78rem', color: 'var(--text-3, var(--text-2))', lineHeight: 1.5 }}>
+              This is a targeted probe on one persona pair, not an audit of all nine personas.
+            </p>
           </div>
         </Panel>
       )}
@@ -288,15 +280,13 @@ export default function BenchmarkPage() {
       {/* CLI Reproducibility */}
       <Panel title="CLI Reproducibility Commands" Icon={Terminal} style={{ marginTop: 24 }}>
         <p style={{ fontSize: '.88rem', color: 'var(--text-2)', lineHeight: 1.6, marginBottom: 12 }}>
-          All measurements reported on this page can be reproduced locally via the repository evaluation harnesses:
+          The retrieval evaluation set and the production evaluation harness are in the repository. The forecasting backtest,
+          entity coverage and multi-hop checks are described step by step in BENCHMARK.md, which also lists their limitations.
         </p>
         <div style={{ background: 'var(--surface-2)', padding: 16, borderRadius: 8, fontFamily: 'var(--font-mono)', fontSize: '.82rem', display: 'flex', flexDirection: 'column', gap: 8, color: 'var(--primary)' }}>
-          <div># 1. Reproduce out-of-sample time-series forecasting backtest</div>
-          <div style={{ color: 'var(--text)' }}>python scripts/evaluate_forecasting.py --origin-months 78 --horizon 3</div>
-          <div style={{ marginTop: 8 }}># 2. Reproduce entity coverage and multi-hop graph retrieval validation</div>
-          <div style={{ color: 'var(--text)' }}>python scripts/evaluate_graph_coverage.py --check-all-rows</div>
-          <div style={{ marginTop: 8 }}># 3. Reproduce hybrid retrieval & RBAC persona scoping audit</div>
-          <div style={{ color: 'var(--text)' }}>python scripts/evaluate_retrieval_rbac.py --personas all</div>
+          <div># Build the evaluation set from the live database, then score the deployed API</div>
+          <div style={{ color: 'var(--text)' }}>python scripts/build_rag_eval_set.py</div>
+          <div style={{ color: 'var(--text)' }}>python scripts/evaluate_production_live.py</div>
         </div>
       </Panel>
     </div>
