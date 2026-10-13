@@ -1454,7 +1454,8 @@ class AgentPersonaFactory:
         except Exception as exc:
             log.error("Persona chat error (%s): %s", persona.name, exc)
             return {
-                "response": f"Error: {exc}",
+                "response": "The answer could not be generated because the model provider did not respond. Please try again.",
+                "error": f"model_provider_error: {type(exc).__name__}",
                 "persona_used": persona.name,
                 "tokens_used": 0,
                 "latency_ms": (time.time() - start) * 1000,

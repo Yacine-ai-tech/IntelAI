@@ -959,6 +959,10 @@ async def get_me(user: TokenData = Depends(get_current_user)):
 # CHAT & PERSONAS
 # ════════════════════════════════════════════════════════════
 
+class ChatProviderError(RuntimeError):
+    """The model provider failed to produce an answer for a chat turn."""
+
+
 async def _run_chat_turn(req: "ChatRequest", user: TokenData) -> Dict[str, Any]:
     """The actual chat pipeline — retrieval + LLM completion + persistence. Shared by
     the synchronous POST /api/v1/chat and the async POST /api/v1/chat/async + GET
@@ -1008,6 +1012,11 @@ async def _run_chat_turn(req: "ChatRequest", user: TokenData) -> Dict[str, Any]:
             f"chat turn exceeded CHAT_TURN_TIMEOUT={int(_chat_turn_timeout_seconds())}s"
         ) from e
 
+    if result.get("error"):
+        # A failed model call is a failed turn: surface it as an error status and do not
+        # store the apology text as if it were an answer.
+        raise ChatProviderError(str(result["error"]))
+
     response_text = result.get("response", "")
     sources = result.get("sources", [])
 
@@ -1041,6 +1050,8 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
         return await _run_chat_turn(req, user)
     except TimeoutError as e:
         raise HTTPException(status_code=504, detail=str(e))
+    except ChatProviderError as e:
+        raise HTTPException(status_code=502, detail=str(e))
 
 
 @app.post("/api/v1/chat/async")
