@@ -432,6 +432,8 @@ class UltraFastRAG:
     ) -> List[Tuple[str, str, float]]:
         """Retrieve most relevant documents using semantic similarity."""
         try:
+            from src.services.metric_aliases import expand_query
+            query = expand_query(query)
             docs = get_knowledge_docs()
             if docs.empty:
                 return []

@@ -33,11 +33,19 @@ from src.core.config import get_cors_allowed_origins, settings
 log = get_logger(__name__)
 
 
-def _chat_turn_timeout_seconds() -> float:
+def _env_number(name: str, default, cast=float):
+    """Numeric environment value; unset, blank or malformed values use the default."""
+    raw = (_os.environ.get(name) or "").strip()
+    if not raw:
+        return default
     try:
-        return max(1.0, float(_os.environ.get("CHAT_TURN_TIMEOUT", "180")))
-    except Exception:
-        return 180.0
+        return cast(raw)
+    except (TypeError, ValueError):
+        return default
+
+
+def _chat_turn_timeout_seconds() -> float:
+    return max(1.0, _env_number("CHAT_TURN_TIMEOUT", 180.0))
 
 
 def _requires_persistent_database(environment: str, vector_store: str) -> bool:
@@ -1553,8 +1561,8 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
         headers["Authorization"] = f"Bearer {settings.DOC_PROCESSOR_TOKEN}"
     vision_route = _os.environ.get("DOC_PROCESSOR_ROUTE", "ocr_fallback")
     text_route = _os.environ.get("DOC_PROCESSOR_TEXT_ROUTE", "auto")
-    timeout = float(_os.environ.get("DOC_PROCESSOR_TIMEOUT", "180"))
-    min_yield = int(_os.environ.get("DOC_PROCESSOR_MIN_CHARS", "200"))
+    timeout = _env_number("DOC_PROCESSOR_TIMEOUT", 180.0)
+    min_yield = _env_number("DOC_PROCESSOR_MIN_CHARS", 200, int)
 
     attempts = [
         ("/extract/text", {"route": text_route}, ("text",)),
@@ -1724,7 +1732,7 @@ async def ingest_audio(
         provider = _os.environ.get("AUDIO_PROCESSOR_PROVIDER", "").strip()
         if provider:
             data["provider"] = provider
-        timeout = float(_os.environ.get("AUDIO_PROCESSOR_TIMEOUT", "300"))
+        timeout = _env_number("AUDIO_PROCESSOR_TIMEOUT", 300.0)
         async with httpx.AsyncClient(timeout=timeout) as client:
             resp = await client.post(
                 f"{settings.AUDIO_PROCESSOR_URL}/pipeline",
