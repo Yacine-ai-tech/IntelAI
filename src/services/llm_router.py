@@ -156,14 +156,19 @@ async def llm_call(
         params["max_tokens"] = max_tokens
     call_params = _tune_params_for_model(params, model)
     try:
-        return await acompletion(**call_params)
+        from src.core import keypool
+        return await keypool.acompletion_pooled(
+            acompletion, call_params["model"],
+            **{k: v for k, v in call_params.items() if k != "model"})
     except Exception as exc:
         fallback = _fallback_for(tier)
         if fallback and _should_fallback(exc):
             log.warning("Primary model %s failed (%s); retrying with fallback %s", model, type(exc).__name__, fallback)
             fb_params = {**params, "model": fallback, "messages": _apply_cache_control(messages, fallback)}
             fb_params = _tune_params_for_model(fb_params, fallback)
-            return await acompletion(**fb_params)
+            return await keypool.acompletion_pooled(
+                acompletion, fb_params["model"],
+                **{k: v for k, v in fb_params.items() if k != "model"})
         raise
 
 
@@ -193,12 +198,17 @@ def llm_call_sync(
         params["max_tokens"] = max_tokens
     call_params = _tune_params_for_model(params, model)
     try:
-        return completion(**call_params)
+        from src.core import keypool
+        return keypool.completion_pooled(
+            completion, call_params["model"],
+            **{k: v for k, v in call_params.items() if k != "model"})
     except Exception as exc:
         fallback = _fallback_for(tier)
         if fallback and _should_fallback(exc):
             log.warning("Primary model %s failed (%s); retrying with fallback %s", model, type(exc).__name__, fallback)
             fb_params = {**params, "model": fallback, "messages": _apply_cache_control(messages, fallback)}
             fb_params = _tune_params_for_model(fb_params, fallback)
-            return completion(**fb_params)
+            return keypool.completion_pooled(
+                completion, fb_params["model"],
+                **{k: v for k, v in fb_params.items() if k != "model"})
         raise
