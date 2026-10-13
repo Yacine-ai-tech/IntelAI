@@ -7,6 +7,7 @@ Operations, ESG, Growth/Risk.
 from __future__ import annotations
 
 import asyncio
+import hmac
 import os
 import uuid
 import math
@@ -959,6 +960,10 @@ async def get_me(user: TokenData = Depends(get_current_user)):
 # CHAT & PERSONAS
 # ════════════════════════════════════════════════════════════
 
+class ChatProviderError(RuntimeError):
+    """The model provider failed to produce an answer for a chat turn."""
+
+
 async def _run_chat_turn(req: "ChatRequest", user: TokenData) -> Dict[str, Any]:
     """The actual chat pipeline — retrieval + LLM completion + persistence. Shared by
     the synchronous POST /api/v1/chat and the async POST /api/v1/chat/async + GET
@@ -1008,6 +1013,11 @@ async def _run_chat_turn(req: "ChatRequest", user: TokenData) -> Dict[str, Any]:
             f"chat turn exceeded CHAT_TURN_TIMEOUT={int(_chat_turn_timeout_seconds())}s"
         ) from e
 
+    if result.get("error"):
+        # A failed model call is a failed turn: surface it as an error status and do not
+        # store the apology text as if it were an answer.
+        raise ChatProviderError(str(result["error"]))
+
     response_text = result.get("response", "")
     sources = result.get("sources", [])
 
@@ -1041,6 +1051,8 @@ async def chat(req: ChatRequest, user: TokenData = Depends(get_current_user)):
         return await _run_chat_turn(req, user)
     except TimeoutError as e:
         raise HTTPException(status_code=504, detail=str(e))
+    except ChatProviderError as e:
+        raise HTTPException(status_code=502, detail=str(e))
 
 
 @app.post("/api/v1/chat/async")
@@ -1092,10 +1104,9 @@ async def get_chat_sessions(
     history sidebar. Keep this ahead of chat_job_status."""
     try:
         from src.services.pg_store import get_user_sessions
-        admin_secret = os.getenv("ADMIN_TOKEN") or os.getenv("INTELAI_INTERNAL_TOKEN")
+        admin_secret = os.getenv("ADMIN_TOKEN")
         is_admin = bool(
-            (x_admin_token and admin_secret and x_admin_token == admin_secret) or
-            (x_intelai_token and admin_secret and x_intelai_token == admin_secret) or
+            (x_admin_token and admin_secret and hmac.compare_digest(x_admin_token, admin_secret)) or
             (user.role == "admin" and request.headers.get("X-Scope-All", "").lower() == "true")
         )
         target_user = "*" if is_admin else user.user_id
@@ -1234,10 +1245,9 @@ async def get_user_files(
 ):
     """Get user's uploaded files."""
     from src.services.pg_store import get_user_files
-    admin_secret = os.getenv("ADMIN_TOKEN") or os.getenv("INTELAI_INTERNAL_TOKEN")
+    admin_secret = os.getenv("ADMIN_TOKEN")
     is_admin = bool(
-        (x_admin_token and admin_secret and x_admin_token == admin_secret) or
-        (x_intelai_token and admin_secret and x_intelai_token == admin_secret) or
+        (x_admin_token and admin_secret and hmac.compare_digest(x_admin_token, admin_secret)) or
         (user.role == "admin" and request.headers.get("X-Scope-All", "").lower() == "true")
     )
     target_user = "*" if is_admin else user.username
@@ -2713,10 +2723,9 @@ async def get_chat_messages(
 ):
     try:
         from src.services.pg_store import get_session_messages
-        admin_secret = os.getenv("ADMIN_TOKEN") or os.getenv("INTELAI_INTERNAL_TOKEN")
+        admin_secret = os.getenv("ADMIN_TOKEN")
         is_admin = bool(
-            (x_admin_token and admin_secret and x_admin_token == admin_secret) or
-            (x_intelai_token and admin_secret and x_intelai_token == admin_secret) or
+            (x_admin_token and admin_secret and hmac.compare_digest(x_admin_token, admin_secret)) or
             (user.role == "admin")
         )
         target_user = "*" if is_admin else user.user_id
