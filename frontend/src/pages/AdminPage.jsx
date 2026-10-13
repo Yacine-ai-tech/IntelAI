@@ -390,20 +390,20 @@ export default function AdminPage() {
       {/* ── DocIntel ── */}
       {tab === 'docintel' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-          <Panel title="Document Intelligence & Extraction Mesh (Neon DB)" icon={FileText}
+          <Panel title="Document Intelligence & Extraction Mesh" icon={FileText}
             actions={<button className="btn btn-outline btn-sm" onClick={fetchDocIntel} disabled={docIntelLoading}>
               <RefreshCw size={13} className={docIntelLoading ? 'spin-inline' : ''} /> Refresh Telemetry
             </button>}>
             
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 12, marginBottom: 18 }}>
               <div style={{ background: 'var(--surface-2)', padding: 14, borderRadius: 'var(--r)', border: '1px solid var(--border)' }}>
-                <div style={{ fontSize: '.75rem', textTransform: 'uppercase', color: 'var(--text-3)' }}>Backend Host</div>
-                <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary)' }}>Contabo VPS (origin.example.invalid)</div>
+                <div style={{ fontSize: '.75rem', textTransform: 'uppercase', color: 'var(--text-3)' }}>Document Service</div>
+                <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary)' }}>DocIntel API</div>
                 <div style={{ fontSize: '.75rem', color: 'var(--text-2)', marginTop: 4 }}>docintel.ysiddo-ai-projects.app</div>
               </div>
               <div style={{ background: 'var(--surface-2)', padding: 14, borderRadius: 'var(--r)', border: '1px solid var(--border)' }}>
                 <div style={{ fontSize: '.75rem', textTransform: 'uppercase', color: 'var(--text-3)' }}>Persistence Engine</div>
-                <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--ok)' }}>Neon PostgreSQL</div>
+                <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--ok)' }}>PostgreSQL</div>
                 <div style={{ fontSize: '.75rem', color: 'var(--text-2)', marginTop: 4 }}>Table: docintel_documents</div>
               </div>
               <div style={{ background: 'var(--surface-2)', padding: 14, borderRadius: 'var(--r)', border: '1px solid var(--border)' }}>
@@ -414,7 +414,7 @@ export default function AdminPage() {
               <div style={{ background: 'var(--surface-2)', padding: 14, borderRadius: 'var(--r)', border: '1px solid var(--border)' }}>
                 <div style={{ fontSize: '.75rem', textTransform: 'uppercase', color: 'var(--text-3)' }}>Avg Confidence</div>
                 <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--ok)' }}>
-                  {docIntelStats?.avg_confidence ? `${(docIntelStats.avg_confidence * 100).toFixed(1)}%` : '98.5%'}
+                  {docIntelStats?.avg_confidence ? `${(docIntelStats.avg_confidence * 100).toFixed(1)}%` : '—'}
                 </div>
                 <div style={{ fontSize: '.75rem', color: 'var(--text-2)', marginTop: 4 }}>Avg Latency: {docIntelStats?.avg_processing_time_ms ? `${docIntelStats.avg_processing_time_ms}ms` : '—'}</div>
               </div>
@@ -439,7 +439,7 @@ export default function AdminPage() {
               Recent Extracted Documents & Ingest Logs
             </h4>
             {docIntelDocs.length === 0 ? (
-              <p className="text-muted" style={{ padding: '20px 0' }}>No document extractions recorded in Neon DB yet.</p>
+              <p className="text-muted" style={{ padding: '20px 0' }}>No document extractions have been recorded yet.</p>
             ) : (
               <div style={{ maxHeight: 520, overflowY: 'auto' }}>
                 <table className="table">
