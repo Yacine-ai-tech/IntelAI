@@ -159,14 +159,28 @@ except ImportError:
 # PROVIDER-AGNOSTIC LLM COMPLETION
 # ════════════════════════════════════════════════════════════════════════════
 
-_GROQ_CLIENT = None
+_GROQ_CLIENTS: Dict[str, Any] = {}
+
+
+def _groq_lease_client():
+    """Groq client for the next usable configured key, with its lease so a rate
+    limit can park that key. ``(None, None)`` when Groq is not usable."""
+    if not _GROQ:
+        return None, None
+    from src.core import keypool
+    lease = keypool.pool("groq").acquire()
+    key = lease.key if lease else (settings.GROQ_API_KEY or "")
+    if not key:
+        return None, None
+    client = _GROQ_CLIENTS.get(key)
+    if client is None:
+        client = Groq(api_key=key)
+        _GROQ_CLIENTS[key] = client
+    return client, lease
 
 
 def _groq_client():
-    global _GROQ_CLIENT
-    if _GROQ_CLIENT is None and _GROQ and settings.GROQ_API_KEY:
-        _GROQ_CLIENT = Groq(api_key=settings.GROQ_API_KEY)
-    return _GROQ_CLIENT
+    return _groq_lease_client()[0]
 
 
 def llm_available() -> bool:
@@ -214,7 +228,7 @@ def llm_complete(
 
     def _execute(target_model: str) -> Tuple[str, int, str]:
         # Fast path: use native Groq SDK if resolved model is a Groq model
-        client = _groq_client()
+        client, lease = _groq_lease_client()
         if target_model.startswith("groq/") and client is not None:
             actual_model = target_model.replace("groq/", "")
             kw: Dict[str, Any] = {
@@ -226,7 +240,12 @@ def llm_complete(
             }
             if top_p is not None:
                 kw["top_p"] = top_p
-            r = client.chat.completions.create(**kw)
+            try:
+                r = client.chat.completions.create(**kw)
+            except Exception as exc:
+                from src.core import keypool
+                keypool.note_failure(lease, exc)
+                raise
             tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
             return r.choices[0].message.content, tokens, target_model
 
@@ -244,7 +263,9 @@ def llm_complete(
         if top_p is not None and "claude" not in target_model.lower():
             kw["top_p"] = top_p
         kw = _tune_params_for_model(kw, target_model)
-        r = _litellm_completion(**kw)
+        from src.core import keypool
+        r = keypool.completion_pooled(_litellm_completion, target_model,
+                                      **{k: v for k, v in kw.items() if k != "model"})
         text = r.choices[0].message.content
         usage = getattr(r, "usage", None)
         tokens = getattr(usage, "total_tokens", 0) if usage else 0
@@ -294,7 +315,7 @@ async def llm_stream(
     timeout_s = float(os.getenv("LLM_TIMEOUT", "15"))
 
     # Groq native streaming path
-    client = _groq_client()
+    client, lease = _groq_lease_client()
     if resolved_model.startswith("groq/") and client is not None:
         actual_model = resolved_model.replace("groq/", "")
         kw: Dict[str, Any] = {"model": actual_model, "messages": messages,
@@ -302,7 +323,12 @@ async def llm_stream(
                               "stream": True, "timeout": timeout_s}
         if top_p is not None:
             kw["top_p"] = top_p
-        stream = client.chat.completions.create(**kw)
+        try:
+            stream = client.chat.completions.create(**kw)
+        except Exception as exc:
+            from src.core import keypool
+            keypool.note_failure(lease, exc)
+            raise
         for chunk in stream:
             delta = chunk.choices[0].delta if chunk.choices else None
             text = getattr(delta, "content", None) if delta else None
@@ -323,7 +349,9 @@ async def llm_stream(
         kw["top_p"] = top_p
     kw = _tune_params_for_model(kw, resolved_model)
     try:
-        stream = await _litellm_acompletion(**kw)
+        from src.core import keypool
+        stream = await keypool.acompletion_pooled(
+            _litellm_acompletion, resolved_model, **{k: v for k, v in kw.items() if k != "model"})
         async for chunk in stream:
             delta = chunk.choices[0].delta if chunk.choices else None
             text = getattr(delta, "content", None) if delta else None
