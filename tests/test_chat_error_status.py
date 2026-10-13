@@ -24,3 +24,14 @@ def test_failed_model_call_is_a_failed_turn(monkeypatch):
     with pytest.raises(server.ChatProviderError):
         asyncio.run(server._run_chat_turn(req, user))
     assert stored == []
+
+
+def test_internal_service_token_is_not_administrator(monkeypatch):
+    """The gateway's service token must not widen a visitor's scope to every user."""
+    import inspect
+    from src.api import server
+
+    for fn in (server.get_chat_messages, server.get_chat_sessions, server.get_user_files):
+        src = inspect.getsource(fn)
+        assert "x_intelai_token and admin_secret" not in src
+        assert "INTELAI_INTERNAL_TOKEN" not in src

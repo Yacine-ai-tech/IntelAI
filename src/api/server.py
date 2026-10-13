@@ -7,6 +7,7 @@ Operations, ESG, Growth/Risk.
 from __future__ import annotations
 
 import asyncio
+import hmac
 import os
 import uuid
 import math
@@ -1103,10 +1104,9 @@ async def get_chat_sessions(
     history sidebar. Keep this ahead of chat_job_status."""
     try:
         from src.services.pg_store import get_user_sessions
-        admin_secret = os.getenv("ADMIN_TOKEN") or os.getenv("INTELAI_INTERNAL_TOKEN")
+        admin_secret = os.getenv("ADMIN_TOKEN")
         is_admin = bool(
-            (x_admin_token and admin_secret and x_admin_token == admin_secret) or
-            (x_intelai_token and admin_secret and x_intelai_token == admin_secret) or
+            (x_admin_token and admin_secret and hmac.compare_digest(x_admin_token, admin_secret)) or
             (user.role == "admin" and request.headers.get("X-Scope-All", "").lower() == "true")
         )
         target_user = "*" if is_admin else user.user_id
@@ -1245,10 +1245,9 @@ async def get_user_files(
 ):
     """Get user's uploaded files."""
     from src.services.pg_store import get_user_files
-    admin_secret = os.getenv("ADMIN_TOKEN") or os.getenv("INTELAI_INTERNAL_TOKEN")
+    admin_secret = os.getenv("ADMIN_TOKEN")
     is_admin = bool(
-        (x_admin_token and admin_secret and x_admin_token == admin_secret) or
-        (x_intelai_token and admin_secret and x_intelai_token == admin_secret) or
+        (x_admin_token and admin_secret and hmac.compare_digest(x_admin_token, admin_secret)) or
         (user.role == "admin" and request.headers.get("X-Scope-All", "").lower() == "true")
     )
     target_user = "*" if is_admin else user.username
@@ -2724,10 +2723,9 @@ async def get_chat_messages(
 ):
     try:
         from src.services.pg_store import get_session_messages
-        admin_secret = os.getenv("ADMIN_TOKEN") or os.getenv("INTELAI_INTERNAL_TOKEN")
+        admin_secret = os.getenv("ADMIN_TOKEN")
         is_admin = bool(
-            (x_admin_token and admin_secret and x_admin_token == admin_secret) or
-            (x_intelai_token and admin_secret and x_intelai_token == admin_secret) or
+            (x_admin_token and admin_secret and hmac.compare_digest(x_admin_token, admin_secret)) or
             (user.role == "admin")
         )
         target_user = "*" if is_admin else user.user_id
