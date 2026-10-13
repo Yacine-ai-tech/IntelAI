@@ -83,7 +83,7 @@ export default function ResearchPage() {
           <ul style={{ margin: '10px 0', paddingLeft: 20, fontSize: '.84rem', color: 'var(--text-2)', lineHeight: 1.6 }}>
             <li><strong>9 Dedicated Personas:</strong> Admin, CEO, CFO, CTO, COO, CHRO, ESG, Risk, Viewer.</li>
             <li><strong>Pre-Retrieval Gate:</strong> Caller JWT claims constrain SQL WHERE clauses and vector metadata filters prior to retrieval.</li>
-            <li><strong>Zero Leakage:</strong> Unprivileged contexts never populate prompt memory.</li>
+            <li><strong>Out-of-scope filtering:</strong> Records outside the caller's scope are dropped before they reach the model.</li>
           </ul>
         </Panel>
 
