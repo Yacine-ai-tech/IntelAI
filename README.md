@@ -13,7 +13,7 @@
 assistant with hybrid retrieval, a lightweight knowledge graph for multi-hop queries, classical
 forecasting, and board-ready exports, over 146 curated KPIs.
 
-**Live Application:** [intelai.ysiddo-ai-projects.app](https://intelai.ysiddo-ai-projects.app) — role-based access control with live persona scoping.
+**Live application:** [intelai.ysiddo-ai-projects.app](https://intelai.ysiddo-ai-projects.app), with role-based access control and live persona scoping.
 - **Research Background:** [`RESEARCH.md`](RESEARCH.md) / [Online Research Documentation](https://intelai.ysiddo-ai-projects.app/research)
 - **Empirical Benchmarks:** [`BENCHMARK.md`](BENCHMARK.md) / [Online Benchmark Dashboard](https://intelai.ysiddo-ai-projects.app/benchmark)
 - **User Guide:** [Online User Guide](https://intelai.ysiddo-ai-projects.app/guide)
@@ -146,7 +146,8 @@ adjusted:
 | `USE_RERANKER` / `RERANK_PROVIDER` | No | Use `true` and `local` for `BAAI/bge-reranker-v2-m3` |
 | `RERANK_BACKEND` | No | `torch` (default) or `onnx-int8` for local CPU reranking |
 | `RERANK_MAX_LENGTH` | No | Maximum query/document pair token length (default `256`) |
-| `EMBED_BATCH_SIZE` / `RERANK_BATCH_SIZE` | No | Embedding batch size / reranker candidates per inference batch (defaults `16` / `20`) |
+| `EMBED_BATCH_SIZE` / `RERANK_BATCH_SIZE` | No | Embedding batch size / reranker candidates per inference batch (defaults `16` / `8`; the reranker batch is also the progress and cancellation granularity) |
+| `RETRIEVAL_DENSE_K` / `RETRIEVAL_SPARSE_K` / `RERANK_CANDIDATES` | No | Dense and BM25 candidates, and how many fused candidates the cross-encoder scores (defaults `50` / `50` / `30`) |
 | `VECTOR_STORE` | No | `chroma` (dev, default), `pgvector`, or `qdrant` (production) |
 | `AUDIO_PROCESSOR_URL` / `DOC_PROCESSOR_URL` | No | Pluggable audio/document processors — for example, a VoiceFlow or DocIntel instance |
 | `INGEST_WEBHOOK_SECRET` | No | Enables the HMAC-signed `/api/v1/webhook/{source}` ingestion path |
@@ -228,13 +229,13 @@ Questions and field notes go to [Discussions](https://github.com/Yacine-ai-tech/
 
 Open-source under the AGPL-3.0 License, free for researchers, students, and open-source use.
 AGPLv3 requires that any proprietary network service built on modified code also open-source
-its backend. A commercial license — for closed-source use or enterprise features such as SSO,
-Active Directory integration, and custom VPC deployment — is available on request.
+its backend. A commercial license for closed-source use or enterprise features such as SSO,
+Active Directory integration and custom VPC deployment is available on request.
 
 ## Anonymous Telemetry
 
-IntelAI can send an anonymous, GDPR-compliant startup ping so a deployment's operator can
-count distinct installs. This is opt-in only: it sends nothing unless `TELEMETRY_URL` is set
+IntelAI can send an anonymous startup ping so a deployment's operator can count distinct
+installs. This is opt-in only: it sends nothing unless `TELEMETRY_URL` is set
 to a collector the operator controls, so a fresh clone never phones home by default. Only the
 project name and a startup-event timestamp are collected — no PII, API keys, or user data.
 `TELEMETRY_OPT_OUT=true` disables it explicitly regardless of `TELEMETRY_URL`.
