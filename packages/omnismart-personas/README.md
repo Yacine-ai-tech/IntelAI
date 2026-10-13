@@ -1,6 +1,7 @@
 # omnismart-personas
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
+
 Role-based, **data-scoped** LLM persona templates + router for production analytics
 copilots. The pattern behind IntelAI's 9-persona RAG copilot, extracted as a tiny,
 zero-dependency, pure-Python library.
@@ -77,26 +78,12 @@ persona's `data_access` scope — the same role boundaries, enforced in your Lan
 pip install -e ".[test]" && pytest
 ```
 
-AGPL-3.0 licensed. Part of the [IntelAI](https://github.com/Yacine-ai-tech/IntelAI) project.
+## License
 
-## ⚖️ License & Enterprise Use (Dual-License)
+Licensed under the [AGPL-3.0](LICENSE) and part of the
+[IntelAI](https://github.com/Yacine-ai-tech/IntelAI) project. The AGPL requires that a network
+service built on this code, or on a modified copy of it, publish its own source. For closed-source
+use, a commercial license is available; see the IntelAI repository's
+[COMMERCIAL.md](https://github.com/Yacine-ai-tech/IntelAI/blob/master/COMMERCIAL.md).
 
-This project is open-source under the **AGPL-3.0 License**. It is completely free for researchers, students, and open-source hobbyists.
-
-> **Commercial Use:** The AGPLv3 license requires that any proprietary network service (SaaS, internal corporate tools) that uses or modifies this code must also open-source its entire backend. 
-> 
-> If you wish to use this framework in a closed-source commercial environment, or require **Enterprise features** (SSO, Active Directory, Custom VPC Deployment, Strict RBAC), you must obtain a **Commercial License**. 
-> Please reach out to discuss commercial licensing and integration consulting.
-
-## 📡 Anonymous Telemetry
-This project collects anonymous, GDPR-compliant startup pings to help the author understand usage volume and prioritize development. 
-* **What is collected:** Only the project name and a "startup" event timestamp. No PII, no API keys, no user data.
-* **How to disable:** We respect your privacy. To opt-out, simply set `TELEMETRY_OPT_OUT=true` in your `.env` file.
-
-<!-- Scarf Analytics Pixel -->
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=6a7b8c9d-1e2f-3a4b-5c6d-7e8f9a0b1c2d" />
-
-## Licensing
-This project is licensed under the [AGPL-3.0 License](LICENSE).
-
-**Commercial Use:** If you wish to use this software commercially without releasing your own source code, please see [COMMERCIAL.md](COMMERCIAL.md) to obtain a commercial license.
+The library makes no network calls and collects no telemetry.
