@@ -82,18 +82,36 @@ The full local retrieval pipeline uses `BAAI/bge-m3`, BM25/RRF, and
 persists them in the `model-cache` volume. Allocate several GiB of RAM to the app
 container before enabling both local models.
 
-The local CPU reranker keeps the same `BAAI/bge-reranker-v2-m3` model and 20-candidate
-pool. Its defaults use a 256-token query/document limit and score all 20 candidates in
-one inference batch. On the Contabo CPU canary, four CPU cores with these settings
-reduced rerank time from roughly 17–27 seconds to roughly 13–21 seconds; the top five
-were unchanged for three tested queries. This is a small smoke comparison, not a
-labeled relevance benchmark. A shorter token limit can omit later document context,
-so evaluate with representative relevance labels before adopting a different limit.
+### Retrieval pipeline and latency
 
-`RERANK_BACKEND=onnx-int8` remains available for testing the same dynamically quantized
-BGE model, but the Contabo full-retrieval comparison did not show a speed improvement
-over PyTorch. Exported files are cached alongside the Hugging Face models; export or
-inference errors are surfaced rather than silently switching backends.
+Retrieval follows the standard hybrid design: dense top-50 and BM25 top-50 are merged
+with Reciprocal Rank Fusion, the top 30 fused candidates are rescored by the
+`BAAI/bge-reranker-v2-m3` cross-encoder, and the best five go to the model. The pool
+sizes are configuration (`RETRIEVAL_DENSE_K`, `RETRIEVAL_SPARSE_K`, `RERANK_CANDIDATES`).
+
+A cross-encoder cannot be precomputed: it reads the query together with each candidate,
+so cost grows with the pool size and runs at query time. On a CPU host this is the
+dominant latency (tens of seconds on four cores for a pool of 30), while a GPU does the
+same work in a fraction of a second. The application therefore keeps the ranking
+identical and works on how the wait behaves instead:
+
+* candidates are scored in small length-sorted batches, which avoids padding work
+  without changing scores;
+* the BM25 index is built once per corpus version instead of once per query;
+* search and chat report the real stage (searching, fused, reranking *n*/*N*) and show
+  the fused ranking as a preliminary result while reranking finishes;
+* if a request is cancelled or exceeds its time budget, the remaining batches are
+  skipped and the fused ranking is returned flagged as partial, never an empty success.
+
+The time budget scales with the pool (`RETRIEVAL_BASE_TIMEOUT` plus
+`RETRIEVAL_TIMEOUT_PER_PAIR` per candidate); set `VECTOR_RETRIEVAL_TIMEOUT` to pin it.
+Reranking can also be pointed at a remote service with `RERANK_PROVIDER` and
+`RERANK_URL`; local CPU or GPU inference remains the default.
+
+`RERANK_BACKEND=onnx-int8` is available for experiments with a dynamically quantized
+copy of the model. It changes scores slightly and has not shown a consistent speed-up
+on small pools, so it is off by default; export or inference errors are surfaced
+rather than silently switching backends.
 
 With `VECTOR_STORE=qdrant`, chat uses the persistent Qdrant dense index fused with
 BM25 through RRF and the local BGE reranker. Qdrant, BM25, and the configured reranker
@@ -193,7 +211,7 @@ out-of-sample forecast backtest, and a knowledge-graph coverage measurement — 
 
 ## Deploy
 
-IntelAI deploys as one containerized service on the Contabo VPS — build the included `Dockerfile`
+IntelAI deploys as one containerized service — build the included `Dockerfile`
 and run it with Docker Compose, set the environment variables above, and attach the configured
 Postgres and Qdrant stores. Deploy the
 frontend separately (Vercel, Netlify, or as static files) with `VITE_API_BASE_URL` pointing to

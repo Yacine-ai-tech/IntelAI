@@ -24,5 +24,5 @@ build: ## Build the app image
 
 deploy-info: ## How IntelAI deploys
 	@echo "IntelAI deploys as a containerized service built from the Dockerfile."
-	@echo "Production backend runs on Contabo VPS behind Caddy/Cloudflare Edge with Neon Postgres & Qdrant."
+	@echo "Production runs the container behind a reverse proxy with Postgres and Qdrant."
 	@echo "Frontend deploys separately to Vercel (https://intelai-ui-2026.vercel.app)."

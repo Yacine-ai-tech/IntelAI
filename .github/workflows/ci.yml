@@ -73,7 +73,7 @@ jobs:
         run: python -m pytest tests/test_pg_store_bootstrap.py -q -o addopts=""
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # Production deployments run on the Contabo VPS, outside this CI workflow.
+  # Production deployments run outside this CI workflow.
   # This workflow validates source changes and performs post-merge smoke tests only.
   # ═══════════════════════════════════════════════════════════════════════════
   # PHASE 2 — Wait for Deploy + Smoke Test all 6 live endpoints

@@ -237,6 +237,8 @@ export default function ChatPage({
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [turnProgress, setTurnProgress] = useState(null)
+  const [waitSeconds, setWaitSeconds] = useState(0)
   const [persona, setPersona] = useState('')          // '' = auto (role-based)
   const [activeSession, setActiveSession] = useState(initialSessionId)
   const [status, setStatus] = useState('disconnected')
@@ -336,6 +338,14 @@ export default function ChatPage({
   const scroll = useCallback(() => endRef.current?.scrollIntoView({ behavior: 'smooth' }), [])
   useEffect(() => { scroll() }, [messages, loading, scroll])
 
+  // Reset per-turn progress and keep an elapsed counter so a slow turn explains itself.
+  useEffect(() => {
+    if (!loading) { setTurnProgress(null); setWaitSeconds(0); return undefined }
+    const started = Date.now()
+    const id = setInterval(() => setWaitSeconds(Math.floor((Date.now() - started) / 1000)), 1000)
+    return () => clearInterval(id)
+  }, [loading])
+
   // Prefill from a Dashboard "ask copilot" deep-link (?q=…), restored session (?session=…), or widget props.
   useEffect(() => {
     if (isWidget) {
@@ -383,6 +393,10 @@ export default function ChatPage({
       ws.onmessage = (ev) => {
         const d = JSON.parse(ev.data)
         if (d.type === 'connected') setStatus('connected')
+        else if (d.type === 'progress') {
+          setTurnProgress(prev => ({ ...(prev || {}), stage: d.stage, done: d.done, total: d.total,
+            sources: d.preliminary_sources || prev?.sources || null }))
+        }
         else if (d.type === 'chunk') {
           // Streaming token received — append to the in-progress assistant message
           setMessages(prev => {
@@ -461,7 +475,8 @@ export default function ChatPage({
       ws.send(JSON.stringify({ message: q, persona: persona || 'general', session_id: activeSession || undefined, language: lang }))
     } else {
       wsInFlightRef.current = false
-      api.sendChat(q, persona || 'general', activeSession, '', lang, abortControllerRef.current.signal)
+      api.sendChat(q, persona || 'general', activeSession, '', lang, abortControllerRef.current.signal,
+        (st) => setTurnProgress(prev => ({ ...(prev || {}), ...st, sources: st.sources || prev?.sources || null })))
         .then(r => {
           const newSessionId = r.data.session_id
           if (newSessionId) {
@@ -654,9 +669,36 @@ export default function ChatPage({
               <div className="chat-avatar"><Sparkles size={15} /></div>
               <div className="chat-bubble" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: 'var(--bg-2, #18181b)', border: '1px solid var(--border-subtle, rgba(255,255,255,0.08))', borderRadius: 12 }}>
                 <span style={{ display: 'inline-block', width: 14, height: 14, border: '2px solid rgba(34, 211, 238, 0.25)', borderTopColor: 'var(--primary, #22d3ee)', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-2, #a1a1aa)', fontStyle: 'italic' }}>
-                  {t('chatThinking') || 'Thinking & synthesizing enterprise context...'}
-                </span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6, minWidth: 0 }}>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-2, #a1a1aa)' }}>
+                    {(() => {
+                      const p = turnProgress
+                      if (!p || !p.stage || p.stage === 'starting') return t('chatThinking') || 'Thinking & synthesizing enterprise context...'
+                      if (p.stage === 'searching') return t('chatStageSearching') || 'Searching the knowledge base…'
+                      if (p.stage === 'fused') return t('chatStageFused') || 'Reading the most relevant passages…'
+                      if (p.stage === 'reranking') return `${t('chatStageRerank') || 'Ranking the best passages'} (${p.done ?? 0}/${p.total ?? '?'})`
+                      return t('chatStageWriting') || 'Writing the answer…'
+                    })()}
+                    {waitSeconds >= 5 && <span style={{ marginLeft: 8, color: 'var(--text-3, #71717a)', fontSize: '0.75rem' }}>{waitSeconds}s</span>}
+                  </span>
+                  {turnProgress?.total > 0 && turnProgress.stage === 'reranking' && (
+                    <div style={{ height: 3, background: 'var(--bg-3, rgba(255,255,255,.08))', borderRadius: 2, overflow: 'hidden' }}>
+                      <div style={{ width: `${Math.min(100, Math.round(((turnProgress.done || 0) / turnProgress.total) * 100))}%`, height: '100%', background: 'var(--primary, #22d3ee)', transition: 'width .4s ease' }} />
+                    </div>
+                  )}
+                  {turnProgress?.sources?.length > 0 && (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                      {turnProgress.sources.slice(0, 4).map((src, i) => (
+                        <span key={i} className="badge" title={src.content} style={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{src.title}</span>
+                      ))}
+                    </div>
+                  )}
+                  {waitSeconds >= 25 && (
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-3, #71717a)' }}>
+                      {t('chatSlowNote') || 'Ranking runs on CPU and can take up to a minute on a cold start. You can stop this turn at any time.'}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           )}
