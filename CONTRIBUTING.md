@@ -30,7 +30,7 @@ We are committed to providing a welcoming, inclusive, and harassment-free experi
 IntelAI is distributed as open-source software under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
 
 - **Open Source Contributions**: By submitting a pull request, you agree that your contribution is licensed under the AGPL-3.0.
-- **Commercial & Enterprise Licensing**: If your organization requires closed-source deployment, proprietary SaaS integration, or distribution without AGPL-3.0 copyleft obligations, commercial licensing is available via **OmniIntelOS**. Please consult [`COMMERCIAL.md`](./COMMERCIAL.md) or contact `siddoyacinetech227@gmail.com` for details.
+- **Commercial & Enterprise Licensing**: If your organization requires closed-source deployment, proprietary SaaS integration, or distribution without AGPL-3.0 copyleft obligations, commercial licensing is available via **OmniIntelOS**. Please consult [`COMMERCIAL.md`](./COMMERCIAL.md) or contact `contact@ysiddo-ai-projects.app` for details.
 
 ---
 
@@ -152,7 +152,7 @@ Signed-off-by: Developer Name <developer@example.com>
 
 If you discover a potential security vulnerability, please **do NOT open a public GitHub issue**. Instead, report it privately via email:
 
-- **Security Contact**: `siddoyacinetech227@gmail.com`
+- **Security Contact**: `contact@ysiddo-ai-projects.app`
 - **Response SLA**: Initial triage within 48 business hours.
 
 Thank you for helping keep IntelAI safe and reliable for the community!
