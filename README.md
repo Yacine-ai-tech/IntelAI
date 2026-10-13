@@ -241,12 +241,13 @@ from any hardware identifier. No documents, prompts, credentials, filenames or c
 included, and a guard prevents more than one ping every 30 seconds per instance.
 The receiving endpoint sees the request's network metadata, as any HTTP server does.
 
-Behaviour of the destination setting:
+Behaviour of the destination setting (the ping is on by default and fires at start-up):
 
-- `TELEMETRY_URL` not defined: the ping goes to the project's collector.
-- `TELEMETRY_URL` defined but empty (the value shipped in `.env.example`): nothing is sent.
+- `TELEMETRY_URL` not defined, or defined but empty: the ping goes to the project's collector.
 - `TELEMETRY_URL=<your collector>`: the ping goes there instead.
 - `TELEMETRY_OPT_OUT=true` or `DO_NOT_TRACK=1`: nothing is sent, whatever the URL says.
 
 <!-- Scarf Analytics Pixel -->
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ada53b5b-d56f-447f-b5ab-a65a061b7d5a" />
+
+![views](https://gateway.ysiddo-ai-projects.app/pixel/readme/IntelAI.png)
