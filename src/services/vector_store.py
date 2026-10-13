@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import os
 import threading
+from concurrent.futures import ThreadPoolExecutor
 from typing import Any, Dict, List, Optional, Tuple
 
 from src.core.config import settings
@@ -411,23 +412,71 @@ def reindex(docs: Optional[List[Doc]] = None, force: bool = False) -> int:
 
 
 # ── Fused retrieval (dense store + BM25 + RRF + optional rerank) ───────────────
+_BM25_LOCK = threading.Lock()
+_BM25_CACHE: Dict[str, Any] = {"sig": None, "bm": None}
+
+
+def _pool_sizes(top_k: int) -> Tuple[int, int, int]:
+    """Dense top-N, sparse top-N and rerank pool, from env with the documented
+    strategy defaults (dense 50 + BM25 50 -> RRF top-30 -> cross-encoder)."""
+    dense_k = max(top_k, int(os.getenv("RETRIEVAL_DENSE_K", "50")))
+    sparse_k = max(top_k, int(os.getenv("RETRIEVAL_SPARSE_K", "50")))
+    pool = max(int(os.getenv("RERANK_CANDIDATES", "30")), top_k * 3)
+    return dense_k, sparse_k, pool
+
+
+def _bm25_index(titles: List[str], contents: List[str]):
+    """BM25 over title-weighted documents, rebuilt only when the corpus changes."""
+    import hashlib
+    from rank_bm25 import BM25Okapi
+    from src.services.hybrid_retrieval import _tokenize
+
+    h = hashlib.blake2b(digest_size=16)
+    for t, c in zip(titles, contents):
+        h.update(t.encode("utf-8", "ignore"))
+        h.update(b"\x00")
+        h.update(c.encode("utf-8", "ignore"))
+        h.update(b"\x01")
+    sig = h.hexdigest()
+    with _BM25_LOCK:
+        if _BM25_CACHE["sig"] == sig and _BM25_CACHE["bm"] is not None:
+            return _BM25_CACHE["bm"]
+        corpus = [f"{t}. {t}. {c}" for t, c in zip(titles, contents)]
+        bm = BM25Okapi([_tokenize(x) for x in corpus])
+        _BM25_CACHE["sig"], _BM25_CACHE["bm"] = sig, bm
+        return bm
+
+
 def vector_store_retrieve(
     query: str, top_k: int = 5, language: Optional[str] = None
 ) -> Optional[List[Tuple[str, str, float]]]:
     """Return ``[(title, content, score)]`` from the persistent store fused with BM25,
-    or ``None`` when no persistent store is configured. Configured backend failures raise."""
+    or ``None`` when no persistent store is configured. Configured backend failures raise.
+
+    Pipeline (STRATEGY.md): dense top-N + BM25 top-N -> RRF -> cross-encoder over the
+    fused pool. When a retrieval context is bound, each stage reports progress and the
+    fused (pre-rerank) ranking is published as the preliminary result; if the context is
+    cancelled mid-rerank the fusion ranking is returned flagged ``partial``.
+    """
+    from src.services.retrieval_progress import (
+        RankedHits, RetrievalCancelled, current as _current_ctx, snippet_rows,
+    )
+
+    ctx = _current_ctx()
     vs = get_vector_store()
     if vs is None:
         if settings.VECTOR_STORE == "qdrant":
             raise RuntimeError("Required Qdrant backend is unavailable")
         return None
     from src.services.pg_store import get_knowledge_docs
-    from src.services.hybrid_retrieval import _tokenize, rerank
+    from src.services.hybrid_retrieval import rerank
 
-    cand = max(top_k * 4, 20)
+    dense_k, sparse_k, cand = _pool_sizes(top_k)
+    if ctx:
+        ctx.report("searching", done=0, total=0)
 
     def _key(t: str, c: str) -> str:
-        return f"{t}{(c or '')[:80]}"
+        return f"{t}{(c or '')[:80]}"
 
     # get_knowledge_docs() is scoped to this requester (global + their own uploads) —
     # the store itself is one shared collection indexed with every visitor's private
@@ -443,24 +492,38 @@ def vector_store_retrieve(
     allowed = {
         _key(t, c) for t, c in zip(docs["title"].tolist(), docs["content"].fillna("").tolist())
     } if not docs.empty else set()
-    raw_dense = vs.query(query, n=cand * 3)
-    dense = [d for d in raw_dense if _key(d["title"], d["content"]) in allowed][:cand]
+    titles = docs["title"].tolist() if not docs.empty else []
+    contents = docs["content"].fillna("").tolist() if not docs.empty else []
 
-    # BM25 over the same corpus (title weighted 2x, matching the in-process retriever).
-    sparse: List[Tuple[str, str]] = []
-    try:
-        from rank_bm25 import BM25Okapi
-        titles = docs["title"].tolist()
-        contents = docs["content"].fillna("").tolist()
-        corpus = [f"{t}. {t}. {c}" for t, c in zip(titles, contents)]
-        bm = BM25Okapi([_tokenize(x) for x in corpus])
-        scores = bm.get_scores(_tokenize(query, drop_stop=True))
-        order = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:cand]
-        sparse = [(titles[i], contents[i]) for i in order]
-    except Exception as e:
-        if settings.VECTOR_STORE == "qdrant":
-            raise RuntimeError("BM25 indexing failed; refusing degraded Qdrant retrieval") from e
-        log.warning("BM25 side skipped in vector_store_retrieve: %s", e)
+    def _dense() -> List[Dict[str, Any]]:
+        raw = vs.query(query, n=dense_k * 3)
+        return [d for d in raw if _key(d["title"], d["content"]) in allowed][:dense_k]
+
+    def _sparse() -> List[Tuple[str, str]]:
+        # BM25 side (title weighted 2x, matching the in-process retriever).
+        if not titles:
+            return []
+        try:
+            from src.services.hybrid_retrieval import _tokenize
+            bm = _bm25_index(titles, contents)
+            scores = bm.get_scores(_tokenize(query, drop_stop=True))
+            order = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:sparse_k]
+            return [(titles[i], contents[i]) for i in order]
+        except Exception as e:
+            if settings.VECTOR_STORE == "qdrant":
+                raise RuntimeError("BM25 indexing failed; refusing degraded Qdrant retrieval") from e
+            log.warning("BM25 side skipped in vector_store_retrieve: %s", e)
+            return []
+
+    # The two searches are independent; run the cheap lexical one while the dense
+    # side embeds the query and queries the store.
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        f_dense = pool.submit(_dense)
+        f_sparse = pool.submit(_sparse)
+        dense = f_dense.result()
+        sparse = f_sparse.result()
+    if ctx:
+        ctx.check()
 
     # Reciprocal Rank Fusion, keyed by title + content prefix (stable across both sources).
     K = 60
@@ -489,18 +552,32 @@ def vector_store_retrieve(
 
     ranked = sorted(fused, key=lambda k: fused[k], reverse=True)[:cand]
     if not ranked:
-        return []
+        return RankedHits()
     cands = [meta[k] for k in ranked]
 
-    rr = rerank(query, [c for _, c in cands])
+    top = ranked[:top_k]
+    mx = max((fused[k] for k in top), default=1.0) or 1.0
+    fusion_rows = [(meta[k][0], meta[k][1], fused[k] / mx) for k in top]
+    if ctx:
+        ctx.preliminary = fusion_rows
+        ctx.report("fused", done=0, total=len(cands), candidates=len(cands),
+                   preliminary=snippet_rows(fusion_rows))
+
+    try:
+        rr = rerank(query, [c for _, c in cands])
+    except RetrievalCancelled:
+        hits = RankedHits(fusion_rows)
+        hits.partial, hits.stage = True, "fused"
+        return hits
     if rr is None and os.getenv("USE_RERANKER", "true").strip().lower() in (
         "1", "true", "yes", "on"
     ):
         raise RuntimeError("Configured reranker failed; refusing degraded Qdrant retrieval")
     if rr:
         idx = sorted(range(len(cands)), key=lambda j: rr[j], reverse=True)[:top_k]
-        return [(cands[j][0], cands[j][1], float(rr[j])) for j in idx]
-
-    top = ranked[:top_k]
-    mx = max((fused[k] for k in top), default=1.0) or 1.0
-    return [(meta[k][0], meta[k][1], fused[k] / mx) for k in top]
+        final = RankedHits((cands[j][0], cands[j][1], float(rr[j])) for j in idx)
+    else:
+        final = RankedHits(fusion_rows)
+    if ctx:
+        ctx.report("done", done=len(cands), total=len(cands))
+    return final

@@ -57,6 +57,8 @@ except ImportError as e:
 _LOCAL_EMBEDDERS: Dict[str, Any] = {}
 _LOCAL_EMBEDDERS_LOCK = threading.Lock()
 _LOCAL_INFERENCE_LOCK = threading.Lock()
+
+from src.services.retrieval_progress import RetrievalCancelled  # noqa: E402
 _LOCAL_RERANKER_LOAD_LOCK = threading.Lock()
 
 
@@ -679,7 +681,13 @@ def hybrid_status() -> str:
 
 
 def _rerank_local(query: str, texts: List[str]) -> List[float]:
-    """Cross-encoder loaded in-process on this host. Raises if unavailable."""
+    """Cross-encoder loaded in-process on this host. Raises if unavailable.
+
+    Pairs are scored in small length-sorted batches. Sorting keeps similar lengths
+    together so short passages do not pay for padding to the longest one (scores are
+    unchanged), and the batch boundary is where progress is reported and where a
+    cancelled request stops instead of finishing work nobody is waiting for.
+    """
     global _RERANK_RETRIEVER
     if not _RERANKER:
         raise RuntimeError(
@@ -689,12 +697,26 @@ def _rerank_local(query: str, texts: List[str]) -> List[float]:
         if _RERANK_RETRIEVER is None:
             _RERANK_RETRIEVER = HybridRetriever()
         reranker = _RERANK_RETRIEVER._ensure_reranker(force=True)
+    from src.services.retrieval_progress import current as _current_ctx
+    ctx = _current_ctx()
+    chunk = max(1, int(os.getenv("RERANK_BATCH_SIZE", "8")))
+    order = sorted(range(len(texts)), key=lambda i: len(texts[i]))
+    scores = [0.0] * len(texts)
+    done = 0
+    if ctx:
+        ctx.report("reranking", done=0, total=len(texts))
     with _LOCAL_INFERENCE_LOCK:
-        scores = reranker.predict(
-            [(query, t) for t in texts],
-            batch_size=max(1, int(os.getenv("RERANK_BATCH_SIZE", "20"))),
-        )
-    return [float(s) for s in scores]
+        for start in range(0, len(order), chunk):
+            if ctx:
+                ctx.check()
+            idx = order[start:start + chunk]
+            out = reranker.predict([(query, texts[i]) for i in idx], batch_size=chunk)
+            for i, value in zip(idx, out):
+                scores[i] = float(value)
+            done += len(idx)
+            if ctx:
+                ctx.report("reranking", done=done, total=len(texts))
+    return scores
 
 
 def _rerank_remote(query: str, texts: List[str]) -> List[float]:
@@ -822,6 +844,8 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
         return None
     try:
         return backend(query, texts)
+    except RetrievalCancelled:
+        raise
     except Exception as e:
         log.error("rerank via provider %r failed (%s) — keeping RRF fusion order. "
                   "Fix the provider config rather than relying on this degradation.", provider, e)
