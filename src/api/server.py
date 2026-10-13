@@ -108,7 +108,7 @@ def _send_telemetry():
     if os.environ.get("TELEMETRY_OPT_OUT", "").strip().lower() in ("true", "1", "yes") or os.environ.get("DO_NOT_TRACK", "").strip() == "1":
         return
 
-    telemetry_url = os.environ.get("TELEMETRY_URL", DEFAULT_TELEMETRY_URL).strip()
+    telemetry_url = (os.environ.get("TELEMETRY_URL") or DEFAULT_TELEMETRY_URL).strip()
     if not telemetry_url:
         return
 
@@ -121,19 +121,18 @@ def _send_telemetry():
     except Exception:
         pass
 
-    try:
-        requests.post(
-            telemetry_url,
-            json={
-                "service": "IntelAI",
-                "event": "startup",
-                "version": "2026.3.0",
-                "instance_id": _telemetry_instance_id(),
-            },
-            timeout=3,
-        )
-    except Exception:
-        pass
+    payload = {
+        "service": "IntelAI",
+        "event": "startup",
+        "version": "2026.3.0",
+        "instance_id": _telemetry_instance_id(),
+    }
+    for attempt in range(3):
+        try:
+            requests.post(telemetry_url, json=payload, timeout=3)
+            break
+        except Exception:
+            time.sleep(2 * (attempt + 1))
 
 threading.Thread(target=_send_telemetry, daemon=True).start()
 # -------------------------
