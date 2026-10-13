@@ -1044,8 +1044,20 @@ async def chat_async(req: ChatRequest, background: BackgroundTasks,
     POST /batch/upload + GET /batch/{job_id} already uses for the identical reason.
     """
     from src.services.chat_jobs import new_job, run_job
+    from src.services import retrieval_progress as _rp
     job_id = new_job(req.model_dump(), owner_user_id=user.user_id)
-    background.add_task(run_job, job_id, lambda: _run_chat_turn(req, user))
+
+    async def _turn_with_progress():
+        # Retrieval stages report under this job id; the threads the turn spawns
+        # inherit the binding, and the poll endpoint below reads it back.
+        token = _rp.set_progress_key(job_id)
+        _rp.board.update(job_id, stage="starting")
+        try:
+            return await _run_chat_turn(req, user)
+        finally:
+            _rp.reset_progress_key(token)
+
+    background.add_task(run_job, job_id, _turn_with_progress)
     return {"job_id": job_id}
 
 
@@ -1093,6 +1105,14 @@ async def chat_job_status(job_id: str, user: TokenData = Depends(get_current_use
         out.update(job.get("result") or {})
     elif job["status"] == "error":
         out["error"] = job.get("error")
+    else:
+        from src.services.retrieval_progress import board
+        state = board.get(job_id)
+        if state:
+            out["progress"] = {k: state[k] for k in ("stage", "done", "total", "candidates")
+                               if k in state}
+            if state.get("preliminary"):
+                out["preliminary_sources"] = state["preliminary"]
     return out
 
 
@@ -2768,9 +2788,107 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
             {"title": title, "content": (content or "")[:600], "score": round(score, 4)}
             for title, content, score in hits
         ]
-        return {"results": results, "query": q, "count": len(results), "detected_language": detected_lang}
+        out = {"results": results, "query": q, "count": len(results), "detected_language": detected_lang}
+        if getattr(hits, "partial", False):
+            out["partial"] = True
+        return out
     except Exception as e:
         return {"results": [], "query": q, "error": str(e)}
+
+
+def _detect_search_language(q: str, user: TokenData) -> str:
+    fr_markers = ['du', 'de', 'le', 'la', 'les', 'un', 'une', 'des', 'et', 'en', 'pour',
+                  'avec', 'sur', 'dans', 'qui', 'que', 'au', 'aux', 'par', 'est', 'sont',
+                  "l'", "d'", "c'", "j'", "qu'"]
+    q_lower = f' {q.lower()} '
+    if sum(1 for m in fr_markers if f' {m} ' in q_lower) >= 2:
+        return 'fr'
+    return getattr(user, 'language', None) or 'en'
+
+
+_SEARCH_JOBS: Dict[str, Dict[str, Any]] = {}
+_SEARCH_JOB_TTL = 900.0
+
+
+@app.post("/api/v1/knowledge/search/async")
+async def knowledge_search_async(q: str, n: int = 5, user: TokenData = Depends(get_current_user)):
+    """Start a search as a background job and return immediately.
+
+    The full pipeline (dense + BM25 + RRF + cross-encoder) can take many seconds on a
+    CPU host, so this returns a job id; poll ``GET /api/v1/knowledge/search/jobs/{id}``
+    for stage progress, the fused preliminary ranking, and the final ranking."""
+    import time as _time
+    from src.services import retrieval_progress as _rp
+    from src.services.omnismart_chatbot import _get_shared_rag
+
+    now = _time.time()
+    for k in [k for k, v in _SEARCH_JOBS.items() if now - v["created"] > _SEARCH_JOB_TTL]:
+        _SEARCH_JOBS.pop(k, None)
+        _rp.board.drop(k)
+    # Collapse an identical in-flight search from the same user into one job.
+    for jid, job in _SEARCH_JOBS.items():
+        if job["owner"] == user.user_id and job["q"] == q and job["n"] == n and job["status"] == "running":
+            return {"job_id": jid, "status": "running", "shared": True}
+
+    job_id = str(uuid.uuid4())
+    job: Dict[str, Any] = {"owner": user.user_id, "q": q, "n": n, "status": "running",
+                           "created": now, "result": None, "error": None}
+    _SEARCH_JOBS[job_id] = job
+    _rp.board.update(job_id, stage="starting")
+    lang = _detect_search_language(q, user)
+
+    async def _run() -> None:
+        token = _rp.set_progress_key(job_id)
+        try:
+            rag = _get_shared_rag()
+            hits = await asyncio.to_thread(rag._retrieve_documents, q, top_k=n, language=lang)
+            if not hits:
+                hits = await asyncio.to_thread(rag._retrieve_documents, q, top_k=n)
+            job["result"] = {
+                "results": [{"title": t, "content": (c or "")[:600], "score": round(s, 4)}
+                            for t, c, s in hits],
+                "query": q, "detected_language": lang,
+                "partial": bool(getattr(hits, "partial", False)),
+            }
+            job["status"] = "done"
+            _rp.board.update(job_id, stage="done")
+        except Exception as e:  # surfaced to the poller, never an empty success
+            job["status"], job["error"] = "error", str(e)[:500]
+            _rp.board.update(job_id, stage="error")
+        finally:
+            _rp.reset_progress_key(token)
+
+    asyncio.get_running_loop().create_task(_run())
+    return {"job_id": job_id, "status": "running"}
+
+
+@app.delete("/api/v1/knowledge/search/jobs/{job_id}")
+async def knowledge_search_cancel(job_id: str, user: TokenData = Depends(get_current_user)):
+    """Stop a running search: remaining cross-encoder batches are skipped."""
+    from src.services import retrieval_progress as _rp
+    job = _SEARCH_JOBS.get(job_id)
+    if not job or job["owner"] != user.user_id:
+        raise HTTPException(status_code=404, detail="search job not found")
+    _rp.board.update(job_id, cancelled=True)
+    return {"job_id": job_id, "cancelled": True}
+
+
+@app.get("/api/v1/knowledge/search/jobs/{job_id}")
+async def knowledge_search_job(job_id: str, user: TokenData = Depends(get_current_user)):
+    from src.services import retrieval_progress as _rp
+    job = _SEARCH_JOBS.get(job_id)
+    if not job or job["owner"] != user.user_id:
+        raise HTTPException(status_code=404, detail="search job not found")
+    out: Dict[str, Any] = {"job_id": job_id, "status": job["status"]}
+    state = _rp.board.get(job_id) or {}
+    out["progress"] = {k: state[k] for k in ("stage", "done", "total", "candidates") if k in state}
+    if state.get("preliminary"):
+        out["preliminary"] = state["preliminary"]
+    if job["status"] == "done":
+        out.update(job["result"])
+    elif job["status"] == "error":
+        out["error"] = job["error"]
+    return out
 
 
 @app.get("/api/v1/knowledge/stats")
@@ -2824,7 +2942,38 @@ async def websocket_chat(websocket: WebSocket):
             language = data.get("language") or user.language
 
             # Phase 1: RAG retrieval + persona setup (fast, synchronous-in-thread)
-            # This builds the full messages list with retrieved context.
+            # This builds the full messages list with retrieved context. Retrieval
+            # stages report under a per-turn key; a small pump forwards real stage
+            # progress to the client while the turn is being prepared.
+            from src.services import retrieval_progress as _rp
+            progress_id = f"ws-{uuid.uuid4()}"
+            progress_token = _rp.set_progress_key(progress_id)
+            _rp.board.update(progress_id, stage="starting")
+
+            async def _progress_pump(pid=progress_id):
+                last = None
+                sent_preliminary = False
+                while True:
+                    await asyncio.sleep(0.6)
+                    state = _rp.board.get(pid)
+                    if not state:
+                        continue
+                    sig = (state.get("stage"), state.get("done"), state.get("total"))
+                    payload = None
+                    if sig != last:
+                        last = sig
+                        payload = {"type": "progress", "stage": sig[0], "done": sig[1], "total": sig[2]}
+                    if state.get("preliminary") and not sent_preliminary:
+                        sent_preliminary = True
+                        payload = payload or {"type": "progress", "stage": sig[0], "done": sig[1], "total": sig[2]}
+                        payload["preliminary_sources"] = state["preliminary"]
+                    if payload:
+                        try:
+                            await websocket.send_json(payload)
+                        except Exception:
+                            return
+
+            progress_pump = asyncio.create_task(_progress_pump())
             try:
                 rag_result = await asyncio.wait_for(
                     asyncio.to_thread(
@@ -2883,6 +3032,11 @@ async def websocket_chat(websocket: WebSocket):
                     "blocks": _structure_answer(result["response"]),
                 })
                 continue
+
+            finally:
+                progress_pump.cancel()
+                _rp.reset_progress_key(progress_token)
+                _rp.board.drop(progress_id)
 
             # Phase 2: Streaming LLM generation — send tokens as they arrive
             messages_for_llm = rag_result["messages"]
