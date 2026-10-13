@@ -110,3 +110,8 @@ def test_board_cancel_flag_is_seen_by_context():
     rp.board.update("job-flag", cancelled=True)
     with pytest.raises(rp.RetrievalCancelled):
         ctx.check()
+
+
+def test_model_loads_share_one_lock():
+    from src.services import hybrid_retrieval as hr
+    assert hr._LOCAL_EMBEDDERS_LOCK is hr._LOCAL_RERANKER_LOAD_LOCK is hr._MODEL_LOAD_LOCK
