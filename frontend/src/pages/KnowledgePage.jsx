@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from '../i18n/I18nContext'
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import * as api from '../api'
-import { Search, Database, FileText, BookOpen, Layers, Sparkles, X } from 'lucide-react'
+import { Search, Database, FileText, BookOpen, Layers, Sparkles, X, StopCircle } from 'lucide-react'
 import { PageHeader, Stat, StatGrid, fmtNum, Loading, AskCopilot, Panel } from '../components/ui'
 
 export default function KnowledgePage() {
@@ -12,10 +12,52 @@ export default function KnowledgePage() {
   const [preview, setPreview] = useState(null)
 
   const { data: stats } = useQuery({ queryKey: ['knowledge-stats'], queryFn: () => api.getKnowledgeStats().then(r => r.data || {}), staleTime: 300_000 })
-  const search = useMutation({ mutationFn: (query) => api.searchKnowledge(query, n).then(r => r.data) })
+  // Search runs as a polled job so the page can show real stage progress and the fused
+  // (preliminary) ranking while the cross-encoder finishes.
+  const [run, setRun] = useState({ phase: 'idle', progress: null, preliminary: null, data: null, error: null, query: '' })
+  const [elapsed, setElapsed] = useState(0)
+  const abortRef = useRef(null)
 
-  const onSearch = (e) => { e.preventDefault(); if (q.trim()) search.mutate(q) }
-  const results = search.data?.results || search.data || []
+  useEffect(() => {
+    if (run.phase !== 'running') { setElapsed(0); return undefined }
+    const started = Date.now()
+    const id = setInterval(() => setElapsed(Math.floor((Date.now() - started) / 1000)), 1000)
+    return () => clearInterval(id)
+  }, [run.phase])
+
+  const startSearch = async (query) => {
+    abortRef.current?.abort()
+    const controller = new AbortController()
+    abortRef.current = controller
+    setRun({ phase: 'running', progress: null, preliminary: null, data: null, error: null, query })
+    try {
+      const data = await api.searchKnowledgeJob(query, n, {
+        signal: controller.signal,
+        onProgress: (st) => setRun(r => r.phase !== 'running' ? r : ({
+          ...r, progress: st.progress || r.progress, preliminary: st.preliminary || r.preliminary,
+        })),
+      })
+      setRun(r => ({ ...r, phase: 'done', data, progress: { stage: 'done' } }))
+    } catch (e) {
+      if (e.name === 'CanceledError' || e.message === 'canceled') setRun(r => ({ ...r, phase: 'canceled' }))
+      else setRun(r => ({ ...r, phase: 'error', error: e.message || 'Search failed' }))
+    }
+  }
+  const cancelSearch = () => abortRef.current?.abort()
+  useEffect(() => () => abortRef.current?.abort(), [])
+
+  const onSearch = (e) => { e.preventDefault(); if (q.trim()) startSearch(q.trim()) }
+  const running = run.phase === 'running'
+  const stageLabel = (p) => {
+    const stage = p?.stage
+    if (stage === 'fused') return t('searchStageFused') || `Candidates found (${p.candidates ?? p.total ?? 0}). Ranking the best passages…`
+    if (stage === 'reranking') return `${t('searchStageRerank') || 'Ranking the best passages'} (${p.done ?? 0}/${p.total ?? '?'})`
+    if (stage === 'searching') return t('searchStageSearching') || 'Searching the knowledge base…'
+    return t('searchStageStarting') || 'Starting…'
+  }
+  const livePreliminary = running && run.preliminary && !run.data
+  const results = run.data?.results || (livePreliminary ? run.preliminary : [])
+  const progressPct = run.progress?.total ? Math.min(100, Math.round(((run.progress.done || 0) / run.progress.total) * 100)) : null
   const docCount = stats?.document_count ?? stats?.total_documents ?? stats?.count ?? 0
 
   return (
@@ -40,22 +82,50 @@ export default function KnowledgePage() {
           <select className="form-input" style={{ width: 90 }} value={n} onChange={e => setN(Number(e.target.value))}>
             {[5, 10, 20, 50].map(v => <option key={v} value={v}>{v}</option>)}
           </select>
-          <button className="btn btn-primary" type="submit" disabled={!q.trim() || search.isPending}>
-            <Search size={15} /> {search.isPending ? (t('searching') || 'Searching…') : (t('search') || 'Search')}
-          </button>
+          {running ? (
+            <button className="btn" type="button" onClick={cancelSearch}>
+              <StopCircle size={15} /> {t('cancel') || 'Cancel'}
+            </button>
+          ) : (
+            <button className="btn btn-primary" type="submit" disabled={!q.trim()}>
+              <Search size={15} /> {t('search') || 'Search'}
+            </button>
+          )}
         </form>
       </Panel>
 
-      {search.isPending && <Loading label={t('lblSearching')} />}
-      {search.error && <div className="alert alert-danger" style={{ marginTop: 16 }}>Search failed: {search.error.message}</div>}
+      {running && (
+        <div className="card" style={{ marginTop: 18 }} role="status" aria-live="polite">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ display: 'inline-block', width: 14, height: 14, border: '2px solid rgba(34, 211, 238, 0.25)', borderTopColor: 'var(--primary, #22d3ee)', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+            <span style={{ fontSize: '.88rem' }}>{stageLabel(run.progress)}</span>
+            <span style={{ marginLeft: 'auto', fontSize: '.75rem', color: 'var(--text-3)' }}>{elapsed}s</span>
+          </div>
+          {progressPct != null && (
+            <div style={{ height: 4, background: 'var(--bg-3, rgba(255,255,255,.08))', borderRadius: 2, marginTop: 10, overflow: 'hidden' }}>
+              <div style={{ width: `${progressPct}%`, height: '100%', background: 'var(--primary, #22d3ee)', transition: 'width .4s ease' }} />
+            </div>
+          )}
+          {elapsed >= 20 && (
+            <div style={{ marginTop: 10, fontSize: '.78rem', color: 'var(--text-3)' }}>
+              {t('searchSlowNote') || 'Still working. Ranking runs on CPU and can take up to a minute on a cold start; the list below is the preliminary order.'}
+            </div>
+          )}
+        </div>
+      )}
+      {run.phase === 'canceled' && <div className="alert" style={{ marginTop: 16 }}>{t('searchCanceled') || 'Search canceled.'}</div>}
+      {run.phase === 'error' && <div className="alert alert-danger" style={{ marginTop: 16 }}>Search failed: {run.error}</div>}
 
-      {search.data && (
+      {(run.data || livePreliminary) && (
         <div style={{ marginTop: 18 }}>
           <div style={{ color: 'var(--text-3)', fontSize: '.82rem', marginBottom: 12 }}>
-            {results.length} {t('results') || 'results'} for “{q}”
+            {results.length} {t('results') || 'results'} for “{run.query}”
+            {livePreliminary && <span className="badge" style={{ marginLeft: 8 }}>{t('searchPreliminary') || 'Preliminary, refining…'}</span>}
+            {run.data?.partial && <span className="badge" style={{ marginLeft: 8 }}>{t('searchPartial') || 'Fused order (ranking was cut short)'}</span>}
+            {run.data && !run.data.partial && <span className="badge" style={{ marginLeft: 8 }}>{t('searchFinal') || 'Final'}</span>}
           </div>
           {results.map((r, i) => (
-            <div key={i} className="card clickable" style={{ marginBottom: 10 }} onClick={() => setPreview(r)}>
+            <div key={`${r.title}-${i}`} className="card clickable" style={{ marginBottom: 10, opacity: livePreliminary ? 0.85 : 1, transition: 'opacity .3s ease' }} onClick={() => setPreview(r)}>
               <div style={{ display: 'flex', gap: 12 }}>
                 <div className="kpi-icon-wrap" style={{ margin: 0, flexShrink: 0 }}><FileText size={17} /></div>
                 <div style={{ minWidth: 0 }}>
@@ -72,7 +142,7 @@ export default function KnowledgePage() {
               </div>
             </div>
           ))}
-          {results.length === 0 && !search.isPending && (
+          {results.length === 0 && !running && (
             <Panel style={{ textAlign: 'center', padding: 40, color: 'var(--text-3)' }}>
               <Search size={38} style={{ margin: '0 auto 12px', opacity: .5 }} /><p>{t('noResultsTryDiff') || 'No results. Try different terms.'}</p>
             </Panel>
