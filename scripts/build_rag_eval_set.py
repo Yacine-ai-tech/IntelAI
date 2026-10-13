@@ -134,9 +134,8 @@ def main() -> int:
     for domain, rows in sorted(by_domain.items()):
         persona = DOMAIN_PERSONA.get(domain, "analyst")
         # Group by metric, keeping every period each metric has (2020-01..2026-06 in
-        # the real corpus) — previously this always picked each metric's single latest
-        # period, and since every metric's latest period is the same month, the whole
-        # eval set ended up asking about that one month regardless of what else existed.
+        # the real corpus), so questions spread over the whole history instead of only
+        # the latest month.
         by_metric: dict[str, list[dict]] = {}
         for r in rows:
             by_metric.setdefault(r["metric"], []).append(r)

@@ -46,9 +46,7 @@ def _embed(texts: List[str]):
     Chunks into EMBED_BATCH_SIZE-sized calls for the remote path — a bulk reindex
     passes hundreds of documents in one call, and asking a remote host to embed all
     of them in a single request can outlast EMBED_TIMEOUT even though each individual
-    document would embed quickly (confirmed live: 455 texts, one request, timeout;
-    EMBED_BATCH_SIZE was already a configured env var but nothing in this module read
-    it)."""
+    document would embed quickly."""
     provider = (os.environ.get("EMBEDDING_PROVIDER", "").strip().lower()
                 or ("remote" if os.environ.get("INFERENCE_MODE", "remote").strip().lower() == "remote"
                     else "local"))
@@ -91,14 +89,10 @@ def _embed_batch(texts: List[str]):
         h["Authorization"] = "Bearer " + tk
     timeout = float(os.environ.get("EMBED_TIMEOUT", "30"))
 
-    # A self-hosted remote embed host (as opposed to a managed API) can be genuinely
-    # up and warm and still fail one request in three — confirmed live: a direct
-    # probe succeeded, and the very next call to the same host moments later,
-    # inside the same reindex, failed. A single unretried attempt turns that
-    # ordinary transient blip into a hard reindex failure for the whole batch.
-    # Retry a few times with backoff before giving up — this does NOT paper over a
-    # persistently broken host (it still raises after all attempts fail) but stops
-    # one bad millisecond from failing a multi-minute job.
+    # A self-hosted remote embed host can be up and still fail an occasional request.
+    # A single unretried attempt would turn that transient failure into a hard reindex
+    # failure for the whole batch, so retry a few times with backoff — a persistently
+    # broken host still raises after all attempts fail.
     attempts = int(os.environ.get("EMBED_RETRY_ATTEMPTS", "4"))
     backoffs = [3, 8, 20, 20][:attempts]
     last_exc: Optional[Exception] = None
@@ -330,12 +324,10 @@ class QdrantVectorStore:
         return int(self.client.count(self.coll).count)
 
     def reset(self) -> None:
-        """Drop + recreate the collection. Without this, reindex(force=True) silently
-        no-ops for Qdrant (reindex() only calls .reset() when hasattr(vs, "reset")) —
-        confirmed live: a force reindex left old points untouched, and since upsert()
-        only adds/updates by doc_id and never deletes, points for documents removed
-        from Postgres (e.g. a cleaned-up duplicate) stayed in Qdrant indefinitely,
-        still retrievable, alongside their replacements."""
+        """Drop + recreate the collection. reindex(force=True) calls this (when the
+        backend has reset()), because upsert() only adds/updates by doc_id and never
+        deletes, so points for documents removed from Postgres would otherwise stay
+        retrievable."""
         from qdrant_client.models import Distance, VectorParams
         if self.client.collection_exists(self.coll):
             self.client.delete_collection(self.coll)
@@ -534,11 +526,8 @@ def vector_store_retrieve(
     # embedded copy is capped at VECTOR_STORE_CONTENT_CHARS — see reindex()) and
     # sparse (BM25 over Postgres, always the full content) surface the same doc.
     # _key() only looks at the first 80 chars, so a truncated and an untruncated
-    # copy of the same document collide on the same key — whichever loop assigned
-    # meta[k] first used to win unconditionally, silently discarding the rest of
-    # any document longer than the cap. Confirmed live: a 24K-char annual digest
-    # was served to the LLM cut off at ~4000 chars (mid-February of a 12-month
-    # digest) even though the full text was sitting right there in `sparse`.
+    # copy of the same document collide on the same key, so the longer content wins
+    # instead of whichever loop assigned meta[k] first.
     for rank, d in enumerate(dense):
         k = _key(d["title"], d["content"])
         fused[k] = fused.get(k, 0.0) + 1.0 / (K + rank + 1)

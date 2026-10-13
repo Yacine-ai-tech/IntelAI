@@ -68,9 +68,7 @@ export default function ForecastingPage() {
   const [initError, setInitError] = useState(false)
 
   useEffect(() => {
-    // Was previously a swallowed .catch(() => {}) — a failed fetch left `metrics`
-    // empty with nothing telling the user this was a real error, not "no metrics
-    // exist yet" (the exact same silent-failure pattern flagged on the other pages).
+    // A failed fetch is surfaced (initError) so it is not mistaken for "no metrics exist yet".
     api.getMetrics().then(r => { const l = r.data?.metrics || []; setMetrics(l); if (l[0]) setMetric(l[0]) })
       .catch(() => setInitError(true)).finally(() => setInit(false))
   }, [])
