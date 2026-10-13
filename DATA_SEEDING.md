@@ -31,7 +31,7 @@ telemetry, blockchain provenance, custom software engineering, managed data cent
 d'Ivoire, Ghana, Nigeria); North & East Africa (Morocco, Kenya); Europe (France,
 Belgium); Americas (US, Canada).
 
-**Partners** — universities (Abdou Moumouni, Cheikh Anta Diop), engineering and
+**Partners** (illustrative; none is a real agreement) — regional universities, engineering and
 manufacturing integrators, regional banks and microfinance institutions, public-sector
 agencies, telcos.
 
