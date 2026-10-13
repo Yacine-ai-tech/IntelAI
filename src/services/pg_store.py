@@ -203,7 +203,7 @@ def _resync_serial_sequences(conn) -> int:
 def _get_conn():
     """Get a PostgreSQL connection. Uses pool if available, else direct connect.
     
-    Pool reuse eliminates the 2-4s Neon cold-start per call. Falls back
+    Pool reuse avoids a new connection handshake on every call. Falls back
     gracefully to direct psycopg.connect() if psycopg_pool is not installed.
     """
     pool = _init_pool()
@@ -217,13 +217,10 @@ def _get_conn():
             def close(self):
                 # psycopg3 connections aren't autocommit by default, and none of the
                 # ~60 call sites in this file use `with conn:` — most explicitly
-                # commit, but the ones that don't (bare reads like the /health check)
-                # were returning to the pool mid-transaction. psycopg_pool then had to
-                # force an implicit rollback on every single one — confirmed live,
-                # happening in lockstep with frequent health-check polling.
+                # commit, but bare reads (like the /health check) would return to the
+                # pool mid-transaction and force an implicit rollback in psycopg_pool.
                 # Rolling back here is always safe (a no-op if already committed or if
-                # there's nothing pending) and fixes every call site at once, rather
-                # than requiring every future one to remember to commit explicitly.
+                # there's nothing pending) and covers every call site at once.
                 try:
                     self._c.rollback()
                 except Exception:
@@ -461,8 +458,7 @@ def init_pg_tables():
 
         # Same job+poll pattern as chat_jobs, for POST /api/v1/admin/scenario/async —
         # a scenario switch writes thousands of rows + extracts entities + generates
-        # and embeds knowledge docs, confirmed live to take 80s+, long enough to hit
-        # Cloudflare's proxy timeout even though the operation succeeds server-side.
+        # and embeds knowledge docs, which can outlast a reverse proxy's timeout.
         conn.execute(
             """
             CREATE TABLE IF NOT EXISTS admin_jobs (
@@ -726,8 +722,8 @@ def get_kpi_metrics(
         # Bank-sourced ESG series — see the comment on kpi_entities' auto-extraction
         # above), but the baseline and scenario generators happen to stamp different,
         # arbitrary segment labels ("OmniIntelOS" vs "Global") for what is otherwise
-        # the same fact — confirmed live: keying on segment let both survive
-        # side-by-side as if they were different data. This instead suppresses a
+        # the same fact, so keying on segment would let both survive side by side as
+        # if they were different data. This instead suppresses a
         # baseline row outright whenever ANY seed_ row exists for its
         # (period, category, metric), regardless of what either one's segment says,
         # so callers downstream never see two conflicting values for one fact.
@@ -775,10 +771,8 @@ def store_kpi_entities(rows: List[Dict[str, str]], replace: bool = True,
     ingestion. ``replace_prefix`` scopes the delete-before-insert to rows whose source
     starts with it (e.g. ``"seed_"`` for the Admin scenario-switcher) — the same
     contract as store_knowledge_docs()'s replace_prefix. Without it, ``replace=True``
-    used to delete the WHOLE table unconditionally on every write, including entities
-    extracted from the real seeded baseline on ordinary CSV ingest — confirmed live:
-    activating any Admin scenario silently wiped every baseline entity, with nothing
-    scoping the delete to the scenario's own rows. Returns the number of rows written.
+    deletes the WHOLE table on every write, including entities extracted from the
+    seeded baseline. Returns the number of rows written.
     """
     if not rows:
         return 0
@@ -1402,8 +1396,7 @@ def update_session_title(session_id: str, user_id: str, title: str) -> bool:
     """Ownership enforced in the query itself, same as get_session_messages() — a
     session_id belonging to a different user_id updates zero rows rather than
     renaming that user's session. Returns whether a row was actually updated, so the
-    caller can tell "renamed" from "not yours" (confirmed live: previously any
-    authenticated user could rename or delete any other user's chat session)."""
+    caller can tell "renamed" from "not yours"."""
     conn = _get_conn()
     try:
         cur = conn.execute(

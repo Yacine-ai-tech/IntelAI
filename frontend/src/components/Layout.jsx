@@ -121,11 +121,8 @@ export default function Layout() {
           className="floating-copilot"
           style={{
             position: 'fixed', bottom: 20, right: 20,
-            // Fixed 450x600 px previously overflowed small/narrow viewports (no responsive
-            // fallback at all — confirmed: on a ~375px-wide viewport the panel runs off the
-            // left edge, and on short viewports the 600px height runs off the top). Clamp
-            // to the viewport instead, and drop the side/bottom insets to 0 below ~480px so
-            // it behaves like a full-screen sheet on phones instead of clipping.
+            // Clamp the 450x600 px panel to the viewport, and drop the side/bottom
+            // insets to 0 below ~480px so it behaves like a full-screen sheet on phones.
             width: 'min(450px, calc(100vw - 40px))',
             height: 'min(600px, calc(100vh - 40px))',
             maxWidth: '100vw', maxHeight: '100vh',
@@ -154,10 +151,8 @@ export default function Layout() {
             </div>
           </div>
           <div style={{ flex: 1, position: 'relative', minHeight: 0 }}>
-             {/* A crash anywhere in the widget's chat tree (e.g. the citation-click path
-                 reported to hard-freeze the whole UI) previously had no fault isolation —
-                 React unmounts the entire app on an uncaught render error with no error
-                 boundary anywhere upstream. Contain it to this panel instead. */}
+             {/* React unmounts the whole app on an uncaught render error, so the widget's
+                 chat tree is wrapped in an error boundary that contains a crash to this panel. */}
              <ErrorBoundary fallback={(err, retry) => (
                <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10, height: '100%', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
                  <span>{t('copilotCrashed') || 'The assistant hit an error and had to reset.'}</span>

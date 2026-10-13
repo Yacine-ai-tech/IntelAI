@@ -189,11 +189,9 @@ export function Loading({ label = 'Loading…' }) {
 export function Empty({ text = 'No data available.' }) {
   return <div className="card" style={{ color: 'var(--text-3)', textAlign: 'center', padding: 30 }}>{text}</div>
 }
-// A request that actually failed (401/500/timeout) was previously visually
-// indistinguishable from "this domain has no data yet" — every page destructured
-// `data` with a `{}`/`[]` default and rendered straight through with isLoading as the
-// only gate, so a confident-looking all-zero dashboard was the same UI as a genuine
-// backend error. Confirmed live on several domain pages.
+// A failed request (401/500/timeout) must look different from "this domain has no data
+// yet": pages that default `data` to `{}`/`[]` would otherwise render an all-zero
+// dashboard for a backend error.
 export function ErrorState({ text = 'Could not load this data.' }) {
   return (
     <div className="card" style={{ color: 'var(--bad)', textAlign: 'center', padding: 30, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
@@ -231,10 +229,9 @@ export function WakingBackend({ waking = true, onRetry }) {
 // anywhere in the tree, ANY uncaught error thrown while rendering — e.g. from a chat
 // message/citation click handler triggering a re-render — unmounts the whole app (a blank,
 // totally unresponsive page: "hard freeze, nothing clickable"), matching the floating
-// Copilot widget's reported crash-on-citation-click behavior exactly regardless of which
-// specific line throws. Wrap any risky subtree (the floating widget in particular, since
-// it's reported to crash and previously had zero fault isolation from the rest of the app)
-// so a bug there degrades to a small inline error card instead of taking down the page.
+// render errors regardless of which specific line throws. Wrap any risky subtree (the
+// floating widget in particular) so a bug there degrades to a small inline error card
+// instead of taking down the page.
 export class ErrorBoundary extends Component {
   constructor(props) { super(props); this.state = { error: null } }
   static getDerivedStateFromError(error) { return { error } }

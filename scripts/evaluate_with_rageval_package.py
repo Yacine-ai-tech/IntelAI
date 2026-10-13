@@ -221,11 +221,10 @@ async def run_decorator_demo(fetched: List[Dict[str, Any]]) -> Dict[str, Any]:
     loop.create_task(coro) on THAT loop and never registers it with flush()'s tracked
     futures at all. Since this whole script runs under asyncio.run(run_async()),
     calling the @track-wrapped function directly from here (a coroutine on that same
-    loop) hit exactly that branch — confirmed live: every case reported "0/N
-    persisted" with no error, because flush() had nothing to wait on and returned
-    immediately, racing ahead of evaluations that were still in flight. A plain OS
-    thread has no event loop of its own, so asyncio.get_running_loop() correctly
-    raises RuntimeError there, taking flush()'s intended path instead.
+    loop) takes that branch, where flush() has nothing to wait on and returns
+    immediately. A plain OS thread has no event loop of its own, so
+    asyncio.get_running_loop() raises RuntimeError there, taking flush()'s intended
+    path instead.
     """
     return await asyncio.to_thread(_run_decorator_demo_sync, fetched)
 
@@ -237,10 +236,9 @@ def _run_decorator_demo_sync(fetched: List[Dict[str, Any]]) -> Dict[str, Any]:
     "60-Second Pitch" shows, against an isolated local SQLite store. The sync wrapper's
     evaluation runs fire-and-forget on a background thread (see rageval/decorator.py) —
     `flush()` blocks until those in-flight background evaluations land, so this can
-    honestly read the store back afterward and report what's actually in it. Note the
-    decorator estimates tokens from word counts (see its own docstring) rather than
-    taking an exact count — a real, documented characteristic of the "zero extra
-    plumbing" drop-in path, not a bug.
+    read the store back afterward and report what it holds. Note the decorator
+    estimates tokens from word counts (see its own docstring) rather than taking an
+    exact count — a documented characteristic of the drop-in path.
 
     A case is retried (fresh @track call) up to `attempts` times if RAGeval's judge
     panel doesn't reach MIN_JUDGES_REQUIRED — observed live in this environment as
@@ -323,12 +321,10 @@ async def run_direct_evaluator_demo(fetched: List[Dict[str, Any]]) -> List[Dict[
     `score_interaction()`'s single all-or-nothing gather (which re-raises if ANY of the
     three fails, discarding the two that succeeded) — relevance and faithfulness don't
     depend on the judge panel at all, so a real, external judge-provider outage
-    shouldn't blank out data that never needed a judge in the first place. This surfaced
-    live during this report's own generation: RAGeval's judge providers hit genuine
-    external constraints mid-run (Anthropic account low on credit, Gemini's free-tier
-    daily quota exhausted by this same session's testing) — `groundedness` on any
-    affected case is reported as unavailable with the real reason, not silently dropped
-    or backfilled.
+    shouldn't blank out data that never needed a judge in the first place.
+    `groundedness` on any affected case is reported as unavailable with the reason
+    (for example a judge provider outage or exhausted quota), not silently dropped or
+    backfilled.
     """
     evaluator = RAGEvaluator()
     results: List[Dict[str, Any]] = []
