@@ -384,6 +384,33 @@ re-verified in this pass.
 metric and month via chat, and compare the cited value and source to the database row tagged
 for that scenario.
 
+## 9. Staged Retrieval Latency on a CPU Host
+
+**Methodology.** The deployed service was queried through its job API
+(`POST /api/v1/knowledge/search/async`, then polling the job) with three fixed natural-language
+queries against the 204-passage corpus, on a four-core CPU allowance with no GPU. The pipeline
+was the documented one: dense top-50 and BM25 top-50, Reciprocal Rank Fusion, then the
+`BAAI/bge-reranker-v2-m3` cross-encoder over the fused pool, in fp32. For each query the script
+recorded the time until the fused (preliminary) ranking was available and the time until the
+final ranking was available. The reranker had been warmed by the startup probe; the service
+was otherwise idle.
+
+| Requested results | Rerank pool | Preliminary ranking available | Final ranking available | Outcome |
+|---:|---:|---:|---:|---|
+| 5 | 30 | 0.4 – 1.0 s | 14.3 – 21.0 s (mean 16.5 s) | 3/3 complete, none partial |
+| 20 | 60 | 0.4 – 1.2 s | 29.8 – 31.4 s (mean 30.6 s) | 3/3 complete, none partial |
+
+**Result.** The fused ranking is available within about a second, and the cross-encoder pass
+dominates the remaining time, as expected for a 568M-parameter model scoring one
+query-passage pair per candidate on CPU. A request for 20 results, which previously ended in a
+retrieval timeout returned as an empty success, now completes with all 20 results.
+
+## Limitations (continued)
+
+- §9 uses three queries and one run each on one host; the figures show the order of magnitude
+  and the shape of the stages, not a latency distribution. Ranking quality against labelled
+  relevance data was not re-measured in this pass.
+
 ## Limitations
 
 - The forecast backtest is scored against a synthetic-but-deterministic 78-month series; it
