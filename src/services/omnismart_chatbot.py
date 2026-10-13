@@ -905,15 +905,10 @@ def _doc_domain(title: str) -> Optional[str]:
         if t.startswith(d + " kpi") or t.startswith(d + " summary"):
             return d
     # "people_2025-04_en.md" / "esg_2025Q1_fr.md" / "esg_2022_en.md" (annual digest) —
-    # {domain}_{period}_{lang}.{ext}. The annual-digest shape (a bare 4-digit year, no
-    # month/quarter) was missing from the period pattern entirely — confirmed live: it's
-    # exactly what scripts/seed_data.py's stage_digests() names its output
-    # ({domain}_{year}_{lang}.md, one file per domain per year), so every annual digest
-    # in the real corpus fell through to `return None` ("domain-agnostic") and leaked
-    # across every persona regardless of data_access — e.g. a COO (no ESG access)
-    # retrieving and reporting real figures from esg_2022_en.md. The exact fail-open
-    # regression this function's own docstring already warned about, just in the one
-    # period shape the docstring didn't yet enumerate.
+    # {domain}_{period}_{lang}.{ext}, where period is YYYY-MM, YYYYQn or a bare YYYY
+    # (annual digest, named by scripts/seed_data.py's stage_digests()). Every shape must
+    # resolve to its domain: falling through to `return None` ("domain-agnostic") would
+    # let the document leak across personas regardless of data_access.
     stem = re.sub(r"\.[a-z0-9]{1,4}$", "", t)
     parts = stem.split("_")
     if len(parts) >= 3 and parts[-1] in ("en", "fr"):
@@ -1114,16 +1109,11 @@ class AgentPersonaFactory:
         # 1) Live KPI snapshot (latest period) + any specifically-named past period
         # ("... in 2024-01?"), scoped to the persona's domains (RBAC). One citation PER
         # (category, period) — NOT one combined multi-category block. A persona scoped
-        # to 2+ categories (e.g. CHRO: People + ESG) used to get every category's data
-        # folded into a single snippet capped at 2000 chars; a verbose category (World
-        # Bank ESG series carry one row per country) could by itself fill that cap and
-        # push every OTHER category's data out of what the citation actually shows —
-        # even though the model's own (uncapped) prompt saw everything. Confirmed live:
-        # a CHRO asking about Attrition Rate got the numerically correct answer, cited
-        # against a source whose displayed snippet was 100% ESG content with no mention
-        # of Attrition Rate at all, scoring 0.0 groundedness on production eval despite
-        # the number being right. Per-category citations mean each one's own ~2000-char
-        # budget is never shared with an unrelated category.
+        # to 2+ categories (e.g. CHRO: People + ESG) would otherwise get every category's
+        # data folded into one snippet capped at 2000 chars, where a verbose category
+        # (World Bank ESG series carry one row per country) can fill the cap and push
+        # the other categories out of what the citation shows. Per-category citations
+        # keep each one's own ~2000-char budget.
         try:
             from src.services.pg_store import get_kpi_metrics
             df = get_kpi_metrics()

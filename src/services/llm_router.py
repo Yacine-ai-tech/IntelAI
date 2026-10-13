@@ -32,9 +32,8 @@ REASONING_MODEL = os.getenv("LLM_REASONING", "gemini/gemini-3.5-flash-lite")
 JUDGE_MODEL = os.getenv("LLM_JUDGE", "groq/openai/gpt-oss-20b")
 LOCAL_MODEL = os.getenv("LLM_LOCAL", "ollama/llama3.3")
 
-# Fallback models — set ONLY in VPS .env when the primary provider key is unavailable.
-# Never hardcoded here; cloners without a fallback simply get the primary behaviour.
-# Example VPS .env: LLM_REASONING_FALLBACK=groq/openai/gpt-oss-120b
+# Fallback models — set via the environment when the primary provider key is unavailable.
+# Example: LLM_REASONING_FALLBACK=groq/openai/gpt-oss-120b
 REASONING_FALLBACK = os.getenv("LLM_REASONING_FALLBACK", "groq/openai/gpt-oss-120b")
 JUDGE_FALLBACK = os.getenv("LLM_JUDGE_FALLBACK", "groq/openai/gpt-oss-20b")
 DEFAULT_FALLBACK = os.getenv("LLM_DEFAULT_FALLBACK", "groq/openai/gpt-oss-120b")

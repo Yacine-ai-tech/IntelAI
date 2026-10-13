@@ -87,12 +87,10 @@ export const getMe = () => api.get('/auth/me', { timeout: 8000, noRetry: true })
 
 // ── Chat ────────────────────────────────────────────────
 // POST /chat is synchronous end-to-end, and a real chat turn under cold retrieval can
-// take 60-100s+ — long enough that the reverse proxy in front of this service cuts the
-// connection before an otherwise-successful response comes back (confirmed live: this
-// showed up as the request hanging with no response at all). The backend's own
-// /chat/async + GET /chat/{job_id} pair exists specifically to avoid that: return
-// immediately with a job_id, then poll in short, fast requests that can never individually
-// run long enough to hit that ceiling — same pattern as DocIntel's batch upload/status.
+// take a minute or more — longer than a reverse proxy in front of this service waits.
+// The backend's /chat/async + GET /chat/{job_id} pair avoids that: it returns immediately
+// with a job_id, then the client polls in short requests — same pattern as DocIntel's
+// batch upload/status.
 export const sendChat = async (message, persona = null, sessionId = null, context = '', lang = 'en', signal = null, onProgress = null) => {
   const { data: job } = await api.post('/chat/async', { message, persona, session_id: sessionId, context, language: lang }, { signal })
   const jobId = job.job_id
@@ -254,10 +252,8 @@ export const getStatus = () => api.get('/status')
 
 // ── Scenario Management ─────────────────────────────────
 // A scenario switch writes thousands of KPI rows, extracts entities, and generates +
-// embeds knowledge docs — confirmed live to take 80s+, long enough that the proxy in
-// front of production can cut the connection with a 502/524 before the (otherwise
-// successful) synchronous response comes back. Submit + poll instead, so no single
-// request needs to stay open long enough to hit that ceiling.
+// embeds knowledge docs, which takes longer than a reverse proxy typically waits.
+// Submit + poll instead, so no single request stays open that long.
 // Mimics axios's error shape (err.response.data.detail) on failure — existing callers
 // already read errors that way (from the old synchronous endpoint's real axios
 // errors), so this keeps their error handling working unchanged.

@@ -523,10 +523,7 @@ export default function ChatPage({
       // There's no per-message cancel over the WS protocol (the backend runs the chat
       // turn as a plain background thread, not a cancellable task), so the only real way
       // to stop receiving this turn's answer is to close the socket outright — the
-      // existing onclose handler reconnects automatically a moment later. This previously
-      // referenced an undefined `useWs` variable, which threw before the socket could be
-      // closed or `loading` reset, leaving the UI stuck showing the typing indicator with
-      // a Stop button that no longer did anything.
+      // existing onclose handler reconnects automatically a moment later.
       wsRef.current.close()
       wsInFlightRef.current = false
       setMessages(p => [...p, { role: 'assistant', content: 'Message canceled.' }])

@@ -98,19 +98,11 @@ def compute_health_index(df: pd.DataFrame) -> Dict[str, float | str]:
         lbl = t("COMMON", "no_data") if I18N.lang() == "fr" else "No Data"
         return {"score": 0, "label": lbl}
 
-    # Bug found live: this used to sort_values("period") over EVERY row matched by the
-    # revenue/sales/arr/mrr keyword filter — with several distinct revenue-family metrics in
-    # the real data (e.g. "Revenue", "Subscription Revenue", "Professional Services Revenue",
-    # "Data Centre Revenue"), iloc[-2]/iloc[-1] on that combined frame just grabbed whichever
-    # two ROWS happened to sort last, which are very often two DIFFERENT metrics from the
-    # same or adjacent periods rather than one metric one period apart. That produced a
-    # wildly wrong (often large-negative) "growth" figure, and growth*2 alone was big enough
-    # to drag the whole formula below 0 before np.clip(..., 0, 100) silently floored it —
-    # exactly the "health score = 0 while every underlying metric looks strong" symptom,
-    # since none of those per-dimension metrics (EBITDA margin, Rule of 40, NRR, etc.) are
-    # even inputs to this score; this narrower revenue/margin/cash/opex formula is.
-    # Fix: sum same-period revenue-like rows together (consistent with extract_key_metrics'
-    # own revenue calc above) and compare one period's total against the previous period's.
+    # Revenue-family metrics ("Revenue", "Subscription Revenue", ...) share the keyword
+    # filter, so taking the last two ROWS of the combined frame would compare two
+    # different metrics rather than one metric one period apart. Sum same-period
+    # revenue-like rows together (consistent with extract_key_metrics' own revenue calc
+    # above) and compare one period's total against the previous period's.
     rev_df = _metric_lookup(df, ["revenue", "sales", "arr", "mrr"])
     growth = 0.0
     if not rev_df.empty:

@@ -4,11 +4,9 @@ GET /api/v1/admin/scenario/{job_id}.
 
 Same pattern as chat_jobs.py (see that module's docstring for the full reasoning):
 switching an Admin scenario writes thousands of KPI rows, extracts GraphRAG-lite
-entities for each, and generates + embeds knowledge docs — confirmed live to take
-80s+, long enough that Cloudflare's proxy in front of production cut the connection
-with a 502 even though the operation completed successfully server-side seconds
-later. Returning a job_id immediately and polling in short, fast requests means no
-single request can ever run long enough to hit that ceiling.
+entities for each, and generates + embeds knowledge docs, which can take over a
+minute — longer than a reverse proxy waits. Returning a job_id immediately and
+polling in short requests means no single request stays open that long.
 
 A separate table from chat_jobs (not a shared one) on purpose: different request/
 result shapes, different TTL reasoning isn't worth entangling, and this keeps the
@@ -111,8 +109,8 @@ def _reap_if_stale(conn, job_id: str) -> None:
             "AND updated_at < NOW() - make_interval(secs => %s)",
             (
                 f"job orphaned: no progress for over {STALE_RUNNING_SECONDS}s — the "
-                "worker process handling it most likely restarted mid-run (deploy, "
-                "OOM, or host recycling). Retry the request.",
+                "worker process handling it most likely restarted mid-run. "
+                "Retry the request.",
                 job_id, STALE_RUNNING_SECONDS,
             ),
         )

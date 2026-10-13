@@ -8,10 +8,9 @@ before an otherwise-successful synchronous response comes back. Returning a job_
 immediately and polling in short, fast requests means no single request can ever run
 long enough to hit that ceiling.
 
-Postgres-backed (not in-memory) so a job survives this process restarting mid-run —
-this app is a single free-tier instance that does restart (deploys, OOM, host
-recycling), and an in-memory-only job store would silently drop every in-flight job
-on any of those, leaving a polling client with "unknown job" and no explanation.
+Postgres-backed (not in-memory) so a job survives this process restarting mid-run;
+an in-memory-only job store would lose every in-flight job on a restart, leaving a
+polling client with "unknown job" and no explanation.
 
 Unlike DocIntel's batch processor, this has no fan-out/concurrency to manage — one job
 is exactly one chat turn, not N files — so it's deliberately smaller: no semaphore, no
@@ -36,13 +35,10 @@ JOB_TTL_SECONDS = 3600
 # How long a job may sit in 'running' with no update before it's treated as orphaned.
 # run_job() executes via FastAPI's BackgroundTasks on the SAME worker process that
 # handled the original POST /chat/async request — if that process restarts mid-run
-# (a real risk on this single free-tier instance: deploys, OOM, host recycling, all
-# explicitly called out in this module's own docstring above), nothing is left to
-# ever write 'done' or 'error' for that job, and a polling client sees 'running'
-# forever. Confirmed live: a real job sat in 'running' for 650+s (see BENCHMARK.md
-# §5) with no sign of progress, well past the 50-150s real chat turns actually take.
-# Set well above that real-world ceiling so a merely slow turn is never mistaken for
-# an orphan.
+# (a deploy or crash), nothing is left to ever write 'done' or 'error' for that job,
+# and a polling client would see 'running' forever. Real chat turns take 50-150s, so
+# the threshold is set well above that and a merely slow turn is never mistaken for an
+# orphan.
 STALE_RUNNING_SECONDS = 600
 
 
@@ -130,8 +126,8 @@ def _reap_if_stale(conn, job_id: str) -> None:
             "AND updated_at < NOW() - make_interval(secs => %s)",
             (
                 f"job orphaned: no progress for over {STALE_RUNNING_SECONDS}s — the "
-                "worker process handling it most likely restarted mid-run (deploy, "
-                "OOM, or host recycling). Retry the request.",
+                "worker process handling it most likely restarted mid-run. "
+                "Retry the request.",
                 job_id, STALE_RUNNING_SECONDS,
             ),
         )

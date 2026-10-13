@@ -83,7 +83,7 @@ MAX_WORDS_PER_CHUNK = int(os.getenv("TTS_CHUNK_WORDS", "26"))
 # early and retrying just piles more load-triggering calls onto a backend that
 # was already working on the first one, which is the opposite of what an
 # infrastructure that rate-limits its own start/stop cycling wants to see.
-# Give a cold start real room before calling it failed.
+# Give a starting host enough time before calling it failed.
 TIMEOUT = float(os.getenv("TTS_ENDPOINT_TIMEOUT", "600"))
 NUM_WORKERS = max(1, len(TTS_URLS))
 
@@ -170,7 +170,7 @@ def _concat_wavs(chunks: List[bytes]) -> bytes:
 
 def synthesize(text: str, voice_gender: str, host_idx: int) -> Optional[bytes]:
     """All of this script's chunks go to ONE pinned host, strictly sequentially.
-    Only the first chunk pays a cold-start cost; as long as the next chunk
+    Only the first chunk pays a start-up cost; as long as the next chunk
     arrives before the host's own idle-downgrade window elapses, it stays warm
     for the rest of the script — one legitimate wake per script, not one per
     chunk. Multiple scripts run concurrently (see build_audio), each pinned to

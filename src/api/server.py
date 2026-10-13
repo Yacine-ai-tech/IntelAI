@@ -281,13 +281,9 @@ def _structure_answer(text: str) -> List[Dict[str, Any]]:
     - ``table``     — GFM ``| a | b |`` pipe tables; ``rows`` key holds ``[[cell, ...], ...]``
     - ``text``      — everything else
 
-    Table support: previously absent entirely, so every ``| Dimension | Key Metrics |
-    Assessment |``-style GFM table the LLM produced fell through to the generic ``text``
-    branch and was shown to the user as literal, unrendered pipe syntax (confirmed live
-    on a "business health?" query) — the frontend's own client-side parser
-    (``ChatPage.jsx::parseBlocks``) already handles tables correctly, but
-    ``FormattedContent`` always prefers these server-sent ``blocks[]`` when present, so
-    the frontend's table support was unreachable for any server-structured response.
+    Tables are emitted as ``table`` blocks: ``FormattedContent`` prefers these
+    server-sent ``blocks[]`` when present, so a GFM pipe table has to be structured
+    here to render as a table instead of literal pipe syntax.
     """
     import re as _re
     lines = (text or "").replace("\r\n", "\n").split("\n")
@@ -981,11 +977,9 @@ async def _run_chat_turn(req: "ChatRequest", user: TokenData) -> Dict[str, Any]:
     except Exception:
         pass  # Fallback — still works without PG
 
-    # Prior turns in this session — without this, every REST message was answered with
-    # no memory of the conversation despite a real session_id being tracked (confirmed
-    # live: a follow-up question referring to the previous answer got no continuity).
-    # The WebSocket handler already keeps this in memory per-connection; REST has no
-    # persistent connection to hold that state in, so it's loaded from Postgres instead.
+    # Prior turns in this session, so follow-up questions have continuity. The WebSocket
+    # handler keeps this in memory per connection; REST has no persistent connection, so
+    # it is loaded from Postgres instead.
     history = await asyncio.to_thread(_load_chat_history, user.user_id, session_id)
 
     # Persona-routed RAG copilot: factory.chat auto-retrieves a role-scoped KPI
@@ -1097,11 +1091,8 @@ async def get_chat_sessions(
 ):
     """Registered here, ahead of GET /api/v1/chat/{job_id}, on purpose: Starlette matches
     routes in registration order, and a single-segment path-param route matches literally
-    anything in that slot. With this endpoint defined later (as it originally was, down in
-    the CHAT HISTORY & SESSIONS section), every GET /api/v1/chat/sessions request was
-    captured by chat_job_status with job_id="sessions" instead — confirmed live in
-    production: 404 {"detail": "Job 'sessions' not found"}, silently breaking the chat
-    history sidebar. Keep this ahead of chat_job_status."""
+    anything in that slot. Defined after chat_job_status, GET /api/v1/chat/sessions would
+    be captured by it with job_id="sessions". Keep this ahead of chat_job_status."""
     try:
         from src.services.pg_store import get_user_sessions
         admin_secret = os.getenv("ADMIN_TOKEN")
@@ -1351,9 +1342,7 @@ async def _process_webhook_payload(payload: WebhookPayload, actor: str) -> Dict[
         df = pd.DataFrame(payload.data)
         if df.empty or "metric_name" not in df.columns or "value" not in df.columns:
             raise HTTPException(status_code=422, detail="Strict schema violation: Missing metric_name or value fields")
-        # store_kpi_metrics() reads the "metric" column, not "metric_name" — without this
-        # rename every webhook-ingested row was silently stored with metric='', discarding
-        # the actual metric name entirely (found via live verification, fixed here).
+        # store_kpi_metrics() reads the "metric" column, not "metric_name".
         df = df.rename(columns={"metric_name": "metric"})
 
         from src.services.pg_store import store_kpi_metrics
@@ -1397,11 +1386,9 @@ async def _process_webhook_payload(payload: WebhookPayload, actor: str) -> Dict[
                 }])
                 store_knowledge_docs(docs_df, owner_user_id=None)
 
-                # 3. Index it immediately. add_texts() never existed on any vector-store
-                # backend (ChromaVectorStore/PgVectorStore/QdrantVectorStore only
-                # implement upsert/query/count/reset) — every webhook knowledge_doc
-                # raised AttributeError here, silently caught below, while the endpoint
-                # still returned HTTP 200 "success" (confirmed live).
+                # 3. Index it immediately. The vector-store backends
+                # (ChromaVectorStore/PgVectorStore/QdrantVectorStore) implement
+                # upsert/query/count/reset.
                 vs = get_vector_store()
                 if vs:
                     vs.upsert([{"doc_id": doc_id, "title": title, "content": content_text[:4000],
@@ -1674,17 +1661,15 @@ async def ingest_document(
 
     # Off the event loop: some of SecurityScanner's DLP patterns (DOTALL private-key
     # blocks, the credit-card catch-all) are backtracking-prone, and this is a
-    # WEB_CONCURRENCY=1 deployment — a multi-second scan on a large document
-    # previously froze every other in-flight request for its whole duration.
+    # WEB_CONCURRENCY=1 deployment — a multi-second scan on a large document would
+    # otherwise hold up every other in-flight request.
     from src.services.security import SecurityScanner
     text = await asyncio.to_thread(SecurityScanner.redact_text, text)
 
     doc_id = str(uuid.uuid4())
-    # Store the extracted text in full. A fixed character cap here silently threw away
-    # the tail of every long document — an 82-page filing extracting 277k chars kept
-    # only its first 50k, and nothing in the response said so. Nothing downstream needs
-    # a pre-truncated row: hybrid_retrieval.chunk_text() splits documents into passages
-    # at index time, so a whole document is the correct unit to persist.
+    # Store the extracted text in full: hybrid_retrieval.chunk_text() splits documents
+    # into passages at index time, so a whole document is the correct unit to persist
+    # and a character cap would silently discard the tail of long documents.
     docs_df = pd.DataFrame([{
         "doc_id": doc_id, "title": file.filename, "content": text,
         "source": category, "embedding": "",
@@ -1859,9 +1844,8 @@ async def generate_financial_statement(
 
     # _fetch_metrics() does an exact-string match against `period`; KPI periods are only
     # ever written as monthly "YYYY-MM" strings (get_latest_period, every ingestion path).
-    # A period that matches nothing used to fall through silently to an all-$0.00 statement
-    # with no indication anything was wrong — reported live as a confusing/"empty-looking"
-    # generated P&L. Fail loudly instead so the user knows to pick a real period.
+    # A period that matches nothing would otherwise produce an all-$0.00 statement with no
+    # indication anything is wrong. Fail loudly so the user knows to pick a real period.
     from src.services.pg_store import get_available_periods
     available_periods = await asyncio.to_thread(get_available_periods)
     if available_periods and period not in available_periods:
@@ -1952,9 +1936,8 @@ async def run_forecast(
     # single CSV snapshot rather than a recurring monthly series) genuinely have too few
     # distinct periods to fit any trend. ForecastEngine already guards this (returns an
     # empty forecast / zeroed explanation rather than crashing), but returning that
-    # silently reads as "the forecast is 0%", not "there isn't enough data to forecast" —
-    # confirmed live: the UI rendered a real-looking-but-meaningless R²=0.000 result with
-    # nothing telling the user why. Flag it explicitly instead.
+    # silently reads as "the forecast is 0%", not "there isn't enough data to forecast".
+    # Flag it explicitly instead.
     if len(forecast_df) < 2:
         return {
             "metric": metric,
@@ -2478,10 +2461,8 @@ async def update_user(
         _users_db[target]["is_active"] = req.is_active
     if req.preferred_language:
         _users_db[target]["preferred_language"] = req.preferred_language
-    # Persist to Postgres too — without this, an admin's change (e.g. deactivating a
-    # compromised account) only lived in this one process's in-memory _users_db and
-    # silently reverted on the next restart (routine on a free-tier host: idle sleep
-    # + cold start), with no indication to the admin that it had been undone.
+    # Persist to Postgres too: the in-memory _users_db is per process, so an admin's
+    # change (e.g. deactivating an account) must be stored to survive a restart.
     from src.services.pg_store import update_user as _pg_update_user
     await asyncio.to_thread(
         _pg_update_user, user_id,
@@ -2532,12 +2513,10 @@ def _run_scenario_switch(scenario: str) -> Dict[str, Any]:
 @app.post("/api/v1/admin/scenario")
 async def switch_scenario(req: ScenarioRequest, user: TokenData = Depends(require_role("admin"))):
     """Switch database scenario for benchmarking (admin only) — synchronous, blocks
-    until the switch completes. Confirmed live to take 80s+, long enough that
-    Cloudflare's free-tier proxy in production can cut the connection with a 502
-    before this response comes back, even though the switch succeeds server-side a
-    few seconds later. Prefer POST .../async + GET .../{job_id} below for any caller
-    behind that proxy; this synchronous form is kept for callers that set their own
-    longer timeout (e.g. local dev, or scripts run directly against the backend)."""
+    until the switch completes. A switch can take over a minute, longer than a reverse
+    proxy typically waits, so prefer POST .../async + GET .../{job_id} below for any
+    caller behind one; this synchronous form is for callers that set their own longer
+    timeout (e.g. local dev, or scripts run directly against the backend)."""
     if req.scenario not in VALID_SCENARIOS:
         raise HTTPException(status_code=400, detail=f"Invalid scenario. Valid: {', '.join(VALID_SCENARIOS)}")
     try:
@@ -2787,7 +2766,7 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
         rag = _get_shared_rag()
         # Auto-detect language from the query rather than always passing 'en'.
         # French queries like "financement du departement it pour achat d'ordinateur et de serveur"
-        # were previously forced through English tokenisation, producing zero relevant French matches.
+        # need French tokenisation to match French documents.
         detected_lang: str | None = None
         try:
             _fr_markers = ['du', 'de', 'le', 'la', 'les', 'un', 'une', 'des', 'et', 'en', 'pour',
@@ -3127,12 +3106,8 @@ async def websocket_chat(websocket: WebSocket):
 # ════════════════════════════════════════════════════════════
 
 def _load_chat_history(user_id: str, session_id: str) -> List[Dict[str, str]]:
-    """Was previously dead code AND broken: get_conversation_history()'s query aliases
-    role AS user_message, content AS ai_response — both columns are truthy on every row
-    regardless of who sent it, so the old version here pushed a bogus {"role": "user",
-    "content": "assistant"} turn (the literal role string, not real content) for every
-    row. get_session_messages() is the function this codebase already uses correctly
-    for this exact table (see GET .../messages) — same ownership-scoped query, real
+    """Prior turns of a session as [{"role", "content"}]. Uses get_session_messages(),
+    the ownership-scoped query behind GET .../messages, which returns the real
     role/content columns."""
     try:
         from src.services.pg_store import get_session_messages

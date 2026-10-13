@@ -6,9 +6,8 @@ Unlike scripts/evaluate_with_rageval.py — which calls UltraFastRAG.answer() in
 so retrieval (embed + rerank, dozens of remote HTTP round trips) runs on whatever machine
 executes the script — this script calls the live production POST /api/v1/chat/async +
 GET /api/v1/chat/{job_id} endpoints for every case (not the synchronous POST
-/api/v1/chat) — a cold-retrieval case can take 60-100s+, long enough to risk Cloudflare's
-free-tier proxy cutting the connection (HTTP 524) on a single blocking request; polling
-in short requests avoids that entirely. All retrieval work happens inside the real
+/api/v1/chat) — a retrieval-heavy case can take a minute or more, longer than a reverse
+proxy waits on a single blocking request; polling in short requests avoids that. All retrieval work happens inside the real
 deployed service itself; the machine running this script only ever sends/receives small
 JSON payloads, plus makes the (also small, non-embedding) LLM judge calls to score each
 answer. evaluate_with_rageval_package.py takes the same gateway-polling approach for
@@ -78,7 +77,7 @@ def load_eval_cases() -> List[Dict[str, Any]]:
 def _retry(fn, attempts: int = 3, base_delay: float = 3.0):
     """Retries transient failures from THIS machine's own flaky connection (DNS
     resolution failures, TLS handshake timeouts) — distinct from a real error from the
-    service being tested, which still fails after all attempts, honestly.
+    service being tested, which still fails after all attempts.
 
     A 429 gets its own, longer backoff (respecting Retry-After when the service sends
     one): three quick retries on a rate limit just add three more requests to an

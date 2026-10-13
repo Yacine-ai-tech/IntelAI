@@ -314,21 +314,16 @@ def get_user_data_categories(role: str, all_categories: Optional[List[str]] = No
     """Get the data categories accessible to a given role.
 
     A wildcard role ("*") means "every category that actually exists" — not a fixed
-    list. A hardcoded list here drifts every time a new domain is added to the KPI
-    catalog (confirmed live: a hardcoded list missing "IT"/"Logistics" silently zeroed
-    out GET /api/v1/kpis for both, for every wildcard-access role, until this was found
-    and the list patched by hand — which just moves the same bug to the next new
-    domain). It also breaks the moment anyone deploys IntelAI against a different
-    dataset with different domain names, since this app is meant to be data-agnostic,
-    not hardwired to whatever the current 7 demo domains happen to be.
+    list. A hardcoded list drifts every time a domain is added to the KPI catalog, and
+    breaks when IntelAI is deployed against a dataset with different domain names; the
+    app is meant to be data-agnostic.
 
     `all_categories`: the caller's own query of get_available_categories() (a DISTINCT
     SELECT against kpi_metrics), passed in explicitly rather than fetched here so this
     stays a synchronous, DB-free function — the caller decides how/where to run the
     actual query (e.g. via asyncio.to_thread from an async route handler). Falls back to
     an empty list (not a guessed default) when the caller has no data yet — an empty
-    wildcard-access result is honest; a hardcoded guess would just reintroduce this bug
-    under a different name.
+    wildcard-access result is correct; a hardcoded guess would drift again.
     """
     role_def = ROLE_DEFINITIONS.get(role, {})
     access = role_def.get("data_access", [])
