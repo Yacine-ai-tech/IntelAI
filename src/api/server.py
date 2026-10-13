@@ -604,7 +604,15 @@ async def startup():
             from src.core.config import settings
             if settings.VECTOR_STORE == "qdrant":
                 from src.services.hybrid_retrieval import rerank
-                if not rerank("startup retrieval readiness probe", ["readiness probe"]):
+                import time as _time
+                probe_ok = False
+                for _attempt in range(1, 4):
+                    if rerank("startup retrieval readiness probe", ["readiness probe"]):
+                        probe_ok = True
+                        break
+                    log.warning("Reranker readiness probe attempt %d/3 failed; retrying", _attempt)
+                    _time.sleep(5 * _attempt)
+                if not probe_ok:
                     raise RuntimeError("Local BGE reranker failed its readiness probe")
                 log.info("Persistent Qdrant retrieval and local BGE reranker pre-warmed")
                 return
