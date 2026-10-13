@@ -234,11 +234,19 @@ Active Directory integration and custom VPC deployment is available on request.
 
 ## Anonymous Telemetry
 
-IntelAI can send an anonymous startup ping so a deployment's operator can count distinct
-installs. This is opt-in only: it sends nothing unless `TELEMETRY_URL` is set
-to a collector the operator controls, so a fresh clone never phones home by default. Only the
-project name and a startup-event timestamp are collected — no PII, API keys, or user data.
-`TELEMETRY_OPT_OUT=true` disables it explicitly regardless of `TELEMETRY_URL`.
+The service sends one small HTTP POST at process start: `{"service": "IntelAI", "event": "startup",
+"version": "<release>", "instance_id": "<random identifier>"}`. The identifier is a random value
+persisted in the logs directory (delete `.telemetry_instance_id` to reset it); it is not derived
+from any hardware identifier. No documents, prompts, credentials, filenames or configuration are
+included, and a guard prevents more than one ping every 30 seconds per instance.
+The receiving endpoint sees the request's network metadata, as any HTTP server does.
+
+Behaviour of the destination setting:
+
+- `TELEMETRY_URL` not defined: the ping goes to the project's collector.
+- `TELEMETRY_URL` defined but empty (the value shipped in `.env.example`): nothing is sent.
+- `TELEMETRY_URL=<your collector>`: the ping goes there instead.
+- `TELEMETRY_OPT_OUT=true` or `DO_NOT_TRACK=1`: nothing is sent, whatever the URL says.
 
 <!-- Scarf Analytics Pixel -->
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ada53b5b-d56f-447f-b5ab-a65a061b7d5a" />
