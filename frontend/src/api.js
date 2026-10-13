@@ -93,7 +93,7 @@ export const getMe = () => api.get('/auth/me', { timeout: 8000, noRetry: true })
 // /chat/async + GET /chat/{job_id} pair exists specifically to avoid that: return
 // immediately with a job_id, then poll in short, fast requests that can never individually
 // run long enough to hit that ceiling — same pattern as DocIntel's batch upload/status.
-export const sendChat = async (message, persona = null, sessionId = null, context = '', lang = 'en', signal = null) => {
+export const sendChat = async (message, persona = null, sessionId = null, context = '', lang = 'en', signal = null, onProgress = null) => {
   const { data: job } = await api.post('/chat/async', { message, persona, session_id: sessionId, context, language: lang }, { signal })
   const jobId = job.job_id
   const pollIntervalMs = 2000
@@ -104,6 +104,9 @@ export const sendChat = async (message, persona = null, sessionId = null, contex
     if (Date.now() - startedAt > maxWaitMs) throw new Error('Chat request timed out waiting for a response.')
     await new Promise(r => setTimeout(r, pollIntervalMs))
     const { data: status } = await api.get(`/chat/${jobId}`, { signal })
+    if (onProgress && (status.progress || status.preliminary_sources)) {
+      try { onProgress({ ...(status.progress || {}), sources: status.preliminary_sources || null }) } catch { /* UI callback must not break polling */ }
+    }
     if (status.status === 'done') return { data: status }
     if (status.status === 'error') throw new Error(status.error || 'request failed')
   }
@@ -128,6 +131,27 @@ export const deleteChatSession = (sessionId) => api.delete(`/chat/sessions/${ses
 // ── Knowledge / Vector Search ───────────────────────────
 export const searchKnowledge = (query, n = 5) => api.get('/knowledge/search', { params: { q: query, n } })
 export const getKnowledgeStats = () => api.get('/knowledge/stats')
+
+// Search as a polled job: the full pipeline (dense + BM25 + RRF + cross-encoder) can take
+// many seconds on a CPU host, so the page gets real stage progress and the fused
+// (preliminary) ranking while the cross-encoder finishes. Aborting the signal cancels the
+// remaining reranking work on the server.
+export const searchKnowledgeJob = async (query, n = 5, { signal = null, onProgress = null, pollMs = 700, maxWaitMs = 5 * 60 * 1000 } = {}) => {
+  const { data: started } = await api.post('/knowledge/search/async', null, { params: { q: query, n }, signal })
+  const jobId = started.job_id
+  const startedAt = Date.now()
+  const abortError = () => { const e = new Error('canceled'); e.name = 'CanceledError'; return e }
+  const cancelRemote = () => api.delete(`/knowledge/search/jobs/${jobId}`).catch(() => {})
+  while (true) {
+    if (signal?.aborted) { cancelRemote(); throw abortError() }
+    if (Date.now() - startedAt > maxWaitMs) { cancelRemote(); throw new Error('Search timed out waiting for a response.') }
+    await new Promise(r => setTimeout(r, pollMs))
+    const { data } = await api.get(`/knowledge/search/jobs/${jobId}`, { signal })
+    if (onProgress) { try { onProgress(data) } catch { /* ignore UI errors */ } }
+    if (data.status === 'done') return data
+    if (data.status === 'error') throw new Error(data.error || 'search failed')
+  }
+}
 
 // ── KPIs (cross-domain) ────────────────────────────────
 export const getKPIs = (params = {}) => api.get('/kpis', { params })
