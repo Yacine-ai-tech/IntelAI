@@ -304,7 +304,7 @@ class HybridRetriever:
             return arr
         # Generic contract (any self-hosted inference host) — same shape
         # AUDIO_PROCESSOR_URL/DOC_PROCESSOR_URL use elsewhere in this codebase.
-        # Waits through an on-demand host's cold start (see _post_json_awaiting_wake).
+        # Waits while an on-demand host starts (see _post_json_awaiting_wake).
         endpoint = url if url.endswith("/embed") else url.rstrip("/") + "/embed"
         result = _post_json_awaiting_wake(
             endpoint,
@@ -751,7 +751,7 @@ def _rerank_remote(query: str, texts: List[str]) -> List[float]:
                 return [float(item[0]["score"] if isinstance(item, list) else item.get("score", 0.0)) for item in res]
         raise RuntimeError(f"HF rerank returned an unexpected shape for {len(texts)} texts")
 
-    # Waits through an on-demand host's cold start, same as the embed path.
+    # Waits while an on-demand host starts, same as the embed path.
     endpoint = remote if remote.endswith("/rerank") else remote.rstrip("/") + "/rerank"
     result = _post_json_awaiting_wake(
         endpoint,
@@ -833,7 +833,7 @@ def rerank(query: str, texts: List[str]) -> Optional[List[float]]:
     Chaining providers is deliberately NOT done: a silent failover changes retrieval
     quality (and cost) without anyone noticing, and hides the fact that the intended
     backend is down. On failure this logs the real error and returns None, which means
-    "keep the RRF fusion order" — an honest, explicit degradation, not a different
+    "keep the RRF fusion order" — an explicit degradation, not a different
     model quietly answering. Set USE_RERANKER=false to turn reranking off entirely.
     """
     if os.getenv("USE_RERANKER", "true").strip().lower() not in ("1", "true", "yes", "on"):
