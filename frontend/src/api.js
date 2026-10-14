@@ -110,6 +110,52 @@ export const sendChat = async (message, persona = null, sessionId = null, contex
   }
 }
 
+// Server-sent events for one chat turn: stage events, sources as soon as they are known,
+// answer chunks as they are generated, and a final `done` event. Rejects with
+// `stream_unavailable` before any event arrives so callers can fall back to sendChat().
+export const streamChat = async (message, persona = null, sessionId = null, context = '', lang = 'en', { signal = null, onEvent = null } = {}) => {
+  const token = localStorage.getItem('access_token')
+  const res = await fetch(`${API_BASE}/chat/stream`, {
+    method: 'POST',
+    signal,
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'text/event-stream',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      'X-Demo-Session-Id': getDemoSessionId(),
+    },
+    body: JSON.stringify({ message, persona, session_id: sessionId, context, language: lang }),
+  })
+  const type = res.headers.get('content-type') || ''
+  if (!res.ok || !res.body || !type.includes('text/event-stream')) {
+    const e = new Error('stream_unavailable'); e.status = res.status; throw e
+  }
+  const reader = res.body.getReader()
+  const decoder = new TextDecoder()
+  let buf = ''
+  let sawEvent = false
+  let finished = false
+  while (true) {
+    const { value, done } = await reader.read()
+    if (done) break
+    buf += decoder.decode(value, { stream: true })
+    let idx
+    while ((idx = buf.indexOf('\n\n')) !== -1) {
+      const frame = buf.slice(0, idx)
+      buf = buf.slice(idx + 2)
+      const line = frame.split('\n').find(l => l.startsWith('data:'))
+      if (!line) continue
+      let ev
+      try { ev = JSON.parse(line.slice(5).trim()) } catch { continue }
+      sawEvent = true
+      if (ev.type === 'done' || ev.type === 'error') finished = true
+      if (onEvent) onEvent(ev)
+    }
+  }
+  if (!sawEvent) { const e = new Error('stream_unavailable'); throw e }
+  if (!finished) { const e = new Error('stream_interrupted'); throw e }
+}
+
 export const listPersonas = () => api.get('/personas')
 
 // ── Glossary (contextual explainer / grounding) ─────────
