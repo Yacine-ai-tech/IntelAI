@@ -52,3 +52,14 @@ past login) returns `403`.
 Groq model instead of erroring. See the `LLM_DEFAULT`/`LLM_REASONING`/`LLM_JUDGE`
 section of `.env.example` for the full multi-provider router config (LiteLLM — any
 provider it supports works, not just Groq/Anthropic).
+
+## Web search, streaming and readiness
+
+- **Web search** for questions about external companies, people and current events needs
+  `TAVILY_API_KEY`. Without it the copilot answers from internal data only. Related settings
+  (`WEB_SEARCH_*`) are described in [`.env.example`](.env.example).
+- **Streaming**: the copilot answers over server-sent events (`POST /api/v1/chat/stream`). A reverse
+  proxy in front of the service must not buffer `text/event-stream` responses. Clients fall back to the
+  polled job API automatically when streaming is unavailable.
+- **Readiness**: `GET /ready` returns 200 once the models are loaded; gate traffic on it. `POST /embed`
+  (internal token) lets other services share this instance's embedding model.

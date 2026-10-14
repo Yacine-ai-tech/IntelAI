@@ -51,7 +51,8 @@ const NAV_SECTIONS = [
   {
     icon: BookOpen, title: 'Knowledge & System', accent: 'var(--warn)',
     items: [
-      { label: 'Knowledge', detail: 'Search the ingested knowledge base directly — the same hybrid retrieval (vector + BM25 + reranker) the copilot uses.' },
+      { label: 'Knowledge', detail: 'Search the ingested knowledge base directly with the same hybrid retrieval (vector + BM25 fused by rank fusion) the copilot uses. The fused ranking appears at once and the cross-encoder refines it afterwards when it is enabled; passages in your question\'s language are preferred and the other language stays eligible.' },
+      { label: 'Copilot web search', detail: 'The copilot searches the web by itself for questions about external companies, people or current events, and always when you ask it to search or verify online. Web sources are listed separately from knowledge-base sources, and the chat shows each step (understanding, knowledge-base search, web search, writing) as it happens.' },
       { label: 'Knowledge Graph', detail: 'Multi-hop entity relationships across domains (GraphRAG-lite) for cross-domain questions.' },
       { label: 'Glossary', detail: 'Authoritative, sourced definitions for every tracked metric — available in EN and FR.' },
       { label: 'Reports', detail: 'Board-ready report generation, drawing on KPIs, insights and the knowledge base.' },
@@ -61,6 +62,7 @@ const NAV_SECTIONS = [
       { label: 'Governance', detail: 'RBAC role table, audit-trail visibility, and platform governance controls (admin role).' },
       { label: 'Admin', detail: 'User management, benchmarking scenarios, vector-store reindex, safe data cleanup (admin role).' },
       { label: 'Settings', detail: 'Personal preferences — language, and per-user configuration.' },
+      { label: 'Architecture', detail: 'Interactive view of the components, the life of a chat turn, retrieval and the design decisions.' },
       { label: 'Research', detail: 'Architectural research background, theoretical grounding, IR formulation, and academic citations.' },
       { label: 'Benchmarks', detail: 'Empirical validation: forecasting backtest (4.64% APE), GraphRAG entity coverage (100%), and RBAC boundary tests.' },
     ],
