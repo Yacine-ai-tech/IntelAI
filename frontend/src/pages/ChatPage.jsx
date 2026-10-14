@@ -53,7 +53,8 @@ const PROMPTS_FR = {
 // Inline markdown → React nodes: **bold**, __bold__, *italic*, _italic_, `code`, [text](url).
 function renderInline(text, keyBase = 'i') {
   if (text == null) return null
-  const s = String(text)
+  // Some models emit 【8†L1-L4】 style citations; show them as plain [8].
+  const s = String(text).replace(/【(\d+)[^】]*】/g, '[$1]')
   const re = /(\*\*([^*]+)\*\*|__([^_]+)__|`([^`]+)`|\*([^*\s][^*]*?)\*|(?<![A-Za-z0-9])_([^_\s][^_]*?)_(?![A-Za-z0-9])|\[([^\]]+)\]\((https?:[^)]+)\))/g
   const nodes = []
   let last = 0, m, k = 0
