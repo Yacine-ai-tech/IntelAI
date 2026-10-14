@@ -19,7 +19,7 @@ from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, Web
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from src.core.logger import get_logger
 from src.core.jwt_auth import (
@@ -955,6 +955,32 @@ async def get_me(user: TokenData = Depends(get_current_user)):
 # ════════════════════════════════════════════════════════════
 # CHAT & PERSONAS
 # ════════════════════════════════════════════════════════════
+
+class EmbedRequest(BaseModel):
+    texts: List[str] = Field(..., min_length=1, max_length=256)
+    model: Optional[str] = None
+
+
+_embed_slots = asyncio.Semaphore(2)
+
+
+@app.post("/embed")
+async def embed_texts(req: EmbedRequest) -> Dict[str, Any]:
+    """Embedding service for the other services in the ecosystem (internal token required).
+
+    Lets RAGeval and StreamPulse share this process's already-loaded embedding model
+    instead of each loading its own copy. Contract: ``{"texts": [...]}`` in,
+    ``{"embeddings": [[...], ...]}`` out. Concurrency is bounded so embedding work cannot
+    starve chat retrieval.
+    """
+    from src.services.vector_store import _embed
+
+    texts = [t[:8000] for t in req.texts]
+    async with _embed_slots:
+        vecs = await asyncio.to_thread(_embed, texts)
+    arr = vecs.tolist() if hasattr(vecs, "tolist") else [list(map(float, v)) for v in vecs]
+    return {"embeddings": arr, "model": settings.EMBEDDING_MODEL, "dim": len(arr[0]) if arr else 0}
+
 
 class ChatProviderError(RuntimeError):
     """The model provider failed to produce an answer for a chat turn."""

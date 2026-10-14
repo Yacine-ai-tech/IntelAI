@@ -13,6 +13,7 @@ Handles all persistence:
 from __future__ import annotations
 
 import contextvars
+import re
 import os
 import uuid
 from typing import Any, Dict, List, Optional
@@ -1035,6 +1036,23 @@ def get_kpi_targets(metrics: Optional[List[str]] = None) -> "pd.DataFrame":
 # KNOWLEDGE BASE OPERATIONS
 # ═══════════════════════════════════════════════════════════
 
+_LANG_SUFFIX = re.compile(r"(?:^|[_\-/ .])(fr|en)(?:[_\-./ ]|$)", re.IGNORECASE)
+
+
+def infer_document_language(title: Any, source: Any, given: Any = None) -> str:
+    """Language tag for a knowledge document. An explicit non-default value wins; otherwise
+    the language is read from the file name ("esg_2021_fr.md", "handbook_2026_fr.pdf",
+    "glossary/fr/...") and falls back to English."""
+    given_s = str(given or "").strip().lower()
+    if given_s and given_s != "en":
+        return given_s
+    for text in (title, source):
+        m = _LANG_SUFFIX.search(str(text or ""))
+        if m:
+            return m.group(1).lower()
+    return "en"
+
+
 def store_knowledge_docs(
     docs_df: "pd.DataFrame",
     replace_prefix: Optional[str] = None,
@@ -1063,7 +1081,7 @@ def store_knowledge_docs(
             _clean(row.get("content", "")),
             _clean(row.get("source", "manual")),
             _clean(row.get("embedding", "")),
-            _clean(row.get("language", "en")),
+            infer_document_language(row.get("title", ""), row.get("source", ""), row.get("language")),
             owner_user_id,
         )
         for _, row in docs_df.iterrows()
