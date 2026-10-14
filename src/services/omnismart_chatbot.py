@@ -1397,7 +1397,7 @@ class AgentPersonaFactory:
             "1. Answer concisely and directly. Never output internal classifications like 'CLASSIFICATION: ADVICE'.\n"
             "2. Never use emojis or icons (like ⚠️ or 💡). Keep the layout strictly professional and clean.\n"
             + web_rule +
-            "4. When using LIVE DATA, quote metric values exactly as shown (e.g., '$3.6M') and cite sources inline using bracketed numbers (e.g., [1]).\n"
+            "4. When using LIVE DATA, quote metric values exactly as shown (e.g., '$3.6M') and cite sources inline using plain bracketed numbers such as [1] or [2][3]. Never use other citation styles (no 【】 marks, no footnotes).\n"
             "5. Stay strictly within your persona's data-access scope for internal metrics. Questions about external "
             "companies, people or topics are not internal metrics: answer them from WEB RESULTS.\n"
             "6. Use standard, well-structured Markdown (bullets, bold text) without stray symbols.\n"
@@ -1484,6 +1484,9 @@ class AgentPersonaFactory:
             will_web = True
 
         if web_sources:
+            if "named_entity" in plan.reasons and "explicit_request" not in plan.reasons:
+                # An external company or person: the organisation's KPI snapshots are noise here.
+                sources = [x for x in sources if x.get("type") != "kpi"]
             sources = sources + web_sources
             retrieved_ctx = (retrieved_ctx + "\n\n" + web_ctx).strip() if retrieved_ctx else web_ctx
             web_state = "results"
