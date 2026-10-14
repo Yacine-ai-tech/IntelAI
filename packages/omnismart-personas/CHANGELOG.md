@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.7] - 2026-10-14
+### Updated
+- Package notice and documentation aligned with the current IntelAI release; persona templates
+  and role-scoped access definitions unchanged.
+
 ## [0.1.6] - 2026-10-09
 ### Updated
 - Synchronized persona templates and domain-scoped RBAC definitions with latest IntelAI 2.0 multi-domain engine.
