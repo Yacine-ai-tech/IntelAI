@@ -408,12 +408,28 @@ _BM25_LOCK = threading.Lock()
 _BM25_CACHE: Dict[str, Any] = {"sig": None, "bm": None}
 
 
+def _retrieval_is_decisive(dense: List[Dict[str, Any]], sparse: List[Tuple[str, str]],
+                           fused: Dict[str, float], ranked: List[str]) -> bool:
+    """True when both searches agree on the top document and it clearly leads the fusion."""
+    if os.getenv("RERANK_SKIP_WHEN_DECISIVE", "true").strip().lower() not in ("1", "true", "yes", "on"):
+        return False
+    if len(ranked) < 2 or not dense or not sparse:
+        return False
+    margin = float(os.getenv("RERANK_DECISIVE_MARGIN", "0.25"))
+    top, second = fused[ranked[0]], fused[ranked[1]]
+    if top <= 0 or (top - second) / top < margin:
+        return False
+    top_dense = f"{dense[0]['title']}{(dense[0]['content'] or '')[:80]}"
+    top_sparse = f"{sparse[0][0]}{(sparse[0][1] or '')[:80]}"
+    return top_dense == top_sparse == ranked[0]
+
+
 def _pool_sizes(top_k: int) -> Tuple[int, int, int]:
     """Dense top-N, sparse top-N and rerank pool, from env with the documented
     strategy defaults (dense 50 + BM25 50 -> RRF top-30 -> cross-encoder)."""
     dense_k = max(top_k, int(os.getenv("RETRIEVAL_DENSE_K", "50")))
     sparse_k = max(top_k, int(os.getenv("RETRIEVAL_SPARSE_K", "50")))
-    pool = max(int(os.getenv("RERANK_CANDIDATES", "30")), top_k * 3)
+    pool = max(int(os.getenv("RERANK_CANDIDATES", "12")), top_k * 3)
     return dense_k, sparse_k, pool
 
 
@@ -543,6 +559,17 @@ def vector_store_retrieve(
     if not ranked:
         return RankedHits()
     cands = [meta[k] for k in ranked]
+
+    # Cross-encoder reranking is the slowest stage on CPU. When the dense and the lexical
+    # searches independently put the same document first, and it leads the fused ranking
+    # by a clear margin, the fused order is already decisive and reranking is skipped.
+    if _retrieval_is_decisive(dense, sparse, fused, ranked):
+        top = ranked[:top_k]
+        mx = max((fused[k] for k in top), default=1.0) or 1.0
+        hits = RankedHits((meta[k][0], meta[k][1], fused[k] / mx) for k in top)
+        if ctx:
+            ctx.report("done", done=len(cands), total=len(cands))
+        return hits
 
     top = ranked[:top_k]
     mx = max((fused[k] for k in top), default=1.0) or 1.0

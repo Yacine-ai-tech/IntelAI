@@ -25,7 +25,7 @@ forecasting, and board-ready exports, over 146 curated KPIs.
 |---|---|
 | Nine-persona RAG copilot | CEO, CFO, CTO, COO, CHRO, ESG, Risk, Analyst, Assistant — role-scoped data, WebSocket streaming, source citations |
 | GraphRAG-lite | A multi-hop entity graph for cross-domain queries (`USE_GRAPH_RAG=true`) |
-| Hybrid retrieval | Local BGE-M3 dense embeddings + BM25 fused with Reciprocal Rank Fusion, followed by the local BGE reranker |
+| Hybrid retrieval | Local BGE-M3 dense embeddings + BM25 fused with Reciprocal Rank Fusion, with an optional local BGE cross-encoder reranker (`USE_RERANKER=true`) |
 | Answer-block structuring | The backend parses LLM markdown into typed blocks (heading, KPI, list, quote, code) |
 | 146 curated KPIs | Finance, HR, IT, Operations, Logistics, ESG, Growth — 78-month history, 7 benchmarking scenarios |
 | ML forecasting | Monte Carlo forecasting with confidence bands |
@@ -45,7 +45,7 @@ FastAPI  (src/api/server.py)
         │
    PostgreSQL (Neon)             LLM (OpenAI-compatible via LiteLLM)
    KPIs · auth · sessions ·      GraphRAG-lite · hybrid retrieval ·
-   vectors (pgvector/Qdrant)    BGE-M3 · BM25/RRF · BGE reranker
+   vectors (pgvector/Qdrant)    BGE-M3 · BM25/RRF · BGE reranker (optional)
 ```
 
 ## Quick Start
@@ -85,8 +85,9 @@ container before enabling both local models.
 ### Retrieval pipeline and latency
 
 Retrieval follows the standard hybrid design: dense top-50 and BM25 top-50 are merged
-with Reciprocal Rank Fusion, the top 30 fused candidates are rescored by the
-`BAAI/bge-reranker-v2-m3` cross-encoder, and the best five go to the model. The pool
+with Reciprocal Rank Fusion; with `USE_RERANKER=true` the top fused candidates (12 by
+default) are rescored by the `BAAI/bge-reranker-v2-m3` cross-encoder, and the best five go
+to the model. The pool
 sizes are configuration (`RETRIEVAL_DENSE_K`, `RETRIEVAL_SPARSE_K`, `RERANK_CANDIDATES`).
 
 A cross-encoder cannot be precomputed: it reads the query together with each candidate,
@@ -143,7 +144,7 @@ adjusted:
 | `USE_GRAPH_RAG` | No | `true` enables GraphRAG-lite multi-hop retrieval |
 | `USE_HYBRID_RETRIEVAL` | No | `true` enables local BGE-M3 dense + BM25/RRF retrieval |
 | `EMBEDDING_PROVIDER` / `EMBEDDING_MODEL` | No | Use `local` and `BAAI/bge-m3` for CPU-local embeddings |
-| `USE_RERANKER` / `RERANK_PROVIDER` | No | Use `true` and `local` for `BAAI/bge-reranker-v2-m3` |
+| `USE_RERANKER` / `RERANK_PROVIDER` | No | Use `true` and `local` for the `BAAI/bge-reranker-v2-m3` cross-encoder. On CPU it adds seconds per query; in this project's retrieval evaluation, fusion alone matched reranked quality (hit@5 90.9% vs 88.6%), so the reference deployment runs with `USE_RERANKER=false` (about 0.3 s per query). When enabled, reranking is skipped automatically if dense and lexical search agree on a clear leader (`RERANK_SKIP_WHEN_DECISIVE`, `RERANK_DECISIVE_MARGIN`), and `RERANK_CANDIDATES` (default 12) bounds its cost. |
 | `RERANK_BACKEND` | No | `torch` (default) or `onnx-int8` for local CPU reranking |
 | `RERANK_MAX_LENGTH` | No | Maximum query/document pair token length (default `256`) |
 | `EMBED_BATCH_SIZE` / `RERANK_BATCH_SIZE` | No | Embedding batch size / reranker candidates per inference batch (defaults `16` / `8`; the reranker batch is also the progress and cancellation granularity) |
