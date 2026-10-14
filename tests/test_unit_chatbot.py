@@ -26,7 +26,7 @@ def test_qdrant_empty_results_do_not_fall_back_to_local_index(monkeypatch):
         chatbot, "settings", SimpleNamespace(VECTOR_STORE="qdrant", GROQ_API_KEY="")
     )
     monkeypatch.setattr(chatbot, "_run_with_timeout", lambda fn, timeout, *a: fn(*a))
-    monkeypatch.setattr(vector_store, "vector_store_retrieve", lambda *a: calls.append("qdrant") or [])
+    monkeypatch.setattr(vector_store, "vector_store_retrieve", lambda *a, **k: calls.append("qdrant") or [])
     monkeypatch.setattr(hybrid_retrieval, "hybrid_enabled", lambda: True)
     monkeypatch.setattr(
         hybrid_retrieval, "hybrid_doc_retrieve",
@@ -55,7 +55,7 @@ def test_qdrant_failure_is_not_hidden_by_local_index(monkeypatch):
     monkeypatch.setattr(chatbot, "_run_with_timeout", lambda fn, timeout, *a: fn(*a))
     monkeypatch.setattr(
         vector_store, "vector_store_retrieve",
-        lambda *a: (_ for _ in ()).throw(RuntimeError("Qdrant unavailable")),
+        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("Qdrant unavailable")),
     )
 
     with pytest.raises(RuntimeError, match="Qdrant unavailable"):
@@ -96,7 +96,7 @@ def test_retrieval_returns_persistent_results_before_local_fallback(monkeypatch)
         chatbot, "settings", SimpleNamespace(VECTOR_STORE="qdrant", GROQ_API_KEY="")
     )
     monkeypatch.setattr(chatbot, "_run_with_timeout", lambda fn, timeout, *a: fn(*a))
-    monkeypatch.setattr(vector_store, "vector_store_retrieve", lambda *a: persistent)
+    monkeypatch.setattr(vector_store, "vector_store_retrieve", lambda *a, **k: persistent)
 
     result = chatbot.UltraFastRAG()._retrieve_documents("query")
 

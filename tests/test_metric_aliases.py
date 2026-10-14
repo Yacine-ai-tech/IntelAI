@@ -19,3 +19,10 @@ def test_unrelated_query_is_unchanged():
 def test_whole_phrase_only():
     assert expand_query("customers by region") .endswith("(Customer Count)")
     assert expand_query("the customerservice desk") == "the customerservice desk"
+
+
+def test_french_wording_gains_the_english_metric_names():
+    out = expand_query("Quelle est la marge brute en 2024-03 ?")
+    assert "Gross Margin" in out
+    assert "Revenue" in expand_query("Donnez le chiffre d'affaires de 2023")
+    assert "Churn Rate" in expand_query("Quel est le taux de désabonnement ?")

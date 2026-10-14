@@ -429,8 +429,13 @@ class UltraFastRAG:
         query: str,
         top_k: int = 5,
         language: Optional[str] = None,
+        refine: bool = False,
     ) -> List[Tuple[str, str, float]]:
-        """Retrieve most relevant documents using semantic similarity."""
+        """Retrieve most relevant documents using semantic similarity.
+
+        With ``refine`` the cross-encoder rescoring runs (when USE_RERANKER is on); without
+        it the fused dense + BM25 ranking is returned straight away. Chat uses the fast
+        path unless RERANK_IN_CHAT is set."""
         try:
             from src.services.metric_aliases import expand_query
             query = expand_query(query)
@@ -438,11 +443,8 @@ class UltraFastRAG:
             if docs.empty:
                 return []
 
-            # Filter by language if specified
-            if language and "language" in docs.columns:
-                lang_docs = docs[docs["language"] == language]
-                if not lang_docs.empty:
-                    docs = lang_docs
+            # The embedding model is multilingual, so documents in either language stay
+            # eligible; the query language is only a preference (applied in the ranker).
 
             # A configured persistent store is authoritative. In particular, Qdrant
             # failures must not trigger a second in-process dense index.
@@ -456,7 +458,9 @@ class UltraFastRAG:
                 def _bound_retrieve():
                     token = _rp.bind(ctx)
                     try:
-                        return vector_store_retrieve(query, top_k, language)
+                        use_rerank = refine or os.getenv("RERANK_IN_CHAT", "false").strip().lower() in (
+                            "1", "true", "yes", "on")
+                        return vector_store_retrieve(query, top_k, language, rerank_results=use_rerank)
                     finally:
                         _rp.unbind(token)
 
@@ -1219,25 +1223,10 @@ class AgentPersonaFactory:
 
     @staticmethod
     def _detect_language(text: str) -> str:
-        """Best-effort FR/EN detection for a single message so the reply mirrors the
-        language the user actually wrote in — even when they switch mid-conversation."""
-        t = (text or "").lower().strip()
-        if not t:
-            return "en"
-        # Accented characters are a strong French signal.
-        if any(c in t for c in "àâçéèêëîïôûùüœ"):
-            return "fr"
-        pad = f" {t} "
-        fr_markers = (" le ", " la ", " les ", " des ", " une ", " un ", " est ", " sont ",
-                      " quel ", " quelle ", " pourquoi ", " comment ", " combien ", " nos ",
-                      " notre ", " pour ", " avec ", " sur ", " dans ", "bonjour", "merci",
-                      " ce ", " cette ", " qui ", " que ", "résum", "prévis", "donne", " plan ")
-        en_markers = (" the ", " is ", " are ", " what ", " why ", " how ", " our ", " show ",
-                      " give ", " which ", " and ", " for ", " with ", "hello", " hi ", "please",
-                      "summar", "forecast", "revenue", " should ", " can ")
-        fr = sum(1 for m in fr_markers if m in pad)
-        en = sum(1 for m in en_markers if m in pad)
-        return "fr" if fr > en else "en"
+        """FR/EN detection for a single message so the reply mirrors the language the user
+        actually wrote in — even when they switch mid-conversation."""
+        from src.services.language import detect_language
+        return detect_language(text)
 
     @staticmethod
     def _is_smalltalk(text: str) -> bool:

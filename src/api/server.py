@@ -2805,23 +2805,10 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
     try:
         from src.services.omnismart_chatbot import _get_shared_rag
         rag = _get_shared_rag()
-        # Auto-detect language from the query rather than always passing 'en'.
-        # French queries like "financement du departement it pour achat d'ordinateur et de serveur"
-        # need French tokenisation to match French documents.
-        detected_lang: str | None = None
-        try:
-            _fr_markers = ['du', 'de', 'le', 'la', 'les', 'un', 'une', 'des', 'et', 'en', 'pour',
-                           'avec', 'sur', 'dans', 'qui', 'que', 'au', 'aux', 'par', 'est', 'sont',
-                           'du', "l'", "d'", "c'", "j'", "qu'"]
-            q_lower = q.lower()
-            fr_hits = sum(1 for m in _fr_markers if f' {m} ' in f' {q_lower} ')
-            if fr_hits >= 2:
-                detected_lang = 'fr'
-            else:
-                # Fall back to user's profile language
-                detected_lang = getattr(user, 'language', None) or 'en'
-        except Exception:
-            detected_lang = 'en'
+        # Detect the query language; it only sets a preference, documents in both
+        # languages remain searchable (the models are multilingual).
+        from src.services.language import detect_language
+        detected_lang = detect_language(q, default=getattr(user, "language", None) or "en")
 
         hits = await asyncio.to_thread(
             rag._retrieve_documents, q, top_k=n, language=detected_lang
@@ -2841,13 +2828,8 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
 
 
 def _detect_search_language(q: str, user: TokenData) -> str:
-    fr_markers = ['du', 'de', 'le', 'la', 'les', 'un', 'une', 'des', 'et', 'en', 'pour',
-                  'avec', 'sur', 'dans', 'qui', 'que', 'au', 'aux', 'par', 'est', 'sont',
-                  "l'", "d'", "c'", "j'", "qu'"]
-    q_lower = f' {q.lower()} '
-    if sum(1 for m in fr_markers if f' {m} ' in q_lower) >= 2:
-        return 'fr'
-    return getattr(user, 'language', None) or 'en'
+    from src.services.language import detect_language
+    return detect_language(q, default=getattr(user, "language", None) or "en")
 
 
 _SEARCH_JOBS: Dict[str, Dict[str, Any]] = {}
@@ -2885,9 +2867,9 @@ async def knowledge_search_async(q: str, n: int = 5, user: TokenData = Depends(g
         token = _rp.set_progress_key(job_id)
         try:
             rag = _get_shared_rag()
-            hits = await asyncio.to_thread(rag._retrieve_documents, q, top_k=n, language=lang)
+            hits = await asyncio.to_thread(rag._retrieve_documents, q, top_k=n, language=lang, refine=True)
             if not hits:
-                hits = await asyncio.to_thread(rag._retrieve_documents, q, top_k=n)
+                hits = await asyncio.to_thread(rag._retrieve_documents, q, top_k=n, refine=True)
             job["result"] = {
                 "results": [{"title": t, "content": (c or "")[:600], "score": round(s, 4)}
                             for t, c, s in hits],
