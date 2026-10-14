@@ -156,3 +156,11 @@ If you discover a potential security vulnerability, please **do NOT open a publi
 - **Response SLA**: Initial triage within 48 business hours.
 
 Thank you for helping keep IntelAI safe and reliable for the community!
+
+## Other ways to help
+
+Code is not the only contribution. Trying IntelAI on your own data and reporting what worked or did
+not, answering a question in [Discussions](https://github.com/Yacine-ai-tech/IntelAI/discussions) or
+improving a paragraph of the documentation all help. If the project is useful to you, a star or a
+follow on [@Yacine-ai-tech](https://github.com/Yacine-ai-tech) is welcome, and optional; sharing
+the link with someone who has the same problem is just as good.
