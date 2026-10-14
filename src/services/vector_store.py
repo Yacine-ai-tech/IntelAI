@@ -456,7 +456,7 @@ def _bm25_index(titles: List[str], contents: List[str]):
 
 
 def vector_store_retrieve(
-    query: str, top_k: int = 5, language: Optional[str] = None
+    query: str, top_k: int = 5, language: Optional[str] = None, rerank_results: bool = True
 ) -> Optional[List[Tuple[str, str, float]]]:
     """Return ``[(title, content, score)]`` from the persistent store fused with BM25,
     or ``None`` when no persistent store is configured. Configured backend failures raise.
@@ -492,10 +492,15 @@ def vector_store_retrieve(
     # checking each one against this scoped corpus, not by trusting the store's answer.
     # Over-fetch since some raw hits get dropped by the filter below.
     docs = get_knowledge_docs()
+    # Documents of every language stay eligible (the models are multilingual); documents in
+    # the query's language get a modest boost after fusion.
+    lang_of: Dict[str, str] = {}
     if language and not docs.empty and "language" in docs.columns:
-        ld = docs[docs["language"] == language]
-        if not ld.empty:
-            docs = ld
+        lang_of = {
+            _key(t, c): str(lg or "en")
+            for t, c, lg in zip(docs["title"].tolist(), docs["content"].fillna("").tolist(),
+                                docs["language"].tolist())
+        }
 
     allowed = {
         _key(t, c) for t, c in zip(docs["title"].tolist(), docs["content"].fillna("").tolist())
@@ -555,6 +560,12 @@ def vector_store_retrieve(
         if k not in meta or len(c or "") > len(meta[k][1] or ""):
             meta[k] = (t, c)
 
+    if lang_of:
+        boost = float(os.getenv("RETRIEVAL_LANGUAGE_BOOST", "1.25"))
+        for k in fused:
+            if lang_of.get(k) == language:
+                fused[k] *= boost
+
     ranked = sorted(fused, key=lambda k: fused[k], reverse=True)[:cand]
     if not ranked:
         return RankedHits()
@@ -578,6 +589,11 @@ def vector_store_retrieve(
         ctx.preliminary = fusion_rows
         ctx.report("fused", done=0, total=len(cands), candidates=len(cands),
                    preliminary=snippet_rows(fusion_rows))
+
+    if not rerank_results:
+        # Fast path (chat and synchronous search): the fused ranking is final. The
+        # cross-encoder refinement is applied by the progressive search job instead.
+        return RankedHits(fusion_rows)
 
     try:
         rr = rerank(query, [c for _, c in cands])

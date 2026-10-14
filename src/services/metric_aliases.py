@@ -10,6 +10,7 @@ unaffected.
 from __future__ import annotations
 
 import re
+import unicodedata
 from typing import Dict, List
 
 # normalised reporting name -> glossary terms that define it
@@ -57,8 +58,56 @@ _NORM = re.compile(r"[^a-z0-9]+")
 
 
 def _norm(text: str) -> str:
-    return _NORM.sub(" ", (text or "").lower()).strip()
+    """Lower-case, accent-free, punctuation-free form used to match phrases."""
+    plain = unicodedata.normalize("NFKD", (text or "").lower())
+    plain = "".join(c for c in plain if not unicodedata.combining(c))
+    return _NORM.sub(" ", plain).strip()
 
+
+# French wording for the same measures. Reporting names and digests use English metric names,
+# so a French question gains the English term (and the glossary term) alongside its own words.
+FRENCH_ALIASES: Dict[str, List[str]] = {
+    "chiffre d'affaires": ["Revenue"],
+    "chiffre d affaires": ["Revenue"],
+    "revenus": ["Revenue"],
+    "marge brute": ["Gross Margin", "Gross Profit"],
+    "marge nette": ["Net Profit Margin", "Net Profit"],
+    "benefice net": ["Net Profit", "Net Income"],
+    "resultat net": ["Net Income", "Net Profit"],
+    "tresorerie": ["Cash Balance", "Cash Runway"],
+    "flux de tresorerie": ["Operating Cash Flow", "Free Cash Flow"],
+    "charges d'exploitation": ["Operating Expenses", "Operating Costs"],
+    "depenses d'exploitation": ["Operating Expenses", "Operating Costs"],
+    "taux de desabonnement": ["Churn Rate", "Monthly Churn Rate"],
+    "taux d'attrition": ["Churn Rate", "Annual Employee Turnover"],
+    "taux de rotation": ["Turnover Rate", "Annual Employee Turnover"],
+    "effectif": ["Headcount"],
+    "effectifs": ["Headcount"],
+    "cout d'acquisition": ["CAC"],
+    "valeur vie client": ["LTV"],
+    "taux d'engagement": ["Engagement Score"],
+    "disponibilite": ["Availability", "System Uptime"],
+    "temps d'arret": ["Downtime Hours", "Unplanned Downtime"],
+    "incidents de securite": ["Security Incidents"],
+    "delai moyen d'approvisionnement": ["Average Lead Time", "Avg Lead Time"],
+    "rotation des stocks": ["Inventory Turnover"],
+    "taux de service": ["Fill Rate"],
+    "emissions de carbone": ["Total Carbon Footprint", "Carbon Emissions (tCO2)"],
+    "intensite carbone": ["Carbon Intensity per Revenue", "Emissions Intensity"],
+    "energie renouvelable": ["Renewable Energy Ratio", "Renewable Energy %"],
+    "diversite du conseil": ["Board Diversity Ratio", "Board Diversity %"],
+    "conformite des audits": ["Audit Compliance Score"],
+    "score de conformite": ["Audit Compliance Score"],
+    "latence api": ["API P99 Latency"],
+    "heures de formation": ["Training Hours per Employee", "Training Hours"],
+    "taux d'absenteisme": ["Absenteeism Rate"],
+    "cout par embauche": ["Cost per Hire"],
+    "dette": ["Total Debt"],
+    "fonds propres": ["Shareholders Equity"],
+}
+for _fr_key, _terms in FRENCH_ALIASES.items():
+    METRIC_ALIASES.setdefault(_fr_key, _terms)
+METRIC_ALIASES = {_norm(k): v for k, v in METRIC_ALIASES.items()}
 
 _PATTERNS = sorted(
     ((re.compile(rf"(?<![a-z0-9]){re.escape(k)}(?![a-z0-9])"), terms) for k, terms in METRIC_ALIASES.items()),
