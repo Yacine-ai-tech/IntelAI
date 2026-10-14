@@ -983,25 +983,61 @@ def normalize_sources(raw: List[Any], cap: int = 8) -> List[Dict[str, Any]]:
 # REAL-TIME WEB SEARCH (Tavily) — augments RAG with trustworthy, citable web sources
 # ════════════════════════════════════════════════════════════════════════════
 
+_WEB_CACHE: "OrderedDict[str, tuple]" = None  # type: ignore[assignment]
+_WEB_CACHE_LOCK = threading.Lock()
+
+
+def _web_cache_get(key: str):
+    ttl = float(os.getenv("WEB_SEARCH_CACHE_TTL_SECONDS", "600"))
+    if ttl <= 0 or _WEB_CACHE is None:
+        return None
+    with _WEB_CACHE_LOCK:
+        hit = _WEB_CACHE.get(key)
+        if hit and time.time() - hit[0] < ttl:
+            _WEB_CACHE.move_to_end(key)
+            return hit[1]
+    return None
+
+
+def _web_cache_put(key: str, value) -> None:
+    global _WEB_CACHE
+    if float(os.getenv("WEB_SEARCH_CACHE_TTL_SECONDS", "600")) <= 0:
+        return
+    with _WEB_CACHE_LOCK:
+        if _WEB_CACHE is None:
+            from collections import OrderedDict
+            _WEB_CACHE = OrderedDict()
+        _WEB_CACHE[key] = (time.time(), value)
+        while len(_WEB_CACHE) > int(os.getenv("WEB_SEARCH_CACHE_SIZE", "128")):
+            _WEB_CACHE.popitem(last=False)
+
+
 def tavily_search(query: str, max_results: int = 4) -> List[Dict[str, Any]]:
     """Real-time web search via Tavily. Returns trustworthy results with URLs so the
     copilot can cite the live web. Stdlib-only (urllib); returns [] when no key is set
-    or on any error, so the chat path degrades gracefully to internal RAG."""
-    key = getattr(settings, "TAVILY_API_KEY", "")
+    or on any error, so the chat path degrades gracefully to internal RAG. Identical
+    queries are served from a short-lived cache (WEB_SEARCH_CACHE_TTL_SECONDS)."""
+    key = getattr(settings, "TAVILY_API_KEY", "") or os.getenv("TAVILY_API_KEY", "")
     if not key or not query or not query.strip():
         return []
+    q = query.strip()[:400]
+    n = max(1, min(int(max_results or 4), 8))
+    ck = f"{n}|{q.lower()}"
+    cached = _web_cache_get(ck)
+    if cached is not None:
+        return cached
     import urllib.request as _u
     payload = json.dumps({
         "api_key": key,
-        "query": query.strip()[:400],
-        "max_results": max(1, min(int(max_results or 4), 8)),
-        "search_depth": "basic",
+        "query": q,
+        "max_results": n,
+        "search_depth": os.getenv("WEB_SEARCH_DEPTH", "basic"),
         "include_answer": False,
     }).encode()
     try:
         req = _u.Request("https://api.tavily.com/search", data=payload,
                          headers={"Content-Type": "application/json"}, method="POST")
-        with _u.urlopen(req, timeout=9) as r:
+        with _u.urlopen(req, timeout=float(os.getenv("WEB_SEARCH_TIMEOUT_SECONDS", "6"))) as r:
             data = json.loads(r.read())
         out: List[Dict[str, Any]] = []
         for it in (data.get("results") or []):
@@ -1014,6 +1050,7 @@ def tavily_search(query: str, max_results: int = 4) -> List[Dict[str, Any]]:
                 "content": (it.get("content") or "").strip()[:600],
                 "score": float(it.get("score", 0) or 0),
             })
+        _web_cache_put(ck, out)
         return out
     except Exception as e:  # network/key/quota — never break the chat
         log.warning("Tavily web search failed: %s", e)
@@ -1247,58 +1284,131 @@ class AgentPersonaFactory:
             return True
         return False
 
-    @staticmethod
-    def _needs_web(text: str) -> bool:
-        """True when a question calls for external / real-time / benchmark information that the
-        internal KPI snapshot + knowledge base cannot answer on their own. Evaluates fast keyword
-        triggers first to avoid an expensive 1.5-3s LLM roundtrip on routine internal/KPI questions."""
-        t = (text or "").lower()
-        if not t.strip():
-            return False
+    # ── turn preparation (shared by chat() and the streaming handlers) ─────────
 
-        triggers = (
-            "benchmark", "industry", "market", "competitor", "competition", "peer", " vs ",
-            "versus", "news", "latest", "regulation", "gdpr", "csrd", "sec filing", "best practice",
-            "macro", "inflation", "interest rate", "industry standard", "industry average",
-            "external", "compare to other", "how do other", "current events", "what's happening",
-            "actualité", "marché", "concurrent", "réglementation", "secteur", "meilleures pratiques",
-            "tendance du marché", "moyenne du secteur", "web search", "search the web", "online",
-            "live search", "tavily", "internet"
-        )
-        
-        # Fast exit: if no external keywords are mentioned, skip the LLM judge completely
-        if not any(x in t for x in triggers):
-            return False
-
-        # If external triggers match, use LLM judge to verify if true web search is required
-        prompt = (
-            "You are a routing agent for a corporate AI copilot. The user asked: {query}\n"
-            "Does the query ask for external market data, news, competitor intel, or current events? "
-            "Reply with exactly one word: YES or NO."
-        ).format(query=t)
-        
-        try:
-            from src.services.llm_router import _resolve
-            reply, _, _ = llm_complete(
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=10,
-                temperature=0.0,
-                model=_resolve("judge")
+    def _system_prompt(self, persona, web_state: str) -> str:
+        data_cutoff = os.getenv("DATA_CUTOFF_LABEL", "June 2026")
+        if web_state == "results":
+            web_rule = (
+                "3. WEB RESULTS from a live web search are included below. Use them for anything about external "
+                "companies, people, markets, news or definitions, cite them by [n], and combine them with the "
+                "internal data when both are relevant. Never say you cannot access the internet.\n"
             )
-            if "yes" in reply.lower():
-                return True
-            if "no" in reply.lower():
-                return False
-        except Exception as e:
-            import logging
-            logging.getLogger(__name__).warning("LLM Judge failed for _needs_web: %s", e)
+        elif web_state == "empty":
+            web_rule = (
+                "3. A live web search was run for this question and returned nothing usable. Say so briefly "
+                "(the search returned no relevant results), then answer from general knowledge and mark it as "
+                "general knowledge, not as verified. Never say you cannot access the internet.\n"
+            )
+        else:
+            web_rule = (
+                "3. You can search the web. A live web search is run automatically when a question concerns "
+                "something outside the organisation's own data, and its results appear as WEB RESULTS. "
+                "None were needed for this question. Never say you cannot access the internet.\n"
+            )
+        return (
+            persona.system_prompt + "\n\n"
+            "INSTRUCTIONS:\n"
+            "1. Answer concisely and directly. Never output internal classifications like 'CLASSIFICATION: ADVICE'.\n"
+            "2. Never use emojis or icons (like ⚠️ or 💡). Keep the layout strictly professional and clean.\n"
+            + web_rule +
+            "4. When using LIVE DATA, quote metric values exactly as shown (e.g., '$3.6M') and cite sources inline using bracketed numbers (e.g., [1]).\n"
+            "5. Stay strictly within your persona's data-access scope for internal metrics. Questions about external "
+            "companies, people or topics are not internal metrics: answer them from WEB RESULTS.\n"
+            "6. Use standard, well-structured Markdown (bullets, bold text) without stray symbols.\n"
+            f"7. DATA RECENCY: The knowledge base reflects the full operating history through {data_cutoff} (the most recently completed reporting period). "
+            "Respond in present tense based on this data. When the recency is directly relevant to the answer, frame it warmly — for example: "
+            f"'Based on our latest reporting through {data_cutoff}, ...' or 'As of {data_cutoff}, our most recent data shows...'. "
+            "Do not frame the data horizon as a limitation; it represents the complete, verified dataset for the period.\n\n"
+            "LANGUAGE (critical): Always detect the language of the user's question and write your ENTIRE reply in that exact same language."
+        )
 
-        return True
+    def _gather(self, message: str, persona, language: str, history, emit):
+        """Run internal retrieval and (when warranted) web search at the same time.
 
-    def _web_context(self, query: str, max_results: int, start_id: int):
-        """Fetch real-time web results and format them as citable context blocks.
-        Returns (block_text, web_sources) with ids continuing after the internal sources."""
-        results = tavily_search(query, max_results)
+        The web decision is rule based (``web_intent.plan_web``), so it costs nothing and the
+        search starts together with retrieval. Explicit requests wait for the web results;
+        automatic ones wait only up to ``WEB_SEARCH_BUDGET_SECONDS`` beyond retrieval.
+        Returns (context_text, sources, web_state, plan).
+        """
+        from concurrent.futures import ThreadPoolExecutor, TimeoutError as _FTimeout
+        from src.services.web_intent import plan_web
+
+        t0 = time.time()
+        plan = plan_web(message, history)
+        web_available = bool(getattr(settings, "TAVILY_API_KEY", "") or os.getenv("TAVILY_API_KEY", ""))
+        will_web = plan.enabled and web_available
+        emit({"type": "stage", "stage": "understanding", "status": "done", "language": language,
+              "web": will_web, "web_mode": plan.mode if will_web else "off",
+              "ms": int((time.time() - t0) * 1000)})
+
+        max_results = int(getattr(settings, "WEB_SEARCH_MAX_RESULTS", 4))
+        budget = float(os.getenv("WEB_SEARCH_BUDGET_SECONDS", "3.0"))
+        retrieved_ctx, sources, web_ctx, web_sources = "", [], "", []
+        web_error = False
+
+        def _internal():
+            emit({"type": "stage", "stage": "retrieving", "status": "running"})
+            t = time.time()
+            ctx, src = self._retrieve_context(message, persona, language)
+            emit({"type": "stage", "stage": "retrieving", "status": "done", "count": len(src),
+                  "ms": int((time.time() - t) * 1000)})
+            if src:
+                emit({"type": "sources", "scope": "internal", "sources": src})
+            return ctx, src
+
+        def _web():
+            emit({"type": "stage", "stage": "web", "status": "running", "query": plan.query[:160]})
+            t = time.time()
+            results = tavily_search(plan.query or message, max_results)
+            return results, int((time.time() - t) * 1000)
+
+        with ThreadPoolExecutor(max_workers=2, thread_name_prefix="chat-gather") as pool:
+            f_int = pool.submit(_internal)
+            f_web = pool.submit(_web) if will_web else None
+            retrieved_ctx, sources = f_int.result()
+            if f_web is not None:
+                wait = None if plan.mode == "explicit" else budget
+                try:
+                    results, ms = f_web.result(timeout=wait)
+                    max_id = max((x.get("id", 0) for x in sources), default=0)
+                    web_ctx, web_sources = self._web_context_from(results, max_id)
+                    emit({"type": "stage", "stage": "web", "status": "done", "count": len(web_sources), "ms": ms})
+                    if web_sources:
+                        emit({"type": "sources", "scope": "web", "sources": web_sources})
+                except _FTimeout:
+                    web_error = True
+                    emit({"type": "stage", "stage": "web", "status": "skipped", "reason": "budget"})
+                except Exception:
+                    web_error = True
+                    emit({"type": "stage", "stage": "web", "status": "error"})
+
+        # Safety net: nothing internal matched and no web search was planned (an entity the
+        # rules did not recognise). One sequential search is cheaper than a useless answer.
+        if (not will_web and web_available and not sources and not self._is_smalltalk(message)
+                and not retrieved_ctx.strip()):
+            emit({"type": "stage", "stage": "web", "status": "running", "query": message[:160], "reason": "no_internal_match"})
+            t = time.time()
+            results = tavily_search(message, max_results)
+            max_id = 0
+            web_ctx, web_sources = self._web_context_from(results, max_id)
+            emit({"type": "stage", "stage": "web", "status": "done", "count": len(web_sources),
+                  "ms": int((time.time() - t) * 1000)})
+            if web_sources:
+                emit({"type": "sources", "scope": "web", "sources": web_sources})
+            will_web = True
+
+        if web_sources:
+            sources = sources + web_sources
+            retrieved_ctx = (retrieved_ctx + "\n\n" + web_ctx).strip() if retrieved_ctx else web_ctx
+            web_state = "results"
+        elif will_web:
+            web_state = "empty"
+        else:
+            web_state = "none"
+        return retrieved_ctx, sources, web_state, plan
+
+    def _web_context_from(self, results, start_id: int):
         if not results:
             return "", []
         parts, sources = [], []
@@ -1309,137 +1419,8 @@ class AgentPersonaFactory:
                 "id": i, "title": r["title"], "type": "web", "url": r["url"],
                 "relevance": rel or None, "snippet": r["content"][:240],
             })
-        header = ("=== WEB RESULTS (real-time; cite by [n]; prefer recent, trustworthy sources) ===")
+        header = "=== WEB RESULTS (real-time; cite by [n]; prefer recent, trustworthy sources) ==="
         return header + "\n" + "\n".join(parts), sources
-
-    def chat(
-        self,
-        message: str,
-        user_role: str,
-        persona_override: Optional[str] = None,
-        language: str = "en",
-        history: Optional[List[Dict[str, str]]] = None,
-        context: str = "",
-    ) -> Dict[str, Any]:
-        """
-        Send a chat message through the resolved persona.
-        
-        Returns dict with: response, persona_used, tokens_used, latency_ms
-        """
-        # Answer in the language of the CURRENT message (users may switch mid-chat).
-        # The detected language drives retrieval + any fallback text; the LLM is also
-        # instructed (system prompt) to mirror the question language in its reply.
-        detected = self._detect_language(message)
-        if detected:
-            language = detected
-        elif not language or language == "auto":
-            language = "en"
-        
-        if not llm_available():
-            return {
-                "response": "AI agent unavailable (missing API key)." if language != "fr" else "Agent IA non disponible (clé API manquante).",
-                "persona_used": "none",
-                "tokens_used": 0,
-                "latency_ms": 0,
-            }
-
-        persona = self.resolve_persona(user_role, persona_override, language)
-        start = time.time()
-
-        # ── Persona-routed RAG: auto-retrieve grounded data + sources ──
-        # Skip retrieval for greetings / small talk so the copilot answers briefly
-        # instead of dumping a KPI analysis at someone who just said "hi".
-        if self._is_smalltalk(message):
-            retrieved_ctx, sources = "", []
-            needs_web = False
-        else:
-            from concurrent.futures import ThreadPoolExecutor
-            with ThreadPoolExecutor(max_workers=2) as executor:
-                rag_future = executor.submit(self._retrieve_context, message, persona, language)
-                judge_future = executor.submit(self._needs_web, message)
-                retrieved_ctx, sources = rag_future.result()
-                needs_web = judge_future.result()
-            
-            # Augment with real-time web search (Tavily) when the question needs external,
-            # current or benchmark data — web results are cited by [n] like any other source.
-            if needs_web:
-                max_id = max((s.get("id", 0) for s in sources), default=0)
-                web_ctx, web_sources = self._web_context(message, settings.WEB_SEARCH_MAX_RESULTS, max_id)
-                if web_ctx:
-                    retrieved_ctx = (retrieved_ctx + "\n\n" + web_ctx).strip() if retrieved_ctx else web_ctx
-                    sources = sources + web_sources
-        full_context = "\n\n".join(c for c in [context, retrieved_ctx] if c).strip()
-
-        # Prompt-cache friendly layout: the system message (persona prompt + fixed
-        # grounding instruction) is IDENTICAL for every request with the same persona,
-        # so it forms a long stable prefix that Groq auto-caches at 50% (and that Anthropic
-        # caches via cache_control). The volatile live data + question go LAST, in the user
-        # turn, so they never invalidate the cached prefix.
-        data_cutoff = os.getenv("DATA_CUTOFF_LABEL", "June 2026")
-        system_prompt = (
-            persona.system_prompt + "\n\n"
-            "INSTRUCTIONS:\n"
-            "1. Answer concisely and directly. Never output internal classifications like 'CLASSIFICATION: ADVICE'.\n"
-            "2. Never use emojis or icons (like ⚠️ or 💡). Keep the layout strictly professional and clean.\n"
-            "3. If the user asks for external data (market, news) not in the knowledge base, use the provided WEB RESULTS if available. If none are available, inform them you don't have access to the web.\n"
-            "4. When using LIVE DATA, quote metric values exactly as shown (e.g., '$3.6M') and cite sources inline using bracketed numbers (e.g., [1]).\n"
-            "5. Stay strictly within your persona's data-access scope. If asked about out-of-scope metrics, briefly point the user to the correct persona.\n"
-            "6. Use standard, well-structured Markdown (bullets, bold text) without stray symbols.\n"
-            f"7. DATA RECENCY: The knowledge base reflects the full operating history through {data_cutoff} (the most recently completed reporting period). "
-            "Respond in present tense based on this data. When the recency is directly relevant to the answer, frame it warmly — for example: "
-            f"'Based on our latest reporting through {data_cutoff}, ...' or 'As of {data_cutoff}, our most recent data shows...'. "
-            "Do not frame the data horizon as a limitation; it represents the complete, verified dataset for the period.\n\n"
-            "LANGUAGE (critical): Always detect the language of the user's question and write your ENTIRE reply in that exact same language."
-        )
-        messages: List[Dict[str, str]] = [{"role": "system", "content": system_prompt}]
-
-        # Conversation history (last 10 messages) — after the cached system prefix.
-        if history:
-            messages.extend(history[-10:])
-
-        # Volatile live data + question last, so the cached prefix stays valid.
-        data_block = (
-            f"=== LIVE DATA (scope: {', '.join(persona.data_access) or 'all'}) ===\n"
-            f"{full_context if full_context else '(no data retrieved)'}"
-        )
-        messages.append({"role": "user", "content": f"{data_block}\n\n=== QUESTION ===\n{message}"})
-
-        try:
-            reply, tokens, resolved_model = llm_complete(
-                messages=messages,
-                max_tokens=2048,
-                temperature=persona.temperature,
-                top_p=0.9,
-                persona_name=persona.name,
-            )
-            latency = int((time.time() - start) * 1000)
-
-            _dogfood_to_rageval(
-                query=message, answer=reply,
-                contexts=[f"{s.get('title', '')}: {s.get('snippet') or s.get('preview') or ''}" for s in sources],
-                persona=persona.name, model=resolved_model,
-                tokens_used=tokens, latency_ms=latency,
-            )
-
-            return {
-                "response": reply,
-                "persona_used": persona.name,
-                "persona_display": persona.display_name,
-                "tokens_used": tokens,
-                "latency_ms": latency,
-                "sources": sources,
-                "query": message,
-            }
-        except Exception as exc:
-            log.error("Persona chat error (%s): %s", persona.name, exc)
-            return {
-                "response": "The answer could not be generated because the model provider did not respond. Please try again.",
-                "error": f"model_provider_error: {type(exc).__name__}",
-                "persona_used": persona.name,
-                "tokens_used": 0,
-                "latency_ms": (time.time() - start) * 1000,
-                "query": message,
-            }
 
     def chat_prepare(
         self,
@@ -1449,14 +1430,11 @@ class AgentPersonaFactory:
         language: str = "en",
         history: Optional[List[Dict[str, str]]] = None,
         context: str = "",
+        emit=None,
     ) -> Dict[str, Any]:
-        """Perform RAG retrieval and prompt construction without calling the LLM.
-
-        Returns a dict with ``messages`` (ready for llm_stream/llm_complete),
-        ``persona_name``, ``persona_display``, ``sources``, and ``temperature``.
-        The WebSocket streaming handler calls this first (fast, in a thread), then
-        streams the LLM response directly on the async event loop.
-        """
+        """Retrieve context (internal + web in parallel) and build the prompt, without
+        calling the model. ``emit`` receives stage / sources events as they happen."""
+        emit = emit or (lambda _ev: None)
         detected = self._detect_language(message)
         if detected:
             language = detected
@@ -1469,39 +1447,14 @@ class AgentPersonaFactory:
         persona = self.resolve_persona(user_role, persona_override, language)
 
         if self._is_smalltalk(message):
-            retrieved_ctx, sources = "", []
+            emit({"type": "stage", "stage": "understanding", "status": "done", "language": language,
+                  "web": False, "web_mode": "off", "ms": 0})
+            retrieved_ctx, sources, web_state = "", [], "none"
         else:
-            from concurrent.futures import ThreadPoolExecutor
-            with ThreadPoolExecutor(max_workers=2) as executor:
-                rag_future = executor.submit(self._retrieve_context, message, persona, language)
-                judge_future = executor.submit(self._needs_web, message)
-                retrieved_ctx, sources = rag_future.result()
-                needs_web = judge_future.result()
-            if needs_web:
-                max_id = max((s.get("id", 0) for s in sources), default=0)
-                web_ctx, web_sources = self._web_context(message, settings.WEB_SEARCH_MAX_RESULTS, max_id)
-                if web_ctx:
-                    retrieved_ctx = (retrieved_ctx + "\n\n" + web_ctx).strip() if retrieved_ctx else web_ctx
-                    sources = sources + web_sources
+            retrieved_ctx, sources, web_state, _plan = self._gather(message, persona, language, history, emit)
 
         full_context = "\n\n".join(c for c in [context, retrieved_ctx] if c).strip()
-        data_cutoff = os.getenv("DATA_CUTOFF_LABEL", "June 2026")
-        system_prompt = (
-            persona.system_prompt + "\n\n"
-            "INSTRUCTIONS:\n"
-            "1. Answer concisely and directly. Never output internal classifications like 'CLASSIFICATION: ADVICE'.\n"
-            "2. Never use emojis or icons (like ⚠️ or 💡). Keep the layout strictly professional and clean.\n"
-            "3. If the user asks for external data (market, news) not in the knowledge base, use the provided WEB RESULTS if available. If none are available, inform them you don't have access to the web.\n"
-            "4. When using LIVE DATA, quote metric values exactly as shown (e.g., '$3.6M') and cite sources inline using bracketed numbers (e.g., [1]).\n"
-            "5. Stay strictly within your persona's data-access scope. If asked about out-of-scope metrics, briefly point the user to the correct persona.\n"
-            "6. Use standard, well-structured Markdown (bullets, bold text) without stray symbols.\n"
-            f"7. DATA RECENCY: The knowledge base reflects the full operating history through {data_cutoff} (the most recently completed reporting period). "
-            "Respond in present tense based on this data. When the recency is directly relevant to the answer, frame it warmly — for example: "
-            f"'Based on our latest reporting through {data_cutoff}, ...' or 'As of {data_cutoff}, our most recent data shows...'. "
-            "Do not frame the data horizon as a limitation; it represents the complete, verified dataset for the period.\n\n"
-            "LANGUAGE (critical): Always detect the language of the user's question and write your ENTIRE reply in that exact same language."
-        )
-        messages: List[Dict[str, str]] = [{"role": "system", "content": system_prompt}]
+        messages: List[Dict[str, str]] = [{"role": "system", "content": self._system_prompt(persona, web_state)}]
         if history:
             messages.extend(history[-10:])
         data_block = (
@@ -1516,7 +1469,73 @@ class AgentPersonaFactory:
             "persona_display": persona.display_name,
             "temperature": getattr(persona, "temperature", 0.3),
             "sources": sources,
+            "web_state": web_state,
+            "language": language,
         }
+
+    def chat(
+        self,
+        message: str,
+        user_role: str,
+        persona_override: Optional[str] = None,
+        language: str = "en",
+        history: Optional[List[Dict[str, str]]] = None,
+        context: str = "",
+        emit=None,
+    ) -> Dict[str, Any]:
+        """Send a chat message through the resolved persona (blocking).
+
+        Returns dict with: response, persona_used, tokens_used, latency_ms
+        """
+        start = time.time()
+        if not llm_available():
+            lang = self._detect_language(message) or language
+            return {
+                "response": "AI agent unavailable (missing API key)." if lang != "fr" else "Agent IA non disponible (clé API manquante).",
+                "persona_used": "none",
+                "tokens_used": 0,
+                "latency_ms": 0,
+            }
+        prepared = self.chat_prepare(message, user_role, persona_override, language, history, context, emit=emit)
+        persona_name = prepared["persona_name"]
+        sources = prepared["sources"]
+        try:
+            (emit or (lambda _e: None))({"type": "stage", "stage": "generating", "status": "running"})
+            reply, tokens, resolved_model = llm_complete(
+                messages=prepared["messages"],
+                max_tokens=2048,
+                temperature=prepared["temperature"],
+                top_p=0.9,
+                persona_name=persona_name,
+            )
+            latency = int((time.time() - start) * 1000)
+
+            _dogfood_to_rageval(
+                query=message, answer=reply,
+                contexts=[f"{s.get('title', '')}: {s.get('snippet') or s.get('preview') or ''}" for s in sources],
+                persona=persona_name, model=resolved_model,
+                tokens_used=tokens, latency_ms=latency,
+            )
+
+            return {
+                "response": reply,
+                "persona_used": persona_name,
+                "persona_display": prepared["persona_display"],
+                "tokens_used": tokens,
+                "latency_ms": latency,
+                "sources": sources,
+                "query": message,
+            }
+        except Exception as exc:
+            log.error("Persona chat error (%s): %s", persona_name, exc)
+            return {
+                "response": "The answer could not be generated because the model provider did not respond. Please try again.",
+                "error": f"model_provider_error: {type(exc).__name__}",
+                "persona_used": persona_name,
+                "tokens_used": 0,
+                "latency_ms": (time.time() - start) * 1000,
+                "query": message,
+            }
 
     def list_personas(self, user_role: Optional[str] = None) -> List[Dict[str, Any]]:
         """List available personas. When ``user_role`` is given, return only the

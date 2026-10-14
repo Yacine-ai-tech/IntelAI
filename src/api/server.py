@@ -1001,7 +1001,7 @@ class ChatProviderError(RuntimeError):
     """The model provider failed to produce an answer for a chat turn."""
 
 
-async def _run_chat_turn(req: "ChatRequest", user: TokenData) -> Dict[str, Any]:
+async def _run_chat_turn(req: "ChatRequest", user: TokenData, emit=None) -> Dict[str, Any]:
     """The actual chat pipeline — retrieval + LLM completion + persistence. Shared by
     the synchronous POST /api/v1/chat and the async POST /api/v1/chat/async + GET
     /api/v1/chat/{job_id} pair, so both paths produce identical results; only how the
@@ -1040,6 +1040,7 @@ async def _run_chat_turn(req: "ChatRequest", user: TokenData) -> Dict[str, Any]:
                 language=req.language or user.language,
                 context=req.context or "",
                 history=history,
+                emit=emit,
             ),
             timeout=_chat_turn_timeout_seconds(),
         )
@@ -1114,13 +1115,128 @@ async def chat_async(req: ChatRequest, background: BackgroundTasks,
         # inherit the binding, and the poll endpoint below reads it back.
         token = _rp.set_progress_key(job_id)
         _rp.board.update(job_id, stage="starting")
+        stages: Dict[str, Dict[str, Any]] = {}
+
+        def _emit(ev: Dict[str, Any]) -> None:
+            if ev.get("type") == "stage":
+                stages[ev["stage"]] = {k: v for k, v in ev.items() if k != "type"}
+                _rp.board.update(job_id, turn_stages=list(stages.values()))
+            elif ev.get("type") == "sources":
+                prev = (_rp.board.get(job_id) or {}).get("turn_sources", [])
+                _rp.board.update(job_id, turn_sources=prev + list(ev.get("sources") or []))
+
         try:
-            return await _run_chat_turn(req, user)
+            return await _run_chat_turn(req, user, emit=_emit)
         finally:
             _rp.reset_progress_key(token)
 
     background.add_task(run_job, job_id, _turn_with_progress)
     return {"job_id": job_id}
+
+
+@app.post("/api/v1/chat/stream")
+async def chat_stream(req: ChatRequest, user: TokenData = Depends(get_current_user)):
+    """Server-sent events for one chat turn: ``stage`` events as the pipeline progresses,
+    ``sources`` as soon as they are known (knowledge base first, then web), ``chunk``
+    events with the answer as it is generated, and a final ``done`` event carrying the
+    persisted result. Clients that cannot read the stream fall back to /chat/async."""
+    import json as _json
+    import time as _time
+    from fastapi.responses import StreamingResponse
+    from src.services.omnismart_chatbot import get_persona_factory, llm_stream
+
+    queue: "asyncio.Queue[Optional[Dict[str, Any]]]" = asyncio.Queue()
+    loop = asyncio.get_running_loop()
+
+    def emit(ev: Dict[str, Any]) -> None:
+        loop.call_soon_threadsafe(queue.put_nowait, ev)
+
+    async def produce() -> None:
+        try:
+            session_id = req.session_id or str(uuid.uuid4())
+            try:
+                from src.services.pg_store import ensure_session_exists
+                await asyncio.to_thread(ensure_session_exists, session_id, user.user_id)
+            except Exception:
+                pass
+            history = await asyncio.to_thread(_load_chat_history, user.user_id, session_id)
+            factory = get_persona_factory()
+            started = _time.time()
+            try:
+                prepared = await asyncio.wait_for(
+                    asyncio.to_thread(
+                        factory.chat_prepare,
+                        message=req.message, user_role=user.role, persona_override=req.persona,
+                        language=req.language or user.language, history=history,
+                        context=req.context or "", emit=emit,
+                    ),
+                    timeout=_chat_turn_timeout_seconds(),
+                )
+            except asyncio.TimeoutError:
+                await queue.put({"type": "error", "error": "The search took too long. Please try again."})
+                return
+            await queue.put({"type": "meta", "persona": prepared.get("persona_name"),
+                             "persona_display": prepared.get("persona_display"),
+                             "session_id": session_id})
+            await queue.put({"type": "stage", "stage": "generating", "status": "running"})
+            text, first_token_ms = "", None
+            gen_started = _time.time()
+            try:
+                async for piece in llm_stream(
+                    messages=prepared["messages"], temperature=prepared.get("temperature", 0.3),
+                    max_tokens=2048, persona_name=prepared.get("persona_name"),
+                ):
+                    if first_token_ms is None:
+                        first_token_ms = int((_time.time() - gen_started) * 1000)
+                    text += piece
+                    await queue.put({"type": "chunk", "text": piece})
+            except Exception as exc:
+                log.error("chat stream generation failed: %s", exc)
+                if not text:
+                    await queue.put({"type": "error", "error": "The model provider did not respond. Please try again."})
+                    return
+            await queue.put({"type": "stage", "stage": "generating", "status": "done",
+                             "ms": int((_time.time() - gen_started) * 1000), "first_token_ms": first_token_ms})
+            sources = prepared.get("sources", [])
+            try:
+                from src.services.pg_store import store_message
+                await asyncio.to_thread(store_message, session_id, "user", req.message)
+                await asyncio.to_thread(store_message, session_id, "assistant", text,
+                                        sources=_json.dumps(sources) if sources else "[]",
+                                        tokens_used=0, latency_ms=int((_time.time() - started) * 1000))
+            except Exception as exc:
+                log.warning("PG message store failed: %s", exc)
+            await queue.put({
+                "type": "done", "response": text, "session_id": session_id,
+                "persona_used": prepared.get("persona_name"), "persona_display": prepared.get("persona_display"),
+                "latency_ms": int((_time.time() - started) * 1000), "sources": sources,
+                "blocks": _structure_answer(text), "web": prepared.get("web_state"),
+            })
+        except Exception as exc:  # never leave the client hanging
+            log.error("chat stream failed: %s", exc)
+            await queue.put({"type": "error", "error": "The request failed. Please try again."})
+        finally:
+            await queue.put(None)
+
+    async def events():
+        task = asyncio.create_task(produce())
+        try:
+            yield ": open\n\n"
+            while True:
+                try:
+                    ev = await asyncio.wait_for(queue.get(), timeout=10)
+                except asyncio.TimeoutError:
+                    yield ": keep-alive\n\n"
+                    continue
+                if ev is None:
+                    break
+                yield f"data: {_json.dumps(ev, ensure_ascii=False)}\n\n"
+        finally:
+            if not task.done():
+                task.cancel()
+
+    return StreamingResponse(events(), media_type="text/event-stream",
+                             headers={"Cache-Control": "no-cache, no-transform", "X-Accel-Buffering": "no"})
 
 
 @app.get("/api/v1/chat/sessions")
@@ -1171,6 +1287,10 @@ async def chat_job_status(job_id: str, user: TokenData = Depends(get_current_use
                                if k in state}
             if state.get("preliminary"):
                 out["preliminary_sources"] = state["preliminary"]
+            if state.get("turn_stages"):
+                out["stages"] = state["turn_stages"]
+            if state.get("turn_sources"):
+                out["turn_sources"] = state["turn_sources"]
     return out
 
 

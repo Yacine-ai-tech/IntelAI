@@ -380,7 +380,8 @@ export function Citations({ sources, label = 'Sources' }) {
                }}>
               <span className="cite-n">{s.id}</span>
               {s.type === 'kpi' ? <Sparkles size={11} /> : s.type === 'web' ? <Globe size={11} /> : <FileText size={11} />} {s.title}
-              {s.rel != null && <em className="cite-rel">{s.rel}%</em>}
+              {s.type === 'web' && isHttp && <em className="cite-rel">{(() => { try { return new URL(s.source).hostname.replace(/^www\./, '') } catch { return '' } })()}</em>}
+              {s.rel != null && s.type !== 'web' && <em className="cite-rel">{s.rel}%</em>}
             </a>
           )
         })}
