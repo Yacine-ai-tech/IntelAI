@@ -43,10 +43,31 @@ React + Vite (Recharts, TanStack Query, i18n)     → Vercel / Netlify
 FastAPI  (src/api/server.py)
   auth · chat (9 personas) · KPIs · insights · forecasting · admin
         │
-   PostgreSQL (Neon)             LLM (OpenAI-compatible via LiteLLM)
+   PostgreSQL                    LLM (OpenAI-compatible via LiteLLM)
    KPIs · auth · sessions ·      GraphRAG-lite · hybrid retrieval ·
    vectors (pgvector/Qdrant)    BGE-M3 · BM25/RRF · BGE reranker (optional)
 ```
+
+## Architecture and configuration
+
+[`ARCHITECTURE.md`](ARCHITECTURE.md) describes the components, the life of a chat turn, retrieval and
+the design decisions, with an interactive version in the application under **Architecture**. Every
+configuration variable is described in [`.env.example`](.env.example).
+
+## Copilot behaviour
+
+- **Web search without asking.** Questions about external companies, people or current events are
+  searched on the web automatically, and an explicit request ("search the web", "verify online") always
+  is. The decision is rule based and the search runs in parallel with internal retrieval, so it adds no
+  waiting time of its own. It needs `TAVILY_API_KEY`; without it the copilot answers from internal data.
+- **Visible pipeline.** The chat shows the real stages of each answer (understanding, knowledge-base
+  search, web search, writing), lists sources as soon as they are found — knowledge base and web
+  separately — and reveals the answer as it is generated.
+- **Language.** The answer follows the language of the question (French and English). Retrieval prefers
+  documents in the question's language and keeps the other language eligible; French metric names map
+  to the canonical English metrics.
+- **Health and readiness.** `GET /ready` returns 200 once models are loaded; `POST /embed` serves
+  embeddings to sibling services with the internal token.
 
 ## Quick Start
 
@@ -135,7 +156,7 @@ adjusted:
 
 | Variable | Required | Description |
 |---|---|---|
-| `POSTGRES_URL` | Yes | Neon or self-hosted Postgres |
+| `POSTGRES_URL` | Yes | PostgreSQL connection URL (managed or self-hosted) |
 | `GROQ_API_KEY` | Yes | Default-tier LLM provider key |
 | `SECRET_KEY` | Yes | JWT signing key |
 | `REQUIRE_INTERNAL_TOKEN` | No | Set `false` for standalone self-hosting — see [SELF_HOSTING.md](SELF_HOSTING.md) |

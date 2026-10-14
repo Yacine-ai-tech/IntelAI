@@ -1,5 +1,7 @@
 # Benchmark Results
 
+> Figures recorded: 2026-10. Document last reviewed: 2026-10-14.
+
 This document reports measured results against IntelAI's live deployment and its
 OmniIntelOS demo dataset. For the reasoning behind each component's design, see
 [`RESEARCH.md`](RESEARCH.md); this document reports what was measured. Every number below

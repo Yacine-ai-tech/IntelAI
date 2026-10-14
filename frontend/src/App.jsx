@@ -32,6 +32,7 @@ import GlossaryPage from './pages/GlossaryPage'
 import ApiDocs from './pages/ApiDocs'
 import UserGuidePage from './pages/UserGuidePage'
 import ResearchPage from './pages/ResearchPage'
+import ArchitecturePage from './pages/ArchitecturePage'
 import BenchmarkPage from './pages/BenchmarkPage'
 
 function ProtectedRoute({ children, page }) {
@@ -110,6 +111,7 @@ export default function App() {
         <Route path="glossary" element={<ProtectedRoute page="analytics"><GlossaryPage /></ProtectedRoute>} />
         <Route path="user-guide" element={<ProtectedRoute page="assistant"><UserGuidePage /></ProtectedRoute>} />
         <Route path="guide" element={<Navigate to="/user-guide" replace />} />
+        <Route path="architecture" element={<ProtectedRoute page="assistant"><ArchitecturePage /></ProtectedRoute>} />
         <Route path="research" element={<ProtectedRoute page="assistant"><ResearchPage /></ProtectedRoute>} />
         <Route path="benchmark" element={<ProtectedRoute page="assistant"><BenchmarkPage /></ProtectedRoute>} />
         <Route path="benchmarks" element={<Navigate to="/benchmark" replace />} />
