@@ -17,7 +17,7 @@ def test_pool_sizes_follow_strategy_defaults(monkeypatch):
     from src.services.vector_store import _pool_sizes
     for name in ("RETRIEVAL_DENSE_K", "RETRIEVAL_SPARSE_K", "RERANK_CANDIDATES"):
         monkeypatch.delenv(name, raising=False)
-    assert _pool_sizes(5) == (50, 50, 30)
+    assert _pool_sizes(5) == (50, 50, 15)  # default pool 12, never below 3x the requested count
     assert _pool_sizes(20) == (50, 50, 60)  # never smaller than 3x the requested count
     monkeypatch.setenv("RERANK_CANDIDATES", "12")
     assert _pool_sizes(2)[2] == 12
