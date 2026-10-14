@@ -606,6 +606,16 @@ async def startup():
     def _rag_prewarm():
         try:
             from src.core.config import settings
+            if settings.VECTOR_STORE == "qdrant" and os.getenv("USE_RERANKER", "true").strip().lower() not in (
+                "1", "true", "yes", "on"
+            ):
+                # Reranking is off: warm the embedder, the lexical index and the store
+                # connection with one real query so the first request is not the slow one.
+                from src.services.vector_store import vector_store_retrieve
+                vector_store_retrieve("startup retrieval warmup", 1)
+                _RETRIEVAL_WARM.set()
+                log.info("Persistent Qdrant retrieval (dense + BM25/RRF) pre-warmed")
+                return
             if settings.VECTOR_STORE == "qdrant":
                 from src.services.hybrid_retrieval import rerank
                 import time as _time
@@ -697,6 +707,9 @@ def _health_vector_store_check() -> str:
         return f"unreachable: {e}"
 
 
+_RETRIEVAL_WARM = threading.Event()
+
+
 def _health_hybrid_retrieval_check() -> str:
     try:
         from src.core.config import settings
@@ -706,9 +719,11 @@ def _health_hybrid_retrieval_check() -> str:
                 "1", "true", "yes", "on"
             ):
                 return "unavailable: hybrid retrieval is disabled"
-            if os.getenv("USE_RERANKER", "true").strip().lower() not in (
-                "1", "true", "yes", "on"
-            ) or os.getenv("RERANK_PROVIDER", "local").strip().lower() != "local":
+            if os.getenv("USE_RERANKER", "true").strip().lower() not in ("1", "true", "yes", "on"):
+                if _RETRIEVAL_WARM.is_set():
+                    return "ready: Qdrant dense + BM25/RRF (reranker disabled)"
+                return "warming: retrieval pipeline has not completed its warm-up query"
+            if os.getenv("RERANK_PROVIDER", "local").strip().lower() != "local":
                 return "unavailable: local BGE reranker is not required/configured"
             if _RERANK_RETRIEVER is None or _RERANK_RETRIEVER._reranker is None:
                 return "warming: local BGE reranker has not passed its readiness probe"
