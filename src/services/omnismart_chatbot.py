@@ -174,13 +174,45 @@ def _groq_lease_client():
         return None, None
     client = _GROQ_CLIENTS.get(key)
     if client is None:
-        client = Groq(api_key=key)
+        # max_retries=0: a rate limit must surface at once so the next key (or the fallback
+        # model) is tried immediately instead of the SDK sleeping through its own retries.
+        client = Groq(api_key=key, max_retries=0)
         _GROQ_CLIENTS[key] = client
     return client, lease
 
 
 def _groq_client():
     return _groq_lease_client()[0]
+
+
+def _groq_attempts() -> int:
+    """How many different keys one call may try before giving up on Groq."""
+    try:
+        from src.core import keypool
+        n = len(keypool.pool("groq")._keys) or 1
+    except Exception:
+        n = 1
+    return max(1, min(n, int(os.getenv("GROQ_KEY_ATTEMPTS", "3"))))
+
+
+def _groq_call(fn):
+    """Run ``fn(client)`` on a Groq key; on a rate limit park that key and retry at once
+    on the next one. Other errors propagate unchanged."""
+    from src.core import keypool
+    last: Optional[BaseException] = None
+    for _ in range(_groq_attempts()):
+        client, lease = _groq_lease_client()
+        if client is None:
+            break
+        try:
+            return fn(client)
+        except Exception as exc:
+            last = exc
+            if not keypool.note_failure(lease, exc):
+                raise
+    if last is not None:
+        raise last
+    raise RuntimeError("Groq is not available")
 
 
 def llm_available() -> bool:
@@ -228,8 +260,7 @@ def llm_complete(
 
     def _execute(target_model: str) -> Tuple[str, int, str]:
         # Fast path: use native Groq SDK if resolved model is a Groq model
-        client, lease = _groq_lease_client()
-        if target_model.startswith("groq/") and client is not None:
+        if target_model.startswith("groq/") and _groq_client() is not None:
             actual_model = target_model.replace("groq/", "")
             kw: Dict[str, Any] = {
                 "model": actual_model,
@@ -240,12 +271,7 @@ def llm_complete(
             }
             if top_p is not None:
                 kw["top_p"] = top_p
-            try:
-                r = client.chat.completions.create(**kw)
-            except Exception as exc:
-                from src.core import keypool
-                keypool.note_failure(lease, exc)
-                raise
+            r = _groq_call(lambda c: c.chat.completions.create(**kw))
             tokens = getattr(r.usage, "total_tokens", 0) if getattr(r, "usage", None) else 0
             return r.choices[0].message.content, tokens, target_model
 
@@ -290,7 +316,7 @@ def llm_complete(
         raise
 
 
-async def llm_stream(
+async def _llm_stream_model(
     messages: List[Dict[str, str]],
     temperature: float = 0.3,
     max_tokens: int = 2048,
@@ -314,32 +340,57 @@ async def llm_stream(
     resolved_model = model or _resolve(tier)
     timeout_s = float(os.getenv("LLM_TIMEOUT", "15"))
 
-    # Groq native streaming path
-    client, lease = _groq_lease_client()
-    if resolved_model.startswith("groq/") and client is not None:
+    # Groq native streaming path. The SDK iterator is synchronous, so it runs in a worker
+    # thread and hands chunks to the event loop through a queue: the loop stays free for
+    # other requests and each token reaches the client as soon as it is produced.
+    if resolved_model.startswith("groq/") and _groq_client() is not None:
+        import asyncio
+        import threading as _th
         actual_model = resolved_model.replace("groq/", "")
         kw: Dict[str, Any] = {"model": actual_model, "messages": messages,
                               "temperature": temperature, "max_tokens": max_tokens,
                               "stream": True, "timeout": timeout_s}
         if top_p is not None:
             kw["top_p"] = top_p
+        loop = asyncio.get_running_loop()
+        out: "asyncio.Queue" = asyncio.Queue()
+        stop = _th.Event()
+        _END = object()
+
+        def _pump() -> None:
+            try:
+                stream = _groq_call(lambda c: c.chat.completions.create(**kw))
+                for chunk in stream:
+                    if stop.is_set():
+                        break
+                    delta = chunk.choices[0].delta if chunk.choices else None
+                    text = getattr(delta, "content", None) if delta else None
+                    if text:
+                        loop.call_soon_threadsafe(out.put_nowait, text)
+                loop.call_soon_threadsafe(out.put_nowait, _END)
+            except BaseException as exc:  # delivered to the consumer below
+                loop.call_soon_threadsafe(out.put_nowait, exc)
+
+        worker = _th.Thread(target=_pump, name="groq-stream", daemon=True)
+        worker.start()
         try:
-            stream = client.chat.completions.create(**kw)
-        except Exception as exc:
-            from src.core import keypool
-            keypool.note_failure(lease, exc)
-            raise
-        for chunk in stream:
-            delta = chunk.choices[0].delta if chunk.choices else None
-            text = getattr(delta, "content", None) if delta else None
-            if text:
-                yield text
+            while True:
+                item = await out.get()
+                if item is _END:
+                    return
+                if isinstance(item, BaseException):
+                    raise item
+                yield item
+        finally:
+            stop.set()
         return
 
     # LiteLLM async streaming for all other providers (Anthropic, OpenAI, Gemini, etc.)
     if not _LITELLM_READY or _litellm_acompletion is None:
-        text, _, _ = llm_complete(messages, temperature=temperature, max_tokens=max_tokens,
-                                   top_p=top_p, model=model, persona_name=persona_name)
+        import asyncio
+        text, _, _ = await asyncio.to_thread(
+            llm_complete, messages, temperature=temperature, max_tokens=max_tokens,
+            top_p=top_p, model=model, persona_name=persona_name)
         yield text
         return
     msgs = _apply_cache_control(messages, resolved_model)
@@ -358,10 +409,44 @@ async def llm_stream(
             if text:
                 yield text
     except Exception:
-        # Streaming unsupported or failed — fall back to blocking call and yield full text
-        text, _, _ = llm_complete(messages, temperature=temperature, max_tokens=max_tokens,
-                                   top_p=top_p, model=model, persona_name=persona_name)
+        # Streaming unsupported or failed — fall back to a blocking call (off the loop)
+        import asyncio
+        text, _, _ = await asyncio.to_thread(
+            llm_complete, messages, temperature=temperature, max_tokens=max_tokens,
+            top_p=top_p, model=model, persona_name=persona_name)
         yield text
+
+
+async def llm_stream(
+    messages: List[Dict[str, str]],
+    temperature: float = 0.3,
+    max_tokens: int = 2048,
+    top_p: Optional[float] = None,
+    model: Optional[str] = None,
+    persona_name: Optional[str] = None,
+):
+    """Stream a completion; when the primary model fails before producing any text
+    (rate limit, outage, bad key) the tier's fallback model is streamed instead."""
+    from src.services.llm_router import _resolve, PERSONA_TIER_MAP, _fallback_for, _should_fallback
+
+    tier = "default"
+    if persona_name and persona_name.lower() in PERSONA_TIER_MAP:
+        tier = PERSONA_TIER_MAP[persona_name.lower()]
+    primary = model or _resolve(tier)
+    fallback = _fallback_for(tier) if model is None else None
+    yielded = False
+    try:
+        async for piece in _llm_stream_model(messages, temperature, max_tokens, top_p, primary, persona_name):
+            yielded = True
+            yield piece
+        return
+    except Exception as exc:
+        if yielded or not fallback or fallback == primary or not _should_fallback(exc):
+            raise
+        log.warning("Streaming model %s failed (%s); streaming fallback %s",
+                    primary, type(exc).__name__, fallback)
+    async for piece in _llm_stream_model(messages, temperature, max_tokens, top_p, fallback, persona_name):
+        yield piece
 
 
 # ════════════════════════════════════════════════════════════════════════════
