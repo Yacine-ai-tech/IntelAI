@@ -8,7 +8,8 @@ import { Citations } from '../components/ui'
 import {
   Send, Sparkles, User, Plus, History, MessageSquare,
   Crown, DollarSign, Cpu, Settings2, Users, Leaf, ShieldAlert, BarChart3, Bot,
-  Info, MoreHorizontal, ArrowUpRight, ArrowDownRight, PanelLeftClose, PanelRightClose, PanelLeft, PanelRight, X, Network, StopCircle
+  Info, MoreHorizontal, ArrowUpRight, ArrowDownRight, PanelLeftClose, PanelRightClose, PanelLeft, PanelRight, X, Network, StopCircle,
+  Globe, Check, Search, Brain, PenLine, ChevronDown, ChevronUp, ListFilter
 } from 'lucide-react'
 import * as Recharts from "recharts";
 const { AreaChart, Area, YAxis, ResponsiveContainer } = Recharts;
@@ -177,6 +178,120 @@ export function FormattedContent({ content, blocks: serverBlocks }) {
   )
 }
 
+
+// ── Turn tracker: the real pipeline stages of one answer, as they happen ───────────
+const STEP_ICON = { understanding: Brain, retrieving: Search, web: Globe, ranking: ListFilter, generating: PenLine }
+
+function stepRows(turn, t) {
+  const st = turn?.stages || {}
+  const rows = [{
+    id: 'understanding', label: t('chatStageUnderstand') || 'Understanding the question',
+    state: st.understanding?.status === 'done' ? 'done' : 'running',
+    detail: st.understanding?.web_mode === 'explicit' ? (t('chatStageWeb') || 'Searching the web') : '',
+    ms: st.understanding?.ms,
+  }]
+  rows.push({
+    id: 'retrieving', label: t('chatStageRetrieve') || 'Searching the knowledge base',
+    state: st.retrieving?.status === 'done' ? 'done' : st.retrieving ? 'running' : 'pending',
+    detail: st.retrieving?.status === 'done' ? `${st.retrieving.count ?? 0} ${t('chatPassages') || 'passages'}` : '',
+    ms: st.retrieving?.ms,
+  })
+  const rk = turn?.progress
+  if (rk?.stage === 'reranking' && rk.total > 0) {
+    rows.push({ id: 'ranking', label: `${t('chatStageRank') || 'Ranking the best passages'} (${rk.done ?? 0}/${rk.total})`, state: 'running', detail: '', ms: null })
+  }
+  if (st.web || turn?.web) {
+    const w = st.web
+    const skipped = w?.status === 'skipped'
+    rows.push({
+      id: 'web', label: t('chatStageWeb') || 'Searching the web',
+      state: w?.status === 'done' ? 'done' : skipped || w?.status === 'error' ? 'skipped' : w ? 'running' : 'pending',
+      detail: w?.status === 'done'
+        ? ((w.count ?? 0) > 0 ? `${w.count} ${t('chatPages') || 'pages'}` : (t('chatWebNone') || 'No relevant results'))
+        : skipped ? (t('chatWebSkipped') || 'Skipped (time budget)') : (w?.query || ''),
+      ms: w?.ms,
+    })
+  }
+  const g = st.generating
+  rows.push({
+    id: 'generating', label: t('chatStageGenerate') || 'Writing the answer',
+    state: g?.status === 'done' ? 'done' : g ? 'running' : 'pending',
+    detail: g?.first_token_ms != null ? `${(g.first_token_ms / 1000).toFixed(1)}s` : '',
+    ms: g?.ms,
+  })
+  return rows
+}
+
+function TurnTracker({ turn, compact = false, collapsedDefault = false }) {
+  const { t } = useTranslation()
+  const [open, setOpen] = useState(!collapsedDefault)
+  if (!turn) return null
+  const rows = stepRows(turn, t)
+  const web = (turn.sources || []).filter(x => x.type === 'web')
+  const kb = (turn.sources || []).filter(x => x.type !== 'web')
+  return (
+    <div className="turn-tracker" style={{
+      border: '1px solid var(--border-subtle, rgba(255,255,255,.08))', borderRadius: 12,
+      background: 'var(--bg-2, #18181b)', padding: '10px 12px', maxWidth: 560, marginBottom: 8,
+    }}>
+      {compact && (
+        <button type="button" onClick={() => setOpen(o => !o)} className="btn btn-ghost btn-sm"
+          style={{ padding: '0 4px', height: 22, fontSize: '.75rem', color: 'var(--text-3, #71717a)' }}>
+          {open ? <ChevronUp size={12} /> : <ChevronDown size={12} />}{' '}
+          {open ? (t('chatStepsHide') || 'Hide steps') : (t('chatStepsShow') || 'Show steps')}
+        </button>
+      )}
+      {open && (
+        <ol style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 6 }}>
+          {rows.map(r => {
+            const Icon = STEP_ICON[r.id] || Search
+            const color = r.state === 'done' ? 'var(--primary, #22d3ee)'
+              : r.state === 'running' ? 'var(--text-1, #e4e4e7)' : 'var(--text-3, #71717a)'
+            return (
+              <li key={r.id} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: '.84rem', color, opacity: r.state === 'pending' ? 0.55 : 1 }}>
+                <span style={{ width: 18, height: 18, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flex: 'none' }}>
+                  {r.state === 'done' ? <Check size={15} />
+                    : r.state === 'running'
+                      ? <span style={{ width: 13, height: 13, border: '2px solid rgba(34,211,238,.25)', borderTopColor: 'var(--primary, #22d3ee)', borderRadius: '50%', animation: 'spin .8s linear infinite' }} />
+                      : <Icon size={14} />}
+                </span>
+                <span style={{ flex: 1, minWidth: 0 }}>
+                  {r.label}
+                  {r.detail && <span style={{ marginLeft: 8, color: 'var(--text-3, #71717a)', fontSize: '.76rem' }}>{r.detail}</span>}
+                </span>
+                {r.ms != null && r.state === 'done' && (
+                  <span style={{ fontSize: '.72rem', color: 'var(--text-3, #71717a)' }}>{r.ms < 1000 ? `${r.ms} ms` : `${(r.ms / 1000).toFixed(1)} s`}</span>
+                )}
+              </li>
+            )
+          })}
+        </ol>
+      )}
+      {open && (kb.length > 0 || web.length > 0) && (
+        <div style={{ marginTop: 10, display: 'grid', gap: 6 }}>
+          {kb.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+              <span style={{ fontSize: '.72rem', color: 'var(--text-3, #71717a)', minWidth: 96 }}>{t('chatSourcesKb') || 'Knowledge base'}</span>
+              {kb.slice(0, 5).map((x, i) => <span key={`k${i}`} className="badge" title={x.snippet || x.title} style={{ maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{x.title}</span>)}
+            </div>
+          )}
+          {web.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+              <span style={{ fontSize: '.72rem', color: 'var(--text-3, #71717a)', minWidth: 96 }}><Globe size={11} style={{ verticalAlign: '-1px' }} /> {t('chatSourcesWeb') || 'Web'}</span>
+              {web.slice(0, 5).map((x, i) => (
+                <a key={`w${i}`} className="badge" href={x.url} target="_blank" rel="noreferrer" title={x.snippet || x.title}
+                   style={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', textDecoration: 'none' }}>
+                  {x.title}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 function MessageBubble({ msg }) {
   const { t } = useTranslation()
   const isUser = msg.role === 'user'
@@ -209,9 +324,13 @@ function MessageBubble({ msg }) {
             </>
           )}
         </div>
+        {!isUser && !msg.streaming && msg.turn && (
+          <div style={{ marginTop: 8 }}><TurnTracker turn={msg.turn} compact collapsedDefault /></div>
+        )}
         {!isUser && !msg.streaming && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginTop: 8 }}>
-            <Citations sources={msg.sources} />
+            <Citations sources={(msg.sources || []).filter(x => (x?.type || '') !== 'web')} label={t('chatSourcesKb') || 'Knowledge base'} />
+            <Citations sources={(msg.sources || []).filter(x => x?.type === 'web')} label={t('chatSourcesWeb') || 'Web'} />
             {msg.sources?.length > 0 && (
               <a href={`/knowledge-graph?q=${encodeURIComponent(msg.query || 'knowledge')}`} target="_blank" rel="noreferrer" 
                  className="btn btn-ghost btn-sm" style={{ padding: '2px 8px', fontSize: '.75rem', height: '24px' }} title={t('visualizeGraphRAG') || 'Visualize GraphRAG Entities'}>
@@ -238,6 +357,9 @@ export default function ChatPage({
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [turnProgress, setTurnProgress] = useState(null)
+  const [turn, setTurn] = useState(null)
+  const turnRef = useRef(null)
+  const revealRef = useRef({ pending: '', shown: '', done: null, timer: null })
   const [waitSeconds, setWaitSeconds] = useState(0)
   const [persona, setPersona] = useState('')          // '' = auto (role-based)
   const [activeSession, setActiveSession] = useState(initialSessionId)
@@ -469,6 +591,126 @@ export default function ChatPage({
     abortControllerRef.current = new AbortController()
     
     const ws = wsRef.current
+    const useStream = !(USE_WS && ws && ws.readyState === WebSocket.OPEN)
+    if (useStream) {
+      const fresh = { stages: {}, sources: [], web: false, progress: null }
+      turnRef.current = fresh
+      setTurn({ ...fresh })
+      const rv = revealRef.current
+      if (rv.timer) clearInterval(rv.timer)
+      rv.pending = ''; rv.shown = ''; rv.done = null; rv.timer = null
+      let streamingStarted = false
+      let sessionFromStream = null
+
+      const flushDone = () => {
+        const doneEv = rv.done
+        if (!doneEv) return
+        if (rv.timer) { clearInterval(rv.timer); rv.timer = null }
+        const finalTurn = { ...(turnRef.current || {}), sources: doneEv.sources || [] }
+        setMessages(p => {
+          const msgs = [...p]
+          const last = msgs[msgs.length - 1]
+          const finalMsg = { role: 'assistant', content: doneEv.response, sources: doneEv.sources || [],
+            blocks: doneEv.blocks || [], persona_used: doneEv.persona_used, query: q, streaming: false, turn: finalTurn }
+          if (last?.role === 'assistant' && last.streaming) return [...msgs.slice(0, -1), finalMsg]
+          return [...msgs, finalMsg]
+        })
+        if (doneEv.session_id) {
+          try { localStorage.setItem('intelai_copilot_session_id', doneEv.session_id) } catch {}
+          if (!activeSession) { setActiveSession(doneEv.session_id); onSessionChange?.(doneEv.session_id) }
+          queryClient.invalidateQueries({ queryKey: ['chat-sessions'] })
+        }
+        setTurn(null); turnRef.current = null
+        setLoading(false)
+      }
+
+      const startReveal = () => {
+        if (rv.timer) return
+        rv.timer = setInterval(() => {
+          if (rv.pending.length) {
+            // Reveal faster when the backlog is large so the text never lags far behind.
+            const n = Math.max(2, Math.ceil(rv.pending.length / 10))
+            rv.shown += rv.pending.slice(0, n)
+            rv.pending = rv.pending.slice(n)
+            const text = rv.shown
+            setMessages(prev => {
+              const msgs = [...prev]
+              const last = msgs[msgs.length - 1]
+              if (last?.role === 'assistant' && last.streaming) return [...msgs.slice(0, -1), { ...last, content: text }]
+              return msgs
+            })
+          } else if (rv.done) {
+            flushDone()
+          }
+        }, 28)
+      }
+
+      const onEvent = (ev) => {
+        if (ev.type === 'stage') {
+          const next = { ...(turnRef.current || fresh) }
+          next.stages = { ...next.stages, [ev.stage]: { ...(next.stages[ev.stage] || {}), ...ev } }
+          if (ev.stage === 'understanding' && ev.web) next.web = true
+          turnRef.current = next; setTurn(next)
+        } else if (ev.type === 'sources') {
+          const next = { ...(turnRef.current || fresh) }
+          next.sources = [...(next.sources || []), ...(ev.sources || [])]
+          turnRef.current = next; setTurn(next)
+        } else if (ev.type === 'meta') {
+          sessionFromStream = ev.session_id || null
+        } else if (ev.type === 'chunk') {
+          if (!streamingStarted) {
+            streamingStarted = true
+            setMessages(p => [...p, { role: 'assistant', content: '', streaming: true, sources: [], blocks: [], query: q }])
+            startReveal()
+          }
+          rv.pending += ev.text
+        } else if (ev.type === 'done') {
+          rv.done = ev
+          if (!streamingStarted) {
+            streamingStarted = true
+            rv.pending = ev.response || ''
+            setMessages(p => [...p, { role: 'assistant', content: '', streaming: true, sources: [], blocks: [], query: q }])
+          }
+          startReveal()
+        } else if (ev.type === 'error') {
+          if (rv.timer) { clearInterval(rv.timer); rv.timer = null }
+          setMessages(p => [...p.filter(m => !m.streaming), { role: 'assistant', content: `Error: ${ev.error || 'request failed'}` }])
+          setTurn(null); turnRef.current = null
+          setLoading(false)
+        }
+      }
+
+      api.streamChat(q, persona || 'general', activeSession, '', lang, { signal: abortControllerRef.current.signal, onEvent })
+        .catch((e) => {
+          if (e.name === 'AbortError') {
+            if (rv.timer) { clearInterval(rv.timer); rv.timer = null }
+            setMessages(p => [...p.filter(m => !m.streaming), { role: 'assistant', content: 'Message canceled.' }])
+            setTurn(null); turnRef.current = null
+            setLoading(false)
+            return
+          }
+          if (streamingStarted || rv.done) { return }
+          // Stream not available on this path: use the polled job API instead.
+          setTurn(null); turnRef.current = null
+          api.sendChat(q, persona || 'general', activeSession, '', lang, abortControllerRef.current?.signal,
+            (st) => setTurnProgress(prev => ({ ...(prev || {}), ...st, sources: st.sources || prev?.sources || null })))
+            .then(r => {
+              const newSessionId = r.data.session_id
+              if (newSessionId) {
+                try { localStorage.setItem('intelai_copilot_session_id', newSessionId) } catch {}
+                if (!activeSession) { setActiveSession(newSessionId); onSessionChange?.(newSessionId) }
+                queryClient.invalidateQueries({ queryKey: ['chat-sessions'] })
+              }
+              streamText(r.data.response || 'No response.', r.data.sources || [], r.data.blocks || [], q)
+            })
+            .catch(err => {
+              setMessages(p => [...p, { role: 'assistant', content: `Error: ${err.response?.data?.detail || err.message || 'request failed'}` }])
+              setLoading(false)
+            })
+        })
+        .finally(() => { abortControllerRef.current = null })
+      return
+    }
     if (USE_WS && ws && ws.readyState === WebSocket.OPEN) {
       wsInFlightRef.current = true
       pendingQueryRef.current = q
@@ -660,8 +902,24 @@ export default function ChatPage({
               </div>
             </div>
           )}
-          {messages.map((m, i) => <MessageBubble key={i} msg={m} />)}
-          {loading && !messages.some(m => m.streaming) && (
+          {messages.map((m, i) => (
+            <div key={i}>
+              {m.streaming && turn && (
+                <div className="chat-message assistant" style={{ marginBottom: 0 }}>
+                  <div className="chat-avatar" style={{ visibility: 'hidden' }}><Sparkles size={15} /></div>
+                  <TurnTracker turn={turn} compact />
+                </div>
+              )}
+              <MessageBubble msg={m} />
+            </div>
+          ))}
+          {loading && turn && !messages.some(m => m.streaming) && (
+            <div className="chat-message assistant">
+              <div className="chat-avatar"><Sparkles size={15} /></div>
+              <TurnTracker turn={turn} />
+            </div>
+          )}
+          {loading && !turn && !messages.some(m => m.streaming) && (
             <div className="chat-message assistant">
               <div className="chat-avatar"><Sparkles size={15} /></div>
               <div className="chat-bubble" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: 'var(--bg-2, #18181b)', border: '1px solid var(--border-subtle, rgba(255,255,255,0.08))', borderRadius: 12 }}>
