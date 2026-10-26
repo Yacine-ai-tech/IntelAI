@@ -734,6 +734,12 @@ def _health_hybrid_retrieval_check() -> str:
         return f"unavailable: {e}"
 
 
+@app.get("/live")
+async def liveness_check():
+    """Pure process liveness probe for Docker/container orchestrators. Zero database calls."""
+    return {"status": "alive", "service": "intelai"}
+
+
 _HEALTH_CACHE_LOCK = threading.Lock()
 _HEALTH_CACHE_TIME = 0.0
 _HEALTH_CACHE_DATA = None
