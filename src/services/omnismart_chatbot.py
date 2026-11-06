@@ -30,6 +30,7 @@ USAGE:
 
 from __future__ import annotations
 
+import contextvars
 import json
 import os
 import threading
@@ -109,10 +110,14 @@ def _run_with_timeout(fn, timeout_s: float, *args, **kwargs):
     remote dependency cannot pin the whole chat turn forever.
     """
     box: Dict[str, Any] = {"done": False, "value": None, "error": None}
+    # threading.Thread does NOT inherit contextvars — capture the caller's
+    # context so request-scoped state (e.g. pg_store's strict-owner sandbox
+    # filter) survives into the worker thread.
+    ctx = contextvars.copy_context()
 
     def _target() -> None:
         try:
-            box["value"] = fn(*args, **kwargs)
+            box["value"] = ctx.run(fn, *args, **kwargs)
         except Exception as e:
             box["error"] = e
         finally:
@@ -1449,8 +1454,10 @@ class AgentPersonaFactory:
             return results, int((time.time() - t) * 1000)
 
         with ThreadPoolExecutor(max_workers=2, thread_name_prefix="chat-gather") as pool:
-            f_int = pool.submit(_internal)
-            f_web = pool.submit(_web) if will_web else None
+            # Each submit gets its own copy_context() so request-scoped
+            # contextvars (strict-owner sandbox filter) reach the workers.
+            f_int = pool.submit(contextvars.copy_context().run, _internal)
+            f_web = pool.submit(contextvars.copy_context().run, _web) if will_web else None
             retrieved_ctx, sources = f_int.result()
             if f_web is not None:
                 wait = None if plan.mode == "explicit" else budget
