@@ -95,7 +95,7 @@ def _dogfood_to_rageval(query: str, answer: str, contexts: List[str], persona: s
                 json={"query": query, "answer": answer, "contexts": contexts,
                       "persona": persona, "model": model,
                       "tokens_used": tokens_used, "latency_ms": latency_ms},
-                headers=headers, timeout=5,
+                headers=headers, timeout=8,
             )
         except Exception as e:
             log.warning("RAGeval dogfood log failed (non-fatal): %s", e)
