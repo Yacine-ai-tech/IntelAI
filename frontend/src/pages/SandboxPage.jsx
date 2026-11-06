@@ -27,6 +27,7 @@ export default function SandboxPage() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [confirmWipe, setConfirmWipe] = useState(false)
+  const [sandboxOnly, setSandboxOnly] = useState(true) // "my data only" — exclude OmniIntelOS global corpus
   const fileRef = useRef(null)
   const pollRef = useRef({})
 
@@ -101,11 +102,11 @@ export default function SandboxPage() {
     setMessages((m) => [...m, { role: 'user', content: msg }])
     try {
       if (!chatId) {
-        const { data } = await sandboxChat(msg, null)
+        const { data } = await sandboxChat(msg, null, sandboxOnly)
         setChatId(data.session_id || data.job_id)
         pollChat(data.job_id || data.id, msg)
       } else {
-        const { data } = await sandboxChat(msg, chatId)
+        const { data } = await sandboxChat(msg, chatId, sandboxOnly)
         pollChat(data.job_id || data.id, msg)
       }
     } catch (e) {
@@ -220,7 +221,13 @@ export default function SandboxPage() {
         </div>
 
         <div style={S.col}>
-          <h2 style={S.h2}>{t('sandboxChatTitle') || 'Chat'}</h2>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h2 style={S.h2}>{t('sandboxChatTitle') || 'Chat'}</h2>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.78rem', color: 'var(--text-2)', cursor: 'pointer' }}>
+              <input type="checkbox" checked={sandboxOnly} onChange={(e) => setSandboxOnly(e.target.checked)} />
+              {t('sandboxOnlyMode') || 'My data only'}
+            </label>
+          </div>
           <div style={S.chat}>
             {messages.length === 0 && <p style={S.muted}>{t('sandboxChatEmpty') || 'Ask anything — answers use OmniIntelOS knowledge plus your uploaded files.'}</p>}
             {messages.map((m, i) => (

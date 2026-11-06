@@ -55,6 +55,22 @@ def get_request_scope_user() -> Optional[str]:
     return _request_scope_user.get()
 
 
+# Strict-owner mode: when set, knowledge queries return ONLY the scoped user's
+# own documents — no global/seeded corpus (owner_user_id IS NULL). Used by the
+# personal sandbox "my data only" chat mode.
+_request_scope_strict: "contextvars.ContextVar[bool]" = contextvars.ContextVar(
+    "request_scope_strict", default=False
+)
+
+
+def set_request_scope_strict(strict: bool) -> None:
+    _request_scope_strict.set(strict)
+
+
+def get_request_scope_strict() -> bool:
+    return _request_scope_strict.get()
+
+
 def _demo_session_scoping_enabled() -> bool:
     val = (os.getenv("DEMO_SESSION_SCOPING") or "true").strip().lower()
     return val not in ("false", "0", "no", "off")
@@ -1132,7 +1148,8 @@ def get_knowledge_docs(limit: int = 2000, all_owners: bool = False) -> "pd.DataF
     personally uploaded, never another visitor's upload. ``all_owners=True`` bypasses this —
     only for the full-corpus vector-store reindex, which must embed every document
     (retrieval-time scoping then applies via vector_store_retrieve()'s post-filter)."""
-    cache_key = (limit, all_owners, get_request_scope_user() if (not all_owners and _demo_session_scoping_enabled()) else None)
+    strict = get_request_scope_strict() and not all_owners and _demo_session_scoping_enabled()
+    cache_key = (limit, all_owners, strict, get_request_scope_user() if (not all_owners and _demo_session_scoping_enabled()) else None)
     now = time.time()
     with _CACHE_LOCK:
         if cache_key in _DOCS_CACHE:
@@ -1146,7 +1163,11 @@ def get_knowledge_docs(limit: int = 2000, all_owners: bool = False) -> "pd.DataF
         q = "SELECT doc_id, title, content, source, embedding, language, created_at FROM knowledge_base"
         params: List[Any] = []
         if not all_owners and _demo_session_scoping_enabled():
-            q += " WHERE (owner_user_id IS NULL OR owner_user_id = %s)"
+            if strict:
+                # Sandbox "my data only" mode — the scoped user's own docs, no global corpus.
+                q += " WHERE owner_user_id = %s"
+            else:
+                q += " WHERE (owner_user_id IS NULL OR owner_user_id = %s)"
             params.append(get_request_scope_user())
         q += " ORDER BY created_at ASC LIMIT %s"
         params.append(limit)

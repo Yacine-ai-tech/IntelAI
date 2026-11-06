@@ -367,8 +367,8 @@ export const sandboxJob = (jobId) => sbxApi.get(`/sandbox/ingest/${jobId}`)
 export const sandboxWipe = () => sbxApi.delete('/sandbox/session')
 // Chat with the sandbox JWT — same /chat/async contract, scope middleware
 // isolates retrieval to global + this sandbox's docs automatically.
-export const sandboxChat = (message, sessionId) =>
-  sbxApi.post('/chat/async', { message, session_id: sessionId }, { timeout: 15000 })
+export const sandboxChat = (message, sessionId, sandboxOnly = false) =>
+  sbxApi.post('/chat/async', { message, session_id: sessionId, sandbox_only: sandboxOnly }, { timeout: 15000 })
 export const sandboxChatStatus = (jobId) => sbxApi.get(`/chat/${jobId}`, { timeout: 15000 })
 
 // Admin sandbox visibility (admin JWT via shared `api`).

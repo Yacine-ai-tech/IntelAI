@@ -272,6 +272,7 @@ class ChatRequest(BaseModel):
     session_id: Optional[str] = None
     context: Optional[str] = ""
     language: Optional[str] = None
+    sandbox_only: bool = False  # restrict retrieval to the caller's own docs (no global corpus)
 
 class ChatResponse(BaseModel):
     response: str
@@ -1082,6 +1083,8 @@ async def _run_chat_turn(req: "ChatRequest", user: TokenData, emit=None) -> Dict
     caller receives them differs."""
     import json as _json
     from src.services.omnismart_chatbot import get_persona_factory
+    from src.services.pg_store import set_request_scope_strict
+    set_request_scope_strict(bool(req.sandbox_only))
 
     session_id = req.session_id or str(uuid.uuid4())
 

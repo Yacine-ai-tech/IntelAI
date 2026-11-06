@@ -795,6 +795,7 @@ const translations = {
     sandboxChatPlaceholder: "Ask about your documents…",
     sandboxSend: "Send",
     sandboxLoading: "Loading…",
+    sandboxOnlyMode: "My data only",
 },
 
   fr: {
@@ -1587,6 +1588,7 @@ const translations = {
     sandboxChatPlaceholder: "Posez une question sur vos documents…",
     sandboxSend: "Envoyer",
     sandboxLoading: "Chargement…",
+    sandboxOnlyMode: "Mes données uniquement",
 },
 }
 
