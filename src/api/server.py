@@ -2117,6 +2117,17 @@ async def sandbox_ingest(
                 "source": "sandbox", "embedding": "",
             }])
             await asyncio.to_thread(store_knowledge_docs, docs_df, owner_user_id=owner)
+            # Index into the vector store immediately — without this the doc is in
+            # Postgres but invisible to dense retrieval (same pattern as the webhook path).
+            try:
+                from src.services.vector_store import get_vector_store
+                vs = get_vector_store()
+                if vs:
+                    await asyncio.to_thread(vs.upsert, [{"doc_id": doc_id, "title": filename,
+                                                         "content": text[:4000], "source": "sandbox",
+                                                         "category": ""}])
+            except Exception as e:
+                log.warning("sandbox ingest vector upsert failed for %s: %s", job_id, e)
             await asyncio.to_thread(log_audit_event, f"sandbox:{x_sandbox_session[-6:]}", "SANDBOX_INGEST", f"{filename} ({kind})")
             sbx.bump_usage(x_sandbox_session, docs=1,
                            text_bytes=len(text.encode()) if kind == "text" else 0,
