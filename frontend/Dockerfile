@@ -16,6 +16,8 @@ RUN npm ci --prefer-offline --quiet
 COPY . .
 ARG VITE_API_URL=http://localhost:8000
 ENV VITE_API_URL=$VITE_API_URL
+ARG VITE_ADMIN_PATH=/operator
+ENV VITE_ADMIN_PATH=$VITE_ADMIN_PATH
 
 RUN npm run build
 

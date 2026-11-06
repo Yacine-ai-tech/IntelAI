@@ -24,7 +24,7 @@ const DEMO = [
   { user: 'viewer',  role: 'Viewer',  Icon: Eye },
 ]
 
-export default function LoginPage() {
+export default function LoginPage({ showCredentials = true }) {
   const { login, demoLogin: demoAuth } = useAuth()
   const { t, lang, setLang } = useTranslation()
   const navigate = useNavigate()
@@ -106,6 +106,7 @@ export default function LoginPage() {
 
           {error && <div className="alert alert-danger" style={{ marginBottom: 16 }}><AlertCircle size={16} /><span>{error}</span></div>}
 
+          {showCredentials && (<>
           <form onSubmit={onSubmit}>
             <div className="form-group">
               <label className="form-label">{t('username') || 'Username'}</label>
@@ -128,6 +129,7 @@ export default function LoginPage() {
                        : <><Lock size={15} /> {t('signIn') || 'Sign in'} <ArrowRight size={15} /></>}
             </button>
           </form>
+          </>)}
 
           <div className="auth-divider"><span>{t('demoAccounts') || 'or try a demo role'}</span></div>
           <div className="login-quick-grid">

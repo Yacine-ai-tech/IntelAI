@@ -36,6 +36,10 @@ import ArchitecturePage from './pages/ArchitecturePage'
 import BenchmarkPage from './pages/BenchmarkPage'
 import SandboxPage from './pages/SandboxPage'
 
+// Unguessable operator sign-in path — set VITE_ADMIN_PATH at build time.
+// Credential login (admin + registered users) lives ONLY here; /login is demo-only.
+const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || '/operator'
+
 function ProtectedRoute({ children, page }) {
   const { isAuthenticated, loading, hasPage } = useAuth()
   
@@ -80,7 +84,10 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={
-        isAuthenticated ? <Navigate to="/workspace" replace /> : <LoginPage />
+        isAuthenticated ? <Navigate to="/workspace" replace /> : <LoginPage showCredentials={false} />
+      } />
+      <Route path={ADMIN_PATH} element={
+        isAuthenticated ? <Navigate to="/workspace" replace /> : <LoginPage showCredentials />
       } />
       <Route path="/sandbox" element={<SandboxPage />} />
 

@@ -838,13 +838,51 @@ async def get_status(user: TokenData = Depends(get_current_user)):
 # AUTHENTICATION
 # ════════════════════════════════════════════════════════════
 
+# ── Credential-login throttle ──────────────────────────────────────────────
+# Per (IP, username) failure counter: 5 failures → 15-minute lockout. In-memory
+# is safe here (WEB_CONCURRENCY=1, same as _DEMO_LOGIN_HITS). Prevents online
+# brute-force against the public admin login without hiding the form.
+_LOGIN_FAILS: Dict[str, List[float]] = {}
+_LOGIN_MAX_FAILS = int(os.environ.get("LOGIN_MAX_FAILURES", "5"))
+_LOGIN_LOCKOUT_S = float(os.environ.get("LOGIN_LOCKOUT_SECONDS", "900"))
+
+
+def _login_key(request: Request, username: str) -> str:
+    ip = request.headers.get("X-Forwarded-For", "").split(",")[0].strip() or (request.client.host if request.client else "unknown")
+    return f"{ip}:{(username or '').lower()[:64]}"
+
+
+def _login_locked(key: str) -> bool:
+    now = time.time()
+    fails = [t for t in _LOGIN_FAILS.get(key, []) if now - t < _LOGIN_LOCKOUT_S]
+    _LOGIN_FAILS[key] = fails
+    return len(fails) >= _LOGIN_MAX_FAILS
+
+
+def _record_login_fail(key: str) -> None:
+    _LOGIN_FAILS.setdefault(key, []).append(time.time())
+
+
+def _clear_login_fails(key: str) -> None:
+    _LOGIN_FAILS.pop(key, None)
+
+
 @app.post("/api/v1/auth/login")
-async def login(req: LoginRequest):
+async def login(req: LoginRequest, request: Request):
+    key = _login_key(request, req.username)
+    if _login_locked(key):
+        raise HTTPException(status_code=429, detail="Too many failed login attempts. Try again later.")
     user_data = _users_db.get(req.username)
-    if not user_data:
+    if not user_data or not verify_password(req.password, user_data["password_hash"]):
+        _record_login_fail(key)
+        try:
+            from src.services.pg_store import log_audit_event
+            await asyncio.to_thread(log_audit_event, req.username or "?", "LOGIN_FAILED", "Failed credential login attempt")
+        except Exception:
+            pass
+        # Uniform message — never reveal whether the username exists.
         raise HTTPException(status_code=401, detail="Invalid username or password")
-    if not verify_password(req.password, user_data["password_hash"]):
-        raise HTTPException(status_code=401, detail="Invalid username or password")
+    _clear_login_fails(key)
     if not user_data.get("is_active", True):
         raise HTTPException(status_code=403, detail="Account deactivated")
 
