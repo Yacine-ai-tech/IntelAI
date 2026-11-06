@@ -162,7 +162,8 @@ async def verify_internal_token(request: Request, call_next):
     # actually given for this integration.
     if (request.url.path in ["/health", "/live", "/ready", "/api/health", "/docs", "/api/docs", "/openapi.json", "/api/openapi.json", "/redoc", "/api/redoc"]
             or request.url.path.startswith("/api/v1/auth/")
-            or request.url.path.startswith("/api/v1/webhook/")):
+            or request.url.path.startswith("/api/v1/webhook/")
+            or (request.method == "POST" and request.url.path == "/api/v1/sandbox/session")):
         return await call_next(request)
 
     token = (
@@ -180,6 +181,20 @@ async def verify_internal_token(request: Request, call_next):
     ]
 
     if expected_tokens and _os.environ.get("REQUIRE_INTERNAL_TOKEN", "true").lower() == "true":
+        # A Bearer JWT that decodes as a real user token is NOT an internal-token
+        # credential — but it IS valid auth for every user-facing route, which
+        # enforces its own Depends(get_current_user)/require_role downstream.
+        # Gating those routes behind the internal secret broke all browser API
+        # calls (user JWT != internal token). Service-to-service callers never
+        # send user JWTs, so they still hit the internal-token check below.
+        auth = request.headers.get("Authorization", "")
+        if auth.startswith("Bearer "):
+            try:
+                from src.core.jwt_auth import decode_access_token
+                decode_access_token(auth[len("Bearer "):])
+                return await call_next(request)
+            except Exception:
+                pass
         if not token or not any(token == exp for exp in expected_tokens):
             return JSONResponse(status_code=403, content={"detail": "Missing or invalid X-IntelAI-Internal-Token"})
 
