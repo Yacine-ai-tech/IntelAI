@@ -2061,7 +2061,7 @@ async def sandbox_ingest(
             elif kind in ("text",):
                 text = content.decode("utf-8", errors="ignore")
             else:  # document | image
-                if not settings.DOCINTEL_URL and not getattr(settings, "DOC_PROCESSOR_URL", None):
+                if not settings.DOC_PROCESSOR_URL:
                     sbx.finish_job(job_id, "failed", error="doc_processor_not_configured")
                     return
                 text = await _delegate_to_doc_processor(content, filename)

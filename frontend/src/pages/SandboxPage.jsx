@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from '../i18n/I18nContext'
 import {
   getSandboxSession, setSandboxSession, sandboxCreate, sandboxGet, sandboxDocs,
   sandboxIngest, sandboxJob, sandboxWipe, sandboxChat, sandboxChatStatus,
@@ -14,6 +15,7 @@ function fmtBytes(n) {
 }
 
 export default function SandboxPage() {
+  const { t } = useTranslation()
   const [phase, setPhase] = useState('loading') // loading | entry | workspace | wiped
   const [session, setSession] = useState(null)
   const [docs, setDocs] = useState([])
@@ -149,26 +151,26 @@ export default function SandboxPage() {
     } finally { setBusy(false); setConfirmWipe(false) }
   }
 
-  if (phase === 'loading') return <div style={S.center}>Loading…</div>
+  if (phase === 'loading') return <div style={S.center}>{t('sandboxLoading') || 'Loading…'}</div>
 
   if (phase === 'entry' || phase === 'wiped') {
     return (
       <div style={S.page}>
         <div style={S.card}>
-          <h1 style={S.h1}>{phase === 'wiped' ? 'Sandbox wiped' : 'Personal Data Sandbox'}</h1>
+          <h1 style={S.h1}>{phase === 'wiped' ? (t('sandboxWipedTitle') || 'Sandbox wiped') : (t('sandboxTitle') || 'Personal Data Sandbox')}</h1>
           <p style={S.p}>
             {phase === 'wiped'
-              ? 'All your documents, transcripts and vectors have been permanently deleted.'
-              : 'Upload your own CSVs, documents, audio or images — the copilot answers from OmniIntelOS knowledge plus your private files. Everything is scoped to this browser session and auto-deleted after 90 days.'}
+              ? (t('sandboxWipedMsg') || 'All your documents, transcripts and vectors have been permanently deleted.')
+              : (t('sandboxIntro') || 'Upload your own CSVs, documents, audio or images — the copilot answers from OmniIntelOS knowledge plus your private files. Everything is scoped to this browser session and auto-deleted after 90 days.')}
           </p>
           <ul style={S.list}>
-            <li>10 documents · 25 MB text · 50 MB media</li>
+            <li>{t('sandboxQuotaDocs') || '10 documents'} · {t('sandboxQuotaText') || '25 MB text'} · {t('sandboxQuotaMedia') || '50 MB media'}</li>
             <li>CSV, PDF, DOCX, TXT, audio (mp3/wav/m4a/ogg), images</li>
-            <li>One-click wipe — nothing persists</li>
+            <li>{t('sandboxQuotaWipe') || 'One-click wipe — nothing persists'}</li>
           </ul>
           {error && <p style={S.err}>{error}</p>}
           <button style={S.btn} onClick={start} disabled={busy}>
-            {busy ? 'Creating…' : phase === 'wiped' ? 'Start a new sandbox' : 'Start sandbox'}
+            {busy ? (t('sandboxCreating') || 'Creating…') : phase === 'wiped' ? (t('sandboxNew') || 'Start a new sandbox') : (t('sandboxStart') || 'Start sandbox')}
           </button>
         </div>
       </div>
@@ -180,15 +182,15 @@ export default function SandboxPage() {
 
   return (
     <div style={S.page}>
-      <div style={S.banner}>Sandbox — your data stays private to this session</div>
+      <div style={S.banner}>{t('sandboxBanner') || 'Sandbox — your data stays private to this session'}</div>
       {error && <div style={S.errBar}>{error}</div>}
 
       <div style={S.grid}>
         <div style={S.col}>
-          <h2 style={S.h2}>Your documents</h2>
-          <div style={S.quota}>Docs {docsUsed}/{docsMax} · {fmtBytes(quota?.bytes_used)} text · {fmtBytes(quota?.media_bytes_used)} media</div>
+          <h2 style={S.h2}>{t('sandboxYourDocs') || 'Your documents'}</h2>
+          <div style={S.quota}>Docs {docsUsed}/{docsMax} · {fmtBytes(quota?.bytes_used)} {t('sandboxTextLabel') || 'text'} · {fmtBytes(quota?.media_bytes_used)} {t('sandboxMediaLabel') || 'media'}</div>
           <button style={S.btnSmall} onClick={() => fileRef.current?.click()} disabled={docsUsed >= docsMax}>
-            Upload file
+            {t('sandboxUpload') || 'Upload file'}
           </button>
           <input ref={fileRef} type="file" accept={ACCEPT} style={{ display: 'none' }}
             onChange={(e) => { upload(e.target.files?.[0]); e.target.value = '' }} />
@@ -201,7 +203,7 @@ export default function SandboxPage() {
           ))}
 
           <div style={S.docList}>
-            {docs.length === 0 && <p style={S.muted}>No documents yet — upload one to ground the chat in your data.</p>}
+            {docs.length === 0 && <p style={S.muted}>{t('sandboxNoDocs') || 'No documents yet — upload one to ground the chat in your data.'}</p>}
             {docs.map((d) => (
               <div key={d.doc_id} style={S.doc}>
                 <div>
@@ -213,22 +215,22 @@ export default function SandboxPage() {
           </div>
 
           <button style={S.wipeBtn} onClick={() => setConfirmWipe(true)} disabled={busy}>
-            Wipe my data
+            {t('sandboxWipeBtn') || 'Wipe my data'}
           </button>
         </div>
 
         <div style={S.col}>
-          <h2 style={S.h2}>Chat</h2>
+          <h2 style={S.h2}>{t('sandboxChatTitle') || 'Chat'}</h2>
           <div style={S.chat}>
-            {messages.length === 0 && <p style={S.muted}>Ask anything — answers use OmniIntelOS knowledge plus your uploaded files.</p>}
+            {messages.length === 0 && <p style={S.muted}>{t('sandboxChatEmpty') || 'Ask anything — answers use OmniIntelOS knowledge plus your uploaded files.'}</p>}
             {messages.map((m, i) => (
               <div key={i} style={m.role === 'user' ? S.msgUser : S.msgBot}>{m.content}</div>
             ))}
           </div>
           <div style={S.inputRow}>
             <input style={S.input} value={input} onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && send()} placeholder="Ask about your documents…" />
-            <button style={S.btnSmall} onClick={send} disabled={busy || !input.trim()}>Send</button>
+              onKeyDown={(e) => e.key === 'Enter' && send()} placeholder={t('sandboxChatPlaceholder') || 'Ask about your documents…'} />
+            <button style={S.btnSmall} onClick={send} disabled={busy || !input.trim()}>{t('sandboxSend') || 'Send'}</button>
           </div>
         </div>
       </div>
@@ -236,11 +238,11 @@ export default function SandboxPage() {
       {confirmWipe && (
         <div style={S.modal}>
           <div style={S.modalCard}>
-            <h3 style={S.h3}>Wipe sandbox?</h3>
-            <p style={S.p}>This permanently deletes {docs.length} document(s), all extracted text, vectors and chat history for this session. This cannot be undone.</p>
+            <h3 style={S.h3}>{t('sandboxWipeTitle') || 'Wipe sandbox?'}</h3>
+            <p style={S.p}>{(t('sandboxWipeMsg') || 'This permanently deletes {count} document(s), all extracted text, vectors and chat history for this session. This cannot be undone.').replace('{count}', docs.length)}</p>
             <div style={S.modalRow}>
-              <button style={S.wipeBtn} onClick={wipe} disabled={busy}>Yes, wipe everything</button>
-              <button style={S.btnSmall} onClick={() => setConfirmWipe(false)}>Cancel</button>
+              <button style={S.wipeBtn} onClick={wipe} disabled={busy}>{t('sandboxWipeConfirm') || 'Yes, wipe everything'}</button>
+              <button style={S.btnSmall} onClick={() => setConfirmWipe(false)}>{t('sandboxCancel') || 'Cancel'}</button>
             </div>
           </div>
         </div>

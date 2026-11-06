@@ -59,6 +59,8 @@ export default function AdminPage() {
   const [sandboxes, setSandboxes] = useState(null)
   const [sandboxDetail, setSandboxDetail] = useState(null)
   const [sandboxLoading, setSandboxLoading] = useState(false)
+  const [docPreview, setDocPreview] = useState(null) // {title, content} | null
+  const [docPreviewLoading, setDocPreviewLoading] = useState(false)
 
   const fetchSandboxes = useCallback(async () => {
     setSandboxLoading(true)
@@ -530,7 +532,10 @@ export default function AdminPage() {
                       <td style={{ padding: '6px 8px', color: 'var(--text-2)' }}>{d.chars} chars</td>
                       <td style={{ padding: '6px 8px' }}>
                         <button className="btn btn-ghost btn-sm" onClick={async () => {
-                          try { const { data } = await api.adminSandboxDocPreview(sandboxDetail.session.id, d.doc_id); alert(`${d.title}\n\n${(data.content || '').slice(0, 3000)}`) } catch { alert('preview_failed') }
+                          setDocPreviewLoading(true)
+                          try { const { data } = await api.adminSandboxDocPreview(sandboxDetail.session.id, d.doc_id); setDocPreview({ title: d.title, content: data.content || '' }) }
+                          catch { setDocPreview({ title: d.title, content: 'preview_failed' }) }
+                          finally { setDocPreviewLoading(false) }
                         }}>Preview</button>
                       </td>
                     </tr>
@@ -582,6 +587,21 @@ export default function AdminPage() {
               )}
             </Panel>
           )}
+        </div>
+      )}
+
+      {/* Sandbox doc preview modal */}
+      {(docPreview || docPreviewLoading) && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.6)', display: 'grid', placeItems: 'center', zIndex: 60 }} onClick={() => setDocPreview(null)}>
+          <div style={{ background: 'var(--bg-1, #12181F)', border: '1px solid var(--border)', borderRadius: 12, padding: '1.25rem', maxWidth: 720, width: '90%', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+              <h3 style={{ margin: 0, fontSize: '1rem' }}>{docPreview?.title || 'Preview'}</h3>
+              <button className="btn btn-ghost btn-sm" onClick={() => setDocPreview(null)}>✕</button>
+            </div>
+            {docPreviewLoading ? <div style={{ color: 'var(--text-2)' }}>Loading…</div> : (
+              <pre style={{ margin: 0, overflow: 'auto', fontSize: '.8rem', whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: 'var(--text-1)' }}>{docPreview?.content}</pre>
+            )}
+          </div>
         </div>
       )}
     </div>
