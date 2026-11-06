@@ -319,7 +319,7 @@ def wipe_session(session: Dict[str, Any]) -> Dict[str, int]:
     try:
         with conn.cursor() as cur:
             cur.execute("SELECT doc_id FROM knowledge_base WHERE owner_user_id = %s", [owner])
-            doc_ids = [r[0] for r in cur.fetchall()]
+            doc_ids = [r["doc_id"] if isinstance(r, dict) else r[0] for r in cur.fetchall()]
             # 2. Delete knowledge rows + job/file bookkeeping.
             cur.execute("DELETE FROM knowledge_base WHERE owner_user_id = %s", [owner])
             cur.execute("DELETE FROM sandbox_ingest_jobs WHERE session_id = %s", [sid])
