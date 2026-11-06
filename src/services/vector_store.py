@@ -320,6 +320,14 @@ class QdrantVectorStore:
         return [{"title": p.payload.get("title", ""), "content": p.payload.get("content", ""),
                  "source": p.payload.get("source", ""), "score": float(p.score)} for p in pts]
 
+    def delete_by_doc_ids(self, doc_ids: List[str]) -> int:
+        """Delete points whose doc_id hashes to a stored point id — used by the
+        sandbox wipe path. Missing ids are ignored by Qdrant."""
+        if not doc_ids:
+            return 0
+        self.client.delete(self.coll, points=[self._pid(d) for d in doc_ids])
+        return len(doc_ids)
+
     def count(self) -> int:
         return int(self.client.count(self.coll).count)
 

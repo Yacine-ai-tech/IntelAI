@@ -34,6 +34,7 @@ import UserGuidePage from './pages/UserGuidePage'
 import ResearchPage from './pages/ResearchPage'
 import ArchitecturePage from './pages/ArchitecturePage'
 import BenchmarkPage from './pages/BenchmarkPage'
+import SandboxPage from './pages/SandboxPage'
 
 function ProtectedRoute({ children, page }) {
   const { isAuthenticated, loading, hasPage } = useAuth()
@@ -81,6 +82,7 @@ export default function App() {
       <Route path="/login" element={
         isAuthenticated ? <Navigate to="/workspace" replace /> : <LoginPage />
       } />
+      <Route path="/sandbox" element={<SandboxPage />} />
 
       <Route path="/" element={
         <ProtectedRoute><Layout /></ProtectedRoute>

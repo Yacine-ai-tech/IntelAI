@@ -600,6 +600,21 @@ async def startup():
     _asyncio.create_task(_asyncio.to_thread(_vector_selfheal))
     log.info("Vector store self-heal scheduled (background)")
 
+    async def _sandbox_sweeper():
+        """Hourly: wipe sandbox sessions past expiry+grace or the 90-day hard cap."""
+        from src.services import sandbox as sbx
+        while True:
+            await _asyncio.sleep(3600)
+            try:
+                wiped = await _asyncio.to_thread(sbx.sweep_expired)
+                if wiped:
+                    log.info("Sandbox sweeper wiped %d expired session(s)", wiped)
+            except Exception as e:
+                log.warning("Sandbox sweeper failed: %s", e)
+
+    _asyncio.create_task(_sandbox_sweeper())
+    log.info("Sandbox sweeper scheduled (hourly)")
+
     # In memory mode, warm the in-process dense+sparse index. With Qdrant configured,
     # retrieval must use its persistent dense index and must not construct a duplicate
     # document-vector index in this process.
@@ -1931,6 +1946,279 @@ async def ingest_audio(
         "chars": len(text), "transcript": transcript, "analysis": analysis,
         "scope": "global" if global_scope else "user",
     }
+
+
+# ════════════════════════════════════════════════════════════
+# PERSONAL DATA SANDBOX — scoped visitor workspaces
+# ════════════════════════════════════════════════════════════
+
+class SandboxSessionResponse(BaseModel):
+    session_id: str
+    token: str
+    token_type: str = "bearer"
+    expires_at: str
+    quota: Dict[str, Any]
+
+
+def _sandbox_session_or_404(session_id: str) -> Dict[str, Any]:
+    from src.services import sandbox as sbx
+    session = sbx.get_session(session_id)
+    if not session or sbx.is_wiped_or_expired(session):
+        raise HTTPException(status_code=404, detail="sandbox_not_found_or_expired")
+    return session
+
+
+@app.post("/api/v1/sandbox/session", response_model=SandboxSessionResponse)
+async def sandbox_create_session(request: Request):
+    """Create a personal sandbox — a demo-scoped owner plus quota registry.
+    Public but IP-rate-limited; returns a viewer-scoped JWT that can only reach
+    sandbox routes and the chat sandbox_session field."""
+    from src.services import sandbox as sbx
+    from src.services.pg_store import _demo_session_scoping_enabled
+    if not _demo_session_scoping_enabled():
+        raise HTTPException(status_code=503, detail="sandbox_requires_demo_scoping")
+    client_ip = request.client.host if request.client else None
+    # Per-IP throttle: count sessions created from this ip_hash in 24h.
+    sbx._ensure_schema()
+    from src.services.pg_store import _get_conn
+    conn = _get_conn()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT COUNT(*) FROM sandbox_sessions WHERE ip_hash = %s AND created_at > now() - interval '1 day'",
+                [sbx.hash_ip(client_ip)],
+            )
+            if (cur.fetchone() or [0])[0] >= 5:
+                raise HTTPException(status_code=429, detail="sandbox_rate_limited")
+    finally:
+        conn.close()
+    result = sbx.create_session(ip=client_ip, user_agent=request.headers.get("user-agent"))
+    return SandboxSessionResponse(**{k: result[k] for k in ("session_id", "token", "token_type", "expires_at", "quota")})
+
+
+@app.get("/api/v1/sandbox/session")
+async def sandbox_get_session(x_sandbox_session: Optional[str] = Header(default=None, alias="X-Sandbox-Session")):
+    from src.services import sandbox as sbx
+    if not x_sandbox_session:
+        raise HTTPException(status_code=401, detail="X-Sandbox-Session header required")
+    session = _sandbox_session_or_404(x_sandbox_session)
+    docs = await asyncio.to_thread(sbx.list_docs, session["owner_user_id"])
+    return {"session": {k: str(v) if hasattr(v, "isoformat") else v for k, v in session.items() if k != "owner_user_id"},
+            "quota": sbx.quota_status(session), "docs": docs}
+
+
+@app.post("/api/v1/sandbox/ingest")
+async def sandbox_ingest(
+    request: Request,
+    file: UploadFile = File(...),
+    x_sandbox_session: Optional[str] = Header(default=None, alias="X-Sandbox-Session"),
+):
+    """Upload one file into the sandbox. Same extraction pipeline as
+    /ingest/document (plain-text decode or DocIntel delegation) plus audio via
+    AUDIO_PROCESSOR_URL; quota + rate limits enforced per session."""
+    from src.services import sandbox as sbx
+    from src.services.pg_store import store_knowledge_docs, log_audit_event
+    if not x_sandbox_session:
+        raise HTTPException(status_code=401, detail="X-Sandbox-Session header required")
+    session = _sandbox_session_or_404(x_sandbox_session)
+    content = await file.read()
+    filename = file.filename or "upload"
+    kind = sbx.classify_filename(filename)
+    if kind == "unsupported":
+        raise HTTPException(status_code=415, detail="unsupported_file_type")
+
+    err = sbx.check_quota(session, len(content), kind)
+    if err == "quota_docs_exceeded":
+        raise HTTPException(status_code=429, detail="quota_docs_exceeded")
+    if err == "quota_bytes_exceeded" or err == "quota_media_bytes_exceeded":
+        raise HTTPException(status_code=429, detail=err)
+    if err == "rate_limited":
+        raise HTTPException(status_code=429, detail="rate_limited")
+
+    job_id = sbx.create_job(x_sandbox_session, filename, kind)
+    owner = session["owner_user_id"]
+
+    async def _run():
+        try:
+            if kind == "audio":
+                text = await _sandbox_audio_text(content, filename)
+            elif kind in ("text",):
+                text = content.decode("utf-8", errors="ignore")
+            else:  # document | image
+                if not settings.DOCINTEL_URL and not getattr(settings, "DOC_PROCESSOR_URL", None):
+                    sbx.finish_job(job_id, "failed", error="doc_processor_not_configured")
+                    return
+                text = await _delegate_to_doc_processor(content, filename)
+            from src.services.security import SecurityScanner
+            text = await asyncio.to_thread(SecurityScanner.redact_text, text)
+            if not text.strip():
+                sbx.finish_job(job_id, "failed", error="empty_extraction")
+                return
+            doc_id = str(uuid.uuid4())
+            docs_df = pd.DataFrame([{
+                "doc_id": doc_id, "title": filename, "content": text,
+                "source": "sandbox", "embedding": "",
+            }])
+            await asyncio.to_thread(store_knowledge_docs, docs_df, owner_user_id=owner)
+            await asyncio.to_thread(log_audit_event, f"sandbox:{x_sandbox_session[-6:]}", "SANDBOX_INGEST", f"{filename} ({kind})")
+            sbx.bump_usage(x_sandbox_session, docs=1,
+                           text_bytes=len(text.encode()) if kind == "text" else 0,
+                           media_bytes=len(content) if kind != "text" else 0)
+            sbx.finish_job(job_id, "done", chunks=1)
+        except HTTPException as e:
+            sbx.finish_job(job_id, "failed", error=str(e.detail)[:300])
+        except Exception as e:
+            log.warning("sandbox ingest job %s failed: %s", job_id, e)
+            sbx.finish_job(job_id, "failed", error=str(e)[:300])
+
+    asyncio.create_task(_run())
+    return {"status": "queued", "job_id": job_id, "kind": kind}
+
+
+async def _sandbox_audio_text(content: bytes, filename: str) -> str:
+    """Audio → transcript via the same AUDIO_PROCESSOR_URL contract as /ingest/audio."""
+    if not settings.AUDIO_PROCESSOR_URL:
+        raise HTTPException(status_code=501, detail="audio_processor_not_configured")
+    import httpx
+    from src.services.security import SecurityScanner
+    headers = {}
+    token = getattr(settings, "AUDIO_PROCESSOR_TOKEN", "") or ""
+    if token:
+        headers["X-Internal-Token"] = token
+    async with httpx.AsyncClient(timeout=300) as client:
+        resp = await client.post(
+            f"{settings.AUDIO_PROCESSOR_URL}/pipeline",
+            files={"file": (filename, content)},
+            data={"analysis_type": "general"},
+            headers=headers,
+        )
+        resp.raise_for_status()
+        result = resp.json()
+    transcript = result.get("transcript", {})
+    text = transcript.get("text", "") if isinstance(transcript, dict) else str(transcript)
+    if not text.strip():
+        raise HTTPException(status_code=502, detail="audio_processor_returned_no_transcript")
+    return await asyncio.to_thread(SecurityScanner.redact_text, text)
+
+
+@app.get("/api/v1/sandbox/ingest/{job_id}")
+async def sandbox_ingest_status(job_id: str, x_sandbox_session: Optional[str] = Header(default=None, alias="X-Sandbox-Session")):
+    from src.services import sandbox as sbx
+    if not x_sandbox_session:
+        raise HTTPException(status_code=401, detail="X-Sandbox-Session header required")
+    _sandbox_session_or_404(x_sandbox_session)
+    job = sbx.get_job(job_id, x_sandbox_session)
+    if not job:
+        raise HTTPException(status_code=404, detail="job_not_found")
+    return {k: str(v) if hasattr(v, "isoformat") else v for k, v in job.items()}
+
+
+@app.delete("/api/v1/sandbox/session")
+async def sandbox_wipe(x_sandbox_session: Optional[str] = Header(default=None, alias="X-Sandbox-Session")):
+    """Wipe everything the sandbox owns — knowledge rows, vectors, jobs. Idempotent."""
+    from src.services import sandbox as sbx
+    if not x_sandbox_session:
+        raise HTTPException(status_code=401, detail="X-Sandbox-Session header required")
+    session = _sandbox_session_or_404(x_sandbox_session)
+    result = await asyncio.to_thread(sbx.wipe_session, session)
+    return {"status": "wiped", **result}
+
+
+@app.get("/api/v1/sandbox/docs")
+async def sandbox_list_docs(x_sandbox_session: Optional[str] = Header(default=None, alias="X-Sandbox-Session")):
+    from src.services import sandbox as sbx
+    if not x_sandbox_session:
+        raise HTTPException(status_code=401, detail="X-Sandbox-Session header required")
+    session = _sandbox_session_or_404(x_sandbox_session)
+    docs = await asyncio.to_thread(sbx.list_docs, session["owner_user_id"])
+    return {"docs": [{k: str(v) if hasattr(v, "isoformat") else v for k, v in d.items()} for d in docs]}
+
+
+# ── Admin visibility ──────────────────────────────────────────
+
+@app.get("/api/v1/admin/sandboxes")
+async def admin_list_sandboxes(user: TokenData = Depends(require_role("admin"))):
+    from src.services import sandbox as sbx
+    sbx._ensure_schema()
+    from src.services.pg_store import _get_conn
+    conn = _get_conn()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                """SELECT id, owner_user_id, created_at, expires_at, wiped_at, docs_count, bytes_used, media_bytes, ip_hash
+                   FROM sandbox_sessions ORDER BY created_at DESC LIMIT 200"""
+            )
+            cols = ["id", "owner_user_id", "created_at", "expires_at", "wiped_at", "docs_count",
+                    "bytes_used", "media_bytes", "ip_hash"]
+            rows = [dict(zip(cols, r)) for r in cur.fetchall()]
+            cur.execute(
+                """SELECT COUNT(*) FILTER (WHERE wiped_at IS NULL AND expires_at > now()) AS active,
+                          COUNT(*) AS total, COALESCE(SUM(docs_count),0) AS docs, COALESCE(SUM(bytes_used),0) AS bytes
+                   FROM sandbox_sessions"""
+            )
+            stats = dict(zip(["active", "total", "docs", "bytes"], cur.fetchone()))
+    finally:
+        conn.close()
+    for r in rows:
+        for k, v in list(r.items()):
+            r[k] = str(v) if hasattr(v, "isoformat") else v
+    return {"stats": stats, "sessions": rows}
+
+
+@app.get("/api/v1/admin/sandboxes/{session_id}")
+async def admin_sandbox_detail(session_id: str, user: TokenData = Depends(require_role("admin"))):
+    from src.services import sandbox as sbx
+    from src.services.pg_store import log_audit_event
+    session = sbx.get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="sandbox_not_found")
+    await asyncio.to_thread(log_audit_event, user.username, "SANDBOX_ADMIN_VIEW", f"session {session_id}")
+    docs = await asyncio.to_thread(sbx.list_docs, session["owner_user_id"])
+    jobs = sbx._ensure_schema() or None
+    from src.services.pg_store import _get_conn
+    conn = _get_conn()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                """SELECT id, filename, media_type, status, chunks_written, error, created_at, finished_at
+                   FROM sandbox_ingest_jobs WHERE session_id = %s ORDER BY created_at DESC LIMIT 100""",
+                [session_id],
+            )
+            jcols = ["id", "filename", "media_type", "status", "chunks_written", "error", "created_at", "finished_at"]
+            job_rows = [dict(zip(jcols, r)) for r in cur.fetchall()]
+    finally:
+        conn.close()
+    for rows in (docs, job_rows):
+        for r in rows:
+            for k, v in list(r.items()):
+                r[k] = str(v) if hasattr(v, "isoformat") else v
+    return {"session": {k: str(v) if hasattr(v, "isoformat") else v for k, v in session.items()},
+            "quota": sbx.quota_status(session), "docs": docs, "jobs": job_rows}
+
+
+@app.get("/api/v1/admin/sandboxes/{session_id}/docs/{doc_id}/preview")
+async def admin_sandbox_doc_preview(session_id: str, doc_id: str, user: TokenData = Depends(require_role("admin"))):
+    """Admin preview of a sandbox doc's extracted text — audit-logged, capped."""
+    from src.services import sandbox as sbx
+    from src.services.pg_store import _get_conn, log_audit_event
+    session = sbx.get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="sandbox_not_found")
+    conn = _get_conn()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                """SELECT title, source, content FROM knowledge_base
+                   WHERE doc_id = %s AND owner_user_id = %s""",
+                [doc_id, session["owner_user_id"]],
+            )
+            row = cur.fetchone()
+    finally:
+        conn.close()
+    if not row:
+        raise HTTPException(status_code=404, detail="doc_not_found")
+    await asyncio.to_thread(log_audit_event, user.username, "SANDBOX_ADMIN_PREVIEW", f"{session_id}/{doc_id}")
+    return {"doc_id": doc_id, "title": row[0], "source": row[1], "content": (row[2] or "")[:20000]}
 
 
 # ════════════════════════════════════════════════════════════

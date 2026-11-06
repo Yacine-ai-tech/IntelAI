@@ -333,3 +333,46 @@ export default api
 
 export const deleteFile = (fileId) => api.delete(`/files/${fileId}`)
 
+// ── Personal Data Sandbox ──────────────────────────────
+// Sandbox tokens live in sessionStorage (never localStorage) and are sent as a
+// plain Bearer JWT plus the X-Sandbox-Session id — the shared `api` instance is
+// NOT used because it would attach the visitor's demo access_token instead.
+const SBX_KEY = 'sandbox_session'
+
+export function getSandboxSession() {
+  try { return JSON.parse(sessionStorage.getItem(SBX_KEY) || 'null') } catch { return null }
+}
+export function setSandboxSession(s) {
+  if (s) sessionStorage.setItem(SBX_KEY, JSON.stringify(s))
+  else sessionStorage.removeItem(SBX_KEY)
+}
+
+const sbxApi = axios.create({ baseURL: API_BASE, timeout: 30000 })
+sbxApi.interceptors.request.use((config) => {
+  const s = getSandboxSession()
+  if (s?.token) config.headers.Authorization = `Bearer ${s.token}`
+  if (s?.session_id) config.headers['X-Sandbox-Session'] = s.session_id
+  return config
+})
+
+export const sandboxCreate = () => axios.post(`${API_BASE}/sandbox/session`, {}, { timeout: 15000 })
+export const sandboxGet = () => sbxApi.get('/sandbox/session')
+export const sandboxDocs = () => sbxApi.get('/sandbox/docs')
+export const sandboxIngest = (file) => {
+  const fd = new FormData()
+  fd.append('file', file)
+  return sbxApi.post('/sandbox/ingest', fd, { headers: { 'Content-Type': 'multipart/form-data' }, timeout: 60000 })
+}
+export const sandboxJob = (jobId) => sbxApi.get(`/sandbox/ingest/${jobId}`)
+export const sandboxWipe = () => sbxApi.delete('/sandbox/session')
+// Chat with the sandbox JWT — same /chat/async contract, scope middleware
+// isolates retrieval to global + this sandbox's docs automatically.
+export const sandboxChat = (message, sessionId) =>
+  sbxApi.post('/chat/async', { message, session_id: sessionId }, { timeout: 15000 })
+export const sandboxChatStatus = (jobId) => sbxApi.get(`/chat/${jobId}`, { timeout: 15000 })
+
+// Admin sandbox visibility (admin JWT via shared `api`).
+export const adminListSandboxes = () => api.get('/admin/sandboxes')
+export const adminSandboxDetail = (id) => api.get(`/admin/sandboxes/${id}`)
+export const adminSandboxDocPreview = (sid, docId) => api.get(`/admin/sandboxes/${sid}/docs/${docId}/preview`)
+

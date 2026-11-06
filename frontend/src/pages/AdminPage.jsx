@@ -55,6 +55,27 @@ export default function AdminPage() {
   const [docIntelError, setDocIntelError] = useState('')
   const [openDocId, setOpenDocId] = useState(null)
 
+  // Sandboxes — visitor personal workspaces
+  const [sandboxes, setSandboxes] = useState(null)
+  const [sandboxDetail, setSandboxDetail] = useState(null)
+  const [sandboxLoading, setSandboxLoading] = useState(false)
+
+  const fetchSandboxes = useCallback(async () => {
+    setSandboxLoading(true)
+    try {
+      const { data } = await api.adminListSandboxes()
+      setSandboxes(data)
+    } catch { setSandboxes({ stats: null, sessions: [] }) }
+    finally { setSandboxLoading(false) }
+  }, [])
+
+  const openSandbox = async (id) => {
+    setSandboxLoading(true)
+    try { const { data } = await api.adminSandboxDetail(id); setSandboxDetail(data) }
+    catch { setSandboxDetail(null) }
+    finally { setSandboxLoading(false) }
+  }
+
   const fetchDocIntel = useCallback(async () => {
     setDocIntelLoading(true)
     setDocIntelError('')
@@ -170,6 +191,7 @@ export default function AdminPage() {
         <button className={tab === 'scenarios' ? 'active' : ''} onClick={() => setTab('scenarios')}><FlaskConical size={14} /> Scenarios</button>
         <button className={tab === 'infra'     ? 'active' : ''} onClick={() => setTab('infra')}    ><Server   size={14} /> Infrastructure</button>
         <button className={tab === 'docintel' ? 'active' : ''} onClick={() => { setTab('docintel'); fetchDocIntel() }}><FileText size={14} /> DocIntel</button>
+        <button className={tab === 'sandboxes' ? 'active' : ''} onClick={() => { setTab('sandboxes'); fetchSandboxes() }}><ShieldCheck size={14} /> Sandboxes</button>
       </div>
 
       {/* ── Users ── */}
@@ -474,6 +496,92 @@ export default function AdminPage() {
               </div>
             )}
           </Panel>
+        </div>
+      )}
+
+      {/* ── Sandboxes ── */}
+      {tab === 'sandboxes' && (
+        <div>
+          {sandboxes?.stats && (
+            <StatGrid>
+              <Stat label="Active sandboxes" value={sandboxes.stats.active ?? 0} />
+              <Stat label="Total sessions" value={sandboxes.stats.total ?? 0} />
+              <Stat label="Documents stored" value={sandboxes.stats.docs ?? 0} />
+              <Stat label="Storage used" value={`${((sandboxes.stats.bytes ?? 0) / 1048576).toFixed(1)} MB`} />
+            </StatGrid>
+          )}
+          {sandboxDetail ? (
+            <Panel title={`Sandbox ${sandboxDetail.session.id}`}
+              actions={<button className="btn btn-ghost btn-sm" onClick={() => { setSandboxDetail(null); fetchSandboxes() }}>← Back</button>}>
+              <div style={{ fontSize: '.82rem', color: 'var(--text-2)', marginBottom: 12 }}>
+                Created {new Date(sandboxDetail.session.created_at).toLocaleString()} ·
+                Expires {new Date(sandboxDetail.session.expires_at).toLocaleString()} ·
+                {sandboxDetail.session.wiped_at ? ' WIPED' : ''} ·
+                Docs {sandboxDetail.session.docs_count} · {(sandboxDetail.session.bytes_used / 1048576).toFixed(1)} MB
+              </div>
+              <h4 style={{ margin: '12px 0 6px' }}>Documents</h4>
+              {(sandboxDetail.docs || []).length === 0 && <div style={{ color: 'var(--text-2)', fontSize: '.85rem' }}>No documents.</div>}
+              <table style={{ width: '100%', fontSize: '.82rem', borderCollapse: 'collapse' }}>
+                <tbody>
+                  {(sandboxDetail.docs || []).map((d) => (
+                    <tr key={d.doc_id} style={{ borderBottom: '1px solid var(--border)' }}>
+                      <td style={{ padding: '6px 8px' }}>{d.title}</td>
+                      <td style={{ padding: '6px 8px', color: 'var(--text-2)' }}>{d.source}</td>
+                      <td style={{ padding: '6px 8px', color: 'var(--text-2)' }}>{d.chars} chars</td>
+                      <td style={{ padding: '6px 8px' }}>
+                        <button className="btn btn-ghost btn-sm" onClick={async () => {
+                          try { const { data } = await api.adminSandboxDocPreview(sandboxDetail.session.id, d.doc_id); alert(`${d.title}\n\n${(data.content || '').slice(0, 3000)}`) } catch { alert('preview_failed') }
+                        }}>Preview</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <h4 style={{ margin: '16px 0 6px' }}>Ingest jobs</h4>
+              <table style={{ width: '100%', fontSize: '.82rem', borderCollapse: 'collapse' }}>
+                <tbody>
+                  {(sandboxDetail.jobs || []).map((j) => (
+                    <tr key={j.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                      <td style={{ padding: '6px 8px' }}>{j.filename}</td>
+                      <td style={{ padding: '6px 8px', color: 'var(--text-2)' }}>{j.media_type}</td>
+                      <td style={{ padding: '6px 8px' }}>{j.status}{j.error ? ` — ${j.error}` : ''}</td>
+                      <td style={{ padding: '6px 8px', color: 'var(--text-2)' }}>{j.created_at ? new Date(j.created_at).toLocaleString() : ''}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Panel>
+          ) : (
+            <Panel title="Visitor sandboxes" actions={<button className="btn btn-ghost btn-sm" onClick={fetchSandboxes} disabled={sandboxLoading}><RefreshCw size={14} /></button>}>
+              {sandboxLoading && !sandboxes ? <Loading /> : (
+                <table style={{ width: '100%', fontSize: '.82rem', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ textAlign: 'left', color: 'var(--text-2)', borderBottom: '1px solid var(--border)' }}>
+                      <th style={{ padding: '6px 8px' }}>Session</th><th style={{ padding: '6px 8px' }}>Created</th>
+                      <th style={{ padding: '6px 8px' }}>Expires</th><th style={{ padding: '6px 8px' }}>Docs</th>
+                      <th style={{ padding: '6px 8px' }}>Size</th><th style={{ padding: '6px 8px' }}>Status</th><th style={{ padding: '6px 8px' }}></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(sandboxes?.sessions || []).map((s) => (
+                      <tr key={s.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                        <td style={{ padding: '6px 8px', fontFamily: 'monospace' }}>{s.id}</td>
+                        <td style={{ padding: '6px 8px', color: 'var(--text-2)' }}>{s.created_at ? new Date(s.created_at).toLocaleString() : '—'}</td>
+                        <td style={{ padding: '6px 8px', color: 'var(--text-2)' }}>{s.expires_at ? new Date(s.expires_at).toLocaleString() : '—'}</td>
+                        <td style={{ padding: '6px 8px' }}>{s.docs_count}</td>
+                        <td style={{ padding: '6px 8px', color: 'var(--text-2)' }}>{((s.bytes_used || 0) / 1048576).toFixed(1)} MB</td>
+                        <td style={{ padding: '6px 8px' }}>{s.wiped_at ? 'wiped' : (s.expires_at && new Date(s.expires_at) < new Date() ? 'expired' : 'active')}</td>
+                        <td style={{ padding: '6px 8px' }}><button className="btn btn-ghost btn-sm" onClick={() => openSandbox(s.id)}>View</button></td>
+                      </tr>
+                    ))}
+                    {(sandboxes?.sessions || []).length === 0 && (
+                      <tr><td colSpan={7} style={{ padding: '12px 8px', color: 'var(--text-2)' }}>No sandboxes yet — visitors create them at /sandbox.</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              )}
+            </Panel>
+          )}
         </div>
       )}
     </div>
