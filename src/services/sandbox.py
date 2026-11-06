@@ -159,7 +159,7 @@ def get_session(session_id: str) -> Optional[Dict[str, Any]]:
                 return None
             cols = ["id", "owner_user_id", "expires_at", "wiped_at", "docs_count", "bytes_used",
                     "media_bytes", "created_at"]
-            return dict(zip(cols, row))
+            return row if isinstance(row, dict) else dict(zip(cols, row))
     finally:
         conn.close()
 
@@ -208,7 +208,9 @@ def jobs_rate_limited(session_id: str) -> Optional[str]:
                    WHERE session_id = %s AND created_at > now() - interval '1 hour'""",
                 [session_id],
             )
-            if (cur.fetchone() or [0])[0] >= MAX_JOBS_PER_HOUR:
+            row = cur.fetchone() or {}
+            count = int(row.get("count", row.get("c", 0)) if isinstance(row, dict) else (row[0] if row else 0))
+            if count >= MAX_JOBS_PER_HOUR:
                 return "rate_limited"
     finally:
         conn.close()
@@ -265,7 +267,7 @@ def get_job(job_id: str, session_id: str) -> Optional[Dict[str, Any]]:
                 return None
             cols = ["id", "session_id", "filename", "media_type", "status", "chunks_written",
                     "error", "created_at", "finished_at"]
-            return dict(zip(cols, row))
+            return row if isinstance(row, dict) else dict(zip(cols, row))
     finally:
         conn.close()
 
@@ -298,7 +300,7 @@ def list_docs(owner_user_id: str) -> List[Dict[str, Any]]:
                 [owner_user_id],
             )
             cols = ["doc_id", "title", "source", "language", "created_at", "chars"]
-            return [dict(zip(cols, r)) for r in cur.fetchall()]
+            return [r if isinstance(r, dict) else dict(zip(cols, r)) for r in cur.fetchall()]
     finally:
         conn.close()
 

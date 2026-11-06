@@ -2000,10 +2000,11 @@ async def sandbox_create_session(request: Request):
     try:
         with conn.cursor() as cur:
             cur.execute(
-                "SELECT COUNT(*) FROM sandbox_sessions WHERE ip_hash = %s AND created_at > now() - interval '1 day'",
+                "SELECT COUNT(*) AS c FROM sandbox_sessions WHERE ip_hash = %s AND created_at > now() - interval '1 day'",
                 [sbx.hash_ip(client_ip)],
             )
-            if (cur.fetchone() or [0])[0] >= 5:
+            row = cur.fetchone() or {}
+            if int(row.get("c", row.get("count", 0)) if isinstance(row, dict) else (row[0] if row else 0)) >= 5:
                 raise HTTPException(status_code=429, detail="sandbox_rate_limited")
     finally:
         conn.close()
@@ -2165,13 +2166,13 @@ async def admin_list_sandboxes(user: TokenData = Depends(require_role("admin")))
             )
             cols = ["id", "owner_user_id", "created_at", "expires_at", "wiped_at", "docs_count",
                     "bytes_used", "media_bytes", "ip_hash"]
-            rows = [dict(zip(cols, r)) for r in cur.fetchall()]
+            rows = [r if isinstance(r, dict) else dict(zip(cols, r)) for r in cur.fetchall()]
             cur.execute(
                 """SELECT COUNT(*) FILTER (WHERE wiped_at IS NULL AND expires_at > now()) AS active,
                           COUNT(*) AS total, COALESCE(SUM(docs_count),0) AS docs, COALESCE(SUM(bytes_used),0) AS bytes
                    FROM sandbox_sessions"""
             )
-            stats = dict(zip(["active", "total", "docs", "bytes"], cur.fetchone()))
+            stats = cur.fetchone() or {}
     finally:
         conn.close()
     for r in rows:
@@ -2200,7 +2201,7 @@ async def admin_sandbox_detail(session_id: str, user: TokenData = Depends(requir
                 [session_id],
             )
             jcols = ["id", "filename", "media_type", "status", "chunks_written", "error", "created_at", "finished_at"]
-            job_rows = [dict(zip(jcols, r)) for r in cur.fetchall()]
+            job_rows = [r if isinstance(r, dict) else dict(zip(jcols, r)) for r in cur.fetchall()]
     finally:
         conn.close()
     for rows in (docs, job_rows):
