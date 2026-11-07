@@ -38,7 +38,8 @@ anthropic>=0.40.0
 openai>=1.55.0
 
 # ── Retrieval — hybrid (dense + BM25 + rerank) ──
-sentence-transformers[onnx]==6.2.0
+sentence-transformers==6.2.0
+optimum[onnxruntime]==2.3.0
 transformers==5.22.2
 huggingface-hub==2.4.0
 sentencepiece>=0.2.0
