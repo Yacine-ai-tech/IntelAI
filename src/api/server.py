@@ -1859,9 +1859,13 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
             "; ".join(errors))
         return best
 
+    # Log the internal detail server-side; the client gets a generic message —
+    # upstream URLs and internal route paths must never leak to visitors.
+    log.warning("Document extraction failed for %s. Processor: %s. Tried: %s",
+                filename, settings.DOC_PROCESSOR_URL, "; ".join(errors))
     raise RuntimeError(
-        f"document processor at {settings.DOC_PROCESSOR_URL} could not extract text "
-        f"from {filename}. Tried: " + "; ".join(errors)
+        f"could not extract text from {filename} — the file may be unsupported, "
+        "scanned-only, or too complex. Try a different format or a clearer scan."
     )
 
 
