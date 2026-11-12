@@ -3827,7 +3827,7 @@ async def spa_fallback(full_path: str):
     /dashboard, /chat, /api-docs, /settings and /knowledge-graph all returned 404 before
     this existed.
 
-    A split deploy (Vercel frontend + this API) never hit it because vercel.json already
+    A split deploy (static frontend + this API) never hit it because the host's SPA fallback already
     rewrites /(.*) to /index.html — which is exactly why it survived: the hosted demo
     masks a bug that every self-hoster would hit immediately.
 

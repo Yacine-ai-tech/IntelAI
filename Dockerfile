@@ -30,7 +30,7 @@ COPY scripts /app/scripts
 # scripts/seed_data.py, not something the running server itself needs on disk.
 COPY data/glossary.py data/glossary_fr.py /app/data/
 # Only the built SPA — see .dockerignore. server.py serves it when present, so one
-# container can host API + UI; a split deploy (Vercel frontend) simply ignores it.
+# container can host API + UI; a split deploy (static frontend) simply ignores it.
 COPY frontend/dist /app/frontend/dist
 COPY main.py /app/main.py
 
