@@ -25,4 +25,4 @@ build: ## Build the app image
 deploy-info: ## How IntelAI deploys
 	@echo "IntelAI deploys as a containerized service built from the Dockerfile."
 	@echo "Production runs the container behind a reverse proxy with Postgres and Qdrant."
-	@echo "Frontend deploys separately to Vercel (https://intelai-ui-2026.vercel.app)."
+	@echo "Frontend deploys separately to Cloudflare Pages (ui-intelai.ysiddo-ai-projects.app)."
