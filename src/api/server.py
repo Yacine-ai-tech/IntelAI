@@ -3246,7 +3246,11 @@ async def reindex_vectors(force: bool = True, user: TokenData = Depends(require_
 @app.get("/api/v1/admin/docintel/stats")
 async def get_admin_docintel_stats(user: TokenData = Depends(require_role("admin"))):
     """Fetch live DocIntel extraction statistics and database metrics from the DocIntel service."""
-    doc_url = settings.DOC_PROCESSOR_URL or "https://docintel.ysiddo-ai-projects.app"
+    doc_url = settings.DOC_PROCESSOR_URL
+    if not doc_url:
+        return {"connected": False, "error": "DOC_PROCESSOR_URL not configured",
+                "service_url": None, "total_documents": 0, "avg_confidence": 0.0,
+                "avg_processing_time_ms": 0.0, "total_pages": 0, "by_doc_type": {}, "by_route": {}}
     import httpx
     headers = {}
     if settings.DOC_PROCESSOR_TOKEN:
@@ -3294,7 +3298,10 @@ async def get_admin_docintel_documents(
     user: TokenData = Depends(require_role("admin")),
 ):
     """List persistent document extraction records from DocIntel Neon DB."""
-    doc_url = settings.DOC_PROCESSOR_URL or "https://docintel.ysiddo-ai-projects.app"
+    doc_url = settings.DOC_PROCESSOR_URL
+    if not doc_url:
+        return {"total": 0, "documents": [], "limit": limit, "offset": offset,
+                "error": "DOC_PROCESSOR_URL not configured"}
     import httpx
     headers = {}
     if settings.DOC_PROCESSOR_TOKEN:
