@@ -818,6 +818,20 @@ metric=Revenue&periods=3`,
   "download_url": "/api/v1/exports/e91a.../download"
 }`,
   },
+  { method: "POST", path: "/api/v1/sandbox/session", group: "Sandbox", auth: "session-token",
+    desc: "Create an anonymous sandbox session (X-Sandbox-Session token). Per-IP rate limited." },
+  { method: "GET", path: "/api/v1/sandbox/session", group: "Sandbox", auth: "session-token",
+    desc: "Current sandbox session + quota." },
+  { method: "POST", path: "/api/v1/sandbox/ingest", group: "Sandbox", auth: "session-token",
+    desc: "Upload a file into the sandbox; poll /sandbox/ingest/{job_id}." },
+  { method: "GET", path: "/api/v1/sandbox/docs", group: "Sandbox", auth: "session-token",
+    desc: "List sandbox documents." },
+  { method: "GET", path: "/api/v1/sandbox/docs/{doc_id}/entities", group: "Sandbox", auth: "session-token",
+    desc: "Entities extracted from a sandbox document." },
+  { method: "POST", path: "/api/v1/sandbox/chat", group: "Sandbox", auth: "session-token",
+    desc: "Chat grounded only in sandbox uploads." },
+  { method: "DELETE", path: "/api/v1/sandbox/session", group: "Sandbox", auth: "session-token",
+    desc: "Wipe sandbox data." },
 ];
 
 const GROUP_ORDER = [

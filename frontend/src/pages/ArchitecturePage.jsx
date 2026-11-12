@@ -182,7 +182,18 @@ export default function ArchitecturePage() {
         </div>
       </Panel>
 
-      <Panel title="Design decisions" style={{ marginTop: 24 }}>
+            <Panel title="Personal data sandbox" style={{ marginTop: 24 }}>
+        <p style={{ fontSize: '.85rem', color: 'var(--text-2)', lineHeight: 1.7 }}>
+          <code>/sandbox</code> is an anonymous, session-scoped variant of the copilot: same
+          persona-routed RAG + generation pipeline, but retrieval is hard-scoped to the
+          session's own uploads (<code>sandbox_only</code>) — the shared OmniIntelOS corpus is
+          excluded. Sessions are token-authed (no JWT), quota-limited, rate-limited per IP,
+          and wiped on demand or by the hourly sweeper. Uploaded originals persist to the
+          configured media store (S3/local) for admin review.
+        </p>
+      </Panel>
+
+<Panel title="Design decisions" style={{ marginTop: 24 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 14 }}>
           {DECISIONS.map(([t, d]) => (
             <div key={t} style={{ padding: 14, borderRadius: 12, border: '1px solid var(--border-subtle, rgba(255,255,255,.08))' }}>

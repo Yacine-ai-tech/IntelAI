@@ -34,7 +34,7 @@ forecasting, and board-ready exports, over 146 curated KPIs.
 | Admin governance | User management, role viewer, scenario switcher, vector-store reindexing |
 | Multi-provider LLM | OpenAI-compatible providers via LiteLLM, configured through `LLM_ENDPOINT` |
 | Bilingual | Full English and French UI and copilot responses |
-| Personal data sandbox | Anonymous visitors upload their own CSV/PDF/DOCX/audio/images at `/sandbox`, chat grounded in `global + private` docs, one-click wipe — see `SANDBOX.md` |
+| Personal data sandbox | Anonymous visitors upload their own CSV/PDF/DOCX/audio/images at `/sandbox`, chat grounded in private docs only, one-click wipe — see `SANDBOX.md` |
 
 ## Architecture
 
