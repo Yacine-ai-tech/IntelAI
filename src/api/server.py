@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional
 import pandas as pd
 from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, WebSocket, WebSocketDisconnect, Query, Request, BackgroundTasks, Header
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -2076,6 +2076,27 @@ async def ingest_audio(
 
 # ════════════════════════════════════════════════════════════
 _INTELAI_MEDIA_ROOT = _os.environ.get("INTELAI_MEDIA_DIR") or _os.environ.get("FILE_STORAGE_DIR") or "/data/intelai_media"
+_INTELAI_S3 = None
+
+def _intelai_s3():
+    """S3-compatible store (Garage/MinIO/S3) when MEDIA_S3_* envs are set."""
+    global _INTELAI_S3
+    if _INTELAI_S3 is None:
+        ep = _os.environ.get("MEDIA_S3_ENDPOINT", "").strip()
+        if not ep:
+            return None
+        try:
+            import boto3
+            from botocore.client import Config
+            _INTELAI_S3 = boto3.client("s3", endpoint_url=ep,
+                aws_access_key_id=_os.environ.get("MEDIA_S3_ACCESS_KEY", ""),
+                aws_secret_access_key=_os.environ.get("MEDIA_S3_SECRET_KEY", ""),
+                region_name=_os.environ.get("MEDIA_S3_REGION", "garage"),
+                config=Config(signature_version="s3v4"))
+        except Exception as e:
+            log.warning("S3 client init failed: %s", e)
+            return None
+    return _INTELAI_S3
 
 def _store_upload(content: bytes, filename: Optional[str]) -> Optional[str]:
     """Persist an uploaded file for admin review under INTELAI_MEDIA_DIR.
@@ -2088,6 +2109,10 @@ def _store_upload(content: bytes, filename: Optional[str]) -> Optional[str]:
         ext = fname.rsplit(".", 1)
         ext = ("." + ext[1][:16]) if len(ext) == 2 and ext[1].replace("-", "").isalnum() else ""
         rel = f"{time.strftime('%Y/%m')}/{uuid.uuid4().hex}{ext}"
+        s3 = _intelai_s3()
+        if s3:
+            s3.put_object(Bucket=_os.environ.get("MEDIA_S3_BUCKET", "oss-media"), Key=rel, Body=content)
+            return rel
         dest = _os.path.join(_INTELAI_MEDIA_ROOT, rel)
         _os.makedirs(_os.path.dirname(dest), exist_ok=True)
         with open(dest, "wb") as f:
@@ -2102,6 +2127,18 @@ def _store_upload(content: bytes, filename: Optional[str]) -> Optional[str]:
 async def admin_media_list():
     """List persisted uploads for omni-admin review (internal-token gated)."""
     out = []
+    s3 = _intelai_s3()
+    if s3:
+        try:
+            import time as _t2
+            paginator = s3.get_paginator("list_objects_v2")
+            for page in paginator.paginate(Bucket=_os.environ.get("MEDIA_S3_BUCKET", "oss-media")):
+                for obj in page.get("Contents", []):
+                    out.append({"path": obj["Key"], "size": obj["Size"], "modified": obj["LastModified"].timestamp()})
+            out.sort(key=lambda x: x["modified"], reverse=True)
+            return {"files": out[:500]}
+        except Exception:
+            pass
     try:
         for dirpath, _dirs, files in _os.walk(_INTELAI_MEDIA_ROOT):
             for fn in files:
@@ -2119,6 +2156,15 @@ async def admin_media_list():
 async def admin_media_file(media_path: str):
     """Stream a persisted upload. Path traversal guarded; internal-token gated."""
     import mimetypes
+    s3 = _intelai_s3()
+    if s3:
+        try:
+            obj = s3.get_object(Bucket=_os.environ.get("MEDIA_S3_BUCKET", "oss-media"), Key=media_path)
+            body = obj["Body"].read()
+            ctype = obj.get("ContentType") or mimetypes.guess_type(media_path)[0] or "application/octet-stream"
+            return Response(content=body, media_type=ctype)
+        except Exception:
+            raise HTTPException(status_code=404, detail="media_not_found")
     norm = _os.path.normpath(_os.path.join(_INTELAI_MEDIA_ROOT, media_path))
     root = _os.path.normpath(_INTELAI_MEDIA_ROOT)
     if not norm.startswith(root + _os.sep) or not _os.path.isfile(norm):
