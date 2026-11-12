@@ -320,6 +320,39 @@ def list_docs(owner_user_id: str) -> List[Dict[str, Any]]:
         conn.close()
 
 
+def doc_entities(owner_user_id: str, doc_id: str, limit: int = 20) -> List[str]:
+    """Top entity/keyword strings extracted from a sandbox doc's stored text —
+    powers the per-doc 'what it learned' preview. Session-scoped by owner."""
+    try:
+        from src.services.entity_extractor import get_entity_extractor
+        from src.services.pg_store import _get_conn
+        conn = _get_conn()
+        try:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT content FROM knowledge_base WHERE doc_id=%s AND owner_user_id=%s",
+                    [doc_id, owner_user_id],
+                )
+                row = cur.fetchone()
+        finally:
+            conn.close()
+        if not row:
+            return []
+        content = row[0] if not isinstance(row, dict) else row.get("content")
+        if not content:
+            return []
+        ex = get_entity_extractor()
+        ents = ex.extract_entities(str(content)[:8000]) if hasattr(ex, "extract_entities") else []
+        if isinstance(ents, list):
+            return [str(e.get("text") if isinstance(e, dict) else e) for e in ents[:limit]]
+        if isinstance(ents, dict):
+            return list(ents.keys())[:limit]
+        return []
+    except Exception as e:
+        log.warning("doc_entities failed: %s", e)
+        return []
+
+
 def wipe_session(session: Dict[str, Any]) -> Dict[str, int]:
     """Delete everything the sandbox owns: knowledge rows, Qdrant points, blobs.
     Idempotent — safe to call twice."""
