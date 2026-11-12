@@ -370,6 +370,7 @@ export const sandboxWipe = () => sbxApi.delete('/sandbox/session')
 export const sandboxChat = (message, sessionId, sandboxOnly = false) =>
   sbxApi.post('/chat/async', { message, session_id: sessionId, sandbox_only: sandboxOnly }, { timeout: 15000 })
 export const sandboxChatStatus = (jobId) => sbxApi.get(`/chat/${jobId}`, { timeout: 15000 })
+export const sandboxDocEntities = (docId) => sbxApi.get(`/sandbox/docs/${docId}/entities`)
 
 // Admin sandbox visibility (admin JWT via shared `api`).
 export const adminListSandboxes = () => api.get('/admin/sandboxes')
