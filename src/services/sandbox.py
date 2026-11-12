@@ -384,6 +384,24 @@ def sweep_expired() -> int:
             sids = [r[0] for r in cur.fetchall()]
     finally:
         conn.close()
+    # Jobs stuck in queued/processing past the max age are orphans (container
+    # restart mid-run) — mark them failed so they don't show as queued forever.
+    try:
+        conn2 = _get_conn()
+        try:
+            with conn2.cursor() as cur:
+                cur.execute(
+                    """UPDATE sandbox_ingest_jobs SET status='failed',
+                       error='stale_job_timeout', finished_at=now()
+                       WHERE status IN ('queued','processing')
+                         AND created_at < now() - make_interval(secs => %s)""",
+                    [MAX_JOB_AGE_S],
+                )
+            conn2.commit()
+        finally:
+            conn2.close()
+    except Exception as e:
+        log.warning("stale job sweep failed: %s", e)
     wiped = 0
     for sid in sids:
         s = get_session(sid)
