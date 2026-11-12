@@ -39,7 +39,7 @@ forecasting, and board-ready exports, over 146 curated KPIs.
 ## Architecture
 
 ```
-React + Vite (Recharts, TanStack Query, i18n)     → Vercel / Netlify
+React + Vite (Recharts, TanStack Query, i18n)     → static hosting (Cloudflare Pages / any CDN)
         │  HTTP / WebSocket  /api/v1/*
 FastAPI  (src/api/server.py)
   auth · chat (9 personas) · KPIs · insights · forecasting · admin
@@ -238,7 +238,7 @@ out-of-sample forecast backtest, and a knowledge-graph coverage measurement — 
 IntelAI deploys as one containerized service — build the included `Dockerfile`
 and run it with Docker Compose, set the environment variables above, and attach the configured
 Postgres and Qdrant stores. Deploy the
-frontend separately (Vercel, Netlify, or as static files) with `VITE_API_BASE_URL` pointing to
+frontend separately (Cloudflare Pages, or as static files) with `VITE_API_BASE_URL` pointing to
 the backend, and keep `VITE_USE_WS=false` in production to use the resilient `/chat/async`
 job-and-poll path by default. See [SELF_HOSTING.md](SELF_HOSTING.md) for a full walkthrough.
 

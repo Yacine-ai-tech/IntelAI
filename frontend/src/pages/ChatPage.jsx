@@ -504,7 +504,7 @@ export default function ChatPage({
     const connect = () => {
       const token = localStorage.getItem('access_token')
       if (!token) { setStatus('error'); return }
-      // WebSocket can't be proxied by Vercel rewrites, so connect straight to the backend
+      // WebSocket can't be proxied by static-host rewrites, so connect straight to the backend
       // origin when VITE_API_BASE_URL is set (prod); fall back to same-host in dev (Vite proxy).
       const apiBase = import.meta.env.VITE_API_BASE_URL
       const wsBase = apiBase
