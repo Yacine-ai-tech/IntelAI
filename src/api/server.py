@@ -1800,6 +1800,39 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
     timeout = _env_number("DOC_PROCESSOR_TIMEOUT", 180.0)
     min_yield = _env_number("DOC_PROCESSOR_MIN_CHARS", 200, int)
 
+    async def _extract_via_batch(client, content, filename, route):
+        """Async path for documents too slow for a synchronous call (edge ~100s
+        timeouts). POST /extract/text/batch -> poll /batch/{id} -> results."""
+        resp = await client.post(
+            f"{settings.DOC_PROCESSOR_URL}/extract/text/batch",
+            files={"file": (filename, content)},
+            data={"route": route},
+            headers=headers,
+        )
+        if resp.status_code == 404:
+            return None
+        resp.raise_for_status()
+        job_id = resp.json().get("job_id")
+        if not job_id:
+            return None
+        deadline = _os.environ.get("DOC_PROCESSOR_BATCH_TIMEOUT", "600")
+        import time as _t
+        end = _t.time() + float(deadline)
+        while _t.time() < end:
+            st = await client.get(f"{settings.DOC_PROCESSOR_URL}/batch/{job_id}", headers=headers)
+            if st.status_code == 200:
+                status = (st.json() or {}).get("status", "")
+                if status in ("completed", "done", "finished", "failed"):
+                    break
+            await asyncio.sleep(3)
+        res = await client.get(f"{settings.DOC_PROCESSOR_URL}/batch/{job_id}/results", headers=headers)
+        if res.status_code != 200:
+            return None
+        results = (res.json() or {}).get("results") or []
+        if results and isinstance(results[0], dict):
+            return results[0].get("text") or results[0].get("markdown")
+        return None
+
     attempts = [
         ("/extract/text", {"route": text_route}, ("text",)),
         ("/extract/marker", None, ("markdown",)),
@@ -1848,6 +1881,16 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
                 errors.append(f"{path}: returned no usable text ({result.get('error') or 'empty'})")
             except Exception as e:
                 errors.append(f"{path}: {e}")
+                if path == "/extract/text":
+                    try:
+                        batched = await _extract_via_batch(client, content, filename, text_route)
+                        if isinstance(batched, str) and batched.strip():
+                            if len(batched.strip()) >= min_yield:
+                                return batched
+                            if len(batched.strip()) > len(best):
+                                best = batched
+                    except Exception as be:
+                        errors.append(f"{path} (batch): {be}")
 
     if best.strip():
         # Every endpoint came in under the yield floor. Some text beats none, but say
