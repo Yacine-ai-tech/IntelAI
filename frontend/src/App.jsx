@@ -5,6 +5,7 @@ import { checkHealth } from './api'
 import { WakingBackend } from './components/ui'
 import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
+import LicensePage from './pages/LicensePage'
 import DashboardPage from './pages/DashboardPage'
 import WorkspacePage from './pages/WorkspacePage'
 import ReportsPage from './pages/ReportsPage'
@@ -118,6 +119,7 @@ export default function App() {
         <Route path="risk" element={<ProtectedRoute page="risk"><RiskPage /></ProtectedRoute>} />
         <Route path="knowledge" element={<ProtectedRoute page="analytics"><KnowledgePage /></ProtectedRoute>} />
         <Route path="glossary" element={<ProtectedRoute page="analytics"><GlossaryPage /></ProtectedRoute>} />
+        <Route path="license" element={<LicensePage />} />
         <Route path="user-guide" element={<ProtectedRoute page="assistant"><UserGuidePage /></ProtectedRoute>} />
         <Route path="guide" element={<Navigate to="/user-guide" replace />} />
         <Route path="architecture" element={<ProtectedRoute page="assistant"><ArchitecturePage /></ProtectedRoute>} />
