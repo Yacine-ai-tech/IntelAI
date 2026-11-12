@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS sandbox_ingest_jobs (
     status          TEXT NOT NULL DEFAULT 'queued',
     chunks_written  INT NOT NULL DEFAULT 0,
     error           TEXT,
+    media_path      TEXT,
     created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
     finished_at     TIMESTAMPTZ
 );
@@ -73,6 +74,7 @@ def _ensure_schema() -> None:
     try:
         with conn.cursor() as cur:
             cur.execute(_SCHEMA)
+            cur.execute("ALTER TABLE sandbox_ingest_jobs ADD COLUMN IF NOT EXISTS media_path TEXT")
         conn.commit()
     finally:
         conn.close()
@@ -233,6 +235,19 @@ def create_job(session_id: str, filename: str, media_type: str) -> str:
     finally:
         conn.close()
     return job_id
+
+
+def attach_media_path(job_id: str, media_path: str) -> None:
+    """Record where the original upload bytes were persisted for admin review."""
+    _ensure_schema()
+    from src.services.pg_store import _get_conn
+    conn = _get_conn()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("UPDATE sandbox_ingest_jobs SET media_path=%s WHERE id=%s", [media_path, job_id])
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def finish_job(job_id: str, status: str, chunks: int = 0, error: Optional[str] = None) -> None:
