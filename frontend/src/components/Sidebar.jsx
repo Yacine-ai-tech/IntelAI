@@ -7,7 +7,7 @@ import {
   Settings2, Leaf, ShieldAlert, Database, ShieldCheck, Settings,
   LogOut, BookOpen, Sparkles, DollarSign, X, ChevronsLeft, ChevronsRight,
   Share2, FileText, GitCompareArrows, Network, Terminal, LifeBuoy,
-  GraduationCap, Award, Workflow,
+  GraduationCap, Award, Workflow, Upload,
 } from 'lucide-react'
 
 export default function Sidebar({ mobileOpen, onClose, collapsed = false, onToggleCollapse = () => {} }) {
@@ -21,6 +21,7 @@ export default function Sidebar({ mobileOpen, onClose, collapsed = false, onTogg
       label: t('sidebarCore') || 'Overview',
       items: [
         { to: '/workspace',   label: t('navWorkspace') || 'Workspace', icon: Sparkles, page: 'assistant' },
+        { to: '/sandbox',     label: t('navSandbox') || 'Sandbox',     icon: Upload,      page: 'assistant' },
         { to: '/dashboard',   label: t('navDashboard'),   icon: LayoutDashboard, page: 'dashboard' },
         { to: '/analytics',   label: t('navAnalytics'),   icon: BarChart3,       page: 'analytics' },
         { to: '/forecasting', label: t('navForecasting'), icon: TrendingUp,      page: 'forecasting' },
