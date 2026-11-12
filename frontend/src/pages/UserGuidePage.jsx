@@ -194,6 +194,15 @@ export default function UserGuidePage() {
       </Section>
 
       {/* Security */}
+      <Section icon={UploadCloud} title="Personal data sandbox" accent="var(--primary)">
+        <ul style={{ margin: 0, paddingLeft: 18, fontSize: '.85rem', color: 'var(--text-2)', lineHeight: 1.7 }}>
+          <li><b>/sandbox</b> is an anonymous, session-scoped workspace: upload your own CSV/PDF/DOCX/TXT/audio/images and chat grounded <b>only in your uploads</b> — the shared OmniIntelOS corpus is never mixed in (use Data Hub for that).</li>
+          <li>Quotas: 10 documents, 25 MB text, 50 MB media per session; everything is wiped on demand or after the retention window. Per-IP rate limit applies.</li>
+          <li>The data panel shows live upload/extraction progress and per-document extracted entities; the chat reuses the copilot UI (citations, markdown, sources).</li>
+          <li>To contribute documents to the shared knowledge base, use <b>Data Hub</b> instead — uploads there are scoped to your account.</li>
+        </ul>
+      </Section>
+
       <Section icon={Shield} title="Security & access control" accent="var(--bad)">
         <ul style={{ margin: 0, paddingLeft: 18, fontSize: '.85rem', color: 'var(--text-2)', lineHeight: 1.7 }}>
           <li>Authentication is a Bearer JWT (8-hour expiry) issued by <code>/api/v1/auth/login</code> or <code>/api/v1/auth/demo-login</code>.</li>
