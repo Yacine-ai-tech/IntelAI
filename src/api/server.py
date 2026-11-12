@@ -2010,6 +2010,58 @@ async def ingest_audio(
 
 
 # ════════════════════════════════════════════════════════════
+_INTELAI_MEDIA_ROOT = _os.environ.get("INTELAI_MEDIA_DIR") or _os.environ.get("FILE_STORAGE_DIR") or "/data/intelai_media"
+
+def _store_upload(content: bytes, filename: Optional[str]) -> Optional[str]:
+    """Persist an uploaded file for admin review under INTELAI_MEDIA_DIR.
+    Returns path relative to the media root; never blocks the request."""
+    if not content:
+        return None
+    try:
+        import time, uuid
+        fname = filename or "upload"
+        ext = fname.rsplit(".", 1)
+        ext = ("." + ext[1][:16]) if len(ext) == 2 and ext[1].replace("-", "").isalnum() else ""
+        rel = f"{time.strftime('%Y/%m')}/{uuid.uuid4().hex}{ext}"
+        dest = _os.path.join(_INTELAI_MEDIA_ROOT, rel)
+        _os.makedirs(_os.path.dirname(dest), exist_ok=True)
+        with open(dest, "wb") as f:
+            f.write(content)
+        return rel
+    except Exception as e:
+        log.warning("upload persistence failed: %s", e)
+        return None
+
+
+@app.get("/admin/media")
+async def admin_media_list():
+    """List persisted uploads for omni-admin review (internal-token gated)."""
+    out = []
+    try:
+        for dirpath, _dirs, files in _os.walk(_INTELAI_MEDIA_ROOT):
+            for fn in files:
+                p = _os.path.join(dirpath, fn)
+                rel = _os.path.relpath(p, _INTELAI_MEDIA_ROOT)
+                out.append({"path": rel, "size": _os.path.getsize(p),
+                            "modified": _os.path.getmtime(p)})
+        out.sort(key=lambda x: x["modified"], reverse=True)
+    except Exception:
+        pass
+    return {"files": out[:500]}
+
+
+@app.get("/admin/media/{media_path:path}")
+async def admin_media_file(media_path: str):
+    """Stream a persisted upload. Path traversal guarded; internal-token gated."""
+    import mimetypes
+    norm = _os.path.normpath(_os.path.join(_INTELAI_MEDIA_ROOT, media_path))
+    root = _os.path.normpath(_INTELAI_MEDIA_ROOT)
+    if not norm.startswith(root + _os.sep) or not _os.path.isfile(norm):
+        raise HTTPException(status_code=404, detail="media_not_found")
+    ctype = mimetypes.guess_type(norm)[0] or "application/octet-stream"
+    return FileResponse(norm, media_type=ctype, filename=_os.path.basename(norm))
+
+
 # PERSONAL DATA SANDBOX — scoped visitor workspaces
 # ════════════════════════════════════════════════════════════
 
@@ -2085,6 +2137,7 @@ async def sandbox_ingest(
     session = _sandbox_session_or_404(x_sandbox_session)
     content = await file.read()
     filename = file.filename or "upload"
+    media_path = _store_upload(content, filename)
     kind = sbx.classify_filename(filename)
     if kind == "unsupported":
         raise HTTPException(status_code=415, detail="unsupported_file_type")
@@ -2098,6 +2151,11 @@ async def sandbox_ingest(
         raise HTTPException(status_code=429, detail="rate_limited")
 
     job_id = sbx.create_job(x_sandbox_session, filename, kind)
+    if media_path:
+        try:
+            sbx.attach_media_path(job_id, media_path)
+        except Exception:
+            pass
     owner = session["owner_user_id"]
 
     async def _run():
