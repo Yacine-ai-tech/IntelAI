@@ -2366,6 +2366,16 @@ async def sandbox_wipe(x_sandbox_session: Optional[str] = Header(default=None, a
     return {"status": "wiped", **result}
 
 
+@app.get("/api/v1/sandbox/docs/{doc_id}/entities")
+async def sandbox_doc_entities(doc_id: str, x_sandbox_session: Optional[str] = Header(default=None, alias="X-Sandbox-Session")):
+    from src.services import sandbox as sbx
+    if not x_sandbox_session:
+        raise HTTPException(status_code=401, detail="X-Sandbox-Session header required")
+    session = _sandbox_session_or_404(x_sandbox_session)
+    entities = await asyncio.to_thread(sbx.doc_entities, session["owner_user_id"], doc_id)
+    return {"doc_id": doc_id, "entities": entities}
+
+
 @app.get("/api/v1/sandbox/docs")
 async def sandbox_list_docs(x_sandbox_session: Optional[str] = Header(default=None, alias="X-Sandbox-Session")):
     from src.services import sandbox as sbx
