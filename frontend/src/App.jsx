@@ -1,41 +1,41 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import { checkHealth } from './api'
-import { WakingBackend } from './components/ui'
+import { WakingBackend, Loading } from './components/ui'
 import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
-import LicensePage from './pages/LicensePage'
-import DashboardPage from './pages/DashboardPage'
-import WorkspacePage from './pages/WorkspacePage'
-import ReportsPage from './pages/ReportsPage'
-import GovernancePage from './pages/GovernancePage'
-import OrganizationPage from './pages/OrganizationPage'
-import ComparePage from './pages/ComparePage'
-import KnowledgeGraphPage from './pages/KnowledgeGraphPage' 
-import ChatPage from './pages/ChatPage'
-import AnalyticsPage from './pages/AnalyticsPage'
-import DataHubPage from './pages/DataHubPage'
-import AdminPage from './pages/AdminPage'
-import SettingsPage from './pages/SettingsPage'
-import HRPage from './pages/HRPage'
-import LogisticsPage from './pages/LogisticsPage'
-import ITPage from './pages/ITPage'
-import OperationsPage from './pages/OperationsPage'
-import ForecastingPage from './pages/ForecastingPage'
-import ESGPage from './pages/ESGPage'
-import RiskPage from './pages/RiskPage'
-import FinancialPage from './pages/FinancialPage'
-import KnowledgePage from './pages/KnowledgePage'
 
-import GrowthPage from './pages/GrowthPage'
-import GlossaryPage from './pages/GlossaryPage'
-import ApiDocs from './pages/ApiDocs'
-import UserGuidePage from './pages/UserGuidePage'
-import ResearchPage from './pages/ResearchPage'
-import ArchitecturePage from './pages/ArchitecturePage'
-import BenchmarkPage from './pages/BenchmarkPage'
-import SandboxPage from './pages/SandboxPage'
+const DashboardPage = lazy(() => import('./pages/DashboardPage'))
+const WorkspacePage = lazy(() => import('./pages/WorkspacePage'))
+const ReportsPage = lazy(() => import('./pages/ReportsPage'))
+const GovernancePage = lazy(() => import('./pages/GovernancePage'))
+const OrganizationPage = lazy(() => import('./pages/OrganizationPage'))
+const ComparePage = lazy(() => import('./pages/ComparePage'))
+const KnowledgeGraphPage = lazy(() => import('./pages/KnowledgeGraphPage'))
+const ChatPage = lazy(() => import('./pages/ChatPage'))
+const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'))
+const DataHubPage = lazy(() => import('./pages/DataHubPage'))
+const AdminPage = lazy(() => import('./pages/AdminPage'))
+const SettingsPage = lazy(() => import('./pages/SettingsPage'))
+const HRPage = lazy(() => import('./pages/HRPage'))
+const LogisticsPage = lazy(() => import('./pages/LogisticsPage'))
+const ITPage = lazy(() => import('./pages/ITPage'))
+const OperationsPage = lazy(() => import('./pages/OperationsPage'))
+const ForecastingPage = lazy(() => import('./pages/ForecastingPage'))
+const ESGPage = lazy(() => import('./pages/ESGPage'))
+const RiskPage = lazy(() => import('./pages/RiskPage'))
+const FinancialPage = lazy(() => import('./pages/FinancialPage'))
+const KnowledgePage = lazy(() => import('./pages/KnowledgePage'))
+const GrowthPage = lazy(() => import('./pages/GrowthPage'))
+const GlossaryPage = lazy(() => import('./pages/GlossaryPage'))
+const ApiDocs = lazy(() => import('./pages/ApiDocs'))
+const UserGuidePage = lazy(() => import('./pages/UserGuidePage'))
+const ResearchPage = lazy(() => import('./pages/ResearchPage'))
+const ArchitecturePage = lazy(() => import('./pages/ArchitecturePage'))
+const BenchmarkPage = lazy(() => import('./pages/BenchmarkPage'))
+const SandboxPage = lazy(() => import('./pages/SandboxPage'))
+const LicensePage = lazy(() => import('./pages/LicensePage'))
 
 // Unguessable operator sign-in path — set VITE_ADMIN_PATH at build time.
 // Credential login (admin + registered users) lives ONLY here; /login is demo-only.
@@ -83,6 +83,7 @@ export default function App() {
   }
 
   return (
+    <Suspense fallback={<Loading />}>
     <Routes>
       <Route path="/login" element={
         isAuthenticated ? <Navigate to="/workspace" replace /> : <LoginPage showCredentials={false} />
@@ -131,5 +132,6 @@ export default function App() {
       
       <Route path="*" element={<Navigate to="/workspace" replace />} />
     </Routes>
+    </Suspense>
   )
 }
