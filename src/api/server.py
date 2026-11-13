@@ -1359,6 +1359,14 @@ async def chat_stream(req: ChatRequest, user: TokenData = Depends(get_current_us
 
     async def produce() -> None:
         try:
+            # Same strict-scope contract as _run_chat_turn: without this, stream-mode
+            # retrieval silently ran non-strict even when req.sandbox_only was set.
+            # produce() runs in its own task whose context copy feeds the
+            # asyncio.to_thread / copy_context workers that do the retrieval.
+            from src.services.pg_store import set_request_scope_strict, get_request_scope_user, get_request_scope_strict
+            set_request_scope_strict(bool(req.sandbox_only))
+            log.info("chat stream turn sandbox_only=%s strict=%s scope_user=%s",
+                     req.sandbox_only, get_request_scope_strict(), get_request_scope_user())
             session_id = req.session_id or str(uuid.uuid4())
             try:
                 from src.services.pg_store import ensure_session_exists
