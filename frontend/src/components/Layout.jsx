@@ -94,7 +94,6 @@ export default function Layout() {
                 }
               }}
             >
-              <option value="admin">{t('roleAdmin') || 'Admin'}</option>
               <option value="ceo">{t('roleCEO') || 'CEO'}</option>
               <option value="cfo">{t('roleCFO') || 'CFO'}</option>
               <option value="cto">{t('roleCTO') || 'CTO'}</option>
