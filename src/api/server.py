@@ -491,6 +491,54 @@ class UserUpdateRequest(BaseModel):
 _users_db: Dict[str, Dict[str, Any]] = {}
 
 
+def _pg_users_enabled() -> bool:
+    """Postgres is the authoritative user store whenever POSTGRES_URL is configured;
+    _users_db then serves only as a fallback for no-database deployments and as a
+    read cache. Without this split, admin role changes and registrations written to
+    Postgres were invisible to login (which read only the in-memory dict) and vice
+    versa."""
+    return bool((getattr(settings, "POSTGRES_URL", "") or "").strip())
+
+
+_PG_USERS_DOWN_UNTIL = 0.0
+_PG_USERS_BACKOFF_S = 60.0
+
+
+def _pg_users_healthy() -> bool:
+    """Circuit breaker: after a failed PG user lookup, skip Postgres for a short
+    window instead of paying its connect-retry latency on every login attempt."""
+    return time.time() >= _PG_USERS_DOWN_UNTIL
+
+
+def _note_pg_users_failure() -> None:
+    global _PG_USERS_DOWN_UNTIL
+    _PG_USERS_DOWN_UNTIL = time.time() + _PG_USERS_BACKOFF_S
+
+
+async def _lookup_user_record(username: str) -> Optional[Dict[str, Any]]:
+    if _pg_users_enabled() and _pg_users_healthy():
+        try:
+            from src.services.pg_store import get_user
+            row = await asyncio.to_thread(get_user, username)
+            if row:
+                return row
+        except Exception as e:
+            _note_pg_users_failure()
+            log.warning("PG user lookup failed for %s (falling back to cache): %s", username, e)
+    return _users_db.get(username)
+
+
+async def _user_exists(username: str) -> bool:
+    if _pg_users_enabled() and _pg_users_healthy():
+        try:
+            from src.services.pg_store import user_exists
+            return bool(await asyncio.to_thread(user_exists, username))
+        except Exception as e:
+            _note_pg_users_failure()
+            log.warning("PG user_exists failed for %s (falling back to cache): %s", username, e)
+    return username in _users_db
+
+
 def _json_safe(value: Any) -> Any:
     """Recursively convert NaN/Inf values to None for JSON compatibility."""
     if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
@@ -895,7 +943,7 @@ async def login(req: LoginRequest, request: Request):
     key = _login_key(request, req.username)
     if _login_locked(key):
         raise HTTPException(status_code=429, detail="Too many failed login attempts. Try again later.")
-    user_data = _users_db.get(req.username)
+    user_data = await _lookup_user_record(req.username)
     if not user_data or not verify_password(req.password, user_data["password_hash"]):
         _record_login_fail(key)
         try:
@@ -1024,10 +1072,12 @@ async def demo_login(role: str, request: Request):
 async def register(req: RegisterRequest):
     if req.role not in {"viewer", "analyst"}:
         raise HTTPException(status_code=403, detail="Public registration is limited to viewer or analyst roles")
-    if req.username in _users_db:
+    if await _user_exists(req.username):
         raise HTTPException(status_code=400, detail="Username already exists")
     user_id = str(uuid.uuid4())
     pw_hash = hash_password(req.password)
+    # Keep the in-memory entry as a cache/fallback only — Postgres below is
+    # authoritative when configured (login resolves through _lookup_user_record).
     _users_db[req.username] = {
         "id": user_id,
         "username": req.username,
@@ -1037,10 +1087,16 @@ async def register(req: RegisterRequest):
         "preferred_language": req.preferred_language,
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
-    # Persist to PostgreSQL
+    # Persist to PostgreSQL — authoritative when configured; its generated id is
+    # the one foreign keys (chat_sessions etc.) actually point at, so keep the
+    # cache entry consistent with it.
     try:
         from src.services.pg_store import create_user
-        await asyncio.to_thread(create_user, req.username, pw_hash, req.role, req.preferred_language)
+        created = await asyncio.to_thread(create_user, req.username, pw_hash, req.role, req.preferred_language)
+        pg_id = (created or {}).get("id")
+        if pg_id:
+            user_id = pg_id
+            _users_db[req.username]["id"] = pg_id
     except Exception as e:
         log.warning("PG user creation failed: %s", e)
     return {"status": "registered", "user_id": user_id, "username": req.username}
@@ -1048,7 +1104,7 @@ async def register(req: RegisterRequest):
 
 @app.get("/api/v1/auth/me")
 async def get_me(user: TokenData = Depends(get_current_user)):
-    user_data = _users_db.get(user.username, {})
+    user_data = await _lookup_user_record(user.username) or {}
     from src.services.pg_store import get_available_categories
     all_categories = await asyncio.to_thread(get_available_categories)
     return {
@@ -1653,7 +1709,8 @@ async def _process_webhook_payload(payload: WebhookPayload, actor: str) -> Dict[
                 vs = get_vector_store()
                 if vs:
                     vs.upsert([{"doc_id": doc_id, "title": title, "content": content_text[:4000],
-                                "source": payload.source, "category": domain}])
+                                "source": payload.source, "category": domain,
+                                "owner_user_id": None}])
                 log.info(f"Webhook doc successfully auto-categorized as {domain} and indexed.")
             except Exception as e:
                 log.error(f"Background webhook processing failed: {e}")
@@ -1983,6 +2040,18 @@ async def ingest_document(
         "source": category, "embedding": "",
     }])
     await asyncio.to_thread(store_knowledge_docs, docs_df, owner_user_id=owner)
+    # Index into the vector store immediately — without this the doc lives in
+    # Postgres but is invisible to dense retrieval until the next full reindex
+    # (same divergence the webhook and sandbox ingest paths already avoid).
+    try:
+        from src.services.vector_store import get_vector_store
+        vs = get_vector_store()
+        if vs:
+            await asyncio.to_thread(vs.upsert, [{"doc_id": doc_id, "title": file.filename,
+                                                 "content": text[:4000], "source": category,
+                                                 "category": "", "owner_user_id": owner}])
+    except Exception as e:
+        log.warning("document ingest vector upsert failed for %s: %s", doc_id, e)
     await asyncio.to_thread(log_audit_event, user.username, "DOC_INGEST", f"Uploaded {file.filename}")
     return {
         "status": "ingested", "doc_id": doc_id, "filename": file.filename, "chars": len(text),
@@ -2066,6 +2135,16 @@ async def ingest_audio(
         "source": category, "embedding": "",
     }])
     await asyncio.to_thread(store_knowledge_docs, docs_df, owner_user_id=owner)
+    # Same Postgres/vector divergence fix as /ingest/document above.
+    try:
+        from src.services.vector_store import get_vector_store
+        vs = get_vector_store()
+        if vs:
+            await asyncio.to_thread(vs.upsert, [{"doc_id": doc_id, "title": file.filename or "audio upload",
+                                                 "content": full_content[:4000], "source": category,
+                                                 "category": "", "owner_user_id": owner}])
+    except Exception as e:
+        log.warning("audio ingest vector upsert failed for %s: %s", doc_id, e)
     await asyncio.to_thread(log_audit_event, user.username, "AUDIO_INGEST", f"Processed {file.filename} via {settings.AUDIO_PROCESSOR_URL}")
     return {
         "status": "ingested", "doc_id": doc_id, "filename": file.filename,
@@ -2299,7 +2378,7 @@ async def sandbox_ingest(
                 if vs:
                     await asyncio.to_thread(vs.upsert, [{"doc_id": doc_id, "title": filename,
                                                          "content": text[:4000], "source": "sandbox",
-                                                         "category": ""}])
+                                                         "category": "", "owner_user_id": owner}])
             except Exception as e:
                 log.warning("sandbox ingest vector upsert failed for %s: %s", job_id, e)
             await asyncio.to_thread(log_audit_event, f"sandbox:{x_sandbox_session[-6:]}", "SANDBOX_INGEST", f"{filename} ({kind})")
@@ -3139,6 +3218,20 @@ async def agent_run_tool(req: AgentToolRequest, user: TokenData = Depends(get_cu
 
 @app.get("/api/v1/admin/users")
 async def list_users(user: TokenData = Depends(require_role("admin"))):
+    # Postgres is authoritative when configured — _users_db only holds the
+    # bootstrap defaults and would hide every user registered since startup.
+    if _pg_users_enabled():
+        try:
+            from src.services.pg_store import list_users as _pg_list_users
+            rows = await asyncio.to_thread(_pg_list_users)
+            return {"users": [{
+                "id": r.get("id"), "username": r.get("username"), "role": r.get("role"),
+                "is_active": r.get("is_active", True),
+                "language": r.get("preferred_language", "en"),
+                "created_at": r.get("created_at"),
+            } for r in rows]}
+        except Exception as e:
+            log.warning("PG list_users failed, falling back to in-memory: %s", e)
     result = []
     for username, data in _users_db.items():
         result.append({
@@ -3155,6 +3248,33 @@ async def update_user(
     user_id: str, req: UserUpdateRequest,
     user: TokenData = Depends(require_role("admin")),
 ):
+    # Postgres is authoritative when configured: resolve the target there first
+    # (the in-memory dict only ever held bootstrap defaults), write the change to
+    # Postgres, then mirror it into _users_db when the entry exists as a cache.
+    if _pg_users_enabled():
+        try:
+            from src.services.pg_store import get_user_by_id, update_user as _pg_update_user
+            target_row = await asyncio.to_thread(get_user_by_id, user_id)
+            if not target_row:
+                raise HTTPException(status_code=404, detail="User not found")
+            await asyncio.to_thread(
+                _pg_update_user, user_id,
+                role=req.role, is_active=req.is_active, preferred_language=req.preferred_language,
+            )
+            cached = _users_db.get(target_row.get("username"))
+            if cached:
+                if req.role:
+                    cached["role"] = req.role
+                if req.is_active is not None:
+                    cached["is_active"] = req.is_active
+                if req.preferred_language:
+                    cached["preferred_language"] = req.preferred_language
+            return {"status": "updated"}
+        except HTTPException:
+            raise
+        except Exception as e:
+            log.warning("PG admin user update failed: %s", e)
+            raise HTTPException(status_code=503, detail="user_store_unavailable")
     target = None
     for username, data in _users_db.items():
         if data["id"] == user_id:
@@ -3168,13 +3288,17 @@ async def update_user(
         _users_db[target]["is_active"] = req.is_active
     if req.preferred_language:
         _users_db[target]["preferred_language"] = req.preferred_language
-    # Persist to Postgres too: the in-memory _users_db is per process, so an admin's
-    # change (e.g. deactivating an account) must be stored to survive a restart.
-    from src.services.pg_store import update_user as _pg_update_user
-    await asyncio.to_thread(
-        _pg_update_user, user_id,
-        role=req.role, is_active=req.is_active, preferred_language=req.preferred_language,
-    )
+    # Persist to Postgres too when reachable: the in-memory _users_db is per
+    # process, so an admin's change (e.g. deactivating an account) must be stored
+    # to survive a restart.
+    try:
+        from src.services.pg_store import update_user as _pg_update_user
+        await asyncio.to_thread(
+            _pg_update_user, user_id,
+            role=req.role, is_active=req.is_active, preferred_language=req.preferred_language,
+        )
+    except Exception:
+        pass
     return {"status": "updated"}
 
 

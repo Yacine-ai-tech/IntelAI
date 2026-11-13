@@ -143,6 +143,14 @@ class ChromaVectorStore:
             settings.CHROMA_COLLECTION, metadata={"hnsw:space": "cosine"}
         )
 
+    @staticmethod
+    def _owner_meta(d: Doc) -> Dict[str, str]:
+        """Owner/scope fields stamped on every point so retrieval can be filtered
+        (and post-filtered) by owner instead of trusting fuzzy title/content match —
+        two users' docs with identical titles used to collide and leak across scopes."""
+        return {"doc_id": str(d.get("doc_id", "")),
+                "owner_user_id": str(d.get("owner_user_id") or "")}
+
     def upsert(self, docs: List[Doc]) -> int:
         if not docs:
             return 0
@@ -152,12 +160,23 @@ class ChromaVectorStore:
             embeddings=embs,
             documents=[d["content"] for d in docs],
             metadatas=[{"title": d.get("title", ""), "source": d.get("source", ""),
-                        "category": d.get("category", "")} for d in docs],
+                        "category": d.get("category", ""), **self._owner_meta(d)} for d in docs],
         )
         return len(docs)
 
-    def query(self, text: str, n: int = 10) -> List[Doc]:
-        res = self.col.query(query_embeddings=_embed([text]).tolist(), n_results=n)
+    def query(self, text: str, n: int = 10, owner_user_id: Optional[str] = None,
+              strict: bool = False, apply_owner_filter: bool = False) -> List[Doc]:
+        where = None
+        if apply_owner_filter:
+            # Same contract as get_knowledge_docs(): non-strict sees global rows
+            # (owner_user_id == "") plus the requester's own; strict (sandbox) sees
+            # only the requester's own points.
+            if strict:
+                where = {"owner_user_id": owner_user_id or ""}
+            else:
+                where = {"$or": [{"owner_user_id": ""},
+                                 {"owner_user_id": owner_user_id or ""}]}
+        res = self.col.query(query_embeddings=_embed([text]).tolist(), n_results=n, where=where)
         docs = (res.get("documents") or [[]])[0]
         metas = (res.get("metadatas") or [[]])[0]
         dists = (res.get("distances") or [[]])[0]
@@ -165,7 +184,8 @@ class ChromaVectorStore:
         for i, doc in enumerate(docs):
             m = metas[i] if i < len(metas) else {}
             dist = dists[i] if i < len(dists) else 1.0
-            out.append({"title": m.get("title", ""), "content": doc,
+            out.append({"doc_id": m.get("doc_id", ""), "owner_user_id": m.get("owner_user_id", "") or None,
+                        "title": m.get("title", ""), "content": doc,
                         "source": m.get("source", ""), "score": 1.0 - float(dist)})
         return out
 
@@ -198,8 +218,12 @@ class PgVectorStore:
             conn.execute(
                 f"CREATE TABLE IF NOT EXISTS doc_vectors ("
                 f"doc_id TEXT PRIMARY KEY, title TEXT, content TEXT, source TEXT, "
-                f"category TEXT, embedding vector({self.dim}))"
+                f"category TEXT, owner_user_id TEXT, embedding vector({self.dim}))"
             )
+            # Idempotent migration for tables created before owner scoping existed —
+            # without it every row reads as ownerless and the retrieval-time owner
+            # filter would silently drop the entire index.
+            conn.execute("ALTER TABLE doc_vectors ADD COLUMN IF NOT EXISTS owner_user_id TEXT")
             conn.commit()
         finally:
             conn.close()
@@ -217,30 +241,42 @@ class PgVectorStore:
         try:
             with conn.cursor() as cur:
                 cur.executemany(
-                    "INSERT INTO doc_vectors (doc_id, title, content, source, category, embedding) "
-                    "VALUES (%s, %s, %s, %s, %s, %s) "
+                    "INSERT INTO doc_vectors (doc_id, title, content, source, category, owner_user_id, embedding) "
+                    "VALUES (%s, %s, %s, %s, %s, %s, %s) "
                     "ON CONFLICT (doc_id) DO UPDATE SET title=EXCLUDED.title, "
-                    "content=EXCLUDED.content, source=EXCLUDED.source, embedding=EXCLUDED.embedding",
+                    "content=EXCLUDED.content, source=EXCLUDED.source, owner_user_id=EXCLUDED.owner_user_id, "
+                    "embedding=EXCLUDED.embedding",
                     [(str(d["doc_id"]), d.get("title", ""), d["content"], d.get("source", ""),
-                      d.get("category", ""), embs[i]) for i, d in enumerate(docs)],
+                      d.get("category", ""), d.get("owner_user_id") or None, embs[i]) for i, d in enumerate(docs)],
                 )
             conn.commit()
         finally:
             conn.close()
         return len(docs)
 
-    def query(self, text: str, n: int = 10) -> List[Doc]:
+    def query(self, text: str, n: int = 10, owner_user_id: Optional[str] = None,
+              strict: bool = False, apply_owner_filter: bool = False) -> List[Doc]:
         q = _embed([text])[0]
+        sql = "SELECT doc_id, title, content, source, owner_user_id, 1 - (embedding <=> %s) AS score FROM doc_vectors"
+        params: List[Any] = [q]
+        if apply_owner_filter:
+            # Same contract as get_knowledge_docs(): non-strict sees global rows
+            # (owner_user_id IS NULL) plus the requester's own; strict (sandbox)
+            # sees only the requester's own points.
+            if strict:
+                sql += " WHERE owner_user_id = %s"
+            else:
+                sql += " WHERE (owner_user_id IS NULL OR owner_user_id = %s)"
+            params.append(owner_user_id)
+        sql += " ORDER BY embedding <=> %s LIMIT %s"
+        params += [q, n]
         conn = self._conn()
         try:
-            rows = conn.execute(
-                "SELECT title, content, source, 1 - (embedding <=> %s) AS score "
-                "FROM doc_vectors ORDER BY embedding <=> %s LIMIT %s",
-                [q, q, n],
-            ).fetchall()
+            rows = conn.execute(sql, params).fetchall()
         finally:
             conn.close()
-        return [{"title": r["title"], "content": r["content"], "source": r["source"],
+        return [{"doc_id": r["doc_id"], "owner_user_id": r["owner_user_id"],
+                 "title": r["title"], "content": r["content"], "source": r["source"],
                  "score": float(r["score"])} for r in rows]
 
     def count(self) -> int:
@@ -259,7 +295,7 @@ class PgVectorStore:
             conn.execute(
                 f"CREATE TABLE doc_vectors ("
                 f"doc_id TEXT PRIMARY KEY, title TEXT, content TEXT, source TEXT, "
-                f"category TEXT, embedding vector({self.dim}))"
+                f"category TEXT, owner_user_id TEXT, embedding vector({self.dim}))"
             )
             conn.commit()
         finally:
@@ -305,19 +341,42 @@ class QdrantVectorStore:
         embs = _embed([d["content"] for d in docs])
         pts = [PointStruct(
             id=self._pid(d["doc_id"]), vector=embs[i].tolist(),
-            payload={"title": d.get("title", ""), "content": d["content"],
+            payload={"doc_id": str(d.get("doc_id", "")),
+                     "owner_user_id": str(d.get("owner_user_id") or ""),
+                     "title": d.get("title", ""), "content": d["content"],
                      "source": d.get("source", ""), "category": d.get("category", "")},
         ) for i, d in enumerate(docs)]
         self.client.upsert(self.coll, points=pts)
         return len(docs)
 
-    def query(self, text: str, n: int = 10) -> List[Doc]:
+    def query(self, text: str, n: int = 10, owner_user_id: Optional[str] = None,
+              strict: bool = False, apply_owner_filter: bool = False) -> List[Doc]:
         vec = _embed([text])[0].tolist()
+        query_filter = None
+        if apply_owner_filter:
+            # Same contract as get_knowledge_docs(): non-strict sees global points
+            # (owner_user_id == "") plus the requester's own; strict (sandbox) sees
+            # only the requester's own points.
+            from qdrant_client.models import FieldCondition, Filter, MatchValue
+            owner = owner_user_id or ""
+            if strict:
+                query_filter = Filter(must=[FieldCondition(key="owner_user_id", match=MatchValue(value=owner))])
+            else:
+                query_filter = Filter(should=[
+                    FieldCondition(key="owner_user_id", match=MatchValue(value="")),
+                    FieldCondition(key="owner_user_id", match=MatchValue(value=owner)),
+                ])
         if hasattr(self.client, "query_points"):  # qdrant-client >= 1.10 (search() is deprecated)
-            pts = self.client.query_points(collection_name=self.coll, query=vec, limit=n).points
+            pts = self.client.query_points(
+                collection_name=self.coll, query=vec, limit=n, query_filter=query_filter,
+            ).points
         else:
-            pts = self.client.search(collection_name=self.coll, query_vector=vec, limit=n)
-        return [{"title": p.payload.get("title", ""), "content": p.payload.get("content", ""),
+            pts = self.client.search(
+                collection_name=self.coll, query_vector=vec, limit=n, query_filter=query_filter,
+            )
+        return [{"doc_id": p.payload.get("doc_id", ""),
+                 "owner_user_id": p.payload.get("owner_user_id", "") or None,
+                 "title": p.payload.get("title", ""), "content": p.payload.get("content", ""),
                  "source": p.payload.get("source", ""), "score": float(p.score)} for p in pts]
 
     def delete_by_doc_ids(self, doc_ids: List[str]) -> int:
@@ -394,10 +453,13 @@ def reindex(docs: Optional[List[Doc]] = None, force: bool = False) -> int:
         from src.services.pg_store import get_knowledge_docs
         # all_owners=True: the store is one shared collection embedding the whole
         # corpus, including every visitor's private uploads — vector_store_retrieve()
-        # enforces owner scoping afterwards by post-filtering dense hits against the
-        # requester's own scoped get_knowledge_docs() call, not by narrowing what
+        # enforces owner scoping afterwards (query-level owner filter + doc_id
+        # post-filter against the requester's scoped corpus), not by narrowing what
         # gets indexed here.
-        df = get_knowledge_docs(all_owners=True)
+        # limit=None is load-bearing: the old default of 2000 silently truncated the
+        # corpus to the OLDEST 2000 rows, so reindex() reported success while every
+        # newer document stayed absent from dense retrieval.
+        df = get_knowledge_docs(all_owners=True, limit=None)
         # This store keeps one embedding per document (not per-chunk, unlike
         # hybrid_retrieval.py's proper chunking) — some real documents in this corpus
         # are 100K+ chars (a 56-page report), and embedding that whole string as one
@@ -407,8 +469,12 @@ def reindex(docs: Optional[List[Doc]] = None, force: bool = False) -> int:
         # chunks from hybrid_retrieval.py separately.
         cap = int(os.getenv("VECTOR_STORE_CONTENT_CHARS", "4000"))
         docs = [{"doc_id": r.doc_id, "title": r.title, "content": (r.content or "")[:cap],
-                 "source": r.source, "category": ""} for r in df.itertuples()]
-    return vs.upsert(docs)
+                 "source": r.source, "category": "",
+                 "owner_user_id": getattr(r, "owner_user_id", None)} for r in df.itertuples()]
+    n = vs.upsert(docs)
+    if n != len(docs):
+        raise RuntimeError(f"vector reindex wrote {n} of {len(docs)} documents")
+    return n
 
 
 # ── Fused retrieval (dense store + BM25 + RRF + optional rerank) ───────────────
@@ -496,10 +562,20 @@ def vector_store_retrieve(
 
     # get_knowledge_docs() is scoped to this requester (global + their own uploads) —
     # the store itself is one shared collection indexed with every visitor's private
-    # docs (see reindex()'s all_owners=True), so dense hits are authorized here by
-    # checking each one against this scoped corpus, not by trusting the store's answer.
+    # docs (see reindex()'s all_owners=True). Authorization is enforced twice: the
+    # backend gets an owner filter at query level (payload WHERE / metadata where /
+    # Qdrant Filter — see each backend's query()), and every surviving dense hit is
+    # then post-filtered by doc_id membership in this scoped corpus. The old check
+    # matched only title + first-80-chars of content, so two users' documents with
+    # the same title and opening collided and leaked across scopes.
     # Over-fetch since some raw hits get dropped by the filter below.
     docs = get_knowledge_docs()
+    from src.services.pg_store import (
+        _demo_session_scoping_enabled, get_request_scope_strict, get_request_scope_user,
+    )
+    scoping_on = _demo_session_scoping_enabled()
+    scope_user = get_request_scope_user()
+    scope_strict = get_request_scope_strict()
     # Documents of every language stay eligible (the models are multilingual); documents in
     # the query's language get a modest boost after fusion.
     lang_of: Dict[str, str] = {}
@@ -513,12 +589,25 @@ def vector_store_retrieve(
     allowed = {
         _key(t, c) for t, c in zip(docs["title"].tolist(), docs["content"].fillna("").tolist())
     } if not docs.empty else set()
+    # doc_id membership is the authoritative authorization check — it cannot collide
+    # the way title+content-prefix matching could. Points written before doc_id was
+    # stamped into payloads fall back to the fuzzy key check (they age out on reindex).
+    allowed_doc_ids = (
+        {str(d) for d in docs["doc_id"].tolist() if d} if not docs.empty and "doc_id" in docs.columns else set()
+    )
     titles = docs["title"].tolist() if not docs.empty else []
     contents = docs["content"].fillna("").tolist() if not docs.empty else []
 
+    def _authorized(d: Dict[str, Any]) -> bool:
+        doc_id = d.get("doc_id")
+        if doc_id:
+            return str(doc_id) in allowed_doc_ids
+        return _key(d["title"], d["content"]) in allowed
+
     def _dense() -> List[Dict[str, Any]]:
-        raw = vs.query(query, n=dense_k * 3)
-        return [d for d in raw if _key(d["title"], d["content"]) in allowed][:dense_k]
+        raw = vs.query(query, n=dense_k * 3, owner_user_id=scope_user,
+                       strict=scope_strict, apply_owner_filter=scoping_on)
+        return [d for d in raw if _authorized(d)][:dense_k]
 
     def _sparse() -> List[Tuple[str, str]]:
         # BM25 side (title weighted 2x, matching the in-process retriever).

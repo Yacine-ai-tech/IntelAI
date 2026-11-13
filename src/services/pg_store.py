@@ -329,13 +329,16 @@ def init_pg_tables():
                 entity_type   TEXT NOT NULL,
                 entity_value  TEXT NOT NULL,
                 source        TEXT DEFAULT '',
+                owner_user_id TEXT,
                 created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
             )
         """)
-        # Idempotent migration for tables created before source existed.
+        # Idempotent migration for tables created before source/owner_user_id existed.
         conn.execute("ALTER TABLE kpi_entities ADD COLUMN IF NOT EXISTS source TEXT DEFAULT ''")
+        conn.execute("ALTER TABLE kpi_entities ADD COLUMN IF NOT EXISTS owner_user_id TEXT")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_entities_ref ON kpi_entities(record_ref)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_entities_source ON kpi_entities(source)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_entities_owner ON kpi_entities(owner_user_id)")
         # Supports get_kpi_entities(entity_values=...)'s case-insensitive lookup.
         conn.execute("CREATE INDEX IF NOT EXISTS idx_kpi_entities_value ON kpi_entities(lower(entity_value))")
         conn.execute("""
@@ -663,7 +666,7 @@ def store_kpi_metrics(
                             "source": row_source,
                         })
                 if entity_rows:
-                    store_kpi_entities(entity_rows, replace=False)
+                    store_kpi_entities(entity_rows, replace=False, owner_user_id=owner_user_id)
             except Exception as ee:
                 log.warning("Auto entity extraction on CSV ingest note: %s", ee)
             return
@@ -781,15 +784,18 @@ def get_kpi_metrics(
 
 
 def store_kpi_entities(rows: List[Dict[str, str]], replace: bool = True,
-                        replace_prefix: Optional[str] = None) -> int:
+                        replace_prefix: Optional[str] = None,
+                        owner_user_id: Optional[str] = None) -> int:
     """Persist GraphRAG-lite entities (the kpi_entities sidecar table).
 
     ``rows`` = ``[{record_ref, entity_type, entity_value, source}, ...]`` extracted at
     ingestion. ``replace_prefix`` scopes the delete-before-insert to rows whose source
     starts with it (e.g. ``"seed_"`` for the Admin scenario-switcher) — the same
     contract as store_knowledge_docs()'s replace_prefix. Without it, ``replace=True``
-    deletes the WHOLE table on every write, including entities extracted from the
-    seeded baseline. Returns the number of rows written.
+    deletes only rows owned by the same ``owner_user_id`` (NULL owner = global rows),
+    so one visitor's re-ingest can never wipe another's — or the seed data's —
+    entities. ``owner_user_id=None`` writes global rows visible to every visitor;
+    a row's own ``owner_user_id`` key wins over the parameter. Returns rows written.
     """
     if not rows:
         return 0
@@ -798,15 +804,20 @@ def store_kpi_entities(rows: List[Dict[str, str]], replace: bool = True,
         if replace_prefix:
             conn.execute("DELETE FROM kpi_entities WHERE source LIKE %s", (f"{replace_prefix}%",))
         elif replace:
-            conn.execute("DELETE FROM kpi_entities")
+            conn.execute(
+                "DELETE FROM kpi_entities WHERE owner_user_id IS NOT DISTINCT FROM %s",
+                (owner_user_id,),
+            )
         params = [
             (str(r.get("record_ref", "")), str(r.get("entity_type", "")),
-             str(r.get("entity_value", "")), str(r.get("source", "")))
+             str(r.get("entity_value", "")), str(r.get("source", "")),
+             r.get("owner_user_id") or owner_user_id)
             for r in rows
         ]
         with conn.cursor() as cur:
             cur.executemany(
-                "INSERT INTO kpi_entities (record_ref, entity_type, entity_value, source) VALUES (%s, %s, %s, %s)",
+                "INSERT INTO kpi_entities (record_ref, entity_type, entity_value, source, owner_user_id) "
+                "VALUES (%s, %s, %s, %s, %s)",
                 params,
             )
         conn.commit()
@@ -815,7 +826,8 @@ def store_kpi_entities(rows: List[Dict[str, str]], replace: bool = True,
         conn.close()
 
 
-def get_kpi_entities(entity_values: Optional[List[str]] = None) -> "pd.DataFrame":
+def get_kpi_entities(entity_values: Optional[List[str]] = None,
+                     all_owners: bool = False) -> "pd.DataFrame":
     """Return the persisted GraphRAG-lite entities (record_ref, entity_type, entity_value).
 
     ``entity_values`` (case-insensitive) filters server-side to just the rows a caller
@@ -824,20 +836,32 @@ def get_kpi_entities(entity_values: Optional[List[str]] = None) -> "pd.DataFrame
     77,000+ rows on every call regardless of how few were ever used, adding several
     seconds of transfer that had nothing to do with the (sub-millisecond) query itself.
     Omit the filter to get every row, unchanged from before, for callers that
-    genuinely need the whole table."""
+    genuinely need the whole table.
+
+    Demo-session scoping (same contract as get_knowledge_docs): a visitor sees global
+    entity rows (owner_user_id IS NULL) plus their own, never another visitor's —
+    without it one visitor's private metric names leaked into every other visitor's
+    GraphRAG ranking. ``all_owners=True`` bypasses scoping (maintenance paths only)."""
     import pandas as pd
     conn = _get_conn()
     try:
+        filters: List[str] = []
+        params: List[Any] = []
         if entity_values:
-            rows = conn.execute(
-                "SELECT record_ref, entity_type, entity_value FROM kpi_entities "
-                "WHERE lower(entity_value) = ANY(%s)",
-                ([str(v).lower() for v in entity_values],),
-            ).fetchall()
-        else:
-            rows = conn.execute(
-                "SELECT record_ref, entity_type, entity_value FROM kpi_entities"
-            ).fetchall()
+            filters.append("lower(entity_value) = ANY(%s)")
+            params.append([str(v).lower() for v in entity_values])
+        strict = get_request_scope_strict() and not all_owners and _demo_session_scoping_enabled()
+        if not all_owners and _demo_session_scoping_enabled():
+            if strict:
+                filters.append("owner_user_id = %s")
+            else:
+                filters.append("(owner_user_id IS NULL OR owner_user_id = %s)")
+            params.append(get_request_scope_user())
+        where = (" WHERE " + " AND ".join(filters)) if filters else ""
+        rows = conn.execute(
+            "SELECT record_ref, entity_type, entity_value FROM kpi_entities" + where,
+            params,
+        ).fetchall()
         return pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
     finally:
         conn.close()
@@ -1142,12 +1166,17 @@ def seed_glossary_knowledge_docs() -> int:
         return 0
 
 
-def get_knowledge_docs(limit: int = 2000, all_owners: bool = False) -> "pd.DataFrame":
+def get_knowledge_docs(limit: Optional[int] = 2000, all_owners: bool = False) -> "pd.DataFrame":
     """Read knowledge-base docs. Demo-session scoping (default on, same as get_kpi_metrics):
     a visitor sees the global/seeded corpus (owner_user_id IS NULL) plus anything they
     personally uploaded, never another visitor's upload. ``all_owners=True`` bypasses this —
     only for the full-corpus vector-store reindex, which must embed every document
-    (retrieval-time scoping then applies via vector_store_retrieve()'s post-filter)."""
+    (retrieval-time scoping then applies via vector_store_retrieve()'s post-filter).
+
+    ``limit=None`` returns the whole (scoped) corpus with no row cap — required by
+    reindex(), which previously passed the default 2000 and silently indexed only the
+    oldest 2000 documents, leaving every newer upload permanently absent from dense
+    retrieval."""
     strict = get_request_scope_strict() and not all_owners and _demo_session_scoping_enabled()
     cache_key = (limit, all_owners, strict, get_request_scope_user() if (not all_owners and _demo_session_scoping_enabled()) else None)
     now = time.time()
@@ -1160,7 +1189,7 @@ def get_knowledge_docs(limit: int = 2000, all_owners: bool = False) -> "pd.DataF
     import pandas as pd
     conn = _get_conn()
     try:
-        q = "SELECT doc_id, title, content, source, embedding, language, created_at FROM knowledge_base"
+        q = "SELECT doc_id, title, content, source, embedding, language, owner_user_id, created_at FROM knowledge_base"
         params: List[Any] = []
         if not all_owners and _demo_session_scoping_enabled():
             if strict:
@@ -1169,8 +1198,10 @@ def get_knowledge_docs(limit: int = 2000, all_owners: bool = False) -> "pd.DataF
             else:
                 q += " WHERE (owner_user_id IS NULL OR owner_user_id = %s)"
             params.append(get_request_scope_user())
-        q += " ORDER BY created_at ASC LIMIT %s"
-        params.append(limit)
+        q += " ORDER BY created_at ASC"
+        if limit:
+            q += " LIMIT %s"
+            params.append(limit)
         rows = conn.execute(q, params).fetchall()
         df = pd.DataFrame([dict(r) for r in rows]) if rows else pd.DataFrame()
         with _CACHE_LOCK:
