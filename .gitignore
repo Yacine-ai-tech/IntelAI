@@ -81,3 +81,4 @@ project_overview.md
 Project_Overview.md
 .claude/
 eval/cache/
+*.tsbuildinfo
