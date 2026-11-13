@@ -106,7 +106,10 @@ async def run_job(job_id: str, fn: Callable[[], Any]) -> None:
         try:
             conn.execute(
                 "UPDATE chat_jobs SET status='error', error=%s, updated_at=NOW() WHERE id=%s",
-                (str(e)[:2000], job_id),
+                # Generic message only: this column is returned verbatim to the
+                # polling client, so raw exception text (paths, SQL, upstream
+                # URLs) must not be stored here. The full error is in the log above.
+                ("internal_error", job_id),
             )
             conn.commit()
         finally:

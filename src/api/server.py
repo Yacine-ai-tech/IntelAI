@@ -49,6 +49,32 @@ def _chat_turn_timeout_seconds() -> float:
     return max(1.0, _env_number("CHAT_TURN_TIMEOUT", 180.0))
 
 
+def _public_error(e: Exception) -> str:
+    """Client-facing error text for unexpected failures: a generic marker, with the
+    real exception logged server-side. Raw str(e) leaks internals (paths, SQL,
+    upstream URLs) into API responses — never return it directly."""
+    log.error("internal error: %s", e)
+    return "internal_error"
+
+
+# Upload size cap for endpoints that buffer the whole request body into memory
+# (file.read() / UploadFile). 100 MB is generous for documents, CSVs and audio
+# clips while still bounding memory per request on a single-worker deployment.
+MAX_UPLOAD_BYTES = 100 * 1024 * 1024
+
+
+def _check_upload_size(request: Request, file: UploadFile) -> None:
+    """Reject oversized uploads BEFORE buffering the body. Content-Length covers
+    the common case (and multipart overhead makes it an over-estimate, which is
+    the safe direction); UploadFile.size is the fallback when the header is
+    absent or dishonest — the post-read len() check below still applies."""
+    content_length = request.headers.get("content-length")
+    if content_length and content_length.isdigit() and int(content_length) > MAX_UPLOAD_BYTES:
+        raise HTTPException(status_code=413, detail="file_too_large")
+    if getattr(file, "size", None) is not None and file.size > MAX_UPLOAD_BYTES:
+        raise HTTPException(status_code=413, detail="file_too_large")
+
+
 def _requires_persistent_database(environment: str, vector_store: str) -> bool:
     return environment.lower() == "production" or vector_store.lower() in {"qdrant", "pgvector"}
 
@@ -209,8 +235,14 @@ async def verify_internal_token(request: Request, call_next):
         # Gating those routes behind the internal secret broke all browser API
         # calls (user JWT != internal token). Service-to-service callers never
         # send user JWTs, so they still hit the internal-token check below.
+        #
+        # The bypass is restricted to /api/v1/* — every route under that prefix
+        # enforces its own auth (get_current_user / require_role / sandbox header)
+        # or is whitelisted above. Internal-token-only routes OUTSIDE that prefix
+        # (/embed, /admin/media) have no route-level auth at all, so a user JWT
+        # must never satisfy their gate.
         auth = request.headers.get("Authorization", "")
-        if auth.startswith("Bearer "):
+        if auth.startswith("Bearer ") and request.url.path.startswith("/api/v1/"):
             try:
                 from src.core.jwt_auth import decode_access_token
                 decode_access_token(auth[len("Bearer "):])
@@ -1111,10 +1143,13 @@ async def _run_chat_turn(req: "ChatRequest", user: TokenData, emit=None) -> Dict
 
     session_id = req.session_id or str(uuid.uuid4())
 
-    # Ensure session exists in PostgreSQL
+    # Ensure session exists in PostgreSQL — ownership-checked: a session_id that
+    # belongs to another user is rejected, not silently written into.
     try:
         from src.services.pg_store import ensure_session_exists, store_message
         await asyncio.to_thread(ensure_session_exists, session_id, user.user_id)
+    except PermissionError:
+        raise HTTPException(status_code=403, detail="session_access_denied")
     except Exception:
         pass  # Fallback — still works without PG
 
@@ -1208,6 +1243,21 @@ async def chat_async(req: ChatRequest, background: BackgroundTasks,
     """
     from src.services.chat_jobs import new_job, run_job
     from src.services import retrieval_progress as _rp
+    # Pin the session_id up front: the async response must carry it (the sync
+    # /chat response already does via _run_chat_turn's return), otherwise pollers
+    # like the sandbox UI fall back to using job_id as the session id and every
+    # turn looks like a brand-new conversation. Ensuring the session here also
+    # rejects a foreign session_id with a real 403 instead of a background-job
+    # error the client only sees on poll.
+    session_id = req.session_id or str(uuid.uuid4())
+    req.session_id = session_id
+    try:
+        from src.services.pg_store import ensure_session_exists
+        await asyncio.to_thread(ensure_session_exists, session_id, user.user_id)
+    except PermissionError:
+        raise HTTPException(status_code=403, detail="session_access_denied")
+    except Exception:
+        pass  # Fallback — still works without PG
     job_id = new_job(req.model_dump(), owner_user_id=user.user_id)
 
     async def _turn_with_progress():
@@ -1231,7 +1281,7 @@ async def chat_async(req: ChatRequest, background: BackgroundTasks,
             _rp.reset_progress_key(token)
 
     background.add_task(run_job, job_id, _turn_with_progress)
-    return {"job_id": job_id}
+    return {"job_id": job_id, "session_id": session_id}
 
 
 @app.post("/api/v1/chat/stream")
@@ -1257,6 +1307,9 @@ async def chat_stream(req: ChatRequest, user: TokenData = Depends(get_current_us
             try:
                 from src.services.pg_store import ensure_session_exists
                 await asyncio.to_thread(ensure_session_exists, session_id, user.user_id)
+            except PermissionError:
+                await queue.put({"type": "error", "error": "session_access_denied"})
+                return
             except Exception:
                 pass
             history = await asyncio.to_thread(_load_chat_history, user.user_id, session_id)
@@ -1361,7 +1414,7 @@ async def get_chat_sessions(
         sessions = await asyncio.to_thread(get_user_sessions, target_user, limit=50)
         return {"sessions": sessions}
     except Exception as e:
-        return {"sessions": [], "error": str(e)}
+        return {"sessions": [], "error": _public_error(e)}
 
 
 @app.get("/api/v1/chat/{job_id}")
@@ -1721,6 +1774,7 @@ async def public_signed_webhook_ingest(source_name: str, request: Request):
 
 @app.post("/api/v1/ingest/csv")
 async def ingest_csv_file(
+    request: Request,
     file: UploadFile = File(...),
     source_name: str = Form("csv_upload"),
     global_scope: bool = Form(False),
@@ -1740,7 +1794,10 @@ async def ingest_csv_file(
     """
     import io
     from src.services.pg_store import store_kpi_metrics, log_audit_event
-    content = await file.read()
+    _check_upload_size(request, file)
+    content = await file.read(MAX_UPLOAD_BYTES + 1)
+    if len(content) > MAX_UPLOAD_BYTES:
+        raise HTTPException(status_code=413, detail="file_too_large")
     try:
         df = pd.read_csv(io.BytesIO(content))
     except Exception as e:
@@ -1936,6 +1993,7 @@ async def _delegate_to_doc_processor(content: bytes, filename: str) -> str:
 
 @app.post("/api/v1/ingest/document")
 async def ingest_document(
+    request: Request,
     file: UploadFile = File(...),
     category: str = Form("Misc"),
     global_scope: bool = Form(False),
@@ -1949,7 +2007,10 @@ async def ingest_document(
     if global_scope and (user.role or "").lower() != "admin":
         raise HTTPException(status_code=403, detail="global_scope requires an admin role")
     owner = None if global_scope else user.user_id
-    content = await file.read()
+    _check_upload_size(request, file)
+    content = await file.read(MAX_UPLOAD_BYTES + 1)
+    if len(content) > MAX_UPLOAD_BYTES:
+        raise HTTPException(status_code=413, detail="file_too_large")
     filename_lower = (file.filename or "").lower()
 
     # Anything that needs parsing/OCR/vision to read (PDF, image, Office doc) is the
@@ -1992,6 +2053,7 @@ async def ingest_document(
 
 @app.post("/api/v1/ingest/audio")
 async def ingest_audio(
+    request: Request,
     file: UploadFile = File(...),
     category: str = Form("Misc"),
     analysis_type: str = Form("meeting"),
@@ -2019,7 +2081,10 @@ async def ingest_audio(
     from src.services.pg_store import store_knowledge_docs, log_audit_event
     from src.services.security import SecurityScanner
 
-    content = await file.read()
+    _check_upload_size(request, file)
+    content = await file.read(MAX_UPLOAD_BYTES + 1)
+    if len(content) > MAX_UPLOAD_BYTES:
+        raise HTTPException(status_code=413, detail="file_too_large")
     try:
         import httpx
         headers = {}
@@ -2246,7 +2311,10 @@ async def sandbox_ingest(
     if not x_sandbox_session:
         raise HTTPException(status_code=401, detail="X-Sandbox-Session header required")
     session = _sandbox_session_or_404(x_sandbox_session)
-    content = await file.read()
+    _check_upload_size(request, file)
+    content = await file.read(MAX_UPLOAD_BYTES + 1)
+    if len(content) > MAX_UPLOAD_BYTES:
+        raise HTTPException(status_code=413, detail="file_too_large")
     filename = file.filename or "upload"
     media_path = _store_upload(content, filename)
     kind = sbx.classify_filename(filename)
@@ -2311,7 +2379,7 @@ async def sandbox_ingest(
             sbx.finish_job(job_id, "failed", error=str(e.detail)[:300])
         except Exception as e:
             log.warning("sandbox ingest job %s failed: %s", job_id, e)
-            sbx.finish_job(job_id, "failed", error=str(e)[:300])
+            sbx.finish_job(job_id, "failed", error="ingest_failed")
 
     asyncio.create_task(_run())
     return {"status": "queued", "job_id": job_id, "kind": kind}
@@ -2583,7 +2651,7 @@ async def generate_financial_statement(
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=_public_error(e))
 
 
 # ════════════════════════════════════════════════════════════
@@ -2667,7 +2735,7 @@ async def run_forecast(
             "explanation": explanation,
         }
     except Exception as e:
-        return {"error": str(e), "metric": metric, "forecast": []}
+        return {"error": _public_error(e), "metric": metric, "forecast": []}
 
 
 # ════════════════════════════════════════════════════════════
@@ -3190,7 +3258,7 @@ async def get_audit_log(limit: int = 100, user: TokenData = Depends(require_role
         df = await asyncio.to_thread(get_audit_trail, limit=limit)
         return {"logs": df.to_dict(orient="records") if not df.empty else []}
     except Exception as e:
-        return {"logs": [], "error": str(e)}
+        return {"logs": [], "error": _public_error(e)}
 
 
 @app.post("/api/v1/admin/seed")
@@ -3230,7 +3298,7 @@ async def switch_scenario(req: ScenarioRequest, user: TokenData = Depends(requir
         counts = await asyncio.to_thread(_run_scenario_switch, req.scenario)
         return {"status": "success", "scenario": req.scenario, "counts": counts}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=_public_error(e))
 
 
 @app.post("/api/v1/admin/scenario/async")
@@ -3397,7 +3465,7 @@ async def get_admin_docintel_documents(
                 return resp.json()
             return {"total": 0, "documents": [], "limit": limit, "offset": offset, "error": resp.text}
     except Exception as e:
-        return {"total": 0, "documents": [], "limit": limit, "offset": offset, "error": str(e)}
+        return {"total": 0, "documents": [], "limit": limit, "offset": offset, "error": _public_error(e)}
 
 
 # ════════════════════════════════════════════════════════════
@@ -3425,7 +3493,7 @@ async def get_chat_messages(
         messages = await asyncio.to_thread(get_session_messages, session_id, target_user)
         return {"messages": messages, "session_id": session_id}
     except Exception as e:
-        return {"messages": [], "error": str(e)}
+        return {"messages": [], "error": _public_error(e)}
 
 
 @app.post("/api/v1/chat/sessions")
@@ -3435,7 +3503,7 @@ async def create_new_session(user: TokenData = Depends(get_current_user)):
         session_id = await asyncio.to_thread(create_chat_session, user.user_id)
         return {"session_id": session_id, "title": "New Chat"}
     except Exception as e:
-        return {"session_id": str(uuid.uuid4()), "error": str(e)}
+        return {"session_id": str(uuid.uuid4()), "error": _public_error(e)}
 
 
 @app.put("/api/v1/chat/sessions/{session_id}/title")
@@ -3449,7 +3517,7 @@ async def rename_session(session_id: str, req: Dict[str, str], user: TokenData =
     except HTTPException:
         raise
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": _public_error(e)}
 
 
 @app.delete("/api/v1/chat/sessions/{session_id}")
@@ -3463,7 +3531,7 @@ async def delete_chat_session(session_id: str, user: TokenData = Depends(get_cur
     except HTTPException:
         raise
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": _public_error(e)}
 
 
 # ════════════════════════════════════════════════════════════
@@ -3497,7 +3565,7 @@ async def knowledge_search(q: str, n: int = 5, user: TokenData = Depends(get_cur
             out["partial"] = True
         return out
     except Exception as e:
-        return {"results": [], "query": q, "error": str(e)}
+        return {"results": [], "query": q, "error": _public_error(e)}
 
 
 def _detect_search_language(q: str, user: TokenData) -> str:
@@ -3552,7 +3620,7 @@ async def knowledge_search_async(q: str, n: int = 5, user: TokenData = Depends(g
             job["status"] = "done"
             _rp.board.update(job_id, stage="done")
         except Exception as e:  # surfaced to the poller, never an empty success
-            job["status"], job["error"] = "error", str(e)[:500]
+            job["status"], job["error"] = "error", _public_error(e)
             _rp.board.update(job_id, stage="error")
         finally:
             _rp.reset_progress_key(token)
@@ -3604,7 +3672,7 @@ async def knowledge_stats(user: TokenData = Depends(get_current_user)):
             "sources": docs["source"].unique().tolist() if not docs.empty and "source" in docs.columns else [],
         }
     except Exception as e:
-        return {"total_documents": 0, "error": str(e)}
+        return {"total_documents": 0, "error": _public_error(e)}
 
 
 # ════════════════════════════════════════════════════════════
@@ -3638,6 +3706,19 @@ async def websocket_chat(websocket: WebSocket):
             persona_override = data.get("persona")
             if data.get("session_id"):
                 session_id = data["session_id"]
+                # Ownership-check BEFORE the turn runs: ensure_session_exists
+                # raises PermissionError on a session owned by someone else, so
+                # store_message below can never append to a foreign session.
+                _session_ready = False
+                try:
+                    from src.services.pg_store import ensure_session_exists
+                    await asyncio.to_thread(ensure_session_exists, session_id, getattr(user, "user_id", user.username))
+                    _session_ready = True
+                except PermissionError:
+                    await websocket.send_json({"type": "error", "error": "session_access_denied"})
+                    continue
+                except Exception:
+                    pass  # PG optional — persistence below degrades the same way
             language = data.get("language") or user.language
 
             # Phase 1: RAG retrieval + persona setup (fast, synchronous-in-thread)
@@ -3862,7 +3943,7 @@ async def set_chatbot_domain(
         }
     except Exception as e:
         log.error("Failed to set domain: %s", e)
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=_public_error(e))
 
 
 @app.get("/api/v1/chatbot/domain")
@@ -3878,7 +3959,7 @@ async def get_chatbot_domain(user: TokenData = Depends(get_current_user)):
         }
     except Exception as e:
         log.error("Failed to get domain: %s", e)
-        return {"domain": "general", "error": str(e)[:200]}
+        return {"domain": "general", "error": _public_error(e)}
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -3989,7 +4070,6 @@ async def export_data(
             "filename": filename,
             "encoding": "base64" if req.format in ("xlsx", "pdf") else "text",
             "data": data,
-            "download_url": f"/api/v1/exports/{export_id}/download",
         }
 
     except HTTPException:
@@ -3997,7 +4077,7 @@ async def export_data(
     except Exception as e:
         log.error("Data export error: %s", e)
         await asyncio.to_thread(update_export_log, export_id=export_id, status="failed", error_message=str(e)[:500])
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=_public_error(e))
 
 
 # ════════════════════════════════════════════════════════════

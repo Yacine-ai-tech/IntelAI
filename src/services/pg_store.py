@@ -1604,18 +1604,34 @@ def clear_user_data() -> Dict[str, int]:
 
 
 def ensure_session_exists(session_id: str, user_id: str) -> str:
-    """Ensure a chat session exists, create if not. Return session_id."""
+    """Ensure a chat session exists, create if not. Return session_id.
+
+    Ownership-checked: when the session already exists it must belong to
+    ``user_id`` ("*" is the admin bypass, matching get_session_messages). A
+    foreign session_id raises PermissionError instead of silently letting the
+    caller append messages to someone else's session."""
     conn = _get_conn()
     try:
-        row = conn.execute("SELECT id FROM chat_sessions WHERE id = %s", [session_id]).fetchone()
+        row = conn.execute("SELECT id, user_id FROM chat_sessions WHERE id = %s", [session_id]).fetchone()
         if row:
+            if user_id != "*" and str(row["user_id"]) != str(user_id):
+                raise PermissionError("chat session belongs to a different user")
             return session_id
         # Create it
-        conn.execute(
-            "INSERT INTO chat_sessions (id, user_id, title, persona) VALUES (%s, %s, %s, %s)",
-            [session_id, user_id, "New Chat", "general"],
-        )
-        conn.commit()
+        try:
+            conn.execute(
+                "INSERT INTO chat_sessions (id, user_id, title, persona) VALUES (%s, %s, %s, %s)",
+                [session_id, user_id, "New Chat", "general"],
+            )
+            conn.commit()
+        except Exception:
+            # Lost an insert race (or the row appeared between SELECT and INSERT):
+            # re-read and apply the same ownership rule rather than trusting the write.
+            conn.rollback()
+            row = conn.execute("SELECT user_id FROM chat_sessions WHERE id = %s", [session_id]).fetchone()
+            if row and user_id != "*" and str(row["user_id"]) != str(user_id):
+                raise PermissionError("chat session belongs to a different user")
+            raise
         return session_id
     finally:
         conn.close()

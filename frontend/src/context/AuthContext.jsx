@@ -44,6 +44,10 @@ export function AuthProvider({ children }) {
     const { access_token, user: userData } = res.data
     localStorage.setItem('access_token', access_token)
     localStorage.setItem('user', JSON.stringify(userData))
+    // Demo login never grants admin (backend rejects role=admin); make sure a
+    // stale was_admin flag from a previous real-admin session can't linger.
+    if (userData.role === 'admin') localStorage.setItem('was_admin', 'true')
+    else localStorage.removeItem('was_admin')
     setToken(access_token)
     setUser(userData)
     return userData
