@@ -80,6 +80,8 @@ def _metric_lookup(df: pd.DataFrame, keywords: List[str]) -> pd.DataFrame:
 # ── Key metrics ───────────────────────────────────────────────────────────
 
 def extract_key_metrics(df: pd.DataFrame) -> Dict[str, float]:
+    if df.empty or "period" not in df.columns or "metric" not in df.columns:
+        return {}
     latest = df.sort_values("period").groupby("metric").tail(1)
     revenue = _metric_lookup(latest, ["revenue", "sales", "arr", "mrr"])
     margin = _metric_lookup(latest, ["gross margin", "margin"])

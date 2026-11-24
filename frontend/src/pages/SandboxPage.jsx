@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from '../i18n/I18nContext'
 import { FormattedContent } from './ChatPage'
 import { Panel, Loading, Empty } from '../components/ui'
-import { Paperclip, Trash2, Upload, Sparkles, User, ChevronDown, ChevronRight } from 'lucide-react'
+import { Paperclip, Trash2, Upload, Sparkles, User, ChevronDown, ChevronRight, ArrowDown } from 'lucide-react'
 import {
   getSandboxSession, setSandboxSession, sandboxCreate, sandboxGet, sandboxDocs,
   sandboxIngest, sandboxJob, sandboxWipe, sandboxChat, sandboxChatStatus,
@@ -34,9 +34,27 @@ export default function SandboxPage() {
   const [error, setError] = useState('')
   const [confirmWipe, setConfirmWipe] = useState(false)
   const [dragOver, setDragOver] = useState(false)
+  const [showScrollBottom, setShowScrollBottom] = useState(false)
   const fileRef = useRef(null)
   const chatEndRef = useRef(null)
+  const messagesContainerRef = useRef(null)
+  const isAtBottomRef = useRef(true)
   const pollRef = useRef({})
+
+  const scrollToBottom = (behavior = 'smooth') => {
+    const el = messagesContainerRef.current
+    if (!el) return
+    el.scrollTo({ top: el.scrollHeight, behavior })
+  }
+
+  const handleScroll = () => {
+    const el = messagesContainerRef.current
+    if (!el) return
+    const offset = el.scrollHeight - el.scrollTop - el.clientHeight
+    const atBottom = offset < 60
+    isAtBottomRef.current = atBottom
+    setShowScrollBottom(!atBottom && messages.length > 2)
+  }
 
   const refresh = async () => {
     try {
@@ -59,7 +77,11 @@ export default function SandboxPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, busy])
+  useEffect(() => {
+    if (isAtBottomRef.current) {
+      scrollToBottom(messages.length <= 1 ? 'auto' : 'smooth')
+    }
+  }, [messages, busy])
 
   const start = async () => {
     setBusy(true); setError('')
@@ -121,6 +143,8 @@ export default function SandboxPage() {
       } catch (e) { setError(e?.response?.data?.detail || 'upload_failed'); setBusy(false); return }
     }
     setMessages((m) => [...m, { role: 'user', content }])
+    isAtBottomRef.current = true
+    setTimeout(() => scrollToBottom('smooth'), 40)
     try {
       const { data } = await sandboxChat(content, chatId || null, true)
       const jid = data.job_id || data.id
@@ -194,9 +218,31 @@ export default function SandboxPage() {
   const pct = (used, max) => Math.min(100, Math.round((used / (max || 1)) * 100))
 
   return (
-    <div className="page" style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 360px) 1fr', gap: '1rem', alignItems: 'start' }}>
+    <div
+      className="page sandbox-page-layout"
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'minmax(300px, 360px) 1fr',
+        gap: '1.25rem',
+        alignItems: 'stretch',
+        height: 'calc(100vh - var(--topbar-h, 60px) - 52px)',
+        minHeight: '520px',
+        maxHeight: 'calc(100vh - 100px)',
+        overflow: 'hidden',
+      }}
+    >
       {/* ── Data panel ─────────────────────────────────────────── */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          height: '100%',
+          overflowY: 'auto',
+          minHeight: 0,
+          paddingRight: 4,
+        }}
+      >
         <Panel title="Your data" icon={Upload} actions={
           <button className="btn btn-ghost btn-sm" onClick={() => setConfirmWipe(true)} disabled={busy} title="Wipe everything">
             <Trash2 size={14} />
@@ -277,8 +323,32 @@ export default function SandboxPage() {
       </div>
 
       {/* ── Chat panel (copilot UI) ────────────────────────────── */}
-      <Panel title="Chat" icon={Sparkles} style={{ display: 'flex', flexDirection: 'column', minHeight: '70vh' }}>
-        <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.9rem', padding: '0.5rem 0.25rem' }}>
+      <Panel
+        title="Chat"
+        icon={Sparkles}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          minHeight: 0,
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          ref={messagesContainerRef}
+          onScroll={handleScroll}
+          style={{
+            flex: 1,
+            overflowY: 'auto',
+            minHeight: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.9rem',
+            padding: '0.5rem 0.5rem',
+            overscrollBehavior: 'contain',
+          }}
+        >
           {messages.length === 0 && (
             <div style={{ textAlign: 'center', color: 'var(--text-2)', padding: '3rem 1rem' }}>
               <Sparkles size={28} style={{ opacity: .4, marginBottom: 10 }} />
@@ -304,7 +374,35 @@ export default function SandboxPage() {
           <div ref={chatEndRef} />
         </div>
 
-        <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border, #1b2632)' }}>
+        {showScrollBottom && (
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={() => {
+              isAtBottomRef.current = true
+              scrollToBottom('smooth')
+              setShowScrollBottom(false)
+            }}
+            style={{
+              position: 'absolute',
+              bottom: 64,
+              right: 20,
+              borderRadius: 20,
+              boxShadow: '0 4px 14px rgba(0,0,0,0.3)',
+              zIndex: 10,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 5,
+              fontSize: '.75rem',
+              padding: '5px 12px',
+              background: 'var(--surface-2, #1b2632)',
+              border: '1px solid var(--border)',
+            }}
+          >
+            <ArrowDown size={13} /> {t('scrollToLatest') || 'Scroll to bottom'}
+          </button>
+        )}
+
+        <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border, #1b2632)', flexShrink: 0 }}>
           <input
             className="input"
             style={{ flex: 1 }}
