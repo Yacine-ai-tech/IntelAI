@@ -663,3 +663,14 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
   scrollbar-width: thin;
   scrollbar-color: var(--border-2) transparent;
 }
+
+/* 6. Sandbox Page Responsive Layout */
+@media (max-width: 860px) {
+  .sandbox-page-layout {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
