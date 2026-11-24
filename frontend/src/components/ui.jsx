@@ -164,11 +164,11 @@ export function Stat({ label, value, unit, icon: Icon, accent = 'var(--primary)'
 export function StatGrid({ children }) { return <div className="kpi-grid">{children}</div> }
 
 // ── panel (titled card) ──────────────────────────────────────
-export function Panel({ title, icon: Icon, actions, children, style, span }) {
+export function Panel({ title, icon: Icon, actions, children, style, span, className }) {
   return (
-    <div className="card" style={{ ...(span ? { gridColumn: `span ${span}` } : {}), ...style }}>
+    <div className={`card${className ? ' ' + className : ''}`} style={{ ...(span ? { gridColumn: `span ${span}` } : {}), ...style }}>
       {(title || actions) && (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14, flexShrink: 0 }}>
           {title && <h3 className="card-title" style={{ margin: 0 }}>{Icon && <Icon size={16} />}{title}</h3>}
           {actions}
         </div>
