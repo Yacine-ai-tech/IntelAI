@@ -665,44 +665,12 @@ input,select,textarea,button { font-family:inherit; font-size:inherit; color:inh
 }
 
 /* 6. Sandbox Page Responsive Layout */
-.sandbox-page-layout {
-  padding: 1.25rem 1.5rem;
-  box-sizing: border-box;
-}
-
-.sandbox-chat-panel {
-  display: flex !important;
-  flex-direction: column !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  position: relative !important;
-  overflow: hidden !important;
-}
-
-.sandbox-messages-container {
-  flex: 1 1 0% !important;
-  overflow-y: auto !important;
-  min-height: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 0.9rem !important;
-  padding: 0.75rem 0.5rem !important;
-  overscroll-behavior: contain !important;
-}
-
 @media (max-width: 860px) {
   .sandbox-page-layout {
     grid-template-columns: 1fr !important;
     height: auto !important;
     max-height: none !important;
-    overflow-y: auto !important;
-    padding: 1rem !important;
-    gap: 1.25rem !important;
-  }
-  .sandbox-chat-panel {
-    height: 70vh !important;
-    min-height: 480px !important;
-    max-height: 750px !important;
+    overflow: visible !important;
   }
 }
 

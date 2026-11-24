@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useTranslation } from '../i18n/I18nContext'
 import { FormattedContent } from './ChatPage'
 import { Panel, Loading, Empty } from '../components/ui'
-import { Paperclip, Trash2, Upload, Sparkles, User, ChevronDown, ChevronRight, ArrowDown, ArrowLeft } from 'lucide-react'
+import { Paperclip, Trash2, Upload, Sparkles, User, ChevronDown, ChevronRight, ArrowDown } from 'lucide-react'
 import {
   getSandboxSession, setSandboxSession, sandboxCreate, sandboxGet, sandboxDocs,
   sandboxIngest, sandboxJob, sandboxWipe, sandboxChat, sandboxChatStatus,
@@ -45,18 +44,14 @@ export default function SandboxPage() {
   const scrollToBottom = (behavior = 'smooth') => {
     const el = messagesContainerRef.current
     if (!el) return
-    if (el.scrollHeight > el.clientHeight) {
-      el.scrollTo({ top: el.scrollHeight, behavior })
-    } else {
-      chatEndRef.current?.scrollIntoView({ behavior, block: 'nearest' })
-    }
+    el.scrollTo({ top: el.scrollHeight, behavior })
   }
 
   const handleScroll = () => {
     const el = messagesContainerRef.current
     if (!el) return
     const offset = el.scrollHeight - el.scrollTop - el.clientHeight
-    const atBottom = offset < 80
+    const atBottom = offset < 60
     isAtBottomRef.current = atBottom
     setShowScrollBottom(!atBottom && messages.length > 2)
   }
@@ -331,12 +326,6 @@ export default function SandboxPage() {
       <Panel
         title="Chat"
         icon={Sparkles}
-        className="sandbox-chat-panel"
-        actions={
-          <Link to="/workspace" className="btn btn-ghost btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: '.75rem' }} title="Back to Workspace">
-            <ArrowLeft size={13} /> Back to Workspace
-          </Link>
-        }
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -348,8 +337,17 @@ export default function SandboxPage() {
       >
         <div
           ref={messagesContainerRef}
-          className="sandbox-messages-container"
           onScroll={handleScroll}
+          style={{
+            flex: 1,
+            overflowY: 'auto',
+            minHeight: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.9rem',
+            padding: '0.5rem 0.5rem',
+            overscrollBehavior: 'contain',
+          }}
         >
           {messages.length === 0 && (
             <div style={{ textAlign: 'center', color: 'var(--text-2)', padding: '3rem 1rem' }}>
@@ -360,8 +358,8 @@ export default function SandboxPage() {
           {messages.map((m, i) => (
             <div key={i} className={`chat-message ${m.role === 'user' ? 'user' : 'assistant'}`}>
               <div className="chat-avatar">{m.role === 'user' ? <User size={15} /> : <Sparkles size={15} />}</div>
-              <div style={{ minWidth: 0, maxWidth: '100%' }}>
-                <div className="chat-bubble" style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+              <div style={{ minWidth: 0 }}>
+                <div className="chat-bubble">
                   {m.role === 'user' ? <div style={{ whiteSpace: 'pre-wrap' }}>{m.content}</div> : <FormattedContent content={m.content} />}
                 </div>
               </div>
